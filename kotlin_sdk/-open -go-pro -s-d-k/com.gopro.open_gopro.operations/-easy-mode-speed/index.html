@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>EasyModeSpeed</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+<link href="../../../images/logo-icon.svg">
+</head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="../../../index.html">
+                            Open GoPro SDK
+                    </a>
+            </div>
+            <div class="library-version">
+            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":wsdk:dokkaHtml/commonMain">common</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="Open GoPro SDK::com.gopro.open_gopro.operations/EasyModeSpeed///PointingToDeclaration//1280103317">
+  <div class="breadcrumbs"><a href="../../../index.html">Open GoPro SDK</a><span class="delimiter">/</span><a href="../index.html">com.gopro.open_gopro.operations</a><span class="delimiter">/</span><span class="current">EasyModeSpeed</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Easy</span><wbr></wbr><span>Mode</span><wbr></wbr><span><span>Speed</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">enum </span><a href="index.html">EasyModeSpeed</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="index.html">EasyModeSpeed</a><span class="token operator">&gt; </span>, <a href="../-i-valued-enum/index.html">IValuedEnum</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-u-byte/index.html">UByte</a><span class="token operator">&gt; </span></div><p class="paragraph">Easy Mode Speed</p><h4 class="">See also</h4><div class="table"><div class="table-row" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div></div></span></div><div><div class="title"><p class="paragraph"><a href="https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-mode-speed-176">Open GoPro Spec</a></p></div></div></div></div></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="ENTRY">Entries</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="ENTRY">
+        <h2 class="">Entries</h2>
+        <div class="table"><a data-name="-1102735501%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_LOW_LIGHT_V2_" id="-1102735501%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_LOW_LIGHT_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1102735501%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_LOW_LIGHT_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1410159083%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_4K_LOW_LIGHT_V2_" id="1410159083%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_4-k_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_4K_LOW_LIGHT_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1410159083%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_4-k_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_4K_LOW_LIGHT_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="744410741%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_2_7K_LOW_LIGHT_V2_" id="744410741%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_2_7-k_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_2_7K_LOW_LIGHT_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="744410741%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_2_7-k_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_2_7K_LOW_LIGHT_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="641357034%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_4K_V2_" id="641357034%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_4-k_-v2_/index.html">NUM_2X_SLO_MO_4K_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="641357034%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_4-k_-v2_/index.html">NUM_2X_SLO_MO_4K_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1466284236%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_2_7K_V2_" id="-1466284236%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_2_7-k_-v2_/index.html">NUM_2X_SLO_MO_2_7K_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1466284236%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_2_7-k_-v2_/index.html">NUM_2X_SLO_MO_2_7K_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1320052860%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_V2_" id="1320052860%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_-v2_/index.html">NUM_2X_SLO_MO_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1320052860%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_-v2_/index.html">NUM_2X_SLO_MO_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1386178082%2FClasslikes%2F1280103317" anchor-label="NUM_4X_SUPER_SLO_MO_V2_" id="1386178082%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_-v2_/index.html">NUM_4X_SUPER_SLO_MO_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1386178082%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_-v2_/index.html">NUM_4X_SUPER_SLO_MO_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1959275797%2FClasslikes%2F1280103317" anchor-label="NUM_8X_ULTRA_SLO_MO_V2_" id="1959275797%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o_-v2_/index.html">NUM_8X_ULTRA_SLO_MO_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1959275797%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o_-v2_/index.html">NUM_8X_ULTRA_SLO_MO_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1650791615%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_50HZ_LOW_LIGHT_V2_" id="-1650791615%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_50-h-z_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_50HZ_LOW_LIGHT_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1650791615%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_50-h-z_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_50HZ_LOW_LIGHT_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1101202487%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_4K_50HZ_LOW_LIGHT_V2_" id="-1101202487%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_4-k_50-h-z_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_4K_50HZ_LOW_LIGHT_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1101202487%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_4-k_50-h-z_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_4K_50HZ_LOW_LIGHT_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-183122561%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_2_7K_50HZ_LOW_LIGHT_V2_" id="-183122561%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_2_7-k_50-h-z_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_2_7K_50HZ_LOW_LIGHT_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-183122561%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_2_7-k_50-h-z_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_2_7K_50HZ_LOW_LIGHT_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-732013742%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_4K_50HZ_V2_" id="-732013742%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_4-k_50-h-z_-v2_/index.html">NUM_2X_SLO_MO_4K_50HZ_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-732013742%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_4-k_50-h-z_-v2_/index.html">NUM_2X_SLO_MO_4K_50HZ_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1751926600%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_2_7K_50HZ_V2_" id="1751926600%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_2_7-k_50-h-z_-v2_/index.html">NUM_2X_SLO_MO_2_7K_50HZ_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1751926600%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_2_7-k_50-h-z_-v2_/index.html">NUM_2X_SLO_MO_2_7K_50HZ_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="966898432%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_50HZ_V2_" id="966898432%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_50-h-z_-v2_/index.html">NUM_2X_SLO_MO_50HZ_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="966898432%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_50-h-z_-v2_/index.html">NUM_2X_SLO_MO_50HZ_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="17517850%2FClasslikes%2F1280103317" anchor-label="NUM_4X_SUPER_SLO_MO_50HZ_V2_" id="17517850%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_50-h-z_-v2_/index.html">NUM_4X_SUPER_SLO_MO_50HZ_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="17517850%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_50-h-z_-v2_/index.html">NUM_4X_SUPER_SLO_MO_50HZ_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1981277703%2FClasslikes%2F1280103317" anchor-label="NUM_8X_ULTRA_SLO_MO_50HZ_V2_" id="1981277703%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o_50-h-z_-v2_/index.html">NUM_8X_ULTRA_SLO_MO_50HZ_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1981277703%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o_50-h-z_-v2_/index.html">NUM_8X_ULTRA_SLO_MO_50HZ_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1495478398%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_LOW_LIGHT_V2_VERTICAL_" id="1495478398%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_-l-o-w_-l-i-g-h-t_-v2_-v-e-r-t-i-c-a-l_/index.html">NUM_1X_SPEED_LOW_LIGHT_V2_VERTICAL_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1495478398%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_-l-o-w_-l-i-g-h-t_-v2_-v-e-r-t-i-c-a-l_/index.html">NUM_1X_SPEED_LOW_LIGHT_V2_VERTICAL_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1278493808%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_50HZ_LOW_LIGHT_V2_VERTICAL_" id="1278493808%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_50-h-z_-l-o-w_-l-i-g-h-t_-v2_-v-e-r-t-i-c-a-l_/index.html">NUM_1X_SPEED_50HZ_LOW_LIGHT_V2_VERTICAL_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1278493808%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_50-h-z_-l-o-w_-l-i-g-h-t_-v2_-v-e-r-t-i-c-a-l_/index.html">NUM_1X_SPEED_50HZ_LOW_LIGHT_V2_VERTICAL_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1235909013%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_V2_VERTICAL_" id="1235909013%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_-v2_-v-e-r-t-i-c-a-l_/index.html">NUM_2X_SLO_MO_V2_VERTICAL_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1235909013%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_-v2_-v-e-r-t-i-c-a-l_/index.html">NUM_2X_SLO_MO_V2_VERTICAL_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="816366481%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_50HZ_V2_VERTICAL_" id="816366481%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_50-h-z_-v2_-v-e-r-t-i-c-a-l_/index.html">NUM_2X_SLO_MO_50HZ_V2_VERTICAL_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="816366481%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_50-h-z_-v2_-v-e-r-t-i-c-a-l_/index.html">NUM_2X_SLO_MO_50HZ_V2_VERTICAL_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-934852111%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_FULL_FRAME_LOW_LIGHT_V2_" id="-934852111%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_-f-u-l-l_-f-r-a-m-e_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_FULL_FRAME_LOW_LIGHT_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-934852111%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_-f-u-l-l_-f-r-a-m-e_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_FULL_FRAME_LOW_LIGHT_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="996354403%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_50HZ_FULL_FRAME_LOW_LIGHT_V2_" id="996354403%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_50-h-z_-f-u-l-l_-f-r-a-m-e_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_50HZ_FULL_FRAME_LOW_LIGHT_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="996354403%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_50-h-z_-f-u-l-l_-f-r-a-m-e_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_50HZ_FULL_FRAME_LOW_LIGHT_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1301075065%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_4K_FULL_FRAME_LOW_LIGHT_V2_" id="1301075065%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_4-k_-f-u-l-l_-f-r-a-m-e_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_4K_FULL_FRAME_LOW_LIGHT_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1301075065%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_4-k_-f-u-l-l_-f-r-a-m-e_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_4K_FULL_FRAME_LOW_LIGHT_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1642662949%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_4K_50HZ_FULL_FRAME_LOW_LIGHT_V2_" id="-1642662949%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_4-k_50-h-z_-f-u-l-l_-f-r-a-m-e_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_4K_50HZ_FULL_FRAME_LOW_LIGHT_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1642662949%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_4-k_50-h-z_-f-u-l-l_-f-r-a-m-e_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_4K_50HZ_FULL_FRAME_LOW_LIGHT_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1737989776%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_FULL_FRAME_V2_" id="-1737989776%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_-f-u-l-l_-f-r-a-m-e_-v2_/index.html">NUM_2X_SLO_MO_FULL_FRAME_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1737989776%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_-f-u-l-l_-f-r-a-m-e_-v2_/index.html">NUM_2X_SLO_MO_FULL_FRAME_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1191437204%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_50HZ_FULL_FRAME_V2_" id="-1191437204%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_50-h-z_-f-u-l-l_-f-r-a-m-e_-v2_/index.html">NUM_2X_SLO_MO_50HZ_FULL_FRAME_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1191437204%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_50-h-z_-f-u-l-l_-f-r-a-m-e_-v2_/index.html">NUM_2X_SLO_MO_50HZ_FULL_FRAME_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1652703850%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_LONG_BATT_LOW_LIGHT_V2_" id="-1652703850%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_-l-o-n-g_-b-a-t-t_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_LONG_BATT_LOW_LIGHT_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1652703850%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_-l-o-n-g_-b-a-t-t_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_LONG_BATT_LOW_LIGHT_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2052055009%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_LONG_BATT_V2_" id="-2052055009%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_-l-o-n-g_-b-a-t-t_-v2_/index.html">NUM_2X_SLO_MO_LONG_BATT_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2052055009%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_-l-o-n-g_-b-a-t-t_-v2_/index.html">NUM_2X_SLO_MO_LONG_BATT_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-292239803%2FClasslikes%2F1280103317" anchor-label="NUM_4X_SUPER_SLO_MO_LONG_BATT_V2_" id="-292239803%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_-l-o-n-g_-b-a-t-t_-v2_/index.html">NUM_4X_SUPER_SLO_MO_LONG_BATT_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-292239803%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_-l-o-n-g_-b-a-t-t_-v2_/index.html">NUM_4X_SUPER_SLO_MO_LONG_BATT_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1240221320%2FClasslikes%2F1280103317" anchor-label="NUM_8X_ULTRA_SLO_MO_LONG_BATT_V2_" id="-1240221320%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o_-l-o-n-g_-b-a-t-t_-v2_/index.html">NUM_8X_ULTRA_SLO_MO_LONG_BATT_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1240221320%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o_-l-o-n-g_-b-a-t-t_-v2_/index.html">NUM_8X_ULTRA_SLO_MO_LONG_BATT_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="210708452%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_50HZ_LONG_BATT_LOW_LIGHT_V2_" id="210708452%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_50-h-z_-l-o-n-g_-b-a-t-t_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_50HZ_LONG_BATT_LOW_LIGHT_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="210708452%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_50-h-z_-l-o-n-g_-b-a-t-t_-l-o-w_-l-i-g-h-t_-v2_/index.html">NUM_1X_SPEED_50HZ_LONG_BATT_LOW_LIGHT_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2121995683%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_50HZ_LONG_BATT_V2_" id="2121995683%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_50-h-z_-l-o-n-g_-b-a-t-t_-v2_/index.html">NUM_2X_SLO_MO_50HZ_LONG_BATT_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2121995683%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_50-h-z_-l-o-n-g_-b-a-t-t_-v2_/index.html">NUM_2X_SLO_MO_50HZ_LONG_BATT_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1989781699%2FClasslikes%2F1280103317" anchor-label="NUM_4X_SUPER_SLO_MO_50HZ_LONG_BATT_V2_" id="-1989781699%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_50-h-z_-l-o-n-g_-b-a-t-t_-v2_/index.html">NUM_4X_SUPER_SLO_MO_50HZ_LONG_BATT_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1989781699%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_50-h-z_-l-o-n-g_-b-a-t-t_-v2_/index.html">NUM_4X_SUPER_SLO_MO_50HZ_LONG_BATT_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1051825174%2FClasslikes%2F1280103317" anchor-label="NUM_8X_ULTRA_SLO_MO_50HZ_LONG_BATT_V2_" id="-1051825174%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o_50-h-z_-l-o-n-g_-b-a-t-t_-v2_/index.html">NUM_8X_ULTRA_SLO_MO_50HZ_LONG_BATT_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1051825174%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o_50-h-z_-l-o-n-g_-b-a-t-t_-v2_/index.html">NUM_8X_ULTRA_SLO_MO_50HZ_LONG_BATT_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1707098555%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_LONG_BATT_LOW_LIGHT_V2_VERTICAL_" id="1707098555%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_-l-o-n-g_-b-a-t-t_-l-o-w_-l-i-g-h-t_-v2_-v-e-r-t-i-c-a-l_/index.html">NUM_1X_SPEED_LONG_BATT_LOW_LIGHT_V2_VERTICAL_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1707098555%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_-l-o-n-g_-b-a-t-t_-l-o-w_-l-i-g-h-t_-v2_-v-e-r-t-i-c-a-l_/index.html">NUM_1X_SPEED_LONG_BATT_LOW_LIGHT_V2_VERTICAL_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="822513453%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_50HZ_LONG_BATT_LOW_LIGHT_V2_VERTICAL_" id="822513453%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_50-h-z_-l-o-n-g_-b-a-t-t_-l-o-w_-l-i-g-h-t_-v2_-v-e-r-t-i-c-a-l_/index.html">NUM_1X_SPEED_50HZ_LONG_BATT_LOW_LIGHT_V2_VERTICAL_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="822513453%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_50-h-z_-l-o-n-g_-b-a-t-t_-l-o-w_-l-i-g-h-t_-v2_-v-e-r-t-i-c-a-l_/index.html">NUM_1X_SPEED_50HZ_LONG_BATT_LOW_LIGHT_V2_VERTICAL_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1852418386%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_LONG_BATT_V2_VERTICAL_" id="1852418386%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_-l-o-n-g_-b-a-t-t_-v2_-v-e-r-t-i-c-a-l_/index.html">NUM_2X_SLO_MO_LONG_BATT_V2_VERTICAL_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1852418386%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_-l-o-n-g_-b-a-t-t_-v2_-v-e-r-t-i-c-a-l_/index.html">NUM_2X_SLO_MO_LONG_BATT_V2_VERTICAL_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-134174642%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_50HZ_LONG_BATT_V2_VERTICAL_" id="-134174642%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_50-h-z_-l-o-n-g_-b-a-t-t_-v2_-v-e-r-t-i-c-a-l_/index.html">NUM_2X_SLO_MO_50HZ_LONG_BATT_V2_VERTICAL_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-134174642%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_50-h-z_-l-o-n-g_-b-a-t-t_-v2_-v-e-r-t-i-c-a-l_/index.html">NUM_2X_SLO_MO_50HZ_LONG_BATT_V2_VERTICAL_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-846829261%2FClasslikes%2F1280103317" anchor-label="NUM_1X_NORMAL_SPEED_1_1_30_FPS_4K_V2_" id="-846829261%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_1_1_30_-f-p-s_4-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_1_1_30_FPS_4K_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-846829261%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_1_1_30_-f-p-s_4-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_1_1_30_FPS_4K_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1149848589%2FClasslikes%2F1280103317" anchor-label="NUM_1X_NORMAL_SPEED_1_1_25_FPS_4K_V2_" id="1149848589%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_1_1_25_-f-p-s_4-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_1_1_25_FPS_4K_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1149848589%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_1_1_25_-f-p-s_4-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_1_1_25_FPS_4K_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="837816885%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_SPEED_1_1_4K_60_FPS_V2_" id="837816885%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_-s-p-e-e-d_1_1_4-k_60_-f-p-s_-v2_/index.html">NUM_2X_SLO_MO_SPEED_1_1_4K_60_FPS_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="837816885%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_-s-p-e-e-d_1_1_4-k_60_-f-p-s_-v2_/index.html">NUM_2X_SLO_MO_SPEED_1_1_4K_60_FPS_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1518611114%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_SPEED_1_1_4K_50_FPS_V2_" id="-1518611114%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_-s-p-e-e-d_1_1_4-k_50_-f-p-s_-v2_/index.html">NUM_2X_SLO_MO_SPEED_1_1_4K_50_FPS_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1518611114%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_-s-p-e-e-d_1_1_4-k_50_-f-p-s_-v2_/index.html">NUM_2X_SLO_MO_SPEED_1_1_4K_50_FPS_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1829662116%2FClasslikes%2F1280103317" anchor-label="NUM_1X_NORMAL_SPEED_21_9_30_FPS_5_3K_V2_" id="1829662116%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_21_9_30_-f-p-s_5_3-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_21_9_30_FPS_5_3K_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1829662116%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_21_9_30_-f-p-s_5_3-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_21_9_30_FPS_5_3K_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="786694654%2FClasslikes%2F1280103317" anchor-label="NUM_1X_NORMAL_SPEED_21_9_25_FPS_5_3K_V2_" id="786694654%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_21_9_25_-f-p-s_5_3-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_21_9_25_FPS_5_3K_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="786694654%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_21_9_25_-f-p-s_5_3-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_21_9_25_FPS_5_3K_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1074727609%2FClasslikes%2F1280103317" anchor-label="NUM_1X_NORMAL_SPEED_21_9_30_FPS_4K_V2_" id="1074727609%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_21_9_30_-f-p-s_4-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_21_9_30_FPS_4K_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1074727609%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_21_9_30_-f-p-s_4-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_21_9_30_FPS_4K_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1223561837%2FClasslikes%2F1280103317" anchor-label="NUM_1X_NORMAL_SPEED_21_9_25_FPS_4K_V2_" id="-1223561837%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_21_9_25_-f-p-s_4-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_21_9_25_FPS_4K_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1223561837%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_21_9_25_-f-p-s_4-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_21_9_25_FPS_4K_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1803317818%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_SPEED_21_9_5_3K_60_FPS_V2_" id="-1803317818%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_-s-p-e-e-d_21_9_5_3-k_60_-f-p-s_-v2_/index.html">NUM_2X_SLO_MO_SPEED_21_9_5_3K_60_FPS_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1803317818%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_-s-p-e-e-d_21_9_5_3-k_60_-f-p-s_-v2_/index.html">NUM_2X_SLO_MO_SPEED_21_9_5_3K_60_FPS_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="135221479%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_SPEED_21_9_5_3K_50_FPS_V2_" id="135221479%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_-s-p-e-e-d_21_9_5_3-k_50_-f-p-s_-v2_/index.html">NUM_2X_SLO_MO_SPEED_21_9_5_3K_50_FPS_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="135221479%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_-s-p-e-e-d_21_9_5_3-k_50_-f-p-s_-v2_/index.html">NUM_2X_SLO_MO_SPEED_21_9_5_3K_50_FPS_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1106196689%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_SPEED_21_9_4K_60_FPS_V2_" id="1106196689%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_-s-p-e-e-d_21_9_4-k_60_-f-p-s_-v2_/index.html">NUM_2X_SLO_MO_SPEED_21_9_4K_60_FPS_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1106196689%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_-s-p-e-e-d_21_9_4-k_60_-f-p-s_-v2_/index.html">NUM_2X_SLO_MO_SPEED_21_9_4K_60_FPS_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1250231310%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_SPEED_21_9_4K_50_FPS_V2_" id="-1250231310%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_-s-p-e-e-d_21_9_4-k_50_-f-p-s_-v2_/index.html">NUM_2X_SLO_MO_SPEED_21_9_4K_50_FPS_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1250231310%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_-s-p-e-e-d_21_9_4-k_50_-f-p-s_-v2_/index.html">NUM_2X_SLO_MO_SPEED_21_9_4K_50_FPS_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-583964328%2FClasslikes%2F1280103317" anchor-label="NUM_120_4X_SUPER_SLO_MO_SPEED_21_9_4K_V2_" id="-583964328%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_120_4-x_-s-u-p-e-r_-s-l-o_-m-o_-s-p-e-e-d_21_9_4-k_-v2_/index.html">NUM_120_4X_SUPER_SLO_MO_SPEED_21_9_4K_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-583964328%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_120_4-x_-s-u-p-e-r_-s-l-o_-m-o_-s-p-e-e-d_21_9_4-k_-v2_/index.html">NUM_120_4X_SUPER_SLO_MO_SPEED_21_9_4K_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1154236134%2FClasslikes%2F1280103317" anchor-label="NUM_100_4X_SUPER_SLO_MO_SPEED_21_9_4K_V2_" id="-1154236134%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_100_4-x_-s-u-p-e-r_-s-l-o_-m-o_-s-p-e-e-d_21_9_4-k_-v2_/index.html">NUM_100_4X_SUPER_SLO_MO_SPEED_21_9_4K_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1154236134%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_100_4-x_-s-u-p-e-r_-s-l-o_-m-o_-s-p-e-e-d_21_9_4-k_-v2_/index.html">NUM_100_4X_SUPER_SLO_MO_SPEED_21_9_4K_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="481072753%2FClasslikes%2F1280103317" anchor-label="NUM_1X_NORMAL_SPEED_30_FPS_4_3_5_3K_V2_" id="481072753%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_30_-f-p-s_4_3_5_3-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_30_FPS_4_3_5_3K_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="481072753%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_30_-f-p-s_4_3_5_3-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_30_FPS_4_3_5_3K_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="378301899%2FClasslikes%2F1280103317" anchor-label="NUM_1X_NORMAL_SPEED_25_FPS_4_3_5_3K_V2_" id="378301899%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_25_-f-p-s_4_3_5_3-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_25_FPS_4_3_5_3K_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="378301899%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_25_-f-p-s_4_3_5_3-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_25_FPS_4_3_5_3K_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1362427194%2FClasslikes%2F1280103317" anchor-label="NUM_1X_NORMAL_SPEED_30_FPS_4_3_4K_V2_" id="-1362427194%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_30_-f-p-s_4_3_4-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_30_FPS_4_3_4K_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1362427194%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_30_-f-p-s_4_3_4-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_30_FPS_4_3_4K_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1368189088%2FClasslikes%2F1280103317" anchor-label="NUM_1X_NORMAL_SPEED_25_FPS_4_3_4K_V2_" id="1368189088%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_25_-f-p-s_4_3_4-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_25_FPS_4_3_4K_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1368189088%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-n-o-r-m-a-l_-s-p-e-e-d_25_-f-p-s_4_3_4-k_-v2_/index.html">NUM_1X_NORMAL_SPEED_25_FPS_4_3_4K_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-825815558%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_SPEED_4_3_4K_60_FPS_V2_" id="-825815558%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_-s-p-e-e-d_4_3_4-k_60_-f-p-s_-v2_/index.html">NUM_2X_SLO_MO_SPEED_4_3_4K_60_FPS_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-825815558%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_-s-p-e-e-d_4_3_4-k_60_-f-p-s_-v2_/index.html">NUM_2X_SLO_MO_SPEED_4_3_4K_60_FPS_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1112723739%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_SPEED_4_3_4K_50_FPS_V2_" id="1112723739%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_-s-p-e-e-d_4_3_4-k_50_-f-p-s_-v2_/index.html">NUM_2X_SLO_MO_SPEED_4_3_4K_50_FPS_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1112723739%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_-s-p-e-e-d_4_3_4-k_50_-f-p-s_-v2_/index.html">NUM_2X_SLO_MO_SPEED_4_3_4K_50_FPS_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1937224095%2FClasslikes%2F1280103317" anchor-label="NUM_120_4X_SUPER_SLO_MO_SPEED_2_7K_4_3_V2_" id="1937224095%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_120_4-x_-s-u-p-e-r_-s-l-o_-m-o_-s-p-e-e-d_2_7-k_4_3_-v2_/index.html">NUM_120_4X_SUPER_SLO_MO_SPEED_2_7K_4_3_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1937224095%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_120_4-x_-s-u-p-e-r_-s-l-o_-m-o_-s-p-e-e-d_2_7-k_4_3_-v2_/index.html">NUM_120_4X_SUPER_SLO_MO_SPEED_2_7K_4_3_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1438667293%2FClasslikes%2F1280103317" anchor-label="NUM_100_4X_SUPER_SLO_MO_SPEED_2_7K_4_3_V2_" id="1438667293%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_100_4-x_-s-u-p-e-r_-s-l-o_-m-o_-s-p-e-e-d_2_7-k_4_3_-v2_/index.html">NUM_100_4X_SUPER_SLO_MO_SPEED_2_7K_4_3_V2_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1438667293%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_100_4-x_-s-u-p-e-r_-s-l-o_-m-o_-s-p-e-e-d_2_7-k_4_3_-v2_/index.html">NUM_100_4X_SUPER_SLO_MO_SPEED_2_7K_4_3_V2_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1498360337%2FClasslikes%2F1280103317" anchor-label="NUM_8X_ULTRA_SLO_MO" id="1498360337%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o/index.html">NUM_8X_ULTRA_SLO_MO</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1498360337%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o/index.html">NUM_8X_ULTRA_SLO_MO</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2057236894%2FClasslikes%2F1280103317" anchor-label="NUM_4X_SUPER_SLO_MO" id="2057236894%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o/index.html">NUM_4X_SUPER_SLO_MO</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2057236894%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o/index.html">NUM_4X_SUPER_SLO_MO</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1117348035%2FClasslikes%2F1280103317" anchor-label="NUM_4X_SUPER_SLO_MO_2_7K_" id="-1117348035%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_2_7-k_/index.html">NUM_4X_SUPER_SLO_MO_2_7K_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1117348035%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_2_7-k_/index.html">NUM_4X_SUPER_SLO_MO_2_7K_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1537356065%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_4K_" id="1537356065%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_4-k_/index.html">NUM_2X_SLO_MO_4K_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1537356065%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_4-k_/index.html">NUM_2X_SLO_MO_4K_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1928409336%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO" id="1928409336%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o/index.html">NUM_2X_SLO_MO</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1928409336%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o/index.html">NUM_2X_SLO_MO</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1979440328%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_LOW_LIGHT_" id="-1979440328%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_-l-o-w_-l-i-g-h-t_/index.html">NUM_1X_SPEED_LOW_LIGHT_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1979440328%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_-l-o-w_-l-i-g-h-t_/index.html">NUM_1X_SPEED_LOW_LIGHT_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1210707604%2FClasslikes%2F1280103317" anchor-label="NUM_8X_ULTRA_SLO_MO_EXT_BATT_" id="1210707604%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o_-e-x-t_-b-a-t-t_/index.html">NUM_8X_ULTRA_SLO_MO_EXT_BATT_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1210707604%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o_-e-x-t_-b-a-t-t_/index.html">NUM_8X_ULTRA_SLO_MO_EXT_BATT_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="463694305%2FClasslikes%2F1280103317" anchor-label="NUM_4X_SUPER_SLO_MO_EXT_BATT_" id="463694305%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_-e-x-t_-b-a-t-t_/index.html">NUM_4X_SUPER_SLO_MO_EXT_BATT_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="463694305%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_-e-x-t_-b-a-t-t_/index.html">NUM_4X_SUPER_SLO_MO_EXT_BATT_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-170278725%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_EXT_BATT_" id="-170278725%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_-e-x-t_-b-a-t-t_/index.html">NUM_2X_SLO_MO_EXT_BATT_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-170278725%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_-e-x-t_-b-a-t-t_/index.html">NUM_2X_SLO_MO_EXT_BATT_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-286134630%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_EXT_BATT_LOW_LIGHT_" id="-286134630%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_-e-x-t_-b-a-t-t_-l-o-w_-l-i-g-h-t_/index.html">NUM_1X_SPEED_EXT_BATT_LOW_LIGHT_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-286134630%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_-e-x-t_-b-a-t-t_-l-o-w_-l-i-g-h-t_/index.html">NUM_1X_SPEED_EXT_BATT_LOW_LIGHT_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1336771292%2FClasslikes%2F1280103317" anchor-label="NUM_8X_ULTRA_SLO_MO_50HZ_" id="-1336771292%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o_50-h-z_/index.html">NUM_8X_ULTRA_SLO_MO_50HZ_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1336771292%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o_50-h-z_/index.html">NUM_8X_ULTRA_SLO_MO_50HZ_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1967105777%2FClasslikes%2F1280103317" anchor-label="NUM_4X_SUPER_SLO_MO_50HZ_" id="1967105777%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_50-h-z_/index.html">NUM_4X_SUPER_SLO_MO_50HZ_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1967105777%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_50-h-z_/index.html">NUM_4X_SUPER_SLO_MO_50HZ_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-881719523%2FClasslikes%2F1280103317" anchor-label="NUM_4X_SUPER_SLO_MO_2_7K_50HZ_" id="-881719523%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_2_7-k_50-h-z_/index.html">NUM_4X_SUPER_SLO_MO_2_7K_50HZ_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-881719523%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_2_7-k_50-h-z_/index.html">NUM_4X_SUPER_SLO_MO_2_7K_50HZ_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-841350215%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_4K_50HZ_" id="-841350215%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_4-k_50-h-z_/index.html">NUM_2X_SLO_MO_4K_50HZ_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-841350215%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_4-k_50-h-z_/index.html">NUM_2X_SLO_MO_4K_50HZ_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1449690421%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_50HZ_" id="-1449690421%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_50-h-z_/index.html">NUM_2X_SLO_MO_50HZ_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1449690421%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_50-h-z_/index.html">NUM_2X_SLO_MO_50HZ_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-357690838%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_50HZ_LOW_LIGHT_" id="-357690838%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_50-h-z_-l-o-w_-l-i-g-h-t_/index.html">NUM_1X_SPEED_50HZ_LOW_LIGHT_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-357690838%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_50-h-z_-l-o-w_-l-i-g-h-t_/index.html">NUM_1X_SPEED_50HZ_LOW_LIGHT_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1316203014%2FClasslikes%2F1280103317" anchor-label="NUM_8X_ULTRA_SLO_MO_50HZ_EXT_BATT_" id="1316203014%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o_50-h-z_-e-x-t_-b-a-t-t_/index.html">NUM_8X_ULTRA_SLO_MO_50HZ_EXT_BATT_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1316203014%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o_50-h-z_-e-x-t_-b-a-t-t_/index.html">NUM_8X_ULTRA_SLO_MO_50HZ_EXT_BATT_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="638858969%2FClasslikes%2F1280103317" anchor-label="NUM_4X_SUPER_SLO_MO_50HZ_EXT_BATT_" id="638858969%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_50-h-z_-e-x-t_-b-a-t-t_/index.html">NUM_4X_SUPER_SLO_MO_50HZ_EXT_BATT_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="638858969%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_50-h-z_-e-x-t_-b-a-t-t_/index.html">NUM_4X_SUPER_SLO_MO_50HZ_EXT_BATT_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1919162431%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_50HZ_EXT_BATT_" id="1919162431%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_50-h-z_-e-x-t_-b-a-t-t_/index.html">NUM_2X_SLO_MO_50HZ_EXT_BATT_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1919162431%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_50-h-z_-e-x-t_-b-a-t-t_/index.html">NUM_2X_SLO_MO_50HZ_EXT_BATT_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1895870440%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_50HZ_EXT_BATT_LOW_LIGHT_" id="1895870440%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_50-h-z_-e-x-t_-b-a-t-t_-l-o-w_-l-i-g-h-t_/index.html">NUM_1X_SPEED_50HZ_EXT_BATT_LOW_LIGHT_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1895870440%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_50-h-z_-e-x-t_-b-a-t-t_-l-o-w_-l-i-g-h-t_/index.html">NUM_1X_SPEED_50HZ_EXT_BATT_LOW_LIGHT_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-252721325%2FClasslikes%2F1280103317" anchor-label="NUM_8X_ULTRA_SLO_MO_LONG_BATT_" id="-252721325%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o_-l-o-n-g_-b-a-t-t_/index.html">NUM_8X_ULTRA_SLO_MO_LONG_BATT_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-252721325%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o_-l-o-n-g_-b-a-t-t_/index.html">NUM_8X_ULTRA_SLO_MO_LONG_BATT_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1935297114%2FClasslikes%2F1280103317" anchor-label="NUM_4X_SUPER_SLO_MO_LONG_BATT_" id="-1935297114%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_-l-o-n-g_-b-a-t-t_/index.html">NUM_4X_SUPER_SLO_MO_LONG_BATT_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1935297114%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_-l-o-n-g_-b-a-t-t_/index.html">NUM_4X_SUPER_SLO_MO_LONG_BATT_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-113624564%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_LONG_BATT_" id="-113624564%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_-l-o-n-g_-b-a-t-t_/index.html">NUM_2X_SLO_MO_LONG_BATT_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-113624564%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_-l-o-n-g_-b-a-t-t_/index.html">NUM_2X_SLO_MO_LONG_BATT_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1957390325%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_LONG_BATT_LOW_LIGHT_" id="1957390325%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_-l-o-n-g_-b-a-t-t_-l-o-w_-l-i-g-h-t_/index.html">NUM_1X_SPEED_LONG_BATT_LOW_LIGHT_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1957390325%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_-l-o-n-g_-b-a-t-t_-l-o-w_-l-i-g-h-t_/index.html">NUM_1X_SPEED_LONG_BATT_LOW_LIGHT_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1277330911%2FClasslikes%2F1280103317" anchor-label="NUM_8X_ULTRA_SLO_MO_50HZ_LONG_BATT_" id="-1277330911%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o_50-h-z_-l-o-n-g_-b-a-t-t_/index.html">NUM_8X_ULTRA_SLO_MO_50HZ_LONG_BATT_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1277330911%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_8-x_-u-l-t-r-a_-s-l-o_-m-o_50-h-z_-l-o-n-g_-b-a-t-t_/index.html">NUM_8X_ULTRA_SLO_MO_50HZ_LONG_BATT_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-800159826%2FClasslikes%2F1280103317" anchor-label="NUM_4X_SUPER_SLO_MO_50HZ_LONG_BATT_" id="-800159826%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_50-h-z_-l-o-n-g_-b-a-t-t_/index.html">NUM_4X_SUPER_SLO_MO_50HZ_LONG_BATT_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-800159826%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_4-x_-s-u-p-e-r_-s-l-o_-m-o_50-h-z_-l-o-n-g_-b-a-t-t_/index.html">NUM_4X_SUPER_SLO_MO_50HZ_LONG_BATT_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="234541832%2FClasslikes%2F1280103317" anchor-label="NUM_2X_SLO_MO_50HZ_LONG_BATT_" id="234541832%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_2-x_-s-l-o_-m-o_50-h-z_-l-o-n-g_-b-a-t-t_/index.html">NUM_2X_SLO_MO_50HZ_LONG_BATT_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="234541832%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_2-x_-s-l-o_-m-o_50-h-z_-l-o-n-g_-b-a-t-t_/index.html">NUM_2X_SLO_MO_50HZ_LONG_BATT_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="880070759%2FClasslikes%2F1280103317" anchor-label="NUM_1X_SPEED_50HZ_LONG_BATT_LOW_LIGHT_" id="880070759%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-u-m_1-x_-s-p-e-e-d_50-h-z_-l-o-n-g_-b-a-t-t_-l-o-w_-l-i-g-h-t_/index.html">NUM_1X_SPEED_50HZ_LONG_BATT_LOW_LIGHT_</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="880070759%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-u-m_1-x_-s-p-e-e-d_50-h-z_-l-o-n-g_-b-a-t-t_-l-o-w_-l-i-g-h-t_/index.html">NUM_1X_SPEED_50HZ_LONG_BATT_LOW_LIGHT_</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="456367564%2FClasslikes%2F1280103317" anchor-label="Companion" id="456367564%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="456367564%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-experimental-unsigned-types/index.html"><span class="token annotation builtin">ExperimentalUnsignedTypes</span></a></div></div><span class="token keyword">object </span><a href="-companion/index.html">Companion</a> : <a href="../-i-u-byte-array-companion/index.html">IUByteArrayCompanion</a><span class="token operator">&lt;</span><a href="index.html">EasyModeSpeed</a><span class="token operator">&gt; </span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="1387469813%2FProperties%2F1280103317" anchor-label="entries" id="1387469813%2FProperties%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="entries.html"><span><span>entries</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1387469813%2FProperties%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="entries.html">entries</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin.enums/-enum-entries/index.html">EnumEntries</a><span class="token operator">&lt;</span><a href="index.html">EasyModeSpeed</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Returns a representation of an immutable list of all enum entries, in the order they're declared.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-372974862%2FProperties%2F1280103317" anchor-label="name" id="-372974862%2FProperties%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-status-id/-p-h-o-t-o_-i-n-t-e-r-v-a-l_-c-a-p-t-u-r-e_-c-o-u-n-t/index.html#-372974862%2FProperties%2F1280103317"><span><span>name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-372974862%2FProperties%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="../-status-id/-p-h-o-t-o_-i-n-t-e-r-v-a-l_-c-a-p-t-u-r-e_-c-o-u-n-t/index.html#-372974862%2FProperties%2F1280103317">name</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-739389684%2FProperties%2F1280103317" anchor-label="ordinal" id="-739389684%2FProperties%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-status-id/-p-h-o-t-o_-i-n-t-e-r-v-a-l_-c-a-p-t-u-r-e_-c-o-u-n-t/index.html#-739389684%2FProperties%2F1280103317"><span><span>ordinal</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-739389684%2FProperties%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="../-status-id/-p-h-o-t-o_-i-n-t-e-r-v-a-l_-c-a-p-t-u-r-e_-c-o-u-n-t/index.html#-739389684%2FProperties%2F1280103317">ordinal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1445941196%2FProperties%2F1280103317" anchor-label="value" id="-1445941196%2FProperties%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="value.html"><span><span>value</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1445941196%2FProperties%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="value.html">value</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-u-byte/index.html">UByte</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="1937676231%2FFunctions%2F1280103317" anchor-label="valueOf" id="1937676231%2FFunctions%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="value-of.html"><span>value</span><wbr></wbr><span><span>Of</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1937676231%2FFunctions%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="value-of.html"><span class="token function">valueOf</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">EasyModeSpeed</a></div><div class="brief "><p class="paragraph">Returns the enum constant of this type with the specified name. The string must match exactly an identifier used to declare an enum constant in this type. (Extraneous whitespace characters are not permitted.)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-308249325%2FFunctions%2F1280103317" anchor-label="values" id="-308249325%2FFunctions%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="values.html"><span><span>values</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-308249325%2FFunctions%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="values.html"><span class="token function">values</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><a href="index.html">EasyModeSpeed</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Returns an array containing the constants of this enum type, in the order they're declared.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2025 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
