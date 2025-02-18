@@ -2,8 +2,10 @@
 
 <img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/gh-pages/assets/images/logos/logo.png" width="50%" style="max-width: 500px;"/>
 
-Welcome to the API Documentation for the Open GoPro Kotlin Multiplatfrom SDK. A complete overview of the SDK can
-be found on Github (TODO link)
+Welcome to the API Documentation for the [Open GoPro Kotlin Multiplatfrom SDK](TODO link to Maven). 
+
+This document is strictly about library usage. For a high level overview and a demo app, see
+the OGP KMP SDK on [Github](https://github.com/gopro/OpenGoPro/tree/main/demos/kotlin/kmp_sdk).
 
 The general procedure is:
 
