@@ -13,6 +13,9 @@ If you are just looking for demos, you can browse the `demos` folder here.
 If you are looking for the [Python SDK](https://pypi.org/project/open_gopro/),
 see its [documentation](https://gopro.github.io/OpenGoPro/python_sdk/).
 
+If you are looking for the [Kotlin SDK](TODO_LINK),
+see its [documentation](https://gopro.github.io/OpenGoPro/kotlin_sdk/).
+
 ## Overview
 
 This repo consists of the following types of content:
