@@ -9,6 +9,7 @@
 
 - [Open GoPro Kotlin Multiplatform SDK](#open-gopro-kotlin-multiplatform-sdk)
   - [Overview](#overview)
+  - [Documentation](#documentation)
   - [Features](#features)
   - [Setup](#setup)
     - [Permissions](#permissions)
@@ -23,6 +24,12 @@ and Wi-Fi / USB [HTTP](https://gopro.github.io/OpenGoPro/http) APIs.
 
 > Currently only Android is fully supported. iOS is mostly untested but there are plans to fully support it
 > soon.
+
+## Documentation
+
+> Note! This README is only an overview of the library.
+
+Complete Documentation can be found at [Open GoPro](https://gopro.github.io/OpenGoPro/kotlin_sdk/)
 
 ## Features
 
@@ -54,14 +61,14 @@ The SDK needs permissions relating to Bluetooth, WiFi, and disc writing.
 #### Android
 
 You can find an example in the demo app:
-- TODO link to XML
-- TODO link to run-time request code
+- Set the needed permissions in the [manifest](https://github.com/gopro/OpenGoPro/blob/main/demos/kotlin/kmp_sdk/composeApp/src/androidMain/AndroidManifest.xml)
+- Request the needed permissions at [run-time](https://github.com/gopro/OpenGoPro/blob/main/demos/kotlin/kmp_sdk/composeApp/src/androidMain/kotlin/gopro/open_gopro/MainActivity.kt)
 
 ## Quick Start (Demo App)
 
 To see a simple demo app that demonstrates most of the SDK, build and load the `composeApp` project from TODO.
 
-General usage is (TODO screenshots):
+General usage is:
 
 1. Select an interface to scan for GoPro's (initially only BLE will be available) and select "Scan"
     <br>![initial demo app](docs/assets/initial.png)
@@ -77,7 +84,7 @@ General usage is (TODO screenshots):
 ## SDK Usage
 
 > Note! This section contains only an overview.
-> Complete API documentation for the OGP KMP SDK can be found on Open GoPro TODO link.
+> Complete API documentation for the OGP KMP SDK can be found on [Open GoPro](https://gopro.github.io/OpenGoPro/kotlin_sdk/).
 
 The general procedure is:
 
