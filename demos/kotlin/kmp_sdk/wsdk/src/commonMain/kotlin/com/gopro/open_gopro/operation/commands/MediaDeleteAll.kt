@@ -1,0 +1,13 @@
+package com.gopro.open_gopro.operations.commands
+
+import com.gopro.open_gopro.domain.api.BaseOperation
+import com.gopro.open_gopro.domain.communicator.HttpCommunicator
+import io.ktor.client.call.body
+import io.ktor.http.path
+
+internal class MediaDeleteAll : BaseOperation<Unit>("Delete All Media") {
+
+    override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
+        communicator.get { url { path("gp/gpControl/command/storage/delete/all") } }
+            .map { it.body() }
+}

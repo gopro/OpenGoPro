@@ -1,0 +1,174 @@
+[versions]
+agp = "8.8.1"
+activityKtx = "1.9.3"
+android-compileSdk = "34"
+android-minSdk = "34"
+android-targetSdk = "34"
+androidx-activityCompose = "1.9.3"
+androidx-appcompat = "1.7.0"
+androidx-constraintlayout = "2.1.4"
+androidx-lifecycle = "2.8.0"
+androidx-material = "1.12.0"
+compose-plugin = "1.6.11"
+uiToolingPreview = "1.7.0"
+junit = "4.13.2"
+# https://central.sonatype.com/artifact/io.insert-koin/koin-test-junit4/versions
+koinTestJunit4 = "4.0.0"
+kotlin = "2.0.10"
+# https://touchlab.co/understanding-and-configuring-your-kmm-test-suite
+androidx-core-ktx = "1.13.1"
+espresso = "3.4.0"
+junitKtx = "1.1.3"
+# https://github.com/Kotlin/kotlinx.serialization/releases
+kotlinx-serialization = "1.7.2"
+# https://github.com/touchlab/Kermit/releases
+kermit = "2.0.4"
+# https://github.com/Kotlin/kotlinx-datetime/releases
+kotlinx-datetime = "0.6.0"
+# https://github.com/Kotlin/kotlinx.coroutines/releases
+kotlinCoroutines = "1.8.1"
+# https://github.com/benasher44/uuid/releases/tag/0.8.4
+uuid = "0.8.4"
+# https://ktor.io/changelog/
+ktor = "2.3.12"
+# https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-navigation-routing.html
+navigationCompose = "2.8.0-alpha02"
+lifecycleViewModel = "2.8.4"
+# https://insert-koin.io/docs/setup/koin/
+koin = "3.6.0-Beta4"
+koinComposeMultiplatform = "1.2.0-Beta4"
+# https://github.com/JuulLabs/kable/releases
+kableCore = "0.34.0"
+khronicle = "0.3.0"
+# https://mvnrepository.com/artifact/androidx.datastore/datastore-core
+dataStore = "1.1.1"
+datastorePreferencesCoreJvm = "1.1.1"
+# https://github.com/google/protobuf-gradle-plugin?tab=readme-ov-file#latest-version
+googleProtobuf = "0.9.4"
+# https://github.com/z4kn4fein/kotlin-semver/releases/tag/2.0.0
+version = "2.0.0"
+# https://github.com/coil-kt/coil/releases
+coil3 = "3.0.0-alpha06"
+# https://developer.android.com/jetpack/androidx/releases/media3
+exoplayer = "1.4.1"
+# https://kotlinlang.org/docs/ksp-quickstart.html
+ksp = "2.0.10-1.0.24"
+# https://developer.android.com/jetpack/androidx/releases/sqlite
+sqlite = "2.5.0-alpha07"
+# https://developer.android.com/jetpack/androidx/releases/room
+androidx-room = "2.7.0-alpha07"
+coreKtx = "1.6.1" # This was breaking room gradle task on newer versions.
+# https://mvnrepository.com/artifact/org.videolan.android/libvlc-all
+vlc = "3.1.12"
+# https://github.com/Kotlin/dokka/releases/tag/v1.9.20
+dokka = "1.9.20"
+# https://central.sonatype.com/artifact/org.mockito/mockito-core
+mockito = "5.14.2"
+# https://github.com/jaredsburrows/gradle-license-plugin/releases/tag/0.9.8
+license = '0.9.8'
+# https://github.com/streem/pbandk/releases/tag/v0.16.0
+pbandk = "0.16.0"
+# https://github.com/vanniktech/gradle-maven-publish-plugin/releases/tag/0.30.0
+publish =  "0.28.0"
+# Our SDK version
+ogpSdk = "0.1.0"
+
+[libraries]
+androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activityKtx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
+androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+# Common unit testing
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
+# Android instrumented testing
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+androidx-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "junitKtx" }
+androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitKtx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+mockito-android = { module = "org.mockito:mockito-android", version.ref = "mockito" }
+koin-test-junit4 = { module = "io.insert-koin:koin-test-junit4", version.ref = "koinTestJunit4" }
+# JSON Serialization
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+# Logging
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
+# Date and Time
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+# Coroutines
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinCoroutines" }
+kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinCoroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinCoroutines" }
+# UUID Base type
+ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "uiToolingPreview" }
+uuid = { module = "com.benasher44:uuid", version.ref = "uuid" }
+##  Http Stack
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
+ktor-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
+# Navigation
+navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+# Shared Presenter logic
+lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewModel" }
+# DI
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koinComposeMultiplatform" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koinComposeMultiplatform" }
+koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
+# Bluetooth
+kable-core = { module = "com.juul.kable:kable-core", version.ref = "kableCore" }
+kable-exceptions = { module = "com.juul.kable:kable-exceptions", version.ref = "kableCore" }
+khronicle = { module = "com.juul.khronicle:khronicle-core", version.ref = "khronicle" }
+# Datastore
+datastore = { module = "androidx.datastore:datastore", version.ref = "dataStore" }
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "dataStore" }
+# Version Data Strcuture
+version = { module = "io.github.z4kn4fein:semver", version.ref = "version" }
+# Coil
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
+coil-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil3" }
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coil3" }
+coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coil3" }
+# Exoplayer
+exoplayer-base = { module = "androidx.media3:media3-exoplayer", version.ref = "exoplayer" }
+exoplayer-rtsp = { module = "androidx.media3:media3-exoplayer-rtsp", version.ref = "exoplayer" }
+exoplayer-ui = { module = "androidx.media3:media3-ui", version.ref = "exoplayer" }
+# Room
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidx-room" }
+sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
+core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtx" }
+# VLC
+libvlc-all = { module = "org.videolan.android:libvlc-all", version.ref = "vlc" }
+# Protobuf
+pbandk-runtime = { module = "pro.streem.pbandk:pbandk-runtime", version.ref = "pbandk" }
+# Local OGP libarary for simplified app testing
+openGopro = { module = "io.github.tcamise-gpsw:open-gopro", version.ref = "ogpSdk"}
+# Documentation
+dokka-base = { module = "org.jetbrains.dokka:dokka-base", version.ref = "dokka" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+protobuf = { id = "com.google.protobuf", version.ref = "googleProtobuf" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+room = { id = "androidx.room", version.ref = "androidx-room" }
+dokka = { id= "org.jetbrains.dokka", version.ref = "dokka"}
+license = { id = "com.jaredsburrows.license", version.ref= "license"}
+publish = { id =  "com.vanniktech.maven.publish", version.ref = "publish"}
