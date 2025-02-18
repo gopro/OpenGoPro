@@ -47,3 +47,5 @@ make copyright
 A file can be excluded from this process by adding the following in a comment on the first line:
 
 `No (C) Copyright`
+
+boilers
