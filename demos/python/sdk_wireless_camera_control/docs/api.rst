@@ -61,16 +61,16 @@ These should not be imported directly and instead should be accessed using the r
 .. autoclass:: open_gopro.api.ble_commands.BleCommands
    :show-inheritance:
 
-.. autoclass:: open_gopro.api.ble_commands.BleSettings
+.. autoclass:: open_gopro.api.ble_settings.BleSettings
    :show-inheritance:
 
-.. autoclass:: open_gopro.api.ble_commands.BleStatuses
+.. autoclass:: open_gopro.api.ble_statuses.BleStatuses
    :show-inheritance:
 
 .. autoclass:: open_gopro.api.http_commands.HttpCommands
    :show-inheritance:
 
-.. autoclass:: open_gopro.api.http_commands.HttpSettings
+.. autoclass:: open_gopro.api.http_settings.HttpSettings
    :show-inheritance:
 
 Base Types
