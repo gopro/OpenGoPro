@@ -4,14 +4,11 @@
 # pylint: disable = redefined-outer-name
 
 import uuid
-from typing import Dict, List
 
 import pytest
 
 from open_gopro.ble import BleUUID, Characteristic, Descriptor, GattDB, Service
 from open_gopro.ble.services import BLE_BASE_UUID, UUIDs, UUIDsMeta
-from open_gopro.constants import BleUUID
-from tests.conftest import mock_gatt_db
 
 
 def test_128_bit_uuid():

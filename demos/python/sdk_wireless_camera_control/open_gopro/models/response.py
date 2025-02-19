@@ -21,12 +21,12 @@ from open_gopro.constants import (
     CmdId,
     ErrorCode,
     FeatureId,
-    GoProIntEnum,
-    GoProUUIDs,
+    GoProUUID,
     QueryCmdId,
     SettingId,
     StatusId,
 )
+from open_gopro.enum import GoProIntEnum
 from open_gopro.exceptions import ResponseParseError
 from open_gopro.parser_interface import GlobalParsers, Parser
 from open_gopro.proto import EnumResultGeneric
@@ -321,11 +321,11 @@ class BleRespBuilder(RespBuilder[bytearray]):
             return ActionId(packet[1])
         # Otherwise it's a TLV command
         except ValueError:
-            if uuid is GoProUUIDs.CQ_SETTINGS_RESP:
+            if uuid is GoProUUID.CQ_SETTINGS_RESP:
                 return SettingId(identifier)
-            if uuid is GoProUUIDs.CQ_QUERY_RESP:
+            if uuid is GoProUUID.CQ_QUERY_RESP:
                 return QueryCmdId(identifier)
-            if uuid in [GoProUUIDs.CQ_COMMAND_RESP, GoProUUIDs.CN_NET_MGMT_RESP]:
+            if uuid in [GoProUUID.CQ_COMMAND_RESP, GoProUUID.CN_NET_MGMT_RESP]:
                 return CmdId(identifier)
             return uuid
 

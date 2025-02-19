@@ -21,7 +21,7 @@ from open_gopro.constants import (
     CmdId,
     ErrorCode,
     FeatureId,
-    GoProUUIDs,
+    GoProUUID,
     QueryCmdId,
     SettingId,
     StatusId,
@@ -37,22 +37,22 @@ def assert_kwargs(message: dict):
 
 @pytest.mark.asyncio
 async def test_ble_read_command():
-    message = BleReadCommand(uuid=GoProUUIDs.ACC_APPEARANCE, parser=None)
+    message = BleReadCommand(uuid=GoProUUID.ACC_APPEARANCE, parser=None)
     d = message._as_dict(**dummy_kwargs)
-    assert d.pop("id") == GoProUUIDs.ACC_APPEARANCE
+    assert d.pop("id") == GoProUUID.ACC_APPEARANCE
     assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUIDs.ACC_APPEARANCE
+    assert d.pop("uuid") == GoProUUID.ACC_APPEARANCE
     assert_kwargs(d)
     assert not d
 
 
 @pytest.mark.asyncio
 async def test_ble_write_command():
-    message = BleWriteCommand(uuid=GoProUUIDs.ACC_APPEARANCE, cmd=CmdId.GET_CAMERA_CAPABILITIES)
+    message = BleWriteCommand(uuid=GoProUUID.ACC_APPEARANCE, cmd=CmdId.GET_CAMERA_CAPABILITIES)
     d = message._as_dict(**dummy_kwargs)
     assert d.pop("id") == CmdId.GET_CAMERA_CAPABILITIES
     assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUIDs.ACC_APPEARANCE
+    assert d.pop("uuid") == GoProUUID.ACC_APPEARANCE
     assert_kwargs(d)
     assert not d
 
@@ -60,7 +60,7 @@ async def test_ble_write_command():
 @pytest.mark.asyncio
 async def test_ble_proto_command():
     message = BleProtoCommand(
-        uuid=GoProUUIDs.ACC_APPEARANCE,
+        uuid=GoProUUID.ACC_APPEARANCE,
         feature_id=FeatureId.COMMAND,
         action_id=ActionId.GET_AP_ENTRIES,
         response_action_id=ActionId.GET_AP_ENTRIES_RSP,
@@ -72,7 +72,7 @@ async def test_ble_proto_command():
     assert d.pop("id") == ActionId.GET_AP_ENTRIES
     assert d.pop("feature_id") == FeatureId.COMMAND
     assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUIDs.ACC_APPEARANCE
+    assert d.pop("uuid") == GoProUUID.ACC_APPEARANCE
     assert_kwargs(d)
     assert not d
 
@@ -114,7 +114,7 @@ async def test_ble_setting():
     assert d.pop("id") == SettingId.ADDON_MAX_LENS_MOD
     assert d.pop("setting_id") == SettingId.ADDON_MAX_LENS_MOD
     assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUIDs.CQ_SETTINGS
+    assert d.pop("uuid") == GoProUUID.CQ_SETTINGS
     assert_kwargs(d)
     assert not d
 
@@ -124,7 +124,7 @@ async def test_ble_setting():
     assert d.pop("id") == QueryCmdId.GET_SETTING_VAL
     assert d.pop("setting_id") == SettingId.ADDON_MAX_LENS_MOD
     assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUIDs.CQ_QUERY
+    assert d.pop("uuid") == GoProUUID.CQ_QUERY
     assert_kwargs(d)
     assert not d
 
@@ -134,7 +134,7 @@ async def test_ble_setting():
     assert d.pop("id") == QueryCmdId.GET_CAPABILITIES_VAL
     assert d.pop("setting_id") == SettingId.ADDON_MAX_LENS_MOD
     assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUIDs.CQ_QUERY
+    assert d.pop("uuid") == GoProUUID.CQ_QUERY
     assert_kwargs(d)
     assert not d
 
@@ -144,7 +144,7 @@ async def test_ble_setting():
     assert d.pop("id") == QueryCmdId.REG_SETTING_VAL_UPDATE
     assert d.pop("setting_id") == SettingId.ADDON_MAX_LENS_MOD
     assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUIDs.CQ_QUERY
+    assert d.pop("uuid") == GoProUUID.CQ_QUERY
     assert_kwargs(d)
     assert not d
 
@@ -154,7 +154,7 @@ async def test_ble_setting():
     assert d.pop("id") == QueryCmdId.UNREG_SETTING_VAL_UPDATE
     assert d.pop("setting_id") == SettingId.ADDON_MAX_LENS_MOD
     assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUIDs.CQ_QUERY
+    assert d.pop("uuid") == GoProUUID.CQ_QUERY
     assert_kwargs(d)
     assert not d
 
@@ -164,7 +164,7 @@ async def test_ble_setting():
     assert d.pop("id") == QueryCmdId.REG_CAPABILITIES_UPDATE
     assert d.pop("setting_id") == SettingId.ADDON_MAX_LENS_MOD
     assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUIDs.CQ_QUERY
+    assert d.pop("uuid") == GoProUUID.CQ_QUERY
     assert_kwargs(d)
     assert not d
 
@@ -174,7 +174,7 @@ async def test_ble_setting():
     assert d.pop("id") == QueryCmdId.UNREG_CAPABILITIES_UPDATE
     assert d.pop("setting_id") == SettingId.ADDON_MAX_LENS_MOD
     assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUIDs.CQ_QUERY
+    assert d.pop("uuid") == GoProUUID.CQ_QUERY
     assert_kwargs(d)
     assert not d
 
@@ -192,7 +192,7 @@ async def test_ble_status():
     assert d.pop("id") == QueryCmdId.GET_STATUS_VAL
     assert d.pop("status_id") == StatusId.ACC_MIC_STAT
     assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUIDs.CQ_QUERY
+    assert d.pop("uuid") == GoProUUID.CQ_QUERY
     assert_kwargs(d)
     assert not d
 
@@ -202,7 +202,7 @@ async def test_ble_status():
     assert d.pop("id") == QueryCmdId.REG_STATUS_VAL_UPDATE
     assert d.pop("status_id") == StatusId.ACC_MIC_STAT
     assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUIDs.CQ_QUERY
+    assert d.pop("uuid") == GoProUUID.CQ_QUERY
     assert_kwargs(d)
     assert not d
 
@@ -212,7 +212,7 @@ async def test_ble_status():
     assert d.pop("id") == QueryCmdId.UNREG_STATUS_VAL_UPDATE
     assert d.pop("status_id") == StatusId.ACC_MIC_STAT
     assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUIDs.CQ_QUERY
+    assert d.pop("uuid") == GoProUUID.CQ_QUERY
     assert_kwargs(d)
     assert not d
 

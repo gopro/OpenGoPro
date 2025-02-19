@@ -31,7 +31,7 @@ from open_gopro.communicator_interface import (
     Message,
     MessageRules,
 )
-from open_gopro.constants import ActionId, GoProUUIDs, StatusId
+from open_gopro.constants import ActionId, GoProUUID, StatusId
 from open_gopro.exceptions import (
     ConnectFailed,
     ConnectionTerminated,
@@ -158,7 +158,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             )
             raise e
 
-        # Builders for currently accumulating synchronous responses, indexed by GoProUUIDs. This assumes there
+        # Builders for currently accumulating synchronous responses, indexed by GoProUUID. This assumes there
         # can only be one active response per BleUUID
         self._active_builders: dict[BleUUID, BleRespBuilder] = {}
         # Responses that we are waiting for.
@@ -679,7 +679,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
         async def _async_notification_handler() -> None:
             # Responses we don't care about. For now, just the BLE-spec defined battery characteristic
-            if (uuid := self._ble.gatt_db.handle2uuid(handle)) == GoProUUIDs.BATT_LEVEL:
+            if (uuid := self._ble.gatt_db.handle2uuid(handle)) == GoProUUID.BATT_LEVEL:
                 return
             logger.debug(f'Received response on BleUUID [{uuid}]: {data.hex(":")}')
             # Add to response dict if not already there

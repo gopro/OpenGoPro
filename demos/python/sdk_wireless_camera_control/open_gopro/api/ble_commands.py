@@ -40,7 +40,7 @@ from open_gopro.constants import (
     ActionId,
     CmdId,
     FeatureId,
-    GoProUUIDs,
+    GoProUUID,
     SettingId,
     StatusId,
 )
@@ -65,7 +65,7 @@ class BleCommands(BleMessages[BleMessage]):
     ######################################################################################################
 
     @ble_write_command(
-        uuid=GoProUUIDs.CQ_COMMAND,
+        uuid=GoProUUID.CQ_COMMAND,
         cmd=CmdId.SET_SHUTTER,
         param_builder=Int8ub,
         rules=MessageRules(
@@ -83,7 +83,7 @@ class BleCommands(BleMessages[BleMessage]):
             GoProResp[None]: status of command
         """
 
-    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.TAG_HILIGHT)
+    @ble_write_command(GoProUUID.CQ_COMMAND, CmdId.TAG_HILIGHT)
     async def tag_hilight(self) -> GoProResp[None]:
         """Tag a highlight during encoding
 
@@ -91,7 +91,7 @@ class BleCommands(BleMessages[BleMessage]):
             GoProResp[None]: status of command
         """
 
-    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.POWER_DOWN)
+    @ble_write_command(GoProUUID.CQ_COMMAND, CmdId.POWER_DOWN)
     async def power_down(self) -> GoProResp[None]:
         """Power Down the camera
 
@@ -99,7 +99,7 @@ class BleCommands(BleMessages[BleMessage]):
             GoProResp[None]: status of command
         """
 
-    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.SLEEP)
+    @ble_write_command(GoProUUID.CQ_COMMAND, CmdId.SLEEP)
     async def sleep(self) -> GoProResp[None]:
         """Put the camera in standby
 
@@ -108,7 +108,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_write_command(
-        uuid=GoProUUIDs.CQ_COMMAND,
+        uuid=GoProUUID.CQ_COMMAND,
         cmd=CmdId.GET_HW_INFO,
         parser=Parser(
             byte_json_adapter=ByteParserBuilders.Construct(
@@ -139,7 +139,7 @@ class BleCommands(BleMessages[BleMessage]):
             GoProResp[CameraInfo]: response as JSON
         """
 
-    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.SET_WIFI, Int8ub)
+    @ble_write_command(GoProUUID.CQ_COMMAND, CmdId.SET_WIFI, Int8ub)
     async def enable_wifi_ap(self, *, enable: bool) -> GoProResp[None]:
         """Enable / disable the Wi-Fi Access Point.
 
@@ -150,7 +150,7 @@ class BleCommands(BleMessages[BleMessage]):
             GoProResp[None]: response as JSON
         """
 
-    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.LOAD_PRESET_GROUP, Int16ub)
+    @ble_write_command(GoProUUID.CQ_COMMAND, CmdId.LOAD_PRESET_GROUP, Int16ub)
     async def load_preset_group(self, *, group: proto.EnumPresetGroup.ValueType) -> GoProResp[None]:
         """Load a Preset Group.
 
@@ -163,7 +163,7 @@ class BleCommands(BleMessages[BleMessage]):
             GoProResp[None]: response as JSON
         """
 
-    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.LOAD_PRESET, Int32ub)
+    @ble_write_command(GoProUUID.CQ_COMMAND, CmdId.LOAD_PRESET, Int32ub)
     async def load_preset(self, *, preset: int) -> GoProResp[None]:
         """Load a Preset
 
@@ -176,7 +176,7 @@ class BleCommands(BleMessages[BleMessage]):
             GoProResp[None]: command status
         """
 
-    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.SET_THIRD_PARTY_CLIENT_INFO)
+    @ble_write_command(GoProUUID.CQ_COMMAND, CmdId.SET_THIRD_PARTY_CLIENT_INFO)
     async def set_third_party_client_info(self) -> GoProResp[None]:
         """Flag as third party app
 
@@ -185,7 +185,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_write_command(
-        uuid=GoProUUIDs.CQ_COMMAND,
+        uuid=GoProUUID.CQ_COMMAND,
         cmd=CmdId.GET_THIRD_PARTY_API_VERSION,
         parser=Parser(
             byte_json_adapter=ByteParserBuilders.Construct(
@@ -202,7 +202,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_write_command(
-        GoProUUIDs.CQ_QUERY,
+        GoProUUID.CQ_QUERY,
         CmdId.GET_CAMERA_STATUSES,
         parser=Parser(json_parser=JsonParsers.CameraStateParser()),
     )
@@ -214,7 +214,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_write_command(
-        GoProUUIDs.CQ_QUERY,
+        GoProUUID.CQ_QUERY,
         CmdId.GET_CAMERA_SETTINGS,
         parser=Parser(json_parser=JsonParsers.CameraStateParser()),
     )
@@ -226,7 +226,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_write_command(
-        GoProUUIDs.CQ_QUERY,
+        GoProUUID.CQ_QUERY,
         CmdId.GET_CAMERA_CAPABILITIES,
         parser=Parser(json_parser=JsonParsers.CameraStateParser()),
     )
@@ -237,7 +237,7 @@ class BleCommands(BleMessages[BleMessage]):
             GoProResp[CameraState]: response as JSON
         """
 
-    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.SET_DATE_TIME, param_builder=ByteParserBuilders.DateTime())
+    @ble_write_command(GoProUUID.CQ_COMMAND, CmdId.SET_DATE_TIME, param_builder=ByteParserBuilders.DateTime())
     async def set_date_time(self, *, date_time: datetime.datetime) -> GoProResp[None]:
         """Set the camera's date and time (non timezone / DST version)
 
@@ -249,7 +249,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_write_command(
-        GoProUUIDs.CQ_COMMAND,
+        GoProUUID.CQ_COMMAND,
         CmdId.GET_DATE_TIME,
         parser=Parser(
             byte_json_adapter=ByteParserBuilders.DateTime(),
@@ -263,7 +263,7 @@ class BleCommands(BleMessages[BleMessage]):
             GoProResp[datetime.datetime]: response as JSON
         """
 
-    @ble_write_command(GoProUUIDs.CQ_COMMAND, CmdId.SET_DATE_TIME_DST, param_builder=ByteParserBuilders.DateTime())
+    @ble_write_command(GoProUUID.CQ_COMMAND, CmdId.SET_DATE_TIME_DST, param_builder=ByteParserBuilders.DateTime())
     async def set_date_time_tz_dst(
         self, *, date_time: datetime.datetime, tz_offset: int, is_dst: bool
     ) -> GoProResp[None]:
@@ -279,7 +279,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_write_command(
-        GoProUUIDs.CQ_COMMAND,
+        GoProUUID.CQ_COMMAND,
         CmdId.GET_DATE_TIME_DST,
         parser=Parser(
             byte_json_adapter=ByteParserBuilders.DateTime(),
@@ -298,7 +298,7 @@ class BleCommands(BleMessages[BleMessage]):
     ######################################################################################################
 
     @ble_read_command(
-        uuid=GoProUUIDs.WAP_SSID,
+        uuid=GoProUUID.WAP_SSID,
         parser=Parser(
             byte_json_adapter=ByteParserBuilders.Construct(Struct("ssid" / GreedyString("utf-8"))),
             json_parser=JsonParsers.LambdaParser(lambda data: data["ssid"]),
@@ -312,7 +312,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_read_command(
-        uuid=GoProUUIDs.WAP_PASSWORD,
+        uuid=GoProUUID.WAP_PASSWORD,
         parser=Parser(
             byte_json_adapter=ByteParserBuilders.Construct(Struct("password" / GreedyString("utf-8"))),
             json_parser=JsonParsers.LambdaParser(lambda data: data["password"]),
@@ -330,7 +330,7 @@ class BleCommands(BleMessages[BleMessage]):
     ######################################################################################################
 
     @ble_register_command(
-        GoProUUIDs.CQ_QUERY,
+        GoProUUID.CQ_QUERY,
         CmdId.REGISTER_ALL_STATUSES,
         update_set=StatusId,
         action=RegisterUnregisterAll.Action.REGISTER,
@@ -346,7 +346,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_register_command(
-        GoProUUIDs.CQ_QUERY,
+        GoProUUID.CQ_QUERY,
         CmdId.UNREGISTER_ALL_STATUSES,
         update_set=StatusId,
         action=RegisterUnregisterAll.Action.UNREGISTER,
@@ -362,7 +362,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_register_command(
-        GoProUUIDs.CQ_QUERY,
+        GoProUUID.CQ_QUERY,
         CmdId.REGISTER_ALL_SETTINGS,
         update_set=SettingId,
         action=RegisterUnregisterAll.Action.REGISTER,
@@ -378,7 +378,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_register_command(
-        GoProUUIDs.CQ_QUERY,
+        GoProUUID.CQ_QUERY,
         CmdId.UNREGISTER_ALL_SETTINGS,
         update_set=SettingId,
         action=RegisterUnregisterAll.Action.UNREGISTER,
@@ -394,7 +394,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_register_command(
-        GoProUUIDs.CQ_QUERY,
+        GoProUUID.CQ_QUERY,
         CmdId.REGISTER_ALL_CAPABILITIES,
         update_set=SettingId,
         action=RegisterUnregisterAll.Action.REGISTER,
@@ -410,7 +410,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_register_command(
-        GoProUUIDs.CQ_QUERY,
+        GoProUUID.CQ_QUERY,
         CmdId.UNREGISTER_ALL_CAPABILITIES,
         update_set=SettingId,
         action=RegisterUnregisterAll.Action.UNREGISTER,
@@ -430,7 +430,7 @@ class BleCommands(BleMessages[BleMessage]):
     ######################################################################################################
 
     @ble_proto_command(
-        uuid=GoProUUIDs.CQ_COMMAND,
+        uuid=GoProUUID.CQ_COMMAND,
         feature_id=FeatureId.COMMAND,
         action_id=ActionId.SET_CAMERA_CONTROL,
         response_action_id=ActionId.SET_CAMERA_CONTROL_RSP,
@@ -450,7 +450,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_proto_command(
-        uuid=GoProUUIDs.CQ_COMMAND,
+        uuid=GoProUUID.CQ_COMMAND,
         feature_id=FeatureId.COMMAND,
         action_id=ActionId.SET_TURBO_MODE,
         response_action_id=ActionId.SET_TURBO_MODE_RSP,
@@ -469,7 +469,7 @@ class BleCommands(BleMessages[BleMessage]):
         return {"active": mode}  # type: ignore
 
     @ble_proto_command(
-        uuid=GoProUUIDs.CQ_QUERY,
+        uuid=GoProUUID.CQ_QUERY,
         feature_id=FeatureId.QUERY,
         action_id=ActionId.GET_PRESET_STATUS,
         response_action_id=ActionId.GET_PRESET_STATUS_RSP,
@@ -504,7 +504,7 @@ class BleCommands(BleMessages[BleMessage]):
         }
 
     @ble_proto_command(
-        uuid=GoProUUIDs.CQ_COMMAND,
+        uuid=GoProUUID.CQ_COMMAND,
         feature_id=FeatureId.COMMAND,
         action_id=ActionId.REQUEST_PRESET_UPDATE_CUSTOM,
         response_action_id=ActionId.RESPONSE_PRESET_UPDATE_CUSTOM,
@@ -545,7 +545,7 @@ class BleCommands(BleMessages[BleMessage]):
         return d  # type: ignore
 
     @ble_proto_command(
-        uuid=GoProUUIDs.CQ_QUERY,
+        uuid=GoProUUID.CQ_QUERY,
         feature_id=FeatureId.QUERY,
         action_id=ActionId.REQUEST_GET_LAST_MEDIA,
         response_action_id=ActionId.RESPONSE_GET_LAST_MEDIA,
@@ -560,7 +560,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_proto_command(
-        uuid=GoProUUIDs.CM_NET_MGMT_COMM,
+        uuid=GoProUUID.CM_NET_MGMT_COMM,
         feature_id=FeatureId.NETWORK_MANAGEMENT,
         action_id=ActionId.SCAN_WIFI_NETWORKS,
         response_action_id=ActionId.SCAN_WIFI_NETWORKS_RSP,
@@ -575,7 +575,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_proto_command(
-        uuid=GoProUUIDs.CM_NET_MGMT_COMM,
+        uuid=GoProUUID.CM_NET_MGMT_COMM,
         feature_id=FeatureId.NETWORK_MANAGEMENT,
         action_id=ActionId.GET_AP_ENTRIES,
         response_action_id=ActionId.GET_AP_ENTRIES_RSP,
@@ -598,7 +598,7 @@ class BleCommands(BleMessages[BleMessage]):
         return {"scan_id": scan_id, "start_index": start_index, "max_entries": max_entries}  # type: ignore
 
     @ble_proto_command(
-        uuid=GoProUUIDs.CM_NET_MGMT_COMM,
+        uuid=GoProUUID.CM_NET_MGMT_COMM,
         feature_id=FeatureId.NETWORK_MANAGEMENT,
         action_id=ActionId.REQUEST_WIFI_CONNECT,
         response_action_id=ActionId.REQUEST_WIFI_CONNECT_RSP,
@@ -619,7 +619,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_proto_command(
-        uuid=GoProUUIDs.CM_NET_MGMT_COMM,
+        uuid=GoProUUID.CM_NET_MGMT_COMM,
         feature_id=FeatureId.NETWORK_MANAGEMENT,
         action_id=ActionId.REQUEST_WIFI_CONNECT_NEW,
         response_action_id=ActionId.REQUEST_WIFI_CONNECT_NEW_RSP,
@@ -641,7 +641,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_proto_command(
-        uuid=GoProUUIDs.CQ_COMMAND,
+        uuid=GoProUUID.CQ_COMMAND,
         feature_id=FeatureId.COMMAND,
         action_id=ActionId.SET_LIVESTREAM_MODE,
         response_action_id=ActionId.SET_LIVESTREAM_MODE_RSP,
@@ -695,7 +695,7 @@ class BleCommands(BleMessages[BleMessage]):
         return d  # type: ignore
 
     @ble_proto_command(
-        uuid=GoProUUIDs.CQ_QUERY,
+        uuid=GoProUUID.CQ_QUERY,
         feature_id=FeatureId.QUERY,
         action_id=ActionId.GET_LIVESTREAM_STATUS,
         response_action_id=ActionId.LIVESTREAM_STATUS_RSP,
@@ -723,7 +723,7 @@ class BleCommands(BleMessages[BleMessage]):
         return {"register_live_stream_status": register or [], "unregister_live_stream_status": unregister or []}  # type: ignore
 
     @ble_proto_command(
-        uuid=GoProUUIDs.CQ_COMMAND,
+        uuid=GoProUUID.CQ_COMMAND,
         feature_id=FeatureId.COMMAND,
         action_id=ActionId.RELEASE_NETWORK,
         response_action_id=ActionId.RELEASE_NETWORK_RSP,
@@ -738,7 +738,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_proto_command(
-        uuid=GoProUUIDs.CQ_QUERY,
+        uuid=GoProUUID.CQ_QUERY,
         feature_id=FeatureId.QUERY,
         action_id=ActionId.REQUEST_GET_COHN_STATUS,
         response_action_id=ActionId.RESPONSE_GET_COHN_STATUS,
@@ -757,7 +757,7 @@ class BleCommands(BleMessages[BleMessage]):
         return {"register_cohn_status": int(register)}  # type: ignore
 
     @ble_proto_command(
-        uuid=GoProUUIDs.CQ_COMMAND,
+        uuid=GoProUUID.CQ_COMMAND,
         feature_id=FeatureId.COMMAND,
         action_id=ActionId.REQUEST_CREATE_COHN_CERT,
         response_action_id=ActionId.RESPONSE_CREATE_COHN_CERT,
@@ -776,7 +776,7 @@ class BleCommands(BleMessages[BleMessage]):
         return {"override": int(override)}  # type: ignore
 
     @ble_proto_command(
-        uuid=GoProUUIDs.CQ_COMMAND,
+        uuid=GoProUUID.CQ_COMMAND,
         feature_id=FeatureId.COMMAND,
         action_id=ActionId.REQUEST_CLEAR_COHN_CERT,
         response_action_id=ActionId.RESPONSE_CLEAR_COHN_CERT,
@@ -791,7 +791,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_proto_command(
-        uuid=GoProUUIDs.CQ_QUERY,
+        uuid=GoProUUID.CQ_QUERY,
         feature_id=FeatureId.QUERY,
         action_id=ActionId.REQUEST_GET_COHN_CERT,
         response_action_id=ActionId.RESPONSE_GET_COHN_CERT,
@@ -806,7 +806,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_proto_command(
-        uuid=GoProUUIDs.CQ_COMMAND,
+        uuid=GoProUUID.CQ_COMMAND,
         feature_id=FeatureId.COMMAND,
         action_id=ActionId.REQUEST_COHN_SETTING,
         response_action_id=ActionId.RESPONSE_COHN_SETTING,
