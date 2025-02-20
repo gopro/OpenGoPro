@@ -6,7 +6,7 @@ from typing import AsyncGenerator
 
 import pytest
 
-from open_gopro import Params, proto
+from open_gopro import constants, proto
 from open_gopro.gopro_wired import WiredGoPro
 from open_gopro.models import MediaPath
 
@@ -27,7 +27,7 @@ async def create_single_photo(gopro: WiredGoPro) -> MediaPath:
     ]
     assert (await gopro.http_command.load_preset(preset=single_preset_id)).ok
 
-    assert (await gopro.http_command.set_shutter(shutter=Params.Toggle.ENABLE)).ok
+    assert (await gopro.http_command.set_shutter(shutter=constants.Toggle.ENABLE)).ok
     photo = (await gopro.http_command.get_last_captured_media()).data
     # Sanity check photo is in media list
     assert photo in (await gopro.http_command.get_media_list()).data
@@ -41,7 +41,7 @@ async def create_burst_photo(gopro: WiredGoPro) -> MediaPath:
     burst_preset_id = next(preset for preset in photo_presets["presetArray"] if "burst" in preset["mode"].lower())["id"]
     assert (await gopro.http_command.load_preset(preset=burst_preset_id)).ok
 
-    assert (await gopro.http_command.set_shutter(shutter=Params.Toggle.ENABLE)).ok
+    assert (await gopro.http_command.set_shutter(shutter=constants.Toggle.ENABLE)).ok
     grouped_photo = (await gopro.http_command.get_last_captured_media()).data
     # Sanity check photo is in media list
     assert grouped_photo in (await gopro.http_command.get_media_list()).data
@@ -53,16 +53,16 @@ async def create_timelapse_photo(gopro: WiredGoPro) -> MediaPath:
     presets = (await gopro.http_command.get_preset_status()).data
     timelapse_presets = next(group for group in presets["presetGroupArray"] if "timelapse" in group["id"].lower())
     assert (await gopro.http_command.load_preset_group(group=proto.EnumPresetGroup.PRESET_GROUP_ID_TIMELAPSE)).ok
-    assert (await gopro.http_setting.media_format.set(Params.MediaFormat.TIME_LAPSE_PHOTO)).ok
+    assert (await gopro.http_setting.media_format.set(constants.MediaFormat.TIME_LAPSE_PHOTO)).ok
     lapse_id = next(preset for preset in timelapse_presets["presetArray"] if "lapse_photo" in preset["mode"].lower())[
         "id"
     ]
     assert (await gopro.http_command.load_preset(preset=lapse_id)).ok
 
     # Take a timelapse
-    assert (await gopro.http_command.set_shutter(shutter=Params.Toggle.ENABLE)).ok
+    assert (await gopro.http_command.set_shutter(shutter=constants.Toggle.ENABLE)).ok
     await asyncio.sleep(3)
-    assert (await gopro.http_command.set_shutter(shutter=Params.Toggle.DISABLE)).ok
+    assert (await gopro.http_command.set_shutter(shutter=constants.Toggle.DISABLE)).ok
 
     grouped_photo = (await gopro.http_command.get_last_captured_media()).data
     # Sanity check photo is in media list

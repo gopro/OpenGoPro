@@ -3,7 +3,6 @@
 
 """Top level API module definition"""
 
-from . import params as Params
 from .api import WiredApi, WirelessApi
 from .ble_commands import BleCommands
 from .ble_settings import BleSettings

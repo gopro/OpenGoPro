@@ -13,10 +13,11 @@ import pytest
 import requests
 import requests_mock
 
+from open_gopro import constants
 from open_gopro.communicator_interface import HttpMessage
 from open_gopro.constants import ErrorCode, QueryCmdId, SettingId, StatusId, settings
 from open_gopro.exceptions import GoProNotOpened, ResponseTimeout
-from open_gopro.gopro_wireless import Params, WirelessGoPro
+from open_gopro.gopro_wireless import WirelessGoPro
 from open_gopro.models.response import GlobalParsers, GoProResp
 from open_gopro.types import UpdateType
 from tests import mock_good_response

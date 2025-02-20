@@ -13,14 +13,13 @@ from collections import defaultdict
 from copy import deepcopy
 from typing import Any, Callable, Final, Pattern
 
-from open_gopro import proto
+from open_gopro import constants, proto
 from open_gopro.api import (
     BleCommands,
     BleSettings,
     BleStatuses,
     HttpCommands,
     HttpSettings,
-    Params,
     WirelessApi,
 )
 from open_gopro.ble import BleakWrapperController, BleUUID
@@ -88,14 +87,12 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     It can be used via context manager:
 
     >>> async with WirelessGoPro() as gopro:
-    >>>     print("Yay! I'm connected via BLE, Wifi, opened, and ready to send / get data now!")
     >>>     # Send some messages now
 
     Or without:
 
     >>> gopro = WirelessGoPro()
     >>> await gopro.open()
-    >>> print("Yay! I'm connected via BLE, Wifi, opened, and ready to send / get data now!")
     >>> # Send some messages now
 
     Attributes:
@@ -478,7 +475,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         Returns:
             bool: True if it succeeded,. False otherwise
         """
-        return (await self.ble_setting.led.set(Params.LED.BLE_KEEP_ALIVE)).ok  # type: ignore
+        return (await self.ble_setting.led.set(constants.LED.BLE_KEEP_ALIVE)).ok  # type: ignore
 
     @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
     async def connect_to_access_point(self, ssid: str, password: str) -> bool:

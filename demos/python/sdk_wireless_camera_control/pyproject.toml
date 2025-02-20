@@ -201,7 +201,7 @@ addopts = [
 data_file = ".reports/coverage/.coverage"
 branch = true
 source = ["open_gopro"]
-omit = ["*/constants.py", "*/params.py", "open_gopro/proto*", "open_gopro/demos*"]
+omit = ["constants/**.py", "open_gopro/proto*", "open_gopro/demos*"]
 
 [tool.coverage.html]
 directory = ".reports/coverage"

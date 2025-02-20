@@ -98,7 +98,7 @@ BLE Status
 ^^^^^^^^^^
 
 .. inheritance-diagram:: open_gopro.api.builders.BleStatusFacade
-   :parts: 1ds
+   :parts: 1
 
 .. autoclass:: open_gopro.api.builders.BleStatusFacade
 
@@ -140,18 +140,6 @@ but the end user should never need to use these directly.
    :show-inheritance:
 
 .. autoclass:: open_gopro.communicator_interface.MessageRules
-
-Parameters
-----------
-
-All of these parameters can be accessed via:
-
-.. code-block:: python
-
-   from open_gopro import Params
-
-.. automodule:: open_gopro.api.params
-   :undoc-members:
 
 Responses
 =========

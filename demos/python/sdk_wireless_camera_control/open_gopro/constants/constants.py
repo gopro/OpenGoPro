@@ -3,9 +3,11 @@
 
 """Constant numbers shared across the GoPro module. These do not change across Open GoPro Versions"""
 
+# pylint: disable=missing-class-docstring, no-member
+
 from __future__ import annotations
 
-from open_gopro.enum import GoProIntEnum
+from open_gopro.enum import GoProEnum, GoProIntEnum
 
 
 class ErrorCode(GoProIntEnum):
@@ -141,3 +143,49 @@ class WebcamError(GoProIntEnum):
     INVALID_PARAM = 6
     UNAVAILABLE = 7
     EXIT = 8
+
+
+class Toggle(GoProIntEnum):
+    """A booleanesque enum"""
+
+    ENABLE = 1
+    DISABLE = 0
+
+
+class LED_SPECIAL(GoProIntEnum):
+    """Special (not functional) LED value used for keep alive signal"""
+
+    BLE_KEEP_ALIVE = 66
+
+
+class CameraControl(GoProIntEnum):
+    """Camera Control Request Values"""
+
+    IDLE = 0
+    CAMERA = 1
+    EXTERNAL = 2
+
+
+class WebcamResolution(GoProIntEnum):
+    """Possible Webcam Resolutions"""
+
+    NOT_APPLICABLE = 0
+    RES_480 = 4
+    RES_720 = 7
+    RES_1080 = 12
+
+
+class WebcamFOV(GoProIntEnum):
+    """Possible Webcam FOVs"""
+
+    WIDE = 0
+    NARROW = 2
+    SUPERVIEW = 3
+    LINEAR = 4
+
+
+class WebcamProtocol(GoProEnum):
+    """Possible Webcam Protocols"""
+
+    TS = "TS"
+    RTSP = "RTSP"

@@ -9,8 +9,7 @@ from typing import Any
 
 from rich.console import Console
 
-from open_gopro import Params, WirelessGoPro, proto
-from open_gopro.constants import constants
+from open_gopro import WirelessGoPro, constants, proto
 from open_gopro.logger import setup_logging
 from open_gopro.util import add_cli_args_and_parse, ainput
 
@@ -21,7 +20,7 @@ async def main(args: argparse.Namespace) -> None:
     setup_logging(__name__, args.log)
 
     async with WirelessGoPro(args.identifier, enable_wifi=False) as gopro:
-        await gopro.ble_command.set_shutter(shutter=Params.Toggle.DISABLE)
+        await gopro.ble_command.set_shutter(shutter=constants.Toggle.DISABLE)
         await gopro.ble_command.register_livestream_status(
             register=[proto.EnumRegisterLiveStreamStatus.REGISTER_LIVE_STREAM_STATUS_STATUS]
         )
@@ -55,12 +54,12 @@ async def main(args: argparse.Namespace) -> None:
         await asyncio.sleep(2)
 
         console.print("[yellow]Starting livestream")
-        assert (await gopro.ble_command.set_shutter(shutter=Params.Toggle.ENABLE)).ok
+        assert (await gopro.ble_command.set_shutter(shutter=constants.Toggle.ENABLE)).ok
 
         console.print("[yellow]Livestream is now streaming and should be available for viewing.")
         await ainput("Press enter to stop livestreaming...\n")
 
-        await gopro.ble_command.set_shutter(shutter=Params.Toggle.DISABLE)
+        await gopro.ble_command.set_shutter(shutter=constants.Toggle.DISABLE)
         await gopro.ble_command.release_network()
 
 

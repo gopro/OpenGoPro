@@ -25,7 +25,7 @@ from construct import (
     this,
 )
 
-from open_gopro import proto
+from open_gopro import constants, proto
 from open_gopro.api.builders import (
     BleAsyncResponse,
     RegisterUnregisterAll,
@@ -49,8 +49,6 @@ from open_gopro.models.response import GlobalParsers, GoProResp
 from open_gopro.parser_interface import Parser
 from open_gopro.types import CameraState, UpdateCb
 
-from . import params as Params
-
 logger = logging.getLogger(__name__)
 
 
@@ -69,15 +67,15 @@ class BleCommands(BleMessages[BleMessage]):
         cmd=CmdId.SET_SHUTTER,
         param_builder=Int8ub,
         rules=MessageRules(
-            fastpass_analyzer=lambda **kwargs: kwargs["shutter"] == Params.Toggle.DISABLE,
-            wait_for_encoding_analyzer=lambda **kwargs: kwargs["shutter"] == Params.Toggle.ENABLE,
+            fastpass_analyzer=lambda **kwargs: kwargs["shutter"] == constants.Toggle.DISABLE,
+            wait_for_encoding_analyzer=lambda **kwargs: kwargs["shutter"] == constants.Toggle.ENABLE,
         ),
     )
-    async def set_shutter(self, *, shutter: Params.Toggle) -> GoProResp[None]:
+    async def set_shutter(self, *, shutter: constants.Toggle) -> GoProResp[None]:
         """Set the Shutter to start / stop encoding
 
         Args:
-            shutter (Params.Toggle): on or off
+            shutter (constants.Toggle): on or off
 
         Returns:
             GoProResp[None]: status of command
@@ -457,11 +455,11 @@ class BleCommands(BleMessages[BleMessage]):
         request_proto=proto.RequestSetTurboActive,
         response_proto=proto.ResponseGeneric,
     )
-    async def set_turbo_mode(self, *, mode: Params.Toggle) -> GoProResp[None]:
+    async def set_turbo_mode(self, *, mode: constants.Toggle) -> GoProResp[None]:
         """Enable / disable turbo mode.
 
         Args:
-            mode (Params.Toggle): True to enable, False to disable.
+            mode (constants.Toggle): True to enable, False to disable.
 
         Returns:
             GoProResp[None]: command status of request
@@ -813,11 +811,11 @@ class BleCommands(BleMessages[BleMessage]):
         request_proto=proto.RequestSetCOHNSetting,
         response_proto=proto.ResponseGeneric,
     )
-    async def cohn_set_setting(self, *, mode: Params.Toggle) -> GoProResp[None]:
+    async def cohn_set_setting(self, *, mode: constants.Toggle) -> GoProResp[None]:
         """Set a COHN specific setting.
 
         Args:
-            mode (Params.Toggle): should camera auto connect to home network?
+            mode (constants.Toggle): should camera auto connect to home network?
 
         Returns:
             GoProResp[None]: status of set

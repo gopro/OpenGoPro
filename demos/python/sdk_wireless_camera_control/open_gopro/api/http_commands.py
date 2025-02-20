@@ -11,7 +11,7 @@ import datetime
 import logging
 from pathlib import Path
 
-from open_gopro import proto
+from open_gopro import constants, proto
 from open_gopro.api.builders import (
     http_get_binary_command,
     http_get_json_command,
@@ -24,8 +24,6 @@ from open_gopro.models.general import WebcamResponse
 from open_gopro.models.response import GoProResp
 from open_gopro.parser_interface import Parser
 from open_gopro.types import CameraState, JsonDict
-
-from . import params as Params
 
 logger = logging.getLogger(__name__)
 
@@ -169,11 +167,11 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """
 
     @http_get_json_command(endpoint="gopro/media/turbo_transfer", arguments=["p"])
-    async def set_turbo_mode(self, *, mode: Params.Toggle) -> GoProResp[None]:
+    async def set_turbo_mode(self, *, mode: constants.Toggle) -> GoProResp[None]:
         """Enable or disable Turbo transfer mode.
 
         Args:
-            mode (Params.Toggle): enable / disable turbo mode
+            mode (constants.Toggle): enable / disable turbo mode
 
         Returns:
             GoProResp[None]: Status
@@ -231,18 +229,18 @@ class HttpCommands(HttpMessages[HttpMessage]):
     @http_get_json_command(
         endpoint="gopro/camera/stream", arguments=["port"], components=["mode"], identifier="Preview Stream"
     )
-    async def set_preview_stream(self, *, mode: Params.Toggle, port: int | None = None) -> GoProResp[None]:
+    async def set_preview_stream(self, *, mode: constants.Toggle, port: int | None = None) -> GoProResp[None]:
         """Start or stop the preview stream
 
         Args:
-            mode (Params.Toggle): enable to start or disable to stop
+            mode (constants.Toggle): enable to start or disable to stop
             port (int | None): Port to use for Preview Stream. Defaults to 8554 if None.
                 Only relevant when starting the stream.
 
         Returns:
             GoProResp[None]: command status
         """
-        return {"mode": "start" if mode is Params.Toggle.ENABLE else "stop", "port": port}  # type: ignore
+        return {"mode": "start" if mode is constants.Toggle.ENABLE else "stop", "port": port}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/camera/analytics/set_client_info")
     async def set_third_party_client_info(self) -> GoProResp[None]:
@@ -260,23 +258,23 @@ class HttpCommands(HttpMessages[HttpMessage]):
             wait_for_encoding_analyzer=lambda **kwargs: kwargs["mode"] == "start",
         ),
     )
-    async def set_shutter(self, *, shutter: Params.Toggle) -> GoProResp[None]:
+    async def set_shutter(self, *, shutter: constants.Toggle) -> GoProResp[None]:
         """Set the shutter on or off
 
         Args:
-            shutter (Params.Toggle): on or off (i.e. start or stop encoding)
+            shutter (constants.Toggle): on or off (i.e. start or stop encoding)
 
         Returns:
             GoProResp[None]: command status
         """
-        return {"mode": "start" if shutter is Params.Toggle.ENABLE else "stop"}  # type: ignore
+        return {"mode": "start" if shutter is constants.Toggle.ENABLE else "stop"}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/camera/control/set_ui_controller", arguments=["p"])
-    async def set_camera_control(self, *, mode: Params.CameraControl) -> GoProResp[None]:
+    async def set_camera_control(self, *, mode: constants.CameraControl) -> GoProResp[None]:
         """Configure global behaviors by setting camera control (to i.e. Idle, External)
 
         Args:
-            mode (Params.CameraControl): desired camera control value
+            mode (constants.CameraControl): desired camera control value
 
         Returns:
             GoProResp[None]: command status
@@ -399,18 +397,18 @@ class HttpCommands(HttpMessages[HttpMessage]):
     async def webcam_start(
         self,
         *,
-        resolution: Params.WebcamResolution | None = None,
-        fov: Params.WebcamFOV | None = None,
+        resolution: constants.WebcamResolution | None = None,
+        fov: constants.WebcamFOV | None = None,
         port: int | None = None,
-        protocol: Params.WebcamProtocol | None = None,
+        protocol: constants.WebcamProtocol | None = None,
     ) -> GoProResp[WebcamResponse]:
         """Start the webcam.
 
         Args:
-            resolution (Params.WebcamResolution | None): resolution to use. If not set, camera default will be used.
-            fov (Params.WebcamFOV | None): field of view to use. If not set, camera default will be used.
+            resolution (constants.WebcamResolution | None): resolution to use. If not set, camera default will be used.
+            fov (constants.WebcamFOV | None): field of view to use. If not set, camera default will be used.
             port (int | None): port to use for streaming. If not set, camera default of 8554 will be used.
-            protocol (Params.WebcamProtocol | None): streaming protocol to use. If not set, camera default of TS will
+            protocol (constants.WebcamProtocol | None): streaming protocol to use. If not set, camera default of TS will
                 be used.
 
         Returns:
@@ -446,11 +444,11 @@ class HttpCommands(HttpMessages[HttpMessage]):
         endpoint="gopro/camera/control/wired_usb",
         arguments=["p"],
     )
-    async def wired_usb_control(self, *, control: Params.Toggle) -> GoProResp[None]:
+    async def wired_usb_control(self, *, control: constants.Toggle) -> GoProResp[None]:
         """Enable / disable wired usb control
 
         Args:
-            control (Params.Toggle): enable or disable
+            control (constants.Toggle): enable or disable
 
         Returns:
             GoProResp[None]: command status

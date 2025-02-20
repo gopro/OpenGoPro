@@ -8,7 +8,7 @@ import asyncio
 
 from rich.console import Console
 
-from open_gopro import Params, WirelessGoPro
+from open_gopro import WirelessGoPro, constants
 from open_gopro.demos.gui.util import display_video_blocking
 from open_gopro.logger import setup_logging
 from open_gopro.util import add_cli_args_and_parse
@@ -20,14 +20,14 @@ async def main(args: argparse.Namespace) -> None:
     setup_logging(__name__, args.log)
 
     async with WirelessGoPro(args.identifier) as gopro:
-        await gopro.http_command.set_preview_stream(mode=Params.Toggle.DISABLE)
-        await gopro.ble_command.set_shutter(shutter=Params.Toggle.DISABLE)
-        assert (await gopro.http_command.set_preview_stream(mode=Params.Toggle.ENABLE, port=args.port)).ok
+        await gopro.http_command.set_preview_stream(mode=constants.Toggle.DISABLE)
+        await gopro.ble_command.set_shutter(shutter=constants.Toggle.DISABLE)
+        assert (await gopro.http_command.set_preview_stream(mode=constants.Toggle.ENABLE, port=args.port)).ok
 
         console.print("Displaying the preview stream...")
         display_video_blocking(f"udp://127.0.0.1:{args.port}", printer=console.print)
 
-        await gopro.http_command.set_preview_stream(mode=Params.Toggle.DISABLE)
+        await gopro.http_command.set_preview_stream(mode=constants.Toggle.DISABLE)
 
 
 def parse_arguments() -> argparse.Namespace:

@@ -10,13 +10,13 @@ import logging
 from typing import Any, Callable, Final
 
 import open_gopro.wifi.mdns_scanner  # Imported this way for pytest monkeypatching
+from open_gopro import constants
 from open_gopro.api import (
     BleCommands,
     BleSettings,
     BleStatuses,
     HttpCommands,
     HttpSettings,
-    Params,
     WiredApi,
 )
 from open_gopro.communicator_interface import GoProWiredInterface, Message, MessageRules
@@ -50,14 +50,12 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
     It can be used via context manager:
 
     >>> async with WiredGoPro() as gopro:
-    >>>     print("Yay! I'm connected via USB, opened, and ready to send / get data now!")
     >>>     # Send some messages now
 
     Or without:
 
     >>> gopro = WiredGoPro()
     >>> await gopro.open()
-    >>> print("Yay! I'm connected via USB, opened, and ready to send / get data now!")
     >>> # Send some messages now
 
     Args:
@@ -105,7 +103,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
                         raise e
                     logger.warning(f"Failed to discover GoPro. Retrying #{retry}")
 
-        await self.http_command.wired_usb_control(control=Params.Toggle.ENABLE)
+        await self.http_command.wired_usb_control(control=constants.Toggle.ENABLE)
         # Find and configure API version
         if (version := (await self.http_command.get_open_gopro_api_version()).data) != self.version:
             raise InvalidOpenGoProVersion(version)
