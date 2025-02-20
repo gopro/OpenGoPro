@@ -41,22 +41,6 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#internal-battery-bars-2)"""
 
-        self.external_battery: BleStatus[bool] = BleStatus(communicator, StatusId.EXTERNAL_BATTERY, Flag)
-        """External Battery
-
-        Is an external battery connected?
-
-        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#external-battery-3)"""
-
-        self.external_battery_percentage: BleStatus[int] = BleStatus(
-            communicator, StatusId.EXTERNAL_BATTERY_PERCENTAGE, Int8ub
-        )
-        """External Battery Percentage
-
-        External battery power level as percentage
-
-        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#external-battery-percentage-4)"""
-
         self.overheating: BleStatus[bool] = BleStatus(communicator, StatusId.OVERHEATING, Flag)
         """Overheating
 
@@ -100,13 +84,6 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
         When encoding video, this is the duration (seconds) of the video so far; 0 otherwise
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#video-encoding-duration-13)"""
-
-        self.broadcast_duration: BleStatus[int] = BleStatus(communicator, StatusId.BROADCAST_DURATION, Int32ub)
-        """Broadcast Duration
-
-        When broadcasting (Live Stream), this is the broadcast duration (seconds) so far; 0 otherwise
-
-        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#broadcast-duration-14)"""
 
         self.wireless_connections_enabled: BleStatus[bool] = BleStatus(
             communicator, StatusId.WIRELESS_CONNECTIONS_ENABLED, Flag
@@ -183,7 +160,7 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
         """Connected WiFi SSID
 
         The name of the wireless network that the camera is connected to where the camera is acting as a client/station.
-
+		
 		When read via BLE, this value is big-endian byte-encoded int32.
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#connected-wifi-ssid-29)"""
@@ -194,7 +171,7 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
         """Access Point SSID
 
         The name of the network that the camera sets up in AP mode for other devices to connect to.
-
+		
 		When read via BLE, this value is big-endian byte-encoded int32.
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#access-point-ssid-30)"""
@@ -224,9 +201,9 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
         """Remaining Photos
 
         How many photos can be taken with current settings before sdcard is full.
-
+		
 		Alternatively, this is:
-
+		
 		- the remaining timelapse capability if Setting 128 is set to Timelapse Photo
 		- the remaining nightlapse capability if Setting 128 is set to Nightlapse Photo
 
@@ -236,27 +213,13 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
         """Remaining Video Time
 
         How many seconds of video can be captured with current settings before sdcard is full
-
+		
 		Alternatively, this is:
-
+		
 		- the remaining timelapse capability if Setting 128 is set to Timelapse Video
 		- the remaining nightlapse capability if Setting 128 is set to Nightlapse Video
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#remaining-video-time-35)"""
-
-        self.group_photos: BleStatus[int] = BleStatus(communicator, StatusId.GROUP_PHOTOS, Int32ub)
-        """Group Photos
-
-        Total number of group photos on sdcard
-
-        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#group-photos-36)"""
-
-        self.chaptered_videos: BleStatus[int] = BleStatus(communicator, StatusId.CHAPTERED_VIDEOS, Int32ub)
-        """Chaptered Videos
-
-        Total number of chaptered videos on sdcard
-
-        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#chaptered-videos-37)"""
 
         self.photos: BleStatus[int] = BleStatus(communicator, StatusId.PHOTOS, Int32ub)
         """Photos
@@ -352,27 +315,6 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
 		often than this
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#minimum-status-poll-period-60)"""
-
-        self.analytics: BleStatus[Analytics] = BleStatus(communicator, StatusId.ANALYTICS, Analytics)
-        """Analytics
-
-        The current state of camera analytics
-
-        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#analytics-61)"""
-
-        self.analytics_size: BleStatus[AnalyticsSize] = BleStatus(communicator, StatusId.ANALYTICS_SIZE, AnalyticsSize)
-        """Analytics Size
-
-        The size (units??) of the analytics file
-
-        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#analytics-size-62)"""
-
-        self.in_contextual_menu: BleStatus[bool] = BleStatus(communicator, StatusId.IN_CONTEXTUAL_MENU, Flag)
-        """In Contextual Menu
-
-        Is the camera currently in a contextual menu (e.g. Preferences)?
-
-        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#in-contextual-menu-63)"""
 
         self.liveview_exposure_select_mode: BleStatus[LiveviewExposureSelectMode] = BleStatus(
             communicator, StatusId.LIVEVIEW_EXPOSURE_SELECT_MODE, LiveviewExposureSelectMode
@@ -507,20 +449,6 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#flatmode-89)"""
 
-        self.default_protune: BleStatus[bool] = BleStatus(communicator, StatusId.DEFAULT_PROTUNE, Flag)
-        """Default Protune
-
-        Are current flatmode's Protune settings factory default?
-
-        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#default-protune-90)"""
-
-        self.logs_ready: BleStatus[bool] = BleStatus(communicator, StatusId.LOGS_READY, Flag)
-        """Logs Ready
-
-        Are system logs ready to be downloaded?
-
-        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#logs-ready-91)"""
-
         self.video_preset: BleStatus[int] = BleStatus(communicator, StatusId.VIDEO_PRESET, Int32ub)
         """Video Preset
 
@@ -633,13 +561,6 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#scheduled-capture-108)"""
 
-        self.custom_preset: BleStatus[bool] = BleStatus(communicator, StatusId.CUSTOM_PRESET, Flag)
-        """Custom Preset
-
-        Is the camera in the process of creating a custom preset?
-
-        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#custom-preset-109)"""
-
         self.display_mod_status: BleStatus[DisplayModStatus] = BleStatus(
             communicator, StatusId.DISPLAY_MOD_STATUS, DisplayModStatus
         )
@@ -708,28 +629,5 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
         """Photo Interval Capture Count
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#photo-interval-capture-count-118)"""
-
-        self.camera_lens_mod: BleStatus[CameraLensMod] = BleStatus(
-            communicator, StatusId.CAMERA_LENS_MOD, CameraLensMod
-        )
-        """Camera Lens Mod
-
-        Camera lens mod (reflects changes to lens settings such as 162, 189, 194, ...)
-
-        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#camera-lens-mod-119)"""
-
-        self.pov_preset: BleStatus[int] = BleStatus(communicator, StatusId.POV_PRESET, Int32ub)
-        """POV Preset
-
-        Current POV Group Active Preset (ID)
-
-        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#pov-preset-120)"""
-
-        self.selfie_preset: BleStatus[int] = BleStatus(communicator, StatusId.SELFIE_PRESET, Int32ub)
-        """Selfie Preset
-
-        Current Selfie Group Active Preset (ID)
-
-        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#selfie-preset-121)"""
 
         super().__init__(communicator)

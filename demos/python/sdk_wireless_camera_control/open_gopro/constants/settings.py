@@ -81,20 +81,22 @@ class VideoResolution(GoProIntEnum):
     NUM_1440 = 7
     NUM_1080 = 9
     NUM_5_3K = 100
-    NUM_5K_4_3 = 25
     NUM_5_3K_4_3 = 27
     NUM_5_3K_8_7 = 26
     NUM_4K_8_7 = 28
+    NUM_5_3K_21_9 = 35
+    NUM_5_3K_4_3_V2 = 113
     NUM_5_3K_8_7_V2 = 107
+    NUM_4K_4_3_V2 = 112
     NUM_4K_8_7_V2 = 108
+    NUM_4K_21_9 = 36
+    NUM_4K_1_1 = 37
     NUM_2_7K_4_3_V2 = 111
     NUM_4K_9_16_V2 = 109
     NUM_1080_9_16_V2 = 110
-    NUM_5_3K_21_9 = 35
-    NUM_4K_21_9 = 36
-    NUM_4K_1_1 = 37
     NUM_900 = 38
     NUM_720 = 12
+    NUM_5K_4_3 = 25
 
 
 class FramesPerSecond(GoProIntEnum):
@@ -147,8 +149,8 @@ class Hypersmooth(GoProIntEnum):
     HIGH = 2
     LOW = 1
     OFF = 0
-    STANDARD = 100
     AUTO_BOOST = 4
+    STANDARD = 100
 
 
 class VideoHorizonLeveling(GoProIntEnum):
@@ -271,19 +273,43 @@ class Controls(GoProIntEnum):
 class EasyModeSpeed(GoProIntEnum):
     """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-mode-speed-176)"""
 
+    NUM_8X_ULTRA_SLO_MO = 0
+    NUM_4X_SUPER_SLO_MO = 1
+    NUM_4X_SUPER_SLO_MO_2_7K_ = 25
+    NUM_2X_SLO_MO_4K_ = 24
+    NUM_2X_SLO_MO = 2
+    NUM_1X_SPEED_LOW_LIGHT_ = 3
+    NUM_8X_ULTRA_SLO_MO_EXT_BATT_ = 14
+    NUM_4X_SUPER_SLO_MO_EXT_BATT_ = 4
+    NUM_2X_SLO_MO_EXT_BATT_ = 5
+    NUM_1X_SPEED_EXT_BATT_LOW_LIGHT_ = 6
+    NUM_8X_ULTRA_SLO_MO_50HZ_ = 7
+    NUM_4X_SUPER_SLO_MO_50HZ_ = 8
+    NUM_4X_SUPER_SLO_MO_2_7K_50HZ_ = 27
+    NUM_2X_SLO_MO_4K_50HZ_ = 26
+    NUM_2X_SLO_MO_50HZ_ = 9
+    NUM_1X_SPEED_50HZ_LOW_LIGHT_ = 10
+    NUM_8X_ULTRA_SLO_MO_50HZ_EXT_BATT_ = 15
+    NUM_4X_SUPER_SLO_MO_50HZ_EXT_BATT_ = 11
+    NUM_2X_SLO_MO_50HZ_EXT_BATT_ = 12
+    NUM_1X_SPEED_50HZ_EXT_BATT_LOW_LIGHT_ = 13
+    NUM_8X_ULTRA_SLO_MO_LONG_BATT_ = 16
+    NUM_4X_SUPER_SLO_MO_LONG_BATT_ = 17
+    NUM_2X_SLO_MO_LONG_BATT_ = 18
+    NUM_1X_SPEED_LONG_BATT_LOW_LIGHT_ = 19
+    NUM_8X_ULTRA_SLO_MO_50HZ_LONG_BATT_ = 20
+    NUM_4X_SUPER_SLO_MO_50HZ_LONG_BATT_ = 21
+    NUM_2X_SLO_MO_50HZ_LONG_BATT_ = 22
+    NUM_1X_SPEED_50HZ_LONG_BATT_LOW_LIGHT_ = 23
     NUM_1X_SPEED_LOW_LIGHT_V2_ = 103
     NUM_1X_SPEED_4K_LOW_LIGHT_V2_ = 126
-    NUM_1X_SPEED_2_7K_LOW_LIGHT_V2_ = 128
     NUM_2X_SLO_MO_4K_V2_ = 116
-    NUM_2X_SLO_MO_2_7K_V2_ = 130
     NUM_2X_SLO_MO_V2_ = 102
     NUM_4X_SUPER_SLO_MO_V2_ = 101
     NUM_8X_ULTRA_SLO_MO_V2_ = 100
     NUM_1X_SPEED_50HZ_LOW_LIGHT_V2_ = 107
     NUM_1X_SPEED_4K_50HZ_LOW_LIGHT_V2_ = 127
-    NUM_1X_SPEED_2_7K_50HZ_LOW_LIGHT_V2_ = 129
     NUM_2X_SLO_MO_4K_50HZ_V2_ = 117
-    NUM_2X_SLO_MO_2_7K_50HZ_V2_ = 131
     NUM_2X_SLO_MO_50HZ_V2_ = 106
     NUM_4X_SUPER_SLO_MO_50HZ_V2_ = 105
     NUM_8X_ULTRA_SLO_MO_50HZ_V2_ = 104
@@ -331,34 +357,10 @@ class EasyModeSpeed(GoProIntEnum):
     NUM_2X_SLO_MO_SPEED_4_3_4K_50_FPS_V2_ = 157
     NUM_120_4X_SUPER_SLO_MO_SPEED_2_7K_4_3_V2_ = 158
     NUM_100_4X_SUPER_SLO_MO_SPEED_2_7K_4_3_V2_ = 159
-    NUM_8X_ULTRA_SLO_MO = 0
-    NUM_4X_SUPER_SLO_MO = 1
-    NUM_4X_SUPER_SLO_MO_2_7K_ = 25
-    NUM_2X_SLO_MO_4K_ = 24
-    NUM_2X_SLO_MO = 2
-    NUM_1X_SPEED_LOW_LIGHT_ = 3
-    NUM_8X_ULTRA_SLO_MO_EXT_BATT_ = 14
-    NUM_4X_SUPER_SLO_MO_EXT_BATT_ = 4
-    NUM_2X_SLO_MO_EXT_BATT_ = 5
-    NUM_1X_SPEED_EXT_BATT_LOW_LIGHT_ = 6
-    NUM_8X_ULTRA_SLO_MO_50HZ_ = 7
-    NUM_4X_SUPER_SLO_MO_50HZ_ = 8
-    NUM_4X_SUPER_SLO_MO_2_7K_50HZ_ = 27
-    NUM_2X_SLO_MO_4K_50HZ_ = 26
-    NUM_2X_SLO_MO_50HZ_ = 9
-    NUM_1X_SPEED_50HZ_LOW_LIGHT_ = 10
-    NUM_8X_ULTRA_SLO_MO_50HZ_EXT_BATT_ = 15
-    NUM_4X_SUPER_SLO_MO_50HZ_EXT_BATT_ = 11
-    NUM_2X_SLO_MO_50HZ_EXT_BATT_ = 12
-    NUM_1X_SPEED_50HZ_EXT_BATT_LOW_LIGHT_ = 13
-    NUM_8X_ULTRA_SLO_MO_LONG_BATT_ = 16
-    NUM_4X_SUPER_SLO_MO_LONG_BATT_ = 17
-    NUM_2X_SLO_MO_LONG_BATT_ = 18
-    NUM_1X_SPEED_LONG_BATT_LOW_LIGHT_ = 19
-    NUM_8X_ULTRA_SLO_MO_50HZ_LONG_BATT_ = 20
-    NUM_4X_SUPER_SLO_MO_50HZ_LONG_BATT_ = 21
-    NUM_2X_SLO_MO_50HZ_LONG_BATT_ = 22
-    NUM_1X_SPEED_50HZ_LONG_BATT_LOW_LIGHT_ = 23
+    NUM_1X_SPEED_2_7K_LOW_LIGHT_V2_ = 128
+    NUM_2X_SLO_MO_2_7K_V2_ = 130
+    NUM_1X_SPEED_2_7K_50HZ_LOW_LIGHT_V2_ = 129
+    NUM_2X_SLO_MO_2_7K_50HZ_V2_ = 131
 
 
 class EnableNightPhoto(GoProIntEnum):
@@ -386,11 +388,11 @@ class StarTrailsLength(GoProIntEnum):
 class SystemVideoMode(GoProIntEnum):
     """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#system-video-mode-180)"""
 
-    BASIC_QUALITY = 112
-    STANDARD_QUALITY = 111
     HIGHEST_QUALITY = 0
     EXTENDED_BATTERY = 101
     LONGEST_BATTERY = 102
+    BASIC_QUALITY = 112
+    STANDARD_QUALITY = 111
 
 
 class VideoBitRate(GoProIntEnum):
@@ -419,11 +421,11 @@ class Profiles(GoProIntEnum):
 class VideoEasyMode(GoProIntEnum):
     """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-easy-mode-186)"""
 
+    STANDARD_VIDEO = 3
+    HDR_VIDEO = 4
     HIGHEST_QUALITY = 0
     STANDARD_QUALITY = 1
     BASIC_QUALITY = 2
-    STANDARD_VIDEO = 3
-    HDR_VIDEO = 4
 
 
 class AutoPowerDown(GoProIntEnum):
@@ -433,9 +435,9 @@ class AutoPowerDown(GoProIntEnum):
     NUM_15_MIN = 6
     NUM_30_MIN = 7
     NEVER = 0
+    NUM_1_MIN = 1
     NUM_8_SECONDS = 11
     NUM_30_SECONDS = 12
-    NUM_1_MIN = 1
 
 
 class LapseMode(GoProIntEnum):
@@ -445,29 +447,29 @@ class LapseMode(GoProIntEnum):
     STAR_TRAILS = 1
     LIGHT_PAINTING = 2
     VEHICLE_LIGHTS = 3
+    TIME_LAPSE_VIDEO = 8
+    NIGHT_LAPSE_VIDEO = 9
     MAX_TIMEWARP = 4
     MAX_STAR_TRAILS = 5
     MAX_LIGHT_PAINTING = 6
     MAX_VEHICLE_LIGHTS = 7
-    TIME_LAPSE_VIDEO = 8
-    NIGHT_LAPSE_VIDEO = 9
 
 
 class MaxLensMod(GoProIntEnum):
     """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-189)"""
 
-    NONE = 0
-    MAX_LENS_1_0 = 1
-    MAX_LENS_2_0 = 2
     ND_32 = 9
     ND_16 = 8
     ND_8 = 7
     ND_4 = 6
     STANDARD_LENS = 10
     AUTO_DETECT = 100
+    MAX_LENS_2_0 = 2
     MAX_LENS_2_5 = 3
     MACRO = 4
     ANAMORPHIC = 5
+    NONE = 0
+    MAX_LENS_1_0 = 1
 
 
 class MaxLensModEnable(GoProIntEnum):
@@ -497,15 +499,15 @@ class MultiShotAspectRatio(GoProIntEnum):
 class Framing(GoProIntEnum):
     """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#framing-193)"""
 
-    WIDESCREEN = 0
-    VERTICAL = 1
-    FULL_FRAME = 2
     WIDESCREEN_16_9_V2 = 101
     VERTICAL_9_16_V2 = 104
     FULL_FRAME_8_7_V2 = 103
     FULL_FRAME_1_1_V2 = 106
     ULTRA_WIDESCREEN_21_9_V2 = 105
     TRADITIONAL_4_3_V2 = 100
+    WIDESCREEN = 0
+    VERTICAL = 1
+    FULL_FRAME = 2
 
 
 class Gps(GoProIntEnum):
@@ -529,9 +531,9 @@ class Led(GoProIntEnum):
     ALL_ON = 3
     ALL_OFF = 4
     FRONT_OFF_ONLY = 5
+    BACK_ONLY = 100
     ON = 2
     OFF = 0
-    BACK_ONLY = 100
 
 
 class SetupScreenSaver(GoProIntEnum):
@@ -630,11 +632,11 @@ class VideoLens(GoProIntEnum):
     NARROW = 2
     HYPERVIEW = 9
     LINEAR_HORIZON_LOCK = 10
-    MAX_HYPERVIEW = 11
     ULTRA_LINEAR = 14
     ULTRA_WIDE = 13
     ULTRA_SUPERVIEW = 12
     ULTRA_HYPERVIEW = 104
+    MAX_HYPERVIEW = 11
 
 
 class PhotoLens(GoProIntEnum):
@@ -663,9 +665,9 @@ class TimeLapseDigitalLenses(GoProIntEnum):
     WIDE = 101
     LINEAR = 102
     NARROW = 19
-    MAX_SUPERVIEW = 100
     WIDE_27_MP = 31
     LINEAR_27_MP = 32
+    MAX_SUPERVIEW = 100
 
 
 class PhotoOutput(GoProIntEnum):

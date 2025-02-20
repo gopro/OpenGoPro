@@ -94,7 +94,7 @@ class HttpSettings(HttpMessages[HttpSetting]):
         """Nightlapse Rate
 
         How frequently to take a video or photo when performing a Nightlapse.
-
+		
 		This controls the Video or Photo Nightlapse rate if Setting 128 is set to 21 or 26 respectively.
 
         @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#nightlapse-rate-32)"""
