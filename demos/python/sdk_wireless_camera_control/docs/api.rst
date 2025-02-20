@@ -98,7 +98,7 @@ BLE Status
 ^^^^^^^^^^
 
 .. inheritance-diagram:: open_gopro.api.builders.BleStatusFacade
-   :parts: 1
+   :parts: 1ds
 
 .. autoclass:: open_gopro.api.builders.BleStatusFacade
 
@@ -211,10 +211,18 @@ These can be imported as:
 
    from open_gopro import constants
 
-
 .. automodule:: open_gopro.constants
    :undoc-members:
    :exclude-members: CmdType, GoProEnumMeta, GoProFlagEnum, ProducerType, ResponseType, enum_factory
+
+.. automodule:: open_gopro.constants.constants
+   :undoc-members:
+
+.. automodule:: open_gopro.constants.settings
+   :undoc-members:
+
+.. automodule:: open_gopro.constants.statuses
+   :undoc-members:
 
 Exceptions
 ==========
