@@ -112,7 +112,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         logger.info(f"Using Open GoPro API version {version}")
 
         # Wait for initial ready state
-        await self._wait_for_state({StatusId.ENCODING: False, StatusId.SYSTEM_BUSY: False})
+        await self._wait_for_state({StatusId.ENCODING: False, StatusId.BUSY: False})
 
         self._open = True
 
@@ -128,7 +128,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         """
         current_state = (await self.http_command.get_camera_state()).data
         self._encoding = bool(current_state[StatusId.ENCODING])
-        self._busy = bool(current_state[StatusId.SYSTEM_BUSY])
+        self._busy = bool(current_state[StatusId.BUSY])
         return not (self._encoding or self._busy)
 
     @property
@@ -295,7 +295,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         if self._should_maintain_state and self.is_open and not rules.is_fastpass(**kwargs):
             # Wait for not encoding and not busy
             logger.trace("Waiting for camera to be ready to receive messages.")  # type: ignore
-            await self._wait_for_state({StatusId.ENCODING: False, StatusId.SYSTEM_BUSY: False})
+            await self._wait_for_state({StatusId.ENCODING: False, StatusId.BUSY: False})
             logger.trace("Camera is ready to receive messages")  # type: ignore
             response = await wrapped(message, **kwargs)
         else:  # Either we're not maintaining state, we're not opened yet, or this is a fastpass message

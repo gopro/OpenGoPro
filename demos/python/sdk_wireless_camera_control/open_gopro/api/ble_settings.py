@@ -6,13 +6,9 @@
 #
 ########################################################################################################################
 
-from construct import Int8ub
-
 from open_gopro.api.builders import BleSettingFacade as BleSetting
 from open_gopro.communicator_interface import BleMessages, GoProBle
 from open_gopro.constants import SettingId, settings
-
-from . import params as Params
 
 
 class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):

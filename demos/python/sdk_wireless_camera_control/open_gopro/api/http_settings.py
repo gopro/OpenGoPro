@@ -1,10 +1,14 @@
 """HTTP Settings"""
 
+########################################################################################################################
+#
+# Warning!! This file is auto-generated. Do not modify it manually.
+#
+########################################################################################################################
+
 from open_gopro.api.builders import HttpSetting
 from open_gopro.communicator_interface import GoProHttp, HttpMessages
 from open_gopro.constants import SettingId, settings
-
-from . import params as Params
 
 
 class HttpSettings(HttpMessages[HttpSetting]):

@@ -592,10 +592,10 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         # Start state maintenance
         if self._should_maintain_state:
             await self._ready_lock.acquire()
-            encoding = (await self.ble_status.encoding_active.register_value_update(self._update_internal_state)).data
+            encoding = (await self.ble_status.encoding.register_value_update(self._update_internal_state)).data
             await self._update_internal_state(StatusId.ENCODING, encoding)
-            busy = (await self.ble_status.system_busy.register_value_update(self._update_internal_state)).data
-            await self._update_internal_state(StatusId.SYSTEM_BUSY, busy)
+            busy = (await self.ble_status.busy.register_value_update(self._update_internal_state)).data
+            await self._update_internal_state(StatusId.BUSY, busy)
         logger.info("BLE is ready!")
 
     async def _update_internal_state(self, update: UpdateType, value: int) -> None:
@@ -621,7 +621,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             self._encoding = bool(value)
             if self._encoding:
                 should_notify_encoding = True
-        elif update == StatusId.SYSTEM_BUSY:
+        elif update == StatusId.BUSY:
             self._busy = bool(value)
         logger.trace(f"Current internal states: {self._encoding=} {self._busy=}")  # type: ignore
 
