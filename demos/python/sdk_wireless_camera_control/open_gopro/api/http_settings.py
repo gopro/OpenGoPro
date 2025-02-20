@@ -2,7 +2,7 @@
 
 from open_gopro.api.builders import HttpSetting
 from open_gopro.communicator_interface import GoProHttp, HttpMessages
-from open_gopro.constants import SettingId
+from open_gopro.constants import SettingId, settings
 
 from . import params as Params
 
@@ -16,254 +16,330 @@ class HttpSettings(HttpMessages[HttpSetting]):
     """
 
     def __init__(self, communicator: GoProHttp):
-        self.resolution: HttpSetting[Params.Resolution] = HttpSetting[Params.Resolution](
-            communicator, SettingId.RESOLUTION
-        )
-        """Resolution."""
 
-        self.fps: HttpSetting[Params.FPS] = HttpSetting[Params.FPS](communicator, SettingId.FPS)
-        """Frames per second."""
-
-        self.auto_off: HttpSetting[Params.AutoOff] = HttpSetting[Params.AutoOff](communicator, SettingId.AUTO_OFF)
-        """Set the auto off time."""
-
-        self.video_field_of_view: HttpSetting[Params.VideoFOV] = HttpSetting[Params.VideoFOV](
-            communicator, SettingId.VIDEO_FOV
-        )
-        """Video FOV."""
-
-        self.photo_field_of_view: HttpSetting[Params.PhotoFOV] = HttpSetting[Params.PhotoFOV](
-            communicator, SettingId.PHOTO_FOV
-        )
-        """Photo FOV."""
-
-        self.multi_shot_field_of_view: HttpSetting[Params.MultishotFOV] = HttpSetting[Params.MultishotFOV](
-            communicator, SettingId.MULTI_SHOT_FOV
-        )
-        """Multi-shot FOV."""
-
-        self.max_lens_mode: HttpSetting[Params.MaxLensMode] = HttpSetting[Params.MaxLensMode](
-            communicator, SettingId.MAX_LENS_MOD
-        )
-        """Enable / disable max lens mod."""
-
-        self.hypersmooth: HttpSetting[Params.HypersmoothMode] = HttpSetting[Params.HypersmoothMode](
-            communicator, SettingId.HYPERSMOOTH
-        )
-        """Set / disable hypersmooth."""
-
-        self.video_performance_mode: HttpSetting[Params.PerformanceMode] = HttpSetting[Params.PerformanceMode](
-            communicator, SettingId.VIDEO_PERFORMANCE_MODE
-        )
-        """Video Performance Mode (extended battery, tripod, etc)."""
-
-        self.media_format: HttpSetting[Params.MediaFormat] = HttpSetting[Params.MediaFormat](
+        self.media_format: HttpSetting[settings.MediaFormat] = HttpSetting[settings.MediaFormat](
             communicator, SettingId.MEDIA_FORMAT
         )
-        """Set the media format."""
+        """Media Format
 
-        self.anti_flicker: HttpSetting[Params.AntiFlicker] = HttpSetting[Params.AntiFlicker](
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#media-format-128)"""
+
+        self.video_resolution: HttpSetting[settings.VideoResolution] = HttpSetting[settings.VideoResolution](
+            communicator, SettingId.VIDEO_RESOLUTION
+        )
+        """Video Resolution
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-resolution-2)"""
+
+        self.frames_per_second: HttpSetting[settings.FramesPerSecond] = HttpSetting[settings.FramesPerSecond](
+            communicator, SettingId.FRAMES_PER_SECOND
+        )
+        """Frames Per Second
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#frames-per-second-3)"""
+
+        self.video_timelapse_rate: HttpSetting[settings.VideoTimelapseRate] = HttpSetting[settings.VideoTimelapseRate](
+            communicator, SettingId.VIDEO_TIMELAPSE_RATE
+        )
+        """Video Timelapse Rate
+
+        How frequently to take a video when performing a Video Timelapse
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-timelapse-rate-5)"""
+
+        self.anti_flicker: HttpSetting[settings.Anti_Flicker] = HttpSetting[settings.Anti_Flicker](
             communicator, SettingId.ANTI_FLICKER
         )
-        """Anti Flicker frequency."""
+        """Anti-Flicker
 
-        self.camera_ux_mode: HttpSetting[Params.CameraUxMode] = HttpSetting[Params.CameraUxMode](
-            communicator, SettingId.CAMERA_UX_MODE
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#anti-flicker-134)"""
+
+        self.hypersmooth: HttpSetting[settings.Hypersmooth] = HttpSetting[settings.Hypersmooth](
+            communicator, SettingId.HYPERSMOOTH
         )
-        """Camera controls configuration."""
+        """Hypersmooth
 
-        self.video_easy_mode: HttpSetting[int] = HttpSetting[int](communicator, SettingId.VIDEO_EASY_MODE)
-        """Video easy mode speed."""
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#hypersmooth-135)"""
 
-        self.photo_easy_mode: HttpSetting[Params.PhotoEasyMode] = HttpSetting[Params.PhotoEasyMode](
-            communicator, SettingId.PHOTO_EASY_MODE
+        self.video_horizon_leveling: HttpSetting[settings.VideoHorizonLeveling] = HttpSetting[
+            settings.VideoHorizonLeveling
+        ](communicator, SettingId.VIDEO_HORIZON_LEVELING)
+        """Video Horizon Leveling
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-horizon-leveling-150)"""
+
+        self.photo_horizon_leveling: HttpSetting[settings.PhotoHorizonLeveling] = HttpSetting[
+            settings.PhotoHorizonLeveling
+        ](communicator, SettingId.PHOTO_HORIZON_LEVELING)
+        """Photo Horizon Leveling
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-horizon-leveling-151)"""
+
+        self.photo_timelapse_rate: HttpSetting[settings.PhotoTimelapseRate] = HttpSetting[settings.PhotoTimelapseRate](
+            communicator, SettingId.PHOTO_TIMELAPSE_RATE
         )
-        """Night Photo easy mode."""
+        """Photo Timelapse Rate
 
-        self.wifi_band: HttpSetting[Params.WifiBand] = HttpSetting[Params.WifiBand](communicator, SettingId.WIFI_BAND)
-        """Current WiFi band being used."""
+        How frequently to take a photo when performing a Photo Timelapse.
 
-        self.star_trail_length: HttpSetting[Params.StarTrailLength] = HttpSetting[Params.StarTrailLength](
-            communicator, SettingId.STAR_TRAIL_LENGTH
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-timelapse-rate-30)"""
+
+        self.nightlapse_rate: HttpSetting[settings.NightlapseRate] = HttpSetting[settings.NightlapseRate](
+            communicator, SettingId.NIGHTLAPSE_RATE
         )
-        """Multi shot star trail length."""
+        """Nightlapse Rate
 
-        self.system_video_mode: HttpSetting[Params.SystemVideoMode] = HttpSetting[Params.SystemVideoMode](
+        How frequently to take a video or photo when performing a Nightlapse.
+
+		This controls the Video or Photo Nightlapse rate if Setting 128 is set to 21 or 26 respectively.
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#nightlapse-rate-32)"""
+
+        self.max_lens: HttpSetting[settings.MaxLens] = HttpSetting[settings.MaxLens](communicator, SettingId.MAX_LENS)
+        """Max Lens
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-162)"""
+
+        self.hindsight: HttpSetting[settings.Hindsight] = HttpSetting[settings.Hindsight](
+            communicator, SettingId.HINDSIGHT
+        )
+        """HindSight
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#hindsight-167)"""
+
+        self.webcam_digital_lenses: HttpSetting[settings.WebcamDigitalLenses] = HttpSetting[
+            settings.WebcamDigitalLenses
+        ](communicator, SettingId.WEBCAM_DIGITAL_LENSES)
+        """Webcam Digital Lenses
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#webcam-digital-lenses-43)"""
+
+        self.photo_single_interval: HttpSetting[settings.PhotoSingleInterval] = HttpSetting[
+            settings.PhotoSingleInterval
+        ](communicator, SettingId.PHOTO_SINGLE_INTERVAL)
+        """Photo Single Interval
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-single-interval-171)"""
+
+        self.photo_interval_duration: HttpSetting[settings.PhotoIntervalDuration] = HttpSetting[
+            settings.PhotoIntervalDuration
+        ](communicator, SettingId.PHOTO_INTERVAL_DURATION)
+        """Photo Interval Duration
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-interval-duration-172)"""
+
+        self.video_performance_mode: HttpSetting[settings.VideoPerformanceMode] = HttpSetting[
+            settings.VideoPerformanceMode
+        ](communicator, SettingId.VIDEO_PERFORMANCE_MODE)
+        """Video Performance Mode
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-performance-mode-173)"""
+
+        self.controls: HttpSetting[settings.Controls] = HttpSetting[settings.Controls](communicator, SettingId.CONTROLS)
+        """Controls
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#controls-175)"""
+
+        self.easy_mode_speed: HttpSetting[settings.EasyModeSpeed] = HttpSetting[settings.EasyModeSpeed](
+            communicator, SettingId.EASY_MODE_SPEED
+        )
+        """Easy Mode Speed
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-mode-speed-176)"""
+
+        self.enable_night_photo: HttpSetting[settings.EnableNightPhoto] = HttpSetting[settings.EnableNightPhoto](
+            communicator, SettingId.ENABLE_NIGHT_PHOTO
+        )
+        """Enable Night Photo
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#enable-night-photo-177)"""
+
+        self.wireless_band: HttpSetting[settings.WirelessBand] = HttpSetting[settings.WirelessBand](
+            communicator, SettingId.WIRELESS_BAND
+        )
+        """Wireless Band
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#wireless-band-178)"""
+
+        self.star_trails_length: HttpSetting[settings.StarTrailsLength] = HttpSetting[settings.StarTrailsLength](
+            communicator, SettingId.STAR_TRAILS_LENGTH
+        )
+        """Star Trails Length
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#star-trails-length-179)"""
+
+        self.system_video_mode: HttpSetting[settings.SystemVideoMode] = HttpSetting[settings.SystemVideoMode](
             communicator, SettingId.SYSTEM_VIDEO_MODE
         )
-        """System video mode."""
+        """System Video Mode
 
-        self.video_horizon_leveling: HttpSetting[Params.HorizonLeveling] = HttpSetting[Params.HorizonLeveling](
-            communicator, SettingId.VIDEO_HORIZON_LEVELING
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#system-video-mode-180)"""
+
+        self.video_bit_rate: HttpSetting[settings.VideoBitRate] = HttpSetting[settings.VideoBitRate](
+            communicator, SettingId.VIDEO_BIT_RATE
         )
-        """Lock / unlock horizon leveling for video."""
+        """Video Bit Rate
 
-        self.photo_horizon_leveling: HttpSetting[Params.HorizonLeveling] = HttpSetting[Params.HorizonLeveling](
-            communicator, SettingId.PHOTO_HORIZON_LEVELING
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-bit-rate-182)"""
+
+        self.bit_depth: HttpSetting[settings.BitDepth] = HttpSetting[settings.BitDepth](
+            communicator, SettingId.BIT_DEPTH
         )
-        """Lock / unlock horizon leveling for photo."""
+        """Bit Depth
 
-        self.bit_rate: HttpSetting[Params.BitRate] = HttpSetting[Params.BitRate](
-            communicator,
-            SettingId.BIT_RATE,
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#bit-depth-183)"""
+
+        self.profiles: HttpSetting[settings.Profiles] = HttpSetting[settings.Profiles](communicator, SettingId.PROFILES)
+        """Profiles
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#profiles-184)"""
+
+        self.video_easy_mode: HttpSetting[settings.VideoEasyMode] = HttpSetting[settings.VideoEasyMode](
+            communicator, SettingId.VIDEO_EASY_MODE
         )
-        """System Video Bit Rate."""
+        """Video Easy Mode
 
-        self.bit_depth: HttpSetting[Params.BitDepth] = HttpSetting[Params.BitDepth](
-            communicator,
-            SettingId.BIT_DEPTH,
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-easy-mode-186)"""
+
+        self.auto_power_down: HttpSetting[settings.AutoPowerDown] = HttpSetting[settings.AutoPowerDown](
+            communicator, SettingId.AUTO_POWER_DOWN
         )
-        """System Video Bit depth."""
+        """Auto Power Down
 
-        self.video_profile: HttpSetting[Params.VideoProfile] = HttpSetting[Params.VideoProfile](
-            communicator,
-            SettingId.VIDEO_PROFILE,
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#auto-power-down-59)"""
+
+        self.lapse_mode: HttpSetting[settings.LapseMode] = HttpSetting[settings.LapseMode](
+            communicator, SettingId.LAPSE_MODE
         )
-        """Video Profile (hdr, etc.)"""
+        """Lapse Mode
 
-        self.video_aspect_ratio: HttpSetting[Params.VideoAspectRatio] = HttpSetting[Params.VideoAspectRatio](
-            communicator,
-            SettingId.VIDEO_ASPECT_RATIO,
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#lapse-mode-187)"""
+
+        self.max_lens_mod: HttpSetting[settings.MaxLensMod] = HttpSetting[settings.MaxLensMod](
+            communicator, SettingId.MAX_LENS_MOD
         )
-        """Video aspect ratio"""
+        """Max Lens Mod
 
-        self.video_easy_aspect_ratio: HttpSetting[Params.EasyAspectRatio] = HttpSetting[Params.EasyAspectRatio](
-            communicator,
-            SettingId.VIDEO_EASY_ASPECT_RATIO,
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-189)"""
+
+        self.max_lens_mod_enable: HttpSetting[settings.MaxLensModEnable] = HttpSetting[settings.MaxLensModEnable](
+            communicator, SettingId.MAX_LENS_MOD_ENABLE
         )
-        """Video easy aspect ratio"""
+        """Max Lens Mod Enable
 
-        self.multi_shot_easy_aspect_ratio: HttpSetting[Params.EasyAspectRatio] = HttpSetting[Params.EasyAspectRatio](
-            communicator,
-            SettingId.MULTI_SHOT_EASY_ASPECT_RATIO,
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-enable-190)"""
+
+        self.easy_night_photo: HttpSetting[settings.EasyNightPhoto] = HttpSetting[settings.EasyNightPhoto](
+            communicator, SettingId.EASY_NIGHT_PHOTO
         )
-        """Multi shot easy aspect ratio"""
+        """Easy Night Photo
 
-        self.multi_shot_nlv_aspect_ratio: HttpSetting[Params.EasyAspectRatio] = HttpSetting[Params.EasyAspectRatio](
-            communicator,
-            SettingId.MULTI_SHOT_NLV_ASPECT_RATIO,
-        )
-        """Multi shot NLV aspect ratio"""
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-night-photo-191)"""
 
-        self.video_mode: HttpSetting[Params.VideoMode] = HttpSetting[Params.VideoMode](
-            communicator,
-            SettingId.VIDEO_MODE,
-        )
-        """Video Mode (i.e. quality)"""
+        self.multi_shot_aspect_ratio: HttpSetting[settings.MultiShotAspectRatio] = HttpSetting[
+            settings.MultiShotAspectRatio
+        ](communicator, SettingId.MULTI_SHOT_ASPECT_RATIO)
+        """Multi Shot Aspect Ratio
 
-        self.timelapse_mode: HttpSetting[Params.TimelapseMode] = HttpSetting[Params.TimelapseMode](
-            communicator,
-            SettingId.TIMELAPSE_MODE,
-        )
-        """Timelapse Mode"""
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-aspect-ratio-192)"""
 
-        self.maxlens_mod_type: HttpSetting[Params.MaxLensModType] = HttpSetting[Params.MaxLensModType](
-            communicator,
-            SettingId.ADDON_MAX_LENS_MOD,
-        )
-        """Max lens mod? If so, what type?"""
+        self.framing: HttpSetting[settings.Framing] = HttpSetting[settings.Framing](communicator, SettingId.FRAMING)
+        """Framing
 
-        self.maxlens_status: HttpSetting[Params.Toggle] = HttpSetting[Params.Toggle](
-            communicator,
-            SettingId.ADDON_MAX_LENS_MOD_ENABLE,
-        )
-        """Enable / disable max lens mod"""
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#framing-193)"""
 
-        self.photo_mode: HttpSetting[Params.PhotoMode] = HttpSetting[Params.PhotoMode](
-            communicator,
-            SettingId.PHOTO_MODE,
-        )
-        """Photo Mode"""
+        self.gps: HttpSetting[settings.Gps] = HttpSetting[settings.Gps](communicator, SettingId.GPS)
+        """GPS
 
-        self.framing: HttpSetting[Params.Framing] = HttpSetting[Params.Framing](
-            communicator,
-            SettingId.FRAMING,
-        )
-        """Video Framing Mode"""
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#gps-83)"""
 
-        self.hindsight: HttpSetting[Params.Hindsight] = HttpSetting[Params.Hindsight](
-            communicator,
-            SettingId.HINDSIGHT,
-        )
-        """Hindsight time / disable"""
-
-        self.photo_interval: HttpSetting[Params.PhotoInterval] = HttpSetting[Params.PhotoInterval](
-            communicator,
-            SettingId.PHOTO_INTERVAL,
-        )
-        """Interval between photo captures"""
-
-        self.photo_duration: HttpSetting[Params.PhotoDuration] = HttpSetting[Params.PhotoDuration](
-            communicator,
-            SettingId.PHOTO_INTERVAL_DURATION,
-        )
-        """Interval between photo captures"""
-
-        self.photo_output: HttpSetting[Params.PhotoOutput] = HttpSetting[Params.PhotoOutput](
-            communicator,
-            SettingId.PHOTO_OUTPUT,
-        )
-        """File type of photo output"""
-
-        self.video_duration: HttpSetting[Params.VideoDuration] = HttpSetting[Params.VideoDuration](
-            communicator, SettingId.VIDEO_DURATION
-        )
-        """If set, a video will automatically be stopped after recording for this long."""
-
-        self.regional_format: HttpSetting[Params.RegionalFormat] = HttpSetting[Params.RegionalFormat](
-            communicator, SettingId.REGIONAL_FORMAT
-        )
-
-        self.quality_control: HttpSetting[Params.QualityControl] = HttpSetting[Params.QualityControl](
-            communicator, SettingId.QUALITY_CONTROL
-        )
-
-        self.camera_volume: HttpSetting[Params.Volume] = HttpSetting[Params.Volume](
+        self.camera_volume: HttpSetting[settings.CameraVolume] = HttpSetting[settings.CameraVolume](
             communicator, SettingId.CAMERA_VOLUME
         )
+        """Camera Volume
 
-        self.lens_attachment: HttpSetting[Params.LensAttachment] = HttpSetting[Params.LensAttachment](
-            communicator, SettingId.LENS_ATTACHMENT
-        )
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-volume-216)"""
 
-        self.setup_screensaver: HttpSetting[Params.ScreenSaverTimeout] = HttpSetting[Params.ScreenSaverTimeout](
+        self.led: HttpSetting[settings.Led] = HttpSetting[settings.Led](communicator, SettingId.LED)
+        """LED
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#led-91)"""
+
+        self.setup_screen_saver: HttpSetting[settings.SetupScreenSaver] = HttpSetting[settings.SetupScreenSaver](
             communicator, SettingId.SETUP_SCREEN_SAVER
         )
+        """Setup Screen Saver
 
-        self.setup_language: HttpSetting[Params.SetupLanguage] = HttpSetting[Params.SetupLanguage](
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-screen-saver-219)"""
+
+        self.setup_language: HttpSetting[settings.SetupLanguage] = HttpSetting[settings.SetupLanguage](
             communicator, SettingId.SETUP_LANGUAGE
         )
+        """Setup Language
 
-        self.auto_power_off: HttpSetting[Params.AutoPowerOff] = HttpSetting[Params.AutoPowerOff](
-            communicator, SettingId.AUTO_POWER_OFF
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-language-223)"""
+
+        self.photo_mode: HttpSetting[settings.PhotoMode] = HttpSetting[settings.PhotoMode](
+            communicator, SettingId.PHOTO_MODE
         )
+        """Photo Mode
 
-        self.photo_mode_v2: HttpSetting[Params.PhotoModeV2] = HttpSetting[Params.PhotoModeV2](
-            communicator, SettingId.PHOTO_MODE_V2
-        )
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-mode-227)"""
 
-        self.video_digital_lens_v2: HttpSetting[Params.VideoLensV2] = HttpSetting[Params.VideoLensV2](
-            communicator, SettingId.VIDEO_DIGITAL_LENSES_V2
-        )
-
-        self.photo_digital_lens_v2: HttpSetting[Params.PhotoLensV2] = HttpSetting[Params.PhotoLensV2](
-            communicator, SettingId.PHOTO_DIGITAL_LENSES_V2
-        )
-
-        self.timelapse_digital_lens_v2: HttpSetting[Params.TimelapseLensV2] = HttpSetting[Params.TimelapseLensV2](
-            communicator, SettingId.TIMELAPSE_DIGITAL_LENSES_V2
-        )
-
-        self.video_framing: HttpSetting[Params.VideoFraming] = HttpSetting[Params.VideoFraming](
+        self.video_framing: HttpSetting[settings.VideoFraming] = HttpSetting[settings.VideoFraming](
             communicator, SettingId.VIDEO_FRAMING
         )
+        """Video Framing
 
-        self.multi_shot_framing: HttpSetting[Params.MultishotFraming] = HttpSetting[Params.MultishotFraming](
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-framing-232)"""
+
+        self.multi_shot_framing: HttpSetting[settings.MultiShotFraming] = HttpSetting[settings.MultiShotFraming](
             communicator, SettingId.MULTI_SHOT_FRAMING
         )
+        """Multi Shot Framing
 
-        self.frame_rate: HttpSetting[Params.FrameRate] = HttpSetting[Params.FrameRate](
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-framing-233)"""
+
+        self.frame_rate: HttpSetting[settings.FrameRate] = HttpSetting[settings.FrameRate](
             communicator, SettingId.FRAME_RATE
         )
+        """Frame Rate
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#frame-rate-234)"""
+
+        self.video_aspect_ratio: HttpSetting[settings.VideoAspectRatio] = HttpSetting[settings.VideoAspectRatio](
+            communicator, SettingId.VIDEO_ASPECT_RATIO
+        )
+        """Video Aspect Ratio
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-aspect-ratio-108)"""
+
+        self.video_lens: HttpSetting[settings.VideoLens] = HttpSetting[settings.VideoLens](
+            communicator, SettingId.VIDEO_LENS
+        )
+        """Video Lens
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-lens-121)"""
+
+        self.photo_lens: HttpSetting[settings.PhotoLens] = HttpSetting[settings.PhotoLens](
+            communicator, SettingId.PHOTO_LENS
+        )
+        """Photo Lens
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-lens-122)"""
+
+        self.time_lapse_digital_lenses: HttpSetting[settings.TimeLapseDigitalLenses] = HttpSetting[
+            settings.TimeLapseDigitalLenses
+        ](communicator, SettingId.TIME_LAPSE_DIGITAL_LENSES)
+        """Time Lapse Digital Lenses
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#time-lapse-digital-lenses-123)"""
+
+        self.photo_output: HttpSetting[settings.PhotoOutput] = HttpSetting[settings.PhotoOutput](
+            communicator, SettingId.PHOTO_OUTPUT
+        )
+        """Photo Output
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-output-125)"""
 
         super().__init__(communicator)

@@ -1,10 +1,16 @@
 """BLE Settings"""
 
+########################################################################################################################
+#
+# Warning!! This file is auto-generated. Do not modify it manually.
+#
+########################################################################################################################
+
 from construct import Int8ub
 
 from open_gopro.api.builders import BleSettingFacade as BleSetting
 from open_gopro.communicator_interface import BleMessages, GoProBle
-from open_gopro.constants import SettingId
+from open_gopro.constants import SettingId, settings
 
 from . import params as Params
 
@@ -20,300 +26,338 @@ class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):
     """
 
     def __init__(self, communicator: GoProBle):
-        self.resolution: BleSetting[Params.Resolution] = BleSetting[Params.Resolution](
-            communicator, SettingId.RESOLUTION, Params.Resolution
+
+        self.media_format: BleSetting[settings.MediaFormat] = BleSetting[settings.MediaFormat](
+            communicator, SettingId.MEDIA_FORMAT, settings.MediaFormat
         )
-        """Resolution."""
+        """Media Format
 
-        self.fps: BleSetting[Params.FPS] = BleSetting[Params.FPS](communicator, SettingId.FPS, Params.FPS)
-        """Frames per second."""
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#media-format-128)"""
 
-        self.auto_off: BleSetting[Params.AutoOff] = BleSetting[Params.AutoOff](
-            communicator, SettingId.AUTO_OFF, Params.AutoOff
+        self.video_resolution: BleSetting[settings.VideoResolution] = BleSetting[settings.VideoResolution](
+            communicator, SettingId.VIDEO_RESOLUTION, settings.VideoResolution
         )
-        """Set the auto off time."""
+        """Video Resolution
 
-        self.video_field_of_view: BleSetting[Params.VideoFOV] = BleSetting[Params.VideoFOV](
-            communicator, SettingId.VIDEO_FOV, Params.VideoFOV
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-resolution-2)"""
+
+        self.frames_per_second: BleSetting[settings.FramesPerSecond] = BleSetting[settings.FramesPerSecond](
+            communicator, SettingId.FRAMES_PER_SECOND, settings.FramesPerSecond
         )
-        """Video FOV."""
+        """Frames Per Second
 
-        self.photo_field_of_view: BleSetting[Params.PhotoFOV] = BleSetting[Params.PhotoFOV](
-            communicator, SettingId.PHOTO_FOV, Params.PhotoFOV
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#frames-per-second-3)"""
+
+        self.video_timelapse_rate: BleSetting[settings.VideoTimelapseRate] = BleSetting[settings.VideoTimelapseRate](
+            communicator, SettingId.VIDEO_TIMELAPSE_RATE, settings.VideoTimelapseRate
         )
-        """Photo FOV."""
+        """Video Timelapse Rate
 
-        self.multi_shot_field_of_view: BleSetting[Params.MultishotFOV] = BleSetting[Params.MultishotFOV](
-            communicator, SettingId.MULTI_SHOT_FOV, Params.MultishotFOV
+        How frequently to take a video when performing a Video Timelapse
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-timelapse-rate-5)"""
+
+        self.anti_flicker: BleSetting[settings.Anti_Flicker] = BleSetting[settings.Anti_Flicker](
+            communicator, SettingId.ANTI_FLICKER, settings.Anti_Flicker
         )
-        """Multi-shot FOV."""
+        """Anti-Flicker
 
-        self.led: BleSetting[Params.LED] = BleSetting[Params.LED](communicator, SettingId.LED, Params.LED)
-        """Set the LED options (or also send the BLE keep alive signal)."""
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#anti-flicker-134)"""
 
-        self.max_lens_mode: BleSetting[Params.MaxLensMode] = BleSetting[Params.MaxLensMode](
-            communicator, SettingId.MAX_LENS_MOD, Params.MaxLensMode
+        self.hypersmooth: BleSetting[settings.Hypersmooth] = BleSetting[settings.Hypersmooth](
+            communicator, SettingId.HYPERSMOOTH, settings.Hypersmooth
         )
-        """Enable / disable max lens mod."""
+        """Hypersmooth
 
-        self.hypersmooth: BleSetting[Params.HypersmoothMode] = BleSetting[Params.HypersmoothMode](
-            communicator, SettingId.HYPERSMOOTH, Params.HypersmoothMode
-        )
-        """Set / disable hypersmooth."""
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#hypersmooth-135)"""
 
-        self.video_performance_mode: BleSetting[Params.PerformanceMode] = BleSetting[Params.PerformanceMode](
-            communicator,
-            SettingId.VIDEO_PERFORMANCE_MODE,
-            Params.PerformanceMode,
-        )
-        """Video Performance Mode."""
+        self.video_horizon_leveling: BleSetting[settings.VideoHorizonLeveling] = BleSetting[
+            settings.VideoHorizonLeveling
+        ](communicator, SettingId.VIDEO_HORIZON_LEVELING, settings.VideoHorizonLeveling)
+        """Video Horizon Leveling
 
-        self.media_format: BleSetting[Params.MediaFormat] = BleSetting[Params.MediaFormat](
-            communicator, SettingId.MEDIA_FORMAT, Params.MediaFormat
-        )
-        """Set the media format."""
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-horizon-leveling-150)"""
 
-        self.anti_flicker: BleSetting[Params.AntiFlicker] = BleSetting[Params.AntiFlicker](
-            communicator,
-            SettingId.ANTI_FLICKER,
-            Params.AntiFlicker,
-        )
-        """Anti Flicker frequency."""
+        self.photo_horizon_leveling: BleSetting[settings.PhotoHorizonLeveling] = BleSetting[
+            settings.PhotoHorizonLeveling
+        ](communicator, SettingId.PHOTO_HORIZON_LEVELING, settings.PhotoHorizonLeveling)
+        """Photo Horizon Leveling
 
-        self.camera_ux_mode: BleSetting[Params.CameraUxMode] = BleSetting[Params.CameraUxMode](
-            communicator,
-            SettingId.CAMERA_UX_MODE,
-            Params.CameraUxMode,
-        )
-        """Camera controls configuration."""
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-horizon-leveling-151)"""
 
-        self.video_easy_mode: BleSetting[int] = BleSetting[int](
-            communicator,
-            SettingId.VIDEO_EASY_MODE,
-            Int8ub,
+        self.photo_timelapse_rate: BleSetting[settings.PhotoTimelapseRate] = BleSetting[settings.PhotoTimelapseRate](
+            communicator, SettingId.PHOTO_TIMELAPSE_RATE, settings.PhotoTimelapseRate
         )
-        """Video easy mode speed. It is not feasible to maintain this setting without code generation so just read as int."""
+        """Photo Timelapse Rate
 
-        self.photo_easy_mode: BleSetting[Params.PhotoEasyMode] = BleSetting[Params.PhotoEasyMode](
-            communicator,
-            SettingId.PHOTO_EASY_MODE,
-            Params.PhotoEasyMode,
-        )
-        """Night Photo easy mode."""
+        How frequently to take a photo when performing a Photo Timelapse.
 
-        self.wifi_band: BleSetting[Params.WifiBand] = BleSetting[Params.WifiBand](
-            communicator,
-            SettingId.WIFI_BAND,
-            Params.WifiBand,
-        )
-        """Current WiFi band being used."""
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-timelapse-rate-30)"""
 
-        self.star_trail_length: BleSetting[Params.StarTrailLength] = BleSetting[Params.StarTrailLength](
-            communicator,
-            SettingId.STAR_TRAIL_LENGTH,
-            Params.StarTrailLength,
+        self.nightlapse_rate: BleSetting[settings.NightlapseRate] = BleSetting[settings.NightlapseRate](
+            communicator, SettingId.NIGHTLAPSE_RATE, settings.NightlapseRate
         )
-        """Multi shot star trail length."""
+        """Nightlapse Rate
 
-        self.system_video_mode: BleSetting[Params.SystemVideoMode] = BleSetting[Params.SystemVideoMode](
-            communicator,
-            SettingId.SYSTEM_VIDEO_MODE,
-            Params.SystemVideoMode,
-        )
-        """System video mode."""
+        How frequently to take a video or photo when performing a Nightlapse.
 
-        self.video_horizon_leveling: BleSetting[Params.HorizonLeveling] = BleSetting[Params.HorizonLeveling](
-            communicator,
-            SettingId.VIDEO_HORIZON_LEVELING,
-            Params.HorizonLeveling,
-        )
-        """Lock / unlock horizon leveling for video."""
+		This controls the Video or Photo Nightlapse rate if Setting 128 is set to 21 or 26 respectively.
 
-        self.photo_horizon_leveling: BleSetting[Params.HorizonLeveling] = BleSetting[Params.HorizonLeveling](
-            communicator,
-            SettingId.PHOTO_HORIZON_LEVELING,
-            Params.HorizonLeveling,
-        )
-        """Lock / unlock horizon leveling for photo."""
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#nightlapse-rate-32)"""
 
-        self.bit_rate: BleSetting[Params.BitRate] = BleSetting[Params.BitRate](
-            communicator,
-            SettingId.BIT_RATE,
-            Params.BitRate,
+        self.max_lens: BleSetting[settings.MaxLens] = BleSetting[settings.MaxLens](
+            communicator, SettingId.MAX_LENS, settings.MaxLens
         )
-        """System Video Bit Rate."""
+        """Max Lens
 
-        self.bit_depth: BleSetting[Params.BitDepth] = BleSetting[Params.BitDepth](
-            communicator,
-            SettingId.BIT_DEPTH,
-            Params.BitDepth,
-        )
-        """System Video Bit depth."""
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-162)"""
 
-        self.video_profile: BleSetting[Params.VideoProfile] = BleSetting[Params.VideoProfile](
-            communicator,
-            SettingId.VIDEO_PROFILE,
-            Params.VideoProfile,
+        self.hindsight: BleSetting[settings.Hindsight] = BleSetting[settings.Hindsight](
+            communicator, SettingId.HINDSIGHT, settings.Hindsight
         )
-        """Video Profile (hdr, etc.)"""
+        """HindSight
 
-        self.video_aspect_ratio: BleSetting[Params.VideoAspectRatio] = BleSetting[Params.VideoAspectRatio](
-            communicator,
-            SettingId.VIDEO_ASPECT_RATIO,
-            Params.VideoAspectRatio,
-        )
-        """Video aspect ratio"""
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#hindsight-167)"""
 
-        self.video_easy_aspect_ratio: BleSetting[Params.EasyAspectRatio] = BleSetting[Params.EasyAspectRatio](
-            communicator,
-            SettingId.VIDEO_EASY_ASPECT_RATIO,
-            Params.EasyAspectRatio,
+        self.webcam_digital_lenses: BleSetting[settings.WebcamDigitalLenses] = BleSetting[settings.WebcamDigitalLenses](
+            communicator, SettingId.WEBCAM_DIGITAL_LENSES, settings.WebcamDigitalLenses
         )
-        """Video easy aspect ratio"""
+        """Webcam Digital Lenses
 
-        self.multi_shot_easy_aspect_ratio: BleSetting[Params.EasyAspectRatio] = BleSetting[Params.EasyAspectRatio](
-            communicator,
-            SettingId.MULTI_SHOT_EASY_ASPECT_RATIO,
-            Params.EasyAspectRatio,
-        )
-        """Multi shot easy aspect ratio"""
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#webcam-digital-lenses-43)"""
 
-        self.multi_shot_nlv_aspect_ratio: BleSetting[Params.EasyAspectRatio] = BleSetting[Params.EasyAspectRatio](
-            communicator,
-            SettingId.MULTI_SHOT_NLV_ASPECT_RATIO,
-            Params.EasyAspectRatio,
+        self.photo_single_interval: BleSetting[settings.PhotoSingleInterval] = BleSetting[settings.PhotoSingleInterval](
+            communicator, SettingId.PHOTO_SINGLE_INTERVAL, settings.PhotoSingleInterval
         )
-        """Multi shot NLV aspect ratio"""
+        """Photo Single Interval
 
-        self.video_mode: BleSetting[Params.VideoMode] = BleSetting[Params.VideoMode](
-            communicator,
-            SettingId.VIDEO_MODE,
-            Params.VideoMode,
-        )
-        """Video Mode (i.e. quality)"""
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-single-interval-171)"""
 
-        self.timelapse_mode: BleSetting[Params.TimelapseMode] = BleSetting[Params.TimelapseMode](
-            communicator,
-            SettingId.TIMELAPSE_MODE,
-            Params.TimelapseMode,
-        )
-        """Timelapse Mode"""
+        self.photo_interval_duration: BleSetting[settings.PhotoIntervalDuration] = BleSetting[
+            settings.PhotoIntervalDuration
+        ](communicator, SettingId.PHOTO_INTERVAL_DURATION, settings.PhotoIntervalDuration)
+        """Photo Interval Duration
 
-        self.maxlens_mod_type: BleSetting[Params.MaxLensModType] = BleSetting[Params.MaxLensModType](
-            communicator,
-            SettingId.ADDON_MAX_LENS_MOD,
-            Params.MaxLensModType,
-        )
-        """Max lens mod? If so, what type?"""
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-interval-duration-172)"""
 
-        self.maxlens_status: BleSetting[Params.Toggle] = BleSetting[Params.Toggle](
-            communicator,
-            SettingId.ADDON_MAX_LENS_MOD_ENABLE,
-            Params.Toggle,
-        )
-        """Enable / disable max lens mod"""
+        self.video_performance_mode: BleSetting[settings.VideoPerformanceMode] = BleSetting[
+            settings.VideoPerformanceMode
+        ](communicator, SettingId.VIDEO_PERFORMANCE_MODE, settings.VideoPerformanceMode)
+        """Video Performance Mode
 
-        self.photo_mode: BleSetting[Params.PhotoMode] = BleSetting[Params.PhotoMode](
-            communicator,
-            SettingId.PHOTO_MODE,
-            Params.PhotoMode,
-        )
-        """Photo Mode"""
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-performance-mode-173)"""
 
-        self.framing: BleSetting[Params.Framing] = BleSetting[Params.Framing](
-            communicator,
-            SettingId.FRAMING,
-            Params.Framing,
+        self.controls: BleSetting[settings.Controls] = BleSetting[settings.Controls](
+            communicator, SettingId.CONTROLS, settings.Controls
         )
-        """Video Framing Mode"""
+        """Controls
 
-        self.hindsight: BleSetting[Params.Hindsight] = BleSetting[Params.Hindsight](
-            communicator,
-            SettingId.HINDSIGHT,
-            Params.Hindsight,
-        )
-        """Hindsight time / disable"""
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#controls-175)"""
 
-        self.photo_interval: BleSetting[Params.PhotoInterval] = BleSetting[Params.PhotoInterval](
-            communicator,
-            SettingId.PHOTO_INTERVAL,
-            Params.PhotoInterval,
+        self.easy_mode_speed: BleSetting[settings.EasyModeSpeed] = BleSetting[settings.EasyModeSpeed](
+            communicator, SettingId.EASY_MODE_SPEED, settings.EasyModeSpeed
         )
-        """Interval between photo captures"""
+        """Easy Mode Speed
 
-        self.photo_duration: BleSetting[Params.PhotoDuration] = BleSetting[Params.PhotoDuration](
-            communicator,
-            SettingId.PHOTO_INTERVAL_DURATION,
-            Params.PhotoDuration,
-        )
-        """Interval between photo captures"""
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-mode-speed-176)"""
 
-        self.photo_output: BleSetting[Params.PhotoOutput] = BleSetting[Params.PhotoOutput](
-            communicator,
-            SettingId.PHOTO_OUTPUT,
-            Params.PhotoOutput,
+        self.enable_night_photo: BleSetting[settings.EnableNightPhoto] = BleSetting[settings.EnableNightPhoto](
+            communicator, SettingId.ENABLE_NIGHT_PHOTO, settings.EnableNightPhoto
         )
-        """File type of photo output"""
+        """Enable Night Photo
 
-        self.video_duration: BleSetting[Params.VideoDuration] = BleSetting[Params.VideoDuration](
-            communicator, SettingId.VIDEO_DURATION, Params.VideoDuration
-        )
-        """If set, a video will automatically be stopped after recording for this long."""
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#enable-night-photo-177)"""
 
-        self.regional_format: BleSetting[Params.RegionalFormat] = BleSetting[Params.RegionalFormat](
-            communicator, SettingId.REGIONAL_FORMAT, Params.RegionalFormat
+        self.wireless_band: BleSetting[settings.WirelessBand] = BleSetting[settings.WirelessBand](
+            communicator, SettingId.WIRELESS_BAND, settings.WirelessBand
         )
+        """Wireless Band
 
-        self.quality_control: BleSetting[Params.QualityControl] = BleSetting[Params.QualityControl](
-            communicator, SettingId.QUALITY_CONTROL, Params.QualityControl
-        )
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#wireless-band-178)"""
 
-        self.camera_volume: BleSetting[Params.Volume] = BleSetting[Params.Volume](
-            communicator, SettingId.CAMERA_VOLUME, Params.Volume
+        self.star_trails_length: BleSetting[settings.StarTrailsLength] = BleSetting[settings.StarTrailsLength](
+            communicator, SettingId.STAR_TRAILS_LENGTH, settings.StarTrailsLength
         )
+        """Star Trails Length
 
-        self.lens_attachment: BleSetting[Params.LensAttachment] = BleSetting[Params.LensAttachment](
-            communicator, SettingId.LENS_ATTACHMENT, Params.LensAttachment
-        )
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#star-trails-length-179)"""
 
-        self.setup_screensaver: BleSetting[Params.ScreenSaverTimeout] = BleSetting[Params.ScreenSaverTimeout](
-            communicator, SettingId.SETUP_SCREEN_SAVER, Params.ScreenSaverTimeout
+        self.system_video_mode: BleSetting[settings.SystemVideoMode] = BleSetting[settings.SystemVideoMode](
+            communicator, SettingId.SYSTEM_VIDEO_MODE, settings.SystemVideoMode
         )
+        """System Video Mode
 
-        self.setup_language: BleSetting[Params.SetupLanguage] = BleSetting[Params.SetupLanguage](
-            communicator, SettingId.SETUP_LANGUAGE, Params.SetupLanguage
-        )
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#system-video-mode-180)"""
 
-        self.auto_power_off: BleSetting[Params.AutoPowerOff] = BleSetting[Params.AutoPowerOff](
-            communicator, SettingId.AUTO_POWER_OFF, Params.AutoPowerOff
+        self.video_bit_rate: BleSetting[settings.VideoBitRate] = BleSetting[settings.VideoBitRate](
+            communicator, SettingId.VIDEO_BIT_RATE, settings.VideoBitRate
         )
+        """Video Bit Rate
 
-        self.photo_mode_v2: BleSetting[Params.PhotoModeV2] = BleSetting[Params.PhotoModeV2](
-            communicator, SettingId.PHOTO_MODE_V2, Params.PhotoModeV2
-        )
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-bit-rate-182)"""
 
-        self.video_digital_lens_v2: BleSetting[Params.VideoLensV2] = BleSetting[Params.VideoLensV2](
-            communicator, SettingId.VIDEO_DIGITAL_LENSES_V2, Params.VideoLensV2
+        self.bit_depth: BleSetting[settings.BitDepth] = BleSetting[settings.BitDepth](
+            communicator, SettingId.BIT_DEPTH, settings.BitDepth
         )
+        """Bit Depth
 
-        self.photo_digital_lens_v2: BleSetting[Params.PhotoLensV2] = BleSetting[Params.PhotoLensV2](
-            communicator, SettingId.PHOTO_DIGITAL_LENSES_V2, Params.PhotoLensV2
-        )
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#bit-depth-183)"""
 
-        self.timelapse_digital_lens_v2: BleSetting[Params.TimelapseLensV2] = BleSetting[Params.TimelapseLensV2](
-            communicator, SettingId.TIMELAPSE_DIGITAL_LENSES_V2, Params.TimelapseLensV2
+        self.profiles: BleSetting[settings.Profiles] = BleSetting[settings.Profiles](
+            communicator, SettingId.PROFILES, settings.Profiles
         )
+        """Profiles
 
-        self.video_framing: BleSetting[Params.VideoFraming] = BleSetting[Params.VideoFraming](
-            communicator, SettingId.VIDEO_FRAMING, Params.VideoFraming
-        )
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#profiles-184)"""
 
-        self.multi_shot_framing: BleSetting[Params.MultishotFraming] = BleSetting[Params.MultishotFraming](
-            communicator, SettingId.MULTI_SHOT_FRAMING, Params.MultishotFraming
+        self.video_easy_mode: BleSetting[settings.VideoEasyMode] = BleSetting[settings.VideoEasyMode](
+            communicator, SettingId.VIDEO_EASY_MODE, settings.VideoEasyMode
         )
+        """Video Easy Mode
 
-        self.frame_rate: BleSetting[Params.FrameRate] = BleSetting[Params.FrameRate](
-            communicator, SettingId.FRAME_RATE, Params.FrameRate
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-easy-mode-186)"""
+
+        self.auto_power_down: BleSetting[settings.AutoPowerDown] = BleSetting[settings.AutoPowerDown](
+            communicator, SettingId.AUTO_POWER_DOWN, settings.AutoPowerDown
         )
+        """Auto Power Down
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#auto-power-down-59)"""
+
+        self.lapse_mode: BleSetting[settings.LapseMode] = BleSetting[settings.LapseMode](
+            communicator, SettingId.LAPSE_MODE, settings.LapseMode
+        )
+        """Lapse Mode
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#lapse-mode-187)"""
+
+        self.max_lens_mod: BleSetting[settings.MaxLensMod] = BleSetting[settings.MaxLensMod](
+            communicator, SettingId.MAX_LENS_MOD, settings.MaxLensMod
+        )
+        """Max Lens Mod
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-189)"""
+
+        self.max_lens_mod_enable: BleSetting[settings.MaxLensModEnable] = BleSetting[settings.MaxLensModEnable](
+            communicator, SettingId.MAX_LENS_MOD_ENABLE, settings.MaxLensModEnable
+        )
+        """Max Lens Mod Enable
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-enable-190)"""
+
+        self.easy_night_photo: BleSetting[settings.EasyNightPhoto] = BleSetting[settings.EasyNightPhoto](
+            communicator, SettingId.EASY_NIGHT_PHOTO, settings.EasyNightPhoto
+        )
+        """Easy Night Photo
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-night-photo-191)"""
+
+        self.multi_shot_aspect_ratio: BleSetting[settings.MultiShotAspectRatio] = BleSetting[
+            settings.MultiShotAspectRatio
+        ](communicator, SettingId.MULTI_SHOT_ASPECT_RATIO, settings.MultiShotAspectRatio)
+        """Multi Shot Aspect Ratio
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-aspect-ratio-192)"""
+
+        self.framing: BleSetting[settings.Framing] = BleSetting[settings.Framing](
+            communicator, SettingId.FRAMING, settings.Framing
+        )
+        """Framing
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#framing-193)"""
+
+        self.gps: BleSetting[settings.Gps] = BleSetting[settings.Gps](communicator, SettingId.GPS, settings.Gps)
+        """GPS
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#gps-83)"""
+
+        self.camera_volume: BleSetting[settings.CameraVolume] = BleSetting[settings.CameraVolume](
+            communicator, SettingId.CAMERA_VOLUME, settings.CameraVolume
+        )
+        """Camera Volume
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-volume-216)"""
+
+        self.led: BleSetting[settings.Led] = BleSetting[settings.Led](communicator, SettingId.LED, settings.Led)
+        """LED
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#led-91)"""
+
+        self.setup_screen_saver: BleSetting[settings.SetupScreenSaver] = BleSetting[settings.SetupScreenSaver](
+            communicator, SettingId.SETUP_SCREEN_SAVER, settings.SetupScreenSaver
+        )
+        """Setup Screen Saver
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-screen-saver-219)"""
+
+        self.setup_language: BleSetting[settings.SetupLanguage] = BleSetting[settings.SetupLanguage](
+            communicator, SettingId.SETUP_LANGUAGE, settings.SetupLanguage
+        )
+        """Setup Language
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-language-223)"""
+
+        self.photo_mode: BleSetting[settings.PhotoMode] = BleSetting[settings.PhotoMode](
+            communicator, SettingId.PHOTO_MODE, settings.PhotoMode
+        )
+        """Photo Mode
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-mode-227)"""
+
+        self.video_framing: BleSetting[settings.VideoFraming] = BleSetting[settings.VideoFraming](
+            communicator, SettingId.VIDEO_FRAMING, settings.VideoFraming
+        )
+        """Video Framing
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-framing-232)"""
+
+        self.multi_shot_framing: BleSetting[settings.MultiShotFraming] = BleSetting[settings.MultiShotFraming](
+            communicator, SettingId.MULTI_SHOT_FRAMING, settings.MultiShotFraming
+        )
+        """Multi Shot Framing
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-framing-233)"""
+
+        self.frame_rate: BleSetting[settings.FrameRate] = BleSetting[settings.FrameRate](
+            communicator, SettingId.FRAME_RATE, settings.FrameRate
+        )
+        """Frame Rate
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#frame-rate-234)"""
+
+        self.video_aspect_ratio: BleSetting[settings.VideoAspectRatio] = BleSetting[settings.VideoAspectRatio](
+            communicator, SettingId.VIDEO_ASPECT_RATIO, settings.VideoAspectRatio
+        )
+        """Video Aspect Ratio
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-aspect-ratio-108)"""
+
+        self.video_lens: BleSetting[settings.VideoLens] = BleSetting[settings.VideoLens](
+            communicator, SettingId.VIDEO_LENS, settings.VideoLens
+        )
+        """Video Lens
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-lens-121)"""
+
+        self.photo_lens: BleSetting[settings.PhotoLens] = BleSetting[settings.PhotoLens](
+            communicator, SettingId.PHOTO_LENS, settings.PhotoLens
+        )
+        """Photo Lens
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-lens-122)"""
+
+        self.time_lapse_digital_lenses: BleSetting[settings.TimeLapseDigitalLenses] = BleSetting[
+            settings.TimeLapseDigitalLenses
+        ](communicator, SettingId.TIME_LAPSE_DIGITAL_LENSES, settings.TimeLapseDigitalLenses)
+        """Time Lapse Digital Lenses
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#time-lapse-digital-lenses-123)"""
+
+        self.photo_output: BleSetting[settings.PhotoOutput] = BleSetting[settings.PhotoOutput](
+            communicator, SettingId.PHOTO_OUTPUT, settings.PhotoOutput
+        )
+        """Photo Output
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-output-125)"""
 
         super().__init__(communicator)

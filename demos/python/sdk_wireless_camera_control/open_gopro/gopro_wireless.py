@@ -478,7 +478,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         Returns:
             bool: True if it succeeded,. False otherwise
         """
-        return (await self.ble_setting.led.set(Params.LED.BLE_KEEP_ALIVE)).ok
+        return (await self.ble_setting.led.set(Params.LED.BLE_KEEP_ALIVE)).ok  # type: ignore
 
     @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
     async def connect_to_access_point(self, ssid: str, password: str) -> bool:
