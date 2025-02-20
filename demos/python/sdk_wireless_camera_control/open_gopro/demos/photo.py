@@ -22,20 +22,6 @@ async def main(args: argparse.Namespace) -> None:
 
     gopro: GoProBase | None = None
 
-    async with WirelessGoPro() as gopro:
-        await gopro.ble_setting.video_resolution.set(constants.settings.VideoResolution.NUM_4K)
-        await gopro.ble_setting.video_lens.set(constants.settings.VideoLens.LINEAR)
-        await gopro.ble_command.set_shutter(shutter=constants.Toggle.ENABLE)
-        await asyncio.sleep(2)  # Record for 2 seconds
-        await gopro.ble_command.set_shutter(shutter=constants.Toggle.DISABLE)
-
-        # Download all of the files from the camera
-        media_list = (await gopro.http_command.get_media_list()).data.files
-        for item in media_list:
-            await gopro.http_command.download_file(camera_file=item.filename)
-
-    return
-
     try:
         async with (
             WiredGoPro(args.identifier)
@@ -43,10 +29,6 @@ async def main(args: argparse.Namespace) -> None:
             else WirelessGoPro(args.identifier, wifi_interface=args.wifi_interface)
         ) as gopro:
             assert gopro
-
-            await gopro.ble_status.internal_battery_percentage.register_value_update(process_battery_notifications)
-            await gopro.ble_status.internal_battery_bars.register_value_update(process_battery_notifications)
-
             assert (await gopro.http_command.load_preset_group(group=proto.EnumPresetGroup.PRESET_GROUP_ID_PHOTO)).ok
 
             # Get the media list before

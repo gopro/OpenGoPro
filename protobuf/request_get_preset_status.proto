@@ -35,5 +35,4 @@ enum EnumRegisterPresetStatus {
 message RequestGetPresetStatus {
     repeated EnumRegisterPresetStatus register_preset_status   = 1; // Array of Preset statuses to be notified about
     repeated EnumRegisterPresetStatus unregister_preset_status = 2; // Array of Preset statuses to stop being notified about
-    optional bool                     use_constant_setting_ids = 3; // Flag to determine if we should use proxied settings. When not supplied, it is also considered to be false.
 }
