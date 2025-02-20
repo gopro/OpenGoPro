@@ -474,8 +474,6 @@ class BleRespBuilder(RespBuilder[bytearray]):
                     param_len = buf[1]
                     try:
                         param_id = query_type(buf[0])  # type: ignore
-                        print(f"parsing {param_id}")
-                        print("")
                     except ValueError:
                         # We don't handle this entity. Ensure to advance past the value.
                         buf = buf[2 + param_len :]
