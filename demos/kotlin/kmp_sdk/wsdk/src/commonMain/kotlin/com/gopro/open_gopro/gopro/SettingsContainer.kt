@@ -1,6 +1,3 @@
-/* SettingsContainer.kt/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Tue Feb 18 18:41:29 UTC 2025 */
-
 package com.gopro.open_gopro.gopro
 
 /************************************************************************************************************
@@ -95,7 +92,7 @@ class SettingsContainer internal constructor(marshaller: IOperationMarshaller) {
      * Nightlapse Rate
      *
      * How frequently to take a video or photo when performing a Nightlapse.
-     *
+     * 
      * This controls the Video or Photo Nightlapse rate if Setting 128 is set to 21 or 26 respectively.
      *
      * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#nightlapse-rate-32)

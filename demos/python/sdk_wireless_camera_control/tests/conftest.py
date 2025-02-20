@@ -44,7 +44,7 @@ from open_gopro.communicator_interface import (
     HttpMessage,
     MessageRules,
 )
-from open_gopro.constants import CmdId, GoProUUIDs, StatusId
+from open_gopro.constants import CmdId, GoProUUID, StatusId
 from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
 from open_gopro.gopro_base import GoProBase
 from open_gopro.logger import set_logging_level, setup_logging
@@ -158,7 +158,7 @@ def mock_gatt_db(mock_service: Service):
 @dataclass
 class MockGattTable:
     def handle2uuid(self, *args):
-        return GoProUUIDs.CQ_QUERY_RESP
+        return GoProUUID.CQ_QUERY_RESP
 
 
 class MockBleController(BLEController, Generic[BleHandle, BleDevice]):
@@ -399,7 +399,7 @@ class MockWirelessGoPro(WirelessGoPro):
         self._ble.write = self._mock_write
         self._ble._gatt_table = MockGattTable()
         self._ble._controller.disconnect = self._disconnect_handler
-        self._test_response_uuid = GoProUUIDs.CQ_COMMAND
+        self._test_response_uuid = GoProUUID.CQ_COMMAND
         self._test_response_data = bytearray()
 
     async def _open_wifi(self, timeout: int = 15, retries: int = 5) -> None:
@@ -481,8 +481,8 @@ class MockGoProMaintainBle(WirelessGoPro):
         )
         self._test_version = "2.0"
         self._api.ble_command.get_open_gopro_api_version = self._mock_get_version
-        self.ble_status.encoding_active.register_value_update = self._mock_register_encoding
-        self.ble_status.system_busy.register_value_update = self._mock_register_busy
+        self.ble_status.encoding.register_value_update = self._mock_register_encoding
+        self.ble_status.busy.register_value_update = self._mock_register_busy
         self.ble_setting.led.set = self._mock_led_set
         self._open_wifi = self._mock_open_wifi
         self._sync_resp_ready_q.get = self._mock_q_get
@@ -500,10 +500,10 @@ class MockGoProMaintainBle(WirelessGoPro):
         return DataPatch({StatusId.ENCODING: 1})
 
     async def _mock_register_busy(self, *args):
-        return DataPatch({StatusId.SYSTEM_BUSY: 1})
+        return DataPatch({StatusId.BUSY: 1})
 
     async def mock_handle2uuid(self, *args):
-        return GoProUUIDs.CQ_QUERY_RESP
+        return GoProUUID.CQ_QUERY_RESP
 
     async def _open_ble(self, timeout: int, retries: int) -> None:
         await super()._open_ble(timeout=timeout, retries=retries)

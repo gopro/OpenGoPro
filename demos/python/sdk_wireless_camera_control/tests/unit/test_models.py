@@ -3,7 +3,7 @@
 
 from typing import Final
 
-from open_gopro import constants
+from open_gopro.constants import constants
 from open_gopro.models import (
     GroupedMediaItem,
     MediaItem,

@@ -4,8 +4,9 @@
 # Open GoPro API Versions to test
 versions = ["2.0"]
 
-from open_gopro import GoProResp, constants
+from open_gopro import GoProResp
 from open_gopro.api import WirelessApi
+from open_gopro.constants import constants
 
 # The global parser map only gets set when API is instantiated. So ensure this is done.
 WirelessApi(None)  # type: ignore

@@ -61,6 +61,7 @@ class RequestGetPresetStatus(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     REGISTER_PRESET_STATUS_FIELD_NUMBER: builtins.int
     UNREGISTER_PRESET_STATUS_FIELD_NUMBER: builtins.int
+    USE_CONSTANT_SETTING_IDS_FIELD_NUMBER: builtins.int
 
     @property
     def register_preset_status(
@@ -73,13 +74,20 @@ class RequestGetPresetStatus(google.protobuf.message.Message):
         self,
     ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[global___EnumRegisterPresetStatus.ValueType]:
         """Array of Preset statuses to stop being notified about"""
+    use_constant_setting_ids: builtins.bool
+    "Flag to determine if we should use proxied settings. When not supplied, it is also considered to be false."
 
     def __init__(
         self,
         *,
         register_preset_status: collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType] | None = ...,
-        unregister_preset_status: collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType] | None = ...
+        unregister_preset_status: collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType] | None = ...,
+        use_constant_setting_ids: builtins.bool | None = ...
     ) -> None: ...
+    def HasField(
+        self,
+        field_name: typing_extensions.Literal["use_constant_setting_ids", b"use_constant_setting_ids"],
+    ) -> builtins.bool: ...
     def ClearField(
         self,
         field_name: typing_extensions.Literal[
@@ -87,6 +95,8 @@ class RequestGetPresetStatus(google.protobuf.message.Message):
             b"register_preset_status",
             "unregister_preset_status",
             b"unregister_preset_status",
+            "use_constant_setting_ids",
+            b"use_constant_setting_ids",
         ],
     ) -> None: ...
 

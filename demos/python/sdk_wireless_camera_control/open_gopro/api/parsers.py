@@ -97,18 +97,14 @@ class JsonParsers:
             # Parse status and settings values into nice human readable things
             for name, id_map in [("status", StatusId), ("settings", SettingId)]:
                 for k, v in data[name].items():
-                    identifier = cast(ResponseType, id_map(int(k)))
                     try:
+                        identifier = cast(ResponseType, id_map(int(k)))
                         if not (parser_builder := GlobalParsers.get_query_container(identifier)):
                             parsed[identifier] = v
                         else:
                             parsed[identifier] = parser_builder(v)
                     except ValueError:
-                        # This is the case where we receive a value that is not defined in our params.
-                        # This shouldn't happen and is either a firmware bug or means the documentation needs to
-                        # be updated. However, it isn't functionally critical.
-                        logger.warning(f"{str(identifier)} does not contain a value {v}")
-                        parsed[identifier] = v
+                        continue
             return parsed
 
 

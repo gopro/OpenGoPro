@@ -61,16 +61,16 @@ These should not be imported directly and instead should be accessed using the r
 .. autoclass:: open_gopro.api.ble_commands.BleCommands
    :show-inheritance:
 
-.. autoclass:: open_gopro.api.ble_commands.BleSettings
+.. autoclass:: open_gopro.api.ble_settings.BleSettings
    :show-inheritance:
 
-.. autoclass:: open_gopro.api.ble_commands.BleStatuses
+.. autoclass:: open_gopro.api.ble_statuses.BleStatuses
    :show-inheritance:
 
 .. autoclass:: open_gopro.api.http_commands.HttpCommands
    :show-inheritance:
 
-.. autoclass:: open_gopro.api.http_commands.HttpSettings
+.. autoclass:: open_gopro.api.http_settings.HttpSettings
    :show-inheritance:
 
 Base Types
@@ -141,18 +141,6 @@ but the end user should never need to use these directly.
 
 .. autoclass:: open_gopro.communicator_interface.MessageRules
 
-Parameters
-----------
-
-All of these parameters can be accessed via:
-
-.. code-block:: python
-
-   from open_gopro import Params
-
-.. automodule:: open_gopro.api.params
-   :undoc-members:
-
 Responses
 =========
 
@@ -211,10 +199,18 @@ These can be imported as:
 
    from open_gopro import constants
 
-
 .. automodule:: open_gopro.constants
    :undoc-members:
    :exclude-members: CmdType, GoProEnumMeta, GoProFlagEnum, ProducerType, ResponseType, enum_factory
+
+.. automodule:: open_gopro.constants.constants
+   :undoc-members:
+
+.. automodule:: open_gopro.constants.settings
+   :undoc-members:
+
+.. automodule:: open_gopro.constants.statuses
+   :undoc-members:
 
 Exceptions
 ==========

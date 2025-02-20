@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "open_gopro"
-version = "0.18.0"
+version = "0.19.0"
 description = "Open GoPro API and Examples"
 authors = ["Tim Camise <tcamise@gopro.com>"]
 readme = "README.md"
@@ -201,7 +201,7 @@ addopts = [
 data_file = ".reports/coverage/.coverage"
 branch = true
 source = ["open_gopro"]
-omit = ["*/constants.py", "*/params.py", "open_gopro/proto*", "open_gopro/demos*"]
+omit = ["constants/**.py", "open_gopro/proto*", "open_gopro/demos*"]
 
 [tool.coverage.html]
 directory = ".reports/coverage"

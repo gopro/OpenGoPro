@@ -1,6 +1,3 @@
-/* Statuses.kt/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Tue Feb 18 18:41:29 UTC 2025 */
-
 package com.gopro.open_gopro.operations
 
 /************************************************************************************************************
@@ -30,8 +27,8 @@ enum class StatusId(override val value: UByte) : IValuedEnum<UByte> {
     REMOTE_VERSION(26U),
     REMOTE_CONNECTED(27U),
     PAIRING_STATE_LEGACY_(28U),
-    AP_SSID(29U),
-    WIFI_SSID(30U),
+    CONNECTED_WIFI_SSID(29U),
+    ACCESS_POINT_SSID(30U),
     CONNECTED_DEVICES(31U),
     PREVIEW_STREAM(32U),
     PRIMARY_STORAGE(33U),

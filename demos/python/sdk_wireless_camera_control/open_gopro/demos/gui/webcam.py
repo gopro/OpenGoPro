@@ -10,7 +10,7 @@ from typing import Final
 
 from rich.console import Console
 
-from open_gopro import Params, WiredGoPro, WirelessGoPro
+from open_gopro import WiredGoPro, WirelessGoPro, constants
 from open_gopro.constants import WebcamError, WebcamStatus
 from open_gopro.demos.gui.util import display_video_blocking
 from open_gopro.gopro_base import GoProBase
@@ -69,9 +69,9 @@ async def main(args: argparse.Namespace) -> int:
                 assert await gopro.is_cohn_provisioned
                 assert await gopro.configure_cohn()
             else:
-                await gopro.http_command.wired_usb_control(control=Params.Toggle.DISABLE)
+                await gopro.http_command.wired_usb_control(control=constants.Toggle.DISABLE)
 
-            await gopro.http_command.set_shutter(shutter=Params.Toggle.DISABLE)
+            await gopro.http_command.set_shutter(shutter=constants.Toggle.DISABLE)
             if (await gopro.http_command.webcam_status()).data.status not in {
                 WebcamStatus.OFF,
                 WebcamStatus.IDLE,

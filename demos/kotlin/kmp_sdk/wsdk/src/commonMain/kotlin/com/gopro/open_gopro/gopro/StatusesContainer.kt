@@ -1,6 +1,3 @@
-/* StatusesContainer.kt/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Tue Feb 18 18:41:30 UTC 2025 */
-
 package com.gopro.open_gopro.gopro
 
 /************************************************************************************************************
@@ -196,25 +193,28 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
     val pairingState_Legacy_ = Status(StatusId.PAIRING_STATE_LEGACY_, marshaller,::toInt8)
 
     /**
-     * AP SSID
+     * Connected WiFi SSID
      *
-     * SSID of the AP the camera is currently connected to when the camera is connected as a STA. When read via BLE,
-     * value is big-endian byte-encoded int32.
+     * The name of the wireless network that the camera is connected to where the camera is acting as a client/station.
+     * 
+     * When read via BLE, this value is big-endian byte-encoded int32.
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#ap-ssid-29)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#connected-wifi-ssid-29)
      */
-    val apSsid = Status(StatusId.AP_SSID, marshaller,::toString
-    )
+    val connectedWifiSsid = Status(StatusId.CONNECTED_WIFI_SSID, marshaller,::toString
+)
 
     /**
-     * WiFi SSID
+     * Access Point SSID
      *
-     * The camera's WiFi SSID. On BLE connection, value is big-endian byte-encoded int32
+     * The name of the network that the camera sets up in AP mode for other devices to connect to.
+     * 
+     * When read via BLE, this value is big-endian byte-encoded int32.
      *
-     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#wifi-ssid-30)
+     * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#access-point-ssid-30)
      */
-    val wifiSsid = Status(StatusId.WIFI_SSID, marshaller,::toString
-    )
+    val accessPointSsid = Status(StatusId.ACCESS_POINT_SSID, marshaller,::toString
+)
 
     /**
      * Connected Devices
@@ -245,9 +245,9 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      * Remaining Photos
      *
      * How many photos can be taken with current settings before sdcard is full.
-     *
+     * 
      * Alternatively, this is:
-     *
+     * 
      * - the remaining timelapse capability if Setting 128 is set to Timelapse Photo
      * - the remaining nightlapse capability if Setting 128 is set to Nightlapse Photo
      *
@@ -259,9 +259,9 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
      * Remaining Video Time
      *
      * How many seconds of video can be captured with current settings before sdcard is full
-     *
+     * 
      * Alternatively, this is:
-     *
+     * 
      * - the remaining timelapse capability if Setting 128 is set to Timelapse Video
      * - the remaining nightlapse capability if Setting 128 is set to Nightlapse Video
      *

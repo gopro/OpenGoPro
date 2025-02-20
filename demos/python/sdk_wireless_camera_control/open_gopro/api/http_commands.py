@@ -1,7 +1,7 @@
 # http_commands.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http:/gopro.com/OpenGoPro).
 # This copyright was auto-generated on Tue Sep  7 21:35:52 UTC 2021
 
-"""HTTP API for Open GoPro version 2.0"""
+"""HTTP Commands"""
 
 # mypy: disable-error-code=empty-body
 
@@ -11,28 +11,19 @@ import datetime
 import logging
 from pathlib import Path
 
-from open_gopro import proto
+from open_gopro import constants, proto
 from open_gopro.api.builders import (
-    HttpSetting,
     http_get_binary_command,
     http_get_json_command,
     http_put_json_command,
 )
 from open_gopro.api.parsers import JsonParsers
-from open_gopro.communicator_interface import (
-    GoProHttp,
-    HttpMessage,
-    HttpMessages,
-    MessageRules,
-)
-from open_gopro.constants import SettingId
+from open_gopro.communicator_interface import HttpMessage, HttpMessages, MessageRules
 from open_gopro.models import CameraInfo, MediaList, MediaMetadata, MediaPath
 from open_gopro.models.general import WebcamResponse
 from open_gopro.models.response import GoProResp
 from open_gopro.parser_interface import Parser
 from open_gopro.types import CameraState, JsonDict
-
-from . import params as Params
 
 logger = logging.getLogger(__name__)
 
@@ -176,11 +167,11 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """
 
     @http_get_json_command(endpoint="gopro/media/turbo_transfer", arguments=["p"])
-    async def set_turbo_mode(self, *, mode: Params.Toggle) -> GoProResp[None]:
+    async def set_turbo_mode(self, *, mode: constants.Toggle) -> GoProResp[None]:
         """Enable or disable Turbo transfer mode.
 
         Args:
-            mode (Params.Toggle): enable / disable turbo mode
+            mode (constants.Toggle): enable / disable turbo mode
 
         Returns:
             GoProResp[None]: Status
@@ -238,18 +229,18 @@ class HttpCommands(HttpMessages[HttpMessage]):
     @http_get_json_command(
         endpoint="gopro/camera/stream", arguments=["port"], components=["mode"], identifier="Preview Stream"
     )
-    async def set_preview_stream(self, *, mode: Params.Toggle, port: int | None = None) -> GoProResp[None]:
+    async def set_preview_stream(self, *, mode: constants.Toggle, port: int | None = None) -> GoProResp[None]:
         """Start or stop the preview stream
 
         Args:
-            mode (Params.Toggle): enable to start or disable to stop
+            mode (constants.Toggle): enable to start or disable to stop
             port (int | None): Port to use for Preview Stream. Defaults to 8554 if None.
                 Only relevant when starting the stream.
 
         Returns:
             GoProResp[None]: command status
         """
-        return {"mode": "start" if mode is Params.Toggle.ENABLE else "stop", "port": port}  # type: ignore
+        return {"mode": "start" if mode is constants.Toggle.ENABLE else "stop", "port": port}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/camera/analytics/set_client_info")
     async def set_third_party_client_info(self) -> GoProResp[None]:
@@ -267,23 +258,23 @@ class HttpCommands(HttpMessages[HttpMessage]):
             wait_for_encoding_analyzer=lambda **kwargs: kwargs["mode"] == "start",
         ),
     )
-    async def set_shutter(self, *, shutter: Params.Toggle) -> GoProResp[None]:
+    async def set_shutter(self, *, shutter: constants.Toggle) -> GoProResp[None]:
         """Set the shutter on or off
 
         Args:
-            shutter (Params.Toggle): on or off (i.e. start or stop encoding)
+            shutter (constants.Toggle): on or off (i.e. start or stop encoding)
 
         Returns:
             GoProResp[None]: command status
         """
-        return {"mode": "start" if shutter is Params.Toggle.ENABLE else "stop"}  # type: ignore
+        return {"mode": "start" if shutter is constants.Toggle.ENABLE else "stop"}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/camera/control/set_ui_controller", arguments=["p"])
-    async def set_camera_control(self, *, mode: Params.CameraControl) -> GoProResp[None]:
+    async def set_camera_control(self, *, mode: constants.CameraControl) -> GoProResp[None]:
         """Configure global behaviors by setting camera control (to i.e. Idle, External)
 
         Args:
-            mode (Params.CameraControl): desired camera control value
+            mode (constants.CameraControl): desired camera control value
 
         Returns:
             GoProResp[None]: command status
@@ -406,18 +397,18 @@ class HttpCommands(HttpMessages[HttpMessage]):
     async def webcam_start(
         self,
         *,
-        resolution: Params.WebcamResolution | None = None,
-        fov: Params.WebcamFOV | None = None,
+        resolution: constants.WebcamResolution | None = None,
+        fov: constants.WebcamFOV | None = None,
         port: int | None = None,
-        protocol: Params.WebcamProtocol | None = None,
+        protocol: constants.WebcamProtocol | None = None,
     ) -> GoProResp[WebcamResponse]:
         """Start the webcam.
 
         Args:
-            resolution (Params.WebcamResolution | None): resolution to use. If not set, camera default will be used.
-            fov (Params.WebcamFOV | None): field of view to use. If not set, camera default will be used.
+            resolution (constants.WebcamResolution | None): resolution to use. If not set, camera default will be used.
+            fov (constants.WebcamFOV | None): field of view to use. If not set, camera default will be used.
             port (int | None): port to use for streaming. If not set, camera default of 8554 will be used.
-            protocol (Params.WebcamProtocol | None): streaming protocol to use. If not set, camera default of TS will
+            protocol (constants.WebcamProtocol | None): streaming protocol to use. If not set, camera default of TS will
                 be used.
 
         Returns:
@@ -453,11 +444,11 @@ class HttpCommands(HttpMessages[HttpMessage]):
         endpoint="gopro/camera/control/wired_usb",
         arguments=["p"],
     )
-    async def wired_usb_control(self, *, control: Params.Toggle) -> GoProResp[None]:
+    async def wired_usb_control(self, *, control: constants.Toggle) -> GoProResp[None]:
         """Enable / disable wired usb control
 
         Args:
-            control (Params.Toggle): enable or disable
+            control (constants.Toggle): enable or disable
 
         Returns:
             GoProResp[None]: command status
@@ -533,265 +524,3 @@ class HttpCommands(HttpMessages[HttpMessage]):
         Returns:
             GoProResp[Path]: Path to local_file that output was written to
         """
-
-
-class HttpSettings(HttpMessages[HttpSetting]):
-    # pylint: disable=missing-class-docstring, unused-argument
-    """The collection of all HTTP Settings
-
-    Args:
-        communicator (GoProHttp): Adapter to read / write settings
-    """
-
-    def __init__(self, communicator: GoProHttp):
-        self.resolution: HttpSetting[Params.Resolution] = HttpSetting[Params.Resolution](
-            communicator, SettingId.RESOLUTION
-        )
-        """Resolution."""
-
-        self.fps: HttpSetting[Params.FPS] = HttpSetting[Params.FPS](communicator, SettingId.FPS)
-        """Frames per second."""
-
-        self.auto_off: HttpSetting[Params.AutoOff] = HttpSetting[Params.AutoOff](communicator, SettingId.AUTO_OFF)
-        """Set the auto off time."""
-
-        self.video_field_of_view: HttpSetting[Params.VideoFOV] = HttpSetting[Params.VideoFOV](
-            communicator, SettingId.VIDEO_FOV
-        )
-        """Video FOV."""
-
-        self.photo_field_of_view: HttpSetting[Params.PhotoFOV] = HttpSetting[Params.PhotoFOV](
-            communicator, SettingId.PHOTO_FOV
-        )
-        """Photo FOV."""
-
-        self.multi_shot_field_of_view: HttpSetting[Params.MultishotFOV] = HttpSetting[Params.MultishotFOV](
-            communicator, SettingId.MULTI_SHOT_FOV
-        )
-        """Multi-shot FOV."""
-
-        self.max_lens_mode: HttpSetting[Params.MaxLensMode] = HttpSetting[Params.MaxLensMode](
-            communicator, SettingId.MAX_LENS_MOD
-        )
-        """Enable / disable max lens mod."""
-
-        self.hypersmooth: HttpSetting[Params.HypersmoothMode] = HttpSetting[Params.HypersmoothMode](
-            communicator, SettingId.HYPERSMOOTH
-        )
-        """Set / disable hypersmooth."""
-
-        self.video_performance_mode: HttpSetting[Params.PerformanceMode] = HttpSetting[Params.PerformanceMode](
-            communicator, SettingId.VIDEO_PERFORMANCE_MODE
-        )
-        """Video Performance Mode (extended battery, tripod, etc)."""
-
-        self.media_format: HttpSetting[Params.MediaFormat] = HttpSetting[Params.MediaFormat](
-            communicator, SettingId.MEDIA_FORMAT
-        )
-        """Set the media format."""
-
-        self.anti_flicker: HttpSetting[Params.AntiFlicker] = HttpSetting[Params.AntiFlicker](
-            communicator, SettingId.ANTI_FLICKER
-        )
-        """Anti Flicker frequency."""
-
-        self.camera_ux_mode: HttpSetting[Params.CameraUxMode] = HttpSetting[Params.CameraUxMode](
-            communicator, SettingId.CAMERA_UX_MODE
-        )
-        """Camera controls configuration."""
-
-        self.video_easy_mode: HttpSetting[int] = HttpSetting[int](communicator, SettingId.VIDEO_EASY_MODE)
-        """Video easy mode speed."""
-
-        self.photo_easy_mode: HttpSetting[Params.PhotoEasyMode] = HttpSetting[Params.PhotoEasyMode](
-            communicator, SettingId.PHOTO_EASY_MODE
-        )
-        """Night Photo easy mode."""
-
-        self.wifi_band: HttpSetting[Params.WifiBand] = HttpSetting[Params.WifiBand](communicator, SettingId.WIFI_BAND)
-        """Current WiFi band being used."""
-
-        self.star_trail_length: HttpSetting[Params.StarTrailLength] = HttpSetting[Params.StarTrailLength](
-            communicator, SettingId.STAR_TRAIL_LENGTH
-        )
-        """Multi shot star trail length."""
-
-        self.system_video_mode: HttpSetting[Params.SystemVideoMode] = HttpSetting[Params.SystemVideoMode](
-            communicator, SettingId.SYSTEM_VIDEO_MODE
-        )
-        """System video mode."""
-
-        self.video_horizon_leveling: HttpSetting[Params.HorizonLeveling] = HttpSetting[Params.HorizonLeveling](
-            communicator, SettingId.VIDEO_HORIZON_LEVELING
-        )
-        """Lock / unlock horizon leveling for video."""
-
-        self.photo_horizon_leveling: HttpSetting[Params.HorizonLeveling] = HttpSetting[Params.HorizonLeveling](
-            communicator, SettingId.PHOTO_HORIZON_LEVELING
-        )
-        """Lock / unlock horizon leveling for photo."""
-
-        self.bit_rate: HttpSetting[Params.BitRate] = HttpSetting[Params.BitRate](
-            communicator,
-            SettingId.BIT_RATE,
-        )
-        """System Video Bit Rate."""
-
-        self.bit_depth: HttpSetting[Params.BitDepth] = HttpSetting[Params.BitDepth](
-            communicator,
-            SettingId.BIT_DEPTH,
-        )
-        """System Video Bit depth."""
-
-        self.video_profile: HttpSetting[Params.VideoProfile] = HttpSetting[Params.VideoProfile](
-            communicator,
-            SettingId.VIDEO_PROFILE,
-        )
-        """Video Profile (hdr, etc.)"""
-
-        self.video_aspect_ratio: HttpSetting[Params.VideoAspectRatio] = HttpSetting[Params.VideoAspectRatio](
-            communicator,
-            SettingId.VIDEO_ASPECT_RATIO,
-        )
-        """Video aspect ratio"""
-
-        self.video_easy_aspect_ratio: HttpSetting[Params.EasyAspectRatio] = HttpSetting[Params.EasyAspectRatio](
-            communicator,
-            SettingId.VIDEO_EASY_ASPECT_RATIO,
-        )
-        """Video easy aspect ratio"""
-
-        self.multi_shot_easy_aspect_ratio: HttpSetting[Params.EasyAspectRatio] = HttpSetting[Params.EasyAspectRatio](
-            communicator,
-            SettingId.MULTI_SHOT_EASY_ASPECT_RATIO,
-        )
-        """Multi shot easy aspect ratio"""
-
-        self.multi_shot_nlv_aspect_ratio: HttpSetting[Params.EasyAspectRatio] = HttpSetting[Params.EasyAspectRatio](
-            communicator,
-            SettingId.MULTI_SHOT_NLV_ASPECT_RATIO,
-        )
-        """Multi shot NLV aspect ratio"""
-
-        self.video_mode: HttpSetting[Params.VideoMode] = HttpSetting[Params.VideoMode](
-            communicator,
-            SettingId.VIDEO_MODE,
-        )
-        """Video Mode (i.e. quality)"""
-
-        self.timelapse_mode: HttpSetting[Params.TimelapseMode] = HttpSetting[Params.TimelapseMode](
-            communicator,
-            SettingId.TIMELAPSE_MODE,
-        )
-        """Timelapse Mode"""
-
-        self.maxlens_mod_type: HttpSetting[Params.MaxLensModType] = HttpSetting[Params.MaxLensModType](
-            communicator,
-            SettingId.ADDON_MAX_LENS_MOD,
-        )
-        """Max lens mod? If so, what type?"""
-
-        self.maxlens_status: HttpSetting[Params.Toggle] = HttpSetting[Params.Toggle](
-            communicator,
-            SettingId.ADDON_MAX_LENS_MOD_ENABLE,
-        )
-        """Enable / disable max lens mod"""
-
-        self.photo_mode: HttpSetting[Params.PhotoMode] = HttpSetting[Params.PhotoMode](
-            communicator,
-            SettingId.PHOTO_MODE,
-        )
-        """Photo Mode"""
-
-        self.framing: HttpSetting[Params.Framing] = HttpSetting[Params.Framing](
-            communicator,
-            SettingId.FRAMING,
-        )
-        """Video Framing Mode"""
-
-        self.hindsight: HttpSetting[Params.Hindsight] = HttpSetting[Params.Hindsight](
-            communicator,
-            SettingId.HINDSIGHT,
-        )
-        """Hindsight time / disable"""
-
-        self.photo_interval: HttpSetting[Params.PhotoInterval] = HttpSetting[Params.PhotoInterval](
-            communicator,
-            SettingId.PHOTO_INTERVAL,
-        )
-        """Interval between photo captures"""
-
-        self.photo_duration: HttpSetting[Params.PhotoDuration] = HttpSetting[Params.PhotoDuration](
-            communicator,
-            SettingId.PHOTO_INTERVAL_DURATION,
-        )
-        """Interval between photo captures"""
-
-        self.photo_output: HttpSetting[Params.PhotoOutput] = HttpSetting[Params.PhotoOutput](
-            communicator,
-            SettingId.PHOTO_OUTPUT,
-        )
-        """File type of photo output"""
-
-        self.video_duration: HttpSetting[Params.VideoDuration] = HttpSetting[Params.VideoDuration](
-            communicator, SettingId.VIDEO_DURATION
-        )
-        """If set, a video will automatically be stopped after recording for this long."""
-
-        self.regional_format: HttpSetting[Params.RegionalFormat] = HttpSetting[Params.RegionalFormat](
-            communicator, SettingId.REGIONAL_FORMAT
-        )
-
-        self.quality_control: HttpSetting[Params.QualityControl] = HttpSetting[Params.QualityControl](
-            communicator, SettingId.QUALITY_CONTROL
-        )
-
-        self.camera_volume: HttpSetting[Params.Volume] = HttpSetting[Params.Volume](
-            communicator, SettingId.CAMERA_VOLUME
-        )
-
-        self.lens_attachment: HttpSetting[Params.LensAttachment] = HttpSetting[Params.LensAttachment](
-            communicator, SettingId.LENS_ATTACHMENT
-        )
-
-        self.setup_screensaver: HttpSetting[Params.ScreenSaverTimeout] = HttpSetting[Params.ScreenSaverTimeout](
-            communicator, SettingId.SETUP_SCREEN_SAVER
-        )
-
-        self.setup_language: HttpSetting[Params.SetupLanguage] = HttpSetting[Params.SetupLanguage](
-            communicator, SettingId.SETUP_LANGUAGE
-        )
-
-        self.auto_power_off: HttpSetting[Params.AutoPowerOff] = HttpSetting[Params.AutoPowerOff](
-            communicator, SettingId.AUTO_POWER_OFF
-        )
-
-        self.photo_mode_v2: HttpSetting[Params.PhotoModeV2] = HttpSetting[Params.PhotoModeV2](
-            communicator, SettingId.PHOTO_MODE_V2
-        )
-
-        self.video_digital_lens_v2: HttpSetting[Params.VideoLensV2] = HttpSetting[Params.VideoLensV2](
-            communicator, SettingId.VIDEO_DIGITAL_LENSES_V2
-        )
-
-        self.photo_digital_lens_v2: HttpSetting[Params.PhotoLensV2] = HttpSetting[Params.PhotoLensV2](
-            communicator, SettingId.PHOTO_DIGITAL_LENSES_V2
-        )
-
-        self.timelapse_digital_lens_v2: HttpSetting[Params.TimelapseLensV2] = HttpSetting[Params.TimelapseLensV2](
-            communicator, SettingId.TIMELAPSE_DIGITAL_LENSES_V2
-        )
-
-        self.video_framing: HttpSetting[Params.VideoFraming] = HttpSetting[Params.VideoFraming](
-            communicator, SettingId.VIDEO_FRAMING
-        )
-
-        self.multi_shot_framing: HttpSetting[Params.MultishotFraming] = HttpSetting[Params.MultishotFraming](
-            communicator, SettingId.MULTI_SHOT_FRAMING
-        )
-
-        self.frame_rate: HttpSetting[Params.FrameRate] = HttpSetting[Params.FrameRate](
-            communicator, SettingId.FRAME_RATE
-        )
-
-        super().__init__(communicator)
