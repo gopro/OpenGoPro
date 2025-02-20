@@ -39,7 +39,7 @@
             Open GoPro Python SDK
           </a>
               <div class="version">
-                0.18.0
+                0.19.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -320,12 +320,12 @@ Do not confuse this with <cite>asyncio</cite>: all operations from the user’s 
 <section id="selecting-parameters">
 <h3>Selecting Parameters<a class="headerlink" href="#selecting-parameters" title="Link to this heading"></a></h3>
 <p>Whenever a parameter is required for a message, it will be type-hinted in the method definition as either a standard Python type
-or an Enum from the <a class="reference internal" href="api.html#parameters"><span class="std std-ref">Params</span></a> module.</p>
+or an Enum from the <a class="reference internal" href="api.html#constants"><span class="std std-ref">constants</span></a> module.</p>
 <p>Here is a full example for clarity:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">open_gopro</span><span class="w"> </span><span class="kn">import</span> <span class="n">WirelessGoPro</span><span class="p">,</span> <span class="n">Params</span>
 
-<span class="k">with</span> <span class="n">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
-    <span class="n">gopro</span><span class="o">.</span><span class="n">ble_command</span><span class="o">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">Params</span><span class="o">.</span><span class="n">Toggle</span><span class="o">.</span><span class="n">ENABLE</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">with</span> <span class="n">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
+    <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_command</span><span class="o">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">shutter</span><span class="o">=</span><span class="n">constants</span><span class="o">.</span><span class="n">Toggle</span><span class="o">.</span><span class="n">ENABLE</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition tip">
@@ -364,8 +364,8 @@ not optionally use positional arguments in such cases as this will affect functi
 <p>Statuses are instances of a BleStatus(<a class="reference internal" href="api.html#open_gopro.api.builders.BleStatusFacade" title="open_gopro.api.builders.BleStatusFacade"><code class="xref py py-class docutils literal notranslate"><span class="pre">BleStatusFacade</span></code></a>). They can be read
 synchronously using their <cite>get_value</cite> method as such:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">with</span> <span class="n">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
-    <span class="n">is_encoding</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_status</span><span class="o">.</span><span class="n">encoding_active</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
-    <span class="n">battery</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_status</span><span class="o">.</span><span class="n">int_batt_per</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+    <span class="n">is_encoding</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_status</span><span class="o">.</span><span class="n">encoding</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+    <span class="n">battery</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_status</span><span class="o">.</span><span class="n">internal_battery_percentage</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>It is also possible to read all statuses at once via:</p>
@@ -387,8 +387,8 @@ or HttpSetting(<a class="reference internal" href="api.html#open_gopro.api.build
 ways.</p>
 <p>Their values can be read (via BLE only) using the <cite>get_value</cite> method as such:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">with</span> <span class="n">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
-    <span class="n">resolution</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_setting</span><span class="o">.</span><span class="n">resolution</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
-    <span class="n">fov</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_setting</span><span class="o">.</span><span class="n">video_field_of_view</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+    <span class="n">resolution</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_setting</span><span class="o">.</span><span class="n">video_resolution</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+    <span class="n">fov</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_setting</span><span class="o">.</span><span class="n">video_lens</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>It is also possible to read all settings at once via:</p>
@@ -405,13 +405,13 @@ to retrieve all of them (as well as all of the statuses) at once.</p>
 <p>Depending on the camera’s current state, settings will have differing capabilities. It is possible to query
 the current capabilities for a given setting (via BLE only) using the <cite>get_capabilities_values</cite> method as such:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">with</span> <span class="n">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
-    <span class="n">capabilities</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_setting</span><span class="o">.</span><span class="n">resolution</span><span class="o">.</span><span class="n">get_capabilities_values</span><span class="p">()</span>
+    <span class="n">capabilities</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_setting</span><span class="o">.</span><span class="n">video_resolution</span><span class="o">.</span><span class="n">get_capabilities_values</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Settings’ values can be set (via either BLE or WiFI) using the <cite>set</cite> method as such:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">with</span> <span class="n">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
-    <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_setting</span><span class="o">.</span><span class="n">resolution</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">Params</span><span class="o">.</span><span class="n">Resolution</span><span class="o">.</span><span class="n">RES_4K</span><span class="p">)</span>
-    <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">http_setting</span><span class="o">.</span><span class="n">fps</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">Params</span><span class="o">.</span><span class="n">FPS</span><span class="o">.</span><span class="n">FPS_30</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_setting</span><span class="o">.</span><span class="n">video_resolution</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">VideoResolution</span><span class="o">.</span><span class="n">NUM_4K</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">http_setting</span><span class="o">.</span><span class="n">video_lens</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">VideoLens</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -437,14 +437,14 @@ responses will then be sent to the registered callback for handling.</p>
 </ul>
 <p>Here is an example of registering for and receiving FOV updates:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">process_battery_notifications</span><span class="p">(</span><span class="n">update</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">update</span> <span class="o">==</span> <span class="n">constants</span><span class="o">.</span><span class="n">StatusId</span><span class="o">.</span><span class="n">INT_BATT_PER</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">update</span> <span class="o">==</span> <span class="n">constants</span><span class="o">.</span><span class="n">StatusId</span><span class="o">.</span><span class="n">INTERNAL_BATTERY_PERCENTAGE</span><span class="p">:</span>
         <span class="o">...</span>
-    <span class="k">elif</span> <span class="n">update</span> <span class="o">==</span> <span class="n">constants</span><span class="o">.</span><span class="n">StatusId</span><span class="o">.</span><span class="n">BATT_LEVEL</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">update</span> <span class="o">==</span> <span class="n">constants</span><span class="o">.</span><span class="n">StatusId</span><span class="o">.</span><span class="n">INTERNAL_BATTERY_BARS</span><span class="p">:</span>
         <span class="o">...</span>
 
 <span class="k">async</span> <span class="k">with</span> <span class="n">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
-    <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_status</span><span class="o">.</span><span class="n">int_batt_per</span><span class="o">.</span><span class="n">register_value_update</span><span class="p">(</span><span class="n">process_battery_notifications</span><span class="p">)</span>
-    <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_status</span><span class="o">.</span><span class="n">batt_level</span><span class="o">.</span><span class="n">register_value_update</span><span class="p">(</span><span class="n">process_battery_notifications</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_status</span><span class="o">.</span><span class="n">internal_battery_percentage</span><span class="o">.</span><span class="n">register_value_update</span><span class="p">(</span><span class="n">process_battery_notifications</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_status</span><span class="o">.</span><span class="n">internal_battery_bars</span><span class="o">.</span><span class="n">register_value_update</span><span class="p">(</span><span class="n">process_battery_notifications</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -496,34 +496,33 @@ functions.</p>
 </ul>
 <p>The response object can be serialized to a JSON string with the default Python <cite>str()</cite> function. Note that
 the <cite>identifier</cite> and <cite>status</cite> attributes are appended to the JSON.</p>
-<p>For example, first let’s connect, send a command, and then store the response:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt; gopro = WirelessGoPro()</span>
-<span class="go">&gt;&gt;&gt; await gopro.open()</span>
-<span class="go">&gt;&gt;&gt; response = await (gopro.ble_setting.resolution).get_value()</span>
-<span class="go">&gt;&gt;&gt; print(response)</span>
+<p>For example, first let’s connect, send a command, and print the repsonse:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">with</span> <span class="n">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_setting</span><span class="o">.</span><span class="n">video_resolution</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Now let’s print the response (as JSON):</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt; print(response)</span>
-<span class="go">{</span>
+<p>This prints as:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">{</span>
 <span class="go">    &quot;id&quot; : &quot;QueryCmdId.GET_SETTING_VAL&quot;,</span>
 <span class="go">    &quot;status&quot; : &quot;ErrorCode.SUCCESS&quot;,</span>
 <span class="go">    &quot;protocol&quot; : &quot;Protocol.BLE&quot;,</span>
-<span class="go">    &quot;data&quot; : {</span>
-<span class="go">        &quot;SettingId.RESOLUTION&quot; : &quot;Resolution.RES_4K_16_9&quot;,</span>
-<span class="go">    },</span>
+<span class="go">    &quot;data&quot; : &quot;VideoResolution.NUM_4K&quot;,</span>
 <span class="go">}</span>
 </pre></div>
 </div>
 <p>Now let’s inspect the responses various attributes / properties:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt; print(response.status)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">protocol</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>which prints as:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">QueryCmdId.GET_SETTING_VAL</span>
 <span class="go">ErrorCode.SUCCESS</span>
-<span class="go">&gt;&gt;&gt; print(response.ok)</span>
-<span class="go">True</span>
-<span class="go">&gt;&gt;&gt; print(response.identifier)</span>
-<span class="go">QueryCmdId.GET_SETTING_VAL</span>
-<span class="go">&gt;&gt;&gt; print(response.protocol)</span>
 <span class="go">Protocol.BLE</span>
+<span class="go">VideoResolution.NUM_4</span>
 </pre></div>
 </div>
 </section>
@@ -538,17 +537,19 @@ is specified via the Generic type specified in the corresponding command signatu
 </div>
 <p>Therefore, its response’s <cite>data</cite> property is of type <a class="reference internal" href="api.html#open_gopro.models.general.CameraInfo" title="open_gopro.models.general.CameraInfo"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CameraInfo()</span></code></a>. Continuing the
 example from above:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt; gopro = WirelessGoPro(enable_wifi=False)</span>
-<span class="go">&gt;&gt;&gt; await gopro.open()</span>
-<span class="go">&gt;&gt;&gt; response = await gopro.ble_command.get_hardware_info()</span>
-<span class="go">&gt;&gt;&gt; print(response.data)</span>
-<span class="go">{</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">with</span> <span class="n">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_command</span><span class="o">.</span><span class="n">get_hardware_info</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>which prints as:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">{</span>
 <span class="go">    &quot;model_number&quot; : &quot;62&quot;,</span>
 <span class="go">    &quot;model_name&quot; : &quot;HERO12 Black&quot;,</span>
-<span class="go">    &quot;firmware_version&quot; : &quot;H23.01.01.09.67&quot;,</span>
-<span class="go">    &quot;serial_number&quot; : &quot;C3501324500702&quot;,</span>
-<span class="go">    &quot;ap_mac_addr&quot; : &quot;2674f7f66104&quot;,</span>
-<span class="go">    &quot;ap_ssid&quot; : &quot;GP24500702&quot;,</span>
+<span class="go">    &quot;firmware_version&quot; : &quot;H23.01.01.99.54&quot;,</span>
+<span class="go">    &quot;serial_number&quot; : &quot;C3501324500711&quot;,</span>
+<span class="go">    &quot;ap_mac_addr&quot; : &quot;2674f7f65f38&quot;,</span>
+<span class="go">    &quot;ap_ssid&quot; : &quot;GP24500711&quot;,</span>
 <span class="go">}</span>
 </pre></div>
 </div>

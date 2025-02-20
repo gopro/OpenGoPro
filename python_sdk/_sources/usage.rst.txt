@@ -205,7 +205,7 @@ Selecting Parameters
 --------------------
 
 Whenever a parameter is required for a message, it will be type-hinted in the method definition as either a standard Python type
-or an Enum from the :ref:`Params<parameters>` module.
+or an Enum from the :ref:`constants<constants>` module.
 
 Here is a full example for clarity:
 
@@ -213,8 +213,8 @@ Here is a full example for clarity:
 
     from open_gopro import WirelessGoPro, Params
 
-    with WirelessGoPro() as gopro:
-        gopro.ble_command.set_shutter(Params.Toggle.ENABLE)
+    async with WirelessGoPro() as gopro:
+        await gopro.ble_command.set_shutter(shutter=constants.Toggle.ENABLE)
 
 .. tip:: The message signature can also be found from the API Reference. For example, here is the documentation
     of the above message: :meth:`~open_gopro.api.ble_commands.BleCommands.set_shutter`
@@ -254,8 +254,8 @@ synchronously using their `get_value` method as such:
 .. code-block:: python
 
     async with WirelessGoPro() as gopro:
-        is_encoding = await gopro.ble_status.encoding_active.get_value()
-        battery = await gopro.ble_status.int_batt_per.get_value()
+        is_encoding = await gopro.ble_status.encoding.get_value()
+        battery = await gopro.ble_status.internal_battery_percentage.get_value()
 
 It is also possible to read all statuses at once via:
 
@@ -281,8 +281,8 @@ Their values can be read (via BLE only) using the `get_value` method as such:
 .. code-block:: python
 
     async with WirelessGoPro() as gopro:
-        resolution = await gopro.ble_setting.resolution.get_value()
-        fov = await gopro.ble_setting.video_field_of_view.get_value()
+        resolution = await gopro.ble_setting.video_resolution.get_value()
+        fov = await gopro.ble_setting.video_lens.get_value()
 
 It is also possible to read all settings at once via:
 
@@ -302,15 +302,15 @@ the current capabilities for a given setting (via BLE only) using the `get_capab
 .. code-block:: python
 
     async with WirelessGoPro() as gopro:
-        capabilities = await gopro.ble_setting.resolution.get_capabilities_values()
+        capabilities = await gopro.ble_setting.video_resolution.get_capabilities_values()
 
 Settings' values can be set (via either BLE or WiFI) using the `set` method as such:
 
 .. code-block:: python
 
     async with WirelessGoPro() as gopro:
-        await gopro.ble_setting.resolution.set(Params.Resolution.RES_4K)
-        await gopro.http_setting.fps.set(Params.FPS.FPS_30)
+        await gopro.ble_setting.video_resolution.set(constants.settings.VideoResolution.NUM_4K)
+        await gopro.http_setting.video_lens.set(constants.settings.VideoLens.LINEAR)
 
 Asynchronous Push Notifications
 -------------------------------
@@ -341,14 +341,14 @@ Here is an example of registering for and receiving FOV updates:
 .. code-block:: python
 
     async def process_battery_notifications(update: types.UpdateType, value: int) -> None:
-        if update == constants.StatusId.INT_BATT_PER:
+        if update == constants.StatusId.INTERNAL_BATTERY_PERCENTAGE:
             ...
-        elif update == constants.StatusId.BATT_LEVEL:
+        elif update == constants.StatusId.INTERNAL_BATTERY_BARS:
             ...
 
     async with WirelessGoPro() as gopro:
-        await gopro.ble_status.int_batt_per.register_value_update(process_battery_notifications)
-        await gopro.ble_status.batt_level.register_value_update(process_battery_notifications)
+        await gopro.ble_status.internal_battery_percentage.register_value_update(process_battery_notifications)
+        await gopro.ble_status.internal_battery_bars.register_value_update(process_battery_notifications)
 
 .. note:: The `register_XXX_update` methods also return the current value / capabilities.
 
@@ -391,41 +391,43 @@ A `GoProResp` has the following relevant attributes / properties for the end use
 The response object can be serialized to a JSON string with the default Python `str()` function. Note that
 the `identifier` and `status` attributes are appended to the JSON.
 
-For example, first let's connect, send a command, and then store the response:
+For example, first let's connect, send a command, and print the repsonse:
+
+.. code-block:: python
+
+    async with WirelessGoPro() as gopro:
+        response = await gopro.ble_setting.video_resolution.get_value()
+        print(response)
+
+This prints as:
 
 .. code-block:: console
 
-    >>> gopro = WirelessGoPro()
-    >>> await gopro.open()
-    >>> response = await (gopro.ble_setting.resolution).get_value()
-    >>> print(response)
-
-Now let's print the response (as JSON):
-
-.. code-block:: console
-
-    >>> print(response)
     {
         "id" : "QueryCmdId.GET_SETTING_VAL",
         "status" : "ErrorCode.SUCCESS",
         "protocol" : "Protocol.BLE",
-        "data" : {
-            "SettingId.RESOLUTION" : "Resolution.RES_4K_16_9",
-        },
+        "data" : "VideoResolution.NUM_4K",
     }
 
 Now let's inspect the responses various attributes / properties:
 
+.. code-block:: python
+
+    print(response.identifier)
+    print(response.status)
+    print(response.protocol)
+    print(response.data)
+
+which prints as:
+
 .. code-block:: console
 
-    >>> print(response.status)
-    ErrorCode.SUCCESS
-    >>> print(response.ok)
-    True
-    >>> print(response.identifier)
     QueryCmdId.GET_SETTING_VAL
-    >>> print(response.protocol)
+    ErrorCode.SUCCESS
     Protocol.BLE
+    VideoResolution.NUM_4
+
 
 Data Access
 -----------
@@ -443,20 +445,23 @@ For example, consider :meth:`~open_gopro.api.ble_commands.BleCommands.get_hardwa
 Therefore, its response's `data` property is of type :meth:`~open_gopro.models.general.CameraInfo`. Continuing the
 example from above:
 
+.. code-block:: python
+
+    async with WirelessGoPro() as gopro:
+        response = await gopro.ble_command.get_hardware_info()
+        print(response.data)
+
+which prints as:
 
 .. code-block:: console
 
-    >>> gopro = WirelessGoPro(enable_wifi=False)
-    >>> await gopro.open()
-    >>> response = await gopro.ble_command.get_hardware_info()
-    >>> print(response.data)
     {
         "model_number" : "62",
         "model_name" : "HERO12 Black",
-        "firmware_version" : "H23.01.01.09.67",
-        "serial_number" : "C3501324500702",
-        "ap_mac_addr" : "2674f7f66104",
-        "ap_ssid" : "GP24500702",
+        "firmware_version" : "H23.01.01.99.54",
+        "serial_number" : "C3501324500711",
+        "ap_mac_addr" : "2674f7f65f38",
+        "ap_ssid" : "GP24500711",
     }
 
 Closing
