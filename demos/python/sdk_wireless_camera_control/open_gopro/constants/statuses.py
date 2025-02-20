@@ -14,12 +14,15 @@ class StatusId(GoProIntEnum):
 
     BATTERY_PRESENT = 1
     INTERNAL_BATTERY_BARS = 2
+    EXTERNAL_BATTERY = 3
+    EXTERNAL_BATTERY_PERCENTAGE = 4
     OVERHEATING = 6
     BUSY = 8
     QUICK_CAPTURE = 9
     ENCODING = 10
     LCD_LOCK = 11
     VIDEO_ENCODING_DURATION = 13
+    BROADCAST_DURATION = 14
     WIRELESS_CONNECTIONS_ENABLED = 17
     PAIRING_STATE = 19
     LAST_PAIRING_TYPE = 20
@@ -29,7 +32,6 @@ class StatusId(GoProIntEnum):
     WIFI_PROVISIONING_STATE = 24
     REMOTE_VERSION = 26
     REMOTE_CONNECTED = 27
-    PAIRING_STATE_LEGACY_ = 28
     CONNECTED_WIFI_SSID = 29
     ACCESS_POINT_SSID = 30
     CONNECTED_DEVICES = 31
@@ -37,6 +39,8 @@ class StatusId(GoProIntEnum):
     PRIMARY_STORAGE = 33
     REMAINING_PHOTOS = 34
     REMAINING_VIDEO_TIME = 35
+    GROUP_PHOTOS = 36
+    CHAPTERED_VIDEOS = 37
     PHOTOS = 38
     VIDEOS = 39
     OTA = 41
@@ -49,6 +53,9 @@ class StatusId(GoProIntEnum):
     ACTIVE_HILIGHTS = 58
     TIME_SINCE_LAST_HILIGHT = 59
     MINIMUM_STATUS_POLL_PERIOD = 60
+    ANALYTICS = 61
+    ANALYTICS_SIZE = 62
+    IN_CONTEXTUAL_MENU = 63
     LIVEVIEW_EXPOSURE_SELECT_MODE = 65
     LIVEVIEW_Y = 66
     LIVEVIEW_X = 67
@@ -68,6 +75,8 @@ class StatusId(GoProIntEnum):
     ROTATION = 86
     ZOOM_WHILE_ENCODING = 88
     FLATMODE = 89
+    DEFAULT_PROTUNE = 90
+    LOGS_READY = 91
     VIDEO_PRESET = 93
     PHOTO_PRESET = 94
     TIMELAPSE_PRESET = 95
@@ -84,6 +93,7 @@ class StatusId(GoProIntEnum):
     HINDSIGHT = 106
     SCHEDULED_CAPTURE_PRESET_ID = 107
     SCHEDULED_CAPTURE = 108
+    CUSTOM_PRESET = 109
     DISPLAY_MOD_STATUS = 110
     SD_CARD_WRITE_SPEED_ERROR = 111
     SD_CARD_ERRORS = 112
@@ -93,6 +103,9 @@ class StatusId(GoProIntEnum):
     USB_CONTROLLED = 116
     SD_CARD_CAPACITY = 117
     PHOTO_INTERVAL_CAPTURE_COUNT = 118
+    CAMERA_LENS_MOD = 119
+    POV_PRESET = 120
+    SELFIE_PRESET = 121
 
 
 class InternalBatteryBars(GoProIntEnum):
@@ -170,6 +183,20 @@ class Ota(GoProIntEnum):
     GOPRO_APP_DOWNLOAD_FAILED = 8
     GOPRO_APP_VERIFY_FAILED = 9
     GOPRO_APP_READY = 10
+
+
+class Analytics(GoProIntEnum):
+    """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#analytics-61)"""
+
+    NOT_READY = 0
+    READY = 1
+    ON_CONNECT = 2
+
+
+class AnalyticsSize(GoProIntEnum):
+    """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#analytics-size-62)"""
+
+    VALUE_HARD_CODED_BY_BOSS_IN_LIBGPCTRLD_SRC_CAMERA_STATUS_CPP = 0
 
 
 class LiveviewExposureSelectMode(GoProIntEnum):
@@ -272,3 +299,20 @@ class UsbControlled(GoProIntEnum):
 
     DISABLED = 0
     ENABLED = 1
+
+
+class CameraLensMod(GoProIntEnum):
+    """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#camera-lens-mod-119)"""
+
+    INVALID = -1
+    DEFAULT = 0
+    MAX_LENS = 1
+    MAX_LENS_2_0 = 2
+    MAX_LENS_2_5 = 3
+    MACRO_LENS = 4
+    ANAMORPHIC_LENS = 5
+    NEUTRAL_DENSITY_4 = 6
+    NEUTRAL_DENSITY_8 = 7
+    NEUTRAL_DENSITY_16 = 8
+    NEUTRAL_DENSITY_32 = 9
+    CLEAR_GLASS_NONE_ = 10

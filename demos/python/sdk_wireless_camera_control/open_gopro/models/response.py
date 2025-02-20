@@ -471,11 +471,17 @@ class BleRespBuilder(RespBuilder[bytearray]):
                 buf = buf[1:]
                 # Parse all parameters
                 while len(buf) != 0:
-                    param_id = query_type(buf[0])  # type: ignore
                     param_len = buf[1]
+                    try:
+                        param_id = query_type(buf[0])  # type: ignore
+                        print(f"parsing {param_id}")
+                        print("")
+                    except ValueError:
+                        # We don't handle this entity. Ensure to advance past the value.
+                        buf = buf[2 + param_len :]
+                        continue
                     buf = buf[2:]
-                    # Special case where we register for a push notification for something that does not yet
-                    # have a value
+                    # Special case where we register for a push notification for something that does not yet have a value
                     if param_len == 0:
                         camera_state[param_id] = []
                         continue

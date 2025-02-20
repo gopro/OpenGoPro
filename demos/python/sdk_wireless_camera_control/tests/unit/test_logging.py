@@ -104,9 +104,7 @@ async def test_ble_setting():
     class Communicator(MockCommunicator[BleSettingFacade.BleSettingMessageBase]): ...
 
     communicator = Communicator()
-    message = BleSettingFacade(
-        communicator=communicator, identifier=SettingId.MAX_LENS, parser_builder=construct.Flag
-    )
+    message = BleSettingFacade(communicator=communicator, identifier=SettingId.MAX_LENS, parser_builder=construct.Flag)
 
     # Set Setting Value
     await message.set(bytes())
@@ -184,7 +182,9 @@ async def test_ble_status():
     class Communicator(MockCommunicator[BleStatusFacade.BleStatusMessageBase]): ...
 
     communicator = Communicator()
-    message = BleStatusFacade(communicator=communicator, identifier=StatusId.MICROPHONE_ACCESSORY, parser=construct.Flag)
+    message = BleStatusFacade(
+        communicator=communicator, identifier=StatusId.MICROPHONE_ACCESSORY, parser=construct.Flag
+    )
 
     # Get Status Value
     await message.get_value()

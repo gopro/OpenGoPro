@@ -477,7 +477,6 @@ def test_complex_write_command():
         idx = end
     assert builder.is_finished_accumulating
     r = builder.build()
-    assert "DEPRECATED" in list(r.data.values())
     assert r.ok
     assert r.identifier is QueryCmdId.GET_STATUS_VAL
     # Test iterator
@@ -677,7 +676,6 @@ def test_http_response_with_extra_parsing():
         response = requests.get(url)
         director = RequestsHttpRespBuilderDirector(response, JsonParsers.CameraStateParser())
         r = director()
-        assert "DEPRECATED" in r.data.values()
         assert r.ok
         assert len(str(r)) > 0
 

@@ -8,8 +8,8 @@ from pathlib import Path
 import pytest
 
 from open_gopro import Params, proto
-from open_gopro.gopro_base import GoProBase
 from open_gopro.constants.settings import FramesPerSecond
+from open_gopro.gopro_base import GoProBase
 
 camera_file = "100GOPRO/XXX.mp4"
 
