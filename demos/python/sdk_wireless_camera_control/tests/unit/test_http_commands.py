@@ -9,6 +9,7 @@ import pytest
 
 from open_gopro import Params, proto
 from open_gopro.gopro_base import GoProBase
+from open_gopro.constants.settings import FramesPerSecond
 
 camera_file = "100GOPRO/XXX.mp4"
 
@@ -36,7 +37,7 @@ async def test_get_with_no_params(mock_wifi_communicator: GoProBase):
 
 @pytest.mark.asyncio
 async def test_set_setting(mock_wifi_communicator: GoProBase):
-    response = await mock_wifi_communicator.http_setting.fps.set(Params.FPS.FPS_100)
+    response = await mock_wifi_communicator.http_setting.frames_per_second.set(FramesPerSecond.NUM_100_0)
     assert response.url == "gopro/camera/setting?setting=3&option=2"
 
 

@@ -481,8 +481,8 @@ class MockGoProMaintainBle(WirelessGoPro):
         )
         self._test_version = "2.0"
         self._api.ble_command.get_open_gopro_api_version = self._mock_get_version
-        self.ble_status.encoding_active.register_value_update = self._mock_register_encoding
-        self.ble_status.system_busy.register_value_update = self._mock_register_busy
+        self.ble_status.encoding.register_value_update = self._mock_register_encoding
+        self.ble_status.busy.register_value_update = self._mock_register_busy
         self.ble_setting.led.set = self._mock_led_set
         self._open_wifi = self._mock_open_wifi
         self._sync_resp_ready_q.get = self._mock_q_get
@@ -500,7 +500,7 @@ class MockGoProMaintainBle(WirelessGoPro):
         return DataPatch({StatusId.ENCODING: 1})
 
     async def _mock_register_busy(self, *args):
-        return DataPatch({StatusId.SYSTEM_BUSY: 1})
+        return DataPatch({StatusId.BUSY: 1})
 
     async def mock_handle2uuid(self, *args):
         return GoProUUID.CQ_QUERY_RESP

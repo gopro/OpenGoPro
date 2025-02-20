@@ -105,14 +105,14 @@ async def test_ble_setting():
 
     communicator = Communicator()
     message = BleSettingFacade(
-        communicator=communicator, identifier=SettingId.ADDON_MAX_LENS_MOD, parser_builder=construct.Flag
+        communicator=communicator, identifier=SettingId.MAX_LENS, parser_builder=construct.Flag
     )
 
     # Set Setting Value
     await message.set(bytes())
     d = communicator.message._as_dict(**dummy_kwargs)
-    assert d.pop("id") == SettingId.ADDON_MAX_LENS_MOD
-    assert d.pop("setting_id") == SettingId.ADDON_MAX_LENS_MOD
+    assert d.pop("id") == SettingId.MAX_LENS
+    assert d.pop("setting_id") == SettingId.MAX_LENS
     assert d.pop("protocol") == GoProResp.Protocol.BLE
     assert d.pop("uuid") == GoProUUID.CQ_SETTINGS
     assert_kwargs(d)
@@ -122,7 +122,7 @@ async def test_ble_setting():
     await message.get_value()
     d = communicator.message._as_dict(**dummy_kwargs)
     assert d.pop("id") == QueryCmdId.GET_SETTING_VAL
-    assert d.pop("setting_id") == SettingId.ADDON_MAX_LENS_MOD
+    assert d.pop("setting_id") == SettingId.MAX_LENS
     assert d.pop("protocol") == GoProResp.Protocol.BLE
     assert d.pop("uuid") == GoProUUID.CQ_QUERY
     assert_kwargs(d)
@@ -132,7 +132,7 @@ async def test_ble_setting():
     await message.get_capabilities_values()
     d = communicator.message._as_dict(**dummy_kwargs)
     assert d.pop("id") == QueryCmdId.GET_CAPABILITIES_VAL
-    assert d.pop("setting_id") == SettingId.ADDON_MAX_LENS_MOD
+    assert d.pop("setting_id") == SettingId.MAX_LENS
     assert d.pop("protocol") == GoProResp.Protocol.BLE
     assert d.pop("uuid") == GoProUUID.CQ_QUERY
     assert_kwargs(d)
@@ -142,7 +142,7 @@ async def test_ble_setting():
     await message.register_value_update(None)
     d = communicator.message._as_dict(**dummy_kwargs)
     assert d.pop("id") == QueryCmdId.REG_SETTING_VAL_UPDATE
-    assert d.pop("setting_id") == SettingId.ADDON_MAX_LENS_MOD
+    assert d.pop("setting_id") == SettingId.MAX_LENS
     assert d.pop("protocol") == GoProResp.Protocol.BLE
     assert d.pop("uuid") == GoProUUID.CQ_QUERY
     assert_kwargs(d)
@@ -152,7 +152,7 @@ async def test_ble_setting():
     await message.unregister_value_update(None)
     d = communicator.message._as_dict(**dummy_kwargs)
     assert d.pop("id") == QueryCmdId.UNREG_SETTING_VAL_UPDATE
-    assert d.pop("setting_id") == SettingId.ADDON_MAX_LENS_MOD
+    assert d.pop("setting_id") == SettingId.MAX_LENS
     assert d.pop("protocol") == GoProResp.Protocol.BLE
     assert d.pop("uuid") == GoProUUID.CQ_QUERY
     assert_kwargs(d)
@@ -162,7 +162,7 @@ async def test_ble_setting():
     await message.register_capability_update(None)
     d = communicator.message._as_dict(**dummy_kwargs)
     assert d.pop("id") == QueryCmdId.REG_CAPABILITIES_UPDATE
-    assert d.pop("setting_id") == SettingId.ADDON_MAX_LENS_MOD
+    assert d.pop("setting_id") == SettingId.MAX_LENS
     assert d.pop("protocol") == GoProResp.Protocol.BLE
     assert d.pop("uuid") == GoProUUID.CQ_QUERY
     assert_kwargs(d)
@@ -172,7 +172,7 @@ async def test_ble_setting():
     await message.unregister_capability_update(None)
     d = communicator.message._as_dict(**dummy_kwargs)
     assert d.pop("id") == QueryCmdId.UNREG_CAPABILITIES_UPDATE
-    assert d.pop("setting_id") == SettingId.ADDON_MAX_LENS_MOD
+    assert d.pop("setting_id") == SettingId.MAX_LENS
     assert d.pop("protocol") == GoProResp.Protocol.BLE
     assert d.pop("uuid") == GoProUUID.CQ_QUERY
     assert_kwargs(d)
@@ -184,13 +184,13 @@ async def test_ble_status():
     class Communicator(MockCommunicator[BleStatusFacade.BleStatusMessageBase]): ...
 
     communicator = Communicator()
-    message = BleStatusFacade(communicator=communicator, identifier=StatusId.ACC_MIC_STAT, parser=construct.Flag)
+    message = BleStatusFacade(communicator=communicator, identifier=StatusId.MICROPHONE_ACCESSORY, parser=construct.Flag)
 
     # Get Status Value
     await message.get_value()
     d = communicator.message._as_dict(**dummy_kwargs)
     assert d.pop("id") == QueryCmdId.GET_STATUS_VAL
-    assert d.pop("status_id") == StatusId.ACC_MIC_STAT
+    assert d.pop("status_id") == StatusId.MICROPHONE_ACCESSORY
     assert d.pop("protocol") == GoProResp.Protocol.BLE
     assert d.pop("uuid") == GoProUUID.CQ_QUERY
     assert_kwargs(d)
@@ -200,7 +200,7 @@ async def test_ble_status():
     await message.register_value_update(None)
     d = communicator.message._as_dict(**dummy_kwargs)
     assert d.pop("id") == QueryCmdId.REG_STATUS_VAL_UPDATE
-    assert d.pop("status_id") == StatusId.ACC_MIC_STAT
+    assert d.pop("status_id") == StatusId.MICROPHONE_ACCESSORY
     assert d.pop("protocol") == GoProResp.Protocol.BLE
     assert d.pop("uuid") == GoProUUID.CQ_QUERY
     assert_kwargs(d)
@@ -210,7 +210,7 @@ async def test_ble_status():
     await message.unregister_value_update(None)
     d = communicator.message._as_dict(**dummy_kwargs)
     assert d.pop("id") == QueryCmdId.UNREG_STATUS_VAL_UPDATE
-    assert d.pop("status_id") == StatusId.ACC_MIC_STAT
+    assert d.pop("status_id") == StatusId.MICROPHONE_ACCESSORY
     assert d.pop("protocol") == GoProResp.Protocol.BLE
     assert d.pop("uuid") == GoProUUID.CQ_QUERY
     assert_kwargs(d)
@@ -233,10 +233,10 @@ async def test_http_setting():
     class Communicator(MockCommunicator[HttpMessage]): ...
 
     communicator = Communicator()
-    message = HttpSetting(communicator=communicator, identifier=SettingId.ADDON_MAX_LENS_MOD)
+    message = HttpSetting(communicator=communicator, identifier=SettingId.MAX_LENS)
     await message.set(1)
     d = communicator.message._as_dict(**dummy_kwargs)
-    assert d.pop("id") == SettingId.ADDON_MAX_LENS_MOD
+    assert d.pop("id") == SettingId.MAX_LENS
     assert d.pop("protocol") == GoProResp.Protocol.HTTP
     assert d.pop("endpoint") == r"gopro/camera/setting?setting={setting}&option={option}"
     assert_kwargs(d)

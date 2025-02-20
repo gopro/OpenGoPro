@@ -14,7 +14,7 @@ import requests
 import requests_mock
 
 from open_gopro.communicator_interface import HttpMessage
-from open_gopro.constants import ErrorCode, QueryCmdId, SettingId, StatusId
+from open_gopro.constants import ErrorCode, QueryCmdId, SettingId, StatusId, settings
 from open_gopro.exceptions import GoProNotOpened, ResponseTimeout
 from open_gopro.gopro_wireless import Params, WirelessGoPro
 from open_gopro.models.response import GlobalParsers, GoProResp
@@ -43,7 +43,7 @@ async def test_lifecycle(mock_wireless_gopro: WirelessGoPro):
 
     # Mock receiving initial not-encoding and not-busy statuses
     await mock_wireless_gopro._update_internal_state(update=StatusId.ENCODING, value=False)
-    await mock_wireless_gopro._update_internal_state(update=StatusId.SYSTEM_BUSY, value=False)
+    await mock_wireless_gopro._update_internal_state(update=StatusId.BUSY, value=False)
     assert await mock_wireless_gopro.is_ready
 
     results = await asyncio.gather(
@@ -219,5 +219,5 @@ async def test_get_update_unregister_all(mock_wireless_gopro_basic: WirelessGoPr
 
 
 def test_get_param_values_by_id():
-    vector = list(Params.Resolution)[0]
-    assert GlobalParsers.get_query_container(SettingId.RESOLUTION)(vector.value) == vector
+    vector = list(settings.VideoResolution)[0]
+    assert GlobalParsers.get_query_container(SettingId.VIDEO_RESOLUTION)(vector.value) == vector

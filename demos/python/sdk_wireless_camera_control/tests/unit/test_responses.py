@@ -36,9 +36,9 @@ def test_push_response_no_parameter_values():
     r = builder.build()
     assert r.ok
     assert r.identifier == QueryCmdId.SETTING_CAPABILITY_PUSH
-    assert r.data[SettingId.RESOLUTION] == []
-    assert r.data[SettingId.FPS] == []
-    assert r.data[SettingId.VIDEO_FOV] == []
+    assert r.data[SettingId.VIDEO_RESOLUTION] == []
+    assert r.data[SettingId.FRAMES_PER_SECOND] == []
+    assert r.data[SettingId.VIDEO_LENS] == []
 
 
 test_read_receive = bytearray([0x64, 0x62, 0x32, 0x2D, 0x73, 0x58, 0x56, 0x2D, 0x66, 0x62, 0x38])

@@ -77,7 +77,7 @@ async def test_wired_lifecycle(mock_wired_gopro: WiredGoPro, monkeypatch):
         mock_wired_gopro.set_state_response(  # type: ignore
             {
                 statuses.StatusId.ENCODING: 0,
-                statuses.StatusId.SYSTEM_BUSY: 0,
+                statuses.StatusId.BUSY: 0,
             }
         )
 
