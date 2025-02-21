@@ -5,12 +5,12 @@
 
 
 PROTO_SRC_DIR=/proto_in
-PROTO_PYTHON_OUT_DIR=/proto_output_python
-PROTO_KOTLIN_OUT_DIR=/proto_output_kotlin
+PROTO_PYTHON_OUT_DIR=/proto_output/python
+PROTO_KOTLIN_OUT_DIR=/proto_output/kotlin
 
 function build_python()
 {
-    rm -rf $PROTO_PYTHON_OUT_DIR && mkdir -p $PROTO_PYTHON_OUT_DIR
+    rm -rf $PROTO_PYTHON_OUT_DIR/* && mkdir -p $PROTO_PYTHON_OUT_DIR
     echo
     echo "Building protobuf python files and stubs from .proto source files..."
     pushd $PROTO_SRC_DIR
@@ -26,13 +26,15 @@ function build_python()
 
 function build_kotlin()
 {
+    set -x
     echo "Building kotlin protobuf files using pbandk..."
     export PATH=$PATH:/
-    rm -rf $PROTO_KOTLIN_OUT_DIR/*
+    rm -rf $PROTO_KOTLIN_OUT_DIR/* && mkdir -p $PROTO_KOTLIN_OUT_DIR
     gosu user:user mkdir -p /home/user/temp
+    ls -la /home/user/temp
     # We can't run as root because pbank can't handle it: https://github.com/streem/pbandk/issues/73
     gosu user:user protoc --pbandk_out=kotlin_package=com.gopro.open_gopro.operations,visibility=internal:/home/user/temp -I $PROTO_SRC_DIR $PROTO_SRC_DIR/*
-    mv /home/user/temp/com/gopro/open_gopro/entity/operation/* $PROTO_KOTLIN_OUT_DIR
+    mv /home/user/temp/com/gopro/open_gopro/operations/* $PROTO_KOTLIN_OUT_DIR
 }
 
 build_python

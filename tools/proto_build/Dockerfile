@@ -20,10 +20,11 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-COPY . /
 
 RUN wget https://repo1.maven.org/maven2/pro/streem/pbandk/protoc-gen-pbandk-jvm/0.16.0/protoc-gen-pbandk-jvm-0.16.0-jvm8.jar -O protoc-gen-pbandk
 RUN chmod +x protoc-gen-pbandk
+
+COPY . /
 
 RUN pip install -r /requirements.txt
 
