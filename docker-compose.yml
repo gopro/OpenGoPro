@@ -10,4 +10,5 @@ services:
             - ephemeral
         volumes:
             - ./protobuf:/proto_in
-            - ./.build/protobuf/python:/proto_python_out
+            - ./.build/protobuf:/proto_output
+            # TODO tutorials?

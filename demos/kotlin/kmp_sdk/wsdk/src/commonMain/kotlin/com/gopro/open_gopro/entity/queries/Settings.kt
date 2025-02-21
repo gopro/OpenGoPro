@@ -974,6 +974,7 @@ enum class Led(override val value: UByte) : IValuedEnum<UByte> {
     ALL_OFF(4U),
     FRONT_OFF_ONLY(5U),
     BACK_ONLY(100U),
+    KEEP_ALIVE(66U),
     ON(2U),
     OFF(0U);
 
