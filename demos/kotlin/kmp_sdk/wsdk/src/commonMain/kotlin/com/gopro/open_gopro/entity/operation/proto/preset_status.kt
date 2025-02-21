@@ -3,7 +3,7 @@
 package com.gopro.open_gopro.operations
 
 @pbandk.Export
-internal sealed class EnumFlatMode(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
+sealed class EnumFlatMode(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
     override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumFlatMode && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumFlatMode.${name ?: "UNRECOGNIZED"}(value=$value)"
@@ -41,7 +41,7 @@ internal sealed class EnumFlatMode(override val value: Int, override val name: S
 }
 
 @pbandk.Export
-internal sealed class EnumPresetGroup(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
+sealed class EnumPresetGroup(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
     override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumPresetGroup && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumPresetGroup.${name ?: "UNRECOGNIZED"}(value=$value)"
@@ -59,7 +59,7 @@ internal sealed class EnumPresetGroup(override val value: Int, override val name
 }
 
 @pbandk.Export
-internal sealed class EnumPresetGroupIcon(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
+sealed class EnumPresetGroupIcon(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
     override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumPresetGroupIcon && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumPresetGroupIcon.${name ?: "UNRECOGNIZED"}(value=$value)"
@@ -85,7 +85,7 @@ internal sealed class EnumPresetGroupIcon(override val value: Int, override val 
 }
 
 @pbandk.Export
-internal sealed class EnumPresetIcon(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
+sealed class EnumPresetIcon(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
     override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumPresetIcon && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumPresetIcon.${name ?: "UNRECOGNIZED"}(value=$value)"
@@ -186,7 +186,7 @@ internal sealed class EnumPresetIcon(override val value: Int, override val name:
 }
 
 @pbandk.Export
-internal sealed class EnumPresetTitle(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
+sealed class EnumPresetTitle(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
     override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumPresetTitle && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumPresetTitle.${name ?: "UNRECOGNIZED"}(value=$value)"
@@ -278,7 +278,7 @@ internal sealed class EnumPresetTitle(override val value: Int, override val name
 }
 
 @pbandk.Export
-internal data class NotifyPresetStatus(
+data class NotifyPresetStatus(
     val presetGroupArray: List<com.gopro.open_gopro.operations.PresetGroup> = emptyList(),
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
@@ -310,7 +310,7 @@ internal data class NotifyPresetStatus(
 }
 
 @pbandk.Export
-internal data class Preset(
+data class Preset(
     val id: Int? = null,
     val mode: com.gopro.open_gopro.operations.EnumFlatMode? = null,
     val titleId: com.gopro.open_gopro.operations.EnumPresetTitle? = null,
@@ -495,7 +495,7 @@ internal data class RequestCustomPresetUpdate(
 }
 
 @pbandk.Export
-internal data class PresetGroup(
+data class PresetGroup(
     val id: com.gopro.open_gopro.operations.EnumPresetGroup? = null,
     val presetArray: List<com.gopro.open_gopro.operations.Preset> = emptyList(),
     val canAddPreset: Boolean? = null,
@@ -571,7 +571,7 @@ internal data class PresetGroup(
 }
 
 @pbandk.Export
-internal data class PresetSetting(
+data class PresetSetting(
     val id: Int? = null,
     val value: Int? = null,
     val isCaption: Boolean? = null,

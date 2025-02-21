@@ -3,7 +3,7 @@
 package com.gopro.open_gopro.operations
 
 @pbandk.Export
-internal sealed class EnumCOHNStatus(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
+sealed class EnumCOHNStatus(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
     override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumCOHNStatus && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumCOHNStatus.${name ?: "UNRECOGNIZED"}(value=$value)"
@@ -20,7 +20,7 @@ internal sealed class EnumCOHNStatus(override val value: Int, override val name:
 }
 
 @pbandk.Export
-internal sealed class EnumCOHNNetworkState(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
+sealed class EnumCOHNNetworkState(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
     override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumCOHNNetworkState && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumCOHNNetworkState.${name ?: "UNRECOGNIZED"}(value=$value)"
