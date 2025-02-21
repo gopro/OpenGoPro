@@ -1,3 +1,6 @@
+# turbo_transfer_pb2.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Fri Feb 21 18:05:41 UTC 2025
+
 import sys
 
 _b = ((sys.version_info[0] < 3) and (lambda x: x)) or (lambda x: x.encode("latin1"))
