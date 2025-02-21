@@ -11,5 +11,5 @@ services:
         volumes:
             - ./protobuf:/proto_in
             - ./demos/kotlin/kmp_sdk/wsdk/src/commonMain/kotlin/com/gopro/open_gopro/entity/operation/proto:/proto_output_kotlin
-            - ./demos/python/sdk_wireless_camera_control/:/proto_output_python
+            - ./.build/protobuf/python:/proto_output_python
             # TODO tutorials?
