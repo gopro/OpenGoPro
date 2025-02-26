@@ -22,7 +22,19 @@ jobs:
                   distribution: 'temurin'
                   java-version: '17'
 
-            - name: Validate Build
+            - name: Validate Builds
               working-directory: demos/kotlin/kmp_sdk
               shell: bash
-              run: ./gradlew :composeApp:assembleDebug
+              run: |
+                  ./gradlew :composeApp:assembleDebug
+                  ./gradlew :simplifiedApp:assembleDebug
+
+            - name: Run Unit Tests
+              working-directory: demos/kotlin/kmp_sdk
+              shell: bash
+              run: ./gradlew :wsdk:testDebugUnitTest
+
+            - name: Validate Doc Build
+              working-directory: demos/kotlin/kmp_sdk
+              shell: bash
+              run: ./gradlew dokkaHtml
