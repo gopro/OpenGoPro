@@ -24,6 +24,12 @@ jobs:
                   cache: gradle
                   cache-dependency-path: demos/kotlin/kmp_sdk
 
+            - name: Lint
+              working-directory: demos/kotlin/kmp_sdk
+              shell: bash
+              run: |
+                  ./gradlew ktfmtCheck
+
             - name: Validate Builds
               working-directory: demos/kotlin/kmp_sdk
               shell: bash
