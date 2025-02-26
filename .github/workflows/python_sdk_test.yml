@@ -11,6 +11,10 @@ on:
         paths:
             - 'demos/python/sdk_wireless_camera_control/**'
 
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
 jobs:
     build_and_test:
         runs-on: ${{ matrix.os }}
@@ -26,9 +30,6 @@ jobs:
                     - os: windows-latest
                       path: ~\AppData\Local\pip\Cache
         steps:
-            - name: Cancel Previous Runs
-              uses: styfle/cancel-workflow-action
-
             - name: Checkout source branch
               uses: actions/checkout@v4
 
