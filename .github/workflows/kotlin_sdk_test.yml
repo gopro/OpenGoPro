@@ -21,6 +21,8 @@ jobs:
               with:
                   distribution: 'temurin'
                   java-version: '17'
+                  cache: gradle
+                  cache-dependency-path: demos/kotlin/kmp_sdk
 
             - name: Validate Builds
               working-directory: demos/kotlin/kmp_sdk

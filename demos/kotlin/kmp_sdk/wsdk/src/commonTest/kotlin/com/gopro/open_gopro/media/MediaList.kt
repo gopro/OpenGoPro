@@ -15,8 +15,14 @@ import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class TestMediaList {
+    @Test
+    fun `i should fail`() {
+        assertTrue { false }
+    }
+
     @Test
     fun `parse single media list item`() {
         // WHEN
