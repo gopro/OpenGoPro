@@ -1,9 +1,7 @@
-# python_sdk_test.yml/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# kotlin_sdk_test.yml/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:05:35 PM
 
-# It only runs when something inside sdk_wireless_camera_control has changed
-
-name: Python SDK Unit Testing
+name: Kotlin SDK Unit Testing
 
 on:
     pull_request:
@@ -25,5 +23,6 @@ jobs:
                   java-version: '11'
 
             - name: Validate Build
+              working-directory: demos/kotlin/kmp_sdk
               shell: bash
               run: ./gradlew :composeApp:assembleDebug
