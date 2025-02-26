@@ -19,11 +19,6 @@ import kotlin.test.assertTrue
 
 class TestMediaList {
     @Test
-    fun `i should fail`() {
-        assertTrue { false }
-    }
-
-    @Test
     fun `parse single media list item`() {
         // WHEN
         val singleMediaListItem =
