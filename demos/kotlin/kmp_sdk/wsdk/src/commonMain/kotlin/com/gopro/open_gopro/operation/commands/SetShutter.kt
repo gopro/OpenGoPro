@@ -15,18 +15,22 @@ import io.ktor.http.path
 
 @OptIn(ExperimentalUnsignedTypes::class)
 internal class SetShutter(val shutter: Boolean) : BaseOperation<Unit>("Set Shutter") {
-    override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
-        communicator.executeTlvCommand(
-            CommandId.SET_SHUTTER,
-            ResponseId.Command(CommandId.SET_SHUTTER),
-            listOf(ubyteArrayOf(shutter.toUByte())),
-        ).map { }
+  override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
+      communicator
+          .executeTlvCommand(
+              CommandId.SET_SHUTTER,
+              ResponseId.Command(CommandId.SET_SHUTTER),
+              listOf(ubyteArrayOf(shutter.toUByte())),
+          )
+          .map {}
 
-    override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
-        communicator.get {
+  override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
+      communicator
+          .get {
             url {
-                path("gopro/camera/shutter")
-                appendPathSegments(if (shutter) "start" else "stop")
+              path("gopro/camera/shutter")
+              appendPathSegments(if (shutter) "start" else "stop")
             }
-        }.map { it.body() }
+          }
+          .map { it.body() }
 }

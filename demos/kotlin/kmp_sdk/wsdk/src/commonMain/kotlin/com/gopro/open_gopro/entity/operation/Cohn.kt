@@ -10,18 +10,18 @@ import kotlinx.serialization.Serializable
 
 sealed class CohnState {
 
-    data object Unprovisioned : CohnState() {
-        override fun toString(): String = "Unprovisioned"
-    }
+  data object Unprovisioned : CohnState() {
+    override fun toString(): String = "Unprovisioned"
+  }
 
-    data class Provisioned(
-        override val username: String,
-        override val password: String,
-        val ipAddress: String,
-        override val certificates: List<String>
-    ) : CohnState(), IHttpsCredentials {
-        override fun toString(): String = "Provisioned"
-    }
+  data class Provisioned(
+      override val username: String,
+      override val password: String,
+      val ipAddress: String,
+      override val certificates: List<String>
+  ) : CohnState(), IHttpsCredentials {
+    override fun toString(): String = "Provisioned"
+  }
 }
 
 @Serializable
@@ -36,7 +36,4 @@ data class CohnStatus(
     @Contextual val status: EnumCOHNStatus? = null
 )
 
-@Serializable
-class CohnSettingRequest(
-    @SerialName("cohn_active") val disableCohn: Boolean
-)
+@Serializable class CohnSettingRequest(@SerialName("cohn_active") val disableCohn: Boolean)

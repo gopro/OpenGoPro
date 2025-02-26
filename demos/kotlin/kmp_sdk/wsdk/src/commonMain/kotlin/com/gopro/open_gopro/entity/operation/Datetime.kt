@@ -14,9 +14,4 @@ data class GpDatetime(
 )
 
 @Serializable
-data class DateTimeHttpResponse(
-    val date: String,
-    val dst: Int,
-    val time: String,
-    val tzone: Int
-)
+data class DateTimeHttpResponse(val date: String, val dst: Int, val time: String, val tzone: Int)

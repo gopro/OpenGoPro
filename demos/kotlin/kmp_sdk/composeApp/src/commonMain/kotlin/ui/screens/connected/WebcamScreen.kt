@@ -35,57 +35,54 @@ fun WebcamScreen(
     viewModel: WebcamViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-    var protocol by remember { mutableStateOf(WebcamProtocol.TS) }
+  val state by viewModel.state.collectAsStateWithLifecycle()
+  var protocol by remember { mutableStateOf(WebcamProtocol.TS) }
 
-    CommonTopBar(
-        navController = navController,
-        title = Screen.Webcam.route,
-    ) { paddingValues ->
-        DisposableEffect(viewModel) {
-            viewModel.start()
-            onDispose { viewModel.stop() }
-        }
-        Column(modifier.padding(paddingValues)) {
-            Text("State: ${state.message}")
-            when (state) {
-                WebcamUiState.Ready -> {
-                    Button({ viewModel.startStream(protocol) }) { Text("Start Stream") }
-//                    ProtocolSelectionDropDown { protocol = it }
-                }
-
-                is WebcamUiState.Starting -> IndeterminateCircularProgressIndicator()
-
-                is WebcamUiState.Streaming -> {
-                    Button({ viewModel.stopStream() }) { Text("Stop Stream") }
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        StreamPlayerWrapper.player.PlayStream(
-                            modifier,
-                            viewModel.streamUrl(protocol)
-                        )
-                    }
-                }
-
-                else -> {}
-            }
-        }
+  CommonTopBar(
+      navController = navController,
+      title = Screen.Webcam.route,
+  ) { paddingValues ->
+    DisposableEffect(viewModel) {
+      viewModel.start()
+      onDispose { viewModel.stop() }
     }
+    Column(modifier.padding(paddingValues)) {
+      Text("State: ${state.message}")
+      when (state) {
+        WebcamUiState.Ready -> {
+          Button({ viewModel.startStream(protocol) }) { Text("Start Stream") }
+          //                    ProtocolSelectionDropDown { protocol = it }
+        }
+
+        is WebcamUiState.Starting -> IndeterminateCircularProgressIndicator()
+
+        is WebcamUiState.Streaming -> {
+          Button({ viewModel.stopStream() }) { Text("Stop Stream") }
+          Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            StreamPlayerWrapper.player.PlayStream(modifier, viewModel.streamUrl(protocol))
+          }
+        }
+
+        else -> {}
+      }
+    }
+  }
 }
 
 @Composable
 fun ProtocolSelectionDropDown(onProtocolSelect: ((WebcamProtocol) -> Unit)) {
-    var expanded by remember { mutableStateOf(false) }
-    Box(modifier = Modifier.fillMaxSize()) {
-        Button({ expanded = true }) { Text("Select Streaming Protocol") }
-        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            DropdownMenuItem(
-                text = { Text("RTSP") },
-                onClick = { onProtocolSelect(WebcamProtocol.RTSP) },
-            )
-            DropdownMenuItem(
-                text = { Text("TS") },
-                onClick = { onProtocolSelect(WebcamProtocol.TS) },
-            )
-        }
+  var expanded by remember { mutableStateOf(false) }
+  Box(modifier = Modifier.fillMaxSize()) {
+    Button({ expanded = true }) { Text("Select Streaming Protocol") }
+    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+      DropdownMenuItem(
+          text = { Text("RTSP") },
+          onClick = { onProtocolSelect(WebcamProtocol.RTSP) },
+      )
+      DropdownMenuItem(
+          text = { Text("TS") },
+          onClick = { onProtocolSelect(WebcamProtocol.TS) },
+      )
     }
+  }
 }

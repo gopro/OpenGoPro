@@ -8,7 +8,6 @@ import kotlinx.datetime.Month
 import kotlinx.datetime.UtcOffset
 import kotlinx.datetime.number
 
-
 @OptIn(ExperimentalUnsignedTypes::class)
 internal fun LocalDateTime.toUByteArray(): UByteArray =
     ubyteArrayOf(
@@ -18,8 +17,7 @@ internal fun LocalDateTime.toUByteArray(): UByteArray =
         this.dayOfMonth.toUByte(),
         this.hour.toUByte(),
         this.minute.toUByte(),
-        this.second.toUByte()
-    )
+        this.second.toUByte())
 
 @OptIn(ExperimentalUnsignedTypes::class)
 internal fun UByteArray.toLocalDateTime(): LocalDateTime =
@@ -35,10 +33,7 @@ internal fun UByteArray.toLocalDateTime(): LocalDateTime =
 @OptIn(ExperimentalUnsignedTypes::class)
 internal fun UtcOffset.toUByteArray(): UByteArray =
     (this.totalSeconds / 60).let {
-        ubyteArrayOf(
-            it.and(0xFF00).shr(8).toUByte(),
-            it.and(0xFF).toUByte()
-        )
+      ubyteArrayOf(it.and(0xFF00).shr(8).toUByte(), it.and(0xFF).toUByte())
     }
 
 @OptIn(ExperimentalUnsignedTypes::class)

@@ -3,9 +3,9 @@
 
 package com.gopro.open_gopro.di
 
-import com.gopro.open_gopro.OgpSdkAppContext
 import android.content.Context
 import android.net.wifi.WifiManager
+import com.gopro.open_gopro.OgpSdkAppContext
 import com.gopro.open_gopro.connector.AndroidDnsApi
 import com.gopro.open_gopro.connector.AndroidWifiApi
 import com.gopro.open_gopro.data.AndroidDatabaseProvider
@@ -18,19 +18,19 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 internal actual fun buildOgpSdkPlatformModule(appContext: OgpSdkAppContext): OgpSdkPlatformModule {
-    return object : OgpSdkPlatformModule {
-        val context = appContext.get()
-        override val module = module {
-            single<WifiManager> {
-                context.getSystemService(Context.WIFI_SERVICE) as WifiManager
-            }
+  return object : OgpSdkPlatformModule {
+    val context = appContext.get()
+    override val module = module {
+      single<WifiManager> { context.getSystemService(Context.WIFI_SERVICE) as WifiManager }
 
-            // This is instead of an expect / actual classes. It seemed a good pattern to conditionally pass context.
-            // TODO can we make this an interface somehow? There is no compile-time enforcement of their existence.
-            single { AndroidWifiApi(context, get(), get()) }.bind(IWifiApi::class)
-            single { AndroidDnsApi(context, get()) }.bind(IDnsApi::class)
-            single { AndroidDatabaseProvider(context) }.bind(IDatabaseProvider::class)
-            single { AndroidHttpClientProvider }.bind(IHttpClientProvider::class)
-        }
+      // This is instead of an expect / actual classes. It seemed a good pattern to conditionally
+      // pass context.
+      // TODO can we make this an interface somehow? There is no compile-time enforcement of their
+      // existence.
+      single { AndroidWifiApi(context, get(), get()) }.bind(IWifiApi::class)
+      single { AndroidDnsApi(context, get()) }.bind(IDnsApi::class)
+      single { AndroidDatabaseProvider(context) }.bind(IDatabaseProvider::class)
+      single { AndroidHttpClientProvider }.bind(IHttpClientProvider::class)
     }
+  }
 }

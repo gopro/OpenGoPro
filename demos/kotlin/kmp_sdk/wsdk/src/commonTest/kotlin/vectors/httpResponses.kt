@@ -3,37 +3,32 @@
 
 package vectors
 
-import com.gopro.open_gopro.operations.OgpVersionHttpResponse
-import com.gopro.open_gopro.operations.MediaId
 import com.gopro.open_gopro.operations.DateTimeHttpResponse
 import com.gopro.open_gopro.operations.HardwareInfo
 import com.gopro.open_gopro.operations.LivestreamConfigurationRequest
 import com.gopro.open_gopro.operations.LivestreamFov
 import com.gopro.open_gopro.operations.LivestreamResolution
+import com.gopro.open_gopro.operations.MediaId
+import com.gopro.open_gopro.operations.OgpVersionHttpResponse
 
 val mockMediaId = MediaId("file", "folder")
 val mockHardwareInfo =
     HardwareInfo(
-        "modelNumber",
-        "modelName",
-        "firmwareVersion",
-        "serialNumber",
-        "apSsid",
-        "apMacAddress"
-    )
-val mockLivestreamRequest = LivestreamConfigurationRequest(
-    url = "rtmp://192.168.50.55:8443/live/test",
-    shouldEncode = true,
-    maximumBitrate = 10,
-    startingBitRate = 1,
-    minimumBitrate = 0,
-    resolution = LivestreamResolution.RES_480,
-    fov = LivestreamFov.WIDE,
-    certificate = null
-)
+        "modelNumber", "modelName", "firmwareVersion", "serialNumber", "apSsid", "apMacAddress")
+val mockLivestreamRequest =
+    LivestreamConfigurationRequest(
+        url = "rtmp://192.168.50.55:8443/live/test",
+        shouldEncode = true,
+        maximumBitrate = 10,
+        startingBitRate = 1,
+        minimumBitrate = 0,
+        resolution = LivestreamResolution.RES_480,
+        fov = LivestreamFov.WIDE,
+        certificate = null)
 val mockOgpVersion = OgpVersionHttpResponse("2.0")
 
-val photoMetadataJson: String = """
+val photoMetadataJson: String =
+    """
 {
     "cre": "1648787120",
     "s": "3645396",
@@ -55,9 +50,11 @@ val photoMetadataJson: String = """
     "w": "5568",
     "h": "4872"
 }
-""".trimIndent()
+"""
+        .trimIndent()
 
-val videoMetadataJson: String = """
+val videoMetadataJson: String =
+    """
 {
     "cre": "1659769382",
     "s": "4489890",
@@ -89,9 +86,11 @@ val videoMetadataJson: String = """
     "prog": "1",
     "subsample": "0"
 }
-""".trimIndent()
+"""
+        .trimIndent()
 
-val videoMetadataJson2 = """
+val videoMetadataJson2 =
+    """
 {
     "cre": "1725899031",
     "s": "3040046",
@@ -121,9 +120,11 @@ val videoMetadataJson2 = """
     "prog": "1",
     "subsample": "0"
 }
-""".trimIndent()
+"""
+        .trimIndent()
 
-val problematicMetadataJson = """
+val problematicMetadataJson =
+    """
 {
     "cre": "3668857923",
     "s": "104378731",
@@ -153,9 +154,11 @@ val problematicMetadataJson = """
     "prog": "1",
     "subsample": "0"
 }
-""".trimIndent()
+"""
+        .trimIndent()
 
-val singleMediaListItemJson: String = """
+val singleMediaListItemJson: String =
+    """
 {
     "n": "GX017060.MP4",
     "cre": "1659744181",
@@ -164,9 +167,11 @@ val singleMediaListItemJson: String = """
     "ls": "-1",
     "s": "4489890"
 }
-""".trimIndent()
+"""
+        .trimIndent()
 
-val groupedMediaListItemJson: String = """
+val groupedMediaListItemJson: String =
+    """
 {
     "n": "G0017061.JPG",
     "g": "1",
@@ -178,9 +183,11 @@ val groupedMediaListItemJson: String = """
     "t": "b",
     "m": []
 }
-""".trimIndent()
+"""
+        .trimIndent()
 
-val mediaListJson: String = """
+val mediaListJson: String =
+    """
 {
     "id": "3681934162299015560",
     "media": [
@@ -234,9 +241,11 @@ val mediaListJson: String = """
         }
     ]
 }
-""".trimIndent()
+"""
+        .trimIndent()
 
-val mediaListJson2 = """
+val mediaListJson2 =
+    """
 {
     "id": "2934290582809906320",
     "media": [
@@ -410,19 +419,17 @@ val mediaListJson2 = """
         }
     ]
 }
-""".trimIndent()
+"""
+        .trimIndent()
 
 val datetimeResponse =
-    DateTimeHttpResponse(
-        date = "2023_1_31",
-        time = "3_4_5",
-        dst = 1,
-        tzone = -120
-    )
+    DateTimeHttpResponse(date = "2023_1_31", time = "3_4_5", dst = 1, tzone = -120)
 
-val webcamStatusResponseJson = """
+val webcamStatusResponseJson =
+    """
 {
     "status": 0,
     "error": 0
 }
-""".trimIndent()
+"""
+        .trimIndent()

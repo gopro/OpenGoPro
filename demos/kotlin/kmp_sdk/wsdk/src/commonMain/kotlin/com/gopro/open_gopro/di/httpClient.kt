@@ -12,27 +12,28 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
 
-
 internal fun createHttpClient(
     engine: HttpClientEngine,
 ): HttpClient {
-    val kermit = co.touchlab.kermit.Logger.withTag("Ktor")
-    val client = HttpClient(engine) {
+  val kermit = co.touchlab.kermit.Logger.withTag("Ktor")
+  val client =
+      HttpClient(engine) {
         install(ContentNegotiation) {
-            json(
-                json = jsonDefault // Use our custom serializer to handle protobuf enums
-            )
+          json(
+              json = jsonDefault // Use our custom serializer to handle protobuf enums
+              )
         }
         install(Logging) {
-            level = LogLevel.ALL
+          level = LogLevel.ALL
 
-            logger = object : Logger {
+          logger =
+              object : Logger {
                 override fun log(message: String) {
-                    kermit.i { message }
+                  kermit.i { message }
                 }
-            }
+              }
         }
-    }
+      }
 
-    return client
+  return client
 }

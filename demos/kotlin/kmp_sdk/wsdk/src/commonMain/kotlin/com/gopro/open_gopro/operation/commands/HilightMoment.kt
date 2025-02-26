@@ -14,12 +14,11 @@ import io.ktor.http.path
 @OptIn(ExperimentalUnsignedTypes::class)
 internal class HilightMoment : BaseOperation<Unit>("Hilight Moment") {
 
-    override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
-        communicator.executeTlvCommand(
-            CommandId.HILGIHT_MOMENT,
-            ResponseId.Command(CommandId.HILGIHT_MOMENT)
-        ).map { }
+  override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
+      communicator
+          .executeTlvCommand(CommandId.HILGIHT_MOMENT, ResponseId.Command(CommandId.HILGIHT_MOMENT))
+          .map {}
 
-    override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
-        communicator.get { url { path("gopro/media/hilight/moment") } }.map { it.body() }
+  override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
+      communicator.get { url { path("gopro/media/hilight/moment") } }.map { it.body() }
 }

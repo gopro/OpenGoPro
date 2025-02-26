@@ -12,13 +12,10 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 import kotlinx.serialization.Serializable
 
-// TODO this should be a one-to-many. I'm using this JSON serialization hack since I don't know anything about databases
+// TODO this should be a one-to-many. I'm using this JSON serialization hack since I don't know
+// anything about databases
 
-@Serializable
-internal data class CertificatesForDb(
-    val certificates: List<String>
-)
-
+@Serializable internal data class CertificatesForDb(val certificates: List<String>)
 
 @Entity
 internal data class CertificatesDbEntry(
@@ -28,15 +25,13 @@ internal data class CertificatesDbEntry(
 
 @Dao
 internal interface CertificatesDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(credentials: CertificatesDbEntry)
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  suspend fun insert(credentials: CertificatesDbEntry)
 
-    @Query("SELECT * FROM CertificatesDbEntry WHERE serialId in (:ids)")
-    suspend fun loadAll(vararg ids: String): List<CertificatesDbEntry>
+  @Query("SELECT * FROM CertificatesDbEntry WHERE serialId in (:ids)")
+  suspend fun loadAll(vararg ids: String): List<CertificatesDbEntry>
 
-    @Query("SELECT COUNT(*) as count FROM CertificatesDbEntry")
-    suspend fun count(): Int
+  @Query("SELECT COUNT(*) as count FROM CertificatesDbEntry") suspend fun count(): Int
 
-    @Delete(entity = CertificatesDbEntry::class)
-    suspend fun delete(serialId: SerialIdDb)
+  @Delete(entity = CertificatesDbEntry::class) suspend fun delete(serialId: SerialIdDb)
 }

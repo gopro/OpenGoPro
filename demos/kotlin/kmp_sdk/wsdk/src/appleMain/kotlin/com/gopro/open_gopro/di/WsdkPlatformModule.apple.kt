@@ -16,11 +16,12 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 internal actual fun buildOgpSdkPlatformModule(appContext: OgpSdkAppContext): OgpSdkPlatformModule {
-    return object : OgpSdkPlatformModule { override val module = module {
-            single { AppleWifiApi(get()) }.bind(IWifiApi::class)
-            single { AppleDnsApi(get()) }.bind(IDnsApi::class)
-            single { AppleDatabaseProvider() }.bind(IDatabaseProvider::class)
-            single { AppleHttpClientProvider() }.bind(IHttpClientProvider::class)
-        }
+  return object : OgpSdkPlatformModule {
+    override val module = module {
+      single { AppleWifiApi(get()) }.bind(IWifiApi::class)
+      single { AppleDnsApi(get()) }.bind(IDnsApi::class)
+      single { AppleDatabaseProvider() }.bind(IDatabaseProvider::class)
+      single { AppleHttpClientProvider() }.bind(IHttpClientProvider::class)
     }
+  }
 }

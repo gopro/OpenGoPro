@@ -11,8 +11,9 @@ internal class FakeSettingsContainer(
     val settingsContainer: SettingsContainer,
     private val marshaller: FakeOperationMarshaller
 ) {
-    val spies = marshaller.fakeBleApi.spies
-    suspend fun sendNextBleMessage() = marshaller.sendNextBleMessage()
+  val spies = marshaller.fakeBleApi.spies
+
+  suspend fun sendNextBleMessage() = marshaller.sendNextBleMessage()
 }
 
 internal fun buildFakeSettingsContainer(
@@ -20,8 +21,5 @@ internal fun buildFakeSettingsContainer(
     dispatcher: CoroutineDispatcher
 ): FakeSettingsContainer =
     FakeOperationMarshaller(responses, dispatcher).let { marshaller ->
-        FakeSettingsContainer(
-            SettingsContainer(marshaller),
-            marshaller
-        )
+      FakeSettingsContainer(SettingsContainer(marshaller), marshaller)
     }

@@ -12,14 +12,14 @@ import io.ktor.http.path
 internal class HilightFile(val file: MediaId, val offsetMs: Int? = null) :
     BaseOperation<Unit>("Hilight Media File") {
 
-    override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
-        communicator.get {
+  override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
+      communicator
+          .get {
             url {
-                path("gopro/media/hilight/file")
-                parameters.append("path", file.asPath)
-                offsetMs?.let {
-                    parameters.append("ms", it.toString())
-                }
+              path("gopro/media/hilight/file")
+              parameters.append("path", file.asPath)
+              offsetMs?.let { parameters.append("ms", it.toString()) }
             }
-        }.map { it.body() }
+          }
+          .map { it.body() }
 }

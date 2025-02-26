@@ -25,25 +25,25 @@ fun CohnScreen(
     viewModel: CohnViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+  val state by viewModel.state.collectAsStateWithLifecycle()
 
-    CommonTopBar(
-        navController = navController,
-        title = Screen.Cohn.route,
-    ) { paddingValues ->
-        DisposableEffect(viewModel) {
-            viewModel.start()
-            onDispose { viewModel.stop() }
-        }
-        Column(modifier.padding(paddingValues)) {
-            Text("COHN state: ${state.name}")
-            Button({ viewModel.enable() }) { Text("Enable") }
-            Button({ viewModel.disable() }) { Text("Disable") }
-            Button({ viewModel.provision() }) { Text("Provision") }
-            Button({ viewModel.unprovision() }) { Text("Unprovision") }
-            if (state == CohnUiState.Provisioning) {
-                IndeterminateCircularProgressIndicator()
-            }
-        }
+  CommonTopBar(
+      navController = navController,
+      title = Screen.Cohn.route,
+  ) { paddingValues ->
+    DisposableEffect(viewModel) {
+      viewModel.start()
+      onDispose { viewModel.stop() }
     }
+    Column(modifier.padding(paddingValues)) {
+      Text("COHN state: ${state.name}")
+      Button({ viewModel.enable() }) { Text("Enable") }
+      Button({ viewModel.disable() }) { Text("Disable") }
+      Button({ viewModel.provision() }) { Text("Provision") }
+      Button({ viewModel.unprovision() }) { Text("Unprovision") }
+      if (state == CohnUiState.Provisioning) {
+        IndeterminateCircularProgressIndicator()
+      }
+    }
+  }
 }

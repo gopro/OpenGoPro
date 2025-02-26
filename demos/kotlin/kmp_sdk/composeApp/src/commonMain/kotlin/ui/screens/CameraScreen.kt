@@ -35,40 +35,39 @@ fun CameraScreen(
     viewModel: CameraViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val cohnState by viewModel.cohnState.collectAsStateWithLifecycle()
-    val isBusy by viewModel.isBusy.collectAsStateWithLifecycle()
-    val isBleConnected by viewModel.isBleConnected.collectAsStateWithLifecycle()
-    val isHttpConnected by viewModel.isHttpConnected.collectAsStateWithLifecycle()
-    val disconnect by viewModel.disconnects.collectAsStateWithLifecycle()
+  val cohnState by viewModel.cohnState.collectAsStateWithLifecycle()
+  val isBusy by viewModel.isBusy.collectAsStateWithLifecycle()
+  val isBleConnected by viewModel.isBleConnected.collectAsStateWithLifecycle()
+  val isHttpConnected by viewModel.isHttpConnected.collectAsStateWithLifecycle()
+  val disconnect by viewModel.disconnects.collectAsStateWithLifecycle()
 
-    disconnect?.let { SnackbarMessageHandler("$it disconnected!!") }
+  disconnect?.let { SnackbarMessageHandler("$it disconnected!!") }
 
-    CommonTopBar(
-        navController = navController,
-        title = Screen.Camera.route,
-    ) { paddingValues ->
-        Column(modifier.padding(paddingValues)) {
-            DisposableEffect(viewModel) {
-                viewModel.start()
-                onDispose { viewModel.stop() }
-            }
+  CommonTopBar(
+      navController = navController,
+      title = Screen.Camera.route,
+  ) { paddingValues ->
+    Column(modifier.padding(paddingValues)) {
+      DisposableEffect(viewModel) {
+        viewModel.start()
+        onDispose { viewModel.stop() }
+      }
 
-            if (isBleConnected) Text("BLE Connected")
-            if (isHttpConnected) Text("HTTP Connected")
-            isBusy?.let { busy ->
-                IndeterminateCircularProgressIndicator()
-                Text(busy.text)
-            } ?: ReadyScreen(
-                cohnState,
-                subRoutes,
-                viewModel::toggleShutter,
-                { navController.navigate(it.route) },
-                viewModel::connectWifi,
-                viewModel::sleep
-            )
-
-        }
+      if (isBleConnected) Text("BLE Connected")
+      if (isHttpConnected) Text("HTTP Connected")
+      isBusy?.let { busy ->
+        IndeterminateCircularProgressIndicator()
+        Text(busy.text)
+      }
+          ?: ReadyScreen(
+              cohnState,
+              subRoutes,
+              viewModel::toggleShutter,
+              { navController.navigate(it.route) },
+              viewModel::connectWifi,
+              viewModel::sleep)
     }
+  }
 }
 
 @Composable
@@ -80,18 +79,18 @@ fun ReadyScreen(
     onConnectWifi: (() -> Unit),
     onSleep: (() -> Unit)
 ) {
-//    Text("COHN state: $cohnState")
-    Button(onToggleShutter) { Text("Toggle shutter") }
-    Button(onConnectWifi) { Text("Connect Wi-Fi") }
-    Button(onSleep) { Text("Sleep") }
-    HorizontalDivider(thickness = 8.dp)
+  //    Text("COHN state: $cohnState")
+  Button(onToggleShutter) { Text("Toggle shutter") }
+  Button(onConnectWifi) { Text("Connect Wi-Fi") }
+  Button(onSleep) { Text("Sleep") }
+  HorizontalDivider(thickness = 8.dp)
 
-    LazyColumn {
-        items(subRoutes) { screen ->
-            MenuListItem(screen.route) {
-                logger.d("Navigating to ${screen.route}")
-                onSelectScreen(screen)
-            }
-        }
+  LazyColumn {
+    items(subRoutes) { screen ->
+      MenuListItem(screen.route) {
+        logger.d("Navigating to ${screen.route}")
+        onSelectScreen(screen)
+      }
     }
+  }
 }

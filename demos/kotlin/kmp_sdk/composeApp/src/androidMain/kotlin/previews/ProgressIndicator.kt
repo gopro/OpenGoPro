@@ -11,7 +11,5 @@ import ui.components.IndeterminateCircularProgressIndicator
 @Composable
 @Preview
 private fun PreviewIndeterminateCircularProgressIndicator() {
-    Box {
-        IndeterminateCircularProgressIndicator()
-    }
+  Box { IndeterminateCircularProgressIndicator() }
 }

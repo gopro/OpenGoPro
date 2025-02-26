@@ -15,45 +15,29 @@ import presenter.MediaViewModel
 import presenter.SettingsViewModel
 import presenter.WebcamViewModel
 
-val cameraScreenModule = module {
-    viewModel { CameraViewModel(get(), get()) }
-}
+val cameraScreenModule = module { viewModel { CameraViewModel(get(), get()) } }
 
-val cameraChooserScreenModule = module {
-    viewModel { CameraChooserViewModel(get(), get()) }
-}
+val cameraChooserScreenModule = module { viewModel { CameraChooserViewModel(get(), get()) } }
 
-val mediaScreenModule = module {
-    viewModel { MediaViewModel(get(), get()) }
-}
+val mediaScreenModule = module { viewModel { MediaViewModel(get(), get()) } }
 
-val webcamScreenModule = module {
-    viewModel { WebcamViewModel(get(), get()) }
-}
+val webcamScreenModule = module { viewModel { WebcamViewModel(get(), get()) } }
 
-val livestreamScreenModule = module {
-    viewModel { LivestreamViewModel(get(), get()) }
-}
+val livestreamScreenModule = module { viewModel { LivestreamViewModel(get(), get()) } }
 
-val accessPointModule = module {
-    viewModelOf(::AccessPointViewModel)
-}
+val accessPointModule = module { viewModelOf(::AccessPointViewModel) }
 
-val cohnModule = module {
-    viewModel { CohnViewModel(get(), get()) }
-}
+val cohnModule = module { viewModel { CohnViewModel(get(), get()) } }
 
-val settingsModule = module {
-    viewModel { SettingsViewModel(get(), get()) }
-}
+val settingsModule = module { viewModel { SettingsViewModel(get(), get()) } }
 
-val screenModules = listOf(
-    cameraScreenModule,
-    mediaScreenModule,
-    cameraChooserScreenModule,
-    webcamScreenModule,
-    accessPointModule,
-    livestreamScreenModule,
-    cohnModule,
-    settingsModule
-)
+val screenModules =
+    listOf(
+        cameraScreenModule,
+        mediaScreenModule,
+        cameraChooserScreenModule,
+        webcamScreenModule,
+        accessPointModule,
+        livestreamScreenModule,
+        cohnModule,
+        settingsModule)

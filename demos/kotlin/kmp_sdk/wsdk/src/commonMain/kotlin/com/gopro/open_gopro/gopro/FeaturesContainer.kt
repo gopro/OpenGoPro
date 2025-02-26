@@ -7,10 +7,10 @@ import com.gopro.open_gopro.domain.connector.ICameraConnector
 import com.gopro.open_gopro.domain.gopro.IGoProFactory
 
 internal interface IFeatureContext {
-    val gopro: GoPro
-    val gpDescriptorManager: GpDescriptorManager
-    val connector: ICameraConnector
-    val facadeFactory: IGoProFactory
+  val gopro: GoPro
+  val gpDescriptorManager: GpDescriptorManager
+  val connector: ICameraConnector
+  val facadeFactory: IGoProFactory
 }
 
 internal data class FeatureContext(
@@ -26,7 +26,7 @@ internal data class FeatureContext(
  * @param featureContext
  */
 class FeaturesContainer internal constructor(featureContext: IFeatureContext) {
-    val accessPoint = AccessPointFeature(featureContext)
-    val cohn = CohnFeature(featureContext)
-    val connectWifi = ConnectWifiFeature(featureContext)
+  val accessPoint = AccessPointFeature(featureContext)
+  val cohn = CohnFeature(featureContext)
+  val connectWifi = ConnectWifiFeature(featureContext)
 }

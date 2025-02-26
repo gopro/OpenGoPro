@@ -8,8 +8,8 @@ import com.gopro.open_gopro.domain.communicator.BleCommunicator
 import com.gopro.open_gopro.domain.communicator.bleCommunicator.ResponseId
 import com.gopro.open_gopro.entity.communicator.ActionId
 import com.gopro.open_gopro.entity.communicator.FeatureId
-import com.gopro.open_gopro.gopro.CameraInternalError
 import com.gopro.open_gopro.entity.network.ble.GpUuid
+import com.gopro.open_gopro.gopro.CameraInternalError
 import com.gopro.open_gopro.operations.ApScanEntry
 import com.gopro.open_gopro.operations.RequestGetApEntries
 import com.gopro.open_gopro.operations.ResponseGetApEntries
@@ -26,39 +26,31 @@ private const val IS_ASSOC_MASK = 1.shl(3)
 internal class AccessPointGetScanResults(val scanId: Int, val totalEntries: Int) :
     BaseOperation<List<ApScanEntry>>("Get AP Scan Results") {
 
-    override suspend fun execute(communicator: BleCommunicator): Result<List<ApScanEntry>> =
-        communicator.executeProtobufCommand(
-            FeatureId.NETWORK_MANAGEMENT,
-            ActionId.GET_AP_ENTRIES,
-            RequestGetApEntries(0, totalEntries, scanId).encodeToByteArray(),
-            ResponseId.Protobuf(
-                FeatureId.NETWORK_MANAGEMENT,
-                ActionId.GET_AP_ENTRIES_RSP
-            ),
-            GpUuid.CM_NET_MGMT_COMM
-        ).map {
+  override suspend fun execute(communicator: BleCommunicator): Result<List<ApScanEntry>> =
+      communicator
+          .executeProtobufCommand(
+              FeatureId.NETWORK_MANAGEMENT,
+              ActionId.GET_AP_ENTRIES,
+              RequestGetApEntries(0, totalEntries, scanId).encodeToByteArray(),
+              ResponseId.Protobuf(FeatureId.NETWORK_MANAGEMENT, ActionId.GET_AP_ENTRIES_RSP),
+              GpUuid.CM_NET_MGMT_COMM)
+          .map {
             ResponseGetApEntries.decodeFromByteArray(it).let { response ->
-                if (response.result.isOk()) {
-                    response.entries.map { entry ->
-                        ApScanEntry(
-                            ssid = entry.ssid,
-                            signalStrengthBars = entry.signalStrengthBars,
-                            signalFrequencyMhz = entry.signalFrequencyMhz,
-                            isAuthenticated = entry.scanEntryFlags.and(IS_AUTH_MASK)
-                                .toBoolean(),
-                            isOpen = !entry.scanEntryFlags.and(IS_AUTH_MASK).toBoolean(),
-                            isAssociated = entry.scanEntryFlags.and(IS_ASSOC_MASK)
-                                .toBoolean(),
-                            isConfigured = entry.scanEntryFlags.and(IS_CONF_MASK)
-                                .toBoolean(),
-                            isBestSsid = entry.scanEntryFlags.and(IS_BEST_SSID_MASK)
-                                .toBoolean()
-                        )
-                    }
-                } else {
-                    throw CameraInternalError("Received error status: ${response.result}.")
+              if (response.result.isOk()) {
+                response.entries.map { entry ->
+                  ApScanEntry(
+                      ssid = entry.ssid,
+                      signalStrengthBars = entry.signalStrengthBars,
+                      signalFrequencyMhz = entry.signalFrequencyMhz,
+                      isAuthenticated = entry.scanEntryFlags.and(IS_AUTH_MASK).toBoolean(),
+                      isOpen = !entry.scanEntryFlags.and(IS_AUTH_MASK).toBoolean(),
+                      isAssociated = entry.scanEntryFlags.and(IS_ASSOC_MASK).toBoolean(),
+                      isConfigured = entry.scanEntryFlags.and(IS_CONF_MASK).toBoolean(),
+                      isBestSsid = entry.scanEntryFlags.and(IS_BEST_SSID_MASK).toBoolean())
                 }
+              } else {
+                throw CameraInternalError("Received error status: ${response.result}.")
+              }
             }
-        }
-
+          }
 }

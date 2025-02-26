@@ -12,46 +12,40 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 interface IImageRequestBuilder {
-    fun fromBinary(data: ByteArray): ImageRequest
+  fun fromBinary(data: ByteArray): ImageRequest
 
-    fun fromNetwork(url: String): ImageRequest
+  fun fromNetwork(url: String): ImageRequest
 }
 
 object PhotoDisplay : KoinComponent {
 
-    private val imageRequestBuilder: IImageRequestBuilder by inject()
+  private val imageRequestBuilder: IImageRequestBuilder by inject()
 
-    @Composable
-    private fun PhotoBase(modifier: Modifier, imageRequest: ImageRequest) {
-        // https://proandroiddev.com/coil-for-compose-multiplatform-5745ea76356f
-        Box {
-            AsyncImage(
-                modifier = modifier,
-                model = imageRequest,
-                contentDescription = "TODO",
-
-                onError = {
-                    //update state
-                },
-                onLoading = {
-                    //update state
-                },
-                onSuccess = {
-                    //update state
-                }
-            )
-        }
+  @Composable
+  private fun PhotoBase(modifier: Modifier, imageRequest: ImageRequest) {
+    // https://proandroiddev.com/coil-for-compose-multiplatform-5745ea76356f
+    Box {
+      AsyncImage(
+          modifier = modifier,
+          model = imageRequest,
+          contentDescription = "TODO",
+          onError = {
+            // update state
+          },
+          onLoading = {
+            // update state
+          },
+          onSuccess = {
+            // update state
+          })
     }
+  }
 
-    @Composable
-    fun FromBinary(
-        modifier: Modifier,
-        data: ByteArray
-    ) = PhotoBase(modifier, imageRequestBuilder.fromBinary(data))
+  @Composable
+  fun FromBinary(modifier: Modifier, data: ByteArray) =
+      PhotoBase(modifier, imageRequestBuilder.fromBinary(data))
 
-    @Composable
-    fun FromNetwork(
-        modifier: Modifier,
-        url: String
-    ) = PhotoBase(modifier, imageRequestBuilder.fromNetwork(url))
+  @Composable
+  fun FromNetwork(modifier: Modifier, url: String) =
+      PhotoBase(modifier, imageRequestBuilder.fromNetwork(url))
 }

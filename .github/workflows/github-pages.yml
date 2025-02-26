@@ -35,18 +35,19 @@ jobs:
 
     check:
         needs: copyright
-        name: Check modified files for Python SDK changes
+        name: Check modified files for SDK changes
         runs-on: ubuntu-latest
         outputs:
-            build_python_sdk: ${{ steps.check_files.outputs.found_modified_python_file }}
+            build_python_sdk: ${{ steps.check_python_files.outputs.found_modified_python_file }}
+            build_kotlin_sdk: ${{ steps.check_kotlin_files.outputs.found_modified_kotlin_file }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
               with:
                   fetch-depth: 2
 
-            - name: Analyze modified files
-              id: check_files
+            - name: Analyze modified Python SDK files
+              id: check_python_files
               run: |
                   echo "=============== list modified files ==============="
                   git diff --name-only HEAD^ HEAD
@@ -58,6 +59,23 @@ jobs:
                       else
                           echo "Found a Python SDK modified file"
                           echo "found_modified_python_file=true" >> "$GITHUB_OUTPUT"
+                          break
+                      fi
+                  done <files.txt
+
+            - name: Analyze modified Kotlin SDK files
+              id: check_kotlin_files
+              run: |
+                  echo "=============== list modified files ==============="
+                  git diff --name-only HEAD^ HEAD
+                  echo
+                  git diff --name-only HEAD^ HEAD >files.txt
+                  while IFS= read -r file; do
+                      if [[ $file != demos/kotlin/kmp_sdk* ]]; then
+                          echo "found_modified_kotlin_file=false" >> "$GITHUB_OUTPUT"
+                      else
+                          echo "Found a Kotlin SDK modified file"
+                          echo "found_modified_kotlin_file=true" >> "$GITHUB_OUTPUT"
                           break
                       fi
                   done <files.txt
@@ -126,4 +144,45 @@ jobs:
                   git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
                   git config user.name "github-actions[bot]"
                   git commit --allow-empty -m "sphinx build from Action ${GITHUB_SHA}"
+                  git push
+
+    kotlin_sdk:
+        name: Build and Deploy Kotlin SDK Documentation
+        needs: check
+        if: needs.check.outputs.build_kotlin_sdk == 'true'
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout source branch (the PR branch)
+              uses: actions/checkout@v4
+              with:
+                  path: source
+
+            - name: Setup Java
+              uses: actions/setup-java@v4
+              with:
+                  distribution: 'temurin'
+                  java-version: '17'
+                  cache: gradle
+                  cache-dependency-path: source/demos/kotlin/kmp_sdk
+
+            - name: Build Dokka Documentation
+              working-directory: source/demos/kotlin/kmp_sdk
+              run: ./gradlew dokkaHtml
+
+            - name: Checkout target branch (the gh-pages branch)
+              uses: actions/checkout@v4
+              with:
+                  ref: gh-pages
+                  path: target
+
+            - name: Deploy to Github Pages
+              run: |
+                  rm -rf ./target/kotlin_sdk
+                  mkdir -p ./target/kotlin_sdk
+                  cp -r ./source/demos/kotlin/kmp_sdk/wsdk/build/dokka/html/. ./target/kotlin_sdk
+                  cd  ./target/kotlin_sdk
+                  git add .
+                  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                  git config user.name "github-actions[bot]"
+                  git commit --allow-empty -m "Dokka build from Action ${GITHUB_SHA}"
                   git push

@@ -11,12 +11,13 @@ import io.ktor.http.path
 
 internal class MediaDeleteSingle(val file: MediaId) : BaseOperation<Unit>("Delete Single Media") {
 
-    override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
-        communicator.get {
+  override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
+      communicator
+          .get {
             url {
-                path("gopro/media/delete/file")
-                encodedParameters.append("path", file.asPath)
+              path("gopro/media/delete/file")
+              encodedParameters.append("path", file.asPath)
             }
-        }
-            .map { it.body() }
+          }
+          .map { it.body() }
 }

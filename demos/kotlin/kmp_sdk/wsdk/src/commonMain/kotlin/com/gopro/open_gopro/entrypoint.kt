@@ -17,10 +17,7 @@ import org.koin.core.error.ApplicationAlreadyStartedException
 import org.koin.core.module.Module
 import org.koin.dsl.koinApplication
 
-/**
- * Platform-specific context needed to initialize the OGP SDK
- *
- */
+/** Platform-specific context needed to initialize the OGP SDK */
 expect class OgpSdkAppContext
 
 private val logger = Logger.withTag("OGP SDK")
@@ -28,40 +25,40 @@ private val logger = Logger.withTag("OGP SDK")
 // https://insert-koin.io/docs/reference/koin-core/context-isolation
 // https://medium.com/@gusakov.giorgi/using-koin-dependency-injection-in-library-sdk-7be76291ecad
 internal object OgpSdkIsolatedKoinContext {
-    private data class InitArguments(
-        val dispatcher: CoroutineDispatcher, val appContext: OgpSdkAppContext
-    )
+  private data class InitArguments(
+      val dispatcher: CoroutineDispatcher,
+      val appContext: OgpSdkAppContext
+  )
 
-    private var initArguments: InitArguments? = null
+  private var initArguments: InitArguments? = null
 
-    private val koinApp: KoinApplication by lazy {
-        koinApplication { modules(koinModules) }.also { app ->
-            try {
-                startKoin(app)
-                logger.d("Started KOIN from OGP SDK since it was not running.")
-            } catch (_: ApplicationAlreadyStartedException) {
-                logger.d("Not starting Koin from OGP SDK since it was already started")
-            }
+  private val koinApp: KoinApplication by lazy {
+    koinApplication { modules(koinModules) }
+        .also { app ->
+          try {
+            startKoin(app)
+            logger.d("Started KOIN from OGP SDK since it was not running.")
+          } catch (_: ApplicationAlreadyStartedException) {
+            logger.d("Not starting Koin from OGP SDK since it was already started")
+          }
         }
-    }
-    internal val koinModules: Module by lazy {
-        initArguments?.let { args ->
-            buildPackageModules(args.dispatcher, args.appContext)
-        } ?: throw Exception("OGP SDK has not been initialized")
-    }
+  }
+  internal val koinModules: Module by lazy {
+    initArguments?.let { args -> buildPackageModules(args.dispatcher, args.appContext) }
+        ?: throw Exception("OGP SDK has not been initialized")
+  }
 
-    fun init(dispatcher: CoroutineDispatcher, appContext: OgpSdkAppContext) {
-        initArguments = InitArguments(dispatcher, appContext)
-    }
+  fun init(dispatcher: CoroutineDispatcher, appContext: OgpSdkAppContext) {
+    initArguments = InitArguments(dispatcher, appContext)
+  }
 
-    fun getOgpSdkKoinApp(): Koin = koinApp.koin
+  fun getOgpSdkKoinApp(): Koin = koinApp.koin
 }
 
 /**
  * The top level SDK interface
  *
  * The client should use this class to discover, connect, and retrieve [GoPro] objects
- *
  * > TODO currently multiple instances of OGP SDK are not supported and have not been tested.
  *
  * ```
@@ -87,45 +84,46 @@ internal object OgpSdkIsolatedKoinContext {
  * @param appContext platform-specific application context
  */
 class OgpSdk(dispatcher: CoroutineDispatcher, appContext: OgpSdkAppContext) {
-    // TODO how / should we handle multiple SDK's
-    init {
-        OgpSdkIsolatedKoinContext.init(dispatcher, appContext)
-    }
+  // TODO how / should we handle multiple SDK's
+  init {
+    OgpSdkIsolatedKoinContext.init(dispatcher, appContext)
+  }
 
-    private val goProFactory: IGoProFactory = OgpSdkIsolatedKoinContext.getOgpSdkKoinApp().get()
-    private val cameraConnector: ICameraConnector = OgpSdkIsolatedKoinContext.getOgpSdkKoinApp().get()
+  private val goProFactory: IGoProFactory = OgpSdkIsolatedKoinContext.getOgpSdkKoinApp().get()
+  private val cameraConnector: ICameraConnector = OgpSdkIsolatedKoinContext.getOgpSdkKoinApp().get()
 
-    /**
-     * Scan for available GoPro's on one or more network types
-     *
-     * @param networkTypes network types to scan on
-     * @return flow of GoPro's discovered per-network
-     */
-    suspend fun discover(vararg networkTypes: NetworkType): Flow<ScanResult> =
-        cameraConnector.discover(*networkTypes)
+  /**
+   * Scan for available GoPro's on one or more network types
+   *
+   * @param networkTypes network types to scan on
+   * @return flow of GoPro's discovered per-network
+   */
+  suspend fun discover(vararg networkTypes: NetworkType): Flow<ScanResult> =
+      cameraConnector.discover(*networkTypes)
 
-    /**
-     * Establish a connection to a discovered GoPro
-     *
-     * @param target discovered GoPro to connect to
-     * @param connectionRequestContext additional per-network-type connection request information
-     * @return ID of connected GoPro
-     */
-    suspend fun connect(
-        target: ScanResult, connectionRequestContext: ConnectionRequestContext? = null
-    ): Result<GoProId> = cameraConnector.connect(target, connectionRequestContext).map {
+  /**
+   * Establish a connection to a discovered GoPro
+   *
+   * @param target discovered GoPro to connect to
+   * @param connectionRequestContext additional per-network-type connection request information
+   * @return ID of connected GoPro
+   */
+  suspend fun connect(
+      target: ScanResult,
+      connectionRequestContext: ConnectionRequestContext? = null
+  ): Result<GoProId> =
+      cameraConnector.connect(target, connectionRequestContext).map {
         goProFactory.storeConnection(it)
         it.id
-    }
+      }
 
-    /**
-     * Retrieve a connected GoPro instance
-     *
-     * The GoPro referenced by [id] must have first been connected with [connect]
-     *
-     * @param id
-     *
-     * @return [GoPro] if a connection is found matching the [id]
-     */
-    suspend fun getGoPro(id: GoProId) = goProFactory.getGoPro(id)
+  /**
+   * Retrieve a connected GoPro instance
+   *
+   * The GoPro referenced by [id] must have first been connected with [connect]
+   *
+   * @param id
+   * @return [GoPro] if a connection is found matching the [id]
+   */
+  suspend fun getGoPro(id: GoProId) = goProFactory.getGoPro(id)
 }

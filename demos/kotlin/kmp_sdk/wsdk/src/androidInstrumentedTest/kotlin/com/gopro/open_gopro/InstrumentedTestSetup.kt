@@ -23,45 +23,46 @@ import org.koin.test.mock.declareMock
 import org.mockito.Mockito
 
 open class AndroidInstrumentedKoinTest : KoinTest {
-    @get:Rule
-    val mockProvider = MockProviderRule.create { clazz ->
-        Mockito.mock(clazz.java)
-    }
+  @get:Rule val mockProvider = MockProviderRule.create { clazz -> Mockito.mock(clazz.java) }
 
-    @get:Rule
-    val koinTestRule = KoinTestRule(listOf(module {
-        single<IWifiApi> { declareMock() }
-        single<IDnsApi> { declareMock() }
-    }))
+  @get:Rule
+  val koinTestRule =
+      KoinTestRule(
+          listOf(
+              module {
+                single<IWifiApi> { declareMock() }
+                single<IDnsApi> { declareMock() }
+              }))
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class KoinTestRule(private val additionalModules: List<Module>? = null) : TestWatcher() {
-    private val testModule: Module
+  private val testModule: Module
 
-    init {
-        OgpSdk.init(
-            dispatcher = UnconfinedTestDispatcher(),
-            appContext = OgpSdkAppContext().apply {
-                set(InstrumentationRegistry.getInstrumentation().targetContext.applicationContext)
+  init {
+    OgpSdk.init(
+        dispatcher = UnconfinedTestDispatcher(),
+        appContext =
+            OgpSdkAppContext().apply {
+              set(InstrumentationRegistry.getInstrumentation().targetContext.applicationContext)
             })
-        testModule = OgpSdkIsolatedKoinContext.koinModules!!
-    }
+    testModule = OgpSdkIsolatedKoinContext.koinModules!!
+  }
 
-    override fun starting(description: Description) {
-        if (getKoinApplicationOrNull() == null) {
-            startKoin {
-                modules(testModule)
-                additionalModules?.let { modules(it) }
-            }
-        } else {
-            loadKoinModules(testModule)
-            additionalModules?.let { loadKoinModules(it) }
-        }
+  override fun starting(description: Description) {
+    if (getKoinApplicationOrNull() == null) {
+      startKoin {
+        modules(testModule)
+        additionalModules?.let { modules(it) }
+      }
+    } else {
+      loadKoinModules(testModule)
+      additionalModules?.let { loadKoinModules(it) }
     }
+  }
 
-    override fun finished(description: Description) {
-        unloadKoinModules(testModule)
-        additionalModules?.let { unloadKoinModules(it) }
-    }
+  override fun finished(description: Description) {
+    unloadKoinModules(testModule)
+    additionalModules?.let { unloadKoinModules(it) }
+  }
 }

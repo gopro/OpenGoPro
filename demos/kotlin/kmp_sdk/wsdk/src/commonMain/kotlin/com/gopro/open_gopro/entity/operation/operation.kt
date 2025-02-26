@@ -10,7 +10,5 @@ class OperationUnsupportedForCommunicator(operation: String, communicationType: 
 
 class ApiError(message: String) : Exception(message)
 
-/**
- * Represent SerializationExceptions.
- */
+/** Represent SerializationExceptions. */
 class SerializationError(message: String) : Exception("Http Network Error: $message")

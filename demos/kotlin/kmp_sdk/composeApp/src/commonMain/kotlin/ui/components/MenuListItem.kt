@@ -13,15 +13,11 @@ import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun MenuListItem(text: String, onClick: () -> Unit) {
-    Button(
-        onClick = onClick,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.labelLarge,
-            textAlign = TextAlign.Start,
-            modifier = Modifier.fillMaxWidth()
-        )
-    }
+  Button(onClick = onClick, modifier = Modifier.fillMaxWidth()) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.labelLarge,
+        textAlign = TextAlign.Start,
+        modifier = Modifier.fillMaxWidth())
+  }
 }
