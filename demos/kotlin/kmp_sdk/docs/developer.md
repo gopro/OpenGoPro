@@ -13,7 +13,9 @@
 
 ## Linting
 
-TODO not yet implemented
+`./gradlew lint`
+
+We haven't actually analyzed the lint results yet. They need to be fixed / configured.
 
 ## Testing
 

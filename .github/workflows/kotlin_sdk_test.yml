@@ -14,6 +14,9 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
+            - name: Cancel Previous Runs
+              uses: styfle/cancel-workflow-action
+
             - name: Checkout source branch
               uses: actions/checkout@v4
 
@@ -24,6 +27,7 @@ jobs:
                   cache: gradle
                   cache-dependency-path: demos/kotlin/kmp_sdk
 
+            # TODO currently just formatting. Need to go through lint results (gradlew lint)
             - name: Lint
               working-directory: demos/kotlin/kmp_sdk
               shell: bash
