@@ -1,5 +1,12 @@
 # Developer README
 
+## Build
+
+`./gradlew :composeApp:assembleDebug`
+`./gradlew :simplifiedApp:assembleDebug`
+`./gradlew :composeApp:assembleRelease`
+`./gradlew :simplifiedApp:assembleRelease`
+
 ## Formatting
 
 TODO not yet implemented
@@ -31,3 +38,7 @@ which will run
 `./gradlew licenseReleaseReport`
  
 > TODO! The copy appears to be broken due to some locked file.
+
+## CI Notes
+
+gradle cache?

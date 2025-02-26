@@ -3,7 +3,6 @@
 
 package gopro.open_gopro
 
-import com.gopro.open_gopro.WsdkAppContext
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.Manifest.permission.ACCESS_WIFI_STATE
@@ -16,6 +15,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import app
+import com.gopro.open_gopro.OgpSdkAppContext
 
 class SimplifiedActivity : ComponentActivity() {
 
@@ -48,7 +48,7 @@ class SimplifiedActivity : ComponentActivity() {
 
 
     private fun startApp() {
-        val appContext = WsdkAppContext().apply { set(applicationContext) }
+        val appContext = OgpSdkAppContext().apply { set(applicationContext) }
         app(appContext)
     }
 
