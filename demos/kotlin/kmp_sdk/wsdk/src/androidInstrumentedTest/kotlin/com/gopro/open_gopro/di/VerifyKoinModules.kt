@@ -3,7 +3,7 @@
 
 package com.gopro.open_gopro.di
 
-//class VerifyKoinModules {
+// class VerifyKoinModules {
 //    @OptIn(KoinExperimentalAPI::class)
 //    @Test
 //    fun `verify koin modules`() {
@@ -14,4 +14,4 @@ package com.gopro.open_gopro.di
 //            )
 //        )
 //    }
-//}
+// }

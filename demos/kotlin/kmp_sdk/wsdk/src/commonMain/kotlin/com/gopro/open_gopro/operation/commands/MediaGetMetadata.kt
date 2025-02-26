@@ -13,12 +13,13 @@ import io.ktor.http.path
 internal class MediaGetMetadata(val file: MediaId) :
     BaseOperation<MediaMetadata>("Get Media File Metadata") {
 
-    override suspend fun execute(communicator: HttpCommunicator): Result<MediaMetadata> =
-        communicator.get {
+  override suspend fun execute(communicator: HttpCommunicator): Result<MediaMetadata> =
+      communicator
+          .get {
             url {
-                path("gopro/media/info")
-                encodedParameters.append("path", file.asPath)
+              path("gopro/media/info")
+              encodedParameters.append("path", file.asPath)
             }
-        }
-            .map { it.body() }
+          }
+          .map { it.body() }
 }

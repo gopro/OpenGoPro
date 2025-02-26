@@ -16,25 +16,18 @@ internal class WebcamStart(
     val fov: WebcamFov? = null,
     val port: Int? = null,
     val protocol: WebcamProtocol? = null
-) :
-    BaseOperation<Unit>("Start Webcam") {
+) : BaseOperation<Unit>("Start Webcam") {
 
-    override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
-        communicator.get {
+  override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
+      communicator
+          .get {
             url {
-                path("gopro/webcam/start")
-                resolution?.let {
-                    parameters.append("res", it.value.toString())
-                }
-                fov?.let {
-                    parameters.append("fov", it.value.toString())
-                }
-                this@WebcamStart.port?.let {
-                    parameters.append("port", it.toString())
-                }
-                this@WebcamStart.protocol?.let {
-                    parameters.append("protocol", it.value)
-                }
+              path("gopro/webcam/start")
+              resolution?.let { parameters.append("res", it.value.toString()) }
+              fov?.let { parameters.append("fov", it.value.toString()) }
+              this@WebcamStart.port?.let { parameters.append("port", it.toString()) }
+              this@WebcamStart.protocol?.let { parameters.append("protocol", it.value) }
             }
-        }.map { it.body() }
+          }
+          .map { it.body() }
 }

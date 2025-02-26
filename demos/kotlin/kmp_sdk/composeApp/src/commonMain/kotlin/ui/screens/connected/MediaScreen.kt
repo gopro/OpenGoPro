@@ -33,84 +33,77 @@ fun MediaScreen(
     viewModel: MediaViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-    val mediaList by viewModel.mediaList.collectAsStateWithLifecycle()
+  val state by viewModel.state.collectAsStateWithLifecycle()
+  val mediaList by viewModel.mediaList.collectAsStateWithLifecycle()
 
-    CommonTopBar(
-        navController = navController,
-        title = Screen.Media.route,
-    ) { paddingValues ->
-        Column(modifier.padding(paddingValues)) {
-            DisposableEffect(viewModel) {
-                viewModel.start()
-                onDispose { viewModel.stop() }
-            }
-            Text("State: ${state.message}")
+  CommonTopBar(
+      navController = navController,
+      title = Screen.Media.route,
+  ) { paddingValues ->
+    Column(modifier.padding(paddingValues)) {
+      DisposableEffect(viewModel) {
+        viewModel.start()
+        onDispose { viewModel.stop() }
+      }
+      Text("State: ${state.message}")
 
-            // Always display user controls if not in error state
-            if (state !is MediaUiState.Error) {
-                MediaListQueryButton { viewModel.getMediaList() }
-                MediaGrid(mediaList) { viewModel.getMedia(it) }
-                HorizontalDivider()
-            }
-            // Display progress indicator if accessing media
-            if (state is MediaUiState.RetrievingMedia) {
-                IndeterminateCircularProgressIndicator()
-            }
+      // Always display user controls if not in error state
+      if (state !is MediaUiState.Error) {
+        MediaListQueryButton { viewModel.getMediaList() }
+        MediaGrid(mediaList) { viewModel.getMedia(it) }
+        HorizontalDivider()
+      }
+      // Display progress indicator if accessing media
+      if (state is MediaUiState.RetrievingMedia) {
+        IndeterminateCircularProgressIndicator()
+      }
 
-            // Display video / photo
-            when (val s = state) {
-                is MediaUiState.ActivePhoto -> {
-                    MediaMetadata(s.photo, s.metadata)
-                    PhotoDisplay.FromBinary(modifier, s.data)
-                }
-
-                is MediaUiState.ActiveVideo -> {
-                    MediaMetadata(s.video, s.metadata)
-                    // TODO download and store videos to disk.
-//                    VideoPlayerWrapper.player.FromBinary(modifier, s.data)
-                    PhotoDisplay.FromBinary(modifier, s.data)
-                }
-                else -> {}
-            }
+      // Display video / photo
+      when (val s = state) {
+        is MediaUiState.ActivePhoto -> {
+          MediaMetadata(s.photo, s.metadata)
+          PhotoDisplay.FromBinary(modifier, s.data)
         }
+
+        is MediaUiState.ActiveVideo -> {
+          MediaMetadata(s.video, s.metadata)
+          // TODO download and store videos to disk.
+          //                    VideoPlayerWrapper.player.FromBinary(modifier, s.data)
+          PhotoDisplay.FromBinary(modifier, s.data)
+        }
+        else -> {}
+      }
     }
+  }
 }
 
 @Composable
 fun MediaMetadata(item: MediaId, metadata: MediaMetadata) {
-    Text("Chosen Media: ${item.asPath}")
-    with(metadata) {
-        Text("id: $id")
-        Text("file size: $fileSize")
-        Text("context type:  ${contentType.name}")
-        Text("height: $height")
-        Text("width: $width")
-    }
+  Text("Chosen Media: ${item.asPath}")
+  with(metadata) {
+    Text("id: $id")
+    Text("file size: $fileSize")
+    Text("context type:  ${contentType.name}")
+    Text("height: $height")
+    Text("width: $width")
+  }
 }
 
 @Composable
-fun MediaListQueryButton(
-    onGetMediaList: () -> Unit
-) {
-    Column {
-        Button(onGetMediaList) { Text("Get Media List") }
-    }
+fun MediaListQueryButton(onGetMediaList: () -> Unit) {
+  Column { Button(onGetMediaList) { Text("Get Media List") } }
 }
 
 @Composable
-fun MediaGrid(
-    mediaList: List<MediaId>,
-    onMediaSelect: (MediaId) -> Unit
-) {
-    LazyColumn {
-        items(mediaList.take(5)) { mediaId ->
-            Row(Modifier.clickable(onClick = { onMediaSelect(mediaId) })) {
-                Column {
-                    Text(mediaId.asPath)
-                    HorizontalDivider()
-                }
-            }
+fun MediaGrid(mediaList: List<MediaId>, onMediaSelect: (MediaId) -> Unit) {
+  LazyColumn {
+    items(mediaList.take(5)) { mediaId ->
+      Row(Modifier.clickable(onClick = { onMediaSelect(mediaId) })) {
+        Column {
+          Text(mediaId.asPath)
+          HorizontalDivider()
         }
+      }
     }
+  }
 }

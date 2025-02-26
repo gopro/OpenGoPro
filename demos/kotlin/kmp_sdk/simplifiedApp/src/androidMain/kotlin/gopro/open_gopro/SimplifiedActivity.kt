@@ -19,40 +19,36 @@ import com.gopro.open_gopro.OgpSdkAppContext
 
 class SimplifiedActivity : ComponentActivity() {
 
-    private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { isGranted ->
-            require(isGranted.all { it.value }) { "Failed to enable all required permissions." }
-            startApp()
-        }
+  private val requestPermissionLauncher =
+      registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { isGranted ->
+        require(isGranted.all { it.value }) { "Failed to enable all required permissions." }
+        startApp()
+      }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
 
-        val permissions = arrayOf(
+    val permissions =
+        arrayOf(
             BLUETOOTH_SCAN,
             BLUETOOTH_CONNECT,
             ACCESS_FINE_LOCATION,
             ACCESS_COARSE_LOCATION,
             ACCESS_WIFI_STATE,
-            CHANGE_WIFI_STATE
-        )
+            CHANGE_WIFI_STATE)
 
-        if (permissions.all { isPermissionGranted(it) }) {
-            startApp()
-        }
-
-        requestPermissionLauncher.launch(
-            permissions
-        )
+    if (permissions.all { isPermissionGranted(it) }) {
+      startApp()
     }
 
+    requestPermissionLauncher.launch(permissions)
+  }
 
-    private fun startApp() {
-        val appContext = OgpSdkAppContext().apply { set(applicationContext) }
-        app(appContext)
-    }
+  private fun startApp() {
+    val appContext = OgpSdkAppContext().apply { set(applicationContext) }
+    app(appContext)
+  }
 
-
-    private fun isPermissionGranted(permission: String) =
-        ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+  private fun isPermissionGranted(permission: String) =
+      ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 }

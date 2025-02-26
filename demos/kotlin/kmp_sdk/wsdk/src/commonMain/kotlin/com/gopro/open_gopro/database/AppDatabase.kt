@@ -8,33 +8,28 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 
-internal data class SerialIdDb(
-    val serialId: String
-)
+internal data class SerialIdDb(val serialId: String)
 
 @Database(
-    entities = [
-        HttpsCredentialsDbEntry::class,
-        CertificatesDbEntry::class,
-        SsidDbEntry::class
-    ],
-    version = 1
-)
+    entities = [HttpsCredentialsDbEntry::class, CertificatesDbEntry::class, SsidDbEntry::class],
+    version = 1)
 @ConstructedBy(AppDatabaseConstructor::class)
 internal abstract class AppDatabase : RoomDatabase() {
-    abstract fun httpsCredentialsDao(): HttpsCredentialsDao
-    abstract fun certificatesDao(): CertificatesDao
-    abstract fun ssidDao(): SsidDao
+  abstract fun httpsCredentialsDao(): HttpsCredentialsDao
+
+  abstract fun certificatesDao(): CertificatesDao
+
+  abstract fun ssidDao(): SsidDao
 }
 
 // The Room compiler generates the `actual` implementations.
 @Suppress("NO_ACTUAL_FOR_EXPECT")
 internal expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
-    override fun initialize(): AppDatabase
+  override fun initialize(): AppDatabase
 }
 
 internal const val dbFileName = "ogp_sdk.db"
 
 internal interface IDatabaseProvider {
-    fun provideDatabase(): RoomDatabase.Builder<AppDatabase>
+  fun provideDatabase(): RoomDatabase.Builder<AppDatabase>
 }

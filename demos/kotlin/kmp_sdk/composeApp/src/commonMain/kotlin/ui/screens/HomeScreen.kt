@@ -35,84 +35,81 @@ fun HomeScreen(
     viewModel: CameraChooserViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val devices by viewModel.devices.collectAsStateWithLifecycle()
-    val state by viewModel.state.collectAsStateWithLifecycle()
-    val selectedNetworks = remember { mutableStateListOf<ScanNetworkType>() }
+  val devices by viewModel.devices.collectAsStateWithLifecycle()
+  val state by viewModel.state.collectAsStateWithLifecycle()
+  val selectedNetworks = remember { mutableStateListOf<ScanNetworkType>() }
 
-    CommonTopBar(
-        navController = navController,
-        title = Screen.CameraChooser.route,
-    ) { paddingValues ->
-        if (state == CameraChooserUiState.Connected) {
-            LaunchedEffect(state) {
-                navController.navigate(Screen.Camera.route)
-            }
-        }
-        Column(modifier.padding(paddingValues)) {
-            Text("Current state: $state")
-            NetworkTypeSelection(selectedNetworks) { network, check ->
-                if (check) selectedNetworks.add(network) else selectedNetworks.remove(network)
-            }
-            DiscoverButton(
-                state,
-                onDiscover = { viewModel.discover(selectedNetworks.toSet()) },
-                onCancel = viewModel::cancelDiscovery
-            )
-            HorizontalDivider()
-            ScanResultList(devices) { viewModel.connect(it) }
-            when (state) {
-                is CameraChooserUiState.Discovering, is CameraChooserUiState.Connecting -> IndeterminateCircularProgressIndicator()
-                else -> {}
-            }
-        }
+  CommonTopBar(
+      navController = navController,
+      title = Screen.CameraChooser.route,
+  ) { paddingValues ->
+    if (state == CameraChooserUiState.Connected) {
+      LaunchedEffect(state) { navController.navigate(Screen.Camera.route) }
     }
-}
-
-
-@Composable
-fun DiscoverButton(
-    state: CameraChooserUiState, onDiscover: (() -> Unit), onCancel: (() -> Unit)
-) {
-    Column {
-        Button({
-            when (state) {
-                CameraChooserUiState.Idle -> onDiscover()
-                CameraChooserUiState.Discovering -> onCancel()
-                else -> {} // TODO
-            }
-        }) { Text(state.name) }
+    Column(modifier.padding(paddingValues)) {
+      Text("Current state: $state")
+      NetworkTypeSelection(selectedNetworks) { network, check ->
+        if (check) selectedNetworks.add(network) else selectedNetworks.remove(network)
+      }
+      DiscoverButton(
+          state,
+          onDiscover = { viewModel.discover(selectedNetworks.toSet()) },
+          onCancel = viewModel::cancelDiscovery)
+      HorizontalDivider()
+      ScanResultList(devices) { viewModel.connect(it) }
+      when (state) {
+        is CameraChooserUiState.Discovering,
+        is CameraChooserUiState.Connecting -> IndeterminateCircularProgressIndicator()
+        else -> {}
+      }
     }
+  }
 }
 
 @Composable
-fun ScanResultList(
-    devices: List<ScanResult>, onDeviceSelect: (ScanResult) -> Unit
-) {
-    LazyColumn {
-        items(devices) { device ->
-            Row(Modifier.clickable(onClick = { onDeviceSelect(device) })) {
-                Column {
-                    Text(device.id.toString())
-                    Text(device.networkType.name)
-                    HorizontalDivider()
-                }
-            }
-            HorizontalDivider()
-        }
+fun DiscoverButton(state: CameraChooserUiState, onDiscover: (() -> Unit), onCancel: (() -> Unit)) {
+  Column {
+    Button({
+      when (state) {
+        CameraChooserUiState.Idle -> onDiscover()
+        CameraChooserUiState.Discovering -> onCancel()
+        else -> {} // TODO
+      }
+    }) {
+      Text(state.name)
     }
+  }
+}
+
+@Composable
+fun ScanResultList(devices: List<ScanResult>, onDeviceSelect: (ScanResult) -> Unit) {
+  LazyColumn {
+    items(devices) { device ->
+      Row(Modifier.clickable(onClick = { onDeviceSelect(device) })) {
+        Column {
+          Text(device.id.toString())
+          Text(device.networkType.name)
+          HorizontalDivider()
+        }
+      }
+      HorizontalDivider()
+    }
+  }
 }
 
 @Composable
 fun NetworkTypeSelection(
-    networks: List<ScanNetworkType>, onCheck: (ScanNetworkType, Boolean) -> Unit
+    networks: List<ScanNetworkType>,
+    onCheck: (ScanNetworkType, Boolean) -> Unit
 ) {
-    LazyColumn {
-        items(ScanNetworkType.entries.toTypedArray()) { networkType ->
-            Row {
-                Checkbox(checked = networks.contains(networkType),
-                    onCheckedChange = { onCheck(networkType, it) })
-                Text(networkType.name)
-            }
-        }
+  LazyColumn {
+    items(ScanNetworkType.entries.toTypedArray()) { networkType ->
+      Row {
+        Checkbox(
+            checked = networks.contains(networkType),
+            onCheckedChange = { onCheck(networkType, it) })
+        Text(networkType.name)
+      }
     }
+  }
 }

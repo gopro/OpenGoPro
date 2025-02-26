@@ -33,40 +33,37 @@ fun LivestreamScreen(
     viewModel: LivestreamViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-    var url: String by remember { mutableStateOf("") }
+  val state by viewModel.state.collectAsStateWithLifecycle()
+  var url: String by remember { mutableStateOf("") }
 
-    CommonTopBar(
-        navController = navController,
-        title = Screen.Livestream.route,
-    ) { paddingValues ->
-        DisposableEffect(viewModel) {
-            viewModel.start()
-            onDispose { viewModel.stop() }
-        }
-        Column(modifier.padding(paddingValues)) {
-            Text("State: ${state.name}")
-            when (state) {
-                is LivestreamUiState.Ready -> {
-                    Button({ viewModel.startStream(url) }) { Text("Start Stream") }
-                    TextField(
-                        value = url,
-                        onValueChange = { url = it },
-                        label = { Text("Livestream Server URL") }
-                    )
-                }
-
-                is LivestreamUiState.Configuring -> IndeterminateCircularProgressIndicator()
-
-                is LivestreamUiState.Streaming -> {
-                    Button({ viewModel.stopStream() }) { Text("Stop Stream") }
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        StreamPlayerWrapper.player.PlayStream(modifier, url)
-                    }
-                }
-
-                else -> {}
-            }
-        }
+  CommonTopBar(
+      navController = navController,
+      title = Screen.Livestream.route,
+  ) { paddingValues ->
+    DisposableEffect(viewModel) {
+      viewModel.start()
+      onDispose { viewModel.stop() }
     }
+    Column(modifier.padding(paddingValues)) {
+      Text("State: ${state.name}")
+      when (state) {
+        is LivestreamUiState.Ready -> {
+          Button({ viewModel.startStream(url) }) { Text("Start Stream") }
+          TextField(
+              value = url, onValueChange = { url = it }, label = { Text("Livestream Server URL") })
+        }
+
+        is LivestreamUiState.Configuring -> IndeterminateCircularProgressIndicator()
+
+        is LivestreamUiState.Streaming -> {
+          Button({ viewModel.stopStream() }) { Text("Stop Stream") }
+          Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            StreamPlayerWrapper.player.PlayStream(modifier, url)
+          }
+        }
+
+        else -> {}
+      }
+    }
+  }
 }

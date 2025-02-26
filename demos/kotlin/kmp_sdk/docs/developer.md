@@ -9,7 +9,7 @@
 
 ## Formatting
 
-TODO not yet implemented
+`./gradlew ktfmtFormat`
 
 ## Linting
 

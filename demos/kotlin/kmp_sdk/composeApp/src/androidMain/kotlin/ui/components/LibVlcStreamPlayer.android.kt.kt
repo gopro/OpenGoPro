@@ -27,77 +27,73 @@ private val logger = Logger.withTag("LibVlcStreamPlayer")
 // https://tehleelmir.medium.com/how-to-integrate-vlc-or-vlclib-in-android-kotlin-798686844394
 
 class LibVlcStreamPlayer(private val context: Context) : IStreamPlayer {
-    private fun MediaPlayer.playMediaSource(vlcLib: LibVLC, source: Uri) {
-        stop()
-        Media(vlcLib, source).apply {
-            setHWDecoderEnabled(true, false)
-            media = this
-        }.release()
-        play()
+  private fun MediaPlayer.playMediaSource(vlcLib: LibVLC, source: Uri) {
+    stop()
+    Media(vlcLib, source)
+        .apply {
+          setHWDecoderEnabled(true, false)
+          media = this
+        }
+        .release()
+    play()
+  }
+
+  @Composable
+  override fun PlayStream(modifier: Modifier, url: String) {
+    logger.i("Playing stream from $url")
+
+    val libVlc = remember {
+      LibVLC(
+          context,
+          ArrayList<String>().apply {
+            //            add("--no-drop-late-frames")
+            //            add("--no-skip-frames")
+            //            add("--file-caching=1500")
+
+            add("--network-caching=150")
+            add("--clock-jitter=0")
+            add("--live-caching=150")
+            add("--drop-late-frames")
+            add("--skip-frames")
+            add("--vout=android-display")
+            add("--sout-transcode-vb=20")
+            add("--no-audio")
+            add(
+                "--sout=#transcode{vcodec=h264,vb=20,acodec=mpga,ab=128,channels=2,samplerate=44100}:duplicate{dst=display}")
+            add("--sout-x264-nf")
+            if (BuildConfig.DEBUG) {
+              add("-vvv")
+            }
+          })
     }
 
-    @Composable
-    override fun PlayStream(modifier: Modifier, url: String) {
-        logger.i("Playing stream from $url")
-
-        val libVlc = remember {
-            LibVLC(context, ArrayList<String>().apply {
-//            add("--no-drop-late-frames")
-//            add("--no-skip-frames")
-//            add("--file-caching=1500")
-
-                add("--network-caching=150")
-                add("--clock-jitter=0")
-                add("--live-caching=150")
-                add("--drop-late-frames")
-                add("--skip-frames")
-                add("--vout=android-display")
-                add("--sout-transcode-vb=20")
-                add("--no-audio")
-                add("--sout=#transcode{vcodec=h264,vb=20,acodec=mpga,ab=128,channels=2,samplerate=44100}:duplicate{dst=display}")
-                add("--sout-x264-nf")
-                if (BuildConfig.DEBUG) {
-                    add("-vvv")
-                }
-            })
-        }
-
-        val vlcView = remember {
-            VLCVideoLayout(context).apply {
-                keepScreenOn = true
-                fitsSystemWindows = false
-                layoutParams =
-                    FrameLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT
-                    )
-            }
-        }
-
-        val player = remember {
-            MediaPlayer(libVlc).apply {
-                attachViews(vlcView, null, true, false)
-            }
-        }
-
-        AndroidView(
-            modifier = modifier.fillMaxWidth(),
-            factory = { vlcView }
-        )
-
-        LaunchedEffect(Unit) {
-            player.setEventListener { event ->
-                // TODO handle these?
-            }
-            player.playMediaSource(libVlc, Uri.parse(url))
-        }
-
-        DisposableEffect(Unit) {
-            onDispose {
-                logger.d("Disposing of stream viewer.")
-                player.release()
-                libVlc.release()
-            }
-        }
+    val vlcView = remember {
+      VLCVideoLayout(context).apply {
+        keepScreenOn = true
+        fitsSystemWindows = false
+        layoutParams =
+            FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+      }
     }
+
+    val player = remember { MediaPlayer(libVlc).apply { attachViews(vlcView, null, true, false) } }
+
+    AndroidView(modifier = modifier.fillMaxWidth(), factory = { vlcView })
+
+    LaunchedEffect(Unit) {
+      player.setEventListener { event ->
+        // TODO handle these?
+      }
+      player.playMediaSource(libVlc, Uri.parse(url))
+    }
+
+    DisposableEffect(Unit) {
+      onDispose {
+        logger.d("Disposing of stream viewer.")
+        player.release()
+        libVlc.release()
+      }
+    }
+  }
 }

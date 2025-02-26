@@ -36,76 +36,75 @@ fun RootNavGraph(
     navController: NavHostController = rememberNavController(),
     modifier: Modifier = Modifier,
 ) {
-    NavHost(
-        navController = navController,
-        startDestination = Screen.Home.route,
-    ) {
-        // Home (Camera Chooser)
-        composable(route = Screen.Home.route) {
-            HomeScreen(
-                navController,
-                koinInject<CameraChooserViewModel>(),
-                modifier,
-            )
-        }
-        // Connected Camera
-        composable(route = Screen.Camera.route) {
-            CameraScreen(
-                navController,
-                listOf(
-                    Screen.Settings,
-                    Screen.Media,
-                    Screen.Webcam,
-                    Screen.AccessPoint,
-                    Screen.Livestream,
-                    Screen.Cohn
-                ),
-                koinViewModel<CameraViewModel>(),
-                modifier,
-            )
-        }
-        // Connected Camera sub-routes
-        composable(route = Screen.Settings.route) {
-            SettingsScreen(
-                navController,
-                koinInject<SettingsViewModel>(),
-                modifier,
-            )
-        }
-        composable(route = Screen.Media.route) {
-            MediaScreen(
-                navController,
-                koinInject<MediaViewModel>(),
-                modifier,
-            )
-        }
-        composable(route = Screen.Webcam.route) {
-            WebcamScreen(
-                navController,
-                koinInject<WebcamViewModel>(),
-                modifier,
-            )
-        }
-        composable(route = Screen.Livestream.route) {
-            LivestreamScreen(
-                navController,
-                koinInject<LivestreamViewModel>(),
-                modifier,
-            )
-        }
-        composable(route = Screen.AccessPoint.route) {
-            AccessPointScreen(
-                navController,
-                koinInject<AccessPointViewModel>(),
-                modifier,
-            )
-        }
-        composable(route = Screen.Cohn.route) {
-            CohnScreen(
-                navController,
-                koinInject<CohnViewModel>(),
-                modifier,
-            )
-        }
+  NavHost(
+      navController = navController,
+      startDestination = Screen.Home.route,
+  ) {
+    // Home (Camera Chooser)
+    composable(route = Screen.Home.route) {
+      HomeScreen(
+          navController,
+          koinInject<CameraChooserViewModel>(),
+          modifier,
+      )
     }
+    // Connected Camera
+    composable(route = Screen.Camera.route) {
+      CameraScreen(
+          navController,
+          listOf(
+              Screen.Settings,
+              Screen.Media,
+              Screen.Webcam,
+              Screen.AccessPoint,
+              Screen.Livestream,
+              Screen.Cohn),
+          koinViewModel<CameraViewModel>(),
+          modifier,
+      )
+    }
+    // Connected Camera sub-routes
+    composable(route = Screen.Settings.route) {
+      SettingsScreen(
+          navController,
+          koinInject<SettingsViewModel>(),
+          modifier,
+      )
+    }
+    composable(route = Screen.Media.route) {
+      MediaScreen(
+          navController,
+          koinInject<MediaViewModel>(),
+          modifier,
+      )
+    }
+    composable(route = Screen.Webcam.route) {
+      WebcamScreen(
+          navController,
+          koinInject<WebcamViewModel>(),
+          modifier,
+      )
+    }
+    composable(route = Screen.Livestream.route) {
+      LivestreamScreen(
+          navController,
+          koinInject<LivestreamViewModel>(),
+          modifier,
+      )
+    }
+    composable(route = Screen.AccessPoint.route) {
+      AccessPointScreen(
+          navController,
+          koinInject<AccessPointViewModel>(),
+          modifier,
+      )
+    }
+    composable(route = Screen.Cohn.route) {
+      CohnScreen(
+          navController,
+          koinInject<CohnViewModel>(),
+          modifier,
+      )
+    }
+  }
 }

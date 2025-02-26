@@ -13,31 +13,29 @@ import com.gopro.open_gopro.domain.gopro.IGoProFactory
 import com.gopro.open_gopro.domain.network.IBleApi
 import com.gopro.open_gopro.domain.network.IHttpApi
 import com.gopro.open_gopro.gopro.GoProFactory
-import kotlinx.coroutines.CoroutineDispatcher
 import com.gopro.open_gopro.network.KableBle
 import com.gopro.open_gopro.network.KtorHttp
+import kotlinx.coroutines.CoroutineDispatcher
 import org.koin.dsl.module
 
 internal fun buildPackageModules(dispatcher: CoroutineDispatcher, appContext: OgpSdkAppContext) =
     module {
-        single<CoroutineDispatcher> { dispatcher }
+      single<CoroutineDispatcher> { dispatcher }
 
-        includes(buildOgpSdkPlatformModules(appContext))
+      includes(buildOgpSdkPlatformModules(appContext))
 
-        // Network ConnectorFactory and communicator APIs
-        single<IBleApi> { KableBle(get()) }
-        single<IHttpApi> { KtorHttp() }
+      // Network ConnectorFactory and communicator APIs
+      single<IBleApi> { KableBle(get()) }
+      single<IHttpApi> { KtorHttp() }
 
-        // Network ConnectorFactory and communicator factories
-        single<ICameraConnector> {
-            CameraConnector(
-                GpBleConnector(get()),
-                GpWifiConnector(get()),
-                GpDnsConnector(get(), get()),
-            )
-        }
-        // Top level facade
-        single<IGoProFactory> {
-            GoProFactory(get(), get(), get(), get(), get())
-        }
+      // Network ConnectorFactory and communicator factories
+      single<ICameraConnector> {
+        CameraConnector(
+            GpBleConnector(get()),
+            GpWifiConnector(get()),
+            GpDnsConnector(get(), get()),
+        )
+      }
+      // Top level facade
+      single<IGoProFactory> { GoProFactory(get(), get(), get(), get(), get()) }
     }

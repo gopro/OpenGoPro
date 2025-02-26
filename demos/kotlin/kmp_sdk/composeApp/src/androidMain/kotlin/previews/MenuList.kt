@@ -11,7 +11,5 @@ import ui.components.MenuListItem
 @Composable
 @Preview
 private fun PreviewMenuListItem() {
-    Box {
-        MenuListItem("item") { println("clicked") }
-    }
+  Box { MenuListItem("item") { println("clicked") } }
 }

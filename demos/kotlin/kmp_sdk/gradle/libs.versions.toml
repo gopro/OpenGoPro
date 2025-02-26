@@ -70,6 +70,8 @@ license = '0.9.8'
 pbandk = "0.16.0"
 # https://github.com/vanniktech/gradle-maven-publish-plugin/releases/tag/0.30.0
 publish =  "0.28.0"
+# https://github.com/cortinico/ktfmt-gradle/releases/
+format = "0.22.0"
 # Our SDK version
 ogpSdk = "0.1.0"
 
@@ -172,3 +174,4 @@ room = { id = "androidx.room", version.ref = "androidx-room" }
 dokka = { id= "org.jetbrains.dokka", version.ref = "dokka"}
 license = { id = "com.jaredsburrows.license", version.ref= "license"}
 publish = { id =  "com.vanniktech.maven.publish", version.ref = "publish"}
+format = { id =  "com.ncorti.ktfmt.gradle", version.ref = "format"}

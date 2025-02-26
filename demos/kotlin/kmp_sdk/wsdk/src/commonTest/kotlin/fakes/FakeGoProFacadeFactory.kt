@@ -14,6 +14,4 @@ internal fun buildFakeGoPro(dispatcher: CoroutineDispatcher): IGoProFactory =
         bleApi = FakeBleApi(listOf(), dispatcher),
         httpApi = buildFakeHttpCommunicator(dispatcher).api,
         wifiApi = FakeWifiApi(dispatcher),
-        httpClientProvider = FakeHttpClientProvider
-    )
-
+        httpClientProvider = FakeHttpClientProvider)

@@ -32,79 +32,66 @@ fun SettingsScreen(
     viewModel: SettingsViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val currentResolution by viewModel.currentResolution.collectAsStateWithLifecycle()
-    val resolutionCaps by viewModel.resolutionCaps.collectAsStateWithLifecycle()
-    val currentFps by viewModel.currentFps.collectAsStateWithLifecycle()
-    val fpsCaps by viewModel.fpsCaps.collectAsStateWithLifecycle()
-    val currentFov by viewModel.currentFov.collectAsStateWithLifecycle()
-    val fovCaps by viewModel.fovCaps.collectAsStateWithLifecycle()
-    val battery by viewModel.currentBattery.collectAsStateWithLifecycle()
-    val isBusy by viewModel.isBusy.collectAsStateWithLifecycle()
-    val isEncoding by viewModel.isEncoding.collectAsStateWithLifecycle()
+  val currentResolution by viewModel.currentResolution.collectAsStateWithLifecycle()
+  val resolutionCaps by viewModel.resolutionCaps.collectAsStateWithLifecycle()
+  val currentFps by viewModel.currentFps.collectAsStateWithLifecycle()
+  val fpsCaps by viewModel.fpsCaps.collectAsStateWithLifecycle()
+  val currentFov by viewModel.currentFov.collectAsStateWithLifecycle()
+  val fovCaps by viewModel.fovCaps.collectAsStateWithLifecycle()
+  val battery by viewModel.currentBattery.collectAsStateWithLifecycle()
+  val isBusy by viewModel.isBusy.collectAsStateWithLifecycle()
+  val isEncoding by viewModel.isEncoding.collectAsStateWithLifecycle()
 
-    CommonTopBar(
-        navController = navController,
-        title = Screen.Settings.route,
-    ) { paddingValues ->
-        DisposableEffect(viewModel) {
-            viewModel.start()
-            onDispose { viewModel.stop() }
-        }
-        Column(modifier.padding(paddingValues)) {
-            Text("Settings")
-            Text("Resolution: $currentResolution")
-            SettingChipRow(resolutionCaps, currentResolution) { viewModel.setResolution(it) }
-            Text("FPS: $currentFps")
-            SettingChipRow(fpsCaps, currentFps) { viewModel.setFps(it) }
-            Text("FOV: $currentFov")
-            SettingChipRow(fovCaps, currentFov) { viewModel.setFov(it) }
-            HorizontalDivider(thickness = 10.dp)
-            Text("Statuses")
-            Text("Battery: $battery")
-            Text("isBusy: $isBusy")
-            Text("isEncoding: $isEncoding")
-        }
+  CommonTopBar(
+      navController = navController,
+      title = Screen.Settings.route,
+  ) { paddingValues ->
+    DisposableEffect(viewModel) {
+      viewModel.start()
+      onDispose { viewModel.stop() }
     }
+    Column(modifier.padding(paddingValues)) {
+      Text("Settings")
+      Text("Resolution: $currentResolution")
+      SettingChipRow(resolutionCaps, currentResolution) { viewModel.setResolution(it) }
+      Text("FPS: $currentFps")
+      SettingChipRow(fpsCaps, currentFps) { viewModel.setFps(it) }
+      Text("FOV: $currentFov")
+      SettingChipRow(fovCaps, currentFov) { viewModel.setFov(it) }
+      HorizontalDivider(thickness = 10.dp)
+      Text("Statuses")
+      Text("Battery: $battery")
+      Text("isBusy: $isBusy")
+      Text("isEncoding: $isEncoding")
+    }
+  }
 }
 
 @Composable
-fun <T> SettingChipRow(
-    capabilities: List<T>,
-    current: T,
-    onSelectSetting: ((T) -> Unit)
-) {
-    LazyRow {
-        items(capabilities) { setting ->
-            SettingChip(
-                setting.toString(),
-                setting == current
-            ) {
-                onSelectSetting(setting)
-            }
-        }
+fun <T> SettingChipRow(capabilities: List<T>, current: T, onSelectSetting: ((T) -> Unit)) {
+  LazyRow {
+    items(capabilities) { setting ->
+      SettingChip(setting.toString(), setting == current) { onSelectSetting(setting) }
     }
+  }
 }
 
 @Composable
-fun SettingChip(
-    text: String,
-    isHighlighted: Boolean,
-    onSelect: (() -> Unit)
-) {
-    FilterChip(
-        onClick = onSelect,
-        label = { Text(text) },
-        selected = isHighlighted,
-        leadingIcon = if (isHighlighted) {
+fun SettingChip(text: String, isHighlighted: Boolean, onSelect: (() -> Unit)) {
+  FilterChip(
+      onClick = onSelect,
+      label = { Text(text) },
+      selected = isHighlighted,
+      leadingIcon =
+          if (isHighlighted) {
             {
-                Icon(
-                    imageVector = Icons.Filled.Done,
-                    contentDescription = "Done icon",
-                    modifier = Modifier.size(FilterChipDefaults.IconSize)
-                )
+              Icon(
+                  imageVector = Icons.Filled.Done,
+                  contentDescription = "Done icon",
+                  modifier = Modifier.size(FilterChipDefaults.IconSize))
             }
-        } else {
+          } else {
             null
-        },
-    )
+          },
+  )
 }

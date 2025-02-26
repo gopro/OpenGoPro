@@ -20,15 +20,12 @@ internal data class SsidDbEntry(
 
 @Dao
 internal interface SsidDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(credentials: SsidDbEntry)
+  @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insert(credentials: SsidDbEntry)
 
-    @Query("SELECT * FROM SsidDbEntry WHERE serialId in (:ids)")
-    suspend fun loadAll(vararg ids: String): List<SsidDbEntry>
+  @Query("SELECT * FROM SsidDbEntry WHERE serialId in (:ids)")
+  suspend fun loadAll(vararg ids: String): List<SsidDbEntry>
 
-    @Query("SELECT COUNT(*) as count FROM SsidDbEntry")
-    suspend fun count(): Int
+  @Query("SELECT COUNT(*) as count FROM SsidDbEntry") suspend fun count(): Int
 
-    @Delete(entity = SsidDbEntry::class)
-    suspend fun delete(serialId: SerialIdDb)
+  @Delete(entity = SsidDbEntry::class) suspend fun delete(serialId: SerialIdDb)
 }

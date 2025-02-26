@@ -11,7 +11,5 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 fun buildOgpSdkModule(appContext: OgpSdkAppContext): Module {
-    return module {
-        single<OgpSdk> { OgpSdk(Dispatchers.IO, appContext) }
-    }
+  return module { single<OgpSdk> { OgpSdk(Dispatchers.IO, appContext) } }
 }

@@ -19,37 +19,35 @@ import androidx.core.content.ContextCompat
 
 class MainActivity : ComponentActivity() {
 
-    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { isGranted ->
+  private val requestPermissionLauncher =
+      registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { isGranted ->
         require(isGranted.all { it.value }) { "Failed to enable all required permissions." }
         startApp()
-    }
+      }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
 
-        val permissions = arrayOf(
+    val permissions =
+        arrayOf(
             BLUETOOTH_SCAN,
             BLUETOOTH_CONNECT,
             ACCESS_FINE_LOCATION,
             ACCESS_COARSE_LOCATION,
             ACCESS_WIFI_STATE,
-            CHANGE_WIFI_STATE
-        )
+            CHANGE_WIFI_STATE)
 
-        if (permissions.all { isPermissionGranted(it) }) {
-            startApp()
-        }
-
-        requestPermissionLauncher.launch(
-            permissions
-        )
+    if (permissions.all { isPermissionGranted(it) }) {
+      startApp()
     }
 
+    requestPermissionLauncher.launch(permissions)
+  }
 
-    private fun startApp() {
-        setContent { App() }
-    }
+  private fun startApp() {
+    setContent { App() }
+  }
 
-
-    private fun isPermissionGranted(permission: String) = ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+  private fun isPermissionGranted(permission: String) =
+      ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 }

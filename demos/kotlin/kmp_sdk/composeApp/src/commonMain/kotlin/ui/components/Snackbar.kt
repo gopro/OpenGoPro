@@ -12,15 +12,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 interface SnackbarController {
-    val snackbarHostState: SnackbarHostState
-    fun showMessage(message: String)
+  val snackbarHostState: SnackbarHostState
+
+  fun showMessage(message: String)
 }
 
 fun SnackbarController(
-    snackbarHostState: SnackbarHostState, coroutineScope: CoroutineScope
-): SnackbarController = SnackbarControllerImpl(
-    snackbarHostState = snackbarHostState, coroutineScope = coroutineScope
-)
+    snackbarHostState: SnackbarHostState,
+    coroutineScope: CoroutineScope
+): SnackbarController =
+    SnackbarControllerImpl(snackbarHostState = snackbarHostState, coroutineScope = coroutineScope)
 
 @Composable
 fun ProvideSnackbarController(
@@ -28,10 +29,9 @@ fun ProvideSnackbarController(
     coroutineScope: CoroutineScope,
     content: @Composable () -> Unit
 ) {
-    CompositionLocalProvider(
-        LocalSnackbarController provides SnackbarController(snackbarHostState, coroutineScope),
-        content = content
-    )
+  CompositionLocalProvider(
+      LocalSnackbarController provides SnackbarController(snackbarHostState, coroutineScope),
+      content = content)
 }
 
 @Composable
@@ -40,25 +40,22 @@ fun SnackbarMessageHandler(
     onDismissSnackbar: () -> Unit = {},
     snackbarController: SnackbarController = LocalSnackbarController.current
 ) {
-    if (snackbarMessage == null) return
+  if (snackbarMessage == null) return
 
-    LaunchedEffect(snackbarMessage, onDismissSnackbar) {
-        snackbarController.showMessage(message = snackbarMessage)
-        onDismissSnackbar()
-    }
+  LaunchedEffect(snackbarMessage, onDismissSnackbar) {
+    snackbarController.showMessage(message = snackbarMessage)
+    onDismissSnackbar()
+  }
 }
 
 private class SnackbarControllerImpl(
     override val snackbarHostState: SnackbarHostState,
     private val coroutineScope: CoroutineScope
 ) : SnackbarController {
-    override fun showMessage(message: String) {
-        coroutineScope.launch {
-            snackbarHostState.showSnackbar(message)
-        }
-    }
+  override fun showMessage(message: String) {
+    coroutineScope.launch { snackbarHostState.showSnackbar(message) }
+  }
 }
 
-val LocalSnackbarController = staticCompositionLocalOf<SnackbarController> {
-    error("No SnackbarController provided.")
-}
+val LocalSnackbarController =
+    staticCompositionLocalOf<SnackbarController> { error("No SnackbarController provided.") }

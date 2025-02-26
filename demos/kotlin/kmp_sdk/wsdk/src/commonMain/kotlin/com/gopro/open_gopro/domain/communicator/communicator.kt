@@ -13,7 +13,8 @@ import com.gopro.open_gopro.ConnectionDescriptor
 // Also these can't be injected (at least not usefully) since they are too different
 
 internal sealed class ICommunicator<T : ConnectionDescriptor> {
-    abstract val connection: T
-    abstract val communicationType: CommunicationType
-    val id get() = connection.id
+  abstract val connection: T
+  abstract val communicationType: CommunicationType
+  val id
+    get() = connection.id
 }

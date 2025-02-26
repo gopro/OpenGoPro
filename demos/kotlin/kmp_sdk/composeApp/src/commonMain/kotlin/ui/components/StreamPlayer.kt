@@ -9,10 +9,9 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 interface IStreamPlayer {
-    @Composable
-    fun PlayStream(modifier: Modifier, url: String)
+  @Composable fun PlayStream(modifier: Modifier, url: String)
 }
 
-object StreamPlayerWrapper: KoinComponent {
-    val player: IStreamPlayer by inject()
+object StreamPlayerWrapper : KoinComponent {
+  val player: IStreamPlayer by inject()
 }

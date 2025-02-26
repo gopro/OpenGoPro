@@ -12,12 +12,14 @@ import io.ktor.http.path
 
 internal class MediaDownload(val file: MediaId) : BaseOperation<ByteArray>("Download Media File") {
 
-    override suspend fun execute(communicator: HttpCommunicator): Result<ByteArray> =
-        communicator.get {
+  override suspend fun execute(communicator: HttpCommunicator): Result<ByteArray> =
+      communicator
+          .get {
             url {
-                path("videos/DCIM")
-                appendEncodedPathSegments(file.folder)
-                appendEncodedPathSegments(file.filename)
+              path("videos/DCIM")
+              appendEncodedPathSegments(file.folder)
+              appendEncodedPathSegments(file.filename)
             }
-        }.map { it.readBytes() }
+          }
+          .map { it.readBytes() }
 }

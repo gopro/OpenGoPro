@@ -31,43 +31,40 @@ internal class HttpCommunicator(
     dispatcher: CoroutineDispatcher
 ) : ICommunicator<ConnectionDescriptor.Http>() {
 
-    private val client = httpClientProvider.provideBaseClient(connection.credentials).config {
+  private val client =
+      httpClientProvider.provideBaseClient(connection.credentials).config {
         defaultRequest {
-            host = connection.ipAddress
-            connection.port?.let {
-                port = it
-            }
-            url {
-                protocol = connection.credentials?.let { URLProtocol.HTTPS } ?: URLProtocol.HTTP
-            }
+          host = connection.ipAddress
+          connection.port?.let { port = it }
+          url { protocol = connection.credentials?.let { URLProtocol.HTTPS } ?: URLProtocol.HTTP }
         }
-    }
+      }
 
-    override val communicationType = CommunicationType.HTTP
+  override val communicationType = CommunicationType.HTTP
 
-    suspend fun get(requestBuilder: HttpRequestBuilder.() -> Unit): Result<HttpResponse> =
-        try {
-            Result.success(httpApi.get(client, requestBuilder))
-        } catch (e: ClientRequestException) {
-            Result.failure(HttpError(e.response.status.value, e.response.bodyAsText()))
-        } catch (e: ServerResponseException) {
-            Result.failure(HttpError(e.response.status.value, e.response.bodyAsText()))
-        } catch (e: IOException) {
-            Result.failure(NetworkError(e.message ?: ""))
-        } catch (e: SerializationException) {
-            Result.failure(SerializationError(e.message ?: ""))
-        }
+  suspend fun get(requestBuilder: HttpRequestBuilder.() -> Unit): Result<HttpResponse> =
+      try {
+        Result.success(httpApi.get(client, requestBuilder))
+      } catch (e: ClientRequestException) {
+        Result.failure(HttpError(e.response.status.value, e.response.bodyAsText()))
+      } catch (e: ServerResponseException) {
+        Result.failure(HttpError(e.response.status.value, e.response.bodyAsText()))
+      } catch (e: IOException) {
+        Result.failure(NetworkError(e.message ?: ""))
+      } catch (e: SerializationException) {
+        Result.failure(SerializationError(e.message ?: ""))
+      }
 
-    suspend fun post(requestBuilder: HttpRequestBuilder.() -> Unit): Result<HttpResponse> =
-        try {
-            Result.success(httpApi.post(client, requestBuilder))
-        } catch (e: ClientRequestException) {
-            Result.failure(HttpError(e.response.status.value, e.response.bodyAsText()))
-        } catch (e: ServerResponseException) {
-            Result.failure(HttpError(e.response.status.value, e.response.bodyAsText()))
-        } catch (e: IOException) {
-            Result.failure(NetworkError(e.message ?: ""))
-        } catch (e: SerializationException) {
-            Result.failure(SerializationError(e.message ?: ""))
-        }
+  suspend fun post(requestBuilder: HttpRequestBuilder.() -> Unit): Result<HttpResponse> =
+      try {
+        Result.success(httpApi.post(client, requestBuilder))
+      } catch (e: ClientRequestException) {
+        Result.failure(HttpError(e.response.status.value, e.response.bodyAsText()))
+      } catch (e: ServerResponseException) {
+        Result.failure(HttpError(e.response.status.value, e.response.bodyAsText()))
+      } catch (e: IOException) {
+        Result.failure(NetworkError(e.message ?: ""))
+      } catch (e: SerializationException) {
+        Result.failure(SerializationError(e.message ?: ""))
+      }
 }

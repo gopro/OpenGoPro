@@ -10,7 +10,6 @@ import io.ktor.http.path
 
 internal class MediaDeleteAll : BaseOperation<Unit>("Delete All Media") {
 
-    override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
-        communicator.get { url { path("gp/gpControl/command/storage/delete/all") } }
-            .map { it.body() }
+  override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
+      communicator.get { url { path("gp/gpControl/command/storage/delete/all") } }.map { it.body() }
 }

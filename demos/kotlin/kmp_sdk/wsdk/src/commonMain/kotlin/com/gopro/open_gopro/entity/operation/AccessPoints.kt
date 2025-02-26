@@ -3,11 +3,7 @@
 
 package com.gopro.open_gopro.operations
 
-data class ApScanResult(
-    val scanId: Int?,
-    val totalEntries: Int?,
-    val totalConfiguredSsids: Int?
-)
+data class ApScanResult(val scanId: Int?, val totalEntries: Int?, val totalConfiguredSsids: Int?)
 
 data class ApScanEntry(
     val ssid: String,
@@ -21,12 +17,16 @@ data class ApScanEntry(
 )
 
 sealed class AccessPointState {
-    data object Disconnected : AccessPointState()
-    data class InProgress(val ssid: String) : AccessPointState()
-    data class Connected(val ssid: String) : AccessPointState()
+  data object Disconnected : AccessPointState()
+
+  data class InProgress(val ssid: String) : AccessPointState()
+
+  data class Connected(val ssid: String) : AccessPointState()
 }
 
-fun AccessPointState.isFinished(): Boolean = when (this) {
-    AccessPointState.Disconnected, is AccessPointState.Connected -> true
-    else -> false
-}
+fun AccessPointState.isFinished(): Boolean =
+    when (this) {
+      AccessPointState.Disconnected,
+      is AccessPointState.Connected -> true
+      else -> false
+    }

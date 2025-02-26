@@ -10,6 +10,6 @@ import io.ktor.http.path
 
 internal class PreviewStreamStop : BaseOperation<Unit>("Stop Preview Stream") {
 
-    override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
-        communicator.get { url { path("gopro/camera/stream/stop") } }.map { it.body() }
+  override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
+      communicator.get { url { path("gopro/camera/stream/stop") } }.map { it.body() }
 }

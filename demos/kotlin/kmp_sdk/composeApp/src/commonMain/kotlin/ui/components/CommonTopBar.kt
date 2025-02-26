@@ -23,27 +23,21 @@ fun CommonTopBar(
     title: String,
     content: @Composable (PaddingValues) -> Unit,
 ) {
-    Scaffold(
-        snackbarHost = {
-            SnackbarHost(hostState = LocalSnackbarController.current.snackbarHostState)
-        },
-        topBar = {
-            TopAppBar(
-                navigationIcon = {
-                    IconButton(
-                        onClick = {
-                            navController.navigateUp()
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                            contentDescription = null,
-                        )
-                    }
-                },
-                title = { Text(text = title) }
-            )
-        },
-        content = content
-    )
+  Scaffold(
+      snackbarHost = {
+        SnackbarHost(hostState = LocalSnackbarController.current.snackbarHostState)
+      },
+      topBar = {
+        TopAppBar(
+            navigationIcon = {
+              IconButton(onClick = { navController.navigateUp() }) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                    contentDescription = null,
+                )
+              }
+            },
+            title = { Text(text = title) })
+      },
+      content = content)
 }

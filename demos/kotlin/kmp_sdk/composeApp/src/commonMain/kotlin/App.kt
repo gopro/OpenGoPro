@@ -21,17 +21,17 @@ import ui.components.ProvideSnackbarController
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
-        KoinContext {
-            setSingletonImageLoaderFactory { getAsyncImageLoader(it) }
+  MaterialTheme {
+    KoinContext {
+      setSingletonImageLoaderFactory { getAsyncImageLoader(it) }
 
-            val snackbarHostState = remember { SnackbarHostState() }
-            val coroutineScope = rememberCoroutineScope()
-            ProvideSnackbarController(snackbarHostState, coroutineScope) {
-                RootNavGraph(
-                    modifier = Modifier.padding(20.dp),
-                )
-            }
-        }
+      val snackbarHostState = remember { SnackbarHostState() }
+      val coroutineScope = rememberCoroutineScope()
+      ProvideSnackbarController(snackbarHostState, coroutineScope) {
+        RootNavGraph(
+            modifier = Modifier.padding(20.dp),
+        )
+      }
     }
+  }
 }

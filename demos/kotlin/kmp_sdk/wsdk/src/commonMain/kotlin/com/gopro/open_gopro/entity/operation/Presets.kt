@@ -8,13 +8,13 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 enum class PresetGroupId(val value: UInt) {
-    VIDEO(1000U),
-    PHOTO(1001U),
-    TIMELAPSE(1002U);
+  VIDEO(1000U),
+  PHOTO(1001U),
+  TIMELAPSE(1002U);
 
-    companion object {
-        fun fromUInt(value: UInt) = entries.first { it.value == value }
-    }
+  companion object {
+    fun fromUInt(value: UInt) = entries.first { it.value == value }
+  }
 }
 
 @Serializable
@@ -24,11 +24,7 @@ data class UpdateCustomPresetRequest(
     @SerialName("title_id") val titleId: Int? = null
 )
 
-@Serializable
-data class Range(
-    val length: Int? = null,
-    val start: Int? = null
-)
+@Serializable data class Range(val length: Int? = null, val start: Int? = null)
 
 @Serializable
 data class WrappedPresetSetting(
@@ -66,4 +62,3 @@ data class PresetInfo(
     val customTitleIds: List<Range>? = null,
     val presetGroupArray: List<WrappedPresetGroup>? = null
 )
-

@@ -10,6 +10,6 @@ import io.ktor.http.path
 
 internal class WebcamStop : BaseOperation<Unit>("Stop Webcam") {
 
-    override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
-        communicator.get { url { path("gopro/webcam/stop") } }.map { it.body() }
+  override suspend fun execute(communicator: HttpCommunicator): Result<Unit> =
+      communicator.get { url { path("gopro/webcam/stop") } }.map { it.body() }
 }

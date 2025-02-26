@@ -20,15 +20,13 @@ internal data class HttpsCredentialsDbEntry(
 
 @Dao
 internal interface HttpsCredentialsDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(credentials: HttpsCredentialsDbEntry)
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  suspend fun insert(credentials: HttpsCredentialsDbEntry)
 
-    @Query("SELECT * FROM HttpsCredentialsDbEntry WHERE serialId in (:ids)")
-    suspend fun loadAll(vararg ids: String): List<HttpsCredentialsDbEntry>
+  @Query("SELECT * FROM HttpsCredentialsDbEntry WHERE serialId in (:ids)")
+  suspend fun loadAll(vararg ids: String): List<HttpsCredentialsDbEntry>
 
-    @Query("SELECT COUNT(*) as count FROM HttpsCredentialsDbEntry")
-    suspend fun count(): Int
+  @Query("SELECT COUNT(*) as count FROM HttpsCredentialsDbEntry") suspend fun count(): Int
 
-    @Delete(entity = HttpsCredentialsDbEntry::class)
-    suspend fun delete(serialId: SerialIdDb)
+  @Delete(entity = HttpsCredentialsDbEntry::class) suspend fun delete(serialId: SerialIdDb)
 }
