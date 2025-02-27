@@ -1,0 +1,46 @@
+from __future__ import annotations
+
+import argparse
+import logging
+import sys
+from pathlib import Path
+
+from kmp_proto_manipulator.parsers.kotlin_transformer import KotlinTransformer
+from kmp_proto_manipulator.parsers.config import ConfigParser
+
+logger: logging.Logger
+
+
+def parse_arguments() -> argparse.Namespace:  # noqa
+    parser = argparse.ArgumentParser(description="Selectively modify the scope of proto-generated kotlin files.")
+    parser.add_argument(
+        "config",
+        type=Path,
+        help="Path to proto manipulator config toml file",
+    )
+    parser.add_argument(
+        "dir",
+        type=Path,
+        help="Path to directory of kotlin files  to manipulate",
+    )
+    return parser.parse_args()
+
+
+def main(args: argparse.Namespace) -> int:  # noqa
+    input_directory: Path = args.dir
+    config_file: Path = args.config
+
+    transformer = KotlinTransformer(
+        config=ConfigParser.parse_config(config_file),
+    )
+
+    for kt in input_directory.glob(r"*.kt"):
+        kt.write_text(transformer.transform(kt.read_text()))
+
+
+def entrypoint() -> int:  # noqa
+    sys.exit(main(parse_arguments()))
+
+
+if __name__ == "__main__":
+    main(parse_arguments())

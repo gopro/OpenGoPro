@@ -1,12 +1,17 @@
-from dataclasses import dataclass
-from .proto_object_scope import ProtoObjectScope
+import enum
+
+from pydantic import BaseModel, RootModel
 
 
-@dataclass(frozen=True)
-class ProtoObjectConfig:
+class ProtoObjectScope(enum.StrEnum):
+    PUBLIC = "public"
+    INTERNAL = "internal"
+    PRIVATE = "private"
+
+
+class ProtoObjectConfig(BaseModel):
     scope: ProtoObjectScope
 
 
-@dataclass(frozen=True)
-class Config:
-    objects: dict[str, ProtoObjectConfig]
+class Config(RootModel):
+    root: dict[str, ProtoObjectConfig]

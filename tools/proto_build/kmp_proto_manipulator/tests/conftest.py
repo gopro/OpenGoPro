@@ -12,6 +12,12 @@ def enum_as_text() -> str:
 def sealed_class_as_text() -> str:
     return (Path("tests") / "vectors" / "sealed_class.kt").read_text()
 
+
 @pytest.fixture
 def file_as_text() -> str:
     return (Path("tests") / "vectors" / "file.kt").read_text()
+
+
+@pytest.fixture
+def config_as_path() -> Path:
+    return Path("tests") / "vectors" / "config.toml"
