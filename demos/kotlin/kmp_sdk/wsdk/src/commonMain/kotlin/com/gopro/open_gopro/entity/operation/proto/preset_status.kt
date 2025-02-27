@@ -1,12 +1,9 @@
-/* preset_status.kt/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Fri Feb 21 18:05:45 UTC 2025 */
-
 @file:OptIn(pbandk.PublicForGeneratedCode::class)
 
 package com.gopro.open_gopro.operations
 
 @pbandk.Export
-sealed class EnumFlatMode(override val value: Int, override val name: String? = null) :
+public sealed class EnumFlatMode(override val value: Int, override val name: String? = null) :
     pbandk.Message.Enum {
   override fun equals(other: kotlin.Any?): Boolean =
       other is com.gopro.open_gopro.operations.EnumFlatMode && other.value == value
@@ -103,7 +100,7 @@ sealed class EnumFlatMode(override val value: Int, override val name: String? = 
 }
 
 @pbandk.Export
-sealed class EnumPresetGroup(override val value: Int, override val name: String? = null) :
+public sealed class EnumPresetGroup(override val value: Int, override val name: String? = null) :
     pbandk.Message.Enum {
   override fun equals(other: kotlin.Any?): Boolean =
       other is com.gopro.open_gopro.operations.EnumPresetGroup && other.value == value
@@ -136,8 +133,10 @@ sealed class EnumPresetGroup(override val value: Int, override val name: String?
 }
 
 @pbandk.Export
-sealed class EnumPresetGroupIcon(override val value: Int, override val name: String? = null) :
-    pbandk.Message.Enum {
+public sealed class EnumPresetGroupIcon(
+    override val value: Int,
+    override val name: String? = null
+) : pbandk.Message.Enum {
   override fun equals(other: kotlin.Any?): Boolean =
       other is com.gopro.open_gopro.operations.EnumPresetGroupIcon && other.value == value
 
@@ -205,7 +204,7 @@ sealed class EnumPresetGroupIcon(override val value: Int, override val name: Str
 }
 
 @pbandk.Export
-sealed class EnumPresetIcon(override val value: Int, override val name: String? = null) :
+public sealed class EnumPresetIcon(override val value: Int, override val name: String? = null) :
     pbandk.Message.Enum {
   override fun equals(other: kotlin.Any?): Boolean =
       other is com.gopro.open_gopro.operations.EnumPresetIcon && other.value == value
@@ -506,7 +505,7 @@ sealed class EnumPresetIcon(override val value: Int, override val name: String? 
 }
 
 @pbandk.Export
-sealed class EnumPresetTitle(override val value: Int, override val name: String? = null) :
+public sealed class EnumPresetTitle(override val value: Int, override val name: String? = null) :
     pbandk.Message.Enum {
   override fun equals(other: kotlin.Any?): Boolean =
       other is com.gopro.open_gopro.operations.EnumPresetTitle && other.value == value
@@ -782,7 +781,7 @@ sealed class EnumPresetTitle(override val value: Int, override val name: String?
 }
 
 @pbandk.Export
-data class NotifyPresetStatus(
+public data class NotifyPresetStatus(
     val presetGroupArray: List<com.gopro.open_gopro.operations.PresetGroup> = emptyList(),
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
@@ -836,7 +835,7 @@ data class NotifyPresetStatus(
 }
 
 @pbandk.Export
-data class Preset(
+public data class Preset(
     val id: Int? = null,
     val mode: com.gopro.open_gopro.operations.EnumFlatMode? = null,
     val titleId: com.gopro.open_gopro.operations.EnumPresetTitle? = null,
@@ -1053,7 +1052,7 @@ internal data class RequestCustomPresetUpdate(
 }
 
 @pbandk.Export
-data class PresetGroup(
+public data class PresetGroup(
     val id: com.gopro.open_gopro.operations.EnumPresetGroup? = null,
     val presetArray: List<com.gopro.open_gopro.operations.Preset> = emptyList(),
     val canAddPreset: Boolean? = null,
@@ -1151,7 +1150,7 @@ data class PresetGroup(
 }
 
 @pbandk.Export
-data class PresetSetting(
+public data class PresetSetting(
     val id: Int? = null,
     val value: Int? = null,
     val isCaption: Boolean? = null,
