@@ -5,12 +5,6 @@ from pathlib import Path
 
 import pytest
 
-
-@pytest.fixture(scope="module")
-def enum_as_text() -> str:
-    return (Path("tests") / "vectors" / "enum.kt").read_text()
-
-
 @pytest.fixture(scope="module")
 def sealed_class_as_text() -> str:
     return (Path("tests") / "vectors" / "sealed_class.kt").read_text()
@@ -19,6 +13,15 @@ def sealed_class_as_text() -> str:
 @pytest.fixture(scope="module")
 def sealed_class_negative_as_text() -> str:
     return (Path("tests") / "vectors" / "sealed_class_negative.kt").read_text()
+
+@pytest.fixture(scope="module")
+def data_class_as_text() -> str:
+    return (Path("tests") / "vectors" / "data_class.kt").read_text()
+
+
+@pytest.fixture(scope="module")
+def data_class_negative_as_text() -> str:
+    return (Path("tests") / "vectors" / "data_class_negative.kt").read_text()
 
 
 @pytest.fixture(scope="module")
