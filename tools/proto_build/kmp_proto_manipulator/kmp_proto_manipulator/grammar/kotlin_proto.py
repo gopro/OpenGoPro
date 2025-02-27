@@ -1,6 +1,6 @@
-"""Grammar to parse a kotlin file generated from protobuf"""
+"""Grammar to parse a kotlin file generated from protobuf."""
 
-from pyparsing import CaselessLiteral, Combine, Group, LineEnd, Literal, SkipTo, Word, alphanums, Opt
+from pyparsing import Literal, Opt, Word, alphanums
 
 INTERNAL = Literal("internal")
 PRIVATE = Literal("private")

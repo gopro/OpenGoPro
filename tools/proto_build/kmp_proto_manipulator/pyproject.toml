@@ -8,14 +8,16 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "pydantic (>=2.10.6,<3.0.0)"
+    "pydantic (>=2.10.6,<3.0.0)",
+    "pyparsing (>=3.2.1,<4.0.0)"
 ]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-pyparsing = "^3"
 
 [tool.poetry.group.dev.dependencies]
+pydoclint = "^0"
+pydocstyle = { extras = ["toml"], version = "^6" }
 pytest = "^7"
 black = "*"
 pylint = "^2"
@@ -53,6 +55,18 @@ help = "Lint code"
 cmd = "black kmp_proto_manipulator tests"
 help = "Apply black formatting to source code"
 
+[tool.poe.tasks._pydocstyle]
+cmd = "pydocstyle --config pyproject.toml -v kmp_proto_manipulator"
+help = "check docstrings style"
+
+[tool.poe.tasks._doclint]
+cmd = "pydoclint kmp_proto_manipulator"
+help = "validate docstrings"
+
+[tool.poe.tasks.docstrings]
+sequence = ["_pydocstyle", "_doclint"]
+help = "Analyze docstrings for consistency and errors"
+
 [tool.poe.tasks._clean_artifacts]
 cmd = "rm -rf **/__pycache__ *.csv *.mp4 *.jpg *.log .mypy_cache .nox"
 help = "Clean testing artifacts and pycache"
@@ -66,7 +80,7 @@ sequence = ["_clean_artifacts", "_clean_tests"]
 help = "Clean everything"
 
 [tool.poe.tasks.all]
-sequence = ["format", "lint", "tests"]
+sequence = ["format", "lint", "tests", "docstrings"]
 help = "Format, check types, lint, and run unit tests"
 
 [tool.mypy]
@@ -143,3 +157,14 @@ exclude = ".venv"
 
 [tool.isort]
 line_length = 120
+
+[tool.pydocstyle]
+convention = "google"
+add-ignore = "D415, D107, D105, D402"
+
+[tool.pydoclint]
+style = 'google'
+require-return-section-when-returning-nothing = false
+ignore-underscore-args = true
+should-document-private-class-attributes = false
+check-class-attributes = false

@@ -17,10 +17,6 @@ def test_object_in_config_is_transformed(transformer: KotlinTransformer, sealed_
 
 
 def test_object_not_in_config_is_not_transformed(transformer: KotlinTransformer, sealed_class_negative_as_text: str):
-    print("input===========================")
-    print(sealed_class_negative_as_text)
     transformed = transformer.transform(sealed_class_negative_as_text)
-    print("output===========================")
-    print(transformed)
     assert "internal sealed class" in transformed
     assert "public sealed class" not in transformed
