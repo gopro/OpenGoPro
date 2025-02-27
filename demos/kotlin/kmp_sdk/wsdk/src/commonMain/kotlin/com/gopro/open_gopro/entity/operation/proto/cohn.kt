@@ -1,12 +1,9 @@
-/* cohn.kt/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Fri Feb 21 18:05:45 UTC 2025 */
-
 @file:OptIn(pbandk.PublicForGeneratedCode::class)
 
 package com.gopro.open_gopro.operations
 
 @pbandk.Export
-sealed class EnumCOHNStatus(override val value: Int, override val name: String? = null) :
+public sealed class EnumCOHNStatus(override val value: Int, override val name: String? = null) :
     pbandk.Message.Enum {
   override fun equals(other: kotlin.Any?): Boolean =
       other is com.gopro.open_gopro.operations.EnumCOHNStatus && other.value == value
@@ -37,8 +34,10 @@ sealed class EnumCOHNStatus(override val value: Int, override val name: String? 
 }
 
 @pbandk.Export
-sealed class EnumCOHNNetworkState(override val value: Int, override val name: String? = null) :
-    pbandk.Message.Enum {
+public sealed class EnumCOHNNetworkState(
+    override val value: Int,
+    override val name: String? = null
+) : pbandk.Message.Enum {
   override fun equals(other: kotlin.Any?): Boolean =
       other is com.gopro.open_gopro.operations.EnumCOHNNetworkState && other.value == value
 
