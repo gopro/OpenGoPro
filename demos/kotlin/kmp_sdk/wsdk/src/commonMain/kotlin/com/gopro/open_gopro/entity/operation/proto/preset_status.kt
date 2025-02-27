@@ -781,7 +781,7 @@ public sealed class EnumPresetTitle(override val value: Int, override val name: 
 }
 
 @pbandk.Export
-internal data class NotifyPresetStatus(
+public data class NotifyPresetStatus(
     val presetGroupArray: List<com.gopro.open_gopro.operations.PresetGroup> = emptyList(),
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
@@ -835,7 +835,7 @@ internal data class NotifyPresetStatus(
 }
 
 @pbandk.Export
-internal data class Preset(
+public data class Preset(
     val id: Int? = null,
     val mode: com.gopro.open_gopro.operations.EnumFlatMode? = null,
     val titleId: com.gopro.open_gopro.operations.EnumPresetTitle? = null,
@@ -1052,7 +1052,7 @@ internal data class RequestCustomPresetUpdate(
 }
 
 @pbandk.Export
-internal data class PresetGroup(
+public data class PresetGroup(
     val id: com.gopro.open_gopro.operations.EnumPresetGroup? = null,
     val presetArray: List<com.gopro.open_gopro.operations.Preset> = emptyList(),
     val canAddPreset: Boolean? = null,
@@ -1150,7 +1150,7 @@ internal data class PresetGroup(
 }
 
 @pbandk.Export
-internal data class PresetSetting(
+public data class PresetSetting(
     val id: Int? = null,
     val value: Int? = null,
     val isCaption: Boolean? = null,
