@@ -15,7 +15,6 @@ def transformer(config_as_path) -> KotlinTransformer:
 
 def test_sealed_class_in_config_is_transformed(transformer: KotlinTransformer, sealed_class_as_text: str):
     transformed = transformer.transform(sealed_class_as_text)
-    print(transformed)
     assert "internal sealed class" not in transformed
     assert "public sealed class" in transformed
 
