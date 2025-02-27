@@ -5,13 +5,19 @@
 
 from pyparsing import Literal, Opt, Word, alphanums
 
+PB_DECORATOR = Literal("@pbandk.Export")
+
 INTERNAL = Literal("internal")
 PRIVATE = Literal("private")
 PUBLIC = Literal("public")
 scope = (INTERNAL | PRIVATE | PUBLIC)("scope")
 
-OBJECT_MARKER = Literal("sealed class")
+SEALED = Literal("sealed")
+DATA = Literal("data")
+class_type = (SEALED | DATA)("class_type")
+
+CLASS = class_type + Literal("class")
 
 object_name = Word(init_chars=alphanums)("name")
 
-kotlin_object = Opt(scope) + OBJECT_MARKER + object_name
+kotlin_object = PB_DECORATOR + Opt(scope) + CLASS + object_name

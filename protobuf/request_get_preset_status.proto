@@ -35,14 +35,4 @@ enum EnumRegisterPresetStatus {
 message RequestGetPresetStatus {
     repeated EnumRegisterPresetStatus register_preset_status   = 1; // Array of Preset statuses to be notified about
     repeated EnumRegisterPresetStatus unregister_preset_status = 2; // Array of Preset statuses to stop being notified about
-    /**
-     * Configures the set of Setting IDs that are returned by @ref NotifyPresetStatus.
-     *
-     * Defaults to False if not set
-     *
-     * When False, Setting IDs are tied to their camera UI string representation and may vary between cameras.
-     *
-     * When True, Setting IDs are tied to their functional representation and are consistent across cameras.
-     */
-    optional bool                     use_constant_setting_ids = 3;
 }
