@@ -9,6 +9,6 @@ scope = (INTERNAL | PRIVATE | PUBLIC)("scope")
 
 OBJECT_MARKER = Literal("sealed class")
 
-object_name = Word(init_chars=alphanums)
+object_name = Word(init_chars=alphanums)("name")
 
 kotlin_object = Opt(scope) + OBJECT_MARKER + object_name
