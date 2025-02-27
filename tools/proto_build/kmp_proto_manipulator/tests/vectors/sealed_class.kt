@@ -1,5 +1,5 @@
 @pbandk.Export
-cheese sealed class EnumPresetGroup(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
+internal sealed class EnumPresetGroup(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
     override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumPresetGroup && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumPresetGroup.${name ?: "UNRECOGNIZED"}(value=$value)"

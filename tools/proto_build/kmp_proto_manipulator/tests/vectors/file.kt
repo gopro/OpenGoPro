@@ -3,7 +3,7 @@
 package com.gopro.open_gopro.operations
 
 @pbandk.Export
-cheese sealed class EnumFlatMode(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
+internal sealed class EnumFlatMode(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
     override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumFlatMode && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumFlatMode.${name ?: "UNRECOGNIZED"}(value=$value)"
@@ -41,7 +41,7 @@ cheese sealed class EnumFlatMode(override val value: Int, override val name: Str
 }
 
 @pbandk.Export
-cheese sealed class EnumPresetGroup(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
+internal sealed class EnumPresetGroup(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
     override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumPresetGroup && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumPresetGroup.${name ?: "UNRECOGNIZED"}(value=$value)"
@@ -59,7 +59,7 @@ cheese sealed class EnumPresetGroup(override val value: Int, override val name: 
 }
 
 @pbandk.Export
-cheese sealed class EnumPresetGroupIcon(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
+internal sealed class EnumPresetGroupIcon(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
     override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumPresetGroupIcon && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumPresetGroupIcon.${name ?: "UNRECOGNIZED"}(value=$value)"
@@ -85,7 +85,7 @@ cheese sealed class EnumPresetGroupIcon(override val value: Int, override val na
 }
 
 @pbandk.Export
-cheese sealed class EnumPresetIcon(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
+internal sealed class EnumPresetIcon(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
     override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumPresetIcon && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumPresetIcon.${name ?: "UNRECOGNIZED"}(value=$value)"
@@ -186,7 +186,7 @@ cheese sealed class EnumPresetIcon(override val value: Int, override val name: S
 }
 
 @pbandk.Export
-cheese sealed class EnumPresetTitle(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
+internal sealed class EnumPresetTitle(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
     override fun equals(other: kotlin.Any?): Boolean = other is com.gopro.open_gopro.operations.EnumPresetTitle && other.value == value
     override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = "EnumPresetTitle.${name ?: "UNRECOGNIZED"}(value=$value)"
