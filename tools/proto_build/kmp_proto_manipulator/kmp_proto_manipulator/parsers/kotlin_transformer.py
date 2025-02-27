@@ -34,7 +34,7 @@ class KotlinTransformer:
             scope = spec.scope
         else:
             scope = toks.scope
-        return " ".join([scope, *toks[1:]])
+        return " ".join([toks[0], "\n", scope, *toks[2:]])
 
     def transform(self, kotlin: str) -> str:
         """Perform all manipulations to transform a kotlin file.
