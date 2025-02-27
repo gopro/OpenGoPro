@@ -2,3 +2,8 @@
 
 !entrypoint.sh
 !requirements.txt
+
+!kmp_manipulator_config.toml
+!kmp_proto_manipulator/pyproject.toml
+!kmp_proto_manipulator/**
+**/__pycache__/

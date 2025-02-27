@@ -30,6 +30,7 @@ function build_kotlin() {
     # We can't run as root because pbank can't handle it: https://github.com/streem/pbandk/issues/73
     gosu user:user protoc --pbandk_out=kotlin_package=com.gopro.open_gopro.operations,visibility=internal:/home/user/temp -I $PROTO_SRC_DIR $PROTO_SRC_DIR/*
     mv /home/user/temp/com/gopro/open_gopro/operations/* $PROTO_KOTLIN_OUT_DIR
+    set-kmp-scopes /kmp_manipulator_config.toml $PROTO_KOTLIN_OUT_DIR
 }
 
 build_python

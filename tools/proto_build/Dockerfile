@@ -1,11 +1,10 @@
 # Dockerfile/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Wed Mar 27 22:05:54 UTC 2024
 
-FROM ubuntu:20.04
+FROM python:3.11.11
 
 RUN apt-get update && \
     apt-get install -y software-properties-common && \
-    apt-add-repository -y ppa:deadsnakes/ppa && \
     # Set env variables
     DEBIAN_FRONTEND=noninteractive \
     # Install
@@ -13,8 +12,6 @@ RUN apt-get update && \
     gosu \
     wget \
     default-jre-headless \
-    python3.11 \
-    python3-pip \
     protobuf-compiler && \
     # clean up
     apt-get clean && \

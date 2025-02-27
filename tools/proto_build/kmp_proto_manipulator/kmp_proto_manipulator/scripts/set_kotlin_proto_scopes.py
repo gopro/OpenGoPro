@@ -32,11 +32,14 @@ def main(args: argparse.Namespace) -> int:  # noqa
     input_directory: Path = args.dir
     config_file: Path = args.config
 
+    print("Transforming proto-generated Kotlin files...")
+
     transformer = KotlinTransformer(
         config=ConfigParser.parse_config(config_file),
     )
 
     for kt in input_directory.glob(r"*.kt"):
+        print(f"Transforming {kt.name}")
         kt.write_text(transformer.transform(kt.read_text()))
 
     return 0

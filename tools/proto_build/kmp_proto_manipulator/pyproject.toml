@@ -7,13 +7,14 @@ authors = [
 ]
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = [
-    "pydantic (>=2.10.6,<3.0.0)",
-    "pyparsing (>=3.2.1,<4.0.0)"
-]
+
+[tool.poetry.scripts]
+set-kmp-scopes = "kmp_proto_manipulator.scripts.set_kotlin_proto_scopes:entrypoint"
 
 [tool.poetry.dependencies]
 python = "^3.11"
+pydantic = "^2"
+pyparsing = "^3"
 
 [tool.poetry.group.dev.dependencies]
 pydoclint = "^0"
