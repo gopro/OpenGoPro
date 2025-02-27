@@ -12,3 +12,8 @@ def test_parse_enum(enum_as_text: str):
 def test_parse_sealed_class(sealed_class_as_text: str):
     transformed = kotlin_object.transform_string(sealed_class_as_text)
     print(transformed)
+
+
+def test_parse_file(file_as_text: str):
+    transformed = kotlin_object.transform_string(file_as_text)
+    print(transformed)
