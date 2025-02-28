@@ -9,6 +9,25 @@ on:
     workflow_dispatch:
 
 jobs:
+    mirror-main-to-staging:
+        name: Mirror Public Main to Staging
+        runs-on: ubunutu-latest
+        steps:
+            - name: Checkout branch (staging public_main_mirror)
+              uses: actions/checkout@v4
+              with:
+                  repository: gopro/OpenGoPro-Staging
+                  ref: public_main_mirror
+                  token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
+
+            - name: Mirror Public Main
+              shell: bash
+              run: |
+                  git remote add public git@github.com:gopro/OpenGoPro.git
+                  git pull --all
+                  git reset --hard public/main
+                  git push -f
+
     copyright:
         runs-on: ubuntu-latest
         steps:
