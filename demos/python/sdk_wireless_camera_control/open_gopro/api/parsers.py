@@ -104,7 +104,7 @@ class JsonParsers:
                         else:
                             parsed[identifier] = parser_builder(v)
                     except (ValueError, FormatFieldError) as e:
-                        logger.trace(f"Error Parsing {name}::{k}, value: {v} ==> {repr(e)}") # type: ignore
+                        logger.trace(f"Error Parsing {name}::{k}, value: {v} ==> {repr(e)}")  # type: ignore
                         continue
             return parsed
 
