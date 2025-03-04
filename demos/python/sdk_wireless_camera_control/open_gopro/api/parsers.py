@@ -10,7 +10,7 @@ import logging
 from typing import Any, Callable, TypeVar, cast
 
 import google.protobuf.json_format
-from construct import Construct, Flag, Int16sb, Int16ub
+from construct import Construct, Flag, FormatFieldError, Int16sb, Int16ub
 from google.protobuf import descriptor
 from google.protobuf.json_format import MessageToDict as ProtobufToDict
 from pydantic import BaseModel
@@ -103,7 +103,8 @@ class JsonParsers:
                             parsed[identifier] = v
                         else:
                             parsed[identifier] = parser_builder(v)
-                    except ValueError:
+                    except (ValueError, FormatFieldError) as e:
+                        logger.trace(f"Error Parsing {name}::{k}, value: {v} ==> {repr(e)}")  # type: ignore
                         continue
             return parsed
 
