@@ -1,6 +1,3 @@
-/* request_get_preset_status.kt/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Thu Feb 27 23:31:55 UTC 2025 */
-
 @file:OptIn(pbandk.PublicForGeneratedCode::class)
 
 package com.gopro.open_gopro.operations
@@ -47,6 +44,7 @@ internal data class RequestGetPresetStatus(
         emptyList(),
     val unregisterPresetStatus: List<com.gopro.open_gopro.operations.EnumRegisterPresetStatus> =
         emptyList(),
+    val useConstantSettingIds: Boolean? = null,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
   override operator fun plus(
@@ -77,7 +75,7 @@ internal data class RequestGetPresetStatus(
             messageClass = com.gopro.open_gopro.operations.RequestGetPresetStatus::class,
             messageCompanion = this,
             fields =
-                buildList(2) {
+                buildList(3) {
                   add(
                       pbandk.FieldDescriptor(
                           messageDescriptor = this@Companion::descriptor,
@@ -114,6 +112,16 @@ internal data class RequestGetPresetStatus(
                           value =
                               com.gopro.open_gopro.operations.RequestGetPresetStatus::
                                   unregisterPresetStatus))
+                  add(
+                      pbandk.FieldDescriptor(
+                          messageDescriptor = this@Companion::descriptor,
+                          name = "use_constant_setting_ids",
+                          number = 3,
+                          type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
+                          jsonName = "useConstantSettingIds",
+                          value =
+                              com.gopro.open_gopro.operations.RequestGetPresetStatus::
+                                  useConstantSettingIds))
                 })
   }
 }
@@ -129,6 +137,7 @@ private fun RequestGetPresetStatus.protoMergeImpl(plus: pbandk.Message?): Reques
       it.copy(
           registerPresetStatus = registerPresetStatus + plus.registerPresetStatus,
           unregisterPresetStatus = unregisterPresetStatus + plus.unregisterPresetStatus,
+          useConstantSettingIds = plus.useConstantSettingIds ?: useConstantSettingIds,
           unknownFields = unknownFields + plus.unknownFields)
     } ?: this
 
@@ -142,6 +151,7 @@ private fun RequestGetPresetStatus.Companion.decodeWithImpl(
   var unregisterPresetStatus:
       pbandk.ListWithSize.Builder<com.gopro.open_gopro.operations.EnumRegisterPresetStatus>? =
       null
+  var useConstantSettingIds: Boolean? = null
 
   val unknownFields =
       u.readMessage(this) { _fieldNumber, _fieldValue ->
@@ -164,11 +174,13 @@ private fun RequestGetPresetStatus.Companion.decodeWithImpl(
                             kotlin.sequences.Sequence<
                                 com.gopro.open_gopro.operations.EnumRegisterPresetStatus>
                   }
+          3 -> useConstantSettingIds = _fieldValue as Boolean
         }
       }
 
   return RequestGetPresetStatus(
       pbandk.ListWithSize.Builder.fixed(registerPresetStatus),
       pbandk.ListWithSize.Builder.fixed(unregisterPresetStatus),
+      useConstantSettingIds,
       unknownFields)
 }
