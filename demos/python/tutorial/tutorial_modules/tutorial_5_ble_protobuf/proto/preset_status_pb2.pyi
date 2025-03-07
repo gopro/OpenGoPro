@@ -403,6 +403,9 @@ class _EnumPresetTitleEnumTypeWrapper(
     PRESET_TITLE_EASY_STANDARD_PROFILE: _EnumPresetTitle.ValueType
     PRESET_TITLE_EASY_HDR_PROFILE: _EnumPresetTitle.ValueType
     PRESET_TITLE_BURST_SLOMO: _EnumPresetTitle.ValueType
+    PRESET_TITLE_4_3_VIDEO: _EnumPresetTitle.ValueType
+    PRESET_TITLE_16_9_VIDEO: _EnumPresetTitle.ValueType
+    PRESET_TITLE_16_9_SLOMO: _EnumPresetTitle.ValueType
 
 class EnumPresetTitle(_EnumPresetTitle, metaclass=_EnumPresetTitleEnumTypeWrapper): ...
 
@@ -483,6 +486,9 @@ PRESET_TITLE_USER_DEFINED_CUSTOM_NAME: EnumPresetTitle.ValueType
 PRESET_TITLE_EASY_STANDARD_PROFILE: EnumPresetTitle.ValueType
 PRESET_TITLE_EASY_HDR_PROFILE: EnumPresetTitle.ValueType
 PRESET_TITLE_BURST_SLOMO: EnumPresetTitle.ValueType
+PRESET_TITLE_4_3_VIDEO: EnumPresetTitle.ValueType
+PRESET_TITLE_16_9_VIDEO: EnumPresetTitle.ValueType
+PRESET_TITLE_16_9_SLOMO: EnumPresetTitle.ValueType
 global___EnumPresetTitle = EnumPresetTitle
 
 @typing_extensions.final

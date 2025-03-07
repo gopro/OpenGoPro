@@ -229,6 +229,9 @@ enum EnumPresetTitle {
     PRESET_TITLE_EASY_STANDARD_PROFILE    = 99;
     PRESET_TITLE_EASY_HDR_PROFILE         = 100;
     PRESET_TITLE_BURST_SLOMO              = 106;
+    PRESET_TITLE_4_3_VIDEO                = 125;
+    PRESET_TITLE_16_9_VIDEO               = 126;
+    PRESET_TITLE_16_9_SLOMO               = 127;
 }
 
 /**
