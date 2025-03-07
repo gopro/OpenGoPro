@@ -5,7 +5,7 @@ name: Kotlin SDK Unit Testing
 
 on:
     pull_request:
-        branches: [main]
+        branches: [main, public_main_mirror]
         paths:
             - 'demos/kotlin/kmp_sdk/**'
 
