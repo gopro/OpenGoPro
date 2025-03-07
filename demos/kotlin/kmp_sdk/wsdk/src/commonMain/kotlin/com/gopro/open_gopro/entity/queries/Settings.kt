@@ -27,7 +27,7 @@ enum class SettingId(override val value: UByte) : IValuedEnum<UByte> {
   PHOTO_SINGLE_INTERVAL(171U),
   PHOTO_INTERVAL_DURATION(172U),
   VIDEO_PERFORMANCE_MODE(173U),
-  CONTROLS(175U),
+  CONTROL_MODE(175U),
   EASY_MODE_SPEED(176U),
   ENABLE_NIGHT_PHOTO(177U),
   WIRELESS_BAND(178U),
@@ -451,19 +451,20 @@ enum class VideoPerformanceMode(override val value: UByte) : IValuedEnum<UByte> 
 }
 
 /**
- * Controls
+ * Control Mode
  *
  * @property value
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#controls-175)
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#control-mode-175)
  */
-enum class Controls(override val value: UByte) : IValuedEnum<UByte> {
+enum class ControlMode(override val value: UByte) : IValuedEnum<UByte> {
   EASY(0U),
   PRO(1U);
 
   @ExperimentalUnsignedTypes
-  companion object : IUByteArrayCompanion<Controls> {
+  companion object : IUByteArrayCompanion<ControlMode> {
     override fun fromUByteArray(value: UByteArray) =
-        Controls.entries.first { it.value == value.last() }
+        ControlMode.entries.first { it.value == value.last() }
   }
 }
 

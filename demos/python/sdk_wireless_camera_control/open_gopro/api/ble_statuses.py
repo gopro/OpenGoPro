@@ -490,7 +490,15 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
         self.preset_modified: BleStatus[int] = BleStatus(communicator, StatusId.PRESET_MODIFIED, Int32ub)
         """Preset Modified
 
-        Preset Modified Status, which contains an event ID and a Preset (Group) ID
+        The value of this status is set to zero when the client sends a Get Preset Status message to the camera.
+		
+		The value of this status is set to a non-zero value when:
+		
+		- Preset settings submenu is exited in the camera UI (whether any settings were changed or not)
+		- A new preset is created
+		- A preset is deleted
+		- Preset ordering is changed within a preset group
+		- A preset is reset to factory defaults
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#preset-modified-98)"""
 

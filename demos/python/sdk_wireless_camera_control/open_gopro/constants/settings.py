@@ -31,7 +31,7 @@ class SettingId(GoProIntEnum):
     PHOTO_SINGLE_INTERVAL = 171
     PHOTO_INTERVAL_DURATION = 172
     VIDEO_PERFORMANCE_MODE = 173
-    CONTROLS = 175
+    CONTROL_MODE = 175
     EASY_MODE_SPEED = 176
     ENABLE_NIGHT_PHOTO = 177
     WIRELESS_BAND = 178
@@ -266,8 +266,8 @@ class VideoPerformanceMode(GoProIntEnum):
     TRIPOD_STATIONARY_VIDEO = 2
 
 
-class Controls(GoProIntEnum):
-    """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#controls-175)"""
+class ControlMode(GoProIntEnum):
+    """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#control-mode-175)"""
 
     EASY = 0
     PRO = 1

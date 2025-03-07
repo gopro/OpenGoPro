@@ -164,12 +164,12 @@ class SettingsContainer internal constructor(marshaller: IOperationMarshaller) {
       Setting(SettingId.VIDEO_PERFORMANCE_MODE, VideoPerformanceMode, marshaller)
 
   /**
-   * Controls
+   * Control Mode
    *
    * @see
-   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#controls-175)
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#control-mode-175)
    */
-  val controls = Setting(SettingId.CONTROLS, Controls, marshaller)
+  val controlMode = Setting(SettingId.CONTROL_MODE, ControlMode, marshaller)
 
   /**
    * Easy Mode Speed
