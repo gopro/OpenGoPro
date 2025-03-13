@@ -30,9 +30,10 @@ requests = "^2"
 rich = "^13"
 pytz = "*"
 tzlocal = "*"
-mypy-protobuf = "*"
+protobuf = "^3"
 
 [tool.poetry.group.dev.dependencies]
+mypy-protobuf = "*"
 poethepoet = "^0"
 black = "*"
 isort = "*"

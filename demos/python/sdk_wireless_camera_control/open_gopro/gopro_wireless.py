@@ -13,14 +13,13 @@ from collections import defaultdict
 from copy import deepcopy
 from typing import Any, Callable, Final, Pattern
 
-from open_gopro import proto
+from open_gopro import constants, proto
 from open_gopro.api import (
     BleCommands,
     BleSettings,
     BleStatuses,
     HttpCommands,
     HttpSettings,
-    Params,
     WirelessApi,
 )
 from open_gopro.ble import BleakWrapperController, BleUUID
@@ -31,7 +30,7 @@ from open_gopro.communicator_interface import (
     Message,
     MessageRules,
 )
-from open_gopro.constants import ActionId, GoProUUIDs, StatusId
+from open_gopro.constants import ActionId, GoProUUID, StatusId
 from open_gopro.exceptions import (
     ConnectFailed,
     ConnectionTerminated,
@@ -88,14 +87,12 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     It can be used via context manager:
 
     >>> async with WirelessGoPro() as gopro:
-    >>>     print("Yay! I'm connected via BLE, Wifi, opened, and ready to send / get data now!")
     >>>     # Send some messages now
 
     Or without:
 
     >>> gopro = WirelessGoPro()
     >>> await gopro.open()
-    >>> print("Yay! I'm connected via BLE, Wifi, opened, and ready to send / get data now!")
     >>> # Send some messages now
 
     Attributes:
@@ -158,7 +155,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             )
             raise e
 
-        # Builders for currently accumulating synchronous responses, indexed by GoProUUIDs. This assumes there
+        # Builders for currently accumulating synchronous responses, indexed by GoProUUID. This assumes there
         # can only be one active response per BleUUID
         self._active_builders: dict[BleUUID, BleRespBuilder] = {}
         # Responses that we are waiting for.
@@ -478,7 +475,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         Returns:
             bool: True if it succeeded,. False otherwise
         """
-        return (await self.ble_setting.led.set(Params.LED.BLE_KEEP_ALIVE)).ok
+        return (await self.ble_setting.led.set(constants.LED.BLE_KEEP_ALIVE)).ok  # type: ignore
 
     @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
     async def connect_to_access_point(self, ssid: str, password: str) -> bool:
@@ -592,10 +589,10 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         # Start state maintenance
         if self._should_maintain_state:
             await self._ready_lock.acquire()
-            encoding = (await self.ble_status.encoding_active.register_value_update(self._update_internal_state)).data
+            encoding = (await self.ble_status.encoding.register_value_update(self._update_internal_state)).data
             await self._update_internal_state(StatusId.ENCODING, encoding)
-            busy = (await self.ble_status.system_busy.register_value_update(self._update_internal_state)).data
-            await self._update_internal_state(StatusId.SYSTEM_BUSY, busy)
+            busy = (await self.ble_status.busy.register_value_update(self._update_internal_state)).data
+            await self._update_internal_state(StatusId.BUSY, busy)
         logger.info("BLE is ready!")
 
     async def _update_internal_state(self, update: UpdateType, value: int) -> None:
@@ -621,7 +618,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             self._encoding = bool(value)
             if self._encoding:
                 should_notify_encoding = True
-        elif update == StatusId.SYSTEM_BUSY:
+        elif update == StatusId.BUSY:
             self._busy = bool(value)
         logger.trace(f"Current internal states: {self._encoding=} {self._busy=}")  # type: ignore
 
@@ -679,7 +676,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
         async def _async_notification_handler() -> None:
             # Responses we don't care about. For now, just the BLE-spec defined battery characteristic
-            if (uuid := self._ble.gatt_db.handle2uuid(handle)) == GoProUUIDs.BATT_LEVEL:
+            if (uuid := self._ble.gatt_db.handle2uuid(handle)) == GoProUUID.BATT_LEVEL:
                 return
             logger.debug(f'Received response on BleUUID [{uuid}]: {data.hex(":")}')
             # Add to response dict if not already there

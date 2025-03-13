@@ -23,8 +23,7 @@ class _EnumResultGeneric:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumResultGenericEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumResultGeneric.ValueType],
-    builtins.type,
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumResultGeneric.ValueType], builtins.type
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     RESULT_UNKNOWN: _EnumResultGeneric.ValueType
@@ -79,12 +78,8 @@ class Media(google.protobuf.message.Message):
 
     def __init__(self, *, folder: builtins.str | None = ..., file: builtins.str | None = ...) -> None: ...
     def HasField(
-        self,
-        field_name: typing_extensions.Literal["file", b"file", "folder", b"folder"],
+        self, field_name: typing_extensions.Literal["file", b"file", "folder", b"folder"]
     ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal["file", b"file", "folder", b"folder"],
-    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["file", b"file", "folder", b"folder"]) -> None: ...
 
 global___Media = Media

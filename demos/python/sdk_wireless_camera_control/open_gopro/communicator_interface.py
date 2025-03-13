@@ -25,7 +25,7 @@ from open_gopro.ble import (
     DisconnectHandlerType,
     NotiHandlerType,
 )
-from open_gopro.constants import GoProUUIDs
+from open_gopro.constants import GoProUUID
 from open_gopro.models.response import GoProResp, Header
 from open_gopro.parser_interface import (
     BytesParser,
@@ -229,8 +229,8 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
             controller,
             disconnected_cb,
             notification_cb,
-            (re.compile(r"GoPro [A-Z0-9]{4}") if target is None else target, [GoProUUIDs.S_CONTROL_QUERY]),
-            uuids=GoProUUIDs,
+            (re.compile(r"GoPro [A-Z0-9]{4}") if target is None else target, [GoProUUID.S_CONTROL_QUERY]),
+            uuids=GoProUUID,
         )
 
     @abstractmethod

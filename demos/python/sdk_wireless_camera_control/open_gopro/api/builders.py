@@ -30,7 +30,7 @@ from open_gopro.constants import (
     ActionId,
     CmdId,
     FeatureId,
-    GoProUUIDs,
+    GoProUUID,
     QueryCmdId,
     SettingId,
     StatusId,
@@ -409,8 +409,8 @@ class BleSettingFacade(Generic[ValueType]):
         parser_builder (QueryParserType): Parses responses from bytes and builds requests to bytes.
     """
 
-    SETTER_UUID: Final[BleUUID] = GoProUUIDs.CQ_SETTINGS
-    READER_UUID: Final[BleUUID] = GoProUUIDs.CQ_QUERY
+    SETTER_UUID: Final[BleUUID] = GoProUUID.CQ_SETTINGS
+    READER_UUID: Final[BleUUID] = GoProUUID.CQ_QUERY
 
     class BleSettingMessageBase(BleMessage):
         """Actual BLE Setting Message that is wrapped by the facade.
@@ -641,7 +641,7 @@ class BleStatusFacade(Generic[ValueType]):
         TypeError: Attempted to pass an invalid parser type
     """
 
-    UUID: Final[BleUUID] = GoProUUIDs.CQ_QUERY
+    UUID: Final[BleUUID] = GoProUUID.CQ_QUERY
 
     class BleStatusMessageBase(BleMessage):
         """An individual camera status that is interacted with via BLE.

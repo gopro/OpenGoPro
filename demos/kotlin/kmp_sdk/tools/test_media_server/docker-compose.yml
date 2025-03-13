@@ -1,0 +1,39 @@
+# docker-compose.yml/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Tue Feb 18 18:41:31 UTC 2025
+
+services:
+    mediamtx:
+        image: bluenviron/mediamtx:1.9.3
+        ports:
+            - '1935:1935'
+            - '8554:8554'
+            - '8000:8000'
+            - '8001:8001'
+            - '8888:8888'
+            - '8889:8889'
+            - '9997:9997'
+            - '8890:8890'
+        volumes:
+            - ./config.yml:/mediamtx.yml
+
+    publish-rtsp:
+        image: linuxserver/ffmpeg:version-7.1-cli
+        links:
+            - 'mediamtx:mediamtx'
+        depends_on:
+            - mediamtx
+        volumes:
+            - ./samples/:/tmp/
+        # command: '-re -stream_loop -1 -i /tmp/test1.mpg -c copy -f rtsp rtsp://mediamtx:8554/test' # This isn't working for HLS
+        command: '-f lavfi -i testsrc=size=640x480:rate=10 -vcodec libx264 -pix_fmt yuv420p -r 30 -b:v 300k -f rtsp rtsp://mediamtx:8554/test'
+
+    publish-rtmp:
+        image: linuxserver/ffmpeg:version-7.1-cli
+        links:
+            - 'mediamtx:mediamtx'
+        depends_on:
+            - mediamtx
+        volumes:
+            - ./samples/:/tmp/
+
+        command: '-f lavfi -i testsrc=size=640x480:rate=10 -vcodec libx264 -pix_fmt yuv420p -r 30 -b:v 300k -f flv rtmp://mediamtx/test2'

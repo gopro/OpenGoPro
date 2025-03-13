@@ -70,9 +70,9 @@ async def process_battery_notifications(update: types.UpdateType, value: int) ->
     global last_percentage
     global last_bars
 
-    if update == StatusId.INT_BATT_PER:
+    if update == StatusId.INTERNAL_BATTERY_PERCENTAGE:
         last_percentage = value
-    elif update == StatusId.BATT_LEVEL:
+    elif update == StatusId.INTERNAL_BATTERY_BARS:
         last_bars = value
 
     # Append and print sample
@@ -98,8 +98,8 @@ async def main(args: argparse.Namespace) -> None:
                             SAMPLES.append(
                                 Sample(
                                     index=SAMPLE_INDEX,
-                                    percentage=(await gopro.ble_status.int_batt_per.get_value()).data,
-                                    bars=(await gopro.ble_status.batt_level.get_value()).data,
+                                    percentage=(await gopro.ble_status.internal_battery_percentage.get_value()).data,
+                                    bars=(await gopro.ble_status.internal_battery_bars.get_value()).data,
                                 )
                             )
                             console.print(str(SAMPLES[-1]))
@@ -112,10 +112,14 @@ async def main(args: argparse.Namespace) -> None:
                     console.print("Configuring battery notifications...")
                     # Enable notifications of the relevant battery statuses. Also store initial values.
                     last_bars = (
-                        await gopro.ble_status.batt_level.register_value_update(process_battery_notifications)
+                        await gopro.ble_status.internal_battery_bars.register_value_update(
+                            process_battery_notifications
+                        )
                     ).data
                     last_percentage = (
-                        await gopro.ble_status.int_batt_per.register_value_update(process_battery_notifications)
+                        await gopro.ble_status.internal_battery_percentage.register_value_update(
+                            process_battery_notifications
+                        )
                     ).data
                     # Append initial sample
                     SAMPLES.append(Sample(index=SAMPLE_INDEX, percentage=last_percentage, bars=last_bars))

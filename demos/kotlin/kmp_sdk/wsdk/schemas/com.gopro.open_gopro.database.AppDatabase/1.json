@@ -1,0 +1,97 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "56181765d459c4eeb7d72ed276df0ce9",
+    "entities": [
+      {
+        "tableName": "HttpsCredentialsDbEntry",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`serialId` TEXT NOT NULL, `username` TEXT NOT NULL, `password` TEXT NOT NULL, PRIMARY KEY(`serialId`))",
+        "fields": [
+          {
+            "fieldPath": "serialId",
+            "columnName": "serialId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "username",
+            "columnName": "username",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "password",
+            "columnName": "password",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "serialId"
+          ]
+        }
+      },
+      {
+        "tableName": "CertificatesDbEntry",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`serialId` TEXT NOT NULL, `certificates` TEXT NOT NULL, PRIMARY KEY(`serialId`))",
+        "fields": [
+          {
+            "fieldPath": "serialId",
+            "columnName": "serialId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "certificates",
+            "columnName": "certificates",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "serialId"
+          ]
+        }
+      },
+      {
+        "tableName": "SsidDbEntry",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`serialId` TEXT NOT NULL, `ssid` TEXT NOT NULL, `password` TEXT NOT NULL, PRIMARY KEY(`serialId`))",
+        "fields": [
+          {
+            "fieldPath": "serialId",
+            "columnName": "serialId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ssid",
+            "columnName": "ssid",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "password",
+            "columnName": "password",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "serialId"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '56181765d459c4eeb7d72ed276df0ce9')"
+    ]
+  }
+}

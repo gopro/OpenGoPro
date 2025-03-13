@@ -24,8 +24,7 @@ class _EnumCOHNStatus:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumCOHNStatusEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumCOHNStatus.ValueType],
-    builtins.type,
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumCOHNStatus.ValueType], builtins.type
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     COHN_UNPROVISIONED: _EnumCOHNStatus.ValueType
@@ -42,8 +41,7 @@ class _EnumCOHNNetworkState:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumCOHNNetworkStateEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumCOHNNetworkState.ValueType],
-    builtins.type,
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumCOHNNetworkState.ValueType], builtins.type
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     COHN_STATE_Init: _EnumCOHNNetworkState.ValueType
@@ -85,12 +83,10 @@ class RequestGetCOHNStatus(google.protobuf.message.Message):
 
     def __init__(self, *, register_cohn_status: builtins.bool | None = ...) -> None: ...
     def HasField(
-        self,
-        field_name: typing_extensions.Literal["register_cohn_status", b"register_cohn_status"],
+        self, field_name: typing_extensions.Literal["register_cohn_status", b"register_cohn_status"]
     ) -> builtins.bool: ...
     def ClearField(
-        self,
-        field_name: typing_extensions.Literal["register_cohn_status", b"register_cohn_status"],
+        self, field_name: typing_extensions.Literal["register_cohn_status", b"register_cohn_status"]
     ) -> None: ...
 
 global___RequestGetCOHNStatus = RequestGetCOHNStatus
@@ -249,13 +245,9 @@ class ResponseCOHNCert(google.protobuf.message.Message):
         self, *, result: response_generic_pb2.EnumResultGeneric.ValueType | None = ..., cert: builtins.str | None = ...
     ) -> None: ...
     def HasField(
-        self,
-        field_name: typing_extensions.Literal["cert", b"cert", "result", b"result"],
+        self, field_name: typing_extensions.Literal["cert", b"cert", "result", b"result"]
     ) -> builtins.bool: ...
-    def ClearField(
-        self,
-        field_name: typing_extensions.Literal["cert", b"cert", "result", b"result"],
-    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["cert", b"cert", "result", b"result"]) -> None: ...
 
 global___ResponseCOHNCert = ResponseCOHNCert
 

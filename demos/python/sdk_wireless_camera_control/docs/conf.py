@@ -66,12 +66,6 @@ TYPE_ALIASES = {
     "ResponseType": "open_gopro.types.ResponseType",
     "Protobuf": "open_gopro.types.Protobuf",
     "IdType": "open_gopro.types.IdType",
-    # TODO there must be a better way of doing this...
-    "Params.Toggle": "open_gopro.api.params.Toggle",
-    "Params.CameraControl": "open_gopro.api.params.CameraControl",
-    "Params.WebcamProtocol": "open_gopro.api.params.WebcamProtocol",
-    "Params.WebcamResolution": "open_gopro.api.params.WebcamResolution",
-    "Params.WebcamFOV": "open_gopro.api.params.WebcamFOV",
 }
 
 # This is very broken.

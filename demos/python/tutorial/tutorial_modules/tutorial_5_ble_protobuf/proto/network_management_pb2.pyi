@@ -26,8 +26,7 @@ class _EnumProvisioning:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumProvisioningEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumProvisioning.ValueType],
-    builtins.type,
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumProvisioning.ValueType], builtins.type
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     PROVISIONING_UNKNOWN: _EnumProvisioning.ValueType
@@ -64,8 +63,7 @@ class _EnumScanning:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumScanningEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumScanning.ValueType],
-    builtins.type,
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumScanning.ValueType], builtins.type
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     SCANNING_UNKNOWN: _EnumScanning.ValueType
@@ -90,8 +88,7 @@ class _EnumScanEntryFlags:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumScanEntryFlagsEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumScanEntryFlags.ValueType],
-    builtins.type,
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumScanEntryFlags.ValueType], builtins.type
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     SCAN_FLAG_OPEN: _EnumScanEntryFlags.ValueType
@@ -134,12 +131,10 @@ class NotifProvisioningState(google.protobuf.message.Message):
 
     def __init__(self, *, provisioning_state: global___EnumProvisioning.ValueType | None = ...) -> None: ...
     def HasField(
-        self,
-        field_name: typing_extensions.Literal["provisioning_state", b"provisioning_state"],
+        self, field_name: typing_extensions.Literal["provisioning_state", b"provisioning_state"]
     ) -> builtins.bool: ...
     def ClearField(
-        self,
-        field_name: typing_extensions.Literal["provisioning_state", b"provisioning_state"],
+        self, field_name: typing_extensions.Literal["provisioning_state", b"provisioning_state"]
     ) -> None: ...
 
 global___NotifProvisioningState = NotifProvisioningState
@@ -342,23 +337,13 @@ class RequestGetApEntries(google.protobuf.message.Message):
     def HasField(
         self,
         field_name: typing_extensions.Literal[
-            "max_entries",
-            b"max_entries",
-            "scan_id",
-            b"scan_id",
-            "start_index",
-            b"start_index",
+            "max_entries", b"max_entries", "scan_id", b"scan_id", "start_index", b"start_index"
         ],
     ) -> builtins.bool: ...
     def ClearField(
         self,
         field_name: typing_extensions.Literal[
-            "max_entries",
-            b"max_entries",
-            "scan_id",
-            b"scan_id",
-            "start_index",
-            b"start_index",
+            "max_entries", b"max_entries", "scan_id", b"scan_id", "start_index", b"start_index"
         ],
     ) -> None: ...
 
@@ -427,23 +412,13 @@ class ResponseConnect(google.protobuf.message.Message):
     def HasField(
         self,
         field_name: typing_extensions.Literal[
-            "provisioning_state",
-            b"provisioning_state",
-            "result",
-            b"result",
-            "timeout_seconds",
-            b"timeout_seconds",
+            "provisioning_state", b"provisioning_state", "result", b"result", "timeout_seconds", b"timeout_seconds"
         ],
     ) -> builtins.bool: ...
     def ClearField(
         self,
         field_name: typing_extensions.Literal[
-            "provisioning_state",
-            b"provisioning_state",
-            "result",
-            b"result",
-            "timeout_seconds",
-            b"timeout_seconds",
+            "provisioning_state", b"provisioning_state", "result", b"result", "timeout_seconds", b"timeout_seconds"
         ],
     ) -> None: ...
 
@@ -478,23 +453,13 @@ class ResponseConnectNew(google.protobuf.message.Message):
     def HasField(
         self,
         field_name: typing_extensions.Literal[
-            "provisioning_state",
-            b"provisioning_state",
-            "result",
-            b"result",
-            "timeout_seconds",
-            b"timeout_seconds",
+            "provisioning_state", b"provisioning_state", "result", b"result", "timeout_seconds", b"timeout_seconds"
         ],
     ) -> builtins.bool: ...
     def ClearField(
         self,
         field_name: typing_extensions.Literal[
-            "provisioning_state",
-            b"provisioning_state",
-            "result",
-            b"result",
-            "timeout_seconds",
-            b"timeout_seconds",
+            "provisioning_state", b"provisioning_state", "result", b"result", "timeout_seconds", b"timeout_seconds"
         ],
     ) -> None: ...
 
@@ -589,12 +554,10 @@ class ResponseGetApEntries(google.protobuf.message.Message):
         entries: collections.abc.Iterable[global___ResponseGetApEntries.ScanEntry] | None = ...
     ) -> None: ...
     def HasField(
-        self,
-        field_name: typing_extensions.Literal["result", b"result", "scan_id", b"scan_id"],
+        self, field_name: typing_extensions.Literal["result", b"result", "scan_id", b"scan_id"]
     ) -> builtins.bool: ...
     def ClearField(
-        self,
-        field_name: typing_extensions.Literal["entries", b"entries", "result", b"result", "scan_id", b"scan_id"],
+        self, field_name: typing_extensions.Literal["entries", b"entries", "result", b"result", "scan_id", b"scan_id"]
     ) -> None: ...
 
 global___ResponseGetApEntries = ResponseGetApEntries
@@ -622,12 +585,10 @@ class ResponseStartScanning(google.protobuf.message.Message):
         scanning_state: global___EnumScanning.ValueType | None = ...
     ) -> None: ...
     def HasField(
-        self,
-        field_name: typing_extensions.Literal["result", b"result", "scanning_state", b"scanning_state"],
+        self, field_name: typing_extensions.Literal["result", b"result", "scanning_state", b"scanning_state"]
     ) -> builtins.bool: ...
     def ClearField(
-        self,
-        field_name: typing_extensions.Literal["result", b"result", "scanning_state", b"scanning_state"],
+        self, field_name: typing_extensions.Literal["result", b"result", "scanning_state", b"scanning_state"]
     ) -> None: ...
 
 global___ResponseStartScanning = ResponseStartScanning

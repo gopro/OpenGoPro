@@ -9,11 +9,10 @@ import datetime
 from base64 import b64encode
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
 
 from pydantic import ConfigDict, Field
 
-from open_gopro import constants
+from open_gopro.constants import SettingId, WebcamError, WebcamStatus
 from open_gopro.models.bases import CustomBaseModel
 
 
@@ -47,19 +46,19 @@ class SupportedOption(CustomBaseModel):
 class WebcamResponse(CustomBaseModel):
     """Common Response from Webcam Commands"""
 
-    status: Optional[constants.WebcamStatus] = Field(default=None)
-    error: constants.WebcamError
-    setting_id: Optional[str] = Field(default=None)
-    supported_options: Optional[list[SupportedOption]] = Field(default=None)
+    status: WebcamStatus | None = Field(default=None)
+    error: WebcamError
+    setting_id: str | None = Field(default=None)
+    supported_options: list[SupportedOption] | None = Field(default=None)
 
 
 class HttpInvalidSettingResponse(CustomBaseModel):
     """Invalid settings response with optional supported options"""
 
     error: int
-    setting_id: constants.SettingId
-    option_id: Optional[int] = Field(default=None)
-    supported_options: Optional[list[SupportedOption]] = Field(default=None)
+    setting_id: SettingId
+    option_id: int | None = Field(default=None)
+    supported_options: list[SupportedOption] | None = Field(default=None)
 
 
 @dataclass

@@ -12,7 +12,8 @@ from typing import Final
 
 import pytest
 
-from open_gopro import WiredGoPro, constants
+from open_gopro import WiredGoPro
+from open_gopro.constants import statuses
 from open_gopro.wifi.mdns_scanner import ZeroconfListener, find_first_ip_addr
 
 IP_ADDR: Final[str] = "172.20.123.51"
@@ -75,8 +76,8 @@ async def test_wired_lifecycle(mock_wired_gopro: WiredGoPro, monkeypatch):
         await asyncio.sleep(1)  # Allow initial poll to fail
         mock_wired_gopro.set_state_response(  # type: ignore
             {
-                constants.StatusId.ENCODING: 0,
-                constants.StatusId.SYSTEM_BUSY: 0,
+                statuses.StatusId.ENCODING: 0,
+                statuses.StatusId.BUSY: 0,
             }
         )
 

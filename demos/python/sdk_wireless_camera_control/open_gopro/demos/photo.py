@@ -9,7 +9,7 @@ from pathlib import Path
 
 from rich.console import Console
 
-from open_gopro import Params, WiredGoPro, WirelessGoPro, proto
+from open_gopro import WiredGoPro, WirelessGoPro, constants, proto
 from open_gopro.gopro_base import GoProBase
 from open_gopro.logger import setup_logging
 from open_gopro.util import add_cli_args_and_parse
@@ -35,7 +35,7 @@ async def main(args: argparse.Namespace) -> None:
             media_set_before = set((await gopro.http_command.get_media_list()).data.files)
 
             # Take a photo
-            assert (await gopro.http_command.set_shutter(shutter=Params.Toggle.ENABLE)).ok
+            assert (await gopro.http_command.set_shutter(shutter=constants.Toggle.ENABLE)).ok
 
             # Get the media list after
             media_set_after = set((await gopro.http_command.get_media_list()).data.files)

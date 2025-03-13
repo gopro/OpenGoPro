@@ -40,7 +40,8 @@ For more information on the API, see the relevant documentation:
 - `HTTP API <https://gopro.github.io/OpenGoPro/http>`_
 
 .. warning::
-    This package requires Python >= version 3.10 and < 3.13
+    This package requires Python >= version 3.10 and < 3.13 and only supports GoPros
+    that `implement the OGP API <https://gopro.github.io/OpenGoPro/ble/#supported-cameras>`_
 
 Features
 --------

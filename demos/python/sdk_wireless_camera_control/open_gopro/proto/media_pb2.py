@@ -1,5 +1,5 @@
 # media_pb2.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
-# This copyright was auto-generated on Tue Jan  7 23:05:57 UTC 2025
+# This copyright was auto-generated on Thu Feb 27 23:32:00 UTC 2025
 
 """Generated protocol buffer code."""
 

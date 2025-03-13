@@ -25,8 +25,7 @@ class _EnumFlatMode:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumFlatModeEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumFlatMode.ValueType],
-    builtins.type,
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumFlatMode.ValueType], builtins.type
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     FLAT_MODE_UNKNOWN: _EnumFlatMode.ValueType
@@ -85,8 +84,7 @@ class _EnumPresetGroup:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumPresetGroupEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetGroup.ValueType],
-    builtins.type,
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetGroup.ValueType], builtins.type
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     PRESET_GROUP_ID_VIDEO: _EnumPresetGroup.ValueType
@@ -105,8 +103,7 @@ class _EnumPresetGroupIcon:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumPresetGroupIconEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetGroupIcon.ValueType],
-    builtins.type,
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetGroupIcon.ValueType], builtins.type
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     PRESET_GROUP_VIDEO_ICON_ID: _EnumPresetGroupIcon.ValueType
@@ -141,8 +138,7 @@ class _EnumPresetIcon:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumPresetIconEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetIcon.ValueType],
-    builtins.type,
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetIcon.ValueType], builtins.type
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     PRESET_ICON_VIDEO: _EnumPresetIcon.ValueType
@@ -327,8 +323,7 @@ class _EnumPresetTitle:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumPresetTitleEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetTitle.ValueType],
-    builtins.type,
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPresetTitle.ValueType], builtins.type
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     PRESET_TITLE_ACTIVITY: _EnumPresetTitle.ValueType
@@ -512,8 +507,7 @@ class NotifyPresetStatus(google.protobuf.message.Message):
 
     def __init__(self, *, preset_group_array: collections.abc.Iterable[global___PresetGroup] | None = ...) -> None: ...
     def ClearField(
-        self,
-        field_name: typing_extensions.Literal["preset_group_array", b"preset_group_array"],
+        self, field_name: typing_extensions.Literal["preset_group_array", b"preset_group_array"]
     ) -> None: ...
 
 global___NotifyPresetStatus = NotifyPresetStatus
@@ -670,23 +664,13 @@ class RequestCustomPresetUpdate(google.protobuf.message.Message):
     def HasField(
         self,
         field_name: typing_extensions.Literal[
-            "custom_name",
-            b"custom_name",
-            "icon_id",
-            b"icon_id",
-            "title_id",
-            b"title_id",
+            "custom_name", b"custom_name", "icon_id", b"icon_id", "title_id", b"title_id"
         ],
     ) -> builtins.bool: ...
     def ClearField(
         self,
         field_name: typing_extensions.Literal[
-            "custom_name",
-            b"custom_name",
-            "icon_id",
-            b"icon_id",
-            "title_id",
-            b"title_id",
+            "custom_name", b"custom_name", "icon_id", b"icon_id", "title_id", b"title_id"
         ],
     ) -> None: ...
 
@@ -708,9 +692,7 @@ class PresetGroup(google.protobuf.message.Message):
     "Preset Group ID"
 
     @property
-    def preset_array(
-        self,
-    ) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Preset]:
+    def preset_array(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Preset]:
         """Array of Presets contained in this Preset Group"""
     can_add_preset: builtins.bool
     "Is there room in the group to add additional Presets?"
@@ -733,8 +715,7 @@ class PresetGroup(google.protobuf.message.Message):
         mode_array: collections.abc.Iterable[global___EnumFlatMode.ValueType] | None = ...
     ) -> None: ...
     def HasField(
-        self,
-        field_name: typing_extensions.Literal["can_add_preset", b"can_add_preset", "icon", b"icon", "id", b"id"],
+        self, field_name: typing_extensions.Literal["can_add_preset", b"can_add_preset", "icon", b"icon", "id", b"id"]
     ) -> builtins.bool: ...
     def ClearField(
         self,
@@ -775,12 +756,10 @@ class PresetSetting(google.protobuf.message.Message):
         self, *, id: builtins.int | None = ..., value: builtins.int | None = ..., is_caption: builtins.bool | None = ...
     ) -> None: ...
     def HasField(
-        self,
-        field_name: typing_extensions.Literal["id", b"id", "is_caption", b"is_caption", "value", b"value"],
+        self, field_name: typing_extensions.Literal["id", b"id", "is_caption", b"is_caption", "value", b"value"]
     ) -> builtins.bool: ...
     def ClearField(
-        self,
-        field_name: typing_extensions.Literal["id", b"id", "is_caption", b"is_caption", "value", b"value"],
+        self, field_name: typing_extensions.Literal["id", b"id", "is_caption", b"is_caption", "value", b"value"]
     ) -> None: ...
 
 global___PresetSetting = PresetSetting

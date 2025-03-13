@@ -23,8 +23,7 @@ class _EnumCameraControlStatus:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumCameraControlStatusEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumCameraControlStatus.ValueType],
-    builtins.type,
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumCameraControlStatus.ValueType], builtins.type
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     CAMERA_IDLE: _EnumCameraControlStatus.ValueType
@@ -67,12 +66,10 @@ class RequestSetCameraControlStatus(google.protobuf.message.Message):
 
     def __init__(self, *, camera_control_status: global___EnumCameraControlStatus.ValueType | None = ...) -> None: ...
     def HasField(
-        self,
-        field_name: typing_extensions.Literal["camera_control_status", b"camera_control_status"],
+        self, field_name: typing_extensions.Literal["camera_control_status", b"camera_control_status"]
     ) -> builtins.bool: ...
     def ClearField(
-        self,
-        field_name: typing_extensions.Literal["camera_control_status", b"camera_control_status"],
+        self, field_name: typing_extensions.Literal["camera_control_status", b"camera_control_status"]
     ) -> None: ...
 
 global___RequestSetCameraControlStatus = RequestSetCameraControlStatus

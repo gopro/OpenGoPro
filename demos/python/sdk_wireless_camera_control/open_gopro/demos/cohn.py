@@ -18,6 +18,8 @@ console = Console()  # rich consoler printer
 
 MDNS_SERVICE = "_gopro-web._tcp.local."
 
+CURL_TEMPLATE = r"""curl -v -u 'gopro:{password}' --cacert cohn.crt 'https://{ip_addr}/gopro/camera/state'"""
+
 
 async def main(args: argparse.Namespace) -> None:
     logger = setup_logging(__name__, args.log)
@@ -39,6 +41,9 @@ async def main(args: argparse.Namespace) -> None:
         # Prove we can communicate via the COHN HTTP channel without a BLE or Wifi connection
         assert (await gopro.http_command.get_camera_state()).ok
         console.print("Successfully communicated via COHN!!")
+        console.print(
+            f"Sample curl command: {CURL_TEMPLATE.format(password=gopro._cohn.password, ip_addr=gopro._cohn.ip_address)}"  # type: ignore
+        )
 
     except Exception as e:  # pylint: disable = broad-except
         logger.error(repr(e))

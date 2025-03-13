@@ -21,12 +21,12 @@ from open_gopro.constants import (
     CmdId,
     ErrorCode,
     FeatureId,
-    GoProIntEnum,
-    GoProUUIDs,
+    GoProUUID,
     QueryCmdId,
     SettingId,
     StatusId,
 )
+from open_gopro.enum import GoProIntEnum
 from open_gopro.exceptions import ResponseParseError
 from open_gopro.parser_interface import GlobalParsers, Parser
 from open_gopro.proto import EnumResultGeneric
@@ -321,11 +321,11 @@ class BleRespBuilder(RespBuilder[bytearray]):
             return ActionId(packet[1])
         # Otherwise it's a TLV command
         except ValueError:
-            if uuid is GoProUUIDs.CQ_SETTINGS_RESP:
+            if uuid is GoProUUID.CQ_SETTINGS_RESP:
                 return SettingId(identifier)
-            if uuid is GoProUUIDs.CQ_QUERY_RESP:
+            if uuid is GoProUUID.CQ_QUERY_RESP:
                 return QueryCmdId(identifier)
-            if uuid in [GoProUUIDs.CQ_COMMAND_RESP, GoProUUIDs.CN_NET_MGMT_RESP]:
+            if uuid in [GoProUUID.CQ_COMMAND_RESP, GoProUUID.CN_NET_MGMT_RESP]:
                 return CmdId(identifier)
             return uuid
 
@@ -471,11 +471,15 @@ class BleRespBuilder(RespBuilder[bytearray]):
                 buf = buf[1:]
                 # Parse all parameters
                 while len(buf) != 0:
-                    param_id = query_type(buf[0])  # type: ignore
                     param_len = buf[1]
+                    try:
+                        param_id = query_type(buf[0])  # type: ignore
+                    except ValueError:
+                        # We don't handle this entity. Ensure to advance past the value.
+                        buf = buf[2 + param_len :]
+                        continue
                     buf = buf[2:]
-                    # Special case where we register for a push notification for something that does not yet
-                    # have a value
+                    # Special case where we register for a push notification for something that does not yet have a value
                     if param_len == 0:
                         camera_state[param_id] = []
                         continue

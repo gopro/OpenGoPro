@@ -1,0 +1,32 @@
+[EnumCOHNStatus]
+scope = "public"
+
+[EnumCOHNNetworkState]
+scope = "public"
+
+[EnumFlatMode]
+scope = "public"
+
+[EnumPresetGroup]
+scope = "public"
+
+[EnumPresetGroupIcon]
+scope = "public"
+
+[EnumPresetIcon]
+scope = "public"
+
+[EnumPresetTitle]
+scope = "public"
+
+[NotifyPresetStatus]
+scope = "public"
+
+[Preset]
+scope = "public"
+
+[PresetGroup]
+scope = "public"
+
+[PresetSetting]
+scope = "public"

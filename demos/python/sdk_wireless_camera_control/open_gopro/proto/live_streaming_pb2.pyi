@@ -25,8 +25,7 @@ class _EnumLens:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumLensEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumLens.ValueType],
-    builtins.type,
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumLens.ValueType], builtins.type
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     LENS_WIDE: _EnumLens.ValueType
@@ -45,8 +44,7 @@ class _EnumLiveStreamError:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumLiveStreamErrorEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumLiveStreamError.ValueType],
-    builtins.type,
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumLiveStreamError.ValueType], builtins.type
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     LIVE_STREAM_ERROR_NONE: _EnumLiveStreamError.ValueType
@@ -111,8 +109,7 @@ class _EnumLiveStreamStatus:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumLiveStreamStatusEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumLiveStreamStatus.ValueType],
-    builtins.type,
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumLiveStreamStatus.ValueType], builtins.type
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     LIVE_STREAM_STATE_IDLE: _EnumLiveStreamStatus.ValueType
@@ -157,8 +154,7 @@ class _EnumRegisterLiveStreamStatus:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumRegisterLiveStreamStatusEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumRegisterLiveStreamStatus.ValueType],
-    builtins.type,
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumRegisterLiveStreamStatus.ValueType], builtins.type
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     REGISTER_LIVE_STREAM_STATUS_STATUS: _EnumRegisterLiveStreamStatus.ValueType
@@ -167,8 +163,7 @@ class _EnumRegisterLiveStreamStatusEnumTypeWrapper(
     REGISTER_LIVE_STREAM_STATUS_BITRATE: _EnumRegisterLiveStreamStatus.ValueType
 
 class EnumRegisterLiveStreamStatus(
-    _EnumRegisterLiveStreamStatus,
-    metaclass=_EnumRegisterLiveStreamStatusEnumTypeWrapper,
+    _EnumRegisterLiveStreamStatus, metaclass=_EnumRegisterLiveStreamStatusEnumTypeWrapper
 ): ...
 
 REGISTER_LIVE_STREAM_STATUS_STATUS: EnumRegisterLiveStreamStatus.ValueType
@@ -182,8 +177,7 @@ class _EnumWindowSize:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumWindowSizeEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumWindowSize.ValueType],
-    builtins.type,
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumWindowSize.ValueType], builtins.type
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     WINDOW_SIZE_480: _EnumWindowSize.ValueType

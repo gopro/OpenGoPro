@@ -10,13 +10,13 @@ import logging
 from typing import Any, Callable, Final
 
 import open_gopro.wifi.mdns_scanner  # Imported this way for pytest monkeypatching
+from open_gopro import constants
 from open_gopro.api import (
     BleCommands,
     BleSettings,
     BleStatuses,
     HttpCommands,
     HttpSettings,
-    Params,
     WiredApi,
 )
 from open_gopro.communicator_interface import GoProWiredInterface, Message, MessageRules
@@ -50,14 +50,12 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
     It can be used via context manager:
 
     >>> async with WiredGoPro() as gopro:
-    >>>     print("Yay! I'm connected via USB, opened, and ready to send / get data now!")
     >>>     # Send some messages now
 
     Or without:
 
     >>> gopro = WiredGoPro()
     >>> await gopro.open()
-    >>> print("Yay! I'm connected via USB, opened, and ready to send / get data now!")
     >>> # Send some messages now
 
     Args:
@@ -105,14 +103,14 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
                         raise e
                     logger.warning(f"Failed to discover GoPro. Retrying #{retry}")
 
-        await self.http_command.wired_usb_control(control=Params.Toggle.ENABLE)
+        await self.http_command.wired_usb_control(control=constants.Toggle.ENABLE)
         # Find and configure API version
         if (version := (await self.http_command.get_open_gopro_api_version()).data) != self.version:
             raise InvalidOpenGoProVersion(version)
         logger.info(f"Using Open GoPro API version {version}")
 
         # Wait for initial ready state
-        await self._wait_for_state({StatusId.ENCODING: False, StatusId.SYSTEM_BUSY: False})
+        await self._wait_for_state({StatusId.ENCODING: False, StatusId.BUSY: False})
 
         self._open = True
 
@@ -128,7 +126,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         """
         current_state = (await self.http_command.get_camera_state()).data
         self._encoding = bool(current_state[StatusId.ENCODING])
-        self._busy = bool(current_state[StatusId.SYSTEM_BUSY])
+        self._busy = bool(current_state[StatusId.BUSY])
         return not (self._encoding or self._busy)
 
     @property
@@ -295,7 +293,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         if self._should_maintain_state and self.is_open and not rules.is_fastpass(**kwargs):
             # Wait for not encoding and not busy
             logger.trace("Waiting for camera to be ready to receive messages.")  # type: ignore
-            await self._wait_for_state({StatusId.ENCODING: False, StatusId.SYSTEM_BUSY: False})
+            await self._wait_for_state({StatusId.ENCODING: False, StatusId.BUSY: False})
             logger.trace("Camera is ready to receive messages")  # type: ignore
             response = await wrapped(message, **kwargs)
         else:  # Either we're not maintaining state, we're not opened yet, or this is a fastpass message

@@ -9,8 +9,11 @@ from typing import Final
 
 from open_gopro.communicator_interface import GoProHttp, GoProWirelessInterface
 
-from .ble_commands import BleAsyncResponses, BleCommands, BleSettings, BleStatuses
-from .http_commands import HttpCommands, HttpSettings
+from .ble_commands import BleAsyncResponses, BleCommands
+from .ble_settings import BleSettings
+from .ble_statuses import BleStatuses
+from .http_commands import HttpCommands
+from .http_settings import HttpSettings
 
 
 class WirelessApi:

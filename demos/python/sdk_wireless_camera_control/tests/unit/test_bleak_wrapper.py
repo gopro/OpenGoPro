@@ -11,7 +11,7 @@ import pytest
 
 from open_gopro.ble import BleUUID
 from open_gopro.ble.adapters.bleak_wrapper import BleakWrapperController
-from open_gopro.constants import GoProUUIDs
+from open_gopro.constants import GoProUUID
 from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
 
 
@@ -53,7 +53,7 @@ async def test_scan_success(mock_bleak_wrapper: BleakWrapperController, monkeypa
         mock_bleak_wrapper.scan(
             token=re.compile(r"GoPro [A-Z0-9]{4}"),
             timeout=1,
-            service_uuids=[GoProUUIDs.CQ_QUERY],
+            service_uuids=[GoProUUID.CQ_QUERY],
         ),
         provide_device(),
     )
@@ -94,7 +94,7 @@ async def test_scan_wrong_devices_found(mock_bleak_wrapper: BleakWrapperControll
             mock_bleak_wrapper.scan(
                 token=re.compile(r"something_else"),
                 timeout=1,
-                service_uuids=[GoProUUIDs.CQ_QUERY],
+                service_uuids=[GoProUUID.CQ_QUERY],
             ),
             provide_device(),
         )
@@ -118,7 +118,7 @@ async def test_scan_timeout(mock_bleak_wrapper: BleakWrapperController, monkeypa
         await mock_bleak_wrapper.scan(
             token=re.compile(r"something_else"),
             timeout=1,
-            service_uuids=[GoProUUIDs.CQ_QUERY],
+            service_uuids=[GoProUUID.CQ_QUERY],
         )
 
 
@@ -191,14 +191,14 @@ async def test_discovery(mock_bleak_wrapper: BleakWrapperController):
     @dataclass
     class MockDescriptor:
         handle: int = 0
-        uuid: BleUUID = GoProUUIDs.ACC_APPEARANCE
+        uuid: BleUUID = GoProUUID.ACC_APPEARANCE
         description: str = "descriptor"
 
     @dataclass
     class MockChar:
         descriptors: list[MockDescriptor] = field(default_factory=lambda: [MockDescriptor()])
         handle: int = 1
-        uuid: BleUUID = GoProUUIDs.ACC_CENTRAL_ADDR_RES
+        uuid: BleUUID = GoProUUID.ACC_CENTRAL_ADDR_RES
         properties: list[str] = field(default_factory=lambda: ["broadcast", "read"])
         description: str = "characteristic"
 
@@ -206,7 +206,7 @@ async def test_discovery(mock_bleak_wrapper: BleakWrapperController):
     class MockService:
         characteristics: list[MockChar] = field(default_factory=lambda: [MockChar()])
         handle: int = 2
-        uuid: BleUUID = GoProUUIDs.ACC_DEVICE_NAME
+        uuid: BleUUID = GoProUUID.ACC_DEVICE_NAME
         description: str = "service"
 
     @dataclass
@@ -216,7 +216,7 @@ async def test_discovery(mock_bleak_wrapper: BleakWrapperController):
         async def read_gatt_descriptor(self, *args):
             return 0
 
-    gatt_db = await mock_bleak_wrapper.discover_chars(MockBleakClient(), uuids=GoProUUIDs)
+    gatt_db = await mock_bleak_wrapper.discover_chars(MockBleakClient(), uuids=GoProUUID)
     assert len(gatt_db.services) == 1
     assert len(gatt_db.characteristics) == 1
     assert len(list(gatt_db.characteristics.values())[0].descriptors) == 1

@@ -18,7 +18,6 @@ from open_gopro.logger import Logger
 
 Logger.addLoggingLevel("TRACE", logging.DEBUG - 5)
 
-from open_gopro.api import Params
 from open_gopro.gopro_wired import WiredGoPro
 from open_gopro.gopro_wireless import WirelessGoPro
 from open_gopro.models import GoProResp

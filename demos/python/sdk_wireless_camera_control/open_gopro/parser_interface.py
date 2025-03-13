@@ -218,10 +218,10 @@ class GlobalParsers:
     def get_query_container(cls, identifier: ResponseType) -> Callable | None:
         """Attempt to get a callable that will translate an input value to the ID-appropriate value.
 
-        For example, _get_query_container(SettingId.RESOLUTION) will return
-        :py:class:`open_gopro.api.params.Resolution`
+        For example, _get_query_container(SettingId.VIDEO_RESOLUTION) will return
+        :py:class:`open_gopro.constants.settings.VideoResolution`
 
-        As another example, _get_query_container(StatusId.TURBO_MODE) will return bool()
+        As another example, _get_query_container(StatusId.TURBO_TRANSFER) will return bool()
 
         Note! Not all ID's are currently parsed so None will be returned if the container does not exist
 

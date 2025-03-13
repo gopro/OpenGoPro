@@ -3,7 +3,7 @@
 ## What is this?
 
 This is a simple [NGINX](https://www.nginx.com/) docker server to
-append [CORS headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) to HTTP responses from a GoPro camera.
+remove [CORS headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) from HTTP requests to a GoPro camera.
 This proxy accepts input on port 8082 and forwards it to `http:10.5.5.9:8080`
 
 ## How do I use it?

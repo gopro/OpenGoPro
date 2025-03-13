@@ -10,7 +10,7 @@ import logging
 from typing import Any, Callable, TypeVar, cast
 
 import google.protobuf.json_format
-from construct import Construct, Flag, Int16sb, Int16ub
+from construct import Construct, Flag, FormatFieldError, Int16sb, Int16ub
 from google.protobuf import descriptor
 from google.protobuf.json_format import MessageToDict as ProtobufToDict
 from pydantic import BaseModel
@@ -97,18 +97,15 @@ class JsonParsers:
             # Parse status and settings values into nice human readable things
             for name, id_map in [("status", StatusId), ("settings", SettingId)]:
                 for k, v in data[name].items():
-                    identifier = cast(ResponseType, id_map(int(k)))
                     try:
+                        identifier = cast(ResponseType, id_map(int(k)))
                         if not (parser_builder := GlobalParsers.get_query_container(identifier)):
                             parsed[identifier] = v
                         else:
                             parsed[identifier] = parser_builder(v)
-                    except ValueError:
-                        # This is the case where we receive a value that is not defined in our params.
-                        # This shouldn't happen and is either a firmware bug or means the documentation needs to
-                        # be updated. However, it isn't functionally critical.
-                        logger.warning(f"{str(identifier)} does not contain a value {v}")
-                        parsed[identifier] = v
+                    except (ValueError, FormatFieldError) as e:
+                        logger.trace(f"Error Parsing {name}::{k}, value: {v} ==> {repr(e)}")  # type: ignore
+                        continue
             return parsed
 
 

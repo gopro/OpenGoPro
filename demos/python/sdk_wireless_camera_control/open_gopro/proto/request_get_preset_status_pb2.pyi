@@ -25,8 +25,7 @@ class _EnumRegisterPresetStatus:
     V: typing_extensions.TypeAlias = ValueType
 
 class _EnumRegisterPresetStatusEnumTypeWrapper(
-    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumRegisterPresetStatus.ValueType],
-    builtins.type,
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumRegisterPresetStatus.ValueType], builtins.type
 ):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     REGISTER_PRESET_STATUS_PRESET: _EnumRegisterPresetStatus.ValueType
@@ -83,10 +82,7 @@ class RequestGetPresetStatus(google.protobuf.message.Message):
     def ClearField(
         self,
         field_name: typing_extensions.Literal[
-            "register_preset_status",
-            b"register_preset_status",
-            "unregister_preset_status",
-            b"unregister_preset_status",
+            "register_preset_status", b"register_preset_status", "unregister_preset_status", b"unregister_preset_status"
         ],
     ) -> None: ...
 

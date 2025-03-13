@@ -3,9 +3,10 @@
 
 """Top level API module definition"""
 
-from . import params as Params
 from .api import WiredApi, WirelessApi
-from .ble_commands import BleCommands, BleSettings, BleStatuses
+from .ble_commands import BleCommands
+from .ble_settings import BleSettings
+from .ble_statuses import BleStatuses
 from .builders import (
     BleAsyncResponse,
     BleProtoCommand,
@@ -16,7 +17,8 @@ from .builders import (
     HttpSetting,
     RegisterUnregisterAll,
 )
-from .http_commands import HttpCommands, HttpSettings
+from .http_commands import HttpCommands
+from .http_settings import HttpSettings
 
 # We need to ensure the API instantiated so that all parsers are set up.
 WirelessApi(None)  # type: ignore

@@ -1,3 +1,5 @@
+**/*.vscode/
+
 **/*.crt
 /.build
 

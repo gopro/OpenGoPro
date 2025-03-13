@@ -1,0 +1,53 @@
+# kotlin_sdk_test.yml/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed, Sep  1, 2021  5:05:35 PM
+
+name: Kotlin SDK Unit Testing
+
+on:
+    pull_request:
+        branches: [main]
+        paths:
+            - 'demos/kotlin/kmp_sdk/**'
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    build_and_test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout source branch
+              uses: actions/checkout@v4
+
+            - uses: actions/setup-java@v4
+              with:
+                  distribution: 'temurin'
+                  java-version: '17'
+                  cache: gradle
+                  cache-dependency-path: demos/kotlin/kmp_sdk
+
+            # TODO currently just formatting. Need to go through lint results (gradlew lint)
+            - name: Lint
+              working-directory: demos/kotlin/kmp_sdk
+              shell: bash
+              run: |
+                  ./gradlew ktfmtCheck
+
+            - name: Validate Builds
+              working-directory: demos/kotlin/kmp_sdk
+              shell: bash
+              run: |
+                  ./gradlew :composeApp:assembleDebug
+                  ./gradlew :simplifiedApp:assembleDebug
+
+            - name: Run Unit Tests
+              working-directory: demos/kotlin/kmp_sdk
+              shell: bash
+              run: ./gradlew :wsdk:testDebugUnitTest
+
+            - name: Validate Doc Build
+              working-directory: demos/kotlin/kmp_sdk
+              shell: bash
+              run: ./gradlew dokkaHtml

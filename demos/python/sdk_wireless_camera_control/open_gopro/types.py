@@ -10,14 +10,8 @@ from typing import Any, Callable, Coroutine, TypeAlias
 import construct
 from google.protobuf.message import Message
 
-from open_gopro.constants import (
-    ActionId,
-    BleUUID,
-    CmdId,
-    QueryCmdId,
-    SettingId,
-    StatusId,
-)
+from open_gopro.ble.services import BleUUID
+from open_gopro.constants import ActionId, CmdId, QueryCmdId, SettingId, StatusId
 
 # Note! We need to use Union here for Python 3.9 support
 

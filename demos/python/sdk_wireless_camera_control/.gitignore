@@ -19,6 +19,7 @@ __pycache__/
 
 # Output
 *.csv
+!/thirdPartyDependencies.csv
 
 # C extensions
 *.so
