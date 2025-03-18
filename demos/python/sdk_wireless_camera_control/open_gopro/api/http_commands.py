@@ -17,12 +17,12 @@ from open_gopro.api.builders import (
     http_get_json_command,
     http_put_json_command,
 )
-from open_gopro.api.parsers import JsonParsers
 from open_gopro.communicator_interface import HttpMessage, HttpMessages, MessageRules
 from open_gopro.models import CameraInfo, MediaList, MediaMetadata, MediaPath
 from open_gopro.models.general import WebcamResponse
 from open_gopro.models.response import GoProResp
 from open_gopro.parser_interface import Parser
+from open_gopro.parsers import JsonParsers
 from open_gopro.types import CameraState, JsonDict
 
 logger = logging.getLogger(__name__)

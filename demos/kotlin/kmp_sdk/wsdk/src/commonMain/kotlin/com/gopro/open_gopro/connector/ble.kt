@@ -8,12 +8,12 @@ import com.gopro.open_gopro.ConnectionRequestContext
 import com.gopro.open_gopro.GoProId
 import com.gopro.open_gopro.NetworkType
 import com.gopro.open_gopro.ScanResult
+import com.gopro.open_gopro.domain.communicator.bleCommunicator.GpBleAdvertisement
 import com.gopro.open_gopro.domain.connector.IConnector
 import com.gopro.open_gopro.domain.network.IBleApi
 import com.gopro.open_gopro.entity.network.ble.BleAdvertisement
 import com.gopro.open_gopro.entity.network.ble.GpUuid
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
@@ -37,10 +37,18 @@ internal class GpBleConnector(private val bleApi: IBleApi) :
   override suspend fun scan(): Result<Flow<ScanResult.Ble>> =
       bleApi.scan(setOf(GpUuid.S_CONTROL_QUERY.toUuid())).map { flow ->
         flow
-            .filter { it.name != null }
             .onStart { idAdvMap.clear() }
             .onEach { idAdvMap[GoProId(it.name!!.takeLast(4))] = it }
-            .map { ScanResult.Ble(GoProId(it.name!!.takeLast(4)), it.id, it.name ?: "") }
+            .map {
+              val serialNumber =
+                  GpBleAdvertisement.Builder()
+                      .name(it.name)
+                      .serviceData(it.service?.get(GpUuid.S_CONTROL_QUERY.toUuid()))
+                      .manufacturerData(it.manufacturerData)
+                      .build()
+                      .serialNumber
+              ScanResult.Ble(GoProId(serialNumber.takeLast(4)), it.id, it.name ?: "")
+            }
       }
 
   override suspend fun connect(

@@ -14,7 +14,6 @@ from typing import Any, Final, Generic, TypeVar
 
 import requests
 
-from open_gopro.api.parsers import JsonParsers
 from open_gopro.ble import BleUUID
 from open_gopro.constants import (
     ActionId,
@@ -29,6 +28,7 @@ from open_gopro.constants import (
 from open_gopro.enum import GoProIntEnum
 from open_gopro.exceptions import ResponseParseError
 from open_gopro.parser_interface import GlobalParsers, Parser
+from open_gopro.parsers import JsonParsers
 from open_gopro.proto import EnumResultGeneric
 from open_gopro.types import CameraState, JsonDict, ResponseType
 from open_gopro.util import pretty_print

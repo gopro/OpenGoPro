@@ -1,7 +1,7 @@
 # mdns_scanner.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Tue Aug  8 18:10:56 UTC 2023
 
-"""MDNS utility functions"""
+"""GoPro-independent MDNS utility functions"""
 
 from __future__ import annotations
 
@@ -15,6 +15,7 @@ import zeroconf
 import zeroconf.asyncio
 
 from open_gopro.exceptions import FailedToFindDevice
+from open_gopro.models.network_scan_responses import DnsScanResponse
 
 logger = logging.getLogger(__name__)
 
@@ -51,7 +52,7 @@ class ZeroconfListener(zeroconf.ServiceListener):
         """
 
 
-async def find_first_ip_addr(service: str, timeout: int = 5) -> str:
+async def find_first_ip_addr(service: str, timeout: int = 5) -> DnsScanResponse:
     """Query the mDNS server to find a an IP address matching a service
 
     The first IP address matching the service will be returned
@@ -64,7 +65,7 @@ async def find_first_ip_addr(service: str, timeout: int = 5) -> str:
         FailedToFindDevice: search timed out
 
     Returns:
-        str: First discovered IP address matching service
+        DnsScanResponse: First response matching service
     """
     logger.info(f"Querying mDNS to find {service}...")
     listener = ZeroconfListener()
@@ -75,7 +76,7 @@ async def find_first_ip_addr(service: str, timeout: int = 5) -> str:
             async with zeroconf.asyncio.AsyncZeroconf(unicast=True) as azc:
                 if info := await azc.async_get_service_info(service, name):
                     ip_addr = info.parsed_addresses()[0]
-                    return ip_addr
+                    return DnsScanResponse(service=service, ip_addr=ip_addr, name=name)
                 raise FailedToFindDevice()
         except Exception as e:
             raise FailedToFindDevice() from e
