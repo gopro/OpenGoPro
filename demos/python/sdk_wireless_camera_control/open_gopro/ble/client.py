@@ -132,7 +132,7 @@ class BleClient(Generic[BleHandle, BleDevice]):
             await self._controller.disconnect(self._handle)
             self._handle = None
         else:
-            logger.debug("BLE already disconnected")
+            logger.warning("BLE already disconnected")
 
     async def read(self, uuid: BleUUID) -> bytes:
         """Read byte data from a characteristic (identified by BleUUID)
