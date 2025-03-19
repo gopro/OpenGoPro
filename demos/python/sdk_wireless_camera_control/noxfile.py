@@ -86,7 +86,7 @@ def docs(session) -> None:
         "docs",
         "docs/build",
         env={
-            "LANG": "en_us",
+            "LANG": "en_US.UTF-8",
             "LC_ALL": "en_US.UTF-8",
             "LC_CTYPE": "en_US.UTF-8",
         },
