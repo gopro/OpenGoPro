@@ -61,8 +61,7 @@ jobs:
             - name: Unit Testing for all cases
               working-directory: ./demos/python/sdk_wireless_camera_control/
               shell: bash
-              run: |
-                LANG=en_US nox -p ${{ matrix.python-version }} -s tests
+              run: LANG=en_US nox -p ${{ matrix.python-version }} -s tests
 
             # Only test docs with latest Python on ubuntu since we need graphviz
             - name: Full linting only on ubuntu with latest python
