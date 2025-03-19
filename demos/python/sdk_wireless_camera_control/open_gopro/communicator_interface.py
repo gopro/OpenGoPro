@@ -330,7 +330,7 @@ class GoProWirelessInterface(GoProBle, GoProWifi, Generic[BleDevice, BleHandle])
 
     Args:
         ble_controller (BLEController): BLE controller instance
-        wifi_controller (WifiController | None): Wifi controller instance
+        wifi_controller (WifiController): Wifi controller instance
         disconnected_cb (DisconnectHandlerType): callback for BLE disconnects
         notification_cb (NotiHandlerType): callback for BLE received notifications
         target (Pattern | BleDevice): BLE device to search for
@@ -339,15 +339,14 @@ class GoProWirelessInterface(GoProBle, GoProWifi, Generic[BleDevice, BleHandle])
     def __init__(
         self,
         ble_controller: BLEController,
-        wifi_controller: WifiController | None,
+        wifi_controller: WifiController,
         disconnected_cb: DisconnectHandlerType,
         notification_cb: NotiHandlerType,
         target: Pattern | BleDevice,
     ) -> None:
         # Initialize GoPro Communication Client
         GoProBle.__init__(self, ble_controller, disconnected_cb, notification_cb, target)
-        if wifi_controller:
-            GoProWifi.__init__(self, wifi_controller)
+        GoProWifi.__init__(self, wifi_controller)
 
 
 ParserType = TypeVar("ParserType", BytesParser, JsonParser)
