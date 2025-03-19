@@ -7,10 +7,31 @@ from datetime import date
 from open_gopro import WirelessGoPro
 
 from sphinx.ext.intersphinx import missing_reference
+from open_gopro.wifi.controller import SsidState, WifiController
 
-import open_gopro.models
 
-gopro = WirelessGoPro(enable_wifi=False)
+class MockWifiController(WifiController):
+    def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
+        return True
+
+    def disconnect(self) -> bool:
+        return True
+
+    def current(self) -> tuple[str | None, SsidState]:
+        return ("mocked", SsidState.CONNECTED)
+
+    def available_interfaces(self) -> list[str]:
+        return []
+
+    def power(self, power: bool) -> bool:
+        return True
+
+    @property
+    def is_on(self) -> bool:
+        return True
+
+
+gopro = WirelessGoPro(enable_wifi=False, wifi_adapter=MockWifiController)
 
 project = "Open GoPro Python SDK"
 copyright = f"{date.today().year}, GoPro Inc."

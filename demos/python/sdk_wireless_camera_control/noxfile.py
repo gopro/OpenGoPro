@@ -80,16 +80,6 @@ def docs(session) -> None:
         "autodoc-pydantic",
         "pydoclint",
     )
-    session.run(
-        "sphinx-build",
-        "-W",
-        "docs",
-        "docs/build",
-        env={
-            "LANG": "en_US.UTF-8",
-            "LC_ALL": "en_US.UTF-8",
-            "LC_CTYPE": "en_US.UTF-8",
-        },
-    )
+    session.run("sphinx-build", "-W", "docs", "docs/build")
     # Clean up for Jekyll consumption
     session.run("rm", "-rf", "docs/build/.doctrees", "/docs/build/_sources", "/docs/build/_static/fonts", external=True)
