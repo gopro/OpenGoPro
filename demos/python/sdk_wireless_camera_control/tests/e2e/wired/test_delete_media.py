@@ -14,6 +14,7 @@ from open_gopro.models import MediaPath
 @pytest.fixture(scope="function")
 async def gopro() -> AsyncGenerator[WiredGoPro, None]:
     async with WiredGoPro() as gopro:
+        assert (await gopro.http_setting.controls.set(constants.settings.Controls.PRO)).ok
         assert (await gopro.http_command.delete_all()).ok
         yield gopro
 
@@ -52,12 +53,15 @@ async def create_timelapse_photo(gopro: WiredGoPro) -> MediaPath:
     # Set a "timelapse" photo preset
     presets = (await gopro.http_command.get_preset_status()).data
     timelapse_presets = next(group for group in presets["presetGroupArray"] if "timelapse" in group["id"].lower())
+    # Get to timelapse preset group
     assert (await gopro.http_command.load_preset_group(group=proto.EnumPresetGroup.PRESET_GROUP_ID_TIMELAPSE)).ok
-    assert (await gopro.http_setting.media_format.set(constants.MediaFormat.TIME_LAPSE_PHOTO)).ok
-    lapse_id = next(preset for preset in timelapse_presets["presetArray"] if "lapse_photo" in preset["mode"].lower())[
-        "id"
-    ]
-    assert (await gopro.http_command.load_preset(preset=lapse_id)).ok
+    # Get to a timelapse preset
+    timelapse_preset = next(
+        preset for preset in timelapse_presets["presetArray"] if "time_lapse" in preset["mode"].lower()
+    )
+    assert (await gopro.http_command.load_preset(preset=timelapse_preset["id"])).ok
+    # Set the format to photo to get a "time lapse photo"
+    assert (await gopro.http_setting.media_format.set(constants.settings.MediaFormat.TIME_LAPSE_PHOTO)).ok
 
     # Take a timelapse
     assert (await gopro.http_command.set_shutter(shutter=constants.Toggle.ENABLE)).ok
@@ -71,17 +75,7 @@ async def create_timelapse_photo(gopro: WiredGoPro) -> MediaPath:
 
 
 @pytest.mark.timeout(60)
-class TestOpenGoPro:
-    """
-    Test already-existing but not yet documented open gopro endpoints.
-
-    Results:
-
-    - the delete group endpoint does not exist
-    - the delete file endpoint succeeds in deleting both single and grouped (burst) files.
-
-    """
-
+class TestMediaDeletion:
     @pytest.mark.asyncio
     async def test_delete_file_deletes_single_file(self, gopro: WiredGoPro):
         # GIVEN
