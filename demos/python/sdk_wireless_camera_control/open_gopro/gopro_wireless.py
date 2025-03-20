@@ -320,7 +320,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                 self._open = True
                 return
 
-            except Exception as e:
+            except Exception as e:  # pylint: disable=broad-exception-caught
                 logger.error(f"Error while opening: {e}")
                 await self.close()
                 if retry > RETRIES:
@@ -577,7 +577,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         """Task to periodically send the keep alive message via BLE."""
         while True:
             if self.is_ble_connected:
-                if not (await self.keep_alive()):
+                if not await self.keep_alive():
                     logger.error("Failed to send keep alive")
             await asyncio.sleep(self._keep_alive_interval)
 
