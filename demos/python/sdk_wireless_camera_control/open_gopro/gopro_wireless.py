@@ -13,7 +13,7 @@ from collections import defaultdict
 from copy import deepcopy
 from typing import Any, Callable, Final, Pattern
 
-from open_gopro import constants, proto
+from open_gopro import proto
 from open_gopro.api import (
     BleCommands,
     BleSettings,
@@ -52,8 +52,6 @@ from open_gopro.util import SnapshotQueue, get_current_dst_aware_time, pretty_pr
 from open_gopro.wifi import WifiCli
 
 logger = logging.getLogger(__name__)
-
-KEEP_ALIVE_INTERVAL: Final = 28
 
 
 class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
@@ -138,6 +136,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         wifi_adapter = kwargs.get("wifi_adapter", WifiCli)
         # Set up API delegate
         self._wireless_api = WirelessApi(self)
+        self._keep_alive_interval = kwargs.get("keep_alive_interval", 28)
 
         try:
             # Initialize GoPro Communication Client
@@ -325,7 +324,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                 logger.error(f"Error while opening: {e}")
                 await self.close()
                 if retry > RETRIES:
-                    logger.critical(f"Retrying complete connection sequence #{retry}")
                     continue
                 raise e
 
@@ -481,7 +479,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         Returns:
             bool: True if it succeeded,. False otherwise
         """
-        return (await self.ble_setting.led.set(constants.LED.BLE_KEEP_ALIVE)).ok  # type: ignore
+        return (await self.ble_setting.led.set(0x66)).ok  # type: ignore
 
     @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
     async def connect_to_access_point(self, ssid: str, password: str) -> bool:
@@ -579,7 +577,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     async def _periodic_keep_alive(self) -> None:
         """Task to periodically send the keep alive message via BLE."""
         while True:
-            await asyncio.sleep(KEEP_ALIVE_INTERVAL)
+            await asyncio.sleep(self._keep_alive_interval)
             if self.is_ble_connected:
                 await self.keep_alive()
 

@@ -13,7 +13,6 @@ import pytest
 import requests
 import requests_mock
 
-from open_gopro import constants
 from open_gopro.communicator_interface import HttpMessage
 from open_gopro.constants import ErrorCode, QueryCmdId, SettingId, StatusId, settings
 from open_gopro.exceptions import GoProNotOpened, ResponseTimeout
@@ -21,10 +20,12 @@ from open_gopro.gopro_wireless import WirelessGoPro
 from open_gopro.models.response import GlobalParsers, GoProResp
 from open_gopro.types import UpdateType
 from tests import mock_good_response
+from tests.mocks import MockGoProMaintainBle
 
 
+@pytest.mark.timeout(30)
 @pytest.mark.asyncio
-async def test_lifecycle(mock_wireless_gopro: WirelessGoPro):
+async def test_lifecycle(mock_wireless_gopro: MockGoProMaintainBle):
     async def set_disconnect_event():
         mock_wireless_gopro._disconnect_handler(None)
 
@@ -54,6 +55,9 @@ async def test_lifecycle(mock_wireless_gopro: WirelessGoPro):
 
     assert results[0].ok
     assert await mock_wireless_gopro.ble_command.get_open_gopro_api_version()
+
+    # Ensure keep alive was received and is correct
+    assert (await mock_wireless_gopro.generic_spy.get())[0] == 0x66
 
     # Mock closing
     asyncio.gather(mock_wireless_gopro.close(), set_disconnect_event())
