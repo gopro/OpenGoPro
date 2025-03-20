@@ -13,7 +13,7 @@ from collections import defaultdict
 from copy import deepcopy
 from typing import Any, Callable, Final, Pattern
 
-from open_gopro import constants, proto
+from open_gopro import proto
 from open_gopro.api import (
     BleCommands,
     BleSettings,
@@ -52,8 +52,6 @@ from open_gopro.util import SnapshotQueue, get_current_dst_aware_time, pretty_pr
 from open_gopro.wifi import WifiCli
 
 logger = logging.getLogger(__name__)
-
-KEEP_ALIVE_INTERVAL: Final = 28
 
 
 class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
@@ -138,6 +136,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         wifi_adapter = kwargs.get("wifi_adapter", WifiCli)
         # Set up API delegate
         self._wireless_api = WirelessApi(self)
+        self._keep_alive_interval = kwargs.get("keep_alive_interval", 28)
 
         try:
             # Initialize GoPro Communication Client
@@ -295,33 +294,37 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             self._busy = True
             self._encoding_started = asyncio.Event()
 
-        try:
-            await self._open_ble(timeout, retries)
+        RETRIES = 5
+        for retry in range(RETRIES):
+            try:
+                await self._open_ble(timeout, retries)
 
-            # Set current dst-aware time. Don't assert on success since some old cameras don't support this command.
-            await self.ble_command.set_date_time_tz_dst(
-                **dict(zip(("date_time", "tz_offset", "is_dst"), get_current_dst_aware_time()))
-            )
+                # Set current dst-aware time. Don't assert on success since some old cameras don't support this command.
+                await self.ble_command.set_date_time_tz_dst(
+                    **dict(zip(("date_time", "tz_offset", "is_dst"), get_current_dst_aware_time()))
+                )
 
-            # Find and configure API version
-            version = (await self.ble_command.get_open_gopro_api_version()).data
-            if version != self.version:
-                raise InvalidOpenGoProVersion(version)
-            logger.info(f"Using Open GoPro API version {version}")
+                # Find and configure API version
+                version = (await self.ble_command.get_open_gopro_api_version()).data
+                if version != self.version:
+                    raise InvalidOpenGoProVersion(version)
+                logger.info(f"Using Open GoPro API version {version}")
 
-            # Establish Wifi connection if desired
-            if self._should_enable_wifi:
-                await self._open_wifi(timeout, retries)
-            else:
-                # Otherwise, turn off Wifi
-                logger.info("Turning off the camera's Wifi radio")
-                await self.ble_command.enable_wifi_ap(enable=False)
-            self._open = True
+                # Establish Wifi connection if desired
+                if self._should_enable_wifi:
+                    await self._open_wifi(timeout, retries)
+                else:
+                    # Otherwise, turn off Wifi
+                    logger.info("Turning off the camera's Wifi radio")
+                    await self.ble_command.enable_wifi_ap(enable=False)
+                self._open = True
+                return
 
-        except Exception as e:
-            logger.error(f"Error while opening: {e}")
-            await self.close()
-            raise e
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error(f"Error while opening: {e}")
+                await self.close()
+                if retry > RETRIES:
+                    raise e
 
     async def close(self) -> None:
         """Safely stop the GoPro instance.
@@ -475,7 +478,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         Returns:
             bool: True if it succeeded,. False otherwise
         """
-        return (await self.ble_setting.led.set(constants.LED.BLE_KEEP_ALIVE)).ok  # type: ignore
+        return (await self.ble_setting.led.set(66)).ok  # type: ignore
 
     @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
     async def connect_to_access_point(self, ssid: str, password: str) -> bool:
@@ -573,9 +576,10 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     async def _periodic_keep_alive(self) -> None:
         """Task to periodically send the keep alive message via BLE."""
         while True:
-            await asyncio.sleep(KEEP_ALIVE_INTERVAL)
             if self.is_ble_connected:
-                await self.keep_alive()
+                if not await self.keep_alive():
+                    logger.error("Failed to send keep alive")
+            await asyncio.sleep(self._keep_alive_interval)
 
     async def _open_ble(self, timeout: int = 10, retries: int = 5) -> None:
         """Connect the instance to a device via BLE.
@@ -588,6 +592,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         await self._ble.open(timeout, retries)
         # Start state maintenance
         if self._should_maintain_state:
+            self._ble_disconnect_event.clear()
             await self._ready_lock.acquire()
             encoding = (await self.ble_status.encoding.register_value_update(self._update_internal_state)).data
             await self._update_internal_state(StatusId.ENCODING, encoding)
@@ -701,7 +706,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                 self._keep_alive_task.cancel()
             await self._ble.close()
             await self._ble_disconnect_event.wait()
-            # TODO this event is never cleared since this object is not designed to be re-opened.
 
     def _disconnect_handler(self, _: Any) -> None:
         """Disconnect callback from BLE controller
@@ -810,7 +814,10 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         if hasattr(self, "_wifi"):  # Corner case where instantiation fails before superclass is initialized
             self._wifi.close()
         if self.is_ble_connected:
-            assert (await self.ble_command.enable_wifi_ap(enable=False)).ok
+            try:
+                await self.ble_command.enable_wifi_ap(enable=False)
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.warning(f"Error closing wifi: {repr(e)}")
 
     @property
     def _base_url(self) -> str:

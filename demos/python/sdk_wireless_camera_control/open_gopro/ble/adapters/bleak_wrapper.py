@@ -410,8 +410,9 @@ class BleakWrapperController(BLEController[BleakDevice, bleak.BleakClient], Sing
         Args:
             handle (bleak.BleakClient): client to disconnect from
         """
-        if handle.is_connected:
+        try:
             logger.info("Disconnecting...")
             await handle.disconnect()
-            # Disconnect handler registered during connect will be asynchronously called
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.warning(f"Error disconnecting in bleak wrapper: {repr(e)}")
         logger.info("Device disconnected!")
