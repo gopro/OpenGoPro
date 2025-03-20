@@ -57,7 +57,7 @@ async def test_lifecycle(mock_wireless_gopro: MockGoProMaintainBle):
     assert await mock_wireless_gopro.ble_command.get_open_gopro_api_version()
 
     # Ensure keep alive was received and is correct
-    assert (await mock_wireless_gopro.generic_spy.get())[0] == 0x66
+    assert (await mock_wireless_gopro.generic_spy.get())[0] == 66
 
     # Mock closing
     asyncio.gather(mock_wireless_gopro.close(), set_disconnect_event())

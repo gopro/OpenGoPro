@@ -479,7 +479,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         Returns:
             bool: True if it succeeded,. False otherwise
         """
-        return (await self.ble_setting.led.set(0x66)).ok  # type: ignore
+        return (await self.ble_setting.led.set(66)).ok  # type: ignore
 
     @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
     async def connect_to_access_point(self, ssid: str, password: str) -> bool:
@@ -577,9 +577,10 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     async def _periodic_keep_alive(self) -> None:
         """Task to periodically send the keep alive message via BLE."""
         while True:
-            await asyncio.sleep(self._keep_alive_interval)
             if self.is_ble_connected:
-                await self.keep_alive()
+                if not (await self.keep_alive()):
+                    logger.error("Failed to send keep alive")
+            await asyncio.sleep(self._keep_alive_interval)
 
     async def _open_ble(self, timeout: int = 10, retries: int = 5) -> None:
         """Connect the instance to a device via BLE.
