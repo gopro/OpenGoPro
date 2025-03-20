@@ -324,8 +324,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                 logger.error(f"Error while opening: {e}")
                 await self.close()
                 if retry > RETRIES:
-                    continue
-                raise e
+                    raise e
 
     async def close(self) -> None:
         """Safely stop the GoPro instance.
