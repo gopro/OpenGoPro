@@ -809,7 +809,8 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         """Terminate the Wifi connection."""
         if hasattr(self, "_wifi"):  # Corner case where instantiation fails before superclass is initialized
             self._wifi.close()
-        assert (await self.ble_command.enable_wifi_ap(enable=False)).ok
+        if self.is_ble_connected:
+            assert (await self.ble_command.enable_wifi_ap(enable=False)).ok
 
     @property
     def _base_url(self) -> str:
