@@ -1,3 +1,6 @@
+# mocks.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Thu Mar 20 21:57:17 UTC 2025
+
 import asyncio
 import re
 from dataclasses import dataclass, field
