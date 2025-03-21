@@ -136,10 +136,10 @@ class MockWifiController(WifiController):
 
     def __init__(self, interface: Optional[str] = None, password: Optional[str] = None) -> None: ...
 
-    def connect(self, ssid: str, password: str, timeout: float) -> bool:
+    async def connect(self, ssid: str, password: str, timeout: float) -> bool:
         return True if password == "password" else False
 
-    def disconnect(self) -> bool:
+    async def disconnect(self) -> bool:
         return True
 
     def current(self) -> tuple[Optional[str], SsidState]:

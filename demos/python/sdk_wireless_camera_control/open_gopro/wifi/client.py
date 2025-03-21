@@ -29,7 +29,7 @@ class WifiClient:
         self.ssid: Optional[str]
         self.password: Optional[str]
 
-    def open(self, ssid: str, password: str, timeout: int = 15, retries: int = 5) -> None:
+    async def open(self, ssid: str, password: str, timeout: int = 15, retries: int = 5) -> None:
         """Open the WiFi client resource so that it is ready to send and receive data
 
         Args:
@@ -43,19 +43,19 @@ class WifiClient:
         """
         logger.info(f"Establishing Wifi connection to {ssid}")
         for _ in range(retries):
-            if self._controller.connect(ssid, password, timeout):
+            if await self._controller.connect(ssid, password, timeout):
                 self.ssid = ssid
                 self.password = password
                 return
         raise ConnectFailed("Wifi failed to connect", timeout, retries)
 
-    def close(self) -> None:
+    async def close(self) -> None:
         """Close the client resource.
 
         This should always be called before exiting.
         """
         logger.info("Terminating the Wifi connection")
-        self._controller.disconnect()
+        await self._controller.disconnect()
 
     @property
     def is_connected(self) -> bool:
