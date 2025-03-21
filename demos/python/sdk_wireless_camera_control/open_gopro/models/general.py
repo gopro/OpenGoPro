@@ -69,7 +69,7 @@ class CohnInfo:
     username: str
     password: str
     certificate: str
-    cert_path: Path = Path("cohn.crt")
+    cert_path: Path 
 
     def __post_init__(self) -> None:
         token = b64encode(f"{self.username}:{self.password}".encode("utf-8")).decode("ascii")
