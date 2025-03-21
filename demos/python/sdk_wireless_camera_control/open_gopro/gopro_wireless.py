@@ -136,7 +136,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         wifi_adapter = kwargs.get("wifi_adapter", WifiCli)
         # Set up API delegate
         self._wireless_api = WirelessApi(self)
-        self._keep_alive_interval = kwargs.get("keep_alive_interval", 28)
+        self._keep_alive_interval = kwargs.get("keep_alive_interval", 3)
 
         try:
             # Initialize GoPro Communication Client
@@ -477,6 +477,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
         Returns:
             bool: True if it succeeded,. False otherwise
+
         """
         return (await self.ble_setting.led.set(66)).ok  # type: ignore
 
@@ -800,7 +801,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         for retry in range(1, retries):
             try:
                 assert (await self.ble_command.enable_wifi_ap(enable=True)).ok
-                self._wifi.open(ssid, password, timeout, 1)
+                await self._wifi.open(ssid, password, timeout, 1)
                 break
             except ConnectFailed:
                 logger.warning(f"Wifi connection failed. Retrying #{retry}")
@@ -812,7 +813,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     async def _close_wifi(self) -> None:
         """Terminate the Wifi connection."""
         if hasattr(self, "_wifi"):  # Corner case where instantiation fails before superclass is initialized
-            self._wifi.close()
+            await self._wifi.close()
         if self.is_ble_connected:
             try:
                 await self.ble_command.enable_wifi_ap(enable=False)

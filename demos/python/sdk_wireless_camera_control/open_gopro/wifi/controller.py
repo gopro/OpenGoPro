@@ -37,7 +37,7 @@ class WifiController(ABC):
         self._password = password
 
     @abstractmethod
-    def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
+    async def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
         """Connect to a network.
 
         Args:
@@ -50,7 +50,7 @@ class WifiController(ABC):
         """
 
     @abstractmethod
-    def disconnect(self) -> bool:
+    async def disconnect(self) -> bool:
         """Disconnect from a network.
 
         Returns:

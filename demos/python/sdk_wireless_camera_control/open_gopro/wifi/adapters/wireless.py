@@ -5,6 +5,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import ctypes
 import html
 import locale
@@ -163,7 +164,7 @@ class WifiCli(WifiController):
         return self._password
 
     @pass_through_to_driver
-    def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:  # type: ignore
+    async def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:  # type: ignore
         """Connect to a network.
 
         Args:
@@ -176,7 +177,7 @@ class WifiCli(WifiController):
         """
 
     @pass_through_to_driver
-    def disconnect(self) -> bool:  # type: ignore
+    async def disconnect(self) -> bool:  # type: ignore
         """Disconnect from a network.
 
         Returns:
@@ -289,7 +290,7 @@ class NmcliWireless(WifiController):
         # if we didn't find an error then we are in the clear
         return False
 
-    def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
+    async def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
         """Connect to WiFi SSID.
 
         Args:
@@ -300,39 +301,48 @@ class NmcliWireless(WifiController):
         Returns:
             bool: [description]
         """
-        # clean up previous connection
-        current, _ = self.current()
-        if current is not None:
-            self._clean(current)
 
-        # First scan to ensure our network is there
-        logger.info(f"Scanning for {ssid}...")
-        cmd(f"{self.sudo} nmcli device wifi rescan")
+        def _sync_connect() -> bool:
+            nonlocal ssid
+            nonlocal password
+            nonlocal timeout
+            # clean up previous connection
+            current, _ = self.current()
+            if current is not None:
+                self._clean(current)
 
-        start = time.time()
-        discovered = False
-        while not discovered and (time.time() - start) <= timeout:
-            # Scan for network
-            response = cmd(f"{self.sudo} nmcli -f SSID device wifi list")
-            for result in response.splitlines()[1:]:  # Skip title row
-                if result.strip() == ssid.strip():
-                    discovered = True
+            # First scan to ensure our network is there
+            logger.info(f"Scanning for {ssid}...")
+            cmd(f"{self.sudo} nmcli device wifi rescan")
+
+            start = time.time()
+            discovered = False
+            while not discovered and (time.time() - start) <= timeout:
+                # Scan for network
+                response = cmd(f"{self.sudo} nmcli -f SSID device wifi list")
+                for result in response.splitlines()[1:]:  # Skip title row
+                    if result.strip() == ssid.strip():
+                        discovered = True
+                        break
+                if discovered:
                     break
-            if discovered:
-                break
-            time.sleep(1)
-        else:
-            logger.warning("Wifi Scan timed out")
-            return False
+                time.sleep(1)
+            else:
+                logger.warning("Wifi Scan timed out")
+                return False
 
-        # attempt to connect
-        logger.info(f"Connecting to {ssid}...")
-        response = cmd(f'{self.sudo} nmcli dev wifi connect "{ssid}" password "{password}" iface "{self.interface}"')
+            # attempt to connect
+            logger.info(f"Connecting to {ssid}...")
+            response = cmd(
+                f'{self.sudo} nmcli dev wifi connect "{ssid}" password "{password}" iface "{self.interface}"'
+            )
 
-        # parse response
-        return not self._error_in_response(response)
+            # parse response
+            return not self._error_in_response(response)
 
-    def disconnect(self) -> bool:
+        return await asyncio.to_thread(_sync_connect)
+
+    async def disconnect(self) -> bool:
         """[summary].
 
         Returns:
@@ -452,7 +462,7 @@ class Nmcli0990Wireless(WifiController):
         # if we didn't find an error then we are in the clear
         return False
 
-    def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
+    async def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
         """Connect to Wifi SSID.
 
         Args:
@@ -463,33 +473,42 @@ class Nmcli0990Wireless(WifiController):
         Returns:
             bool: True if connection suceeded, False otherwise
         """
-        # First scan to ensure our network is there
-        logger.info(f"Scanning for {ssid}...")
-        start = time.time()
-        discovered = False
-        while not discovered and (time.time() - start) <= timeout:
-            # Scan for network
-            cmd(f"{self.sudo} nmcli device wifi rescan")
-            response = cmd(f"{self.sudo} nmcli -f SSID device wifi list")
-            for result in response.splitlines()[1:]:  # Skip title row
-                if result.strip() == ssid.strip():
-                    discovered = True
+
+        def _sync_connect() -> bool:
+            nonlocal ssid
+            nonlocal password
+            nonlocal timeout
+            # First scan to ensure our network is there
+            logger.info(f"Scanning for {ssid}...")
+            start = time.time()
+            discovered = False
+            while not discovered and (time.time() - start) <= timeout:
+                # Scan for network
+                cmd(f"{self.sudo} nmcli device wifi rescan")
+                response = cmd(f"{self.sudo} nmcli -f SSID device wifi list")
+                for result in response.splitlines()[1:]:  # Skip title row
+                    if result.strip() == ssid.strip():
+                        discovered = True
+                        break
+                if discovered:
                     break
-            if discovered:
-                break
-            time.sleep(1)
-        else:
-            logger.warning("Wifi Scan timed out")
-            return False
+                time.sleep(1)
+            else:
+                logger.warning("Wifi Scan timed out")
+                return False
 
-        # attempt to connect
-        logger.info(f"Connecting to {ssid}...")
-        response = cmd(f'{self.sudo} nmcli dev wifi connect "{ssid}" password "{password}" ifname "{self.interface}"')
+            # attempt to connect
+            logger.info(f"Connecting to {ssid}...")
+            response = cmd(
+                f'{self.sudo} nmcli dev wifi connect "{ssid}" password "{password}" ifname "{self.interface}"'
+            )
 
-        # parse response
-        return not self._error_in_response(response)
+            # parse response
+            return not self._error_in_response(response)
 
-    def disconnect(self) -> bool:
+        return await asyncio.to_thread(_sync_connect)
+
+    async def disconnect(self) -> bool:
         """[summary].
 
         Returns:
@@ -567,7 +586,7 @@ class WpasupplicantWireless(WifiController):
     def __init__(self, password: str | None, interface: Optional[str] = None) -> None:
         WifiController.__init__(self, interface=interface, password=password)
 
-    def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
+    async def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
         """[summary].
 
         Args:
@@ -578,36 +597,43 @@ class WpasupplicantWireless(WifiController):
         Returns:
             bool: [description]
         """
-        # attempt to stop any active wpa_supplicant instances
-        # ideally we do this just for the interface we care about
-        cmd(f"{self.sudo} killall wpa_supplicant")
 
-        # don't do DHCP for GoPros; can cause dropouts with the server
-        cmd(f'{self.sudo} ifconfig "{self.interface}" 10.5.5.10/24 up')
+        def _sync_connect() -> bool:
+            nonlocal ssid
+            nonlocal password
+            nonlocal timeout
+            # attempt to stop any active wpa_supplicant instances
+            # ideally we do this just for the interface we care about
+            cmd(f"{self.sudo} killall wpa_supplicant")
 
-        # create configuration file
-        with open(self._file, "w") as fp:
-            fp.write(f'network={{\n    ssid="{ssid}"\n    psk="{password}"\n}}\n')
-            fp.close()
+            # don't do DHCP for GoPros; can cause dropouts with the server
+            cmd(f'{self.sudo} ifconfig "{self.interface}" 10.5.5.10/24 up')
 
-        # attempt to connect
-        cmd(f'{self.sudo} wpa_supplicant -i"{self.interface}" -c"{self._file}" -B')
+            # create configuration file
+            with open(self._file, "w") as fp:
+                fp.write(f'network={{\n    ssid="{ssid}"\n    psk="{password}"\n}}\n')
+                fp.close()
 
-        # check that the connection was successful
-        # i've never seen it take more than 3 seconds for the link to establish
-        time.sleep(5)
-        current_ssid, _ = self.current()
-        if current_ssid != ssid:
-            return False
+            # attempt to connect
+            cmd(f'{self.sudo} wpa_supplicant -i"{self.interface}" -c"{self._file}" -B')
 
-        # attempt to grab an IP
-        # better hope we are connected because the timeout here is really long
-        # cmd(f"{self.sudo} dhclient {self.interface}"")
+            # check that the connection was successful
+            # i've never seen it take more than 3 seconds for the link to establish
+            time.sleep(5)
+            current_ssid, _ = self.current()
+            if current_ssid != ssid:
+                return False
 
-        # parse response
-        return True
+            # attempt to grab an IP
+            # better hope we are connected because the timeout here is really long
+            # cmd(f"{self.sudo} dhclient {self.interface}"")
 
-    def disconnect(self) -> bool:
+            # parse response
+            return True
+
+        return await asyncio.to_thread(_sync_connect)
+
+    async def disconnect(self) -> bool:
         """[summary].
 
         Returns:
@@ -682,7 +708,7 @@ class NetworksetupWireless(WifiController):
     def __init__(self, interface: Optional[str] = None) -> None:
         WifiController.__init__(self, interface)
 
-    def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
+    async def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
         """Connect to SSID.
 
         Args:
@@ -693,52 +719,59 @@ class NetworksetupWireless(WifiController):
         Returns:
             bool: [description]
         """
-        # Escape single quotes
-        ssid = ssid.replace(r"'", '''"'"''')
 
-        logger.info(f"Scanning for {ssid}...")
-        start = time.time()
-        discovered = False
-        while not discovered and (time.time() - start) <= timeout:
-            # Scan for network
-            response = cmd(r"/usr/sbin/system_profiler SPAirPortDataType")
-            regex = re.compile(
-                r"\n\s+([\x20-\x7E]{1,32}):\n\s+PHY Mode:"
-            )  # 0x20...0x7E --> ASCII for printable characters
-            if ssid in sorted(regex.findall(response)):
-                break
-            time.sleep(1)
-        else:
-            logger.warning("Wifi Scan timed out")
-            return False
+        def _sync_connect() -> bool:
+            nonlocal ssid
+            nonlocal password
+            nonlocal timeout
+            # Escape single quotes
+            ssid = ssid.replace(r"'", '''"'"''')
 
-        # If we're already connected, return
-        if self.current()[0] == ssid:
-            return True
-
-        # Connect now that we found the ssid
-        logger.info(f"Connecting to {ssid}...")
-        response = cmd(f"networksetup -setairportnetwork '{self.interface}' '{ssid}' '{password}'")
-
-        if "not find" in response.lower():
-            return False
-        # Now wait for network to actually establish
-        current = self.current()[0]
-        logger.debug(f"current wifi: {current}")
-        while current is not None and ssid not in current and timeout > 0:
-            time.sleep(1)
-            current = self.current()[0]
-            logger.debug(f"current wifi: {current}")
-            timeout -= 1
-            if timeout == 0:
+            logger.info(f"Scanning for {ssid}...")
+            start = time.time()
+            discovered = False
+            while not discovered and (time.time() - start) <= timeout:
+                # Scan for network
+                response = cmd(r"/usr/sbin/system_profiler SPAirPortDataType")
+                regex = re.compile(
+                    r"\n\s+([\x20-\x7E]{1,32}):\n\s+PHY Mode:"
+                )  # 0x20...0x7E --> ASCII for printable characters
+                if ssid in sorted(regex.findall(response)):
+                    break
+                time.sleep(1)
+            else:
+                logger.warning("Wifi Scan timed out")
                 return False
 
-        # There is some delay required here, presumably because the network is not ready.
-        time.sleep(5)
+            # If we're already connected, return
+            if self.current()[0] == ssid:
+                return True
 
-        return True
+            # Connect now that we found the ssid
+            logger.info(f"Connecting to {ssid}...")
+            response = cmd(f"networksetup -setairportnetwork '{self.interface}' '{ssid}' '{password}'")
 
-    def disconnect(self) -> bool:
+            if "not find" in response.lower():
+                return False
+            # Now wait for network to actually establish
+            current = self.current()[0]
+            logger.debug(f"current wifi: {current}")
+            while current is not None and ssid not in current and timeout > 0:
+                time.sleep(1)
+                current = self.current()[0]
+                logger.debug(f"current wifi: {current}")
+                timeout -= 1
+                if timeout == 0:
+                    return False
+
+            # There is some delay required here, presumably because the network is not ready.
+            time.sleep(5)
+
+            return True
+
+        return await asyncio.to_thread(_sync_connect)
+
+    async def disconnect(self) -> bool:
         """[summary].
 
         Returns:
@@ -849,66 +882,72 @@ class NetshWireless(WifiController):
     def __del__(self) -> None:
         self._clean(self.ssid)
 
-    def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
+    async def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
         """Establish a connection.
 
         This is blocking and won't return until either a connection is established or
         a 10 second timeout
+
+        Raises a RuntimeError if it can not add profile or request to connect to SSID fails
 
         Args:
             ssid (str): SSID of network to connect to
             password (str): password of network to connect to
             timeout (float): Time before considering connection failed (in seconds). Defaults to 15.
 
-        Raises:
-            RuntimeError: Can not add profile or request to connect to SSID fails
-
         Returns:
             bool: True if connected, False otherwise
         """
-        # Replace xml tokens (&, <, >, etc.)
-        password = html.escape(password)
-        ssid = html.escape(ssid)
 
-        logger.info(f"Attempting to establish Wifi connection to {ssid}...")
+        def _sync_connect() -> bool:
+            nonlocal password
+            nonlocal ssid
+            nonlocal timeout
+            # Replace xml tokens (&, <, >, etc.)
+            password = html.escape(password)
+            ssid = html.escape(ssid)
 
-        # Start fresh each time.
-        self._clean(ssid)
+            logger.info(f"Attempting to establish Wifi connection to {ssid}...")
 
-        # Create new profile
-        output = NetshWireless.template.format(ssid=ssid, auth="WPA2PSK", encrypt="AES", passwd=password)
-        logger.debug(f"Using template {output}")
-        # Need ugly low level mkstemp and os here because standard tempfile can't be accessed by a subprocess in Windows :(
-        fd, filename = tempfile.mkstemp()
-        os.write(fd, output.encode("utf-8"))
-        os.close(fd)
-        response = cmd(f"netsh wlan add profile filename={filename}")
-        if "is added on interface" not in response:
-            raise RuntimeError(response)
-        os.remove(filename)
+            # Start fresh each time.
+            self._clean(ssid)
 
-        for _ in range(5):
-            # Try to connect
-            response = cmd(f'netsh wlan connect ssid="{ssid}" name="{ssid}" interface="{self.interface}"')
-            if "was completed successfully" not in response:
+            # Create new profile
+            output = NetshWireless.template.format(ssid=ssid, auth="WPA2PSK", encrypt="AES", passwd=password)
+            logger.debug(f"Using template {output}")
+            # Need ugly low level mkstemp and os here because standard tempfile can't be accessed by a subprocess in Windows :(
+            fd, filename = tempfile.mkstemp()
+            os.write(fd, output.encode("utf-8"))
+            os.close(fd)
+            response = cmd(f"netsh wlan add profile filename={filename}")
+            if "is added on interface" not in response:
                 raise RuntimeError(response)
-            # Wait for connection to establish
-            DELAY = 1
-            while current := self.current():
-                if current == (ssid, SsidState.CONNECTED):
-                    logger.info("Wifi connection established!")
-                    self.ssid = ssid
-                    return True
-                logger.debug(f"Waiting {DELAY} second for Wi-Fi connection to establish...")
-                time.sleep(DELAY)
-                timeout -= DELAY
-                if timeout <= 0 or current[1] is SsidState.DISCONNECTED:
-                    logger.debug("Wifi driver detected disconnect. Attempting retry...")
-                    break
+            os.remove(filename)
 
-        return False
+            for _ in range(5):
+                # Try to connect
+                response = cmd(f'netsh wlan connect ssid="{ssid}" name="{ssid}" interface="{self.interface}"')
+                if "was completed successfully" not in response:
+                    raise RuntimeError(response)
+                # Wait for connection to establish
+                DELAY = 1
+                while current := self.current():
+                    if current == (ssid, SsidState.CONNECTED):
+                        logger.info("Wifi connection established!")
+                        self.ssid = ssid
+                        return True
+                    logger.debug(f"Waiting {DELAY} second for Wi-Fi connection to establish...")
+                    time.sleep(DELAY)
+                    timeout -= DELAY
+                    if timeout <= 0 or current[1] is SsidState.DISCONNECTED:
+                        logger.debug("Wifi driver detected disconnect. Attempting retry...")
+                        break
 
-    def disconnect(self) -> bool:
+            return False
+
+        return await asyncio.to_thread(_sync_connect)
+
+    async def disconnect(self) -> bool:
         """Terminate the Wifi connection.
 
         Returns:
