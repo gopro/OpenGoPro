@@ -224,13 +224,15 @@ def test_initialized(wireless: WifiCli):
     assert wireless.current() == (None, SsidState.DISCONNECTED)
 
 
-def test_connect(wireless: WifiCli, command_sender: CommandSender):
+@pytest.mark.asyncio
+async def test_connect(wireless: WifiCli, command_sender: CommandSender):
     command_sender.interface_state = InterfaceState.CONNECTED
-    assert wireless.connect(SSID, PASSWORD, timeout=1)
+    assert await wireless.connect(SSID, PASSWORD, timeout=1)
 
 
-def test_disconnect(wireless: WifiCli):
-    assert wireless.disconnect()
+@pytest.mark.asyncio
+async def test_disconnect(wireless: WifiCli):
+    assert await wireless.disconnect()
 
 
 def test_is_on(wireless: WifiCli, command_sender: CommandSender):
