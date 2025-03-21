@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "open_gopro"
-version = "0.19.3"
+version = "0.19.4"
 description = "Open GoPro API and Examples"
 authors = ["Tim Camise <tcamise@gopro.com>"]
 readme = "README.md"
@@ -37,7 +37,7 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.13"
+python = ">=3.10,<3.13"
 bleak = "=0.22.3"
 construct = "^2"
 wrapt = "^1"
