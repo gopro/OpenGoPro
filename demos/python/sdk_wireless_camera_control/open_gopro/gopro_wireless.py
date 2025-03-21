@@ -479,7 +479,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             bool: True if it succeeded,. False otherwise
 
         """
-        logger.critical("DEBUG ==> SENDING KEEP ALIVE")
         return (await self.ble_setting.led.set(66)).ok  # type: ignore
 
     @GoProBase._ensure_opened((GoProMessageInterface.BLE,))

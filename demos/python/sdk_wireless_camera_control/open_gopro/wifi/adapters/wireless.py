@@ -888,13 +888,12 @@ class NetshWireless(WifiController):
         This is blocking and won't return until either a connection is established or
         a 10 second timeout
 
+        Raises a RuntimeError if it can not add profile or request to connect to SSID fails
+
         Args:
             ssid (str): SSID of network to connect to
             password (str): password of network to connect to
             timeout (float): Time before considering connection failed (in seconds). Defaults to 15.
-
-        Raises:
-            RuntimeError: Can not add profile or request to connect to SSID fails
 
         Returns:
             bool: True if connected, False otherwise
