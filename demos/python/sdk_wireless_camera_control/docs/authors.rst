@@ -13,3 +13,4 @@ Contributors
 ------------
 
 * Ben Freeland <bfreeland@gopro.com>
+* Martin Carapia <martin.carapia@outlook.com>

@@ -8,7 +8,7 @@ from __future__ import annotations
 from abc import ABC
 from typing import Any
 
-from pydantic import Field, PrivateAttr, validator
+from pydantic import Field, PrivateAttr, field_validator
 
 from open_gopro.models.bases import CustomBaseModel
 from open_gopro.types import JsonDict
@@ -143,20 +143,18 @@ class MediaFileSystem(CustomBaseModel):
     directory: str = Field(alias="d")  # Directory that the files are in
     file_system: list[MediaItem] = Field(alias="fs")  #: List of files
 
-    @validator("file_system", pre=True, each_item=True)
+    @field_validator("file_system", mode="before", check_fields=True)
     @classmethod
-    def identify_item(cls, item: JsonDict) -> MediaItem:
-        """Extent item into GroupedMediaItem if it such an item
-
-        A group item is identified by the presence of a "g" field
+    def identify_item(cls, value: list[JsonDict]) -> list[MediaItem]:
+        """Validate and convert each item in the file system list
 
         Args:
-            item (JsonDict): input JSON
+            value (list[JsonDict]): List of raw JSON items
 
         Returns:
-            MediaItem: parsed media item
+            list[MediaItem]: List of parsed MediaItem or GroupedMediaItem objects
         """
-        return (GroupedMediaItem if "g" in item else MediaItem)(**item)
+        return [(GroupedMediaItem if "g" in item else MediaItem)(**item) for item in value]
 
 
 class MediaList(CustomBaseModel):
