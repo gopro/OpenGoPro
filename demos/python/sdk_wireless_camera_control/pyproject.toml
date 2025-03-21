@@ -6,7 +6,7 @@ authors = ["Tim Camise <tcamise@gopro.com>"]
 readme = "README.md"
 license = "MIT"
 repository = "https://github.com/gopro/OpenGoPro/tree/main/demos/python/sdk_wireless_camera_control"
-documentation = "https://gopro.github.io/OpenGoPro/"
+documentation = "https://gopro.github.io/OpenGoPro/python_sdk/"
 classifiers = [
     "Intended Audience :: Developers",
     "Topic :: Communications",
