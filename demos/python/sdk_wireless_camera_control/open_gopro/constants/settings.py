@@ -31,7 +31,7 @@ class SettingId(GoProIntEnum):
     PHOTO_SINGLE_INTERVAL = 171
     PHOTO_INTERVAL_DURATION = 172
     VIDEO_PERFORMANCE_MODE = 173
-    CONTROLS = 175
+    CONTROL_MODE = 175
     EASY_MODE_SPEED = 176
     ENABLE_NIGHT_PHOTO = 177
     WIRELESS_BAND = 178
@@ -76,17 +76,18 @@ class MediaFormat(GoProIntEnum):
 class VideoResolution(GoProIntEnum):
     """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-resolution-2)"""
 
-    NUM_5K = 24
-    NUM_4K = 1
-    NUM_4K_4_3 = 18
-    NUM_2_7K = 4
-    NUM_2_7K_4_3 = 6
-    NUM_1440 = 7
-    NUM_1080 = 9
     NUM_5_3K = 100
     NUM_5_3K_4_3 = 27
     NUM_5_3K_8_7 = 26
+    NUM_4K = 1
+    NUM_4K_4_3 = 18
     NUM_4K_8_7 = 28
+    NUM_2_7K = 4
+    NUM_2_7K_4_3 = 6
+    NUM_1080 = 9
+    NUM_5K = 24
+    NUM_1440 = 7
+    NUM_5K_4_3 = 25
     NUM_5_3K_21_9 = 35
     NUM_5_3K_4_3_V2 = 113
     NUM_5_3K_8_7_V2 = 107
@@ -99,7 +100,6 @@ class VideoResolution(GoProIntEnum):
     NUM_1080_9_16_V2 = 110
     NUM_900 = 38
     NUM_720 = 12
-    NUM_5K_4_3 = 25
 
 
 class FramesPerSecond(GoProIntEnum):
@@ -148,11 +148,11 @@ class Anti_Flicker(GoProIntEnum):
 class Hypersmooth(GoProIntEnum):
     """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#hypersmooth-135)"""
 
+    AUTO_BOOST = 4
     BOOST = 3
-    HIGH = 2
     LOW = 1
     OFF = 0
-    AUTO_BOOST = 4
+    HIGH = 2
     STANDARD = 100
 
 
@@ -266,8 +266,8 @@ class VideoPerformanceMode(GoProIntEnum):
     TRIPOD_STATIONARY_VIDEO = 2
 
 
-class Controls(GoProIntEnum):
-    """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#controls-175)"""
+class ControlMode(GoProIntEnum):
+    """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#control-mode-175)"""
 
     EASY = 0
     PRO = 1
@@ -434,11 +434,11 @@ class VideoEasyMode(GoProIntEnum):
 class AutoPowerDown(GoProIntEnum):
     """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#auto-power-down-59)"""
 
+    NUM_1_MIN = 1
     NUM_5_MIN = 4
     NUM_15_MIN = 6
     NUM_30_MIN = 7
     NEVER = 0
-    NUM_1_MIN = 1
     NUM_8_SECONDS = 11
     NUM_30_SECONDS = 12
 
@@ -628,13 +628,13 @@ class VideoLens(GoProIntEnum):
     """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-lens-121)"""
 
     MAX_SUPERVIEW = 7
+    HYPERVIEW = 9
     SUPERVIEW = 3
     WIDE = 0
     LINEAR = 4
     LINEAR_HORIZON_LEVELING = 8
-    NARROW = 2
-    HYPERVIEW = 9
     LINEAR_HORIZON_LOCK = 10
+    NARROW = 2
     ULTRA_LINEAR = 14
     ULTRA_WIDE = 13
     ULTRA_SUPERVIEW = 12
@@ -668,9 +668,9 @@ class TimeLapseDigitalLenses(GoProIntEnum):
     WIDE = 101
     LINEAR = 102
     NARROW = 19
+    MAX_SUPERVIEW = 100
     WIDE_27_MP = 31
     LINEAR_27_MP = 32
-    MAX_SUPERVIEW = 100
 
 
 class PhotoOutput(GoProIntEnum):

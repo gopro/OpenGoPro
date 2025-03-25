@@ -142,10 +142,12 @@ class HttpSettings(HttpMessages[HttpSetting]):
 
         @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-performance-mode-173)"""
 
-        self.controls: HttpSetting[settings.Controls] = HttpSetting[settings.Controls](communicator, SettingId.CONTROLS)
-        """Controls
+        self.control_mode: HttpSetting[settings.ControlMode] = HttpSetting[settings.ControlMode](
+            communicator, SettingId.CONTROL_MODE
+        )
+        """Control Mode
 
-        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#controls-175)"""
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#control-mode-175)"""
 
         self.easy_mode_speed: HttpSetting[settings.EasyModeSpeed] = HttpSetting[settings.EasyModeSpeed](
             communicator, SettingId.EASY_MODE_SPEED

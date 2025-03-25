@@ -8,7 +8,6 @@
 import requests
 import requests_mock
 
-from open_gopro.api.parsers import JsonParsers
 from open_gopro.constants import (
     ActionId,
     CmdId,
@@ -23,6 +22,7 @@ from open_gopro.models.response import (
     HttpRespBuilder,
     RequestsHttpRespBuilderDirector,
 )
+from open_gopro.parsers import JsonParsers
 
 # Resolution capability response with no valid capabilities
 test_push_receive_no_parameter = bytearray([0x08, 0xA2, 0x00, 0x02, 0x00, 0x03, 0x00, 0x79, 0x00])

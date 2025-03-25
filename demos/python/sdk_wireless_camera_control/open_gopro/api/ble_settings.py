@@ -146,12 +146,12 @@ class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-performance-mode-173)"""
 
-        self.controls: BleSetting[settings.Controls] = BleSetting[settings.Controls](
-            communicator, SettingId.CONTROLS, settings.Controls
+        self.control_mode: BleSetting[settings.ControlMode] = BleSetting[settings.ControlMode](
+            communicator, SettingId.CONTROL_MODE, settings.ControlMode
         )
-        """Controls
+        """Control Mode
 
-        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#controls-175)"""
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#control-mode-175)"""
 
         self.easy_mode_speed: BleSetting[settings.EasyModeSpeed] = BleSetting[settings.EasyModeSpeed](
             communicator, SettingId.EASY_MODE_SPEED, settings.EasyModeSpeed

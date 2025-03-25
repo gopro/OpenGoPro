@@ -93,10 +93,10 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         if not self._serial:
             for retry in range(1, retries + 1):
                 try:
-                    ip_addr = await open_gopro.wifi.mdns_scanner.find_first_ip_addr(
+                    response = await open_gopro.wifi.mdns_scanner.find_first_ip_addr(
                         WiredGoPro._MDNS_SERVICE_NAME, timeout
                     )
-                    self._serial = "GoPro X" + "".join([ip_addr[5], *ip_addr[8:10]])
+                    self._serial = response.name.split(".")[0]
                     break
                 except FailedToFindDevice as e:
                     if retry == retries:

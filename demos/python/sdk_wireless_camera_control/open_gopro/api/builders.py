@@ -15,7 +15,6 @@ from typing import Any, Callable, Final, Generic, Protocol, TypeVar, Union
 import construct
 import wrapt
 
-from open_gopro.api.parsers import ByteParserBuilders
 from open_gopro.ble import BleUUID
 from open_gopro.communicator_interface import (
     BleMessage,
@@ -39,6 +38,7 @@ from open_gopro.enum import GoProIntEnum
 from open_gopro.logger import Logger
 from open_gopro.models.response import GlobalParsers, GoProResp
 from open_gopro.parser_interface import BytesBuilder, BytesParserBuilder, Parser
+from open_gopro.parsers import ByteParserBuilders
 from open_gopro.types import CameraState, JsonDict, Protobuf, UpdateCb
 
 logger = logging.getLogger(__name__)

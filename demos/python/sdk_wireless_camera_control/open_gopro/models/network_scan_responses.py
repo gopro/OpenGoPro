@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import json
+import logging
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
@@ -27,6 +28,8 @@ from construct import (
 )
 
 from open_gopro.util import deeply_update_dict
+
+logger = logging.getLogger(__name__)
 
 
 class Hexlify(Adapter):
@@ -74,7 +77,7 @@ manuf_data_struct = Struct(
     "camera_status" / camera_status_struct,
     "camera_id" / Byte,
     "camera_capabilities" / camera_capability_struct,
-    "id_hash" / Hexlify(Bytes(6)),
+    "id_hash" / Bytes(6),
     "media_offload_status" / media_offload_status_struct,
 )
 
@@ -98,7 +101,7 @@ service_data_struct = Struct(
 scan_response_struct = Struct(
     "name_length" / Byte,
     "name_type" / Hex(Byte),
-    "name" / PaddedString(this.name_length - 1, encoding="utf8"),
+    "name" / PaddedString(this.name_length - 1, "utf8"),
     "service_length" / Byte,
     "service_type" / Hex(Byte),
     "service_uuid" / Hex(Int16ul),
@@ -119,6 +122,17 @@ class Jsonable:
         return json.dumps(asdict(self), indent=4, default=default_decode)
 
 
+camera_id_map: dict[int, str] = {
+    55: "C344",
+    57: "C346",
+    58: "C347",
+    60: "C349",
+    62: "C350",
+    64: "C352",
+    65: "C353",
+}
+
+
 @dataclass
 class GoProAdvData(Jsonable):
     """GoPro-specific advertising data"""
@@ -129,7 +143,7 @@ class GoProAdvData(Jsonable):
     wifi_ap_state: bool
     peripheral_pairing_state: bool
     is_new_media_available: bool
-    camera_id: str
+    camera_id: int
     supports_cnc: bool
     supports_ble_metadata: bool
     supports_wideband_audio: bool
@@ -144,7 +158,28 @@ class GoProAdvData(Jsonable):
     is_media_upload_busy: bool
     is_media_upload_paused: bool
     ap_mac_address: bytes
-    partial_serial_number: bytes
+    partial_serial_number: str
+
+    def __hash__(self) -> int:
+        return hash(self.serial_number)
+
+    @property
+    def serial_number(self) -> str:
+        """Get the serial number as accurately as possible
+
+        Returns:
+            str: serial number with X's denoting unknown characters
+        """
+        try:
+            prefix_4 = camera_id_map[self.camera_id]
+        except KeyError:
+            logger.warning(f"Unknown camera ID {self.camera_id}")
+            prefix_4 = "XXXX"
+        try:
+            middle_6 = self.id_hash.decode("utf-8")
+        except UnicodeDecodeError:
+            middle_6 = "XXXXXX"
+        return f"{prefix_4}{middle_6}{self.partial_serial_number}"
 
     @classmethod
     def fromAdvData(cls, data: AdvData) -> GoProAdvData:
@@ -169,7 +204,7 @@ class GoProAdvData(Jsonable):
             peripheral_pairing_state=manuf_data.camera_status.peripheral_pairing_state,
             is_new_media_available=manuf_data.camera_status.is_new_media_available,
             # Camera ID from advertising data manufacturer data
-            camera_id=manuf_data.camera_id,
+            camera_id=int(manuf_data.camera_id),
             # Camera capabilities from advertising data manufacturer data
             supports_ble_metadata=manuf_data.camera_capabilities.ble_metadata,
             supports_cnc=manuf_data.camera_capabilities.cnc,
@@ -200,6 +235,7 @@ class AdvData(Jsonable):
     Only contains fields that are currently used by GoPro
     """
 
+    serial_number: str = ""
     local_name: str = ""
     manufacturer_data: dict[str, Any] = field(default_factory=dict)
     service_uuids: list[str] = field(default_factory=list)
@@ -221,3 +257,12 @@ class AdvData(Jsonable):
                 setattr(self, k, [*self_dict[k], v])
             else:
                 setattr(self, k, v)
+
+
+@dataclass
+class DnsScanResponse:
+    """mDNS scan data"""
+
+    service: str
+    ip_addr: str
+    name: str

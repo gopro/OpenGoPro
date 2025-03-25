@@ -14,17 +14,19 @@ import pytest
 
 from open_gopro import WiredGoPro
 from open_gopro.constants import statuses
+from open_gopro.models.network_scan_responses import DnsScanResponse
 from open_gopro.wifi.mdns_scanner import ZeroconfListener, find_first_ip_addr
-
-IP_ADDR: Final[str] = "172.20.123.51"
 
 
 @pytest.mark.asyncio
 async def test_mdns_scan(monkeypatch):
+    # GIVEN
+    ip_addr = "172.20.123.51"
+
     @dataclass
     class MockServiceInfo:
         def parsed_addresses(self, *args, **kwargs):
-            return [IP_ADDR]
+            return [ip_addr]
 
     class MockZeroconf:
         def __init__(self, *args, **kwargs) -> None:
@@ -63,14 +65,22 @@ async def test_mdns_scan(monkeypatch):
     monkeypatch.setattr("zeroconf.Zeroconf", MockZeroconf)
     monkeypatch.setattr("zeroconf.asyncio.AsyncServiceBrowser", MockServiceBrowser)
     monkeypatch.setattr("zeroconf.asyncio.AsyncZeroconf", MockAsyncZeroConf)
-    assert (await find_first_ip_addr("service")) == IP_ADDR
+    assert (await find_first_ip_addr("service")).ip_addr == ip_addr
 
 
 @pytest.mark.asyncio
 async def test_wired_lifecycle(mock_wired_gopro: WiredGoPro, monkeypatch):
+    # GIVEN
+    ip_addr = "172.27.111.51"
+    serial_number = "C3501324500711"
+
     class MockMdnsScanner:
-        async def find_first_ip_addr(self, *args, **kwargs) -> str:
-            return IP_ADDR
+        async def find_first_ip_addr(self, *args, **kwargs) -> DnsScanResponse:
+            return DnsScanResponse(
+                args[0],
+                ip_addr,
+                f"{serial_number}._gopro-web._tcp.local.",
+            )
 
     async def set_ready():
         await asyncio.sleep(1)  # Allow initial poll to fail
@@ -85,5 +95,5 @@ async def test_wired_lifecycle(mock_wired_gopro: WiredGoPro, monkeypatch):
     await asyncio.gather(mock_wired_gopro.open(), set_ready())
     assert mock_wired_gopro.is_open
     assert await mock_wired_gopro.is_ready
-    assert mock_wired_gopro.identifier == "GoPro X023"
-    assert mock_wired_gopro._base_url == f"http://{IP_ADDR}:8080/"
+    assert mock_wired_gopro.identifier == serial_number
+    assert mock_wired_gopro._base_url == f"http://{ip_addr}:8080/"

@@ -31,6 +31,7 @@ gopro-webcam = "open_gopro.demos.gui.webcam:entrypoint"
 gopro-livestream = "open_gopro.demos.gui.livestream:entrypoint"
 gopro-preview-stream = "open_gopro.demos.gui.preview_stream:entrypoint"
 gopro-cohn = "open_gopro.demos.cohn:entrypoint"
+gopro-scan = "open_gopro.demos.scanner:entrypoint"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

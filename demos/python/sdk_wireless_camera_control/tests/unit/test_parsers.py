@@ -1,13 +1,20 @@
 # test_parsers.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Mon Jul 31 17:04:06 UTC 2023
 
+import pytest
+
 from open_gopro.api.ble_commands import BleCommands
-from open_gopro.api.parsers import ByteParserBuilders
 from open_gopro.communicator_interface import GoProBle
 from open_gopro.constants import CmdId
-from open_gopro.models.ble_advertisement import adv_data_struct, scan_response_struct
+from open_gopro.models.network_scan_responses import (
+    GoProAdvData,
+    adv_data_struct,
+    manuf_data_struct,
+    scan_response_struct,
+)
 from open_gopro.models.response import GlobalParsers
 from open_gopro.parser_interface import Parser
+from open_gopro.parsers import ByteParserBuilders
 from open_gopro.proto import EnumResultGeneric, ResponseGetApEntries
 
 
@@ -80,7 +87,7 @@ def test_ble_advertisement_parsing():
 
     assert manuf_data.schema_version == 2
     assert manuf_data.camera_id == 56
-    assert manuf_data.id_hash == "b3:fe:2a:79:dc:eb"
+    assert manuf_data.id_hash.hex(":") == "b3:fe:2a:79:dc:eb"
 
     assert camera_status.processor_state == False
     assert camera_status.wifi_ap_state == False
@@ -143,3 +150,70 @@ def test_ble_scan_response_parsing():
     assert scan_response.service_uuid == 0xFEA6
     assert scan_response.service_data.ap_mac_address == "f7:a9:76:88"
     assert scan_response.service_data.serial_number == "1058"
+
+
+@pytest.fixture(scope="module")
+def mock_gopro_adv_data() -> GoProAdvData:
+    return GoProAdvData(
+        name="name",
+        schema_version=2,
+        processor_state=True,
+        wifi_ap_state=True,
+        peripheral_pairing_state=True,
+        is_new_media_available=True,
+        camera_id=0,
+        supports_cnc=False,
+        supports_ble_metadata=False,
+        supports_wideband_audio=False,
+        supports_concurrent_master_slave=False,
+        supports_onboarding=False,
+        supports_new_media_available=False,
+        id_hash=bytes(6),
+        is_media_upload_available=False,
+        is_media_upload_battery_ok=False,
+        is_media_upload_busy=False,
+        is_media_upload_new_media_available=False,
+        is_media_upload_paused=False,
+        is_media_upload_sd_card_ok=False,
+        ap_mac_address=bytes(6),
+        partial_serial_number="AAAA",
+    )
+
+
+def test_serial_number_complete_success(mock_gopro_adv_data: GoProAdvData):
+    # GIVEN
+    mock_gopro_adv_data.camera_id = 64
+    mock_gopro_adv_data.id_hash = bytes([0x30, 0x31, 0x32, 0x33, 0x34, 0x35])
+    mock_gopro_adv_data.partial_serial_number = "6789"
+
+    # WHEN
+    serial_number = mock_gopro_adv_data.serial_number
+
+    # THEN
+    assert serial_number == "C3520123456789"
+
+
+def test_serial_number_id_hash_not_middle_6(mock_gopro_adv_data: GoProAdvData):
+    # GIVEN
+    mock_gopro_adv_data.camera_id = 64
+    mock_gopro_adv_data.id_hash = bytes(6 * [0x9A])
+    mock_gopro_adv_data.partial_serial_number = "6789"
+
+    # WHEN
+    serial_number = mock_gopro_adv_data.serial_number
+
+    # THEN
+    assert serial_number == "C352XXXXXX6789"
+
+
+def test_serial_number_invalid_model_id(mock_gopro_adv_data: GoProAdvData):
+    # GIVEN
+    mock_gopro_adv_data.camera_id = -1
+    mock_gopro_adv_data.id_hash = bytes([0x30, 0x31, 0x32, 0x33, 0x34, 0x35])
+    mock_gopro_adv_data.partial_serial_number = "6789"
+
+    # WHEN
+    serial_number = mock_gopro_adv_data.serial_number
+
+    # THEN
+    assert serial_number == "XXXX0123456789"

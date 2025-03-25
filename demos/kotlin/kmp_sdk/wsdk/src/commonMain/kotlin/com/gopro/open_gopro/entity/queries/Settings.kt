@@ -27,7 +27,7 @@ enum class SettingId(override val value: UByte) : IValuedEnum<UByte> {
   PHOTO_SINGLE_INTERVAL(171U),
   PHOTO_INTERVAL_DURATION(172U),
   VIDEO_PERFORMANCE_MODE(173U),
-  CONTROLS(175U),
+  CONTROL_MODE(175U),
   EASY_MODE_SPEED(176U),
   ENABLE_NIGHT_PHOTO(177U),
   WIRELESS_BAND(178U),
@@ -93,17 +93,18 @@ enum class MediaFormat(override val value: UByte) : IValuedEnum<UByte> {
  *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-resolution-2)
  */
 enum class VideoResolution(override val value: UByte) : IValuedEnum<UByte> {
-  NUM_5K(24U),
-  NUM_4K(1U),
-  NUM_4K_4_3(18U),
-  NUM_2_7K(4U),
-  NUM_2_7K_4_3(6U),
-  NUM_1440(7U),
-  NUM_1080(9U),
   NUM_5_3K(100U),
   NUM_5_3K_4_3(27U),
   NUM_5_3K_8_7(26U),
+  NUM_4K(1U),
+  NUM_4K_4_3(18U),
   NUM_4K_8_7(28U),
+  NUM_2_7K(4U),
+  NUM_2_7K_4_3(6U),
+  NUM_1080(9U),
+  NUM_5K(24U),
+  NUM_1440(7U),
+  NUM_5K_4_3(25U),
   NUM_5_3K_21_9(35U),
   NUM_5_3K_4_3_V2(113U),
   NUM_5_3K_8_7_V2(107U),
@@ -115,8 +116,7 @@ enum class VideoResolution(override val value: UByte) : IValuedEnum<UByte> {
   NUM_4K_9_16_V2(109U),
   NUM_1080_9_16_V2(110U),
   NUM_900(38U),
-  NUM_720(12U),
-  NUM_5K_4_3(25U);
+  NUM_720(12U);
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<VideoResolution> {
@@ -211,11 +211,11 @@ enum class Anti_Flicker(override val value: UByte) : IValuedEnum<UByte> {
  *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#hypersmooth-135)
  */
 enum class Hypersmooth(override val value: UByte) : IValuedEnum<UByte> {
+  AUTO_BOOST(4U),
   BOOST(3U),
-  HIGH(2U),
   LOW(1U),
   OFF(0U),
-  AUTO_BOOST(4U),
+  HIGH(2U),
   STANDARD(100U);
 
   @ExperimentalUnsignedTypes
@@ -451,19 +451,20 @@ enum class VideoPerformanceMode(override val value: UByte) : IValuedEnum<UByte> 
 }
 
 /**
- * Controls
+ * Control Mode
  *
  * @property value
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#controls-175)
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#control-mode-175)
  */
-enum class Controls(override val value: UByte) : IValuedEnum<UByte> {
+enum class ControlMode(override val value: UByte) : IValuedEnum<UByte> {
   EASY(0U),
   PRO(1U);
 
   @ExperimentalUnsignedTypes
-  companion object : IUByteArrayCompanion<Controls> {
+  companion object : IUByteArrayCompanion<ControlMode> {
     override fun fromUByteArray(value: UByteArray) =
-        Controls.entries.first { it.value == value.last() }
+        ControlMode.entries.first { it.value == value.last() }
   }
 }
 
@@ -731,11 +732,11 @@ enum class VideoEasyMode(override val value: UByte) : IValuedEnum<UByte> {
  *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#auto-power-down-59)
  */
 enum class AutoPowerDown(override val value: UByte) : IValuedEnum<UByte> {
+  NUM_1_MIN(1U),
   NUM_5_MIN(4U),
   NUM_15_MIN(6U),
   NUM_30_MIN(7U),
   NEVER(0U),
-  NUM_1_MIN(1U),
   NUM_8_SECONDS(11U),
   NUM_30_SECONDS(12U);
 
@@ -927,7 +928,6 @@ enum class Led(override val value: UByte) : IValuedEnum<UByte> {
   ALL_OFF(4U),
   FRONT_OFF_ONLY(5U),
   BACK_ONLY(100U),
-  KEEP_ALIVE(66U),
   ON(2U),
   OFF(0U);
 
@@ -1108,13 +1108,13 @@ enum class VideoAspectRatio(override val value: UByte) : IValuedEnum<UByte> {
  */
 enum class VideoLens(override val value: UByte) : IValuedEnum<UByte> {
   MAX_SUPERVIEW(7U),
+  HYPERVIEW(9U),
   SUPERVIEW(3U),
   WIDE(0U),
   LINEAR(4U),
   LINEAR_HORIZON_LEVELING(8U),
-  NARROW(2U),
-  HYPERVIEW(9U),
   LINEAR_HORIZON_LOCK(10U),
+  NARROW(2U),
   ULTRA_LINEAR(14U),
   ULTRA_WIDE(13U),
   ULTRA_SUPERVIEW(12U),
@@ -1170,9 +1170,9 @@ enum class TimeLapseDigitalLenses(override val value: UByte) : IValuedEnum<UByte
   WIDE(101U),
   LINEAR(102U),
   NARROW(19U),
+  MAX_SUPERVIEW(100U),
   WIDE_27_MP(31U),
-  LINEAR_27_MP(32U),
-  MAX_SUPERVIEW(100U);
+  LINEAR_27_MP(32U);
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<TimeLapseDigitalLenses> {

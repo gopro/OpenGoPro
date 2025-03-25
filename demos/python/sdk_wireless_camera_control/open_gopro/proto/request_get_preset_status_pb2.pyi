@@ -60,6 +60,7 @@ class RequestGetPresetStatus(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     REGISTER_PRESET_STATUS_FIELD_NUMBER: builtins.int
     UNREGISTER_PRESET_STATUS_FIELD_NUMBER: builtins.int
+    USE_CONSTANT_SETTING_IDS_FIELD_NUMBER: builtins.int
 
     @property
     def register_preset_status(
@@ -72,17 +73,28 @@ class RequestGetPresetStatus(google.protobuf.message.Message):
         self,
     ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[global___EnumRegisterPresetStatus.ValueType]:
         """Array of Preset statuses to stop being notified about"""
+    use_constant_setting_ids: builtins.bool
+    "*\n    Configures the set of Setting IDs that are returned by @ref NotifyPresetStatus.\n\n    Defaults to False if not set\n\n    When False, Setting IDs are tied to their camera UI string representation and may vary between cameras.\n\n    When True, Setting IDs are tied to their functional representation and are consistent across cameras.\n    "
 
     def __init__(
         self,
         *,
         register_preset_status: collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType] | None = ...,
-        unregister_preset_status: collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType] | None = ...
+        unregister_preset_status: collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType] | None = ...,
+        use_constant_setting_ids: builtins.bool | None = ...
     ) -> None: ...
+    def HasField(
+        self, field_name: typing_extensions.Literal["use_constant_setting_ids", b"use_constant_setting_ids"]
+    ) -> builtins.bool: ...
     def ClearField(
         self,
         field_name: typing_extensions.Literal[
-            "register_preset_status", b"register_preset_status", "unregister_preset_status", b"unregister_preset_status"
+            "register_preset_status",
+            b"register_preset_status",
+            "unregister_preset_status",
+            b"unregister_preset_status",
+            "use_constant_setting_ids",
+            b"use_constant_setting_ids",
         ],
     ) -> None: ...
 

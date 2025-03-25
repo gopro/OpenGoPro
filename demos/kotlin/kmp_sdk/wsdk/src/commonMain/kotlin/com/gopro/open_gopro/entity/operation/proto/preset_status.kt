@@ -1,6 +1,3 @@
-/* preset_status.kt/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Thu Feb 27 23:31:55 UTC 2025 */
-
 @file:OptIn(pbandk.PublicForGeneratedCode::class)
 
 package com.gopro.open_gopro.operations
@@ -689,6 +686,12 @@ public sealed class EnumPresetTitle(override val value: Int, override val name: 
 
   internal object PRESET_TITLE_BURST_SLOMO : EnumPresetTitle(106, "PRESET_TITLE_BURST_SLOMO")
 
+  internal object PRESET_TITLE_4_3_VIDEO : EnumPresetTitle(125, "PRESET_TITLE_4_3_VIDEO")
+
+  internal object PRESET_TITLE_16_9_VIDEO : EnumPresetTitle(126, "PRESET_TITLE_16_9_VIDEO")
+
+  internal object PRESET_TITLE_16_9_SLOMO : EnumPresetTitle(127, "PRESET_TITLE_16_9_SLOMO")
+
   internal class UNRECOGNIZED(value: Int) : EnumPresetTitle(value)
 
   internal companion object :
@@ -771,7 +774,10 @@ public sealed class EnumPresetTitle(override val value: Int, override val name: 
           PRESET_TITLE_USER_DEFINED_CUSTOM_NAME,
           PRESET_TITLE_EASY_STANDARD_PROFILE,
           PRESET_TITLE_EASY_HDR_PROFILE,
-          PRESET_TITLE_BURST_SLOMO)
+          PRESET_TITLE_BURST_SLOMO,
+          PRESET_TITLE_4_3_VIDEO,
+          PRESET_TITLE_16_9_VIDEO,
+          PRESET_TITLE_16_9_SLOMO)
     }
 
     override fun fromValue(value: Int): com.gopro.open_gopro.operations.EnumPresetTitle =

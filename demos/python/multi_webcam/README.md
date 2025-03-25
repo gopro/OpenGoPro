@@ -10,7 +10,6 @@
   - [Multiple Webcams](#multiple-webcams)
   - [Module Usage](#module-usage)
 
-
 This is a small Python module to demonstrate GoPro Webcam usage, including how to use multiple webcams
 simultaneously from the same PC.
 
@@ -117,9 +116,10 @@ where an example config file could look like this:
 }
 
 ```
+
 If port is not set, an available port will be discovered automatically starting at 8554.
 If resolution or fov are not set, they will be set to defaults by the GoPro.
 
 ## Module Usage
 
-For detailed module usage, see the docstrings in ./multi_webcam/webcam.py.
+For detailed module usage, see the docstrings in `./multi_webcam/webcam.py`.

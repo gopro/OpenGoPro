@@ -25,7 +25,6 @@ private val logger = Logger.withTag("CameraChooserViewModel")
 
 enum class ScanNetworkType {
   BLE,
-
   //    WIFI,
   DNS
 }
