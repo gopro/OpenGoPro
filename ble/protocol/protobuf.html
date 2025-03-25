@@ -139,8 +139,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Protobuf Documentation — Open GoPro BLE API 0.0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1">
+  <title>Protobuf Documentation — GoPro BLE API 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3">
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094">
       <link rel="stylesheet" type="text/css" href="../_static/style.css?v=d4d8e761">
 
@@ -170,7 +170,7 @@
           
           
           <a href="../index.html" class="icon icon-home">
-            Open GoPro BLE API
+            GoPro BLE API
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -187,12 +187,22 @@
 <li class="toctree-l2">
 <a class="reference internal" href="ble_setup.html">BLE Setup</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="ble_setup.html#pairing-mode">Pairing Mode</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ble_setup.html#advertisements">Advertisements</a></li>
+<li class="toctree-l3">
+<a class="reference internal" href="ble_setup.html#advertisements">Advertisements</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ble_setup.html#advertising-data">Advertising Data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ble_setup.html#scan-response-data">Scan Response Data</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="ble_setup.html#finish-pairing">Finish Pairing</a></li>
 <li class="toctree-l3">
 <a class="reference internal" href="ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="ble_setup.html#ble-characteristics">BLE Characteristics</a></li>
 <li class="toctree-l4"><a class="reference internal" href="ble_setup.html#send-messages">Send Messages</a></li>
+</ul>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="ble_setup.html#gopro-setup">GoPro Setup</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ble_setup.html#wait-for-camera-ble-readiness">Wait for Camera BLE Readiness</a></li>
 </ul>
 </li>
 </ul>
@@ -347,6 +357,7 @@
 </li>
 <li class="toctree-l1">
 <a class="reference internal" href="../features/live_streaming.html">Live Streaming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../features/live_streaming.html#metadata">Metadata</a></li>
 <li class="toctree-l2">
 <a class="reference internal" href="../features/live_streaming.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/live_streaming.html#set-livestream-mode"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Livestream</span> <span class="pre">Mode</span></code></a></li>
@@ -386,7 +397,7 @@
 </li>
 <li class="toctree-l1">
 <a class="reference internal" href="../features/presets.html">Presets</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../features/presets.html#preset-groups">Preset Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../features/presets.html#recommended-usage">Recommended Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../features/presets.html#preset-modified-status">Preset Modified Status</a></li>
 <li class="toctree-l2">
 <a class="reference internal" href="../features/presets.html#operations">Operations</a><ul>
@@ -415,6 +426,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#webcam-digital-lenses-43">Webcam Digital Lenses (43)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#auto-power-down-59">Auto Power Down (59)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#gps-83">GPS (83)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#led-91">LED (91)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#video-aspect-ratio-108">Video Aspect Ratio (108)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#video-lens-121">Video Lens (121)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#photo-lens-122">Photo Lens (122)</a></li>
@@ -430,7 +442,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#photo-single-interval-171">Photo Single Interval (171)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#photo-interval-duration-172">Photo Interval Duration (172)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#video-performance-mode-173">Video Performance Mode (173)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#controls-175">Controls (175)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#control-mode-175">Control Mode (175)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#easy-mode-speed-176">Easy Mode Speed (176)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#enable-night-photo-177">Enable Night Photo (177)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#wireless-band-178">Wireless Band (178)</a></li>
@@ -479,8 +491,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#remote-version-26">Remote Version (26)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#remote-connected-27">Remote Connected (27)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#pairing-state-legacy-28">Pairing State (Legacy) (28)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#ap-ssid-29">AP SSID (29)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#wifi-ssid-30">WiFi SSID (30)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#connected-wifi-ssid-29">Connected WiFi SSID (29)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#access-point-ssid-30">Access Point SSID (30)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#connected-devices-31">Connected Devices (31)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#preview-stream-32">Preview Stream (32)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#primary-storage-33">Primary Storage (33)</a></li>
@@ -554,7 +566,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Open GoPro BLE API</a>
+          <a href="../index.html">GoPro BLE API</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -583,7 +595,7 @@
 </h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/cohn.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
@@ -655,7 +667,7 @@
 </h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/cohn.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
@@ -691,7 +703,7 @@
 </h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/set_camera_control_status.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/set_camera_control_status.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
@@ -737,7 +749,7 @@
 </h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
@@ -899,7 +911,7 @@
 </h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
@@ -941,7 +953,7 @@
 </h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
@@ -1030,7 +1042,7 @@
 </h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
@@ -1094,7 +1106,7 @@
 </h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
@@ -1136,7 +1148,7 @@
 </h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
@@ -1226,7 +1238,7 @@
 </h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
@@ -1766,7 +1778,7 @@
 </h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
@@ -2244,6 +2256,24 @@
 <td>
 </td>
 </tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_4_3_VIDEO</td>
+<td>125</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_16_9_VIDEO</td>
+<td>126</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_16_9_SLOMO</td>
+<td>127</td>
+<td>
+</td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -2252,7 +2282,7 @@
 </h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
@@ -2348,7 +2378,7 @@
 </h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
@@ -2396,7 +2426,7 @@
 </h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/request_get_preset_status.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/request_get_preset_status.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
@@ -2430,7 +2460,7 @@
 </h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/response_generic.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
@@ -2496,7 +2526,7 @@
 </h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
@@ -2552,7 +2582,7 @@
 </h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
@@ -2612,7 +2642,7 @@
 </h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
 </div>
 <table class="docutils align-default">
 <colgroup>
@@ -2655,7 +2685,7 @@
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/response_generic.proto">Source Protobuf File</a></p>
 </div>
 <p>A common model to represent a media file</p>
 <table class="docutils align-default">
@@ -2694,7 +2724,7 @@
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto">Source Protobuf File</a></p>
 </div>
 <p>Provision state notification</p>
 <p>Sent during provisioning triggered via <a class="reference internal" href="#proto-requestconnect"><span class="std std-ref">RequestConnect</span></a> or <a class="reference internal" href="#proto-requestconnectnew"><span class="std std-ref">RequestConnectNew</span></a></p>
@@ -2728,7 +2758,7 @@
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto">Source Protobuf File</a></p>
 </div>
 <p>Scanning state notification</p>
 <p>Triggered via <a class="reference internal" href="#proto-requeststartscan"><span class="std std-ref">RequestStartScan</span></a></p>
@@ -2780,7 +2810,7 @@
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/cohn.proto">Source Protobuf File</a></p>
 </div>
 <p>Current COHN status triggered by a <a class="reference internal" href="#proto-requestgetcohnstatus"><span class="std std-ref">RequestGetCOHNStatus</span></a></p>
 <table class="docutils align-default">
@@ -2855,7 +2885,7 @@
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
 </div>
 <p>Live Stream status</p>
 <p>Sent either:</p>
@@ -2963,7 +2993,7 @@
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
 </div>
 <p>Current Preset status</p>
 <p>Sent either:</p>
@@ -3001,7 +3031,7 @@
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
 </div>
 <p>An individual preset.</p>
 <table class="docutils align-default">
@@ -3089,7 +3119,7 @@
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
 </div>
 <p>Preset Group meta information and contained Presets</p>
 <table class="docutils align-default">
@@ -3146,7 +3176,7 @@
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
 </div>
 <p>Setting representation that comprises a  <a class="reference internal" href="#proto-preset"><span class="std std-ref">Preset</span></a></p>
 <table class="docutils align-default">
@@ -3191,7 +3221,7 @@
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/cohn.proto">Source Protobuf File</a></p>
 </div>
 <p>Get the COHN certificate.</p>
 <p>Returns a <a class="reference internal" href="#proto-responsecohncert"><span class="std std-ref">ResponseCOHNCert</span></a></p>
@@ -3201,7 +3231,7 @@
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/cohn.proto">Source Protobuf File</a></p>
 </div>
 <p>Clear the COHN certificate.</p>
 <p>Returns a <a class="reference internal" href="#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a> with the status of the clear</p>
@@ -3211,7 +3241,7 @@
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto">Source Protobuf File</a></p>
 </div>
 <p>Connect to (but do not authenticate with) an Access Point</p>
 <p>This is intended to be used to connect to a previously-connected Access Point</p>
@@ -3247,7 +3277,7 @@
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto">Source Protobuf File</a></p>
 </div>
 <p>Connect to and authenticate with an Access Point</p>
 <p>This is only intended to be used if the AP is not previously provisioned.</p>
@@ -3319,7 +3349,7 @@
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/cohn.proto">Source Protobuf File</a></p>
 </div>
 <p>Create the Camera On the Home Network SSL/TLS certificate.</p>
 <p>Returns a <a class="reference internal" href="#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a> with the status of the creation</p>
@@ -3353,7 +3383,7 @@
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
 </div>
 <p>Request to Update the Title and / or Icon of the Active Custom Preset</p>
 <p>This only operates on the currently active Preset and will fail  if the current
@@ -3446,7 +3476,7 @@ Preset is not custom.</p>
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto">Source Protobuf File</a></p>
 </div>
 <p>Get a list of Access Points found during a <a class="reference internal" href="#proto-requeststartscan"><span class="std std-ref">RequestStartScan</span></a></p>
 <p>Response: <a class="reference internal" href="#proto-responsegetapentries"><span class="std std-ref">ResponseGetApEntries</span></a></p>
@@ -3492,7 +3522,7 @@ Preset is not custom.</p>
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/cohn.proto">Source Protobuf File</a></p>
 </div>
 <p>Get the current COHN status.</p>
 <p>Response: <a class="reference internal" href="#proto-notifycohnstatus"><span class="std std-ref">NotifyCOHNStatus</span></a></p>
@@ -3528,7 +3558,7 @@ changes.</p>
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/media.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/media.proto">Source Protobuf File</a></p>
 </div>
 <p>Get the last captured media filename</p>
 <p>Returns a <a class="reference internal" href="#proto-responselastcapturedmedia"><span class="std std-ref">ResponseLastCapturedMedia</span></a></p>
@@ -3538,7 +3568,7 @@ changes.</p>
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
 </div>
 <p>Get the current livestream status (and optionally register for future status changes)</p>
 <p>Response: <a class="reference internal" href="#proto-notifylivestreamstatus"><span class="std std-ref">NotifyLiveStreamStatus</span></a></p>
@@ -3579,7 +3609,7 @@ changes.</p>
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/request_get_preset_status.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/request_get_preset_status.proto">Source Protobuf File</a></p>
 </div>
 <p>Get the set of currently available presets and optionally register to be notified when it changes.</p>
 <p>Response: <a class="reference internal" href="#proto-notifypresetstatus"><span class="std std-ref">NotifyPresetStatus</span></a> sent immediately</p>
@@ -3618,6 +3648,22 @@ changes.</p>
 <td>2</td>
 <td>Array of Preset statuses to stop being notified about</td>
 </tr>
+<tr class="row-even">
+<td>use_constant_setting_ids</td>
+<td>bool</td>
+<td>3</td>
+<td>
+<div class="line-block">
+<div class="line">Configures the set of Setting IDs that are returned by <a class="reference internal" href="#proto-notifypresetstatus"><span class="std std-ref">NotifyPresetStatus</span></a>.</div>
+<div class="line"><br></div>
+<div class="line">Defaults to False if not set</div>
+<div class="line"><br></div>
+<div class="line">When False, Setting IDs are tied to their camera UI string representation and may vary between cameras.</div>
+<div class="line"><br></div>
+<div class="line">When True, Setting IDs are tied to their functional representation and are consistent across cameras.</div>
+</div>
+</td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -3626,7 +3672,7 @@ changes.</p>
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto">Source Protobuf File</a></p>
 </div>
 <p>Request to disconnect from currently-connected AP</p>
 <p>This drops the camera out of Station (STA) Mode and returns it to Access Point (AP) mode.</p>
@@ -3637,7 +3683,7 @@ changes.</p>
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/cohn.proto">Source Protobuf File</a></p>
 </div>
 <p>Configure a COHN Setting</p>
 <p>Returns a <a class="reference internal" href="#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a></p>
@@ -3677,7 +3723,7 @@ changes.</p>
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/set_camera_control_status.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/set_camera_control_status.proto">Source Protobuf File</a></p>
 </div>
 <p>Set Camera Control Status (as part of Global Behaviors feature)</p>
 <p>This command is used to tell the camera that the app (i.e. External Control) wishes to claim control of the camera.
@@ -3717,7 +3763,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/live_streaming.proto">Source Protobuf File</a></p>
 </div>
 <p>Configure Live Streaming</p>
 <p>Response: <a class="reference internal" href="#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a></p>
@@ -3809,7 +3855,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/turbo_transfer.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/turbo_transfer.proto">Source Protobuf File</a></p>
 </div>
 <p>Enable/disable display of “Transferring Media” UI</p>
 <p>Response: <a class="reference internal" href="#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a></p>
@@ -3843,7 +3889,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto">Source Protobuf File</a></p>
 </div>
 <p>Start scanning for Access Points</p>
 <div class="admonition note">
@@ -3858,7 +3904,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/cohn.proto">Source Protobuf File</a></p>
 </div>
 <p>COHN Certificate response triggered by <a class="reference internal" href="#proto-requestcohncert"><span class="std std-ref">RequestCOHNCert</span></a></p>
 <table class="docutils align-default">
@@ -3897,7 +3943,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto">Source Protobuf File</a></p>
 </div>
 <p>The status of an attempt to connect to an Access Point</p>
 <p>Sent as the initial response to <a class="reference internal" href="#proto-requestconnect"><span class="std std-ref">RequestConnect</span></a></p>
@@ -3943,7 +3989,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto">Source Protobuf File</a></p>
 </div>
 <p>The status of an attempt to connect to an Access Point</p>
 <p>Sent as the initial response to <a class="reference internal" href="#proto-requestconnectnew"><span class="std std-ref">RequestConnectNew</span></a></p>
@@ -3993,7 +4039,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/response_generic.proto">Source Protobuf File</a></p>
 </div>
 <p>Generic Response used across many response / notification messages</p>
 <table class="docutils align-default">
@@ -4026,7 +4072,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto">Source Protobuf File</a></p>
 </div>
 <p>A list of scan entries describing a scanned Access Point</p>
 <p>This is sent in response to a <a class="reference internal" href="#proto-requestgetapentries"><span class="std std-ref">RequestGetApEntries</span></a></p>
@@ -4072,7 +4118,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/media.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/media.proto">Source Protobuf File</a></p>
 </div>
 <p>The Last Captured Media</p>
 <p>Message is sent in response to a <a class="reference internal" href="#proto-requestgetlastcapturedmedia"><span class="std std-ref">RequestGetLastCapturedMedia</span></a>.</p>
@@ -4122,7 +4168,7 @@ on the type of media captured, it will return:</p>
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto">Source Protobuf File</a></p>
 </div>
 <p>The current scanning state.</p>
 <p>This is the initial response to a <a class="reference internal" href="#proto-requeststartscan"><span class="std std-ref">RequestStartScan</span></a></p>
@@ -4162,7 +4208,7 @@ on the type of media captured, it will return:</p>
 </h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto">Source Protobuf File</a></p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto">Source Protobuf File</a></p>
 </div>
 <p>An individual Scan Entry in a <a class="reference internal" href="#proto-responsegetapentries"><span class="std std-ref">ResponseGetApEntries</span></a> response</p>
 <div class="admonition note">

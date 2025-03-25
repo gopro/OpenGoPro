@@ -64,6 +64,8 @@
 .quiz {
     text-align: center;
     margin: 0.5em;
+    margin-left: 3em;
+    margin-right: 3em;
     min-width: 50%;
     border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
     padding: 1em;
@@ -82,7 +84,7 @@
 }
 .quiz button {
     background-color: rgb(173, 173, 173);
-    border: 0px;
+    border: solid #38a 3px;
     border-radius: 5px;
     cursor: pointer;
     color: black;
@@ -124,20 +126,6 @@
 .callout.warning {
     background-color: #fbbeb8;
     border-left: solid 8px #df5142;
-}
-
-/* Center diagrams */
-
-img.plantuml {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-img.mermaid {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 /* Custom classes for additional markdown formatting */
@@ -264,4 +252,13 @@ img.mermaid {
 /* https://www.bryanbraun.com/anchorjs/#pages-with-a-sticky-navbar */
 :target {
     scroll-margin-top: 4em;
+}
+
+svg.plantuml {
+    background: none !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }

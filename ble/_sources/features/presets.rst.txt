@@ -1,16 +1,31 @@
 Presets
 =======
 
-The camera organizes many modes of operation into Presets.
+The camera organizes modes of operation into :ref:`Presets <proto-wsdk_preset>` which consist of a camera mode and some corresponding settings.
 
-Depending on the camera's state, different collections of presets will be available for immediate loading and use.
+The set of available *Presets* is dependent on the camera's current state such as the currently active settings. Therefore,
+it is possible that the camera can be in a state where certain *Presets* can not currently be set. Special attention
+should be paid to the following settings since these have a drastic effect on the set of currently available *Presets*:
 
-Preset Groups
--------------
+- :operation:ref:`Control Mode <Setting 175>`
 
-Presets are organized into Preset Groups.
+Recommended Usage
+-----------------
 
-To find the currently available Presets / Preset Groups, use :operation:ref:`Get Available Presets`
+The set of available Presets / Preset Groups can be found using :operation:ref:`Get Available Presets`. Depending on the
+camera, this may be returned as a flat list or further separated into *Preset Groups*. It is possible for the groupings
+to vary per camera. Also, none of the following *Preset* attributes are consistent across cameras:
+
+- :ref:`Preset ID <proto-wsdk_preset>`
+- :ref:`Preset Title ID<proto-wsdk_enumpresettitle>`
+- :ref:`Preset Icon ID<proto-wsdk_enumpreseticon>`
+
+The recommended procedure to query and set *Presets* is:
+
+1. :operation:ref:`Get Available Presets` to retrieve a hierarchy of *Preset Groups*
+2. Flatten all the *Preset Groups* into a flat list of *Presets*
+3. Identify the desired *Preset* by its :ref:`Preset Title ID<proto-wsdk_enumpresettitle>`
+4. Use the :ref:`Preset ID <proto-wsdk_preset>` from step 3 to load the Preset with :operation:ref:`Load Preset`
 
 Preset Modified Status
 ----------------------
@@ -91,7 +106,7 @@ Operations
    :external:
    :id: 0x3E
 
-   The available group ID values can be found in :ref:`proto-enumpresetgroup`
+   The available group ID values can be found in :ref:`proto-wsdk_enumpresetgroup`
 
    .. operation:tlv-message:: Request
       :uuid: Command
@@ -99,6 +114,22 @@ Operations
             - preset (uint32): preset group ID
    .. operation:tlv-message:: Response
       :uuid: Command Response
+
+.. operation:protobuf:: Set Preset Visibility
+   :operation-id: GPCAMERA_FEATURE_SET_PRESET_VISIBILITY
+   :external:
+
+    .. operation:protobuf-message:: request
+        :feature-id: 0xF1
+        :action-id: 0x63
+        :uuid: Command
+        :message: WSDK_RequestPresetSetVisibility
+
+    .. operation:protobuf-message:: response
+        :feature-id: 0xF1
+        :action-id: 0xE3
+        :uuid: Command Response
+        :message: ResponseGeneric
 
 .. operation:protobuf:: Update Custom Preset
    :operation-id: GPCAMERA_CUSTOM_PRESET_UPDATE

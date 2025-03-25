@@ -1,6 +1,8 @@
 Data Protocol
 *************
 
+.. include:: ../substitutions.inc
+
 Note the following terminology used in this section:
 
 - **packet**: GATT-level byte data including packet headers
@@ -135,7 +137,7 @@ Message Payload
 ===============
 
 Once the payload has been extracted and had its type deciphered, it can then be parsed depending on its type.
-The Open GoPro protocol uses two different top-level message payload formats:
+The |api_title| protocol uses two different top-level message payload formats:
 
 - :ref:`Type Length Value (TLV) <protocol/data_protocol:type length value>`
 - :ref:`Protobuf <protocol/data_protocol:protobuf>`
@@ -254,7 +256,7 @@ Protobuf
 --------
 
 In order to maximize BLE bandwidth, some commands use `Google Protobuf (Protocol Buffers) <https://developers.google.com/protocol-buffers>`_.
-Open GoPro currently uses Protocol Buffers `Version 2 <https://developers.google.com/protocol-buffers/docs/reference/proto2-spec>`_
+The |api_title| API currently uses Protocol Buffers `Version 2 <https://developers.google.com/protocol-buffers/docs/reference/proto2-spec>`_
 
 Protobuf requests and responses are identified by a Feature ID and an Action ID prepended before their serialized payload.
 The top level message format for a Protobuf message is as follows:

@@ -68,7 +68,7 @@ Operations
     .. operation:tlv-message:: Request
         :uuid: Command
         :params:
-            - mode (uint8) : 0 to disable, 1 to enable
+            - mode (uint8) : 0 to disable, 1 to enable, 2 to bounce (disable --> enable)
     .. operation:tlv-message:: Response
         :uuid: Command Response
 

@@ -139,8 +139,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BLE Setup — Open GoPro BLE API 0.0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1">
+  <title>BLE Setup — GoPro BLE API 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3">
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094">
       <link rel="stylesheet" type="text/css" href="../_static/style.css?v=d4d8e761">
 
@@ -170,7 +170,7 @@
           
           
           <a href="../index.html" class="icon icon-home">
-            Open GoPro BLE API
+            GoPro BLE API
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -187,12 +187,22 @@
 <li class="toctree-l2 current">
 <a class="current reference internal" href="#">BLE Setup</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#pairing-mode">Pairing Mode</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#advertisements">Advertisements</a></li>
+<li class="toctree-l3">
+<a class="reference internal" href="#advertisements">Advertisements</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#advertising-data">Advertising Data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scan-response-data">Scan Response Data</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#finish-pairing">Finish Pairing</a></li>
 <li class="toctree-l3">
 <a class="reference internal" href="#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#ble-characteristics">BLE Characteristics</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#send-messages">Send Messages</a></li>
+</ul>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="#gopro-setup">GoPro Setup</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#wait-for-camera-ble-readiness">Wait for Camera BLE Readiness</a></li>
 </ul>
 </li>
 </ul>
@@ -347,6 +357,7 @@
 </li>
 <li class="toctree-l1">
 <a class="reference internal" href="../features/live_streaming.html">Live Streaming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../features/live_streaming.html#metadata">Metadata</a></li>
 <li class="toctree-l2">
 <a class="reference internal" href="../features/live_streaming.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/live_streaming.html#set-livestream-mode"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Livestream</span> <span class="pre">Mode</span></code></a></li>
@@ -386,7 +397,7 @@
 </li>
 <li class="toctree-l1">
 <a class="reference internal" href="../features/presets.html">Presets</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../features/presets.html#preset-groups">Preset Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../features/presets.html#recommended-usage">Recommended Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../features/presets.html#preset-modified-status">Preset Modified Status</a></li>
 <li class="toctree-l2">
 <a class="reference internal" href="../features/presets.html#operations">Operations</a><ul>
@@ -415,6 +426,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#webcam-digital-lenses-43">Webcam Digital Lenses (43)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#auto-power-down-59">Auto Power Down (59)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#gps-83">GPS (83)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#led-91">LED (91)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#video-aspect-ratio-108">Video Aspect Ratio (108)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#video-lens-121">Video Lens (121)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#photo-lens-122">Photo Lens (122)</a></li>
@@ -430,7 +442,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#photo-single-interval-171">Photo Single Interval (171)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#photo-interval-duration-172">Photo Interval Duration (172)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#video-performance-mode-173">Video Performance Mode (173)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#controls-175">Controls (175)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#control-mode-175">Control Mode (175)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#easy-mode-speed-176">Easy Mode Speed (176)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#enable-night-photo-177">Enable Night Photo (177)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#wireless-band-178">Wireless Band (178)</a></li>
@@ -479,8 +491,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#remote-version-26">Remote Version (26)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#remote-connected-27">Remote Connected (27)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#pairing-state-legacy-28">Pairing State (Legacy) (28)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#ap-ssid-29">AP SSID (29)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#wifi-ssid-30">WiFi SSID (30)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#connected-wifi-ssid-29">Connected WiFi SSID (29)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#access-point-ssid-30">Access Point SSID (30)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#connected-devices-31">Connected Devices (31)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#preview-stream-32">Preview Stream (32)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#primary-storage-33">Primary Storage (33)</a></li>
@@ -554,7 +566,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Open GoPro BLE API</a>
+          <a href="../index.html">GoPro BLE API</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -585,6 +597,7 @@ limiting to peripherals that advertise service <strong>0xFEA6</strong>)</p></li>
 <li><p><a class="reference internal" href="#finish-pairing"><span class="std std-ref">Finish pairing</span></a> with the peripheral device</p></li>
 <li><p>Discover all advertised services and characteristics</p></li>
 <li><p><a class="reference internal" href="#configure-gatt-characteristics"><span class="std std-ref">Subscribe to notifications</span></a> from all characteristics that have the notify flag set</p></li>
+<li><p>Perform <a class="reference internal" href="#gopro-setup"><span class="std std-ref">GoPro-specific-setup</span></a></p></li>
 </ol>
 <section id="pairing-mode">
 <h2>Pairing Mode<a class="headerlink" href="#pairing-mode" title="Link to this heading"></a>
@@ -599,6 +612,270 @@ camera UI.</p>
 <p>Once in pairing mode, the camera will send BLE advertisements while it is ON and for the first 8 hours after the camera
 is put to sleep. During this time, the camera is discoverable and can be connected to. If the camera is in sleep mode,
 connecting to it will cause the camera to wake and boot up.</p>
+<section id="advertising-data">
+<h3>Advertising Data<a class="headerlink" href="#advertising-data" title="Link to this heading"></a>
+</h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd">
+<th class="head">Byte(s)</th>
+<th class="head">Description</th>
+<th class="head">Bit Documentation</th>
+<th class="head">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even">
+<td>0</td>
+<td>Flags Length</td>
+<td>
+</td>
+<td>Always 2</td>
+</tr>
+<tr class="row-odd">
+<td>1</td>
+<td>Flags Type</td>
+<td>
+</td>
+<td>Always 1</td>
+</tr>
+<tr class="row-even">
+<td>2</td>
+<td>Flags</td>
+<td>
+</td>
+<td>See the BLE Spec</td>
+</tr>
+<tr class="row-odd">
+<td>3</td>
+<td>UUIDs length</td>
+<td>
+</td>
+<td>Always 3</td>
+</tr>
+<tr class="row-even">
+<td>4</td>
+<td>UUIDs type</td>
+<td>
+</td>
+<td>Always 2</td>
+</tr>
+<tr class="row-odd">
+<td>5-6</td>
+<td>UUIDS</td>
+<td>
+</td>
+<td>Always 0xFEA6. This can be used to filter for GoPros</td>
+</tr>
+<tr class="row-even">
+<td>7</td>
+<td>Manufacturer Data Length</td>
+<td>
+</td>
+<td>Always 16</td>
+</tr>
+<tr class="row-odd">
+<td>8</td>
+<td>Manufacturer Data Type</td>
+<td>
+</td>
+<td>Always 0xFF</td>
+</tr>
+<tr class="row-even">
+<td>9-10</td>
+<td>Company ID</td>
+<td>
+</td>
+<td>Always 0xF202</td>
+</tr>
+<tr class="row-odd">
+<td>11</td>
+<td>Schema ID</td>
+<td>
+</td>
+<td>Always 2</td>
+</tr>
+<tr class="row-even">
+<td rowspan="6">12</td>
+<td rowspan="6">Camera Status</td>
+<td>Bit 0: Processor State</td>
+<td>0 == low power. 1 == awake</td>
+</tr>
+<tr class="row-odd">
+<td>Bit 1: WiFi AP State</td>
+<td>0 == off. 1 == on.</td>
+</tr>
+<tr class="row-even">
+<td>Bit 2: Peripheral Pairing State</td>
+<td>0 == not pairing. 1 == pairing.</td>
+</tr>
+<tr class="row-odd">
+<td>Bit 3: Is Central Role Enabled?</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>Bit 4: Is New Media Available?</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>Bits 5-8: Reserved</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>13</td>
+<td>Model  ID</td>
+<td>
+</td>
+<td>See <a class="reference internal" href="../index.html#supported-cameras"><span class="std std-ref">Supported Cameras</span></a> table</td>
+</tr>
+<tr class="row-odd">
+<td rowspan="7">14</td>
+<td rowspan="7">Camera Capabilities</td>
+<td>Bit 0: Command and Control</td>
+<td>Supports  Command, Settings, and Query characteristics.</td>
+</tr>
+<tr class="row-even">
+<td>Bit 1: BLE Metadata</td>
+<td>LE Sensor Data GATT Characteristics.</td>
+</tr>
+<tr class="row-odd">
+<td>Bit 2: Wideband Audio</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>Bit 3: Concurrent Master Slave</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>Bit 4: Onboarding</td>
+<td>Supports Onboarding 2.0</td>
+</tr>
+<tr class="row-even">
+<td>Bit 5: New Media Available</td>
+<td>Supports status bit for New Media Available</td>
+</tr>
+<tr class="row-odd">
+<td>Bits 6-8: Reserved</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>15</td>
+<td>Reserved</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>16-21</td>
+<td>ID Hash</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td rowspan="7">22</td>
+<td rowspan="7">Media Offload Status</td>
+<td>Bit 0: Available</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>Bit 1: New Media Available</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>Bit 2: Battery OK</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>Bit 3: SD Card OK</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>Bit 4: Busy</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>Bit 5: Paused</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>Bits 6-8: Reserved</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="scan-response-data">
+<h3>Scan Response Data<a class="headerlink" href="#scan-response-data" title="Link to this heading"></a>
+</h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd">
+<th class="head">Byte(s)</th>
+<th class="head">Description</th>
+<th class="head">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even">
+<td>0</td>
+<td>Name Length</td>
+<td>Always 11</td>
+</tr>
+<tr class="row-odd">
+<td>1</td>
+<td>Name Type</td>
+<td>Always 0x09</td>
+</tr>
+<tr class="row-even">
+<td>2-11</td>
+<td>Name</td>
+<td>ASCII Camera Name, i.e. GoPro 1234</td>
+</tr>
+<tr class="row-odd">
+<td>12</td>
+<td>Service Data Length</td>
+<td>Always 11</td>
+</tr>
+<tr class="row-even">
+<td>13</td>
+<td>Service Data Type</td>
+<td>Always 0x16</td>
+</tr>
+<tr class="row-odd">
+<td>14-15</td>
+<td>Service Data UUID</td>
+<td>Always 0xFEA6</td>
+</tr>
+<tr class="row-even">
+<td>16-19</td>
+<td>AP Mac Address</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>20-23</td>
+<td>Partial Serial Number</td>
+<td>Last 4 digits of the serial number as ASCII</td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 <section id="finish-pairing">
 <h2>Finish Pairing<a class="headerlink" href="#finish-pairing" title="Link to this heading"></a>
@@ -713,6 +990,34 @@ from the corresponding response / notification UUID. Responses and notifications
 and will be (asynchronously) processed. For example, to send a camera control command, a client should write to
 GP-0072 and then wait for a response notification from GP-0073.</p>
 <p>See the following Protocol sections for steps to build and parse messages.</p>
+</section>
+</section>
+<section id="gopro-setup">
+<h2>GoPro Setup<a class="headerlink" href="#gopro-setup" title="Link to this heading"></a>
+</h2>
+<p>This section details the GoPro-specific steps that are needed to configure / prepare the camera for communication</p>
+<section id="wait-for-camera-ble-readiness">
+<h3>Wait for Camera BLE Readiness<a class="headerlink" href="#wait-for-camera-ble-readiness" title="Link to this heading"></a>
+</h3>
+<p>It takes some time for the camera’s BLE communication to become ready after establishing connection. In order to verify
+readiness, the client shall continuously poll <a class="reference internal" href="../features/query.html#get-hardware-info" title="get hardware info"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Hardware</span> <span class="pre">Info</span></code></a> until it returns a success status.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-6a80b6db367dd42c310cae2024824e70d3b15e1b.png" alt='title Camera Connection Init
+
+actor client
+participant "GP-0072" as cmd
+participant "GP-0073" as cmd_resp
+
+client -&gt; cmd : GetHardwareInfo (0x3C)
+
+client &lt;- cmd_resp : GetHardwareInfoRsp
+note right
+   status: 0: Success - camera is ready for more commands
+   status: 2: Error - camera not ready, please try this command again before
+               progressing with connection. This can occur when camera is resuming
+               from suspend state.
+end note'>
+</p>
 </section>
 </section>
 </section>

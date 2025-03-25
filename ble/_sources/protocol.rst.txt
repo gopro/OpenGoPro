@@ -2,7 +2,9 @@
 Protocol
 ########
 
-Read through the following sections in order to initialize and configure Open GoPro BLE communication.
+.. include:: substitutions.inc
+
+Read through the following sections in order to initialize and configure |api_title| BLE communication.
 
 .. toctree::
     :maxdepth: 2

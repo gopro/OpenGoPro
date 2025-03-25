@@ -1,21 +1,21 @@
-Welcome to Open GoPro BLE API's documentation!
+Welcome to the |api_title| API documentation!
 **********************************************
 
 This document describes the format, capabilities, and use of
 `Bluetooth Low Energy (BLE) <https://learn.adafruit.com/introduction-to-bluetooth-low-energy>`_ as it pertains to communicating
-with GoPro cameras via the Open GoPro API.
+with GoPro cameras via the |api_title| API.
 
 Supported Cameras
 =================
 
-Below is a table of cameras that support GoPro's public BLE API:
+Below is a table of cameras that support GoPro's public BLE API, sorted by release date.
 
 .. include:: included_cameras.inc
 
 Getting Started
 ===============
 
-First, read through the protocol section to understand how to send and receive BLE messages via the Open GoPro
+First, read through the protocol section to understand how to send and receive BLE messages via the |api_title|
 protocol:
 
 .. toctree::

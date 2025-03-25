@@ -139,8 +139,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to Open GoPro BLE API’s documentation! — Open GoPro BLE API 0.0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1">
+  <title>Welcome to the Open GoPro API documentation! — GoPro BLE API 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3">
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094">
       <link rel="stylesheet" type="text/css" href="_static/style.css?v=d4d8e761">
 
@@ -169,7 +169,7 @@
           
           
           <a href="#" class="icon icon-home">
-            Open GoPro BLE API
+            GoPro BLE API
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -186,12 +186,22 @@
 <li class="toctree-l2">
 <a class="reference internal" href="protocol/ble_setup.html">BLE Setup</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="protocol/ble_setup.html#pairing-mode">Pairing Mode</a></li>
-<li class="toctree-l3"><a class="reference internal" href="protocol/ble_setup.html#advertisements">Advertisements</a></li>
+<li class="toctree-l3">
+<a class="reference internal" href="protocol/ble_setup.html#advertisements">Advertisements</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="protocol/ble_setup.html#advertising-data">Advertising Data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="protocol/ble_setup.html#scan-response-data">Scan Response Data</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/ble_setup.html#finish-pairing">Finish Pairing</a></li>
 <li class="toctree-l3">
 <a class="reference internal" href="protocol/ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="protocol/ble_setup.html#ble-characteristics">BLE Characteristics</a></li>
 <li class="toctree-l4"><a class="reference internal" href="protocol/ble_setup.html#send-messages">Send Messages</a></li>
+</ul>
+</li>
+<li class="toctree-l3">
+<a class="reference internal" href="protocol/ble_setup.html#gopro-setup">GoPro Setup</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="protocol/ble_setup.html#wait-for-camera-ble-readiness">Wait for Camera BLE Readiness</a></li>
 </ul>
 </li>
 </ul>
@@ -346,6 +356,7 @@
 </li>
 <li class="toctree-l1">
 <a class="reference internal" href="features/live_streaming.html">Live Streaming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="features/live_streaming.html#metadata">Metadata</a></li>
 <li class="toctree-l2">
 <a class="reference internal" href="features/live_streaming.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="features/live_streaming.html#set-livestream-mode"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Livestream</span> <span class="pre">Mode</span></code></a></li>
@@ -385,7 +396,7 @@
 </li>
 <li class="toctree-l1">
 <a class="reference internal" href="features/presets.html">Presets</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="features/presets.html#preset-groups">Preset Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features/presets.html#recommended-usage">Recommended Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="features/presets.html#preset-modified-status">Preset Modified Status</a></li>
 <li class="toctree-l2">
 <a class="reference internal" href="features/presets.html#operations">Operations</a><ul>
@@ -414,6 +425,7 @@
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#webcam-digital-lenses-43">Webcam Digital Lenses (43)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#auto-power-down-59">Auto Power Down (59)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#gps-83">GPS (83)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="features/settings.html#led-91">LED (91)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#video-aspect-ratio-108">Video Aspect Ratio (108)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#video-lens-121">Video Lens (121)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#photo-lens-122">Photo Lens (122)</a></li>
@@ -429,7 +441,7 @@
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#photo-single-interval-171">Photo Single Interval (171)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#photo-interval-duration-172">Photo Interval Duration (172)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#video-performance-mode-173">Video Performance Mode (173)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="features/settings.html#controls-175">Controls (175)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="features/settings.html#control-mode-175">Control Mode (175)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#easy-mode-speed-176">Easy Mode Speed (176)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#enable-night-photo-177">Enable Night Photo (177)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#wireless-band-178">Wireless Band (178)</a></li>
@@ -478,8 +490,8 @@
 <li class="toctree-l3"><a class="reference internal" href="features/statuses.html#remote-version-26">Remote Version (26)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/statuses.html#remote-connected-27">Remote Connected (27)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/statuses.html#pairing-state-legacy-28">Pairing State (Legacy) (28)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="features/statuses.html#ap-ssid-29">AP SSID (29)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="features/statuses.html#wifi-ssid-30">WiFi SSID (30)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="features/statuses.html#connected-wifi-ssid-29">Connected WiFi SSID (29)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="features/statuses.html#access-point-ssid-30">Access Point SSID (30)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/statuses.html#connected-devices-31">Connected Devices (31)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/statuses.html#preview-stream-32">Preview Stream (32)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/statuses.html#primary-storage-33">Primary Storage (33)</a></li>
@@ -553,7 +565,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">Open GoPro BLE API</a>
+          <a href="#">GoPro BLE API</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -561,7 +573,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Welcome to Open GoPro BLE API’s documentation!</li>
+      <li class="breadcrumb-item active">Welcome to the Open GoPro API documentation!</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -570,8 +582,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="welcome-to-open-gopro-ble-api-s-documentation">
-<h1>Welcome to Open GoPro BLE API’s documentation!<a class="headerlink" href="#welcome-to-open-gopro-ble-api-s-documentation" title="Link to this heading"></a>
+  <section id="welcome-to-the-api-title-api-documentation">
+<h1>Welcome to the Open GoPro API documentation!<a class="headerlink" href="#welcome-to-the-api-title-api-documentation" title="Link to this heading"></a>
 </h1>
 <p>This document describes the format, capabilities, and use of
 <a class="reference external" href="https://learn.adafruit.com/introduction-to-bluetooth-low-energy">Bluetooth Low Energy (BLE)</a> as it pertains to communicating
@@ -579,16 +591,18 @@ with GoPro cameras via the Open GoPro API.</p>
 <section id="supported-cameras">
 <h2>Supported Cameras<a class="headerlink" href="#supported-cameras" title="Link to this heading"></a>
 </h2>
-<p>Below is a table of cameras that support GoPro’s public BLE API:</p>
+<p>Below is a table of cameras that support GoPro’s public BLE API, sorted by release date.</p>
 <table class="docutils align-default" id="id1">
 <caption>
-<span class="caption-text">Open GoPro Supported Cameras</span><a class="headerlink" href="#id1" title="Link to this table"></a>
+<span class="caption-text">Open GoPro API Supported Cameras</span><a class="headerlink" href="#id1" title="Link to this table"></a>
 </caption>
 <colgroup>
-<col style="width: 5.4%">
-<col style="width: 5.4%">
-<col style="width: 22.3%">
-<col style="width: 67.0%">
+<col style="width: 4.2%">
+<col style="width: 4.2%">
+<col style="width: 17.3%">
+<col style="width: 51.9%">
+<col style="width: 5.2%">
+<col style="width: 17.3%">
 </colgroup>
 <thead>
 <tr class="row-odd">
@@ -596,6 +610,8 @@ with GoPro cameras via the Open GoPro API.</p>
 <th class="head">Model Code</th>
 <th class="head">Marketing Name</th>
 <th class="head">Firmware Download Link</th>
+<th class="head">Serial Prefix</th>
+<th class="head">Release Date</th>
 </tr>
 </thead>
 <tbody>
@@ -604,36 +620,48 @@ with GoPro cameras via the Open GoPro API.</p>
 <td>H24.01</td>
 <td>HERO13 Black</td>
 <td><a class="reference external" href="https://gopro.com/en/us/update/hero13-black">https://gopro.com/en/us/update/hero13-black</a></td>
+<td>C353</td>
+<td>2024-09-10</td>
 </tr>
 <tr class="row-odd">
 <td>62</td>
 <td>H23.01</td>
 <td>HERO12 Black</td>
 <td><a class="reference external" href="https://gopro.com/en/us/update/hero12-black">https://gopro.com/en/us/update/hero12-black</a></td>
+<td>C350</td>
+<td>2023-09-13</td>
 </tr>
 <tr class="row-even">
 <td>60</td>
 <td>H22.03</td>
 <td>HERO11 Black Mini</td>
 <td><a class="reference external" href="https://gopro.com/en/us/update/hero11-black-mini">https://gopro.com/en/us/update/hero11-black-mini</a></td>
+<td>C349</td>
+<td>2022-11-18</td>
 </tr>
 <tr class="row-odd">
 <td>58</td>
 <td>H22.01</td>
 <td>HERO11 Black</td>
 <td><a class="reference external" href="https://gopro.com/en/us/update/hero11-black">https://gopro.com/en/us/update/hero11-black</a></td>
+<td>C347</td>
+<td>2022-09-14</td>
 </tr>
 <tr class="row-even">
 <td>57</td>
 <td>H21.01</td>
 <td>HERO10 Black</td>
 <td><a class="reference external" href="https://gopro.com/en/us/update/hero10-black">https://gopro.com/en/us/update/hero10-black</a></td>
+<td>C346</td>
+<td>2021-09-16</td>
 </tr>
 <tr class="row-odd">
 <td>55</td>
 <td>HD9.01</td>
 <td>HERO9 Black</td>
 <td><a class="reference external" href="https://gopro.com/en/us/update/hero9-black">https://gopro.com/en/us/update/hero9-black</a></td>
+<td>C344</td>
+<td>2020-09-16</td>
 </tr>
 </tbody>
 </table>

@@ -15,7 +15,7 @@ EnumCOHNNetworkState
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/cohn.proto>`__
 
 
 .. list-table::
@@ -77,7 +77,7 @@ EnumCOHNStatus
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/cohn.proto>`__
 
 
 .. list-table::
@@ -109,7 +109,7 @@ EnumCameraControlStatus
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/set_camera_control_status.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/set_camera_control_status.proto>`__
 
 
 .. list-table::
@@ -151,7 +151,7 @@ EnumFlatMode
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto>`__
 
 
 .. list-table::
@@ -288,7 +288,7 @@ EnumLens
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/live_streaming.proto>`__
 
 
 .. list-table::
@@ -325,7 +325,7 @@ EnumLiveStreamError
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/live_streaming.proto>`__
 
 
 .. list-table::
@@ -412,7 +412,7 @@ EnumLiveStreamStatus
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/live_streaming.proto>`__
 
 
 .. list-table::
@@ -474,7 +474,7 @@ EnumPresetGroup
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto>`__
 
 
 .. list-table::
@@ -511,7 +511,7 @@ EnumPresetGroupIcon
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto>`__
 
 
 .. list-table::
@@ -588,7 +588,7 @@ EnumPresetIcon
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto>`__
 
 
 .. list-table::
@@ -1040,7 +1040,7 @@ EnumPresetTitle
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto>`__
 
 
 .. list-table::
@@ -1435,6 +1435,21 @@ EnumPresetTitle
 
      - 
 
+   * - PRESET_TITLE_4_3_VIDEO
+     - 125
+
+     - 
+
+   * - PRESET_TITLE_16_9_VIDEO
+     - 126
+
+     - 
+
+   * - PRESET_TITLE_16_9_SLOMO
+     - 127
+
+     - 
+
 
 
 
@@ -1447,7 +1462,7 @@ EnumProvisioning
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto>`__
 
 
 .. list-table::
@@ -1529,7 +1544,7 @@ EnumRegisterLiveStreamStatus
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/live_streaming.proto>`__
 
 
 .. list-table::
@@ -1571,7 +1586,7 @@ EnumRegisterPresetStatus
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/request_get_preset_status.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/request_get_preset_status.proto>`__
 
 
 .. list-table::
@@ -1603,7 +1618,7 @@ EnumResultGeneric
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/response_generic.proto>`__
 
 
 .. list-table::
@@ -1660,7 +1675,7 @@ EnumScanEntryFlags
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto>`__
 
 
 .. list-table::
@@ -1712,7 +1727,7 @@ EnumScanning
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto>`__
 
 
 .. list-table::
@@ -1764,7 +1779,7 @@ EnumWindowSize
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/live_streaming.proto>`__
 
 
 .. list-table::
@@ -1957,7 +1972,7 @@ Media
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/response_generic.proto>`__
 
 
 A common model to represent a media file
@@ -1995,7 +2010,7 @@ NotifProvisioningState
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto>`__
 
 
 Provision state notification
@@ -2030,7 +2045,7 @@ NotifStartScanning
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto>`__
 
 
 Scanning state notification
@@ -2083,7 +2098,7 @@ NotifyCOHNStatus
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/cohn.proto>`__
 
 
 Current COHN status triggered by a :ref:`proto-requestgetcohnstatus`
@@ -2159,7 +2174,7 @@ NotifyLiveStreamStatus
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/live_streaming.proto>`__
 
 
 Live Stream status
@@ -2266,7 +2281,7 @@ NotifyPresetStatus
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto>`__
 
 
 Current Preset status
@@ -2304,7 +2319,7 @@ Preset
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto>`__
 
 
 An individual preset.
@@ -2394,7 +2409,7 @@ PresetGroup
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto>`__
 
 
 Preset Group meta information and contained Presets
@@ -2454,7 +2469,7 @@ PresetSetting
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto>`__
 
 
 Setting representation that comprises a  :ref:`proto-preset`
@@ -2498,7 +2513,7 @@ RequestCOHNCert
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/cohn.proto>`__
 
 
 Get the COHN certificate.
@@ -2517,7 +2532,7 @@ RequestClearCOHNCert
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/cohn.proto>`__
 
 
 Clear the COHN certificate.
@@ -2536,7 +2551,7 @@ RequestConnect
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto>`__
 
 
 Connect to (but do not authenticate with) an Access Point
@@ -2574,7 +2589,7 @@ RequestConnectNew
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto>`__
 
 
 Connect to and authenticate with an Access Point
@@ -2648,7 +2663,7 @@ RequestCreateCOHNCert
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/cohn.proto>`__
 
 
 Create the Camera On the Home Network SSL/TLS certificate.
@@ -2682,7 +2697,7 @@ RequestCustomPresetUpdate
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/preset_status.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto>`__
 
 
 Request to Update the Title and / or Icon of the Active Custom Preset
@@ -2758,7 +2773,7 @@ RequestGetApEntries
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto>`__
 
 
 Get a list of Access Points found during a :ref:`proto-requeststartscan`
@@ -2804,7 +2819,7 @@ RequestGetCOHNStatus
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/cohn.proto>`__
 
 
 Get the current COHN status.
@@ -2841,7 +2856,7 @@ RequestGetLastCapturedMedia
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/media.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/media.proto>`__
 
 
 Get the last captured media filename
@@ -2860,7 +2875,7 @@ RequestGetLiveStreamStatus
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/live_streaming.proto>`__
 
 
 Get the current livestream status (and optionally register for future status changes)
@@ -2904,7 +2919,7 @@ RequestGetPresetStatus
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/request_get_preset_status.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/request_get_preset_status.proto>`__
 
 
 Get the set of currently available presets and optionally register to be notified when it changes.
@@ -2941,6 +2956,18 @@ The preset status changes when:
 
      - Array of Preset statuses to stop being notified about
 
+   * - use_constant_setting_ids
+     - bool
+     - 3
+
+     - | Configures the set of Setting IDs that are returned by :ref:`proto-notifypresetstatus`.
+       | 
+       | Defaults to False if not set
+       | 
+       | When False, Setting IDs are tied to their camera UI string representation and may vary between cameras.
+       | 
+       | When True, Setting IDs are tied to their functional representation and are consistent across cameras.
+
 
 
 
@@ -2954,7 +2981,7 @@ RequestReleaseNetwork
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto>`__
 
 
 Request to disconnect from currently-connected AP
@@ -2975,7 +3002,7 @@ RequestSetCOHNSetting
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/cohn.proto>`__
 
 
 Configure a COHN Setting
@@ -3011,7 +3038,7 @@ RequestSetCameraControlStatus
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/set_camera_control_status.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/set_camera_control_status.proto>`__
 
 
 Set Camera Control Status (as part of Global Behaviors feature)
@@ -3054,7 +3081,7 @@ RequestSetLiveStreamMode
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/live_streaming.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/live_streaming.proto>`__
 
 
 Configure Live Streaming
@@ -3138,7 +3165,7 @@ RequestSetTurboActive
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/turbo_transfer.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/turbo_transfer.proto>`__
 
 
 Enable/disable display of "Transferring Media" UI
@@ -3172,7 +3199,7 @@ RequestStartScan
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto>`__
 
 
 Start scanning for Access Points
@@ -3195,7 +3222,7 @@ ResponseCOHNCert
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/cohn.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/cohn.proto>`__
 
 
 COHN Certificate response triggered by :ref:`proto-requestcohncert`
@@ -3234,7 +3261,7 @@ ResponseConnect
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto>`__
 
 
 The status of an attempt to connect to an Access Point
@@ -3282,7 +3309,7 @@ ResponseConnectNew
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto>`__
 
 
 The status of an attempt to connect to an Access Point
@@ -3330,7 +3357,7 @@ ResponseGeneric
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/response_generic.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/response_generic.proto>`__
 
 
 Generic Response used across many response / notification messages
@@ -3363,7 +3390,7 @@ ResponseGetApEntries
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto>`__
 
 
 A list of scan entries describing a scanned Access Point
@@ -3411,7 +3438,7 @@ ResponseLastCapturedMedia
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/media.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/media.proto>`__
 
 
 The Last Captured Media
@@ -3459,7 +3486,7 @@ ResponseStartScanning
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto>`__
 
 
 The current scanning state.
@@ -3501,7 +3528,7 @@ ResponseGetApEntries::ScanEntry
 
 .. seealso::
 
-   `Source Protobuf File <https://github.com/gopro/OpenGoPro/blob/main/protobuf/network_management.proto>`__
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto>`__
 
 
 An individual Scan Entry in a :ref:`proto-responsegetapentries` response

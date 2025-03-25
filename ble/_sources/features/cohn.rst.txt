@@ -1,6 +1,8 @@
 Camera on the Home Network
 **************************
 
+.. include:: ../substitutions.inc
+
 Some cameras support Camera On the Home Network (COHN). This capability allows the client to perform command and control
 with the camera indirectly through an access point such as a router at home. For security purposes, all communications
 are performed over HTTPS.
@@ -59,7 +61,11 @@ is as follows:
 
 Once the camera is provisioned, the client can communicate with the camera via HTTPS. The camera supports nearly all
 functionality over HTTPS that it does over HTTP. For more details about HTTP/HTTPS, see the
-Open GoPro `HTTP specification <../../http>`_.
+|api_title| `HTTP specification <../../http>`_.
+
+.. note::
+    The camera will remember and apply the COHN configuration on future boots so it is not necessary to
+    reprovision on future connections.
 
 Operations
 ==========

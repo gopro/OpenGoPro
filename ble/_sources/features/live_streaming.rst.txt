@@ -4,7 +4,7 @@ Live Streaming
 The camera supports the ability to stream to social media platforms such as Twitch, YouTube, Facebook or any other site
 that accepts RTMP(S) URLs.
 
-For additional details about getting started with RTMP, see
+The livestream is transferred via RTMP as AVC/h264. For additional details about getting started with RTMP, see
 `How to Stream <https://gopro.com/en/us/news/how-to-live-stream-on-gopro>`__.
 
 Live streaming with camera is accomplished as follows:
@@ -16,6 +16,25 @@ Live streaming with camera is accomplished as follows:
 5. Unset the shutter to stop live streaming
 
 .. image:: ../../assets/images/plantuml_ble_live_streaming.png
+
+Metadata
+--------
+
+The following fields are reported as `RTMP Metadata <https://rtmp.veriskope.com/docs/spec/#712data-message-18-15>`__ :
+
+- creator (string) = "GoPro Hero"
+- encoder  (string) = "<Serial Number>"  (eg. "C35313DVT1X220")
+- width (number) = stream resolution width
+- height (number) = stream resolution height
+- videodatarate (number) = stream bitrate
+- framerate (number) = stream framerate
+- videocodecid (number) = 7
+- audiocodecid (number) = 10
+- audiodatarate (number) = audio bitrate
+- audiosamplerate (number) = audio sample rate
+- audiosamplesize (number) = 16
+- stero (boolean) = True if audio has 2 channels, False otherwise
+- filesize (number) = size of the file (edited)
 
 Operations
 ----------
@@ -45,17 +64,17 @@ Operations
     .. operation:protobuf-message:: request
         :feature-id: 0xF5
         :action-id: 0x74
-        :uuid: Command
+        :uuid: Query
         :message: WSDK_RequestGetLiveStreamStatus
 
     .. operation:protobuf-message:: response
         :feature-id: 0xF5
         :action-id: 0xF4
-        :uuid: Command Response
+        :uuid: Query Response
         :message: WSDK_NotifyLiveStreamStatus
 
     .. operation:protobuf-message:: notification
         :feature-id: 0xF5
         :action-id: 0xF5
-        :uuid: Command Response
+        :uuid: Query Response
         :message: WSDK_NotifyLiveStreamStatus
