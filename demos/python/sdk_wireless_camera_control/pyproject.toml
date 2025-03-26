@@ -51,7 +51,7 @@ zeroconf = "^0"
 pydantic = "^2"
 opencv-python = { version = "^4", optional = true }
 Pillow = {version= "^11", optional = true}
-pytz = "*"
+pytz = "^2024.2"
 tzlocal = "*"
 
 [tool.poetry.extras]
