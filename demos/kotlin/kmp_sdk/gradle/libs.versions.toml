@@ -7,39 +7,39 @@ android-targetSdk = "34"
 androidx-activityCompose = "1.9.3"
 androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.1.4"
-androidx-lifecycle = "2.8.0"
+androidx-lifecycle = "2.9.0+dev2251"
 androidx-material = "1.12.0"
-compose-plugin = "1.6.11"
-uiToolingPreview = "1.7.0"
+compose-plugin = "23.10.16.1"
+uiToolingPreview = "1.8.0+dev2251"
 junit = "4.13.2"
 # https://central.sonatype.com/artifact/io.insert-koin/koin-test-junit4/versions
-koinTestJunit4 = "4.0.0"
-kotlin = "2.0.10"
+koinTestJunit4 = "4.0.3"
+kotlin = "2.1.20-218"
 # https://touchlab.co/understanding-and-configuring-your-kmm-test-suite
 androidx-core-ktx = "1.13.1"
 espresso = "3.4.0"
 junitKtx = "1.1.3"
 # https://github.com/Kotlin/kotlinx.serialization/releases
-kotlinx-serialization = "1.7.2"
+kotlinx-serialization = "1.8.0"
 # https://github.com/touchlab/Kermit/releases
-kermit = "2.0.4"
+kermit = "2.0.5"
 # https://github.com/Kotlin/kotlinx-datetime/releases
-kotlinx-datetime = "0.6.0"
+kotlinx-datetime = "0.6.2"
 # https://github.com/Kotlin/kotlinx.coroutines/releases
-kotlinCoroutines = "1.8.1"
+kotlinCoroutines = "1.10.1"
 # https://github.com/benasher44/uuid/releases/tag/0.8.4
 uuid = "0.8.4"
 # https://ktor.io/changelog/
-ktor = "2.3.12"
+ktor = "3.1.1"
 # https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-navigation-routing.html
-navigationCompose = "2.8.0-alpha02"
+navigationCompose = "2.9.0-alpha15"
 lifecycleViewModel = "2.8.4"
 # https://insert-koin.io/docs/setup/koin/
-koin = "3.6.0-Beta4"
-koinComposeMultiplatform = "1.2.0-Beta4"
+koin = "4.1.0-Beta5"
+koinComposeMultiplatform = "4.1.0-Beta5"
 # https://github.com/JuulLabs/kable/releases
 kableCore = "0.34.0"
-khronicle = "0.3.0"
+khronicle = "0.5.1"
 # https://mvnrepository.com/artifact/androidx.datastore/datastore-core
 dataStore = "1.1.1"
 datastorePreferencesCoreJvm = "1.1.1"
@@ -48,28 +48,28 @@ googleProtobuf = "0.9.4"
 # https://github.com/z4kn4fein/kotlin-semver/releases/tag/2.0.0
 version = "2.0.0"
 # https://github.com/coil-kt/coil/releases
-coil3 = "3.0.0-alpha06"
+coil3 = "3.0.0-alpha08"
 # https://developer.android.com/jetpack/androidx/releases/media3
 exoplayer = "1.4.1"
 # https://kotlinlang.org/docs/ksp-quickstart.html
-ksp = "2.0.10-1.0.24"
+ksp = "2.1.20-1.0.32"
 # https://developer.android.com/jetpack/androidx/releases/sqlite
 sqlite = "2.5.0-alpha07"
 # https://developer.android.com/jetpack/androidx/releases/room
 androidx-room = "2.7.0-alpha07"
 coreKtx = "1.6.1" # This was breaking room gradle task on newer versions.
 # https://mvnrepository.com/artifact/org.videolan.android/libvlc-all
-vlc = "3.1.12"
+vlc = "3.6.1"
 # https://github.com/Kotlin/dokka/releases/tag/v1.9.20
-dokka = "1.9.20"
+dokka = "2.0.0"
 # https://central.sonatype.com/artifact/org.mockito/mockito-core
-mockito = "5.14.2"
+mockito = "5.16.1"
 # https://github.com/jaredsburrows/gradle-license-plugin/releases/tag/0.9.8
 license = '0.9.8'
 # https://github.com/streem/pbandk/releases/tag/v0.16.0
 pbandk = "0.16.0"
 # https://github.com/vanniktech/gradle-maven-publish-plugin/releases/tag/0.30.0
-publish =  "0.28.0"
+publish =  "0.31.0"
 # https://github.com/cortinico/ktfmt-gradle/releases/
 format = "0.22.0"
 # Our SDK version
