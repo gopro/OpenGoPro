@@ -19,6 +19,9 @@ updates:
               dependency-type: production
           development-dependencies:
               dependency-type: development
+      ignore:
+          - update-types:
+                - version-update:semver-patch
       labels:
           - dependencies
           - kotlin_sdk
