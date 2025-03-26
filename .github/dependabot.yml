@@ -13,14 +13,12 @@ updates:
       schedule:
           interval: weekly
       groups:
-          # Note! This is not currently supported for Gradle so everything gets lumped into production. We'll leave
-          # it in case it ever gets implemented.
-          production-dependencies:
-              dependency-type: production
-          development-dependencies:
-              dependency-type: development
+          kotlin-dependencies:
+              patterns:
+                  - '*'
       ignore:
-          - update-types:
+          - dependency-name: '*'
+            update-types:
                 - version-update:semver-patch
       labels:
           - dependencies
