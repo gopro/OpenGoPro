@@ -14,10 +14,11 @@ updates:
               dependency-type: production
           development-dependencies:
               dependency-type: development
+      versioning-strategy: increase-if-necessary
 
     # Python SDK
     - package-ecosystem: pip
-      directory: /demos/kotlin/kmp_sdk
+      directory: /demos/python/sdk_wireless_camera_control
       reviewers:
           - tcamise-gpsw
       schedule:
@@ -27,6 +28,7 @@ updates:
               dependency-type: production
           development-dependencies:
               dependency-type: development
+      versioning-strategy: increase-if-necessary
 
     # Github workflows
     - package-ecosystem: 'github-actions'
@@ -39,3 +41,4 @@ updates:
           github-actions-dependencies:
               patterns:
                   - '*'
+      versioning-strategy: increase
