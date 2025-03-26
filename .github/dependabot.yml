@@ -17,9 +17,19 @@ updates:
               patterns:
                   - '*'
       ignore:
+          # We'll only take minor and major updates
           - dependency-name: '*'
             update-types:
                 - version-update:semver-patch
+          # Dokka 2.0 requires a major update to our doc infrastructure
+          - dependency-name: 'org.jetbrains.dokka*'
+            update-types:
+                - version-update:semver-major
+          - dependency-name: 'org.jetbrains.kotlin*'
+            versions:
+                - '*.*.*-.*'
+            update-types:
+                - version-update:semver-major
       labels:
           - dependencies
           - kotlin_sdk
