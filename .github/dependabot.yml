@@ -1,0 +1,42 @@
+# https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference
+
+version: 2
+updates:
+    # Kotlin SDK
+    - package-ecosystem: gradle
+      directory: /demos/kotlin/kmp_sdk
+      reviewers:
+          - tcamise-gpsw
+      schedule:
+          interval: weekly
+      groups:
+          production-dependencies:
+              dependency-type: production
+          development-dependencies:
+              dependency-type: development
+
+    # Python SDK
+    - package-ecosystem: pip
+      directory: /demos/python/sdk_wireless_camera_control
+      reviewers:
+          - tcamise-gpsw
+      schedule:
+          interval: weekly
+      groups:
+          production-dependencies:
+              dependency-type: production
+          development-dependencies:
+              dependency-type: development
+      versioning-strategy: increase-if-necessary
+
+    # Github workflows
+    - package-ecosystem: 'github-actions'
+      directory: '/'
+      reviewers:
+          - tcamise-gpsw
+      schedule:
+          interval: weekly
+      groups:
+          github-actions-dependencies:
+              patterns:
+                  - '*'
