@@ -33,7 +33,7 @@ updates:
               dependency-type: production
           development-dependencies:
               dependency-type: development
-      versioning-strategy: increase-if-necessary
+      versioning-strategy: increase
       labels:
           - dependencies
           - python sdk
