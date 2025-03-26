@@ -14,7 +14,6 @@ updates:
               dependency-type: production
           development-dependencies:
               dependency-type: development
-      versioning-strategy: increase-if-necessary
 
     # Python SDK
     - package-ecosystem: pip
@@ -41,4 +40,3 @@ updates:
           github-actions-dependencies:
               patterns:
                   - '*'
-      versioning-strategy: increase
