@@ -36,7 +36,7 @@ updates:
       versioning-strategy: increase-if-necessary
       labels:
           - dependencies
-          - python_sdk
+          - python sdk
 
     # Github workflows
     - package-ecosystem: 'github-actions'
