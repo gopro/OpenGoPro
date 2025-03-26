@@ -14,6 +14,9 @@ updates:
               dependency-type: production
           development-dependencies:
               dependency-type: development
+      labels:
+          - dependencies
+          - kotlin_sdk
 
     # Python SDK
     - package-ecosystem: pip
@@ -28,6 +31,9 @@ updates:
           development-dependencies:
               dependency-type: development
       versioning-strategy: increase-if-necessary
+      labels:
+          - dependencies
+          - python_sdk
 
     # Github workflows
     - package-ecosystem: 'github-actions'
@@ -40,3 +46,5 @@ updates:
           github-actions-dependencies:
               patterns:
                   - '*'
+      labels:
+          - dependencies
