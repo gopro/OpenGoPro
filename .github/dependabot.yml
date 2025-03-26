@@ -13,6 +13,8 @@ updates:
       schedule:
           interval: weekly
       groups:
+          # Note! This is not currently supported for Gradle so everything gets lumped into production. We'll leave
+          # it in case it ever gets implemented.
           production-dependencies:
               dependency-type: production
           development-dependencies:
@@ -21,22 +23,22 @@ updates:
           - dependencies
           - kotlin_sdk
 
-    # Python SDK
-    - package-ecosystem: pip
-      directory: /demos/python/sdk_wireless_camera_control
-      reviewers:
-          - tcamise-gpsw
-      schedule:
-          interval: weekly
-      groups:
-          production-dependencies:
-              dependency-type: production
-          development-dependencies:
-              dependency-type: development
-      versioning-strategy: increase
-      labels:
-          - dependencies
-          - python sdk
+    # # Python SDK
+    # - package-ecosystem: pip
+    #   directory: /demos/python/sdk_wireless_camera_control
+    #   reviewers:
+    #       - tcamise-gpsw
+    #   schedule:
+    #       interval: weekly
+    #   groups:
+    #       production-dependencies:
+    #           dependency-type: production
+    #       development-dependencies:
+    #           dependency-type: development
+    #   versioning-strategy: increase
+    #   labels:
+    #       - dependencies
+    #       - python sdk
 
     # Github workflows
     - package-ecosystem: 'github-actions'
