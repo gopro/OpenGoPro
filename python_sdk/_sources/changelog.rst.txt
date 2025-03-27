@@ -9,6 +9,14 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
+0.19.5 (March-27-2025)
+----------------------
+* Fix race condition in BLE opening
+* Set third party when opening device
+* Add more detailed advertisement data parsing capability
+* Add 4:3 and 16:9 preset enums
+* Use constant setting IDs when getting presets
+
 0.19.4 (March-21-2025)
 ----------------------
 * Inject BLE keep alive and set the default to 3 seconds
