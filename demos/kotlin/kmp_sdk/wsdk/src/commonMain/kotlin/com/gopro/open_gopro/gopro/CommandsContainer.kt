@@ -85,12 +85,13 @@ class CommandsContainer internal constructor(private val marshaller: IOperationM
         waitForEncodingStop { operation, _ -> !operation.shutter }
       }
 
-    /**
-     * Flag as third party client
-     *
-     * @see [Open GoPro spec](https://gopro.github.io/OpenGoPro/http#tag/Analytics/operation/OGP_SET_ANALYTICS)
-     */
-    suspend fun setThirdParty(): Result<Unit> = marshaller.marshal(SetThirdParty())
+  /**
+   * Flag as third party client
+   *
+   * @see
+   *   [Open GoPro spec](https://gopro.github.io/OpenGoPro/http#tag/Analytics/operation/OGP_SET_ANALYTICS)
+   */
+  suspend fun setThirdParty(): Result<Unit> = marshaller.marshal(SetThirdParty())
 
   /** Put the camera to sleep */
   suspend fun sleep(): Result<Unit> = marshaller.marshal(Sleep())
@@ -99,7 +100,6 @@ class CommandsContainer internal constructor(private val marshaller: IOperationM
    * Get the Media List
    *
    * @return Media List
-   *
    * @see
    *   [Open GoPro spec](https://gopro.github.io/OpenGoPro/http#tag/Media/operation/OGP_MEDIA_LIST)
    */
