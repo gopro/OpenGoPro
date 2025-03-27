@@ -15,6 +15,7 @@ internal enum class CommandId(val value: UByte) {
   LOAD_PRESET_GROUP(0x3EU),
   LOAD_PRESET(0x40U),
   HILGIHT_MOMENT(0x18U),
+  SET_THIRD_PARTY(0x50U),
   GET_OGP_VERSION(0x51U),
   KEEP_ALIVE(0x5BU);
 

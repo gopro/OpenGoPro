@@ -213,9 +213,10 @@ class DataPatch:
 class MockWiredGoPro(WiredGoPro):
     def __init__(self, test_version: str) -> None:
         super().__init__(serial=None, poll_period=0.5)
-        self.http_command.wired_usb_control = self._mock_wired_usb_control
+        self.http_command.wired_usb_control = self._mock_empty_return
         self.http_command.get_open_gopro_api_version = self._mock_get_version
         self.http_command.get_camera_state = self._mock_get_state
+        self.http_command.set_third_party_client_info = self._mock_empty_return
         self.state_response: CameraState = {}
 
     async def _mock_get_state(self, *args, **kwargs):
@@ -224,7 +225,7 @@ class MockWiredGoPro(WiredGoPro):
     def set_state_response(self, response: CameraState):
         self.state_response = response
 
-    async def _mock_wired_usb_control(self, *args, **kwargs):
+    async def _mock_empty_return(self, *args, **kwargs):
         return
 
     async def _mock_get_version(self, *args, **kwargs):
@@ -242,11 +243,13 @@ class MockWirelessGoPro(WirelessGoPro):
         )
         self._test_version = test_version
         self._api.ble_command.get_open_gopro_api_version = self._mock_version
+        self.http_command.set_third_party_client_info = self._mock_empty_return
         self._ble.write = self._mock_write
         self._ble._gatt_table = MockGattTable()
         self._ble._controller.disconnect = self._disconnect_handler
         self._test_response_uuid = GoProUUID.CQ_COMMAND
         self._test_response_data = bytearray()
+        self.ble_status.ap_mode.get_value = self._mock_wifi_check
 
     async def _open_wifi(self, timeout: int = 15, retries: int = 5) -> None:
         self._api.ble_command.get_wifi_password = self._mock_password
@@ -281,8 +284,14 @@ class MockWirelessGoPro(WirelessGoPro):
     async def _mock_password(self) -> DataPatch:
         return DataPatch("password")
 
+    async def _mock_wifi_check(self) -> DataPatch:
+        return DataPatch(True)
+
     async def _mock_ssid(self) -> DataPatch:
         return DataPatch("ssid")
+
+    async def _mock_empty_return(self, *args, **kwargs) -> None:
+        return None
 
     def _mock_uuid(self, _) -> BleUUID:
         return self._test_response_uuid

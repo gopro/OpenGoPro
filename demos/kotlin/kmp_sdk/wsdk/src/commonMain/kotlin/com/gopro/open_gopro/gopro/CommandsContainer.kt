@@ -57,6 +57,7 @@ import com.gopro.open_gopro.operations.commands.SetApMode
 import com.gopro.open_gopro.operations.commands.SetCameraControl
 import com.gopro.open_gopro.operations.commands.SetDigitalZoom
 import com.gopro.open_gopro.operations.commands.SetShutter
+import com.gopro.open_gopro.operations.commands.SetThirdParty
 import com.gopro.open_gopro.operations.commands.Sleep
 import com.gopro.open_gopro.operations.commands.WebcamGetState
 import com.gopro.open_gopro.operations.commands.WebcamStart
@@ -83,6 +84,14 @@ class CommandsContainer internal constructor(private val marshaller: IOperationM
         // We can't complete the command until encoding has completed
         waitForEncodingStop { operation, _ -> !operation.shutter }
       }
+
+  /**
+   * Flag as third party client
+   *
+   * @see
+   *   [Open GoPro spec](https://gopro.github.io/OpenGoPro/http#tag/Analytics/operation/OGP_SET_ANALYTICS)
+   */
+  suspend fun setThirdParty(): Result<Unit> = marshaller.marshal(SetThirdParty())
 
   /** Put the camera to sleep */
   suspend fun sleep(): Result<Unit> = marshaller.marshal(Sleep())
