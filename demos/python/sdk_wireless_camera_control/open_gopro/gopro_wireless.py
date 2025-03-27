@@ -578,7 +578,8 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     async def _periodic_keep_alive(self) -> None:
         """Task to periodically send the keep alive message via BLE."""
         while True:
-            if self.is_ble_connected:
+            # BLE connected is not same as BLE ready. Use open to ensure BLE is also ready.
+            if self.is_ble_connected and self.open:
                 if not await self.keep_alive():
                     logger.error("Failed to send keep alive")
             await asyncio.sleep(self._keep_alive_interval)
