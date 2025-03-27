@@ -806,6 +806,10 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             try:
                 assert (await self.ble_command.enable_wifi_ap(enable=True)).ok
 
+                logger.debug("Waiting for camera wifi ready status")
+                while not (await self.ble_status.ap_mode.get_value()).data:
+                    await asyncio.sleep(0.200)
+
                 await self._wifi.open(ssid, password, timeout, 1)
                 break
             except ConnectFailed:

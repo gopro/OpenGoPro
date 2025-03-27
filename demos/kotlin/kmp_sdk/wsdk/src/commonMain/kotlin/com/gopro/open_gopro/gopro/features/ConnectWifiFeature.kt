@@ -8,7 +8,13 @@ import com.gopro.open_gopro.ConnectionRequestContext
 import com.gopro.open_gopro.OgpSdkIsolatedKoinContext
 import com.gopro.open_gopro.ScanResult
 import com.gopro.open_gopro.domain.data.ICameraRepository
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.timeout
 
 /**
  * Establish a Wi-Fi connection where the camera is an Access Point
@@ -23,16 +29,24 @@ class ConnectWifiFeature internal constructor(private val context: IFeatureConte
   private val cameraRepo: ICameraRepository = OgpSdkIsolatedKoinContext.getOgpSdkKoinApp().get()
 
   /** Establish a Wi-Fi connection where the camera is an Access Point */
+  @OptIn(FlowPreview::class)
   suspend fun connect(): Result<Unit> {
     // Get Wifi info and enable Access Point via BLE
     val ssid = context.gopro.commands.readWifiSsid().getOrThrow()
     val password = context.gopro.commands.readWifiPassword().getOrThrow()
     context.gopro.commands.setApMode(true).getOrThrow()
 
-    // TODO. Trying to brute force fix wifi connection delays. It seems to be working...
-    // So presumably there is some come-up period where the GoPro can not connect and does
-    // not gracefully disconnect.
-    delay(5000)
+    try {
+      // Wait for camera wifi ready status
+      context.gopro.statuses.apMode
+          .registerValueUpdate()
+          .getOrThrow()
+          .timeout(5.toDuration(DurationUnit.SECONDS))
+          .first { it }
+      // TODO unregister
+    } catch (e: TimeoutCancellationException) {
+      return Result.failure(e)
+    }
 
     // Connect Wifi
     while (true) {

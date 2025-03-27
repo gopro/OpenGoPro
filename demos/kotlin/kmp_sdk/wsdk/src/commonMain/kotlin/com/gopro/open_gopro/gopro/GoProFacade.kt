@@ -222,6 +222,6 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
   }
 
   internal companion object {
-    val KEEP_ALIVE_INTERVAL = 28.toDuration(DurationUnit.SECONDS)
+    val KEEP_ALIVE_INTERVAL = 3.toDuration(DurationUnit.SECONDS)
   }
 }
