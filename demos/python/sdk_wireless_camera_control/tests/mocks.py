@@ -86,7 +86,7 @@ def disconnection_handler(_) -> None:
     print("Entered test disconnect callback")
 
 
-async def notification_handler(handle: int, data: bytearray) -> None:
+def notification_handler(handle: int, data: bytearray) -> None:
     print("Entered test notification callback")
 
 

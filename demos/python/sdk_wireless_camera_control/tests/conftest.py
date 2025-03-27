@@ -10,8 +10,8 @@ from pathlib import Path
 from typing import Any, Generator
 
 import pytest
+import pytest_asyncio
 
-from open_gopro.api import WirelessApi
 from open_gopro.ble import BleClient, Characteristic, Descriptor, GattDB, Service, UUIDs
 from open_gopro.ble.adapters.bleak_wrapper import BleakWrapperController
 from open_gopro.ble.services import CharProps
@@ -60,29 +60,17 @@ def test_log(request):
 
 
 ##############################################################################################################
-#                                             General
-##############################################################################################################
-
-
-@pytest.fixture(scope="module")
-def event_loop():
-    loop = asyncio.get_event_loop()
-    yield loop
-    loop.close()
-
-
-##############################################################################################################
 #                                             Bleak Unit Testing
 ##############################################################################################################
 
 
-@pytest.fixture(scope="module")
+@pytest_asyncio.fixture(scope="module")
 async def mock_bleak_wrapper():
     ble = BleakWrapperController()
     yield ble
 
 
-@pytest.fixture(scope="module")
+@pytest_asyncio.fixture(scope="module")
 async def mock_bleak_client():
     def disconnected_cb(_) -> None:
         print("Entered test disconnect callback")
@@ -136,11 +124,11 @@ def disconnection_handler(_) -> None:
     print("Entered test disconnect callback")
 
 
-async def notification_handler(handle: int, data: bytearray) -> None:
+def notification_handler(handle: int, data: bytearray) -> None:
     print("Entered test notification callback")
 
 
-@pytest.fixture(scope="module")
+@pytest_asyncio.fixture(scope="module")
 async def mock_ble_client():
     test_client = BleClient(
         controller=MockBleController(),
@@ -151,7 +139,7 @@ async def mock_ble_client():
     yield test_client
 
 
-@pytest.fixture(scope="module", params=versions)
+@pytest_asyncio.fixture(scope="module", params=versions)
 async def mock_ble_communicator(request):
     test_client = MockBleCommunicator(request.param)
     yield test_client
@@ -162,13 +150,13 @@ async def mock_ble_communicator(request):
 ##############################################################################################################
 
 
-@pytest.fixture(scope="module")
+@pytest_asyncio.fixture(scope="module")
 async def mock_wifi_client():
     test_client = WifiClient(controller=MockWifiController())
     yield test_client
 
 
-@pytest.fixture(scope="module", params=versions)
+@pytest_asyncio.fixture(scope="module", params=versions)
 async def mock_wifi_communicator(request):
     test_client = MockWifiCommunicator(request.param)
     yield test_client
@@ -179,13 +167,13 @@ async def mock_wifi_communicator(request):
 ##############################################################################################################
 
 
-@pytest.fixture(scope="function")
+@pytest_asyncio.fixture(scope="function")
 async def mock_wired_gopro():
     test_client = MockWiredGoPro("2.0")
     yield test_client
 
 
-@pytest.fixture(params=versions)
+@pytest_asyncio.fixture(params=versions)
 async def mock_wireless_gopro_basic(request):
     test_client = MockWirelessGoPro(request.param)
     GoProBase.HTTP_GET_RETRIES = 1  # type: ignore
@@ -193,7 +181,7 @@ async def mock_wireless_gopro_basic(request):
     test_client.close()
 
 
-@pytest.fixture(scope="function")
+@pytest_asyncio.fixture(scope="function")
 async def mock_wireless_gopro():
     test_client = MockGoProMaintainBle()
     yield test_client
