@@ -41,6 +41,7 @@ $dokka.location:com.gopro.open_gopro.gopro/CommandsContainer/setApMode/#kotlin.B
 $dokka.location:com.gopro.open_gopro.gopro/CommandsContainer/setDateTime/#kotlinx.datetime.LocalDateTime#kotlinx.datetime.UtcOffset#kotlin.Boolean/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-commands-container/set-date-time.html
 $dokka.location:com.gopro.open_gopro.gopro/CommandsContainer/setDigitalZoom/#kotlin.Int/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-commands-container/set-digital-zoom.html
 $dokka.location:com.gopro.open_gopro.gopro/CommandsContainer/setShutter/#kotlin.Boolean/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-commands-container/set-shutter.html
+$dokka.location:com.gopro.open_gopro.gopro/CommandsContainer/setThirdParty/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-commands-container/set-third-party.html
 $dokka.location:com.gopro.open_gopro.gopro/CommandsContainer/sleep/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-commands-container/sleep.html
 $dokka.location:com.gopro.open_gopro.gopro/CommandsContainer/startLivestream/#com.gopro.open_gopro.operations.LivestreamConfigurationRequest/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-commands-container/start-livestream.html
 $dokka.location:com.gopro.open_gopro.gopro/CommandsContainer/startPreviewStream/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-commands-container/start-preview-stream.html
