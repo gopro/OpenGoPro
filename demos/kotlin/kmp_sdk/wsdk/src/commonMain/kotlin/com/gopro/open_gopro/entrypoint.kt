@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import org.koin.core.Koin
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
-import org.koin.core.error.ApplicationAlreadyStartedException
+import org.koin.core.error.KoinApplicationAlreadyStartedException
 import org.koin.core.module.Module
 import org.koin.dsl.koinApplication
 
@@ -38,7 +38,7 @@ internal object OgpSdkIsolatedKoinContext {
           try {
             startKoin(app)
             logger.d("Started KOIN from OGP SDK since it was not running.")
-          } catch (_: ApplicationAlreadyStartedException) {
+          } catch (_: KoinApplicationAlreadyStartedException) {
             logger.d("Not starting Koin from OGP SDK since it was already started")
           }
         }

@@ -1,24 +1,25 @@
 [versions]
 agp = "8.9.0"
-activityKtx = "1.9.3"
-android-compileSdk = "34"
+activityKtx = "1.10.1"
+android-compileSdk = "35"
 android-minSdk = "34"
 android-targetSdk = "34"
-androidx-activityCompose = "1.9.3"
+androidx-activityCompose = "1.10.1"
 androidx-appcompat = "1.7.0"
-androidx-constraintlayout = "2.1.4"
-androidx-lifecycle = "2.8.0"
+androidx-constraintlayout = "2.2.1"
+androidx-lifecycle = "2.8.4"
 androidx-material = "1.12.0"
-compose-plugin = "23.10.16.1"
-uiToolingPreview = "1.7.0"
+# https://plugins.gradle.org/plugin/org.jetbrains.compose
+compose-plugin = "1.7.3"
+uiToolingPreview = "1.7.3"
 junit = "4.13.2"
 # https://central.sonatype.com/artifact/io.insert-koin/koin-test-junit4/versions
 koinTestJunit4 = "4.0.0"
 kotlin = "2.1.20-218"
 # https://touchlab.co/understanding-and-configuring-your-kmm-test-suite
-androidx-core-ktx = "1.13.1"
-espresso = "3.4.0"
-junitKtx = "1.1.3"
+androidx-core-ktx = "1.15.0"
+espresso = "3.6.1"
+junitKtx = "1.2.1"
 # https://github.com/Kotlin/kotlinx.serialization/releases
 kotlinx-serialization = "1.8.0"
 # https://github.com/touchlab/Kermit/releases
@@ -33,7 +34,7 @@ uuid = "0.8.4"
 ktor = "3.1.1"
 # https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-navigation-routing.html
 navigationCompose = "2.8.0-alpha02"
-lifecycleViewModel = "2.8.4"
+lifecycleViewModel = "2.8.7"
 # https://insert-koin.io/docs/setup/koin/
 koin = "4.1.0-Beta5"
 koinComposeMultiplatform = "4.1.0-Beta5"
@@ -41,7 +42,7 @@ koinComposeMultiplatform = "4.1.0-Beta5"
 kableCore = "0.34.0"
 khronicle = "0.5.1"
 # https://mvnrepository.com/artifact/androidx.datastore/datastore-core
-dataStore = "1.1.1"
+dataStore = "1.1.4"
 datastorePreferencesCoreJvm = "1.1.1"
 # https://github.com/google/protobuf-gradle-plugin?tab=readme-ov-file#latest-version
 googleProtobuf = "0.9.4"
@@ -50,13 +51,13 @@ version = "2.0.0"
 # https://github.com/coil-kt/coil/releases
 coil3 = "3.0.0-alpha06"
 # https://developer.android.com/jetpack/androidx/releases/media3
-exoplayer = "1.4.1"
+exoplayer = "1.6.0"
 # https://kotlinlang.org/docs/ksp-quickstart.html
 ksp = "2.1.20-1.0.32"
 # https://developer.android.com/jetpack/androidx/releases/sqlite
-sqlite = "2.5.0-alpha07"
+sqlite = "2.5.0-rc03"
 # https://developer.android.com/jetpack/androidx/releases/room
-androidx-room = "2.7.0-alpha07"
+androidx-room = "2.7.0-rc03"
 coreKtx = "1.6.1" # This was breaking room gradle task on newer versions.
 # https://mvnrepository.com/artifact/org.videolan.android/libvlc-all
 vlc = "3.6.1"

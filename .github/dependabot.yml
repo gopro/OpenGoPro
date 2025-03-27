@@ -17,9 +17,18 @@ updates:
               patterns:
                   - '*'
       ignore:
+          # We'll only take minor and major updates
           - dependency-name: '*'
             update-types:
                 - version-update:semver-patch
+          # Dokka 2.0 requires a major update to our doc infrastructure
+          - dependency-name: 'org.jetbrains.dokka*'
+            update-types:
+                - version-update:semver-major
+          # This is too major of a change to automate
+          - dependency-name: 'org.jetbrains.kotlin*'
+          # Both Android Studio and Dependabot are somehow finding a bad version of this
+          - dependency-name: 'org.jetbrains.compose'
       labels:
           - dependencies
           - kotlin_sdk
