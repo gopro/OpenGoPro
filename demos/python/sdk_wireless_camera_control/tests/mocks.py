@@ -249,6 +249,7 @@ class MockWirelessGoPro(WirelessGoPro):
         self._ble._controller.disconnect = self._disconnect_handler
         self._test_response_uuid = GoProUUID.CQ_COMMAND
         self._test_response_data = bytearray()
+        self.ble_status.ap_mode.get_value = self._mock_wifi_check
 
     async def _open_wifi(self, timeout: int = 15, retries: int = 5) -> None:
         self._api.ble_command.get_wifi_password = self._mock_password
@@ -282,6 +283,9 @@ class MockWirelessGoPro(WirelessGoPro):
 
     async def _mock_password(self) -> DataPatch:
         return DataPatch("password")
+
+    async def _mock_wifi_check(self) -> DataPatch:
+        return DataPatch(True)
 
     async def _mock_ssid(self) -> DataPatch:
         return DataPatch("ssid")
