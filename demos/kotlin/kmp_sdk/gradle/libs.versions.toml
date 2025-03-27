@@ -15,7 +15,7 @@ uiToolingPreview = "1.7.3"
 junit = "4.13.2"
 # https://central.sonatype.com/artifact/io.insert-koin/koin-test-junit4/versions
 koinTestJunit4 = "4.0.0"
-kotlin = "2.1.20-218"
+kotlin = "2.1.20"
 # https://touchlab.co/understanding-and-configuring-your-kmm-test-suite
 androidx-core-ktx = "1.15.0"
 espresso = "3.6.1"
