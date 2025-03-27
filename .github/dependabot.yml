@@ -25,11 +25,8 @@ updates:
           - dependency-name: 'org.jetbrains.dokka*'
             update-types:
                 - version-update:semver-major
-          - dependency-name: 'org.jetbrains.kotlin*'
-            versions:
-                - '*.*.*-.*'
-            update-types:
-                - version-update:semver-major
+          # Both Android Studio and Dependabot are somehow finding a bad version of this
+          - dependency-name: 'org.jetbrains.compose'
       labels:
           - dependencies
           - kotlin_sdk
