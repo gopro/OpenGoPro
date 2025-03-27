@@ -104,6 +104,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
                     logger.warning(f"Failed to discover GoPro. Retrying #{retry}")
 
         await self.http_command.wired_usb_control(control=constants.Toggle.ENABLE)
+        await self.http_command.set_third_party_client_info()
         # Find and configure API version
         if (version := (await self.http_command.get_open_gopro_api_version()).data) != self.version:
             raise InvalidOpenGoProVersion(version)

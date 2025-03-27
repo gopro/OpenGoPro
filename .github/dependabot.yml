@@ -31,22 +31,22 @@ updates:
           - dependencies
           - kotlin_sdk
 
-    # # Python SDK
-    # - package-ecosystem: pip
-    #   directory: /demos/python/sdk_wireless_camera_control
-    #   reviewers:
-    #       - tcamise-gpsw
-    #   schedule:
-    #       interval: weekly
-    #   groups:
-    #       production-dependencies:
-    #           dependency-type: production
-    #       development-dependencies:
-    #           dependency-type: development
-    #   versioning-strategy: increase
-    #   labels:
-    #       - dependencies
-    #       - python sdk
+    # Python SDK
+    - package-ecosystem: pip
+      directory: /demos/python/sdk_wireless_camera_control
+      reviewers:
+          - tcamise-gpsw
+      schedule:
+          interval: weekly
+      groups:
+          production-dependencies:
+              dependency-type: production
+          development-dependencies:
+              dependency-type: development
+      versioning-strategy: increase
+      labels:
+          - dependencies
+          - python sdk
 
     # Github workflows
     - package-ecosystem: 'github-actions'
@@ -54,7 +54,7 @@ updates:
       reviewers:
           - tcamise-gpsw
       schedule:
-          interval: weekly
+          interval: monthly
       groups:
           github-actions-dependencies:
               patterns:

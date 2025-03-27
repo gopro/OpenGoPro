@@ -299,6 +299,8 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             try:
                 await self._open_ble(timeout, retries)
 
+                await self.ble_command.set_third_party_client_info()
+
                 # Set current dst-aware time. Don't assert on success since some old cameras don't support this command.
                 await self.ble_command.set_date_time_tz_dst(
                     **dict(zip(("date_time", "tz_offset", "is_dst"), get_current_dst_aware_time()))
@@ -801,6 +803,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         for retry in range(1, retries):
             try:
                 assert (await self.ble_command.enable_wifi_ap(enable=True)).ok
+
                 await self._wifi.open(ssid, password, timeout, 1)
                 break
             except ConnectFailed:

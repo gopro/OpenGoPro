@@ -189,13 +189,13 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
     }
   }
 
-  private fun setDateTime() {
+  private suspend fun setDateTime() {
     logger.d("Setting DateTime")
     val currentMoment: Instant = Clock.System.now()
     val datetimeInSystemZone: LocalDateTime =
         currentMoment.toLocalDateTime(TimeZone.currentSystemDefault())
     val utcOffset = TimeZone.currentSystemDefault().offsetAt(currentMoment)
-    scope.launch { commands.setDateTime(datetimeInSystemZone, utcOffset, false) }
+    commands.setDateTime(datetimeInSystemZone, utcOffset, false)
   }
 
   internal suspend fun bindCommunicator(communicator: ICommunicator<*>) {
@@ -205,6 +205,7 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
     if (!isInitialized) {
       initializeStateManagement(communicator)
       setDateTime()
+      commands.setThirdParty()
       isInitialized = true
     }
 
