@@ -167,6 +167,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         # TO be set up when opening in async context
         self._loop: asyncio.AbstractEventLoop
         self._open = False
+        self._is_ble_connected = False
         self._ble_disconnect_event: asyncio.Event
 
         if self._should_maintain_state:
@@ -206,7 +207,8 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         Returns:
             bool: True if yes, False if no
         """
-        return self._ble.is_connected
+        # We can't rely on the BLE Client since it can be connected but not ready
+        return self._is_ble_connected
 
     @property
     def is_http_connected(self) -> bool:
@@ -283,7 +285,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         """
         # Set up concurrency
         self._loop = asyncio.get_running_loop()
-        self._open = False
         self._ble_disconnect_event = asyncio.Event()
 
         # If we are to perform BLE housekeeping
@@ -578,8 +579,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     async def _periodic_keep_alive(self) -> None:
         """Task to periodically send the keep alive message via BLE."""
         while True:
-            # BLE connected is not same as BLE ready. Use open to ensure BLE is also ready.
-            if self.is_ble_connected and self.open:
+            if self.is_ble_connected:
                 if not await self.keep_alive():
                     logger.error("Failed to send keep alive")
             await asyncio.sleep(self._keep_alive_interval)
@@ -593,6 +593,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         """
         # Establish connection, pair, etc.
         await self._ble.open(timeout, retries)
+        self._is_ble_connected = True
         # Start state maintenance
         if self._should_maintain_state:
             self._ble_disconnect_event.clear()
@@ -704,9 +705,9 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
     async def _close_ble(self) -> None:
         """Terminate BLE connection if it is connected"""
+        if self._should_maintain_state:
+            self._keep_alive_task.cancel()
         if self.is_ble_connected and self._ble is not None:
-            if self._should_maintain_state:
-                self._keep_alive_task.cancel()
             await self._ble.close()
             await self._ble_disconnect_event.wait()
 
@@ -716,6 +717,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         Raises:
             ConnectionTerminated: We entered this callback in an unexpected state.
         """
+        self._is_ble_connected = False
         if self._ble_disconnect_event.is_set():
             raise ConnectionTerminated("BLE connection terminated unexpectedly.")
         self._ble_disconnect_event.set()
