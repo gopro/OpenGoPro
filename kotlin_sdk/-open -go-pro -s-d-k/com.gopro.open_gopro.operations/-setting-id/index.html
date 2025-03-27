@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>SettingId</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+<link href="../../../images/logo-icon.svg">
+</head>
+<body>
+    <div class="root">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+            <a class="library-name--link" href="../../../index.html">
+                    Open GoPro SDK
+            </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active=""
+                        data-filter=":wsdk:dokkaHtml/commonMain">common</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
+                        data-role="dropdown-toggle"
+                        aria-controls="platform-tags-listbox"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        aria-label="Toggle source sets"
+                ></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":wsdk:dokkaHtml/commonMain"
+                                       data-filter=":wsdk:dokkaHtml/commonMain"/>
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </div>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
+                    type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    Open GoPro SDK
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="Open GoPro SDK::com.gopro.open_gopro.operations/SettingId///PointingToDeclaration//1280103317">
+  <div class="breadcrumbs"><a href="../../../index.html">Open GoPro SDK</a><span class="delimiter">/</span><a href="../index.html">com.gopro.open_gopro.operations</a><span class="delimiter">/</span><span class="current">SettingId</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Setting</span><wbr></wbr><span><span>Id</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">enum </span><a href="index.html">SettingId</a> : <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="index.html">SettingId</a><span class="token operator">&gt; </span>, <a href="../-i-valued-enum/index.html">IValuedEnum</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-u-byte/index.html">UByte</a><span class="token operator">&gt; </span></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="ENTRY">Entries</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="ENTRY">
+        <h2 class="">Entries</h2>
+        <div class="table"><a data-name="1034959812%2FClasslikes%2F1280103317" anchor-label="MEDIA_FORMAT" id="1034959812%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-m-e-d-i-a_-f-o-r-m-a-t/index.html">MEDIA_FORMAT</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1034959812%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-m-e-d-i-a_-f-o-r-m-a-t/index.html">MEDIA_FORMAT</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1918685566%2FClasslikes%2F1280103317" anchor-label="VIDEO_RESOLUTION" id="-1918685566%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-v-i-d-e-o_-r-e-s-o-l-u-t-i-o-n/index.html">VIDEO_RESOLUTION</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1918685566%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-v-i-d-e-o_-r-e-s-o-l-u-t-i-o-n/index.html">VIDEO_RESOLUTION</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="932264549%2FClasslikes%2F1280103317" anchor-label="FRAMES_PER_SECOND" id="932264549%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-f-r-a-m-e-s_-p-e-r_-s-e-c-o-n-d/index.html">FRAMES_PER_SECOND</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="932264549%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-f-r-a-m-e-s_-p-e-r_-s-e-c-o-n-d/index.html">FRAMES_PER_SECOND</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1756919563%2FClasslikes%2F1280103317" anchor-label="VIDEO_TIMELAPSE_RATE" id="-1756919563%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-v-i-d-e-o_-t-i-m-e-l-a-p-s-e_-r-a-t-e/index.html">VIDEO_TIMELAPSE_RATE</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1756919563%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-v-i-d-e-o_-t-i-m-e-l-a-p-s-e_-r-a-t-e/index.html">VIDEO_TIMELAPSE_RATE</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1384620845%2FClasslikes%2F1280103317" anchor-label="ANTI_FLICKER" id="1384620845%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-a-n-t-i_-f-l-i-c-k-e-r/index.html">ANTI_FLICKER</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1384620845%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-a-n-t-i_-f-l-i-c-k-e-r/index.html">ANTI_FLICKER</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1595729520%2FClasslikes%2F1280103317" anchor-label="HYPERSMOOTH" id="1595729520%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-h-y-p-e-r-s-m-o-o-t-h/index.html">HYPERSMOOTH</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1595729520%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-h-y-p-e-r-s-m-o-o-t-h/index.html">HYPERSMOOTH</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1375438344%2FClasslikes%2F1280103317" anchor-label="VIDEO_HORIZON_LEVELING" id="-1375438344%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-v-i-d-e-o_-h-o-r-i-z-o-n_-l-e-v-e-l-i-n-g/index.html">VIDEO_HORIZON_LEVELING</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1375438344%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-v-i-d-e-o_-h-o-r-i-z-o-n_-l-e-v-e-l-i-n-g/index.html">VIDEO_HORIZON_LEVELING</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1107835745%2FClasslikes%2F1280103317" anchor-label="PHOTO_HORIZON_LEVELING" id="1107835745%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-p-h-o-t-o_-h-o-r-i-z-o-n_-l-e-v-e-l-i-n-g/index.html">PHOTO_HORIZON_LEVELING</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1107835745%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-p-h-o-t-o_-h-o-r-i-z-o-n_-l-e-v-e-l-i-n-g/index.html">PHOTO_HORIZON_LEVELING</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-118583138%2FClasslikes%2F1280103317" anchor-label="PHOTO_TIMELAPSE_RATE" id="-118583138%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-p-h-o-t-o_-t-i-m-e-l-a-p-s-e_-r-a-t-e/index.html">PHOTO_TIMELAPSE_RATE</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-118583138%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-p-h-o-t-o_-t-i-m-e-l-a-p-s-e_-r-a-t-e/index.html">PHOTO_TIMELAPSE_RATE</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1955694912%2FClasslikes%2F1280103317" anchor-label="NIGHTLAPSE_RATE" id="1955694912%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-n-i-g-h-t-l-a-p-s-e_-r-a-t-e/index.html">NIGHTLAPSE_RATE</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1955694912%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-n-i-g-h-t-l-a-p-s-e_-r-a-t-e/index.html">NIGHTLAPSE_RATE</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1101805259%2FClasslikes%2F1280103317" anchor-label="MAX_LENS" id="1101805259%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-m-a-x_-l-e-n-s/index.html">MAX_LENS</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1101805259%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-m-a-x_-l-e-n-s/index.html">MAX_LENS</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-878020516%2FClasslikes%2F1280103317" anchor-label="HINDSIGHT" id="-878020516%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-h-i-n-d-s-i-g-h-t/index.html">HINDSIGHT</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-878020516%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-h-i-n-d-s-i-g-h-t/index.html">HINDSIGHT</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-773441715%2FClasslikes%2F1280103317" anchor-label="WEBCAM_DIGITAL_LENSES" id="-773441715%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-w-e-b-c-a-m_-d-i-g-i-t-a-l_-l-e-n-s-e-s/index.html">WEBCAM_DIGITAL_LENSES</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-773441715%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-w-e-b-c-a-m_-d-i-g-i-t-a-l_-l-e-n-s-e-s/index.html">WEBCAM_DIGITAL_LENSES</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="893713637%2FClasslikes%2F1280103317" anchor-label="PHOTO_SINGLE_INTERVAL" id="893713637%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-p-h-o-t-o_-s-i-n-g-l-e_-i-n-t-e-r-v-a-l/index.html">PHOTO_SINGLE_INTERVAL</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="893713637%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-p-h-o-t-o_-s-i-n-g-l-e_-i-n-t-e-r-v-a-l/index.html">PHOTO_SINGLE_INTERVAL</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1843605783%2FClasslikes%2F1280103317" anchor-label="PHOTO_INTERVAL_DURATION" id="1843605783%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-p-h-o-t-o_-i-n-t-e-r-v-a-l_-d-u-r-a-t-i-o-n/index.html">PHOTO_INTERVAL_DURATION</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1843605783%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-p-h-o-t-o_-i-n-t-e-r-v-a-l_-d-u-r-a-t-i-o-n/index.html">PHOTO_INTERVAL_DURATION</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-756942264%2FClasslikes%2F1280103317" anchor-label="VIDEO_PERFORMANCE_MODE" id="-756942264%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-v-i-d-e-o_-p-e-r-f-o-r-m-a-n-c-e_-m-o-d-e/index.html">VIDEO_PERFORMANCE_MODE</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-756942264%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-v-i-d-e-o_-p-e-r-f-o-r-m-a-n-c-e_-m-o-d-e/index.html">VIDEO_PERFORMANCE_MODE</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1443487511%2FClasslikes%2F1280103317" anchor-label="CONTROL_MODE" id="1443487511%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-c-o-n-t-r-o-l_-m-o-d-e/index.html">CONTROL_MODE</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1443487511%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-c-o-n-t-r-o-l_-m-o-d-e/index.html">CONTROL_MODE</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="881147102%2FClasslikes%2F1280103317" anchor-label="EASY_MODE_SPEED" id="881147102%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-a-s-y_-m-o-d-e_-s-p-e-e-d/index.html">EASY_MODE_SPEED</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="881147102%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-e-a-s-y_-m-o-d-e_-s-p-e-e-d/index.html">EASY_MODE_SPEED</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1523261953%2FClasslikes%2F1280103317" anchor-label="ENABLE_NIGHT_PHOTO" id="1523261953%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-n-a-b-l-e_-n-i-g-h-t_-p-h-o-t-o/index.html">ENABLE_NIGHT_PHOTO</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1523261953%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-e-n-a-b-l-e_-n-i-g-h-t_-p-h-o-t-o/index.html">ENABLE_NIGHT_PHOTO</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-789610452%2FClasslikes%2F1280103317" anchor-label="WIRELESS_BAND" id="-789610452%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-w-i-r-e-l-e-s-s_-b-a-n-d/index.html">WIRELESS_BAND</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-789610452%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-w-i-r-e-l-e-s-s_-b-a-n-d/index.html">WIRELESS_BAND</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1299980221%2FClasslikes%2F1280103317" anchor-label="STAR_TRAILS_LENGTH" id="1299980221%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-s-t-a-r_-t-r-a-i-l-s_-l-e-n-g-t-h/index.html">STAR_TRAILS_LENGTH</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1299980221%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-s-t-a-r_-t-r-a-i-l-s_-l-e-n-g-t-h/index.html">STAR_TRAILS_LENGTH</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="144473165%2FClasslikes%2F1280103317" anchor-label="SYSTEM_VIDEO_MODE" id="144473165%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-s-y-s-t-e-m_-v-i-d-e-o_-m-o-d-e/index.html">SYSTEM_VIDEO_MODE</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="144473165%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-s-y-s-t-e-m_-v-i-d-e-o_-m-o-d-e/index.html">SYSTEM_VIDEO_MODE</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="971584712%2FClasslikes%2F1280103317" anchor-label="VIDEO_BIT_RATE" id="971584712%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-v-i-d-e-o_-b-i-t_-r-a-t-e/index.html">VIDEO_BIT_RATE</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="971584712%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-v-i-d-e-o_-b-i-t_-r-a-t-e/index.html">VIDEO_BIT_RATE</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1777941127%2FClasslikes%2F1280103317" anchor-label="BIT_DEPTH" id="1777941127%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-b-i-t_-d-e-p-t-h/index.html">BIT_DEPTH</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1777941127%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-b-i-t_-d-e-p-t-h/index.html">BIT_DEPTH</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1281912796%2FClasslikes%2F1280103317" anchor-label="PROFILES" id="1281912796%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-p-r-o-f-i-l-e-s/index.html">PROFILES</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1281912796%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-p-r-o-f-i-l-e-s/index.html">PROFILES</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-585764910%2FClasslikes%2F1280103317" anchor-label="VIDEO_EASY_MODE" id="-585764910%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-v-i-d-e-o_-e-a-s-y_-m-o-d-e/index.html">VIDEO_EASY_MODE</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-585764910%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-v-i-d-e-o_-e-a-s-y_-m-o-d-e/index.html">VIDEO_EASY_MODE</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="447423298%2FClasslikes%2F1280103317" anchor-label="AUTO_POWER_DOWN" id="447423298%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-a-u-t-o_-p-o-w-e-r_-d-o-w-n/index.html">AUTO_POWER_DOWN</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="447423298%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-a-u-t-o_-p-o-w-e-r_-d-o-w-n/index.html">AUTO_POWER_DOWN</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1734745913%2FClasslikes%2F1280103317" anchor-label="LAPSE_MODE" id="-1734745913%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-l-a-p-s-e_-m-o-d-e/index.html">LAPSE_MODE</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1734745913%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-l-a-p-s-e_-m-o-d-e/index.html">LAPSE_MODE</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2088835630%2FClasslikes%2F1280103317" anchor-label="MAX_LENS_MOD" id="2088835630%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-m-a-x_-l-e-n-s_-m-o-d/index.html">MAX_LENS_MOD</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2088835630%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-m-a-x_-l-e-n-s_-m-o-d/index.html">MAX_LENS_MOD</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1346348324%2FClasslikes%2F1280103317" anchor-label="MAX_LENS_MOD_ENABLE" id="-1346348324%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-m-a-x_-l-e-n-s_-m-o-d_-e-n-a-b-l-e/index.html">MAX_LENS_MOD_ENABLE</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1346348324%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-m-a-x_-l-e-n-s_-m-o-d_-e-n-a-b-l-e/index.html">MAX_LENS_MOD_ENABLE</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-702275264%2FClasslikes%2F1280103317" anchor-label="EASY_NIGHT_PHOTO" id="-702275264%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-a-s-y_-n-i-g-h-t_-p-h-o-t-o/index.html">EASY_NIGHT_PHOTO</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-702275264%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-e-a-s-y_-n-i-g-h-t_-p-h-o-t-o/index.html">EASY_NIGHT_PHOTO</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-628597895%2FClasslikes%2F1280103317" anchor-label="MULTI_SHOT_ASPECT_RATIO" id="-628597895%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-m-u-l-t-i_-s-h-o-t_-a-s-p-e-c-t_-r-a-t-i-o/index.html">MULTI_SHOT_ASPECT_RATIO</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-628597895%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-m-u-l-t-i_-s-h-o-t_-a-s-p-e-c-t_-r-a-t-i-o/index.html">MULTI_SHOT_ASPECT_RATIO</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1003585728%2FClasslikes%2F1280103317" anchor-label="FRAMING" id="-1003585728%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-f-r-a-m-i-n-g/index.html">FRAMING</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1003585728%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-f-r-a-m-i-n-g/index.html">FRAMING</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="333568512%2FClasslikes%2F1280103317" anchor-label="GPS" id="333568512%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-g-p-s/index.html">GPS</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="333568512%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-g-p-s/index.html">GPS</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1621410538%2FClasslikes%2F1280103317" anchor-label="CAMERA_VOLUME" id="1621410538%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-c-a-m-e-r-a_-v-o-l-u-m-e/index.html">CAMERA_VOLUME</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1621410538%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-c-a-m-e-r-a_-v-o-l-u-m-e/index.html">CAMERA_VOLUME</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2003976287%2FClasslikes%2F1280103317" anchor-label="LED" id="-2003976287%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-l-e-d/index.html">LED</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2003976287%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-l-e-d/index.html">LED</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1599686774%2FClasslikes%2F1280103317" anchor-label="SETUP_SCREEN_SAVER" id="1599686774%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-s-e-t-u-p_-s-c-r-e-e-n_-s-a-v-e-r/index.html">SETUP_SCREEN_SAVER</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1599686774%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-s-e-t-u-p_-s-c-r-e-e-n_-s-a-v-e-r/index.html">SETUP_SCREEN_SAVER</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-707410836%2FClasslikes%2F1280103317" anchor-label="SETUP_LANGUAGE" id="-707410836%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-s-e-t-u-p_-l-a-n-g-u-a-g-e/index.html">SETUP_LANGUAGE</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-707410836%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-s-e-t-u-p_-l-a-n-g-u-a-g-e/index.html">SETUP_LANGUAGE</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2136952226%2FClasslikes%2F1280103317" anchor-label="PHOTO_MODE" id="2136952226%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-p-h-o-t-o_-m-o-d-e/index.html">PHOTO_MODE</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2136952226%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-p-h-o-t-o_-m-o-d-e/index.html">PHOTO_MODE</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="656440540%2FClasslikes%2F1280103317" anchor-label="VIDEO_FRAMING" id="656440540%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-v-i-d-e-o_-f-r-a-m-i-n-g/index.html">VIDEO_FRAMING</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="656440540%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-v-i-d-e-o_-f-r-a-m-i-n-g/index.html">VIDEO_FRAMING</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1061845661%2FClasslikes%2F1280103317" anchor-label="MULTI_SHOT_FRAMING" id="1061845661%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-m-u-l-t-i_-s-h-o-t_-f-r-a-m-i-n-g/index.html">MULTI_SHOT_FRAMING</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1061845661%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-m-u-l-t-i_-s-h-o-t_-f-r-a-m-i-n-g/index.html">MULTI_SHOT_FRAMING</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-33131772%2FClasslikes%2F1280103317" anchor-label="FRAME_RATE" id="-33131772%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-f-r-a-m-e_-r-a-t-e/index.html">FRAME_RATE</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-33131772%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-f-r-a-m-e_-r-a-t-e/index.html">FRAME_RATE</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1034217626%2FClasslikes%2F1280103317" anchor-label="VIDEO_ASPECT_RATIO" id="1034217626%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-v-i-d-e-o_-a-s-p-e-c-t_-r-a-t-i-o/index.html">VIDEO_ASPECT_RATIO</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1034217626%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-v-i-d-e-o_-a-s-p-e-c-t_-r-a-t-i-o/index.html">VIDEO_ASPECT_RATIO</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2040117036%2FClasslikes%2F1280103317" anchor-label="VIDEO_LENS" id="-2040117036%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-v-i-d-e-o_-l-e-n-s/index.html">VIDEO_LENS</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2040117036%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-v-i-d-e-o_-l-e-n-s/index.html">VIDEO_LENS</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1573249091%2FClasslikes%2F1280103317" anchor-label="PHOTO_LENS" id="-1573249091%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-p-h-o-t-o_-l-e-n-s/index.html">PHOTO_LENS</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1573249091%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-p-h-o-t-o_-l-e-n-s/index.html">PHOTO_LENS</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1407916755%2FClasslikes%2F1280103317" anchor-label="TIME_LAPSE_DIGITAL_LENSES" id="-1407916755%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-t-i-m-e_-l-a-p-s-e_-d-i-g-i-t-a-l_-l-e-n-s-e-s/index.html">TIME_LAPSE_DIGITAL_LENSES</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1407916755%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-t-i-m-e_-l-a-p-s-e_-d-i-g-i-t-a-l_-l-e-n-s-e-s/index.html">TIME_LAPSE_DIGITAL_LENSES</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="414009792%2FClasslikes%2F1280103317" anchor-label="PHOTO_OUTPUT" id="414009792%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-p-h-o-t-o_-o-u-t-p-u-t/index.html">PHOTO_OUTPUT</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="414009792%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><a href="-p-h-o-t-o_-o-u-t-p-u-t/index.html">PHOTO_OUTPUT</a></div></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="-964690525%2FClasslikes%2F1280103317" anchor-label="Companion" id="-964690525%2FClasslikes%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-964690525%2FClasslikes%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-experimental-unsigned-types/index.html"><span class="token annotation builtin">ExperimentalUnsignedTypes</span></a></div></div><span class="token keyword">object </span><a href="-companion/index.html">Companion</a> : <a href="../-i-u-byte-array-companion/index.html">IUByteArrayCompanion</a><span class="token operator">&lt;</span><a href="index.html">SettingId</a><span class="token operator">&gt; </span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="1819510156%2FProperties%2F1280103317" anchor-label="entries" id="1819510156%2FProperties%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="entries.html"><span><span>entries</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1819510156%2FProperties%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="entries.html">entries</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.enums/-enum-entries/index.html">EnumEntries</a><span class="token operator">&lt;</span><a href="index.html">SettingId</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Returns a representation of an immutable list of all enum entries, in the order they're declared.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-372974862%2FProperties%2F1280103317" anchor-label="name" id="-372974862%2FProperties%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-status-id/-p-h-o-t-o_-i-n-t-e-r-v-a-l_-c-a-p-t-u-r-e_-c-o-u-n-t/index.html#-372974862%2FProperties%2F1280103317"><span><span>name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-372974862%2FProperties%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="../-status-id/-p-h-o-t-o_-i-n-t-e-r-v-a-l_-c-a-p-t-u-r-e_-c-o-u-n-t/index.html#-372974862%2FProperties%2F1280103317">name</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-739389684%2FProperties%2F1280103317" anchor-label="ordinal" id="-739389684%2FProperties%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-status-id/-p-h-o-t-o_-i-n-t-e-r-v-a-l_-c-a-p-t-u-r-e_-c-o-u-n-t/index.html#-739389684%2FProperties%2F1280103317"><span><span>ordinal</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-739389684%2FProperties%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="../-status-id/-p-h-o-t-o_-i-n-t-e-r-v-a-l_-c-a-p-t-u-r-e_-c-o-u-n-t/index.html#-739389684%2FProperties%2F1280103317">ordinal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1593611147%2FProperties%2F1280103317" anchor-label="value" id="1593611147%2FProperties%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="value.html"><span><span>value</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1593611147%2FProperties%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="value.html">value</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-u-byte/index.html">UByte</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="1665317776%2FFunctions%2F1280103317" anchor-label="valueOf" id="1665317776%2FFunctions%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="value-of.html"><span>value</span><wbr></wbr><span><span>Of</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1665317776%2FFunctions%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="value-of.html"><span class="token function">valueOf</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">SettingId</a></div><div class="brief "><p class="paragraph">Returns the enum constant of this type with the specified name. The string must match exactly an identifier used to declare an enum constant in this type. (Extraneous whitespace characters are not permitted.)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-571407204%2FFunctions%2F1280103317" anchor-label="values" id="-571407204%2FFunctions%2F1280103317" data-filterable-set=":wsdk:dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":wsdk:dokkaHtml/commonMain" data-filterable-set=":wsdk:dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="values.html"><span><span>values</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-571407204%2FFunctions%2F1280103317"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":wsdk:dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="values.html"><span class="token function">values</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><a href="index.html">SettingId</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Returns an array containing the constants of this enum type, in the order they're declared.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2025 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
