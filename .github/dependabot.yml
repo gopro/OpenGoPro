@@ -25,8 +25,6 @@ updates:
           - dependency-name: 'org.jetbrains.dokka*'
             update-types:
                 - version-update:semver-major
-          # This is too major of a change to automate
-          - dependency-name: 'org.jetbrains.kotlin*'
           # Both Android Studio and Dependabot are somehow finding a bad version of this
           - dependency-name: 'org.jetbrains.compose'
       labels:
