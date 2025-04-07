@@ -64,7 +64,7 @@ vlc = "3.6.1"
 # https://github.com/Kotlin/dokka/releases/tag/v1.9.20
 dokka = "2.0.0"
 # https://central.sonatype.com/artifact/org.mockito/mockito-core
-mockito = "5.16.1"
+mockito = "5.17.0"
 # https://github.com/jaredsburrows/gradle-license-plugin/releases/tag/0.9.8
 license = '0.9.8'
 # https://github.com/streem/pbandk/releases/tag/v0.16.0
