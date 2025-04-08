@@ -218,7 +218,9 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
         target (Pattern | BleDevice): regex or device to connect to
     """
 
-    class _InternalRegisterType(enum.Enum):
+    class _CompositeRegisterType(enum.Enum):
+        """A composite register type to signify all elements of a given set should be (un)registered for"""
+
         ALL_SETTINGS = enum.auto()
         ALL_STATUSES = enum.auto()
 
@@ -238,10 +240,23 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
         )
 
     @abstractmethod
-    def _register_internal_update(self, callback: UpdateCb, update: _InternalRegisterType) -> None: ...
+    def _register_update(self, callback: UpdateCb, update: _CompositeRegisterType | UpdateType) -> None:
+        """Common register method for both public UpdateType and "protected" internal register type
+
+        Args:
+            callback (UpdateCb): callback to register
+            update (_CompositeRegisterType | UpdateType): update type to register for
+        """
 
     @abstractmethod
-    def _unregister_internal_update(self, callback: UpdateCb, update: _InternalRegisterType | None = None) -> None: ...
+    def _unregister_update(self, callback: UpdateCb, update: _CompositeRegisterType | UpdateType | None = None) -> None:
+        """Common unregister method for both public UpdateType and "protected" internal register type
+
+        Args:
+            callback (UpdateCb): callback to unregister
+            update (_CompositeRegisterType | UpdateType | None, optional): Update type to unregister for. Defaults to
+                    None which will unregister the callback for all update types.
+        """
 
     @abstractmethod
     async def _send_ble_message(

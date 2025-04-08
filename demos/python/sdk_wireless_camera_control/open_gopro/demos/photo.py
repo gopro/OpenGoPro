@@ -6,21 +6,15 @@
 import argparse
 import asyncio
 from pathlib import Path
-from typing import Any
 
 from rich.console import Console
 
 from open_gopro import WiredGoPro, WirelessGoPro, constants, proto
 from open_gopro.gopro_base import GoProBase
 from open_gopro.logger import setup_logging
-from open_gopro.types import UpdateType
-from open_gopro.util import add_cli_args_and_parse, ainput
+from open_gopro.util import add_cli_args_and_parse
 
 console = Console()
-
-
-async def status_handler(update: UpdateType, value: Any) -> None:
-    console.print(f"Received status ({update}) ==> {value}")
 
 
 async def main(args: argparse.Namespace) -> None:
@@ -29,15 +23,29 @@ async def main(args: argparse.Namespace) -> None:
     gopro: GoProBase | None = None
 
     try:
-        async with WirelessGoPro(enable_wifi=False) as gopro:
+        async with (
+            WiredGoPro(args.identifier)
+            if args.wired
+            else WirelessGoPro(args.identifier, wifi_interface=args.wifi_interface)
+        ) as gopro:
             assert gopro
+            assert (await gopro.http_command.load_preset_group(group=proto.EnumPresetGroup.PRESET_GROUP_ID_PHOTO)).ok
 
-            await gopro.ble_command.register_for_all_settings(callback=status_handler)
+            # Get the media list before
+            media_set_before = set((await gopro.http_command.get_media_list()).data.files)
 
-            await ainput("Press enter to unregister...")
-            await gopro.ble_command.unregister_for_all_settings(callback=status_handler)
+            # Take a photo
+            assert (await gopro.http_command.set_shutter(shutter=constants.Toggle.ENABLE)).ok
 
-            await ainput("Press enter to exit...")
+            # Get the media list after
+            media_set_after = set((await gopro.http_command.get_media_list()).data.files)
+            # The video (is most likely) the difference between the two sets
+            photo = media_set_after.difference(media_set_before).pop()
+
+            # Download the photo
+            console.print(f"Downloading {photo.filename}...")
+            await gopro.http_command.download_file(camera_file=photo.filename, local_file=args.output)
+            console.print(f"Success!! :smiley: File has been downloaded to {Path(args.output).absolute()}")
 
     except Exception as e:  # pylint: disable = broad-except
         logger.error(repr(e))

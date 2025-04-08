@@ -8,13 +8,16 @@
 
 import asyncio
 from pathlib import Path
+from typing import Any
 
 import pytest
 import requests
 import requests_mock
 
+from open_gopro import constants
 from open_gopro.communicator_interface import HttpMessage
 from open_gopro.constants import ErrorCode, QueryCmdId, SettingId, StatusId, settings
+from open_gopro.constants.statuses import InternalBatteryBars
 from open_gopro.exceptions import GoProNotOpened, ResponseTimeout
 from open_gopro.gopro_wireless import WirelessGoPro
 from open_gopro.models.response import GlobalParsers, GoProResp
@@ -202,7 +205,7 @@ async def test_route_individual_data(mock_wireless_gopro_basic: WirelessGoPro):
 
 
 @pytest.mark.asyncio
-async def test_get_update_unregister_all(mock_wireless_gopro_basic: WirelessGoPro):
+async def test_get_update_unregister(mock_wireless_gopro_basic: WirelessGoPro):
     event = asyncio.Event()
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
 
@@ -226,3 +229,69 @@ async def test_get_update_unregister_all(mock_wireless_gopro_basic: WirelessGoPr
 def test_get_param_values_by_id():
     vector = list(settings.VideoResolution)[0]
     assert GlobalParsers.get_query_container(SettingId.VIDEO_RESOLUTION)(vector.value) == vector
+
+
+@pytest.mark.asyncio
+@pytest.mark.timeout(3)
+async def test_register_all_statuses(mock_wireless_gopro_basic: WirelessGoPro):
+    # GIVEN
+    status_q: asyncio.Queue[tuple[UpdateType, InternalBatteryBars]] = asyncio.Queue()
+    mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
+
+    async def status_handler(update: UpdateType, value: InternalBatteryBars) -> None:
+        await status_q.put((update, value))
+
+    # WHEN
+    await mock_wireless_gopro_basic.ble_command.register_for_all_statuses(callback=status_handler)
+    battery_bars_0 = bytearray([0x05, 0x93, 0x00, StatusId.INTERNAL_BATTERY_BARS.value, 0x01, 0x00])
+    mock_wireless_gopro_basic._notification_handler(0xFF, battery_bars_0)
+
+    # THEN
+    status, value = await status_q.get()
+    assert status == StatusId.INTERNAL_BATTERY_BARS
+    assert value == InternalBatteryBars.ZERO
+
+    # WHEN
+    await mock_wireless_gopro_basic.ble_command.unregister_for_all_statuses(callback=status_handler)
+    battery_bars_1 = bytearray([0x05, 0x93, 0x00, StatusId.INTERNAL_BATTERY_BARS.value, 0x01, 0x01])
+    mock_wireless_gopro_basic._notification_handler(0xFF, battery_bars_1)
+
+    # THEN
+    with pytest.raises(asyncio.TimeoutError):
+        value = await asyncio.wait_for(status_q.get(), 1)
+        print(value)
+
+
+@pytest.mark.asyncio
+@pytest.mark.timeout(3)
+async def test_register_all_settings(mock_wireless_gopro_basic: WirelessGoPro):
+    # GIVEN
+    setting_q: asyncio.Queue[tuple[UpdateType, InternalBatteryBars]] = asyncio.Queue()
+    mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
+
+    async def setting_handler(update: UpdateType, value: InternalBatteryBars) -> None:
+        await setting_q.put((update, value))
+
+    # WHEN
+    await mock_wireless_gopro_basic.ble_command.register_for_all_settings(callback=setting_handler)
+    resolution_update = bytearray(
+        [0x05, 0x92, 0x00, SettingId.VIDEO_RESOLUTION.value, 0x01, constants.settings.VideoResolution.NUM_1080]
+    )
+    mock_wireless_gopro_basic._notification_handler(0xFF, resolution_update)
+
+    # THEN
+    setting, value = await setting_q.get()
+    assert setting == SettingId.VIDEO_RESOLUTION
+    assert value == constants.settings.VideoResolution.NUM_1080
+
+    # WHEN
+    await mock_wireless_gopro_basic.ble_command.unregister_for_all_settings(callback=setting_handler)
+    resolution_update_2 = bytearray(
+        [0x05, 0x93, 0x00, StatusId.INTERNAL_BATTERY_BARS.value, 0x01, constants.settings.VideoResolution.NUM_1440]
+    )
+    mock_wireless_gopro_basic._notification_handler(0xFF, resolution_update_2)
+
+    # THEN
+    with pytest.raises(asyncio.TimeoutError):
+        value = await asyncio.wait_for(setting_q.get(), 1)
+        print(value)

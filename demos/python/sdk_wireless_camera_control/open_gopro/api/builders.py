@@ -21,7 +21,6 @@ from open_gopro.communicator_interface import (
     BleMessages,
     GoProBle,
     GoProHttp,
-    GoProWirelessInterface,
     HttpMessage,
     HttpMessages,
     MessageRules,
@@ -326,11 +325,15 @@ def ble_register_command(
         response = await instance._communicator._send_ble_message(message, **(await wrapped(**kwargs) or kwargs))
         if response.ok:
             internal_update_type = (
-                GoProBle._InternalRegisterType.ALL_STATUSES
+                GoProBle._CompositeRegisterType.ALL_STATUSES
                 if update_set == StatusId
-                else GoProBle._InternalRegisterType.ALL_SETTINGS
+                else GoProBle._CompositeRegisterType.ALL_SETTINGS
             )
-            instance._communicator._register_internal_update(kwargs["callback"], internal_update_type)
+            if action is RegisterUnregisterAll.Action.REGISTER:
+                instance._communicator._register_update(kwargs["callback"], internal_update_type)
+            else:
+                instance._communicator._unregister_update(kwargs["callback"], internal_update_type)
+        return response
 
     return wrapper
 

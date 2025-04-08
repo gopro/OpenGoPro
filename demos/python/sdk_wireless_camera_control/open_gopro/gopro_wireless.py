@@ -164,7 +164,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         # Synchronous response that has been parsed and are ready for their sender to receive as the response.
         self._sync_resp_ready_q: SnapshotQueue[GoProResp] = SnapshotQueue()
 
-        self._listeners: dict[UpdateType | GoProBle._InternalRegisterType, set[UpdateCb]] = defaultdict(set)
+        self._listeners: dict[UpdateType | GoProBle._CompositeRegisterType, set[UpdateCb]] = defaultdict(set)
 
         # TO be set up when opening in async context
         self._loop: asyncio.AbstractEventLoop
@@ -342,9 +342,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         await self._close_ble()
         self._open = False
 
-    def _common_register_update(self, callback: UpdateCb, update: UpdateType | GoProBle._InternalRegisterType) -> None:
-        self._listeners[update].add(callback)
-
     def register_update(self, callback: UpdateCb, update: UpdateType) -> None:
         """Register for callbacks when an update occurs
 
@@ -352,23 +349,16 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             callback (UpdateCb): callback to be notified in
             update (UpdateType): update to register for
         """
-        return self._common_register_update(callback, update)
+        return self._register_update(callback, update)
 
-    def _register_internal_update(self, callback: UpdateCb, update: GoProBle._InternalRegisterType) -> None:
-        return self._common_register_update(callback, update)
+    def _register_update(self, callback: UpdateCb, update: GoProBle._CompositeRegisterType | UpdateType) -> None:
+        """Common register method for both public UpdateType and "protected" internal register type
 
-    def _common_unregister_update(
-        self, callback: UpdateCb, update: UpdateType | GoProBle._InternalRegisterType | None = None
-    ) -> None:
-        if update:
-            self._listeners.get(update, set()).remove(callback)
-        else:
-            # If update was not specified, remove all uses of callback
-            for key in dict(self._listeners).keys():
-                try:
-                    self._listeners[key].remove(callback)
-                except KeyError:
-                    continue
+        Args:
+            callback (UpdateCb): callback to register
+            update (GoProBle._CompositeRegisterType | UpdateType): update type to register for
+        """
+        self._listeners[update].add(callback)
 
     def unregister_update(self, callback: UpdateCb, update: UpdateType | None = None) -> None:
         """Unregister for asynchronous update(s)
@@ -378,10 +368,27 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             update (UpdateType | None): updates to unsubscribe for. Defaults to None (all
                 updates that use this callback will be unsubscribed).
         """
-        return self._common_unregister_update(callback, update)
+        return self._unregister_update(callback, update)
 
-    def _unregister_internal_update(self, callback: UpdateCb, update: UpdateType | None = None) -> None:
-        return self._common_unregister_update(callback, update)
+    def _unregister_update(
+        self, callback: UpdateCb, update: GoProBle._CompositeRegisterType | UpdateType | None = None
+    ) -> None:
+        """Common unregister method for both public UpdateType and "protected" internal register type
+
+        Args:
+            callback (UpdateCb): callback to unregister
+            update (GoProBle._CompositeRegisterType | UpdateType | None, optional): Update type to unregister for. Defaults to
+                    None which will unregister the callback for all update types.
+        """
+        if update:
+            self._listeners.get(update, set()).remove(callback)
+        else:
+            # If update was not specified, remove all uses of callback
+            for key in dict(self._listeners).keys():
+                try:
+                    self._listeners[key].remove(callback)
+                except KeyError:
+                    continue
 
     @property
     def is_open(self) -> bool:
@@ -595,10 +602,10 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         # Now handle our internal composite updates
         match update:
             case StatusId():
-                for listener in self._listeners.get(GoProBle._InternalRegisterType.ALL_STATUSES, []):
+                for listener in self._listeners.get(GoProBle._CompositeRegisterType.ALL_STATUSES, []):
                     await listener(update, value)
             case SettingId():
-                for listener in self._listeners.get(GoProBle._InternalRegisterType.ALL_SETTINGS, []):
+                for listener in self._listeners.get(GoProBle._CompositeRegisterType.ALL_SETTINGS, []):
                     await listener(update, value)
 
     async def _periodic_keep_alive(self) -> None:
