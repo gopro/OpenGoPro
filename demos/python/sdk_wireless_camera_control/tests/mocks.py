@@ -102,10 +102,18 @@ class MockBleCommunicator(GoProBle):
         )
         self._api = api_versions[test_version](self)
 
+    def _register_update(self, callback: UpdateCb, update: GoProBle._CompositeRegisterType | UpdateType) -> None:
+        return
+
+    def _unregister_update(
+        self, callback: UpdateCb, update: GoProBle._CompositeRegisterType | UpdateType | None = None
+    ) -> None:
+        return
+
     def register_update(self, callback: UpdateCb, update: UpdateType) -> None:
         return
 
-    def unregister_update(self, callback: UpdateCb, update: UpdateType = None) -> None:
+    def unregister_update(self, callback: UpdateCb, update: UpdateType | None = None) -> None:
         return
 
     async def _send_ble_message(

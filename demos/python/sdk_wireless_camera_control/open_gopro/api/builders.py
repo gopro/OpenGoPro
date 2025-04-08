@@ -168,6 +168,9 @@ class RegisterUnregisterAll(BleWriteCommand):
         self.update_set = update_set
         super().__init__(uuid=uuid, cmd=cmd, parser=parser)
 
+    def _build_data(self, **kwargs: Any) -> bytearray:
+        return bytearray([self.cmd.value])
+
 
 class BleProtoCommand(BleMessage):
     """A BLE command that is sent and received as using the Protobuf protocol
@@ -319,7 +322,18 @@ def ble_register_command(
 
     @wrapt.decorator
     async def wrapper(wrapped: Callable, instance: BleMessages, _: Any, kwargs: Any) -> GoProResp:
-        return await instance._communicator._send_ble_message(message, **(await wrapped(**kwargs) or kwargs))
+        response = await instance._communicator._send_ble_message(message, **(await wrapped(**kwargs) or kwargs))
+        if response.ok:
+            internal_update_type = (
+                GoProBle._CompositeRegisterType.ALL_STATUSES
+                if update_set == StatusId
+                else GoProBle._CompositeRegisterType.ALL_SETTINGS
+            )
+            if action is RegisterUnregisterAll.Action.REGISTER:
+                instance._communicator._register_update(kwargs["callback"], internal_update_type)
+            else:
+                instance._communicator._unregister_update(kwargs["callback"], internal_update_type)
+        return response
 
     return wrapper
 

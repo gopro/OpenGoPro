@@ -25,12 +25,14 @@ from open_gopro.api import (
 from open_gopro.ble import BleakWrapperController, BleUUID
 from open_gopro.communicator_interface import (
     BleMessage,
+    GoProBle,
     GoProWirelessInterface,
     HttpMessage,
     Message,
     MessageRules,
 )
 from open_gopro.constants import ActionId, GoProUUID, StatusId
+from open_gopro.constants.settings import SettingId
 from open_gopro.exceptions import (
     ConnectFailed,
     ConnectionTerminated,
@@ -162,7 +164,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         # Synchronous response that has been parsed and are ready for their sender to receive as the response.
         self._sync_resp_ready_q: SnapshotQueue[GoProResp] = SnapshotQueue()
 
-        self._listeners: dict[UpdateType, set[UpdateCb]] = defaultdict(set)
+        self._listeners: dict[UpdateType | GoProBle._CompositeRegisterType, set[UpdateCb]] = defaultdict(set)
 
         # TO be set up when opening in async context
         self._loop: asyncio.AbstractEventLoop
@@ -347,6 +349,15 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             callback (UpdateCb): callback to be notified in
             update (UpdateType): update to register for
         """
+        return self._register_update(callback, update)
+
+    def _register_update(self, callback: UpdateCb, update: GoProBle._CompositeRegisterType | UpdateType) -> None:
+        """Common register method for both public UpdateType and "protected" internal register type
+
+        Args:
+            callback (UpdateCb): callback to register
+            update (GoProBle._CompositeRegisterType | UpdateType): update type to register for
+        """
         self._listeners[update].add(callback)
 
     def unregister_update(self, callback: UpdateCb, update: UpdateType | None = None) -> None:
@@ -357,8 +368,25 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             update (UpdateType | None): updates to unsubscribe for. Defaults to None (all
                 updates that use this callback will be unsubscribed).
         """
+        return self._unregister_update(callback, update)
+
+    def _unregister_update(
+        self, callback: UpdateCb, update: GoProBle._CompositeRegisterType | UpdateType | None = None
+    ) -> None:
+        """Common unregister method for both public UpdateType and "protected" internal register type
+
+        Args:
+            callback (UpdateCb): callback to unregister
+            update (GoProBle._CompositeRegisterType | UpdateType | None, optional): Update type to unregister for. Defaults to
+                    None which will unregister the callback for all update types.
+        """
         if update:
-            self._listeners.get(update, set()).remove(callback)
+            try:
+                self._listeners.get(update, set()).remove(callback)
+            except KeyError:
+                # This is possible if, for example, the register occurred with register and the unregister is now an
+                # individual setting / status
+                return
         else:
             # If update was not specified, remove all uses of callback
             for key in dict(self._listeners).keys():
@@ -573,7 +601,19 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             update (UpdateType): update to notify
             value (Any): value to notify
         """
+        listeners: set[UpdateCb] = set()
+        # check individual updates
         for listener in self._listeners.get(update, []):
+            listeners.add(listener)
+        # Now check our internal composite updates
+        match update:
+            case StatusId():
+                for listener in self._listeners.get(GoProBle._CompositeRegisterType.ALL_STATUSES, []):
+                    listeners.add(listener)
+            case SettingId():
+                for listener in self._listeners.get(GoProBle._CompositeRegisterType.ALL_SETTINGS, []):
+                    listeners.add(listener)
+        for listener in listeners:
             await listener(update, value)
 
     async def _periodic_keep_alive(self) -> None:
