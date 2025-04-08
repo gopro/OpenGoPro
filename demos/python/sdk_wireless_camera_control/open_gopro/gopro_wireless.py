@@ -381,7 +381,12 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                     None which will unregister the callback for all update types.
         """
         if update:
-            self._listeners.get(update, set()).remove(callback)
+            try:
+                self._listeners.get(update, set()).remove(callback)
+            except KeyError:
+                # This is possible if, for example, the register occurred with register and the unregister is now an
+                # individual setting / status
+                return
         else:
             # If update was not specified, remove all uses of callback
             for key in dict(self._listeners).keys():
@@ -596,17 +601,20 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             update (UpdateType): update to notify
             value (Any): value to notify
         """
-        # Handle individual updates first
+        listeners: set[UpdateCb] = set()
+        # check individual updates
         for listener in self._listeners.get(update, []):
-            await listener(update, value)
-        # Now handle our internal composite updates
+            listeners.add(listener)
+        # Now check our internal composite updates
         match update:
             case StatusId():
                 for listener in self._listeners.get(GoProBle._CompositeRegisterType.ALL_STATUSES, []):
-                    await listener(update, value)
+                    listeners.add(listener)
             case SettingId():
                 for listener in self._listeners.get(GoProBle._CompositeRegisterType.ALL_SETTINGS, []):
-                    await listener(update, value)
+                    listeners.add(listener)
+        for listener in listeners:
+            await listener(update, value)
 
     async def _periodic_keep_alive(self) -> None:
         """Task to periodically send the keep alive message via BLE."""

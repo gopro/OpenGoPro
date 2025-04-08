@@ -233,7 +233,7 @@ def test_get_param_values_by_id():
 
 @pytest.mark.asyncio
 @pytest.mark.timeout(3)
-async def test_register_all_statuses(mock_wireless_gopro_basic: WirelessGoPro):
+async def test_register_all_unregister_all_statuses(mock_wireless_gopro_basic: WirelessGoPro):
     # GIVEN
     status_q: asyncio.Queue[tuple[UpdateType, InternalBatteryBars]] = asyncio.Queue()
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
@@ -264,7 +264,7 @@ async def test_register_all_statuses(mock_wireless_gopro_basic: WirelessGoPro):
 
 @pytest.mark.asyncio
 @pytest.mark.timeout(3)
-async def test_register_all_settings(mock_wireless_gopro_basic: WirelessGoPro):
+async def test_register_all_unregister_all_settings(mock_wireless_gopro_basic: WirelessGoPro):
     # GIVEN
     setting_q: asyncio.Queue[tuple[UpdateType, InternalBatteryBars]] = asyncio.Queue()
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
@@ -286,6 +286,41 @@ async def test_register_all_settings(mock_wireless_gopro_basic: WirelessGoPro):
 
     # WHEN
     await mock_wireless_gopro_basic.ble_command.unregister_for_all_settings(callback=setting_handler)
+    resolution_update_2 = bytearray(
+        [0x05, 0x93, 0x00, StatusId.INTERNAL_BATTERY_BARS.value, 0x01, constants.settings.VideoResolution.NUM_1440]
+    )
+    mock_wireless_gopro_basic._notification_handler(0xFF, resolution_update_2)
+
+    # THEN
+    with pytest.raises(asyncio.TimeoutError):
+        value = await asyncio.wait_for(setting_q.get(), 1)
+        print(value)
+
+
+@pytest.mark.asyncio
+@pytest.mark.timeout(3)
+async def test_register_all_unregister_one_settings(mock_wireless_gopro_basic: WirelessGoPro):
+    # GIVEN
+    setting_q: asyncio.Queue[tuple[UpdateType, InternalBatteryBars]] = asyncio.Queue()
+    mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
+
+    async def setting_handler(update: UpdateType, value: InternalBatteryBars) -> None:
+        await setting_q.put((update, value))
+
+    # WHEN
+    await mock_wireless_gopro_basic.ble_command.register_for_all_settings(callback=setting_handler)
+    resolution_update = bytearray(
+        [0x05, 0x92, 0x00, SettingId.VIDEO_RESOLUTION.value, 0x01, constants.settings.VideoResolution.NUM_1080]
+    )
+    mock_wireless_gopro_basic._notification_handler(0xFF, resolution_update)
+
+    # THEN
+    setting, value = await setting_q.get()
+    assert setting == SettingId.VIDEO_RESOLUTION
+    assert value == constants.settings.VideoResolution.NUM_1080
+
+    # WHEN
+    await mock_wireless_gopro_basic.ble_setting.video_resolution.unregister_value_update(callback=setting_handler)
     resolution_update_2 = bytearray(
         [0x05, 0x93, 0x00, StatusId.INTERNAL_BATTERY_BARS.value, 0x01, constants.settings.VideoResolution.NUM_1440]
     )
