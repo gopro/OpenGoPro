@@ -9,9 +9,10 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
-Unreleased
-----------
+0.19.6 (April-8-2025)
+--------------------
 * Update dependencies
+* Fix register / unregister all settings / statuses
 
 0.19.5 (March-27-2025)
 ----------------------
