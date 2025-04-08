@@ -21,6 +21,7 @@ from open_gopro.communicator_interface import (
     BleMessages,
     GoProBle,
     GoProHttp,
+    GoProWirelessInterface,
     HttpMessage,
     HttpMessages,
     MessageRules,
@@ -167,6 +168,9 @@ class RegisterUnregisterAll(BleWriteCommand):
         self.action = action
         self.update_set = update_set
         super().__init__(uuid=uuid, cmd=cmd, parser=parser)
+
+    def _build_data(self, **kwargs: Any) -> bytearray:
+        return bytearray([self.cmd.value])
 
 
 class BleProtoCommand(BleMessage):
@@ -319,7 +323,14 @@ def ble_register_command(
 
     @wrapt.decorator
     async def wrapper(wrapped: Callable, instance: BleMessages, _: Any, kwargs: Any) -> GoProResp:
-        return await instance._communicator._send_ble_message(message, **(await wrapped(**kwargs) or kwargs))
+        response = await instance._communicator._send_ble_message(message, **(await wrapped(**kwargs) or kwargs))
+        if response.ok:
+            internal_update_type = (
+                GoProBle._InternalRegisterType.ALL_STATUSES
+                if update_set == StatusId
+                else GoProBle._InternalRegisterType.ALL_SETTINGS
+            )
+            instance._communicator._register_internal_update(kwargs["callback"], internal_update_type)
 
     return wrapper
 

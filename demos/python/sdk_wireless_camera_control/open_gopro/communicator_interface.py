@@ -218,6 +218,10 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
         target (Pattern | BleDevice): regex or device to connect to
     """
 
+    class _InternalRegisterType(enum.Enum):
+        ALL_SETTINGS = enum.auto()
+        ALL_STATUSES = enum.auto()
+
     def __init__(
         self,
         controller: BLEController,
@@ -232,6 +236,12 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
             (re.compile(r"GoPro [A-Z0-9]{4}") if target is None else target, [GoProUUID.S_CONTROL_QUERY]),
             uuids=GoProUUID,
         )
+
+    @abstractmethod
+    def _register_internal_update(self, callback: UpdateCb, update: _InternalRegisterType) -> None: ...
+
+    @abstractmethod
+    def _unregister_internal_update(self, callback: UpdateCb, update: _InternalRegisterType | None = None) -> None: ...
 
     @abstractmethod
     async def _send_ble_message(

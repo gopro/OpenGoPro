@@ -4,7 +4,7 @@
 """Commonly reused type aliases"""
 
 from __future__ import annotations
-
+import enum
 from typing import Any, Callable, Coroutine, TypeAlias
 
 import construct
