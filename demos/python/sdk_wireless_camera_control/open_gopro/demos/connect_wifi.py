@@ -26,7 +26,9 @@ async def main(args: argparse.Namespace) -> None:
     setup_logging(__name__, args.log)
     gopro: Optional[WirelessGoPro] = None
 
-    async with WirelessGoPro(args.identifier, wifi_interface=args.wifi_interface, sudo_password=args.password) as gopro:
+    async with WirelessGoPro(
+        args.identifier, host_wifi_interface=args.wifi_interface, host_sudo_password=args.password
+    ) as gopro:
         # Now we only want errors
         set_stream_logging_level(logging.ERROR)
 

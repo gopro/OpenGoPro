@@ -54,7 +54,7 @@ class MockBleController(BLEController, Generic[BleHandle, BleDevice]):
         self.gatt_db = MockGattTable()
 
     async def scan(self, token: Pattern, timeout: int, service_uuids: list[BleUUID] = None) -> str:
-        if token == re.compile("device"):
+        if token == re.compile("device") or token == "device":
             return "scanned_device"
         raise FailedToFindDevice
 
@@ -98,9 +98,12 @@ class MockBleCommunicator(GoProBle):
             MockBleController(),
             disconnection_handler,
             notification_handler,
-            re.compile("target"),
+            "target",
         )
         self._api = api_versions[test_version](self)
+
+    def identifier(self) -> str:
+        return "identifier"
 
     def _register_update(self, callback: UpdateCb, update: GoProBle._CompositeRegisterType | UpdateType) -> None:
         return
@@ -176,6 +179,10 @@ class MockWifiCommunicator(GoProWifi):
         super().__init__(MockWifiController())
         self._api = api_versions[test_version](self)
 
+    @property
+    def identifier(self) -> str:
+        return "identifier"
+
     async def _get_json(
         self, message: HttpMessage, *, timeout: int = 0, rules: MessageRules = MessageRules(), **kwargs
     ) -> GoProResp:
@@ -243,7 +250,7 @@ class MockWiredGoPro(WiredGoPro):
 class MockWirelessGoPro(WirelessGoPro):
     def __init__(self, test_version: str) -> None:
         super().__init__(
-            target=re.compile("device"),
+            target="device",
             ble_adapter=MockBleController,
             wifi_adapter=MockWifiController,
             enable_wifi=True,
@@ -328,7 +335,7 @@ _test_response_id = CmdId.SET_SHUTTER
 class MockGoProMaintainBle(WirelessGoPro):
     def __init__(self) -> None:
         super().__init__(
-            target=re.compile("device"),
+            target="device",
             ble_adapter=MockBleController,
             wifi_adapter=MockWifiController,
             enable_wifi=True,

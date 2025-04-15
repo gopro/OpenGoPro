@@ -241,31 +241,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
             bool: True if yes, False if no
         """
 
-    @abstractmethod
-    async def configure_cohn(self, timeout: int = 60) -> bool:
-        """Prepare Camera on the Home Network
-
-        Provision if not provisioned
-        Then wait for COHN to be connected and ready
-
-        Args:
-            timeout (int): time in seconds to wait for COHN to be ready. Defaults to 60.
-
-        Returns:
-            bool: True if success, False otherwise
-        """
-
-    @property
-    @abstractmethod
-    async def is_cohn_provisioned(self) -> bool:
-        """Is COHN currently provisioned?
-
-        Get the current COHN status from the camera
-
-        Returns:
-            bool: True if COHN is provisioned, False otherwise
-        """
-
     ##########################################################################################################
     #                                 End Public API
     ##########################################################################################################

@@ -26,7 +26,7 @@ async def main(args: argparse.Namespace) -> None:
         async with (
             WiredGoPro(args.identifier)
             if args.wired
-            else WirelessGoPro(args.identifier, wifi_interface=args.wifi_interface)
+            else WirelessGoPro(args.identifier, host_wifi_interface=args.wifi_interface)
         ) as gopro:
             assert gopro
             assert (await gopro.http_command.load_preset_group(group=proto.EnumPresetGroup.PRESET_GROUP_ID_PHOTO)).ok

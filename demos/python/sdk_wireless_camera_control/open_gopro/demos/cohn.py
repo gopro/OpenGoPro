@@ -16,8 +16,6 @@ from open_gopro.util import add_cli_args_and_parse
 
 console = Console()  # rich consoler printer
 
-MDNS_SERVICE = "_gopro-web._tcp.local."
-
 CURL_TEMPLATE = r"""curl -v -u 'gopro:{password}' --cacert cohn.crt 'https://{ip_addr}/gopro/camera/state'"""
 
 

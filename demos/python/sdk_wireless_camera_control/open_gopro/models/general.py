@@ -6,11 +6,14 @@
 from __future__ import annotations
 
 import datetime
+import os
+import tempfile
 from base64 import b64encode
 from dataclasses import dataclass
+from functools import cached_property
 from pathlib import Path
 
-from pydantic import ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from open_gopro.constants import SettingId, WebcamError, WebcamStatus
 from open_gopro.models.bases import CustomBaseModel
@@ -61,18 +64,31 @@ class HttpInvalidSettingResponse(CustomBaseModel):
     supported_options: list[SupportedOption] | None = Field(default=None)
 
 
-@dataclass
-class CohnInfo:
+class CohnInfo(BaseModel):
     """Data model to store Camera on the Home Network connection info"""
 
     ip_address: str
     username: str
     password: str
     certificate: str
-    cert_path: Path = Path("cohn.crt")
 
-    def __post_init__(self) -> None:
+    @cached_property
+    def auth_token(self) -> str:
         token = b64encode(f"{self.username}:{self.password}".encode("utf-8")).decode("ascii")
-        self.auth_token = f"Basic {token}"
-        with open(self.cert_path, "w") as fp:
-            fp.write(self.certificate)
+        return f"Basic {token}"
+
+    # TODO this is ugly and probably unsecure. Why can't I pass a cert as a string to requests?
+    @cached_property
+    def certificate_as_path(self) -> Path:
+        with tempfile.NamedTemporaryFile(delete=False) as cert_file:
+            cert_file.write(self.certificate.encode("utf-8"))
+            cert_file.close()
+            return Path(cert_file.name)
+
+    def __add__(self, other: CohnInfo) -> CohnInfo:
+        return CohnInfo(
+            ip_address=other.ip_address or self.ip_address,
+            username=other.username or self.username,
+            password=other.password or self.password,
+            certificate=other.certificate or self.certificate,
+        )

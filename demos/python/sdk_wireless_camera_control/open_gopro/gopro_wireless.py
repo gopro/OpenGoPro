@@ -7,11 +7,13 @@ from __future__ import annotations
 
 import asyncio
 import enum
+import json
 import logging
 import queue
 from collections import defaultdict
 from copy import deepcopy
-from typing import Any, Callable, Final, Pattern
+from pathlib import Path
+from typing import Any, Callable, Final
 
 from open_gopro import proto
 from open_gopro.api import (
@@ -23,6 +25,7 @@ from open_gopro.api import (
     WirelessApi,
 )
 from open_gopro.ble import BleakWrapperController, BleUUID
+from open_gopro.ble.controller import BLEController
 from open_gopro.communicator_interface import (
     BleMessage,
     GoProBle,
@@ -41,6 +44,7 @@ from open_gopro.exceptions import (
     InvalidOpenGoProVersion,
     ResponseTimeout,
 )
+from open_gopro.features.cohn import CohnFeature
 from open_gopro.gopro_base import (
     GoProBase,
     GoProMessageInterface,
@@ -52,6 +56,7 @@ from open_gopro.models.response import BleRespBuilder, GoProResp
 from open_gopro.types import ResponseType, UpdateCb, UpdateType
 from open_gopro.util import SnapshotQueue, get_current_dst_aware_time, pretty_print
 from open_gopro.wifi import WifiCli
+from open_gopro.wifi.controller import WifiController
 
 logger = logging.getLogger(__name__)
 
@@ -123,29 +128,51 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         RULE_ENFORCER = enum.auto()
         STATE_MANAGER = enum.auto()
 
+    class Interface(enum.Enum):
+        BLE = enum.auto()
+        WIFI_AP = enum.auto()
+        COHN = enum.auto()  # WIFI_STA
+
     def __init__(
         self,
-        target: Pattern | None = None,
-        wifi_interface: str | None = None,
-        sudo_password: str | None = None,
-        enable_wifi: bool = True,
+        target: str | None = None,
+        host_wifi_interface: str | None = None,
+        host_sudo_password: str | None = None,
+        cohn_credentials: CohnInfo | None = None,
+        cohn_db: Path = Path("cohn_db.json"),
+        interfaces: set[WirelessGoPro.Interface] = {Interface.BLE, Interface.WIFI_AP},
         **kwargs: Any,
     ) -> None:
         GoProBase.__init__(self, **kwargs)
         # Store initialization information
-        self._should_enable_wifi = enable_wifi
-        ble_adapter = kwargs.get("ble_adapter", BleakWrapperController)
-        wifi_adapter = kwargs.get("wifi_adapter", WifiCli)
+        self._should_enable_wifi = WirelessGoPro.Interface.WIFI_AP in interfaces
+        self._should_enable_ble = WirelessGoPro.Interface.BLE in interfaces
+        self._should_enable_cohn = WirelessGoPro.Interface.COHN in interfaces
+        self._cohn_db_path = cohn_db
+        self._cohn_credentials = cohn_credentials
+
+        # Valid parameter selections
+        if self._should_enable_wifi and self._should_enable_cohn:
+            raise ValueError("Can not have simultaneous COHN and Wifi Access Point connections")
+        if self._should_enable_wifi and not self._should_enable_ble:
+            raise ValueError("Can not have Wifi Access Point connection without BLE")
+        if self._should_enable_cohn and not cohn_credentials:
+            raise ValueError("Can not enable COHN without passing the cohn_credentials")
+
+        self._identifier = target
+
+        ble_adapter: type[BLEController] = kwargs.get("ble_adapter", BleakWrapperController)
+        wifi_adapter: type[WifiController] = kwargs.get("wifi_adapter", WifiCli)
         # Set up API delegate
         self._wireless_api = WirelessApi(self)
-        self._keep_alive_interval = kwargs.get("keep_alive_interval", 3)
+        self._keep_alive_interval: int = kwargs.get("keep_alive_interval", 3)
 
         try:
             # Initialize GoPro Communication Client
             GoProWirelessInterface.__init__(
                 self,
                 ble_controller=ble_adapter(self._handle_exception),
-                wifi_controller=wifi_adapter(wifi_interface, password=sudo_password),
+                wifi_controller=wifi_adapter(host_wifi_interface, password=host_sudo_password),
                 disconnected_cb=self._disconnect_handler,
                 notification_cb=self._notification_handler,
                 target=target,
@@ -155,6 +182,9 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                 "Could not find a suitable Wifi Interface. If there is an available Wifi interface, try passing it manually with the 'wifi_interface' argument."
             )
             raise e
+
+        # Set up feature delegates
+        self._cohn: CohnFeature
 
         # Builders for currently accumulating synchronous responses, indexed by GoProUUID. This assumes there
         # can only be one active response per BleUUID
@@ -166,7 +196,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
         self._listeners: dict[UpdateType | GoProBle._CompositeRegisterType, set[UpdateCb]] = defaultdict(set)
 
-        # TO be set up when opening in async context
+        # To be set up when opening in async context
         self._loop: asyncio.AbstractEventLoop
         self._open = False
         self._is_ble_connected = False
@@ -180,8 +210,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             self._encoding: bool
             self._busy: bool
             self._encoding_started: asyncio.Event
-
-        self._cohn: CohnInfo | None = None
 
     @property
     def identifier(self) -> str:
@@ -198,9 +226,9 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         Returns:
             str: last 4 digits if available, else None
         """
-        if self._ble.identifier is None:
-            raise GoProNotOpened("Client does not yet have an identifier.")
-        return self._ble.identifier
+        if not self._identifier:
+            raise RuntimeError("Identifier not yet set")
+        return self._identifier
 
     @property
     def is_ble_connected(self) -> bool:
@@ -220,7 +248,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             bool: True if yes, False if no
         """
         try:
-            return bool(self._cohn) or self._wifi.is_connected
+            return self._cohn.is_ready or self._wifi.is_connected
         except AttributeError:
             return False
 
@@ -289,6 +317,8 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         self._loop = asyncio.get_running_loop()
         self._ble_disconnect_event = asyncio.Event()
 
+        self._cohn = CohnFeature(self._cohn_db_path, self, self._loop, self._cohn_credentials)
+
         # If we are to perform BLE housekeeping
         if self._should_maintain_state:
             self._ready_lock = asyncio.Lock()
@@ -300,23 +330,28 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         RETRIES = 5
         for retry in range(RETRIES):
             try:
-                await self._open_ble(timeout, retries)
+                if self._should_enable_ble:
+                    await self._open_ble(timeout, retries)
 
-                await self.ble_command.set_third_party_client_info()
-                # Set current dst-aware time. Don't assert on success since some old cameras don't support this command.
-                await self.ble_command.set_date_time_tz_dst(
-                    **dict(zip(("date_time", "tz_offset", "is_dst"), get_current_dst_aware_time()))
-                )
+                    # TODO need to handle sending these if BLE does not exist
+                    await self.ble_command.set_third_party_client_info()
+                    # Set current dst-aware time. Don't assert on success since some old cameras don't support this command.
+                    await self.ble_command.set_date_time_tz_dst(
+                        **dict(zip(("date_time", "tz_offset", "is_dst"), get_current_dst_aware_time()))
+                    )
 
-                # Find and configure API version
-                version = (await self.ble_command.get_open_gopro_api_version()).data
-                if version != self.version:
-                    raise InvalidOpenGoProVersion(version)
-                logger.info(f"Using Open GoPro API version {version}")
+                    # Find and configure API version
+                    version = (await self.ble_command.get_open_gopro_api_version()).data
+                    if version != self.version:
+                        raise InvalidOpenGoProVersion(version)
+                    logger.info(f"Using Open GoPro API version {version}")
 
-                # Establish Wifi connection if desired
+                # Establish Wifi / COHN connection if desired
                 if self._should_enable_wifi:
                     await self._open_wifi(timeout, retries)
+                elif self._should_enable_cohn:
+                    if not self._cohn.is_ready:
+                        logger.warning("COHN needs to be configured.")
                 else:
                     # Otherwise, turn off Wifi
                     logger.info("Turning off the camera's Wifi radio")
@@ -416,89 +451,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     ##########################################################################################################
     #### Abstracted commands
 
-    # TODO move these into delegate / mixin?
-
-    # TODO message rules are a mess here. Since these send other commands that need message rules, we deadlock
-    # if we try to apply message rules to these
-
-    async def _provision_cohn(self, timeout: int) -> bool:
-        """Provision the camera for Camera on the Home Network
-
-        Args:
-            timeout (int): time in seconds to wait for provisioning success
-
-        Returns:
-            bool: True if success, False otherwise
-        """
-        logger.info("Provisioning COHN")
-        provisioned = asyncio.Event()
-
-        async def wait_for_cohn_provisioned(_: Any, status: proto.NotifyCOHNStatus) -> None:
-            if status.enabled is True:
-                provisioned.set()
-
-        self.register_update(wait_for_cohn_provisioned, ActionId.RESPONSE_GET_COHN_STATUS)
-        # ALways override. Assume if we're here, we are purposely (re)configuring COHN
-        assert (await self.ble_command.cohn_create_certificate(override=True)).ok
-        try:
-            logger.debug("Waiting for COHN to provision")
-            await self.ble_command.cohn_get_status(register=True)
-            await asyncio.wait_for(provisioned.wait(), timeout)
-            logger.info("COHN is provisioned!!")
-            return True
-        except TimeoutError:
-            return False
-
-    # TODO allow cohn_info to be passed in
-    # TODO validate if network is connected if COHN needs to be configured
-    @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
-    async def configure_cohn(self, timeout: int = 60) -> bool:
-        """Prepare Camera on the Home Network
-
-        Provision if not provisioned
-        Then wait for COHN to be connected and ready
-
-        Args:
-            timeout (int): time in seconds to wait for COHN to be ready. Defaults to 60.
-
-        Returns:
-            bool: True if success, False otherwise
-        """
-        status = (await self.ble_command.cohn_get_status(register=False)).data
-        # We need to provision if nor currently provisioned
-        if not status.enabled:
-            assert await self._provision_cohn(timeout)
-
-        credentials: asyncio.Queue[tuple[str, str]] = asyncio.Queue()
-
-        async def wait_for_cohn_ready(_: Any, status: proto.NotifyCOHNStatus) -> None:
-            if status.state == proto.EnumCOHNNetworkState.COHN_STATE_NetworkConnected:
-                await credentials.put((status.ipaddress, status.password))
-
-        # Now we need to wait for COHN to be ready
-        try:
-            self.register_update(wait_for_cohn_ready, ActionId.RESPONSE_GET_COHN_STATUS)
-            logger.info("Waiting for COHN to be connected")
-            await self.ble_command.cohn_get_status(register=True)
-            ip_address, password = await asyncio.wait_for(credentials.get(), timeout)
-            cert = (await self.ble_command.cohn_get_certificate()).data.cert
-            self._cohn = CohnInfo(ip_address, "gopro", password, cert)
-            logger.info(f"Using COHN Credentials: {self._cohn}")
-            return True
-        except TimeoutError:
-            return False
-
-    @property
-    async def is_cohn_provisioned(self) -> bool:
-        """Is COHN currently provisioned?
-
-        Get the current COHN status from the camera
-
-        Returns:
-            bool: True if COHN is provisioned, False otherwise
-        """
-        return (await self.ble_command.cohn_get_status(register=False)).data.enabled
-
     @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
     async def keep_alive(self) -> bool:
         """Send a heartbeat to prevent the BLE connection from dropping.
@@ -510,58 +462,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
         """
         return (await self.ble_setting.led.set(66)).ok  # type: ignore
-
-    @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
-    async def connect_to_access_point(self, ssid: str, password: str) -> bool:
-        """Connect the camera to a Wifi Access Point
-
-        Args:
-            ssid (str): SSID of AP
-            password (str): password of AP
-
-        Returns:
-            bool: True if AP is currently connected, False otherwise
-        """
-        scan_result: asyncio.Queue[proto.NotifStartScanning] = asyncio.Queue()
-        provisioned_result: asyncio.Queue[proto.NotifProvisioningState] = asyncio.Queue()
-
-        async def wait_for_scan(_: Any, result: proto.NotifStartScanning) -> None:
-            await scan_result.put(result)
-
-        async def wait_for_provisioning(_: Any, result: proto.NotifProvisioningState) -> None:
-            await provisioned_result.put(result)
-
-        # Wait to receive scanning success
-        logger.info("Scanning for Wifi networks")
-        self.register_update(wait_for_scan, ActionId.NOTIF_START_SCAN)
-        await self.ble_command.scan_wifi_networks()
-        if (sresult := await scan_result.get()).scanning_state != proto.EnumScanning.SCANNING_SUCCESS:
-            logger.error(f"Scan failed: {str(sresult.scanning_state)}")
-            return False
-        scan_id = sresult.scan_id
-        self.unregister_update(wait_for_scan)
-
-        # Get scan results and see if we need to provision
-        for entry in (await self.ble_command.get_ap_entries(scan_id=scan_id)).data.entries:
-            if entry.ssid == ssid:
-                self.register_update(wait_for_provisioning, ActionId.NOTIF_PROVIS_STATE)
-                # Are we already provisioned?
-                if entry.scan_entry_flags & proto.EnumScanEntryFlags.SCAN_FLAG_CONFIGURED:
-                    logger.info(f"Connecting to already provisioned network {ssid}...")
-                    await self.ble_command.request_wifi_connect(ssid=ssid)
-                else:
-                    logger.info(f"Provisioning new network {ssid}...")
-                    await self.ble_command.request_wifi_connect_new(ssid=ssid, password=password)
-                if (
-                    presult := (await provisioned_result.get())
-                ).provisioning_state != proto.EnumProvisioning.PROVISIONING_SUCCESS_NEW_AP:
-                    logger.error(f"Provision failed: {str(presult.provisioning_state)}")
-                    return False
-                self.unregister_update(wait_for_provisioning)
-                logger.info(f"Successfully connected to {ssid}")
-                return True
-        logger.error(f"Could not find ssid {ssid}")
-        return False
 
     ##########################################################################################################
     #                                 End Public API
@@ -803,7 +703,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
     # TODO make decorator?
     def _handle_cohn(self, message: HttpMessage) -> HttpMessage:
-        """Prepend COHN headers if COHN is enabled
+        """Prepend COHN headers if COHN is provisioned
 
         Args:
             message (HttpMessage): HTTP message to append headers to
@@ -811,10 +711,13 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         Returns:
             HttpMessage: potentially modified HTTP message
         """
-        if self._cohn:
-            message._headers["Authorization"] = self._cohn.auth_token
-            message._certificate = self._cohn.cert_path
-        return message
+        try:
+            if self._cohn.credentials:
+                message._headers["Authorization"] = self._cohn.credentials.auth_token
+                message._certificate = self._cohn.credentials.certificate_as_path
+            return message
+        except AttributeError:
+            return message
 
     async def _get_json(self, message: HttpMessage, *args: Any, **kwargs: Any) -> GoProResp:
         message = self._handle_cohn(message)
@@ -873,7 +776,12 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
     @property
     def _base_url(self) -> str:
-        return f"https://{self._cohn.ip_address}/" if self._cohn else "http://10.5.5.9:8080/"
+        try:
+            return (
+                f"https://{self._cohn.credentials.ip_address}/" if self._cohn.credentials else "http://10.5.5.9:8080/"
+            )
+        except AttributeError:
+            return "http://10.5.5.9:8080/"
 
     @property
     def _api(self) -> WirelessApi:

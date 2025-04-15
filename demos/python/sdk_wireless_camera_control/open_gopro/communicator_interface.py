@@ -107,6 +107,15 @@ class MessageRules:
 class BaseGoProCommunicator(ABC):
     """Common Communicator interface"""
 
+    @property
+    @abstractmethod
+    def identifier(self) -> str:
+        """_summary_
+
+        Returns:
+            str: _description_
+        """
+
     @abstractmethod
     def register_update(self, callback: UpdateCb, update: UpdateType) -> None:
         """Register for callbacks when an update occurs
@@ -215,7 +224,7 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
         controller (BLEController): controller implementation to use for this client
         disconnected_cb (DisconnectHandlerType): disconnected callback
         notification_cb (NotiHandlerType): notification callback
-        target (Pattern | BleDevice): regex or device to connect to
+        target (str | BleDevice): device to connect to or trailing digits of serial number
     """
 
     class _CompositeRegisterType(enum.Enum):
@@ -229,7 +238,7 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
         controller: BLEController,
         disconnected_cb: DisconnectHandlerType,
         notification_cb: NotiHandlerType,
-        target: Pattern | BleDevice,
+        target: str | BleDevice,
     ) -> None:
         self._ble: BleClient = BleClient(
             controller,
