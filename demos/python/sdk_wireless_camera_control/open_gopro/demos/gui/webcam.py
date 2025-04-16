@@ -57,6 +57,7 @@ async def main(args: argparse.Namespace) -> int:
     logger = setup_logging(__name__, args.log)
     gopro: GoProBase | None = None
 
+    # TODO handle COHN
     try:
         async with (
             WirelessGoPro(args.identifier, host_wifi_interface=args.wifi_interface, enable_wifi=not args.cohn)
@@ -65,11 +66,7 @@ async def main(args: argparse.Namespace) -> int:
         ) as gopro:
             assert gopro
 
-            if args.cohn:
-                assert await gopro.is_cohn_provisioned
-                assert await gopro.configure_cohn()
-            else:
-                await gopro.http_command.wired_usb_control(control=constants.Toggle.DISABLE)
+            await gopro.http_command.wired_usb_control(control=constants.Toggle.DISABLE)
 
             await gopro.http_command.set_shutter(shutter=constants.Toggle.DISABLE)
             if (await gopro.http_command.webcam_status()).data.status not in {

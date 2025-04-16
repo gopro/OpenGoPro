@@ -26,7 +26,7 @@ async def main(args: argparse.Namespace) -> None:
         )
 
         console.print(f"[yellow]Connecting to {args.ssid}...")
-        await gopro.connect_to_access_point(args.ssid, args.password)
+        await gopro.access_point.connect(args.ssid, args.password)
 
         # Start livestream
         livestream_is_ready = asyncio.Event()

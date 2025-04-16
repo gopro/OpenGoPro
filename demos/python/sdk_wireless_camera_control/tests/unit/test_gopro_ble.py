@@ -34,7 +34,7 @@ async def test_gopro_ble_client_failed_to_find_device(mock_ble_client: BleClient
 
 @pytest.mark.asyncio
 async def test_gopro_ble_client_failed_to_connect(mock_ble_client: BleClient):
-    mock_ble_client._target = re.compile("device")
+    mock_ble_client._target = re.compile(".*device")
     mock_ble_client._disconnected_cb = None
     with pytest.raises(ConnectFailed):
         await mock_ble_client.open()

@@ -7,10 +7,8 @@ from __future__ import annotations
 
 import argparse
 import asyncio
-import re
 from dataclasses import dataclass
-from functools import cached_property
-from typing import Pattern
+from pathlib import Path
 
 from rich.console import Console
 
@@ -21,8 +19,6 @@ from open_gopro.util import add_cli_args_and_parse
 
 console = Console()
 
-CURL_TEMPLATE = r"""curl -v -u 'gopro:{password}' --cacert cohn.crt 'https://{ip_addr}/gopro/camera/state'"""
-
 
 @dataclass
 class GoPro:
@@ -31,10 +27,6 @@ class GoPro:
     gopro: WirelessGoPro | None = None
     cohn: CohnInfo | None = None
 
-    @cached_property
-    def target(self) -> Pattern:
-        return re.compile(f".*{self.serial}")
-
 
 def wrapped_console_print(target: GoPro, message: str) -> None:
     console.print(f"{target.name} ==> {message}")
@@ -42,28 +34,39 @@ def wrapped_console_print(target: GoPro, message: str) -> None:
 
 async def main(args: argparse.Namespace) -> None:
     logger = setup_logging(__name__, args.log)
+    cohn_db_path = Path("cohn_db.json")
 
     targets = [GoPro("0711", "Hero12"), GoPro("0053", "Hero13")]
+    targets = targets[:-1]
     gopro: WirelessGoPro | None = None
     # Ensure COHN is provisioned
-    for target in targets[-1:]:
-        try:
+    try:
+        for target in targets:
             # Start with just BLE connected in order to provision COHN
             async with WirelessGoPro(
-                target.target,
+                target=target.serial,
                 interfaces={WirelessGoPro.Interface.BLE},
+                cohn_db=cohn_db_path,
             ) as gopro:
-                if not await gopro.is_cohn_provisioned:
-                    await gopro.connect_to_access_point("dabugdabug", "pleasedontguessme")
-                    target.cohn = await gopro.configure_cohn()
+                if gopro.cohn.is_configured:
+                    console.print("COHN is already configured :smiley:")
+                else:
+                    await gopro.access_point.connect("dabugdabug", "pleasedontguessme")
+                    await gopro.cohn.configure()
 
-        except Exception as e:  # pylint: disable = broad-except
-            logger.error(repr(e))
-            if gopro:
-                await gopro.close()
-    with open("cohn_db.json", "w") as fp:
-        cohn_db = {gopro.serial: gopro.cohn for gopro in targets}
-        fp.write(CohnCredentialsDb(credentials=cohn_db).model_dump_json(indent=4))  # type: ignore
+        for target in targets:
+            # Start with just BLE connected in order to provision COHN
+            async with WirelessGoPro(
+                target=target.serial,
+                interfaces={WirelessGoPro.Interface.COHN},
+                cohn_db=cohn_db_path,
+            ) as gopro:
+                await gopro.http_command.get_webcam_version()
+
+    except Exception as e:  # pylint: disable = broad-except
+        logger.error(repr(e))
+        if gopro:
+            await gopro.close()
 
 
 def parse_arguments() -> argparse.Namespace:

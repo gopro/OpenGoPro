@@ -33,6 +33,9 @@ from open_gopro.communicator_interface import (
 )
 from open_gopro.constants import CmdId, GoProUUID, StatusId
 from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
+from open_gopro.features.access_point import AccessPointFeature
+from open_gopro.features.base_feature import BaseFeature
+from open_gopro.gopro_base import GoProBase
 from open_gopro.models.response import GoProResp
 from open_gopro.types import CameraState, UpdateCb, UpdateType
 from open_gopro.wifi import SsidState, WifiController
@@ -54,7 +57,7 @@ class MockBleController(BLEController, Generic[BleHandle, BleDevice]):
         self.gatt_db = MockGattTable()
 
     async def scan(self, token: Pattern, timeout: int, service_uuids: list[BleUUID] = None) -> str:
-        if token == re.compile("device") or token == "device":
+        if token == re.compile(".*device") or token == "device":
             return "scanned_device"
         raise FailedToFindDevice
 
@@ -247,6 +250,26 @@ class MockWiredGoPro(WiredGoPro):
         return DataPatch("2.0")
 
 
+class MockFeature(BaseFeature):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(None, None)
+
+    async def wait_for_ready(self) -> None:
+        return
+
+    @property
+    def is_ready(self) -> bool:
+        return True
+
+    def close(self) -> None:
+        return
+
+
+class MockFeatures:
+    CohnFeature = MockFeature
+    AccessPointFeature = MockFeature
+
+
 class MockWirelessGoPro(WirelessGoPro):
     def __init__(self, test_version: str) -> None:
         super().__init__(
@@ -257,7 +280,10 @@ class MockWirelessGoPro(WirelessGoPro):
             maintain_state=False,
         )
         self._test_version = test_version
+        # TODO we need to find a way to inject these from individual tests
         self._api.ble_command.get_open_gopro_api_version = self._mock_version
+        self._api.ble_command.cohn_get_certificate = self._mock_get_cohn_cohn_cert
+        self._api.ble_command.get_ap_entries = self._mock_get_ap_entries
         self.http_command.set_third_party_client_info = self._mock_empty_return
         self._ble.write = self._mock_write
         self._ble._gatt_table = MockGattTable()
@@ -316,6 +342,16 @@ class MockWirelessGoPro(WirelessGoPro):
         self._notification_handler(0, self._test_response_data)
         # for packet in self._test_response_data:
         #     self._notification_handler(0, packet)
+
+    async def _mock_get_cohn_cohn_cert(self) -> DataPatch:
+        @dataclass
+        class MockCert:
+            cert: str
+
+        return DataPatch(MockCert("cert"))
+
+    async def _mock_get_ap_entries(self) -> DataPatch:
+        return DataPatch("ap_entries")
 
     @property
     def is_ble_connected(self) -> bool:

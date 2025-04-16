@@ -24,24 +24,25 @@ async def main(args: argparse.Namespace) -> None:
 
     gopro: WirelessGoPro | None = None
     try:
-        # Start with Wifi Disabled (i.e. don't allow camera in AP mode).
-        async with WirelessGoPro(args.identifier, enable_wifi=False) as gopro:
-            if await gopro.is_cohn_provisioned:
-                console.print("[yellow]COHN is already provisioned")
-            else:
-                if not args.ssid or not args.password:
-                    raise ValueError("COHN needs to be provisioned but you didn't pass SSID credentials.")
-                assert await gopro.connect_to_access_point(args.ssid, args.password)
-            assert await gopro.configure_cohn()
+        raise NotImplementedError
+        # # Start with Wifi Disabled (i.e. don't allow camera in AP mode).
+        # async with WirelessGoPro(args.identifier, enable_wifi=False) as gopro:
+        #     if await gopro.is_cohn_provisioned:
+        #         console.print("[yellow]COHN is already provisioned")
+        #     else:
+        #         if not args.ssid or not args.password:
+        #             raise ValueError("COHN needs to be provisioned but you didn't pass SSID credentials.")
+        #         assert await gopro.connect_to_access_point(args.ssid, args.password)
+        #     assert await gopro.configure_cohn()
 
-            console.print("[blue]COHN is ready for communication. Dropping the BLE connection.")
+        #     console.print("[blue]COHN is ready for communication. Dropping the BLE connection.")
 
-        # Prove we can communicate via the COHN HTTP channel without a BLE or Wifi connection
-        assert (await gopro.http_command.get_camera_state()).ok
-        console.print("Successfully communicated via COHN!!")
-        console.print(
-            f"Sample curl command: {CURL_TEMPLATE.format(password=gopro._cohn.password, ip_addr=gopro._cohn.ip_address)}"  # type: ignore
-        )
+        # # Prove we can communicate via the COHN HTTP channel without a BLE or Wifi connection
+        # assert (await gopro.http_command.get_camera_state()).ok
+        # console.print("Successfully communicated via COHN!!")
+        # console.print(
+        #     f"Sample curl command: {CURL_TEMPLATE.format(password=gopro._cohn.password, ip_addr=gopro._cohn.ip_address)}"  # type: ignore
+        # )
 
     except Exception as e:  # pylint: disable = broad-except
         logger.error(repr(e))

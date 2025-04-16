@@ -3,7 +3,6 @@
 
 # pylint: disable=redefined-outer-name
 
-import asyncio
 import logging
 import re
 from pathlib import Path
@@ -22,6 +21,7 @@ from tests import versions
 from tests.mocks import (
     MockBleCommunicator,
     MockBleController,
+    MockFeatures,
     MockGoProMaintainBle,
     MockWifiCommunicator,
     MockWifiController,
@@ -134,7 +134,7 @@ async def mock_ble_client():
         controller=MockBleController(),
         disconnected_cb=disconnection_handler,
         notification_cb=notification_handler,  # type: ignore
-        target=(re.compile("device"), []),
+        target=(re.compile(".*device"), []),
     )
     yield test_client
 
@@ -173,15 +173,22 @@ async def mock_wired_gopro():
     yield test_client
 
 
-@pytest_asyncio.fixture(params=versions)
-async def mock_wireless_gopro_basic(request):
-    test_client = MockWirelessGoPro(request.param)
+def mock_features(monkeypatch):
+    monkeypatch.setattr("open_gopro.features.access_point", MockFeatures)
+    monkeypatch.setattr("open_gopro.features.cohn", MockFeatures)
+
+
+@pytest_asyncio.fixture(scope="function")
+async def mock_wireless_gopro_basic(request, monkeypatch):
+    mock_features(monkeypatch)
+    test_client = MockWirelessGoPro("2.0")
     GoProBase.HTTP_GET_RETRIES = 1  # type: ignore
     yield test_client
     test_client.close()
 
 
 @pytest_asyncio.fixture(scope="function")
-async def mock_wireless_gopro():
+async def mock_wireless_gopro(monkeypatch):
+    mock_features(monkeypatch)
     test_client = MockGoProMaintainBle()
     yield test_client

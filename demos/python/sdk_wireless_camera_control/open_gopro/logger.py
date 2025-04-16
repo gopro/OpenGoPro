@@ -59,6 +59,8 @@ class Logger:
             "open_gopro.wifi.mdns_scanner",
             "open_gopro.models.response",
             "open_gopro.models.network_scan_response",
+            "open_gopro.features.cohn",
+            "open_gopro.features.access_point",
             "open_gopro.util",
             "bleak",
             "urllib3",

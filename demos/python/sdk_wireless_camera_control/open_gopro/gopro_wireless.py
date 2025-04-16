@@ -7,7 +7,6 @@ from __future__ import annotations
 
 import asyncio
 import enum
-import json
 import logging
 import queue
 from collections import defaultdict
@@ -15,6 +14,9 @@ from copy import deepcopy
 from pathlib import Path
 from typing import Any, Callable, Final
 
+# These are imported this way for monkeypatching in pytest
+import open_gopro.features.access_point
+import open_gopro.features.cohn
 from open_gopro import proto
 from open_gopro.api import (
     BleCommands,
@@ -44,7 +46,6 @@ from open_gopro.exceptions import (
     InvalidOpenGoProVersion,
     ResponseTimeout,
 )
-from open_gopro.features.cohn import CohnFeature
 from open_gopro.gopro_base import (
     GoProBase,
     GoProMessageInterface,
@@ -156,8 +157,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             raise ValueError("Can not have simultaneous COHN and Wifi Access Point connections")
         if self._should_enable_wifi and not self._should_enable_ble:
             raise ValueError("Can not have Wifi Access Point connection without BLE")
-        if self._should_enable_cohn and not cohn_credentials:
-            raise ValueError("Can not enable COHN without passing the cohn_credentials")
 
         self._identifier = target
 
@@ -183,8 +182,9 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             )
             raise e
 
-        # Set up feature delegates
-        self._cohn: CohnFeature
+        # Feature delegates
+        self._cohn: open_gopro.features.cohn.CohnFeature
+        self._access_point: open_gopro.features.access_point.AccessPointFeature
 
         # Builders for currently accumulating synchronous responses, indexed by GoProUUID. This assumes there
         # can only be one active response per BleUUID
@@ -210,6 +210,20 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             self._encoding: bool
             self._busy: bool
             self._encoding_started: asyncio.Event
+
+    @property
+    def cohn(self) -> open_gopro.features.cohn.CohnFeature:
+        try:
+            return self._cohn
+        except AttributeError:
+            raise GoProNotOpened("")
+
+    @property
+    def access_point(self) -> open_gopro.features.access_point.AccessPointFeature:
+        try:
+            return self._access_point
+        except AttributeError:
+            raise GoProNotOpened("")
 
     @property
     def identifier(self) -> str:
@@ -247,10 +261,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         Returns:
             bool: True if yes, False if no
         """
-        try:
-            return self._cohn.is_ready or self._wifi.is_connected
-        except AttributeError:
-            return False
+        return self.cohn.is_ready or self._wifi.is_connected
 
     @property
     def ble_command(self) -> BleCommands:
@@ -317,7 +328,8 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         self._loop = asyncio.get_running_loop()
         self._ble_disconnect_event = asyncio.Event()
 
-        self._cohn = CohnFeature(self._cohn_db_path, self, self._loop, self._cohn_credentials)
+        self._cohn = open_gopro.features.cohn.CohnFeature(self._cohn_db_path, self, self._loop, self._cohn_credentials)
+        self._access_point = open_gopro.features.access_point.AccessPointFeature(self, self._loop)
 
         # If we are to perform BLE housekeeping
         if self._should_maintain_state:
@@ -346,23 +358,29 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                         raise InvalidOpenGoProVersion(version)
                     logger.info(f"Using Open GoPro API version {version}")
 
+                    await self.cohn.wait_for_ready()
+
                 # Establish Wifi / COHN connection if desired
                 if self._should_enable_wifi:
                     await self._open_wifi(timeout, retries)
                 elif self._should_enable_cohn:
-                    if not self._cohn.is_ready:
+                    if not await self.cohn.is_configured:
                         logger.warning("COHN needs to be configured.")
                 else:
                     # Otherwise, turn off Wifi
                     logger.info("Turning off the camera's Wifi radio")
                     await self.ble_command.enable_wifi_ap(enable=False)
+
+                # We need at least one connection to continue
+                if not self.is_ble_connected and not self.is_http_connected:
+                    raise InterfaceConfigFailure("No connections were established.")
                 self._open = True
                 return
 
             except Exception as e:  # pylint: disable=broad-exception-caught
                 logger.error(f"Error while opening: {e}")
                 await self.close()
-                if retry > RETRIES:
+                if retry >= RETRIES - 1:
                     raise e
 
     async def close(self) -> None:
@@ -712,11 +730,11 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             HttpMessage: potentially modified HTTP message
         """
         try:
-            if self._cohn.credentials:
-                message._headers["Authorization"] = self._cohn.credentials.auth_token
-                message._certificate = self._cohn.credentials.certificate_as_path
+            if self.cohn.credentials:
+                message._headers["Authorization"] = self.cohn.credentials.auth_token
+                message._certificate = self.cohn.credentials.certificate_as_path
             return message
-        except AttributeError:
+        except GoProNotOpened:
             return message
 
     async def _get_json(self, message: HttpMessage, *args: Any, **kwargs: Any) -> GoProResp:
@@ -777,10 +795,8 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     @property
     def _base_url(self) -> str:
         try:
-            return (
-                f"https://{self._cohn.credentials.ip_address}/" if self._cohn.credentials else "http://10.5.5.9:8080/"
-            )
-        except AttributeError:
+            return f"https://{self.cohn.credentials.ip_address}/" if self.cohn.credentials else "http://10.5.5.9:8080/"
+        except GoProNotOpened:
             return "http://10.5.5.9:8080/"
 
     @property

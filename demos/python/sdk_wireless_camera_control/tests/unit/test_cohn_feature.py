@@ -1,132 +1,114 @@
-from typing import TypeVar
+import asyncio
+from pathlib import Path
 
-from returns.future import future_safe, FutureSuccess, FutureFailure, FutureResult
-from returns.io import IOSuccess, IOFailure, IO
-from returns.result import Success, Failure, Result
 import pytest
+import pytest_asyncio
+from returns.pipeline import is_successful
+
+from open_gopro.features.cohn import CohnFeature
+from open_gopro.gopro_wireless import WirelessGoPro
+from open_gopro.models.general import CohnInfo
+from open_gopro.proto.cohn_pb2 import (
+    EnumCOHNNetworkState,
+    EnumCOHNStatus,
+    NotifyCOHNStatus,
+)
+
+provisioned_status = NotifyCOHNStatus(status=EnumCOHNStatus.COHN_PROVISIONED)
+unprovisioned_status = NotifyCOHNStatus(status=EnumCOHNStatus.COHN_UNPROVISIONED)
+connected_status = NotifyCOHNStatus(
+    status=EnumCOHNStatus.COHN_PROVISIONED,
+    state=EnumCOHNNetworkState.COHN_STATE_NetworkConnected,
+    ipaddress="ip",
+    username="user",
+    password="password",
+)
+cohn_credentials = CohnInfo(ip_address="ip", username="user", password="password", certificate="cert")
 
 
-async def div(first_number: int, second_number: int) -> Result[int, ZeroDivisionError]:  # noqa: FURB118
-    try:
-        return Result.from_value(first_number // second_number)
-    except ZeroDivisionError as e:
-        return Result.from_failure(e)
-
-
-@future_safe(exceptions=(ZeroDivisionError,))
-async def future_div(first_number: int, second_number: int) -> int:  # noqa: FURB118
-    return first_number // second_number
-
-
-@pytest.mark.asyncio
-async def test_future_returns_10():
-    match await future_div(20, 2):
-        case IOSuccess(Success(10)):
-            assert True
-
-        case IOSuccess(Success(value)):
-            assert False
-
-        case IOFailure(Failure(ZeroDivisionError())):
-            assert False
-
-        case IOFailure(Failure(_)):
-            assert False
-
-        case _:
-            assert False
-
-
-@pytest.mark.asyncio
-async def test_future_returns_2():
-    match await future_div(20, 10):
-        case IOSuccess(Success(10)):
-            assert False
-
-        case IOSuccess(Success(value)):
-            assert value == 2
-
-        case IOFailure(Failure(ZeroDivisionError())):
-            assert False
-
-        case IOFailure(Failure(_)):
-            assert False
-
-        case _:
-            assert False
+@pytest_asyncio.fixture(loop_scope="function")
+async def cohn_feature(mock_wireless_gopro_basic: WirelessGoPro):
+    cohn = CohnFeature(
+        Path("test_cohn_cb.json"), mock_wireless_gopro_basic, asyncio.get_running_loop(), cohn_credentials
+    )
+    yield cohn
+    cohn.close()
 
 
 @pytest.mark.asyncio
-async def test_future_divide_by_zero():
-    match await future_div(20, 0):
-        case IOSuccess(Success(10)):
-            assert False
+async def test_cohn_feature_starts_successfully(cohn_feature: CohnFeature):
+    # WHEN
+    async def send_cohn_status():
+        await cohn_feature._status_flow._flow_manager.emit(NotifyCOHNStatus())
 
-        case IOSuccess(Success(value)):
-            assert False
+    async with asyncio.TaskGroup() as task_group:
+        task_group.create_task(send_cohn_status())
+        task_group.create_task(cohn_feature.wait_for_ready())
 
-        case IOFailure(Failure(ZeroDivisionError())):
-            assert True
-
-        case IOFailure(Failure(_)):
-            assert False
-
-        case _:
-            assert False
+    # THEN
+    assert cohn_feature.is_ready
 
 
 @pytest.mark.asyncio
-async def test_returns_10():
-    match await div(20, 2):
-        case Success(10):
-            assert True
-
-        case Success(value):
-            assert False
-
-        case Failure(ZeroDivisionError()):
-            assert False
-
-        case Failure(_):
-            assert False
-
-        case _:
-            assert False
+async def test_cohn_feature_start_times_out(cohn_feature: CohnFeature):
+    # WHEN / THEN
+    with pytest.raises(TimeoutError):
+        await cohn_feature.wait_for_ready(timeout=0.1)
 
 
 @pytest.mark.asyncio
-async def test_returns_2():
-    match await div(20, 10):
-        case Success(10):
-            assert False
+async def test_cohn_feature_is_configured(cohn_feature: CohnFeature):
+    # WHEN
+    async def send_cohn_status():
+        await cohn_feature._status_flow._flow_manager.emit(provisioned_status)
 
-        case Success(value):
-            assert value == 2
+    async with asyncio.TaskGroup() as task_group:
+        task_group.create_task(send_cohn_status())
+        task_group.create_task(cohn_feature.wait_for_ready())
 
-        case Failure(ZeroDivisionError()):
-            assert False
-
-        case Failure(_):
-            assert False
-
-        case _:
-            assert False
+    # THEN
+    assert cohn_feature.is_ready
+    assert await cohn_feature.is_configured
 
 
 @pytest.mark.asyncio
-async def test_divide_by_zero():
-    match await div(20, 0):
-        case Success(10):
-            assert False
+async def test_cohn_feature_configure_without_provisioning(cohn_feature: CohnFeature):
+    # WHEN
+    async def send_cohn_status():
+        await cohn_feature._status_flow._flow_manager.emit(provisioned_status)
+        await cohn_feature._status_flow._flow_manager.emit(connected_status)
 
-        case Success(value):
-            assert False
+    async with asyncio.TaskGroup() as task_group:
+        task_group.create_task(send_cohn_status())
+        task_group.create_task(cohn_feature.wait_for_ready())
 
-        case Failure(ZeroDivisionError()):
-            assert True
+    result = await cohn_feature.configure()
 
-        case Failure(_):
-            assert False
+    # THEN
+    assert is_successful(result)
+    assert result.unwrap() == cohn_credentials
 
-        case _:
-            assert False
+
+@pytest.mark.asyncio
+async def test_cohn_feature_provision(cohn_feature: CohnFeature):
+    # WHEN
+    async def send_cohn_unprovisioned():
+        await cohn_feature._status_flow._flow_manager.emit(unprovisioned_status)
+
+    async with asyncio.TaskGroup() as task_group:
+        task_group.create_task(send_cohn_unprovisioned())
+        task_group.create_task(cohn_feature.wait_for_ready())
+
+    assert not await cohn_feature.is_configured
+
+    async def send_cohn_provisioned():
+        await cohn_feature._status_flow._flow_manager.emit(connected_status)
+
+    async with asyncio.TaskGroup() as task_group:
+        task_group.create_task(send_cohn_provisioned())
+        configure_task = task_group.create_task(cohn_feature.configure())
+    result = configure_task.result()
+
+    # THEN
+    assert is_successful(result)
+    assert result.unwrap() == cohn_credentials
