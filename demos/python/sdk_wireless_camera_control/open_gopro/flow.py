@@ -74,8 +74,6 @@ class Flow[T](AsyncGenerator[T, Any]):
         return self
 
     async def first(self, filter: Callable[[T], bool]) -> T:
-        if self.current and filter(self.current):
-            return self.current
         while (value := await anext(self)) is not None:
             if filter(value):
                 return value

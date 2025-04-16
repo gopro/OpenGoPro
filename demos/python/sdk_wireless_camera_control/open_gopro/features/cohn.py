@@ -35,8 +35,7 @@ class CohnFeature(BaseFeature):
         super().__init__(gopro, loop)
         self._db = CohnDb(TinyDB(cohn_db_path))
         if cohn_credentials:
-            self._db.insert_or_update_credentials(self._gopro.identifier, cohn_credentials)
-        self.credentials = self._db.search_credentials(self._gopro.identifier)
+            self.credentials = cohn_credentials
         # TODO close this
         self._status_flow = StatusFlow(
             gopro=self._gopro,
@@ -48,7 +47,6 @@ class CohnFeature(BaseFeature):
 
     def close(self) -> None:
         self._status_task.cancel()
-        print("cancelled")
 
     async def _track_status(self) -> None:
         while True:
@@ -61,6 +59,14 @@ class CohnFeature(BaseFeature):
                     await flow.collect(process_status)
             else:
                 await asyncio.sleep(1)
+
+    @property
+    def credentials(self) -> CohnInfo | None:
+        return self._db.search_credentials(self._gopro.identifier)
+
+    @credentials.setter
+    def credentials(self, new_credentials: CohnInfo) -> None:
+        self._db.insert_or_update_credentials(self._gopro.identifier, new_credentials)
 
     @property
     def status(self) -> NotifyCOHNStatus:
@@ -88,6 +94,14 @@ class CohnFeature(BaseFeature):
                 logger.error(repr(e))
         return False
 
+    @property
+    def _is_connected(self) -> bool:
+        return self.status.state == EnumCOHNNetworkState.COHN_STATE_NetworkConnected
+
+    @property
+    def _is_provisioned(self) -> bool:
+        return self.status.status == EnumCOHNStatus.COHN_PROVISIONED
+
     async def _provision_cohn(self, timeout: int = 60) -> Result[CohnInfo, TimeoutError]:
         """Provision the camera for Camera on the Home Network
 
@@ -101,15 +115,16 @@ class CohnFeature(BaseFeature):
             raise RuntimeError("COHN needs to be provisioned but BLE is not connected")
 
         logger.info("Provisioning COHN")
-        # Always override. Assume if we're here, we are purposely (re)configuring COHN
-        assert (await self._gopro.ble_command.cohn_create_certificate(override=True)).ok
-
         try:
-            logger.debug("Waiting for COHN to provision")
-            status = await asyncio.wait_for(
-                self._status_flow.first(lambda status: status.status == EnumCOHNStatus.COHN_PROVISIONED),
-                timeout,
-            )
+            async with asyncio.timeout(timeout):
+                async with asyncio.TaskGroup() as tg:
+                    # Always override. Assume if we're here, we are purposely (re)configuring COHN
+                    create_cert = tg.create_task(self._gopro.ble_command.cohn_create_certificate(override=True))
+                    wait_for_provisioning_status = tg.create_task(
+                        self._status_flow.first(lambda status: status.status == EnumCOHNStatus.COHN_PROVISIONED)
+                    )
+            assert create_cert.result().ok
+            status = wait_for_provisioning_status.result()
             logger.info("COHN is provisioned!!")
 
             cert = (await self._gopro.ble_command.cohn_get_certificate()).data.cert
@@ -119,11 +134,16 @@ class CohnFeature(BaseFeature):
                 password=status.password,
                 certificate=cert,
             )
+            self.credentials = credentials
             return Result.from_value(credentials)
         except TimeoutError as e:
             return Result.from_failure(e)
 
-    async def configure(self, timeout: int = 60) -> Result[CohnInfo, RuntimeError | TimeoutError]:
+    async def configure(
+        self,
+        force_reprovision: bool = False,
+        timeout: int = 60,
+    ) -> Result[CohnInfo, RuntimeError | TimeoutError]:
         """Prepare Camera on the Home Network
 
         Provision if not provisioned
@@ -135,24 +155,21 @@ class CohnFeature(BaseFeature):
         Returns:
             bool: True if success, False otherwise
         """
-        # TODO verify connected to AP?
-
         # If we don't have credentials or peer isn't provisioned, we need to (re)provision
-        if not self.is_configured:
-            if is_successful(result := await self._provision_cohn()):
-                self.credentials = result.unwrap()  # TODO make this a property with a setter to write to DB
-                self._db.insert_or_update_credentials(self._gopro.identifier, self.credentials)
-            else:
+        if force_reprovision or not await self.is_configured:
+            if not is_successful(result := await self._provision_cohn()):
                 return result
         try:
-            logger.info("Waiting for COHN to be connected")
-            await asyncio.wait_for(
-                self._status_flow.first(
-                    lambda status: status.state == EnumCOHNNetworkState.COHN_STATE_NetworkConnected
-                ),
-                timeout,
-            )
-            assert self.credentials
-            return Result.from_value(self.credentials)
+            if not self._is_connected:
+                logger.info("Waiting for COHN to be connected")
+                await asyncio.wait_for(
+                    self._status_flow.first(
+                        lambda status: status.state == EnumCOHNNetworkState.COHN_STATE_NetworkConnected
+                    ),
+                    timeout,
+                )
         except TimeoutError as e:
             return Result.from_failure(e)
+        assert self.credentials
+        logger.info("COHN is provisioned, connected, and ready for communication")
+        return Result.from_value(self.credentials)

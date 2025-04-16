@@ -16,7 +16,7 @@ from open_gopro.util import add_cli_args_and_parse
 
 console = Console()  # rich consoler printer
 
-CURL_TEMPLATE = r"""curl -v -u 'gopro:{password}' --cacert cohn.crt 'https://{ip_addr}/gopro/camera/state'"""
+CURL_TEMPLATE = r"""curl --insecure -v -u 'gopro:{password}' --cacert cohn.crt 'https://{ip_addr}/gopro/camera/state'"""
 
 
 async def main(args: argparse.Namespace) -> None:

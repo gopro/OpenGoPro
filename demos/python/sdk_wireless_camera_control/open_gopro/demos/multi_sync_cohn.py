@@ -48,11 +48,12 @@ async def main(args: argparse.Namespace) -> None:
                 interfaces={WirelessGoPro.Interface.BLE},
                 cohn_db=cohn_db_path,
             ) as gopro:
-                if gopro.cohn.is_configured:
-                    console.print("COHN is already configured :smiley:")
-                else:
-                    await gopro.access_point.connect("dabugdabug", "pleasedontguessme")
-                    await gopro.cohn.configure()
+                # if await gopro.cohn.is_configured:
+                #     console.print("COHN is already configured :smiley:")
+                # else:
+                await gopro.access_point.connect("dabugdabug", "pleasedontguessme")
+                await gopro.cohn.configure(force_reprovision=True)
+            assert (await gopro.http_command.get_camera_state()).ok
 
         for target in targets:
             # Start with just BLE connected in order to provision COHN
@@ -61,7 +62,8 @@ async def main(args: argparse.Namespace) -> None:
                 interfaces={WirelessGoPro.Interface.COHN},
                 cohn_db=cohn_db_path,
             ) as gopro:
-                await gopro.http_command.get_webcam_version()
+                assert (await gopro.http_command.get_webcam_version()).ok
+                console.print("Successfully communicated via COHN :smiley:")
 
     except Exception as e:  # pylint: disable = broad-except
         logger.error(repr(e))

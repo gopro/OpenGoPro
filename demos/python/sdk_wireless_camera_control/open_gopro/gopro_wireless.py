@@ -151,6 +151,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         self._should_enable_cohn = WirelessGoPro.Interface.COHN in interfaces
         self._cohn_db_path = cohn_db
         self._cohn_credentials = cohn_credentials
+        self._is_cohn_configured = False
 
         # Valid parameter selections
         if self._should_enable_wifi and self._should_enable_cohn:
@@ -261,7 +262,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         Returns:
             bool: True if yes, False if no
         """
-        return self.cohn.is_ready or self._wifi.is_connected
+        return self._is_cohn_configured or self._wifi.is_connected
 
     @property
     def ble_command(self) -> BleCommands:
@@ -364,12 +365,10 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                 if self._should_enable_wifi:
                     await self._open_wifi(timeout, retries)
                 elif self._should_enable_cohn:
-                    if not await self.cohn.is_configured:
+                    if await self.cohn.is_configured:
+                        self._is_cohn_configured = True
+                    else:
                         logger.warning("COHN needs to be configured.")
-                else:
-                    # Otherwise, turn off Wifi
-                    logger.info("Turning off the camera's Wifi radio")
-                    await self.ble_command.enable_wifi_ap(enable=False)
 
                 # We need at least one connection to continue
                 if not self.is_ble_connected and not self.is_http_connected:
@@ -786,11 +785,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         """Terminate the Wifi connection."""
         if hasattr(self, "_wifi"):  # Corner case where instantiation fails before superclass is initialized
             await self._wifi.close()
-        if self.is_ble_connected:
-            try:
-                await self.ble_command.enable_wifi_ap(enable=False)
-            except Exception as e:  # pylint: disable=broad-exception-caught
-                logger.warning(f"Error closing wifi: {repr(e)}")
 
     @property
     def _base_url(self) -> str:
