@@ -132,7 +132,9 @@ class BleakWrapperController(BLEController[BleakDevice, bleak.BleakClient], Sing
             if (name := adv_data.local_name or device.name) and name not in devices:
                 devices[name] = device
                 logger.info(f"\tDiscovered: {device}")
-                stop_event.set()
+                matched_devices = [device for name, device in devices.items() if token.match(name)]
+                if matched_devices:
+                    stop_event.set()
 
         # Now get list of connectable advertisements
         async with bleak.BleakScanner(timeout=timeout, detection_callback=scan_callback, service_uuids=uuids):

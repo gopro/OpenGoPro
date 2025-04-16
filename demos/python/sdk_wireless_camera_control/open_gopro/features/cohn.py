@@ -85,8 +85,7 @@ class CohnFeature(BaseFeature):
 
     @property
     async def is_configured(self) -> bool:
-        # TODO validate cohn credentials are all set?
-        if bool(self.credentials):
+        if self.credentials and self.credentials.is_complete:
             # Validate COHN
             try:
                 return (await self._gopro.http_command.get_open_gopro_api_version()).ok
@@ -95,7 +94,7 @@ class CohnFeature(BaseFeature):
         return False
 
     @property
-    def _is_connected(self) -> bool:
+    def is_connected(self) -> bool:
         return self.status.state == EnumCOHNNetworkState.COHN_STATE_NetworkConnected
 
     @property
@@ -160,13 +159,22 @@ class CohnFeature(BaseFeature):
             if not is_successful(result := await self._provision_cohn()):
                 return result
         try:
-            if not self._is_connected:
+            if not self.is_connected:
                 logger.info("Waiting for COHN to be connected")
-                await asyncio.wait_for(
+                status = await asyncio.wait_for(
                     self._status_flow.first(
                         lambda status: status.state == EnumCOHNNetworkState.COHN_STATE_NetworkConnected
                     ),
                     timeout,
+                )
+                # On some cameras, the IP address only comes with this status. Let's just always take all of the
+                # new information available here (everything but the cert)
+                assert self.credentials
+                self.credentials = CohnInfo(
+                    username=status.username,
+                    password=status.password,
+                    ip_address=status.ipaddress,
+                    certificate=self.credentials.certificate,
                 )
         except TimeoutError as e:
             return Result.from_failure(e)

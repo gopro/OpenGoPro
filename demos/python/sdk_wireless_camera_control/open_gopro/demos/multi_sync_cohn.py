@@ -12,9 +12,10 @@ from pathlib import Path
 
 from rich.console import Console
 
-from open_gopro import WirelessGoPro
+from open_gopro import WirelessGoPro, constants
 from open_gopro.logger import setup_logging
 from open_gopro.models.general import CohnInfo
+from open_gopro.models.response import GoProResp
 from open_gopro.util import add_cli_args_and_parse
 
 console = Console()
@@ -37,33 +38,39 @@ async def main(args: argparse.Namespace) -> None:
     cohn_db_path = Path("cohn_db.json")
 
     targets = [GoPro("0711", "Hero12"), GoPro("0053", "Hero13")]
-    targets = targets[:-1]
     gopro: WirelessGoPro | None = None
-    # Ensure COHN is provisioned
     try:
-        for target in targets:
-            # Start with just BLE connected in order to provision COHN
-            async with WirelessGoPro(
-                target=target.serial,
-                interfaces={WirelessGoPro.Interface.BLE},
-                cohn_db=cohn_db_path,
-            ) as gopro:
-                # if await gopro.cohn.is_configured:
-                #     console.print("COHN is already configured :smiley:")
-                # else:
-                await gopro.access_point.connect("dabugdabug", "pleasedontguessme")
-                await gopro.cohn.configure(force_reprovision=True)
-            assert (await gopro.http_command.get_camera_state()).ok
+        # Ensure COHN is provisioned
+        # for target in targets:
+        #     # Start with just BLE connected in order to provision COHN
+        #     async with WirelessGoPro(
+        #         target=target.serial,
+        #         interfaces={WirelessGoPro.Interface.BLE},
+        #         cohn_db=cohn_db_path,
+        #     ) as gopro:
+        #         if await gopro.cohn.is_configured:
+        #             console.print("COHN is already configured :smiley:")
+        #         else:
+        #             await gopro.access_point.connect("dabugdabug", "pleasedontguessme")
+        #             await gopro.cohn.configure(force_reprovision=True)
 
-        for target in targets:
-            # Start with just BLE connected in order to provision COHN
-            async with WirelessGoPro(
+        gopros = [
+            WirelessGoPro(
                 target=target.serial,
                 interfaces={WirelessGoPro.Interface.COHN},
                 cohn_db=cohn_db_path,
-            ) as gopro:
-                assert (await gopro.http_command.get_webcam_version()).ok
-                console.print("Successfully communicated via COHN :smiley:")
+            )
+            for target in targets
+        ]
+        for gopro in gopros:
+            await gopro.open()
+
+        async def take_photo(gopro: WirelessGoPro) -> GoProResp[None]:
+            return await gopro.http_command.set_shutter(shutter=constants.Toggle.ENABLE)
+
+        async with asyncio.TaskGroup() as tg:
+            for gopro in gopros:
+                tg.create_task(take_photo(gopro), name=gopro.identifier)
 
     except Exception as e:  # pylint: disable = broad-except
         logger.error(repr(e))

@@ -52,7 +52,6 @@ def test_update_camera_doesnt_take_empty_fields(cohn_db: CohnDb):
         ip_address="ip_address", password="new password", username="user", certificate="new cert"
     )
 
-
 def test_delete_camera(cohn_db: CohnDb):
     # GIVEN
     camera = "1234"

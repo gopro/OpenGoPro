@@ -92,3 +92,7 @@ class CohnInfo(BaseModel):
             password=other.password or self.password,
             certificate=other.certificate or self.certificate,
         )
+
+    @property
+    def is_complete(self) -> bool:
+        return "" not in {self.ip_address, self.username, self.password, self.certificate}

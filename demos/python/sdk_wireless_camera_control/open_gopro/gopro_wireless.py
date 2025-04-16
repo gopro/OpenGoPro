@@ -373,6 +373,9 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                 # We need at least one connection to continue
                 if not self.is_ble_connected and not self.is_http_connected:
                     raise InterfaceConfigFailure("No connections were established.")
+                if not self.is_ble_connected and self._should_maintain_state:
+                    logger.warning("Can not maintain state without BLE")
+                    self._should_maintain_state = False
                 self._open = True
                 return
 
