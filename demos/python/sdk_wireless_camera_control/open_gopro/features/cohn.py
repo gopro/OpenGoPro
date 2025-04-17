@@ -27,13 +27,13 @@ logger = logging.getLogger(__name__)
 class CohnFeature(BaseFeature):
     def __init__(
         self,
-        cohn_db_path: Path,
+        cohn_db: TinyDB,
         gopro: GoProBase[WirelessApi],
         loop: asyncio.AbstractEventLoop,
         cohn_credentials: CohnInfo | None = None,
     ) -> None:
         super().__init__(gopro, loop)
-        self._db = CohnDb(TinyDB(cohn_db_path))
+        self._db = CohnDb(cohn_db)
         if cohn_credentials:
             self.credentials = cohn_credentials
         # TODO close this

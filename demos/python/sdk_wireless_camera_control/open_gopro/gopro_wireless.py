@@ -14,6 +14,8 @@ from copy import deepcopy
 from pathlib import Path
 from typing import Any, Callable, Final
 
+from tinydb import TinyDB
+
 # These are imported this way for monkeypatching in pytest
 import open_gopro.features.access_point
 import open_gopro.features.cohn
@@ -329,7 +331,12 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         self._loop = asyncio.get_running_loop()
         self._ble_disconnect_event = asyncio.Event()
 
-        self._cohn = open_gopro.features.cohn.CohnFeature(self._cohn_db_path, self, self._loop, self._cohn_credentials)
+        self._cohn = open_gopro.features.cohn.CohnFeature(
+            cohn_db=TinyDB(self._cohn_db_path, indent=4),
+            gopro=self,
+            loop=self._loop,
+            cohn_credentials=self._cohn_credentials,
+        )
         self._access_point = open_gopro.features.access_point.AccessPointFeature(self, self._loop)
 
         # If we are to perform BLE housekeeping

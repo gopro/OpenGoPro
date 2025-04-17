@@ -15,7 +15,6 @@ from rich.console import Console
 from open_gopro import WirelessGoPro, constants
 from open_gopro.logger import setup_logging
 from open_gopro.models.general import CohnInfo
-from open_gopro.models.response import GoProResp
 from open_gopro.util import add_cli_args_and_parse
 
 console = Console()
@@ -37,39 +36,37 @@ async def main(args: argparse.Namespace) -> None:
     logger = setup_logging(__name__, args.log)
     cohn_db_path = Path("cohn_db.json")
 
-    targets = [GoPro("0711", "Hero12"), GoPro("0053", "Hero13")]
+    targets = [
+        GoPro("0711", "Hero12Left"),
+        GoPro("0702", "Hero12Right"),
+        # GoPro("0053", "Hero13"),
+    ]
     gopro: WirelessGoPro | None = None
     try:
         # Ensure COHN is provisioned
-        # for target in targets:
-        #     # Start with just BLE connected in order to provision COHN
-        #     async with WirelessGoPro(
-        #         target=target.serial,
-        #         interfaces={WirelessGoPro.Interface.BLE},
-        #         cohn_db=cohn_db_path,
-        #     ) as gopro:
-        #         if await gopro.cohn.is_configured:
-        #             console.print("COHN is already configured :smiley:")
-        #         else:
-        #             await gopro.access_point.connect("dabugdabug", "pleasedontguessme")
-        #             await gopro.cohn.configure(force_reprovision=True)
-
-        gopros = [
-            WirelessGoPro(
+        for target in targets:
+            # Start with just BLE connected in order to provision COHN
+            async with WirelessGoPro(
                 target=target.serial,
-                interfaces={WirelessGoPro.Interface.COHN},
+                interfaces={WirelessGoPro.Interface.BLE},
                 cohn_db=cohn_db_path,
-            )
-            for target in targets
-        ]
-        for gopro in gopros:
-            await gopro.open()
+            ) as gopro:
+                if await gopro.cohn.is_configured:
+                    console.print("COHN is already configured :smiley:")
+                else:
+                    await gopro.access_point.connect("dabugdabug", "pleasedontguessme")
+                    await gopro.cohn.configure(force_reprovision=True)
 
-        async def take_photo(gopro: WirelessGoPro) -> GoProResp[None]:
-            return await gopro.http_command.set_shutter(shutter=constants.Toggle.ENABLE)
+        gopros = [WirelessGoPro(target=target.serial, interfaces={WirelessGoPro.Interface.COHN}) for target in targets]
+
+        async def take_photo(gopro: WirelessGoPro) -> None:
+            await gopro.http_command.set_shutter(shutter=constants.Toggle.ENABLE)
+            await asyncio.sleep(2)
+            await gopro.http_command.set_shutter(shutter=constants.Toggle.DISABLE)
 
         async with asyncio.TaskGroup() as tg:
             for gopro in gopros:
+                await gopro.open()
                 tg.create_task(take_photo(gopro), name=gopro.identifier)
 
     except Exception as e:  # pylint: disable = broad-except

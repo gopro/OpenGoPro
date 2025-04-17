@@ -52,13 +52,34 @@ def test_update_camera_doesnt_take_empty_fields(cohn_db: CohnDb):
         ip_address="ip_address", password="new password", username="user", certificate="new cert"
     )
 
+
 def test_delete_camera(cohn_db: CohnDb):
     # GIVEN
     camera = "1234"
 
     # WHEN
-    credentials = cohn_db.delete_credentials(camera)
+    cohn_db.delete_credentials(camera)
     retrieved_credentials = cohn_db.search_credentials(camera)
 
     # THEN
     assert retrieved_credentials is None
+
+
+def main():
+    from pathlib import Path
+
+    partial1 = CohnInfo(ip_address="", username="user1", password="password", certificate="cert")
+    complete1 = CohnInfo(ip_address="ip_address", username="user1", password="password", certificate="cert")
+
+    partial2 = CohnInfo(ip_address="", username="", password="password", certificate="")
+    complete2 = CohnInfo(ip_address="ip_address", username="user2", password="password", certificate="cert")
+
+    db = CohnDb(TinyDB(Path("temp_db.json"), indent=4))
+    db.insert_or_update_credentials("one", partial1)
+    db.insert_or_update_credentials("one", complete1)
+    db.insert_or_update_credentials("two", partial2)
+    db.insert_or_update_credentials("two", complete2)
+
+
+if __name__ == "__main__":
+    main()

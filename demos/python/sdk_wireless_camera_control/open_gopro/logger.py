@@ -62,6 +62,7 @@ class Logger:
             "open_gopro.features.cohn",
             "open_gopro.features.access_point",
             "open_gopro.util",
+            "open_gopro.db",
             "bleak",
             "urllib3",
             "http.client",

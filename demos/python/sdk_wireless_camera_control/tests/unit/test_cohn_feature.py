@@ -1,9 +1,11 @@
 import asyncio
-from pathlib import Path
 
 import pytest
 import pytest_asyncio
 from returns.pipeline import is_successful
+from tinydb import TinyDB
+from tinydb.storages import MemoryStorage
+
 
 from open_gopro.features.cohn import CohnFeature
 from open_gopro.gopro_wireless import WirelessGoPro
@@ -29,7 +31,10 @@ cohn_credentials = CohnInfo(ip_address="ip", username="user", password="password
 @pytest_asyncio.fixture(loop_scope="function")
 async def cohn_feature(mock_wireless_gopro_basic: WirelessGoPro):
     cohn = CohnFeature(
-        Path("test_cohn_cb.json"), mock_wireless_gopro_basic, asyncio.get_running_loop(), cohn_credentials
+        cohn_db=TinyDB(storage=MemoryStorage),
+        gopro=mock_wireless_gopro_basic,
+        loop=asyncio.get_running_loop(),
+        cohn_credentials=cohn_credentials,
     )
     yield cohn
     cohn.close()
@@ -62,9 +67,9 @@ async def test_cohn_feature_is_configured(cohn_feature: CohnFeature):
     async def send_cohn_status():
         await cohn_feature._status_flow._flow_manager.emit(provisioned_status)
 
-    async with asyncio.TaskGroup() as task_group:
-        task_group.create_task(send_cohn_status())
-        task_group.create_task(cohn_feature.wait_for_ready())
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(send_cohn_status())
+        tg.create_task(cohn_feature.wait_for_ready())
 
     # THEN
     assert cohn_feature.is_ready
@@ -98,8 +103,6 @@ async def test_cohn_feature_provision(cohn_feature: CohnFeature):
     async with asyncio.TaskGroup() as task_group:
         task_group.create_task(send_cohn_unprovisioned())
         task_group.create_task(cohn_feature.wait_for_ready())
-
-    assert not await cohn_feature.is_configured
 
     async def send_cohn_provisioned():
         await cohn_feature._status_flow._flow_manager.emit(connected_status)

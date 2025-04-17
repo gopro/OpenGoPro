@@ -227,6 +227,10 @@ class DataPatch:
     def data(self) -> Any:
         return self.value
 
+    @property
+    def ok(self) -> bool:
+        return True
+
 
 class MockWiredGoPro(WiredGoPro):
     def __init__(self, test_version: str) -> None:
@@ -282,6 +286,7 @@ class MockWirelessGoPro(WirelessGoPro):
         self._test_version = test_version
         # TODO we need to find a way to inject these from individual tests
         self._api.ble_command.get_open_gopro_api_version = self._mock_version
+        self._api.http_command.get_open_gopro_api_version = self._mock_version
         self._api.ble_command.cohn_get_certificate = self._mock_get_cohn_cohn_cert
         self._api.ble_command.get_ap_entries = self._mock_get_ap_entries
         self.http_command.set_third_party_client_info = self._mock_empty_return
