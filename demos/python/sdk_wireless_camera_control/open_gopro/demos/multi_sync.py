@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import argparse
+import logging
 import asyncio
 from dataclasses import dataclass
 from pathlib import Path
@@ -13,11 +14,15 @@ from pathlib import Path
 from rich.console import Console
 
 from open_gopro import WirelessGoPro, constants
+from open_gopro.gopro_base import GoProBase
+from open_gopro.gopro_wired import WiredGoPro
 from open_gopro.logger import setup_logging
 from open_gopro.models.general import CohnInfo
 from open_gopro.util import add_cli_args_and_parse
 
 console = Console()
+
+logger: logging.Logger
 
 
 @dataclass
@@ -32,25 +37,19 @@ def wrapped_console_print(target: GoPro, message: str) -> None:
     console.print(f"{target.name} ==> {message}")
 
 
-async def main(args: argparse.Namespace) -> None:
-    logger = setup_logging(__name__, args.log)
-    cohn_db_path = Path("cohn_db.json")
+async def take_photo(gopro: GoProBase) -> None:
+    await gopro.http_command.set_shutter(shutter=constants.Toggle.ENABLE)
+    await asyncio.sleep(2)
+    await gopro.http_command.set_shutter(shutter=constants.Toggle.DISABLE)
 
-    targets = [
-        GoPro("0711", "Hero12Left"),
-        GoPro("0702", "Hero12Right"),
-        # GoPro("0053", "Hero13"),
-    ]
+
+async def multi_record_via_cohn(targets: list[GoPro]) -> None:
     gopro: WirelessGoPro | None = None
     try:
         # Ensure COHN is provisioned
         for target in targets:
             # Start with just BLE connected in order to provision COHN
-            async with WirelessGoPro(
-                target=target.serial,
-                interfaces={WirelessGoPro.Interface.BLE},
-                cohn_db=cohn_db_path,
-            ) as gopro:
+            async with WirelessGoPro(target=target.serial, interfaces={WirelessGoPro.Interface.BLE}) as gopro:
                 if await gopro.cohn.is_configured:
                     console.print("COHN is already configured :smiley:")
                 else:
@@ -58,12 +57,6 @@ async def main(args: argparse.Namespace) -> None:
                     await gopro.cohn.configure(force_reprovision=True)
 
         gopros = [WirelessGoPro(target=target.serial, interfaces={WirelessGoPro.Interface.COHN}) for target in targets]
-
-        async def take_photo(gopro: WirelessGoPro) -> None:
-            await gopro.http_command.set_shutter(shutter=constants.Toggle.ENABLE)
-            await asyncio.sleep(2)
-            await gopro.http_command.set_shutter(shutter=constants.Toggle.DISABLE)
-
         async with asyncio.TaskGroup() as tg:
             for gopro in gopros:
                 await gopro.open()
@@ -73,6 +66,26 @@ async def main(args: argparse.Namespace) -> None:
         logger.error(repr(e))
         if gopro:
             await gopro.close()
+
+
+async def multi_record_via_usb(targets: list[GoPro]) -> None:
+    async with asyncio.TaskGroup() as tg:
+        for gopro in [WiredGoPro(target.serial) for target in targets]:
+            await gopro.open()
+            tg.create_task(take_photo(gopro), name=gopro.identifier)
+
+
+async def main(args: argparse.Namespace) -> None:
+    global logger
+    logger = setup_logging(__name__, args.log)
+
+    targets = [
+        GoPro("0711", "Hero12Left"),
+        GoPro("0702", "Hero12Right"),
+        # GoPro("0053", "Hero13"),
+    ]
+    # await multi_record_via_cohn(targets)
+    await multi_record_via_usb(targets)
 
 
 def parse_arguments() -> argparse.Namespace:
