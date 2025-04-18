@@ -12,7 +12,7 @@ from open_gopro.models import (
     PhotoMetadata,
     VideoMetadata,
 )
-from open_gopro.models.general import HttpInvalidSettingResponse, WebcamResponse
+from open_gopro.models.general import HttpInvalidSettingResponse, WebcamResponse, ScheduledCapture
 
 SINGLE_MEDIA_ITEM: Final = {
     "n": "GX010001.MP4",
@@ -297,3 +297,17 @@ def test_printing():
     response = HttpInvalidSettingResponse(**HTTP_INVALID_SETTING_RSP)
     str(response)
     assert True
+
+
+def test_schedule_capture_model():
+    # GIVEN
+    raw_bytes = bytes([0x0C, 0x8B])
+
+    # WHEN
+    scheduled_capture = ScheduledCapture.from_bytes(raw_bytes)
+
+    # THEN
+    assert scheduled_capture.hour == 12
+    assert scheduled_capture.minute == 34
+    assert scheduled_capture.is_24_hour == True
+    assert scheduled_capture.is_enabled == True

@@ -5,9 +5,11 @@
 
 from __future__ import annotations
 
+from copy import copy
 import datetime
 import logging
 from typing import Any, Callable, TypeVar, cast
+from construct import Container
 
 import google.protobuf.json_format
 from construct import Construct, Flag, FormatFieldError, Int16sb, Int16ub
@@ -372,3 +374,20 @@ class ByteParserBuilders:
                 bytes: empty
             """
             return bytes()
+
+
+def to_dict(container: Container) -> dict:
+    """Convert a parsed construct container to a dict, removing any internal Construct fields
+
+    This is needed because annoyingly all construct's contain an "_io" field.
+    See https://github.com/construct/construct/issues/1055
+
+    Args:
+        container (Container): container to convert
+
+    Returns:
+        dict: converted dict with any construct internal properties removed
+    """
+    d = dict(container)
+    d.pop("_io", None)
+    return d
