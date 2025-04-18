@@ -11,14 +11,20 @@ import enum
 import logging
 import subprocess
 import sys
+from dataclasses import is_dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Callable, Generic, TypeVar
+from typing import TYPE_CHECKING, Any, Callable, Generic, TypeVar
 
 import pytz
 from construct import Container
 from pydantic import BaseModel
+from typing_extensions import TypeIs
 from tzlocal import get_localzone
+
+if TYPE_CHECKING:
+    from _typeshed import DataclassInstance
+
 
 util_logger = logging.getLogger(__name__)
 
@@ -366,3 +372,15 @@ def to_dict(container: Container) -> dict:
     d = dict(container)
     d.pop("_io", None)
     return d
+
+
+def is_dataclass_instance(obj: Any) -> TypeIs[DataclassInstance | type[DataclassInstance]] | bool:
+    """Check if a given object is a dataclass instance
+
+    Args:
+        obj (Any): object to analyze
+
+    Returns:
+        TypeIs[DataclassInstance | type[DataclassInstance]] | bool: TypeIs from analysis
+    """
+    return is_dataclass(obj) and not isinstance(obj, type)

@@ -18,11 +18,11 @@ from open_gopro.constants import (
     StatusId,
 )
 from open_gopro.parser_interface import Parser
+from open_gopro.parsers.json import CameraStateJsonParser
 from open_gopro.parsers.response import (
     BleRespBuilder,
     RequestsHttpRespBuilderDirector,
 )
-from open_gopro.parsers.json import CameraStateJsonParser
 
 # Resolution capability response with no valid capabilities
 test_push_receive_no_parameter = bytearray([0x08, 0xA2, 0x00, 0x02, 0x00, 0x03, 0x00, 0x79, 0x00])

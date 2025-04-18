@@ -161,7 +161,7 @@ These are the various models that are returned in responses, used in commands, e
 
 .. code-block:: python
 
-   from open_gopro.models import ***
+   from open_gopro import models
 
 .. autopydantic_model:: open_gopro.models.media_list.MediaPath
 
@@ -189,6 +189,8 @@ These are the various models that are returned in responses, used in commands, e
 .. autopydantic_model:: open_gopro.models.general.WebcamResponse
 
 .. autopydantic_model:: open_gopro.models.general.SupportedOption
+
+.. autoclass:: open_gopro.models.general.ScheduledCapture
 
 Constants
 =========

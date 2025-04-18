@@ -12,7 +12,7 @@ from open_gopro.models.network_scan_responses import (
     manuf_data_struct,
     scan_response_struct,
 )
-from open_gopro.parser_interface import Parser, GlobalParsers
+from open_gopro.parser_interface import GlobalParsers, Parser
 from open_gopro.parsers.bytes import BytesParserBuilder, ProtobufByteParser
 from open_gopro.proto import EnumResultGeneric, ResponseGetApEntries
 

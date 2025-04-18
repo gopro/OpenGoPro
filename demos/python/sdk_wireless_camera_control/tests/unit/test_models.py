@@ -6,15 +6,13 @@ from typing import Final
 from open_gopro.constants import constants
 from open_gopro.models import (
     GroupedMediaItem,
+    HttpInvalidSettingResponse,
     MediaItem,
     MediaList,
     MediaMetadata,
     PhotoMetadata,
-    VideoMetadata,
-)
-from open_gopro.models import (
-    HttpInvalidSettingResponse,
     ScheduledCapture,
+    VideoMetadata,
     WebcamResponse,
 )
 from open_gopro.parsers import ScheduledCaptureParser

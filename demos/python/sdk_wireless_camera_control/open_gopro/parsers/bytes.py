@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import datetime
 import logging
-from typing import Any
+from dataclasses import asdict, dataclass
+from typing import Any, Protocol, TypeVar, runtime_checkable
 
 import google.protobuf.json_format
 from construct import Construct, Flag, Int16sb, Int16ub
@@ -14,7 +15,7 @@ from google.protobuf.json_format import MessageToDict as ProtobufToDict
 from open_gopro.enum import GoProIntEnum, enum_factory
 from open_gopro.parser_interface import BytesBuilder, BytesParser, BytesParserBuilder
 from open_gopro.types import Protobuf
-from open_gopro.util import pretty_print
+from open_gopro.util import is_dataclass_instance, pretty_print, to_dict
 
 logger = logging.getLogger(__name__)
 
@@ -234,3 +235,44 @@ class ConstructByteParserBuilder(BytesParserBuilder):
             bytes: built bytes
         """
         return self._construct.build(obj)
+
+
+@runtime_checkable
+@dataclass
+class DataclassProtocol(Protocol):
+    """Protocol to indicate a dataclass"""
+
+    def __call__(self, **kwargs: Any) -> DataclassProtocol:  # noqa: D102
+        ...
+
+
+T = TypeVar("T", bound=DataclassProtocol)
+
+
+class ConstructDataclassByteParserBuilder[T](BytesParserBuilder):
+    """Helper class for byte building / parsing using a data class using Construct"""
+
+    def __init__(self, construct: Construct, data_class: T, int_builder: Construct) -> None:
+        self.construct = construct
+        self.data_class = data_class
+        self.int_builder = int_builder
+
+    def parse(self, data: bytes) -> T:  # noqa: D102
+        return self.data_class(**to_dict(self.construct.parse(data)))  # type: ignore
+
+    def build(self, obj: Any) -> bytes:  # noqa: D102
+        if is_dataclass_instance(obj):
+            return self.construct.build(asdict(obj))
+        match obj:
+            case int():
+                return self.int_builder.build(obj)
+            case _:
+                raise TypeError(f"Can not build from type {type(obj)}")
+
+    def __call__(self) -> ConstructDataclassByteParserBuilder:
+        """Helper method to just return itself in order to be used similarly to other parsers that require instantation
+
+        Returns:
+            ConstructDataclassByteParserBuilder: returns self
+        """
+        return self

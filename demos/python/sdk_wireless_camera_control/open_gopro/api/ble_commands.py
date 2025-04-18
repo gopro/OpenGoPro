@@ -43,8 +43,7 @@ from open_gopro.constants import (
     SettingId,
     StatusId,
 )
-from open_gopro.models import CameraInfo, TzDstDateTime
-from open_gopro.models import GoProResp
+from open_gopro.models import CameraInfo, GoProResp, TzDstDateTime
 from open_gopro.parser_interface import GlobalParsers, Parser
 from open_gopro.parsers.bytes import (
     ConstructByteParserBuilder,

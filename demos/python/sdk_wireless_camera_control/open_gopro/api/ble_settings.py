@@ -119,7 +119,7 @@ class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#hindsight-167)"""
 
-        self.scheduled_capture: BleSetting[models.ScheduledCapture] = BleSetting[models.ScheduledCapture](
+        self.scheduled_capture: BleSetting[models.ScheduledCapture] = BleSetting[models.general.ScheduledCapture](
             communicator, SettingId.SCHEDULED_CAPTURE, parsers.ScheduledCaptureParser()
         )
         """Scheduled Capture

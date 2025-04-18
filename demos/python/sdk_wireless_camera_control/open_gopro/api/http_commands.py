@@ -18,7 +18,14 @@ from open_gopro.api.builders import (
     http_put_json_command,
 )
 from open_gopro.communicator_interface import HttpMessage, HttpMessages, MessageRules
-from open_gopro.models import CameraInfo, MediaList, MediaMetadata, MediaPath, WebcamResponse, GoProResp
+from open_gopro.models import (
+    CameraInfo,
+    GoProResp,
+    MediaList,
+    MediaMetadata,
+    MediaPath,
+    WebcamResponse,
+)
 from open_gopro.parser_interface import Parser
 from open_gopro.parsers.json import (
     CameraStateJsonParser,

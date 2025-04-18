@@ -20,8 +20,7 @@ from open_gopro.constants import (
     StatusId,
 )
 from open_gopro.exceptions import ResponseParseError
-from open_gopro.models import GoProResp
-from open_gopro.models import GoProBlePacketHeader
+from open_gopro.models import GoProBlePacketHeader, GoProResp
 from open_gopro.parser_interface import GlobalParsers, Parser
 from open_gopro.parsers.json import LambdaJsonParser
 from open_gopro.proto import EnumResultGeneric
