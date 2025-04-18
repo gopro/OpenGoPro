@@ -118,6 +118,13 @@ class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#hindsight-167)"""
 
+        self.scheduled_capture: BleSetting[settings.ScheduledCapture] = BleSetting[settings.ScheduledCapture](
+            communicator, SettingId.SCHEDULED_CAPTURE, settings.ScheduledCapture
+        )
+        """Scheduled Capture
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168)"""
+
         self.webcam_digital_lenses: BleSetting[settings.WebcamDigitalLenses] = BleSetting[settings.WebcamDigitalLenses](
             communicator, SettingId.WEBCAM_DIGITAL_LENSES, settings.WebcamDigitalLenses
         )

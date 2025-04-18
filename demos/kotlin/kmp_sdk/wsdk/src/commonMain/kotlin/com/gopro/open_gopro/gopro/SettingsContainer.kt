@@ -128,6 +128,14 @@ class SettingsContainer internal constructor(marshaller: IOperationMarshaller) {
   val hindsight = Setting(SettingId.HINDSIGHT, Hindsight, marshaller)
 
   /**
+   * Scheduled Capture
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168)
+   */
+  val scheduledCapture = Setting(SettingId.SCHEDULED_CAPTURE, ScheduledCapture, marshaller)
+
+  /**
    * Webcam Digital Lenses
    *
    * @see

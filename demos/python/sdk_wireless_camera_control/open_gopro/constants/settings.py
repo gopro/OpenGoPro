@@ -27,6 +27,7 @@ class SettingId(GoProIntEnum):
     NIGHTLAPSE_RATE = 32
     MAX_LENS = 162
     HINDSIGHT = 167
+    SCHEDULED_CAPTURE = 168
     WEBCAM_DIGITAL_LENSES = 43
     PHOTO_SINGLE_INTERVAL = 171
     PHOTO_INTERVAL_DURATION = 172
@@ -217,6 +218,12 @@ class Hindsight(GoProIntEnum):
     NUM_15_SECONDS = 2
     NUM_30_SECONDS = 3
     OFF = 4
+
+
+class ScheduledCapture(GoProIntEnum):
+    """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168)"""
+
+    NUM_00_00_12_HOUR_DISABLED = 0
 
 
 class WebcamDigitalLenses(GoProIntEnum):

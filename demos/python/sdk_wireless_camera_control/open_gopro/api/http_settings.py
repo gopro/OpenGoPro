@@ -114,6 +114,13 @@ class HttpSettings(HttpMessages[HttpSetting]):
 
         @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#hindsight-167)"""
 
+        self.scheduled_capture: HttpSetting[settings.ScheduledCapture] = HttpSetting[settings.ScheduledCapture](
+            communicator, SettingId.SCHEDULED_CAPTURE
+        )
+        """Scheduled Capture
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168)"""
+
         self.webcam_digital_lenses: HttpSetting[settings.WebcamDigitalLenses] = HttpSetting[
             settings.WebcamDigitalLenses
         ](communicator, SettingId.WEBCAM_DIGITAL_LENSES)

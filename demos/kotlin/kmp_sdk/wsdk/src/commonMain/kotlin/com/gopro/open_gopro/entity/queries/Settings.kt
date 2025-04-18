@@ -23,6 +23,7 @@ enum class SettingId(override val value: UByte) : IValuedEnum<UByte> {
   NIGHTLAPSE_RATE(32U),
   MAX_LENS(162U),
   HINDSIGHT(167U),
+  SCHEDULED_CAPTURE(168U),
   WEBCAM_DIGITAL_LENSES(43U),
   PHOTO_SINGLE_INTERVAL(171U),
   PHOTO_INTERVAL_DURATION(172U),
@@ -356,6 +357,23 @@ enum class Hindsight(override val value: UByte) : IValuedEnum<UByte> {
   companion object : IUByteArrayCompanion<Hindsight> {
     override fun fromUByteArray(value: UByteArray) =
         Hindsight.entries.first { it.value == value.last() }
+  }
+}
+
+/**
+ * Scheduled Capture
+ *
+ * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168)
+ */
+enum class ScheduledCapture(override val value: ULong) : IValuedEnum<ULong> {
+  NUM_00_00_12_HOUR_DISABLED(0U);
+
+  @ExperimentalUnsignedTypes
+  companion object : IUByteArrayCompanion<ScheduledCapture> {
+    override fun fromUByteArray(value: UByteArray) =
+        ScheduledCapture.entries.first { it.value == value.asInt64UB() }
   }
 }
 
