@@ -20,7 +20,8 @@ from open_gopro.constants import ErrorCode, QueryCmdId, SettingId, StatusId, set
 from open_gopro.constants.statuses import InternalBatteryBars
 from open_gopro.exceptions import GoProNotOpened, ResponseTimeout
 from open_gopro.gopro_wireless import WirelessGoPro
-from open_gopro.models.response import GlobalParsers, GoProResp
+from open_gopro.models import GoProResp
+from open_gopro.parser_interface import GlobalParsers
 from open_gopro.types import UpdateType
 from tests import mock_good_response
 from tests.mocks import MockGoProMaintainBle

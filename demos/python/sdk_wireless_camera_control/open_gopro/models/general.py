@@ -9,15 +9,11 @@ import datetime
 from base64 import b64encode
 from dataclasses import dataclass
 from pathlib import Path
-from typing import ClassVar
 
 from pydantic import ConfigDict, Field
 
-from construct import BitsInteger, BitStruct, Construct, Padding, Flag
-
 from open_gopro.constants import SettingId, WebcamError, WebcamStatus
 from open_gopro.models.bases import CustomBaseModel
-from open_gopro.parsers import to_dict
 
 
 class CameraInfo(CustomBaseModel):
@@ -84,19 +80,9 @@ class CohnInfo:
 
 @dataclass(frozen=True)
 class ScheduledCapture:
+    """Scheduled capture request / status"""
+
     hour: int
     minute: int
     is_enabled: bool
     is_24_hour: bool
-
-    scheduled_capture_struct: ClassVar[Construct] = BitStruct(
-        Padding(3),
-        "hour" / BitsInteger(5),
-        "minute" / BitsInteger(6),
-        "is_24_hour" / Flag,
-        "is_enabled" / Flag,
-    )
-
-    @classmethod
-    def from_bytes(cls, raw_byes: bytes | bytearray) -> ScheduledCapture:
-        return cls(**to_dict(cls.scheduled_capture_struct.parse(raw_byes)))

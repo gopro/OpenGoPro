@@ -44,9 +44,18 @@ from open_gopro.constants import (
     StatusId,
 )
 from open_gopro.models import CameraInfo, TzDstDateTime
-from open_gopro.models.response import GlobalParsers, GoProResp
-from open_gopro.parser_interface import Parser
-from open_gopro.parsers import ByteParserBuilders, JsonParsers
+from open_gopro.models import GoProResp
+from open_gopro.parser_interface import GlobalParsers, Parser
+from open_gopro.parsers.bytes import (
+    ConstructByteParserBuilder,
+    DateTimeByteParserBuilder,
+    ProtobufByteParser,
+)
+from open_gopro.parsers.json import (
+    CameraStateJsonParser,
+    LambdaJsonParser,
+    PydanticAdapterJsonParser,
+)
 from open_gopro.types import CameraState, UpdateCb
 
 logger = logging.getLogger(__name__)
@@ -109,7 +118,7 @@ class BleCommands(BleMessages[BleMessage]):
         uuid=GoProUUID.CQ_COMMAND,
         cmd=CmdId.GET_HW_INFO,
         parser=Parser(
-            byte_json_adapter=ByteParserBuilders.Construct(
+            byte_json_adapter=ConstructByteParserBuilder(
                 Struct(
                     Padding(1),
                     "model_number" / Int32ub,
@@ -127,7 +136,7 @@ class BleCommands(BleMessages[BleMessage]):
                     "ap_mac_addr" / PaddedString(this.ap_mac_len, "utf-8"),
                 )
             ),
-            json_parser=JsonParsers.PydanticAdapter(CameraInfo),
+            json_parser=PydanticAdapterJsonParser(CameraInfo),
         ),
     )
     async def get_hardware_info(self) -> GoProResp[CameraInfo]:
@@ -186,10 +195,10 @@ class BleCommands(BleMessages[BleMessage]):
         uuid=GoProUUID.CQ_COMMAND,
         cmd=CmdId.GET_THIRD_PARTY_API_VERSION,
         parser=Parser(
-            byte_json_adapter=ByteParserBuilders.Construct(
+            byte_json_adapter=ConstructByteParserBuilder(
                 Struct(Padding(1), "major" / Int8ub, Padding(1), "minor" / Int8ub)
             ),
-            json_parser=JsonParsers.LambdaParser(lambda data: f"{data['major']}.{data['minor']}"),
+            json_parser=LambdaJsonParser(lambda data: f"{data['major']}.{data['minor']}"),
         ),
     )
     async def get_open_gopro_api_version(self) -> GoProResp[str]:
@@ -202,7 +211,7 @@ class BleCommands(BleMessages[BleMessage]):
     @ble_write_command(
         GoProUUID.CQ_QUERY,
         CmdId.GET_CAMERA_STATUSES,
-        parser=Parser(json_parser=JsonParsers.CameraStateParser()),
+        parser=Parser(json_parser=CameraStateJsonParser()),
     )
     async def get_camera_statuses(self) -> GoProResp[CameraState]:
         """Get all of the camera's statuses
@@ -214,7 +223,7 @@ class BleCommands(BleMessages[BleMessage]):
     @ble_write_command(
         GoProUUID.CQ_QUERY,
         CmdId.GET_CAMERA_SETTINGS,
-        parser=Parser(json_parser=JsonParsers.CameraStateParser()),
+        parser=Parser(json_parser=CameraStateJsonParser()),
     )
     async def get_camera_settings(self) -> GoProResp[CameraState]:
         """Get all of the camera's settings
@@ -226,7 +235,7 @@ class BleCommands(BleMessages[BleMessage]):
     @ble_write_command(
         GoProUUID.CQ_QUERY,
         CmdId.GET_CAMERA_CAPABILITIES,
-        parser=Parser(json_parser=JsonParsers.CameraStateParser()),
+        parser=Parser(json_parser=CameraStateJsonParser()),
     )
     async def get_camera_capabilities(self) -> GoProResp[CameraState]:
         """Get the current capabilities of each camera setting
@@ -235,7 +244,7 @@ class BleCommands(BleMessages[BleMessage]):
             GoProResp[CameraState]: response as JSON
         """
 
-    @ble_write_command(GoProUUID.CQ_COMMAND, CmdId.SET_DATE_TIME, param_builder=ByteParserBuilders.DateTime())
+    @ble_write_command(GoProUUID.CQ_COMMAND, CmdId.SET_DATE_TIME, param_builder=DateTimeByteParserBuilder())
     async def set_date_time(self, *, date_time: datetime.datetime) -> GoProResp[None]:
         """Set the camera's date and time (non timezone / DST version)
 
@@ -250,8 +259,8 @@ class BleCommands(BleMessages[BleMessage]):
         GoProUUID.CQ_COMMAND,
         CmdId.GET_DATE_TIME,
         parser=Parser(
-            byte_json_adapter=ByteParserBuilders.DateTime(),
-            json_parser=JsonParsers.LambdaParser(lambda data: data["datetime"]),
+            byte_json_adapter=DateTimeByteParserBuilder(),
+            json_parser=LambdaJsonParser(lambda data: data["datetime"]),
         ),
     )
     async def get_date_time(self) -> GoProResp[datetime.datetime]:
@@ -261,7 +270,7 @@ class BleCommands(BleMessages[BleMessage]):
             GoProResp[datetime.datetime]: response as JSON
         """
 
-    @ble_write_command(GoProUUID.CQ_COMMAND, CmdId.SET_DATE_TIME_DST, param_builder=ByteParserBuilders.DateTime())
+    @ble_write_command(GoProUUID.CQ_COMMAND, CmdId.SET_DATE_TIME_DST, param_builder=DateTimeByteParserBuilder())
     async def set_date_time_tz_dst(
         self, *, date_time: datetime.datetime, tz_offset: int, is_dst: bool
     ) -> GoProResp[None]:
@@ -280,8 +289,8 @@ class BleCommands(BleMessages[BleMessage]):
         GoProUUID.CQ_COMMAND,
         CmdId.GET_DATE_TIME_DST,
         parser=Parser(
-            byte_json_adapter=ByteParserBuilders.DateTime(),
-            json_parser=JsonParsers.PydanticAdapter(TzDstDateTime),
+            byte_json_adapter=DateTimeByteParserBuilder(),
+            json_parser=PydanticAdapterJsonParser(TzDstDateTime),
         ),
     )
     async def get_date_time_tz_dst(self) -> GoProResp[TzDstDateTime]:
@@ -298,8 +307,8 @@ class BleCommands(BleMessages[BleMessage]):
     @ble_read_command(
         uuid=GoProUUID.WAP_SSID,
         parser=Parser(
-            byte_json_adapter=ByteParserBuilders.Construct(Struct("ssid" / GreedyString("utf-8"))),
-            json_parser=JsonParsers.LambdaParser(lambda data: data["ssid"]),
+            byte_json_adapter=ConstructByteParserBuilder(Struct("ssid" / GreedyString("utf-8"))),
+            json_parser=LambdaJsonParser(lambda data: data["ssid"]),
         ),
     )
     async def get_wifi_ssid(self) -> GoProResp[str]:
@@ -312,8 +321,8 @@ class BleCommands(BleMessages[BleMessage]):
     @ble_read_command(
         uuid=GoProUUID.WAP_PASSWORD,
         parser=Parser(
-            byte_json_adapter=ByteParserBuilders.Construct(Struct("password" / GreedyString("utf-8"))),
-            json_parser=JsonParsers.LambdaParser(lambda data: data["password"]),
+            byte_json_adapter=ConstructByteParserBuilder(Struct("password" / GreedyString("utf-8"))),
+            json_parser=LambdaJsonParser(lambda data: data["password"]),
         ),
     )
     async def get_wifi_password(self) -> GoProResp[str]:
@@ -829,19 +838,19 @@ class BleAsyncResponses:
     """These are responses whose ID's are not associated with any messages"""
 
     generic_parser: Final = Parser[bytes](
-        byte_json_adapter=ByteParserBuilders.Construct(Struct("unparsed" / GreedyBytes))
+        byte_json_adapter=ConstructByteParserBuilder(Struct("unparsed" / GreedyBytes))
     )
 
     responses: list[BleAsyncResponse] = [
         BleAsyncResponse(
             FeatureId.NETWORK_MANAGEMENT,
             ActionId.NOTIF_PROVIS_STATE,
-            Parser(byte_json_adapter=ByteParserBuilders.Protobuf(proto.NotifProvisioningState)),
+            Parser(byte_json_adapter=ProtobufByteParser(proto.NotifProvisioningState)),
         ),
         BleAsyncResponse(
             FeatureId.NETWORK_MANAGEMENT,
             ActionId.NOTIF_START_SCAN,
-            Parser(byte_json_adapter=ByteParserBuilders.Protobuf(proto.NotifStartScanning)),
+            Parser(byte_json_adapter=ProtobufByteParser(proto.NotifStartScanning)),
         ),
         BleAsyncResponse(
             FeatureId.QUERY,

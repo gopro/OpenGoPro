@@ -16,7 +16,7 @@ from rich.console import Console
 
 from open_gopro.exceptions import FailedToFindDevice
 from open_gopro.gopro_wired import WiredGoPro
-from open_gopro.models.network_scan_responses import AdvData, GoProAdvData
+from open_gopro.models import AdvData, GoProAdvData
 from open_gopro.util import add_cli_args_and_parse, ainput
 from open_gopro.wifi.mdns_scanner import find_first_ip_addr
 

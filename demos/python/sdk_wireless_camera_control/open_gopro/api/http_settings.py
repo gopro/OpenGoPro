@@ -9,6 +9,7 @@
 #
 ########################################################################################################################
 
+from open_gopro import models
 from open_gopro.api.builders import HttpSetting
 from open_gopro.communicator_interface import GoProHttp, HttpMessages
 from open_gopro.constants import SettingId, settings
@@ -97,7 +98,7 @@ class HttpSettings(HttpMessages[HttpSetting]):
         """Nightlapse Rate
 
         How frequently to take a video or photo when performing a Nightlapse.
-		
+
 		This controls the Video or Photo Nightlapse rate if Setting 128 is set to 21 or 26 respectively.
 
         @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#nightlapse-rate-32)"""
@@ -114,7 +115,7 @@ class HttpSettings(HttpMessages[HttpSetting]):
 
         @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#hindsight-167)"""
 
-        self.scheduled_capture: HttpSetting[settings.ScheduledCapture] = HttpSetting[settings.ScheduledCapture](
+        self.scheduled_capture: HttpSetting[models.ScheduledCapture] = HttpSetting[models.ScheduledCapture](
             communicator, SettingId.SCHEDULED_CAPTURE
         )
         """Scheduled Capture

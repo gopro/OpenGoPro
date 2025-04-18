@@ -9,6 +9,7 @@
 #
 ########################################################################################################################
 
+from open_gopro import models, parsers
 from open_gopro.api.builders import BleSettingFacade as BleSetting
 from open_gopro.communicator_interface import BleMessages, GoProBle
 from open_gopro.constants import SettingId, settings
@@ -99,7 +100,7 @@ class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):
         """Nightlapse Rate
 
         How frequently to take a video or photo when performing a Nightlapse.
-		
+
 		This controls the Video or Photo Nightlapse rate if Setting 128 is set to 21 or 26 respectively.
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#nightlapse-rate-32)"""
@@ -118,8 +119,8 @@ class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#hindsight-167)"""
 
-        self.scheduled_capture: BleSetting[settings.ScheduledCapture] = BleSetting[settings.ScheduledCapture](
-            communicator, SettingId.SCHEDULED_CAPTURE, settings.ScheduledCapture
+        self.scheduled_capture: BleSetting[models.ScheduledCapture] = BleSetting[models.ScheduledCapture](
+            communicator, SettingId.SCHEDULED_CAPTURE, parsers.ScheduledCaptureParser()
         )
         """Scheduled Capture
 

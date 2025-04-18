@@ -15,7 +15,7 @@ import zeroconf
 import zeroconf.asyncio
 
 from open_gopro.exceptions import FailedToFindDevice
-from open_gopro.models.network_scan_responses import DnsScanResponse
+from open_gopro.models import DnsScanResponse
 
 logger = logging.getLogger(__name__)
 

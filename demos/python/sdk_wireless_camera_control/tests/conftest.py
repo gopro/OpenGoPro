@@ -3,7 +3,6 @@
 
 # pylint: disable=redefined-outer-name
 
-import asyncio
 import logging
 import re
 from pathlib import Path

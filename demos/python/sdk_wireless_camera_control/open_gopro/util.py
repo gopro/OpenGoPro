@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import Any, Callable, Generic, TypeVar
 
 import pytz
+from construct import Container
 from pydantic import BaseModel
 from tzlocal import get_localzone
 
@@ -347,4 +348,21 @@ def deeply_update_dict(d: dict, u: dict) -> dict:
             d[k] = deeply_update_dict(d.get(k, {}), v)
         else:
             d[k] = v
+    return d
+
+
+def to_dict(container: Container) -> dict:
+    """Convert a parsed construct container to a dict, removing any internal Construct fields
+
+    This is needed because annoyingly all construct's contain an "_io" field.
+    See https://github.com/construct/construct/issues/1055
+
+    Args:
+        container (Container): container to convert
+
+    Returns:
+        dict: converted dict with any construct internal properties removed
+    """
+    d = dict(container)
+    d.pop("_io", None)
     return d

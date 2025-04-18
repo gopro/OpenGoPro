@@ -47,8 +47,8 @@ from open_gopro.gopro_base import (
     enforce_message_rules,
 )
 from open_gopro.logger import Logger
-from open_gopro.models.general import CohnInfo
-from open_gopro.models.response import BleRespBuilder, GoProResp
+from open_gopro.models import CohnInfo, GoProResp
+from open_gopro.parsers.response import BleRespBuilder
 from open_gopro.types import ResponseType, UpdateCb, UpdateType
 from open_gopro.util import SnapshotQueue, get_current_dst_aware_time, pretty_print
 from open_gopro.wifi import WifiCli

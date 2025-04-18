@@ -220,12 +220,6 @@ class Hindsight(GoProIntEnum):
     OFF = 4
 
 
-class ScheduledCapture(GoProIntEnum):
-    """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168)"""
-
-    NUM_00_00_12_HOUR_DISABLED = 0
-
-
 class WebcamDigitalLenses(GoProIntEnum):
     """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#webcam-digital-lenses-43)"""
 

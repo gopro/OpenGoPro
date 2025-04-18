@@ -33,7 +33,7 @@ from open_gopro.communicator_interface import (
 )
 from open_gopro.constants import CmdId, GoProUUID, StatusId
 from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
-from open_gopro.models.response import GoProResp
+from open_gopro.models import GoProResp
 from open_gopro.types import CameraState, UpdateCb, UpdateType
 from open_gopro.wifi import SsidState, WifiController
 from tests import mock_good_response, versions

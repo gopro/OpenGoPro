@@ -12,9 +12,8 @@ from open_gopro.models.network_scan_responses import (
     manuf_data_struct,
     scan_response_struct,
 )
-from open_gopro.models.response import GlobalParsers
-from open_gopro.parser_interface import Parser
-from open_gopro.parsers import ByteParserBuilders
+from open_gopro.parser_interface import Parser, GlobalParsers
+from open_gopro.parsers.bytes import BytesParserBuilder, ProtobufByteParser
 from open_gopro.proto import EnumResultGeneric, ResponseGetApEntries
 
 
@@ -35,7 +34,7 @@ def test_recursive_protobuf_proxying():
     )
     response = ResponseGetApEntries(result=EnumResultGeneric.RESULT_SUCCESS, scan_id=1, entries=[scan1, scan2])
     raw = response.SerializeToString()
-    parser = Parser[ResponseGetApEntries](byte_json_adapter=ByteParserBuilders.Protobuf(ResponseGetApEntries))
+    parser = Parser[ResponseGetApEntries](byte_json_adapter=ProtobufByteParser(ResponseGetApEntries))
     parsed = parser.parse(raw)
     assert len(parsed.entries) == 2
     assert parsed.entries[0].ssid == "one"

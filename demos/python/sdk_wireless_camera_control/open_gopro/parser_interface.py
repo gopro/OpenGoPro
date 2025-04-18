@@ -87,7 +87,7 @@ class Parser(ABC, Generic[T]):
         1. Variable number of byte transformers (bytes --> bytes)
         2. One bytes Json adapter (bytes --> json)
         3. Variable number of json transformers (json --> json)
-        4. One JSON parser (json -> Any)
+        4. One JSON parser (json -> T)
 
     Args:
         byte_transformers (list[BytesTransformer] | None): bytes --> bytes. Defaults to None.
