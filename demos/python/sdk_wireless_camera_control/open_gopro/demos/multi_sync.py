@@ -37,10 +37,17 @@ def wrapped_console_print(target: GoPro, message: str) -> None:
     console.print(f"{target.name} ==> {message}")
 
 
-async def take_photo(gopro: GoProBase) -> None:
+async def take_photo(gopro: GoProBase, sync_event: asyncio.Event) -> None:
+    await sync_event.wait()
+    logger.critical(f"Triggering {gopro.identifier}")
     await gopro.http_command.set_shutter(shutter=constants.Toggle.ENABLE)
     await asyncio.sleep(2)
     await gopro.http_command.set_shutter(shutter=constants.Toggle.DISABLE)
+
+
+async def set_future_event(event: asyncio.Event, delay_sec: int) -> None:
+    await asyncio.sleep(delay_sec)
+    event.set()
 
 
 async def multi_record_via_cohn(targets: list[GoPro]) -> None:
@@ -57,10 +64,14 @@ async def multi_record_via_cohn(targets: list[GoPro]) -> None:
                     await gopro.cohn.configure(force_reprovision=True)
 
         gopros = [WirelessGoPro(target=target.serial, interfaces={WirelessGoPro.Interface.COHN}) for target in targets]
+        sync_event = asyncio.Event()
         async with asyncio.TaskGroup() as tg:
             for gopro in gopros:
                 await gopro.open()
-                tg.create_task(take_photo(gopro), name=gopro.identifier)
+                tg.create_task(take_photo(gopro, sync_event), name=gopro.identifier)
+            tg.create_task(set_future_event(sync_event, 5))
+        for gopro in gopros:
+            await gopro.close()
 
     except Exception as e:  # pylint: disable = broad-except
         logger.error(repr(e))
@@ -69,10 +80,14 @@ async def multi_record_via_cohn(targets: list[GoPro]) -> None:
 
 
 async def multi_record_via_usb(targets: list[GoPro]) -> None:
+    gopros = [WiredGoPro(target.serial) for target in targets]
+    for gopro in gopros:
+        await gopro.open()
     async with asyncio.TaskGroup() as tg:
-        for gopro in [WiredGoPro(target.serial) for target in targets]:
-            await gopro.open()
+        for gopro in gopros:
             tg.create_task(take_photo(gopro), name=gopro.identifier)
+    for gopro in gopros:
+        await gopro.close()
 
 
 async def main(args: argparse.Namespace) -> None:
@@ -84,8 +99,8 @@ async def main(args: argparse.Namespace) -> None:
         GoPro("0702", "Hero12Right"),
         # GoPro("0053", "Hero13"),
     ]
-    # await multi_record_via_cohn(targets)
-    await multi_record_via_usb(targets)
+    await multi_record_via_cohn(targets)
+    # await multi_record_via_usb(targets)
 
 
 def parse_arguments() -> argparse.Namespace:
