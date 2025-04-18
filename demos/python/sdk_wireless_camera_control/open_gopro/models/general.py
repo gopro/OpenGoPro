@@ -6,8 +6,9 @@
 from __future__ import annotations
 
 import datetime
+import json
 from base64 import b64encode
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from pydantic import ConfigDict, Field
@@ -86,3 +87,33 @@ class ScheduledCapture:
     minute: int
     is_enabled: bool
     is_24_hour: bool
+
+    @classmethod
+    def from_datetime(cls, dt: datetime.datetime, is_enabled: bool) -> ScheduledCapture:
+        """Helper method to build a ScheduledCapture object from Python standard datetime.datetime
+
+        Args:
+            dt (datetime.datetime): datetime to build from
+            is_enabled (bool): is / should scheduled capture be enabled on the camera?
+
+        Returns:
+            ScheduledCapture: _description_
+        """
+        return cls(
+            hour=dt.hour,
+            minute=dt.minute,
+            is_enabled=is_enabled,
+            is_24_hour=True,
+        )
+
+    def __str__(self) -> str:
+        return json.dumps(asdict(self), indent=4)
+
+    @classmethod
+    def off(cls) -> ScheduledCapture:
+        """Helper method to return a pre-filled ScheduledCapture object that can be used to turn scheduled capture off
+
+        Returns:
+            ScheduledCapture: object with "is_enabled" set to False
+        """
+        return cls(0, 0, False, False)

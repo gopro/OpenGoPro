@@ -304,7 +304,7 @@ def test_printing():
 
 def test_parse_schedule_capture():
     # GIVEN
-    raw_bytes = bytes([0x0C, 0x8B])
+    raw_bytes = bytes([0x00, 0x00, 0x0C, 0x8B])
 
     # WHEN
     scheduled_capture = ScheduledCaptureParser().parse(raw_bytes)
@@ -324,4 +324,4 @@ def test_build_schedule_capture():
     raw_bytes = ScheduledCaptureParser().build(scheduled_capture)
 
     # THEN
-    assert raw_bytes == bytes([0x0C, 0x8B])
+    assert raw_bytes == bytes([0x00, 0x00, 0x0C, 0x8B])
