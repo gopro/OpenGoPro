@@ -9,6 +9,7 @@ package com.gopro.open_gopro.gopro
  * WARNING!!! This file is auto-generated. Do not modify it manually
  */
 import com.gopro.open_gopro.domain.api.IOperationMarshaller
+import com.gopro.open_gopro.entity.queries.ComplexQueryEntity
 import com.gopro.open_gopro.operations.*
 
 /**
@@ -133,7 +134,7 @@ class SettingsContainer internal constructor(marshaller: IOperationMarshaller) {
    * @see
    *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168)
    */
-  val scheduledCapture = Setting(SettingId.SCHEDULED_CAPTURE, ScheduledCapture, marshaller)
+  val scheduledCapture = Setting(SettingId.SCHEDULED_CAPTURE, ComplexQueryEntity.ScheduledCapture, marshaller)
 
   /**
    * Webcam Digital Lenses
