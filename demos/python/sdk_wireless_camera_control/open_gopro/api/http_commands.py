@@ -18,11 +18,20 @@ from open_gopro.api.builders import (
     http_put_json_command,
 )
 from open_gopro.communicator_interface import HttpMessage, HttpMessages, MessageRules
-from open_gopro.models import CameraInfo, MediaList, MediaMetadata, MediaPath
-from open_gopro.models.general import WebcamResponse
-from open_gopro.models.response import GoProResp
+from open_gopro.models import (
+    CameraInfo,
+    GoProResp,
+    MediaList,
+    MediaMetadata,
+    MediaPath,
+    WebcamResponse,
+)
 from open_gopro.parser_interface import Parser
-from open_gopro.parsers import JsonParsers
+from open_gopro.parsers.json import (
+    CameraStateJsonParser,
+    LambdaJsonParser,
+    PydanticAdapterJsonParser,
+)
 from open_gopro.types import CameraState, JsonDict
 
 logger = logging.getLogger(__name__)
@@ -67,7 +76,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
 
     @http_get_json_command(
         endpoint="gopro/media/last_captured",
-        parser=Parser(json_parser=JsonParsers.PydanticAdapter(MediaPath)),
+        parser=Parser(json_parser=PydanticAdapterJsonParser(MediaPath)),
     )
     async def get_last_captured_media(self) -> GoProResp[MediaPath]:
         """Get the last captured media file.
@@ -112,7 +121,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
 
     @http_get_json_command(
         endpoint="gopro/camera/state",
-        parser=Parser(json_parser=JsonParsers.CameraStateParser()),
+        parser=Parser(json_parser=CameraStateJsonParser()),
         rules=MessageRules(fastpass_analyzer=MessageRules.always_true),
     )
     async def get_camera_state(self) -> GoProResp[CameraState]:
@@ -123,7 +132,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """
 
     @http_get_json_command(
-        endpoint="gopro/camera/info", parser=Parser(json_parser=JsonParsers.PydanticAdapter(CameraInfo))
+        endpoint="gopro/camera/info", parser=Parser(json_parser=PydanticAdapterJsonParser(CameraInfo))
     )
     async def get_camera_info(self) -> GoProResp[CameraInfo]:
         """Get general information about the camera such as firmware version
@@ -143,7 +152,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
     @http_get_json_command(
         endpoint="gopro/media/info",
         arguments=["path"],
-        parser=Parser(json_parser=JsonParsers.PydanticAdapter(MediaMetadata)),
+        parser=Parser(json_parser=PydanticAdapterJsonParser(MediaMetadata)),
     )
     async def get_media_metadata(self, *, path: str) -> GoProResp[MediaMetadata]:
         """Get media metadata for a file.
@@ -157,7 +166,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
 
     @http_get_json_command(
         endpoint="gopro/media/list",
-        parser=Parser(json_parser=JsonParsers.PydanticAdapter(MediaList)),
+        parser=Parser(json_parser=PydanticAdapterJsonParser(MediaList)),
     )
     async def get_media_list(self) -> GoProResp[MediaList]:
         """Get a list of media on the camera.
@@ -180,7 +189,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
 
     @http_get_json_command(
         endpoint="gopro/version",
-        parser=Parser(json_parser=JsonParsers.LambdaParser(lambda data: f"{data['version']}")),
+        parser=Parser(json_parser=LambdaJsonParser(lambda data: f"{data['version']}")),
     )
     async def get_open_gopro_api_version(self) -> GoProResp[str]:
         """Get Open GoPro API version
@@ -366,7 +375,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
 
     @http_get_json_command(
         endpoint="gopro/webcam/exit",
-        parser=Parser(json_parser=JsonParsers.PydanticAdapter(WebcamResponse)),
+        parser=Parser(json_parser=PydanticAdapterJsonParser(WebcamResponse)),
         rules=MessageRules(fastpass_analyzer=MessageRules.always_true),
     )
     async def webcam_exit(self) -> GoProResp[WebcamResponse]:
@@ -378,7 +387,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
 
     @http_get_json_command(
         endpoint="gopro/webcam/preview",
-        parser=Parser(json_parser=JsonParsers.PydanticAdapter(WebcamResponse)),
+        parser=Parser(json_parser=PydanticAdapterJsonParser(WebcamResponse)),
         rules=MessageRules(fastpass_analyzer=MessageRules.always_true),
     )
     async def webcam_preview(self) -> GoProResp[WebcamResponse]:
@@ -391,7 +400,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
     @http_get_json_command(
         endpoint="gopro/webcam/start",
         arguments=["res", "fov", "port", "protocol"],
-        parser=Parser(json_parser=JsonParsers.PydanticAdapter(WebcamResponse)),
+        parser=Parser(json_parser=PydanticAdapterJsonParser(WebcamResponse)),
         rules=MessageRules(fastpass_analyzer=MessageRules.always_true),
     )
     async def webcam_start(
@@ -419,7 +428,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
     @http_get_json_command(
         endpoint="gopro/webcam/stop",
         rules=MessageRules(fastpass_analyzer=MessageRules.always_true),
-        parser=Parser(json_parser=JsonParsers.PydanticAdapter(WebcamResponse)),
+        parser=Parser(json_parser=PydanticAdapterJsonParser(WebcamResponse)),
     )
     async def webcam_stop(self) -> GoProResp[WebcamResponse]:
         """Stop the webcam.
@@ -430,7 +439,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
 
     @http_get_json_command(
         endpoint="gopro/webcam/status",
-        parser=Parser(json_parser=JsonParsers.PydanticAdapter(WebcamResponse)),
+        parser=Parser(json_parser=PydanticAdapterJsonParser(WebcamResponse)),
         rules=MessageRules(fastpass_analyzer=MessageRules.always_true),
     )
     async def webcam_status(self) -> GoProResp[WebcamResponse]:

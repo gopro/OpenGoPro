@@ -26,7 +26,7 @@ from open_gopro.ble import (
     NotiHandlerType,
 )
 from open_gopro.constants import GoProUUID
-from open_gopro.models.response import GoProResp, Header
+from open_gopro.models import GoProBlePacketHeader, GoProResp
 from open_gopro.parser_interface import (
     BytesParser,
     BytesTransformer,
@@ -306,13 +306,13 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
 
         extended_13_header = BitStruct(
             "continuation" / Const(0, Bit),
-            "header" / Const(Header.EXT_13.value, BitsInteger(2)),
+            "header" / Const(GoProBlePacketHeader.EXT_13.value, BitsInteger(2)),
             "length" / BitsInteger(13),
         )
 
         extended_16_header = BitStruct(
             "continuation" / Const(0, Bit),
-            "header" / Const(Header.EXT_16.value, BitsInteger(2)),
+            "header" / Const(GoProBlePacketHeader.EXT_16.value, BitsInteger(2)),
             "padding" / Padding(5),
             "length" / BitsInteger(16),
         )

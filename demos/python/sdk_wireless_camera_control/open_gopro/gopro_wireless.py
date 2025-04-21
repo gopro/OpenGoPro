@@ -47,8 +47,8 @@ from open_gopro.gopro_base import (
     enforce_message_rules,
 )
 from open_gopro.logger import Logger
-from open_gopro.models.general import CohnInfo
-from open_gopro.models.response import BleRespBuilder, GoProResp
+from open_gopro.models import CohnInfo, GoProResp
+from open_gopro.parsers.response import BleRespBuilder
 from open_gopro.types import ResponseType, UpdateCb, UpdateType
 from open_gopro.util import SnapshotQueue, get_current_dst_aware_time, pretty_print
 from open_gopro.wifi import WifiCli
@@ -304,9 +304,8 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
                 await self.ble_command.set_third_party_client_info()
                 # Set current dst-aware time. Don't assert on success since some old cameras don't support this command.
-                await self.ble_command.set_date_time_tz_dst(
-                    **dict(zip(("date_time", "tz_offset", "is_dst"), get_current_dst_aware_time()))
-                )
+                dt, tz_offset, is_dst = get_current_dst_aware_time()
+                await self.ble_command.set_date_time_tz_dst(date_time=dt, tz_offset=tz_offset, is_dst=is_dst)
 
                 # Find and configure API version
                 version = (await self.ble_command.get_open_gopro_api_version()).data

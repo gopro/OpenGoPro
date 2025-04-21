@@ -5,6 +5,7 @@ import com.gopro.open_gopro.domain.communicator.BleCommunicator
 import com.gopro.open_gopro.domain.communicator.bleCommunicator.bleFragment
 import com.gopro.open_gopro.entity.network.ble.BleNotification
 import com.gopro.open_gopro.entity.network.ble.GpUuid
+import com.gopro.open_gopro.entity.queries.ComplexQueryEntity
 import com.gopro.open_gopro.operations.VideoResolution
 import com.gopro.open_gopro.util.extensions.toTlvMap
 import fakes.BleApiSpy
@@ -23,6 +24,7 @@ import kotlinx.coroutines.test.runTest
 import vectors.asynchronousSettingValueUpdateMessage1
 import vectors.asynchronousSettingValueUpdateMessage2
 import vectors.getMultipleSettingsResponsePayload
+import vectors.getScheduledCaptureResponseMessage
 import vectors.getSettingResponseMessage
 import vectors.getSettingResponseMessage2
 import vectors.getSettingResponseMessage3
@@ -36,7 +38,6 @@ import vectors.setSettingsRequestPayload
 
 @OptIn(ExperimentalUnsignedTypes::class, ExperimentalCoroutinesApi::class)
 class TestSettings {
-
   @Test
   fun `set resolution success`() = runTest {
     // GIVEN
@@ -115,6 +116,59 @@ class TestSettings {
     // THEN
     assertTrue { result.isSuccess }
     assertEquals(result.getOrThrow(), VideoResolution.NUM_1080)
+  }
+
+  @Test
+  fun `parse scheduled capture from bytearray`() {
+    // GIVEN
+    val target =
+        ComplexQueryEntity.ScheduledCapture(
+            hour = 12, minute = 34, is24hour = true, isEnabled = true)
+
+    // WHEN
+    val parsed =
+        ComplexQueryEntity.ScheduledCapture.fromUByteArray(getScheduledCaptureResponseMessage)
+
+    // THEN
+    assertEquals(target, parsed)
+  }
+
+  @Test
+  fun `build bytearray from scheduled capture`() {
+    // GIVEN
+    val target = getScheduledCaptureResponseMessage.takeLast(4).toUByteArray()
+
+    // WHEN
+    val built =
+        ComplexQueryEntity.ScheduledCapture.toUByteArray(
+            ComplexQueryEntity.ScheduledCapture(
+                hour = 12, minute = 34, is24hour = true, isEnabled = true))
+
+    // THEN
+    assertContentEquals(target, built)
+  }
+
+  @Test
+  fun `get complex query`() = runTest {
+    // GIVEN
+    val responses =
+        listOf(
+            listOf(
+                BleNotification(GpUuid.CQ_QUERY_RESP.toUuid(), getScheduledCaptureResponseMessage)))
+    val fakeSettingsContainer = buildFakeSettingsContainer(responses, UnconfinedTestDispatcher())
+    val setting = fakeSettingsContainer.settingsContainer.scheduledCapture
+
+    // WHEN
+    val result = setting.getValue()
+
+    // THEN
+    assertTrue { result.isSuccess }
+    with(result.getOrThrow()) {
+      assertEquals(hour, 12)
+      assertEquals(minute, 34)
+      assertTrue { is24hour }
+      assertTrue { isEnabled }
+    }
   }
 
   @Test
