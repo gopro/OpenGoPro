@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import datetime
 import logging
-from dataclasses import asdict, dataclass
-from typing import Any, Protocol, TypeVar, runtime_checkable
+from dataclasses import asdict
+from typing import Any, Generic, TypeVar
 
 import google.protobuf.json_format
 from construct import Construct, Flag, Int16sb, Int16ub
@@ -237,19 +237,10 @@ class ConstructByteParserBuilder(BytesParserBuilder):
         return self._construct.build(obj)
 
 
-@runtime_checkable
-@dataclass
-class DataclassProtocol(Protocol):
-    """Protocol to indicate a dataclass"""
-
-    def __call__(self, **kwargs: Any) -> DataclassProtocol:  # noqa: D102
-        ...
+T = TypeVar("T")
 
 
-T = TypeVar("T", bound=DataclassProtocol)
-
-
-class ConstructDataclassByteParserBuilder[T](BytesParserBuilder):
+class ConstructDataclassByteParserBuilder(Generic[T], BytesParserBuilder[T]):
     """Helper class for byte building / parsing using a data class using Construct"""
 
     def __init__(self, construct: Construct, data_class: T, int_builder: Construct) -> None:
@@ -270,7 +261,7 @@ class ConstructDataclassByteParserBuilder[T](BytesParserBuilder):
                 raise TypeError(f"Can not build from type {type(obj)}")
 
     def __call__(self) -> ConstructDataclassByteParserBuilder:
-        """Helper method to just return itself in order to be used similarly to other parsers that require instantation
+        """Helper method to just return itself in order to be used similarly to other parsers that require instantiation
 
         Returns:
             ConstructDataclassByteParserBuilder: returns self
