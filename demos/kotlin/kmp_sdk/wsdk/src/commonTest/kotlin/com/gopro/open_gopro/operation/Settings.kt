@@ -148,25 +148,28 @@ class TestSettings {
     assertContentEquals(target, built)
   }
 
-   @Test
-   fun `get complex query`() = runTest {
-      // GIVEN
-      val responses = listOf(listOf(BleNotification(GpUuid.CQ_QUERY_RESP.toUuid(), getScheduledCaptureResponseMessage)))
-      val fakeSettingsContainer = buildFakeSettingsContainer(responses, UnconfinedTestDispatcher())
-      val setting = fakeSettingsContainer.settingsContainer.scheduledCapture
+  @Test
+  fun `get complex query`() = runTest {
+    // GIVEN
+    val responses =
+        listOf(
+            listOf(
+                BleNotification(GpUuid.CQ_QUERY_RESP.toUuid(), getScheduledCaptureResponseMessage)))
+    val fakeSettingsContainer = buildFakeSettingsContainer(responses, UnconfinedTestDispatcher())
+    val setting = fakeSettingsContainer.settingsContainer.scheduledCapture
 
-      // WHEN
-      val result = setting.getValue()
+    // WHEN
+    val result = setting.getValue()
 
-      // THEN
-      assertTrue { result.isSuccess }
-      with (result.getOrThrow()) {
-          assertEquals(hour, 12)
-          assertEquals(minute, 34)
-          assertTrue { is24hour }
-          assertTrue { isEnabled }
-      }
-   }
+    // THEN
+    assertTrue { result.isSuccess }
+    with(result.getOrThrow()) {
+      assertEquals(hour, 12)
+      assertEquals(minute, 34)
+      assertTrue { is24hour }
+      assertTrue { isEnabled }
+    }
+  }
 
   @Test
   fun `get multiple settings`() = runTest {
