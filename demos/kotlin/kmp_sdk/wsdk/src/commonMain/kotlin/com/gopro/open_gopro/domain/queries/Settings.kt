@@ -32,195 +32,182 @@ internal constructor(
     private val byteTransformer: IUByteArrayCompanion<T>,
     private val marshaller: IOperationMarshaller,
 ) {
-    private inner class SetSettingValue(private val value: T) :
-        BaseOperation<Unit>("Set Setting Value::${settingId.name}") {
-        override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
-            communicator.executeSetting(settingId, byteTransformer.toUByteArray(value)).map {
-                GpStatus.fromUByte(it.last()).let { status ->
-                    if (status == GpStatus.SUCCESS) {
-                        Result.success(Unit)
-                    } else {
-                        Result.failure(Exception("Set setting failed with: $status"))
-                    }
-                }
+  private inner class SetSettingValue(private val value: T) :
+      BaseOperation<Unit>("Set Setting Value::${settingId.name}") {
+    override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
+        communicator.executeSetting(settingId, byteTransformer.toUByteArray(value)).map {
+          GpStatus.fromUByte(it.last()).let { status ->
+            if (status == GpStatus.SUCCESS) {
+              Result.success(Unit)
+            } else {
+              Result.failure(Exception("Set setting failed with: $status"))
             }
+          }
+        }
+  }
+
+  private inner class GetSettingValue : BaseOperation<T>("Get Setting Value::${settingId.name}") {
+    override suspend fun execute(communicator: BleCommunicator): Result<T> =
+        communicator.executeQuery(QueryId.GET_SETTING_VALUES, settingId).map {
+          byteTransformer.fromUByteArray(it)
+        }
+  }
+
+  private inner class GetSettingCapabilities :
+      BaseOperation<List<T>>("Get Setting Capabilities::${settingId.name}") {
+
+    override suspend fun execute(communicator: BleCommunicator): Result<List<T>> =
+        communicator.executeQuery(QueryId.GET_SETTING_CAPABILITIES, settingId).map {
+          listOf(byteTransformer.fromUByteArray(TODO()))
+        }
+  }
+
+  private inner class RegisterForSettingValueUpdates :
+      BaseOperation<Flow<T>>("Register Setting Value Updates::${settingId.name}") {
+
+    override suspend fun execute(communicator: BleCommunicator): Result<Flow<T>> {
+      // Send initial query OTA to register and store current value for later returning
+      val currentValue =
+          communicator
+              .executeQuery(QueryId.REGISTER_SETTING_VALUE_UPDATES, settingId)
+              .fold(
+                  onFailure = {
+                    return Result.failure(it)
+                  },
+                  onSuccess = { byteTransformer.fromUByteArray(it) },
+              )
+
+      // Now actually register to receive notifications
+      return communicator
+          .registerUpdate(
+              ResponseId.QuerySetting(QueryId.ASYNC_SETTING_VALUE_NOTIFICATION, settingId))
+          .map { flow ->
+            flow.map { byteTransformer.fromUByteArray(it.payload) }.onStart { emit(currentValue) }
+          }
     }
+  }
 
-    private inner class GetSettingValue : BaseOperation<T>("Get Setting Value::${settingId.name}") {
-        override suspend fun execute(communicator: BleCommunicator): Result<T> =
-            communicator.executeQuery(QueryId.GET_SETTING_VALUES, settingId).map {
-                byteTransformer.fromUByteArray(it)
-            }
-    }
+  private inner class UnregisterForSettingValueUpdates :
+      BaseOperation<Unit>("Unregister Setting Value Updates::${settingId.name}") {
 
-    private inner class GetSettingCapabilities :
-        BaseOperation<List<T>>("Get Setting Capabilities::${settingId.name}") {
+    override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
+        communicator.executeQuery(QueryId.UNREGISTER_SETTING_VALUE_UPDATES, settingId).map {}
+  }
 
-        override suspend fun execute(communicator: BleCommunicator): Result<List<T>> =
-            communicator.executeQuery(QueryId.GET_SETTING_CAPABILITIES, settingId).map {
-                listOf(byteTransformer.fromUByteArray(TODO()))
-            }
-    }
+  private inner class RegisterForSettingCapabilityUpdates :
+      BaseOperation<Flow<List<T>>>("Register Setting Capability Updates::${settingId.name}") {
 
-    private inner class RegisterForSettingValueUpdates :
-        BaseOperation<Flow<T>>("Register Setting Value Updates::${settingId.name}") {
+    override suspend fun execute(communicator: BleCommunicator): Result<Flow<List<T>>> {
+      val initialCapabilities =
+          communicator
+              .executeQuery(QueryId.REGISTER_SETTING_CAPABILITY_UPDATES, settingId)
+              .fold(
+                  onSuccess = {
+                    it.map { byte -> byteTransformer.fromUByteArray(ubyteArrayOf(byte)) }
+                  },
+                  onFailure = {
+                    return Result.failure(it)
+                  },
+              )
 
-        override suspend fun execute(communicator: BleCommunicator): Result<Flow<T>> {
-            // Send initial query OTA to register and store current value for later returning
-            val currentValue =
-                communicator
-                    .executeQuery(QueryId.REGISTER_SETTING_VALUE_UPDATES, settingId)
-                    .fold(
-                        onFailure = {
-                            return Result.failure(it)
-                        },
-                        onSuccess = { byteTransformer.fromUByteArray(it) },
-                    )
-
-            // Now actually register to receive notifications
-            return communicator
-                .registerUpdate(
-                    ResponseId.QuerySetting(QueryId.ASYNC_SETTING_VALUE_NOTIFICATION, settingId)
-                )
-                .map { flow ->
-                    flow.map { byteTransformer.fromUByteArray(it.payload) }
-                        .onStart { emit(currentValue) }
+      // Now actually register to receive notifications
+      return communicator
+          .registerUpdate(
+              ResponseId.QuerySetting(QueryId.ASYNC_SETTING_CAPABILITY_NOTIFICATION, settingId))
+          .map { flow ->
+            flow
+                .map {
+                  it.payload.map { byte -> byteTransformer.fromUByteArray(ubyteArrayOf(byte)) }
                 }
-        }
+                .onStart { emit(initialCapabilities) }
+          }
     }
+  }
 
-    private inner class UnregisterForSettingValueUpdates :
-        BaseOperation<Unit>("Unregister Setting Value Updates::${settingId.name}") {
+  private inner class UnregisterForSettingCapabilityUpdates :
+      BaseOperation<Unit>("Unregister Setting Capability Updates::${settingId.name}") {
 
-        override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
-            communicator.executeQuery(QueryId.UNREGISTER_SETTING_VALUE_UPDATES, settingId).map {}
-    }
+    override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
+        communicator.executeQuery(QueryId.UNREGISTER_SETTING_CAPABILITY_UPDATES, settingId).map {}
+  }
 
-    private inner class RegisterForSettingCapabilityUpdates :
-        BaseOperation<Flow<List<T>>>("Register Setting Capability Updates::${settingId.name}") {
+  /**
+   * Set the setting to a desired value
+   *
+   * @param value value to set
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#set-setting)
+   */
+  suspend fun setValue(value: T): Result<Unit> =
+      marshaller.marshal(SetSettingValue(value)) {
+        useCommunicator { _, _ -> CommunicationType.BLE }
+      }
 
-        override suspend fun execute(communicator: BleCommunicator): Result<Flow<List<T>>> {
-            val initialCapabilities =
-                communicator
-                    .executeQuery(QueryId.REGISTER_SETTING_CAPABILITY_UPDATES, settingId)
-                    .fold(
-                        onSuccess = {
-                            it.map { byte -> byteTransformer.fromUByteArray(ubyteArrayOf(byte)) }
-                        },
-                        onFailure = {
-                            return Result.failure(it)
-                        },
-                    )
+  /**
+   * Get the current setting value
+   *
+   * @return current setting value
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/query.html#get-setting-values)
+   */
+  suspend fun getValue(): Result<T> =
+      marshaller.marshal(GetSettingValue()) { useCommunicator { _, _ -> CommunicationType.BLE } }
 
-            // Now actually register to receive notifications
-            return communicator
-                .registerUpdate(
-                    ResponseId.QuerySetting(
-                        QueryId.ASYNC_SETTING_CAPABILITY_NOTIFICATION,
-                        settingId
-                    )
-                )
-                .map { flow ->
-                    flow
-                        .map {
-                            it.payload.map { byte ->
-                                byteTransformer.fromUByteArray(
-                                    ubyteArrayOf(
-                                        byte
-                                    )
-                                )
-                            }
-                        }
-                        .onStart { emit(initialCapabilities) }
-                }
-        }
-    }
+  /**
+   * Get the current setting's capabilities
+   *
+   * @return setting capabilities
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/query.html#get-setting-capabilities)
+   */
+  suspend fun getCapabilities(): Result<List<T>> =
+      marshaller.marshal(GetSettingCapabilities()) {
+        useCommunicator { _, _ -> CommunicationType.BLE }
+      }
 
-    private inner class UnregisterForSettingCapabilityUpdates :
-        BaseOperation<Unit>("Unregister Setting Capability Updates::${settingId.name}") {
+  /**
+   * Register for setting value updates
+   *
+   * @return continuous setting value updates
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/query.html#register-for-setting-value-updates)
+   */
+  suspend fun registerValueUpdates(): Result<Flow<T>> =
+      marshaller.marshal(RegisterForSettingValueUpdates()) {
+        useCommunicator { _, _ -> CommunicationType.BLE }
+      }
 
-        override suspend fun execute(communicator: BleCommunicator): Result<Unit> =
-            communicator.executeQuery(QueryId.UNREGISTER_SETTING_CAPABILITY_UPDATES, settingId)
-                .map {}
-    }
+  /**
+   * Unregister for setting value updates
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/query.html#unregister-for-setting-value-updates)
+   */
+  suspend fun unregisterValueUpdates(): Result<Unit> =
+      marshaller.marshal(UnregisterForSettingValueUpdates()) {
+        useCommunicator { _, _ -> CommunicationType.BLE }
+      }
 
-    /**
-     * Set the setting to a desired value
-     *
-     * @param value value to set
-     * @see
-     *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#set-setting)
-     */
-    suspend fun setValue(value: T): Result<Unit> =
-        marshaller.marshal(SetSettingValue(value)) {
-            useCommunicator { _, _ -> CommunicationType.BLE }
-        }
+  /**
+   * Register for setting capability updates
+   *
+   * @return list of currently available setting options
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/query.html#register-for-setting-capability-updates)
+   */
+  suspend fun registerCapabilityUpdates(): Result<Flow<List<T>>> =
+      marshaller.marshal(RegisterForSettingCapabilityUpdates()) {
+        useCommunicator { _, _ -> CommunicationType.BLE }
+      }
 
-    /**
-     * Get the current setting value
-     *
-     * @return current setting value
-     * @see
-     *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/query.html#get-setting-values)
-     */
-    suspend fun getValue(): Result<T>
-        = marshaller.marshal(GetSettingValue()) { useCommunicator { _, _ -> CommunicationType.BLE } }
-
-    /**
-     * Get the current setting's capabilities
-     *
-     * @return setting capabilities
-     * @see
-     *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/query.html#get-setting-capabilities)
-     */
-    suspend fun getCapabilities(): Result<List<T>> =
-        marshaller.marshal(GetSettingCapabilities()) {
-            useCommunicator { _, _ -> CommunicationType.BLE }
-        }
-
-    /**
-     * Register for setting value updates
-     *
-     * @return continuous setting value updates
-     * @see
-     *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/query.html#register-for-setting-value-updates)
-     */
-    suspend fun registerValueUpdates(): Result<Flow<T>> =
-        marshaller.marshal(RegisterForSettingValueUpdates()) {
-            useCommunicator { _, _ -> CommunicationType.BLE }
-        }
-
-    /**
-     * Unregister for setting value updates
-     *
-     * @see
-     *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/query.html#unregister-for-setting-value-updates)
-     */
-    suspend fun unregisterValueUpdates(): Result<Unit> =
-        marshaller.marshal(UnregisterForSettingValueUpdates()) {
-            useCommunicator { _, _ -> CommunicationType.BLE }
-        }
-
-    /**
-     * Register for setting capability updates
-     *
-     * @return list of currently available setting options
-     * @see
-     *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/query.html#register-for-setting-capability-updates)
-     */
-    suspend fun registerCapabilityUpdates(): Result<Flow<List<T>>> =
-        marshaller.marshal(RegisterForSettingCapabilityUpdates()) {
-            useCommunicator { _, _ -> CommunicationType.BLE }
-        }
-
-    /**
-     * Unregister for setting capability updates
-     *
-     * @see
-     *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/query.html#unregister-for-setting-capability-updates)
-     */
-    suspend fun unregisterCapabilityUpdates(): Result<Unit> =
-        marshaller.marshal(UnregisterForSettingCapabilityUpdates()) {
-            useCommunicator { _, _ -> CommunicationType.BLE }
-        }
+  /**
+   * Unregister for setting capability updates
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/query.html#unregister-for-setting-capability-updates)
+   */
+  suspend fun unregisterCapabilityUpdates(): Result<Unit> =
+      marshaller.marshal(UnregisterForSettingCapabilityUpdates()) {
+        useCommunicator { _, _ -> CommunicationType.BLE }
+      }
 }

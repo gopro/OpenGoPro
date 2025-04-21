@@ -10,5 +10,6 @@ interface IValuedEnum<T> {
 @OptIn(ExperimentalUnsignedTypes::class)
 interface IUByteArrayCompanion<T> {
   fun fromUByteArray(value: UByteArray): T
+
   fun toUByteArray(value: T): UByteArray
 }
