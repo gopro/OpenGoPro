@@ -4,7 +4,7 @@ import enum
 import logging
 from abc import ABC, abstractmethod
 from collections import defaultdict
-from typing import Any, Final
+from typing import Any, Final, Generic, TypeVar
 
 import requests
 
@@ -33,8 +33,10 @@ EXT_13_BYTE0_MASK: Final = 0b00011111
 
 logger = logging.getLogger(__name__)
 
+T = TypeVar("T")
 
-class RespBuilder[T](ABC):
+
+class RespBuilder(Generic[T], ABC):
     """Common Response Builder Interface"""
 
     class _State(enum.Enum):
