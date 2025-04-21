@@ -139,6 +139,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_settings.BleSettings.photo_single_interval"><code class="docutils literal notranslate"><span class="pre">BleSettings.photo_single_interval</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_settings.BleSettings.photo_timelapse_rate"><code class="docutils literal notranslate"><span class="pre">BleSettings.photo_timelapse_rate</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_settings.BleSettings.profiles"><code class="docutils literal notranslate"><span class="pre">BleSettings.profiles</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_settings.BleSettings.scheduled_capture"><code class="docutils literal notranslate"><span class="pre">BleSettings.scheduled_capture</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_settings.BleSettings.setup_language"><code class="docutils literal notranslate"><span class="pre">BleSettings.setup_language</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_settings.BleSettings.setup_screen_saver"><code class="docutils literal notranslate"><span class="pre">BleSettings.setup_screen_saver</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_settings.BleSettings.star_trails_length"><code class="docutils literal notranslate"><span class="pre">BleSettings.star_trails_length</span></code></a></li>
@@ -309,6 +310,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_settings.HttpSettings.photo_single_interval"><code class="docutils literal notranslate"><span class="pre">HttpSettings.photo_single_interval</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_settings.HttpSettings.photo_timelapse_rate"><code class="docutils literal notranslate"><span class="pre">HttpSettings.photo_timelapse_rate</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_settings.HttpSettings.profiles"><code class="docutils literal notranslate"><span class="pre">HttpSettings.profiles</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_settings.HttpSettings.scheduled_capture"><code class="docutils literal notranslate"><span class="pre">HttpSettings.scheduled_capture</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_settings.HttpSettings.setup_language"><code class="docutils literal notranslate"><span class="pre">HttpSettings.setup_language</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_settings.HttpSettings.setup_screen_saver"><code class="docutils literal notranslate"><span class="pre">HttpSettings.setup_screen_saver</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_settings.HttpSettings.star_trails_length"><code class="docutils literal notranslate"><span class="pre">HttpSettings.star_trails_length</span></code></a></li>
@@ -369,6 +371,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.models.general.CameraInfo"><code class="docutils literal notranslate"><span class="pre">CameraInfo</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.models.general.WebcamResponse"><code class="docutils literal notranslate"><span class="pre">WebcamResponse</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.models.general.SupportedOption"><code class="docutils literal notranslate"><span class="pre">SupportedOption</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.models.general.ScheduledCapture"><code class="docutils literal notranslate"><span class="pre">ScheduledCapture</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -924,6 +927,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.settings.SettingId.PHOTO_SINGLE_INTERVAL"><code class="docutils literal notranslate"><span class="pre">SettingId.PHOTO_SINGLE_INTERVAL</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.settings.SettingId.PHOTO_TIMELAPSE_RATE"><code class="docutils literal notranslate"><span class="pre">SettingId.PHOTO_TIMELAPSE_RATE</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.settings.SettingId.PROFILES"><code class="docutils literal notranslate"><span class="pre">SettingId.PROFILES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.settings.SettingId.SCHEDULED_CAPTURE"><code class="docutils literal notranslate"><span class="pre">SettingId.SCHEDULED_CAPTURE</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.settings.SettingId.SETUP_LANGUAGE"><code class="docutils literal notranslate"><span class="pre">SettingId.SETUP_LANGUAGE</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.settings.SettingId.SETUP_SCREEN_SAVER"><code class="docutils literal notranslate"><span class="pre">SettingId.SETUP_SCREEN_SAVER</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.settings.SettingId.STAR_TRAILS_LENGTH"><code class="docutils literal notranslate"><span class="pre">SettingId.STAR_TRAILS_LENGTH</span></code></a></li>
@@ -3177,6 +3181,13 @@ unregister for. Defaults to None (don’t unregister for any).</p></li>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.ble_settings.BleSettings.scheduled_capture">
+<span class="sig-name descname"><span class="pre">scheduled_capture</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.api.builders.BleSettingFacade" title="open_gopro.api.builders.BleSettingFacade"><span class="pre">BleSettingFacade</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.models.general.ScheduledCapture" title="open_gopro.models.general.ScheduledCapture"><span class="pre">ScheduledCapture</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#open_gopro.api.ble_settings.BleSettings.scheduled_capture" title="Link to this definition"></a></dt>
+<dd><p>Scheduled Capture</p>
+<p>See [Open GoPro Spec](<a class="reference external" href="https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168">https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168</a>)</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.api.ble_settings.BleSettings.setup_language">
 <span class="sig-name descname"><span class="pre">setup_language</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.api.builders.BleSettingFacade" title="open_gopro.api.builders.BleSettingFacade"><span class="pre">BleSettingFacade</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.constants.settings.SetupLanguage" title="open_gopro.constants.settings.SetupLanguage"><span class="pre">SetupLanguage</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#open_gopro.api.ble_settings.BleSettings.setup_language" title="Link to this definition"></a></dt>
 <dd><p>Setup Language</p>
@@ -4807,6 +4818,13 @@ be used.</p></li>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.http_settings.HttpSettings.scheduled_capture">
+<span class="sig-name descname"><span class="pre">scheduled_capture</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.api.builders.HttpSetting" title="open_gopro.api.builders.HttpSetting"><span class="pre">HttpSetting</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.models.general.ScheduledCapture" title="open_gopro.models.general.ScheduledCapture"><span class="pre">ScheduledCapture</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#open_gopro.api.http_settings.HttpSettings.scheduled_capture" title="Link to this definition"></a></dt>
+<dd><p>Scheduled Capture</p>
+<p>&#64;see [Open GoPro Spec](<a class="reference external" href="https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168">https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168</a>)</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.api.http_settings.HttpSettings.setup_language">
 <span class="sig-name descname"><span class="pre">setup_language</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.api.builders.HttpSetting" title="open_gopro.api.builders.HttpSetting"><span class="pre">HttpSetting</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.constants.settings.SetupLanguage" title="open_gopro.constants.settings.SetupLanguage"><span class="pre">SetupLanguage</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#open_gopro.api.http_settings.HttpSettings.setup_language" title="Link to this definition"></a></dt>
 <dd><p>Setup Language</p>
@@ -5629,7 +5647,7 @@ Defaults to always_false.</p></li>
 <section id="data-models">
 <h3>Data Models<a class="headerlink" href="#data-models" title="Link to this heading"></a></h3>
 <p>These are the various models that are returned in responses, used in commands, etc. They can be imported with:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">open_gopro.models</span><span class="w"> </span><span class="kn">import</span> <span class="o">***</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">open_gopro</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span>
 </pre></div>
 </div>
 <dl class="py class pydantic_model">
@@ -6324,6 +6342,46 @@ Defaults to always_false.</p></li>
 <dt class="sig sig-object py" id="open_gopro.models.general.SupportedOption.id">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#open_gopro.models.general.SupportedOption.id" title="Link to this definition"></a></dt>
 <dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="open_gopro.models.general.ScheduledCapture">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ScheduledCapture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hour</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">minute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_24_hour</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#open_gopro.models.general.ScheduledCapture" title="Link to this definition"></a></dt>
+<dd><p>Scheduled capture request / status</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.models.general.ScheduledCapture.from_datetime">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_datetime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.13)"><span class="pre">datetime</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.general.ScheduledCapture" title="open_gopro.models.general.ScheduledCapture"><span class="pre">ScheduledCapture</span></a></span></span><a class="headerlink" href="#open_gopro.models.general.ScheduledCapture.from_datetime" title="Link to this definition"></a></dt>
+<dd><p>Helper method to build a ScheduledCapture object from Python standard datetime.datetime</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dt</strong> (<a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.13)"><em>datetime.datetime</em></a>) – datetime to build from</p></li>
+<li><p><strong>is_enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – is / should scheduled capture be enabled on the camera?</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>_description_</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.models.general.ScheduledCapture" title="open_gopro.models.general.ScheduledCapture">ScheduledCapture</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.models.general.ScheduledCapture.off">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">off</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.general.ScheduledCapture" title="open_gopro.models.general.ScheduledCapture"><span class="pre">ScheduledCapture</span></a></span></span><a class="headerlink" href="#open_gopro.models.general.ScheduledCapture.off" title="Link to this definition"></a></dt>
+<dd><p>Helper method to return a pre-filled ScheduledCapture object that can be used to turn scheduled capture off</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>object with “is_enabled” set to False</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.models.general.ScheduledCapture" title="open_gopro.models.general.ScheduledCapture">ScheduledCapture</a></p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -8647,6 +8705,11 @@ Defaults to always_false.</p></li>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.settings.SettingId.SCHEDULED_CAPTURE">
+<span class="sig-name descname"><span class="pre">SCHEDULED_CAPTURE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">168</span></em><a class="headerlink" href="#open_gopro.constants.settings.SettingId.SCHEDULED_CAPTURE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.constants.settings.SettingId.SETUP_LANGUAGE">
 <span class="sig-name descname"><span class="pre">SETUP_LANGUAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">223</span></em><a class="headerlink" href="#open_gopro.constants.settings.SettingId.SETUP_LANGUAGE" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -10591,7 +10654,7 @@ Defaults to always_false.</p></li>
 <li><p>Variable number of byte transformers (bytes –&gt; bytes)</p></li>
 <li><p>One bytes Json adapter (bytes –&gt; json)</p></li>
 <li><p>Variable number of json transformers (json –&gt; json)</p></li>
-<li><p>One JSON parser (json -&gt; Any)</p></li>
+<li><p>One JSON parser (json -&gt; T)</p></li>
 </ol>
 </dd>
 </dl>

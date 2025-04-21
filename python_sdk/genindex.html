@@ -667,10 +667,10 @@
 </li>
       <li><a href="api.html#open_gopro.models.media_list.VideoMetadata.frame_rate">frame_rate (VideoMetadata attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.models.media_list.VideoMetadata.frame_rate_divisor">frame_rate_divisor (VideoMetadata attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.constants.settings.FrameRate">FrameRate (class in open_gopro.constants.settings)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_settings.BleSettings.frames_per_second">frames_per_second (BleSettings attribute)</a>
@@ -692,6 +692,8 @@
       <li><a href="api.html#open_gopro.constants.settings.SettingId.FRAMING">FRAMING (SettingId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.settings.SetupLanguage.FRENCH">FRENCH (SetupLanguage attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.models.general.ScheduledCapture.from_datetime">from_datetime() (ScheduledCapture class method)</a>
 </li>
       <li><a href="api.html#open_gopro.models.media_list.MediaMetadata.from_json">from_json() (MediaMetadata class method)</a>
 </li>
@@ -2210,6 +2212,8 @@
         <li><a href="api.html#open_gopro.constants.constants.WebcamStatus.OFF">(WebcamStatus attribute)</a>
 </li>
       </ul></li>
+      <li><a href="api.html#open_gopro.models.general.ScheduledCapture.off">off() (ScheduledCapture class method)</a>
+</li>
       <li><a href="api.html#open_gopro.models.response.GoProResp.ok">ok (GoProResp property)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.statuses.PrimaryStorage.OK">OK (PrimaryStorage attribute)</a>
@@ -2714,13 +2718,25 @@
 </li>
       <li><a href="api.html#open_gopro.constants.constants.ActionId.SCAN_WIFI_NETWORKS_RSP">SCAN_WIFI_NETWORKS_RSP (ActionId attribute)</a>
 </li>
-      <li><a href="api.html#open_gopro.api.ble_statuses.BleStatuses.scheduled_capture">scheduled_capture (BleStatuses attribute)</a>
+      <li><a href="api.html#open_gopro.api.ble_settings.BleSettings.scheduled_capture">scheduled_capture (BleSettings attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.ble_statuses.BleStatuses.scheduled_capture">(BleStatuses attribute)</a>
 </li>
-      <li><a href="api.html#open_gopro.constants.statuses.StatusId.SCHEDULED_CAPTURE">SCHEDULED_CAPTURE (StatusId attribute)</a>
+        <li><a href="api.html#open_gopro.api.http_settings.HttpSettings.scheduled_capture">(HttpSettings attribute)</a>
 </li>
+      </ul></li>
+      <li><a href="api.html#open_gopro.constants.settings.SettingId.SCHEDULED_CAPTURE">SCHEDULED_CAPTURE (SettingId attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.constants.statuses.StatusId.SCHEDULED_CAPTURE">(StatusId attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api.html#open_gopro.api.ble_statuses.BleStatuses.scheduled_capture_preset_id">scheduled_capture_preset_id (BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.statuses.StatusId.SCHEDULED_CAPTURE_PRESET_ID">SCHEDULED_CAPTURE_PRESET_ID (StatusId attribute)</a>
+</li>
+      <li><a href="api.html#open_gopro.models.general.ScheduledCapture">ScheduledCapture (class in open_gopro.models.general)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.statuses.PrimaryStorage.SD_CARD_BUSY">SD_CARD_BUSY (PrimaryStorage attribute)</a>
 </li>
@@ -2832,12 +2848,12 @@
 </li>
       <li><a href="api.html#open_gopro.constants.constants.WebcamError.SET_WINDOW_SIZE">SET_WINDOW_SIZE (WebcamError attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.api.builders.BleSettingFacade.SETTER_UUID">SETTER_UUID (BleSettingFacade attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.constants.constants.FeatureId.SETTING">SETTING (FeatureId attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.constants.constants.QueryCmdId.SETTING_CAPABILITY_PUSH">SETTING_CAPABILITY_PUSH (QueryCmdId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.models.general.WebcamResponse.setting_id">setting_id (WebcamResponse attribute)</a>
