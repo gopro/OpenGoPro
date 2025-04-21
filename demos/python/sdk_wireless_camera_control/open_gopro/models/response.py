@@ -8,7 +8,7 @@ from __future__ import annotations
 import enum
 import logging
 from dataclasses import dataclass
-from typing import TypeVar
+from typing import Generic, TypeVar
 
 from open_gopro.constants import ErrorCode, QueryCmdId
 from open_gopro.enum import GoProIntEnum
@@ -31,7 +31,7 @@ class GoProBlePacketHeader(enum.Enum):
 
 
 @dataclass
-class GoProResp[T]:
+class GoProResp(Generic[T]):
     """The object used to encapsulate all GoPro responses.
 
     It consists of several common properties / attribute and a data attribute that varies per response.
