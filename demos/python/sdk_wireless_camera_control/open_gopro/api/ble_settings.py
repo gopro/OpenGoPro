@@ -193,6 +193,22 @@ class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-horizon-leveling-151)"""
 
+        self.video_duration: BleSetting[settings.VideoDuration] = BleSetting[settings.VideoDuration](
+            communicator, SettingId.VIDEO_DURATION, settings.VideoDuration
+        )
+
+        """Video Duration
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-duration-156)"""
+
+        self.multi_shot_duration: BleSetting[settings.MultiShotDuration] = BleSetting[settings.MultiShotDuration](
+            communicator, SettingId.MULTI_SHOT_DURATION, settings.MultiShotDuration
+        )
+
+        """Multi Shot Duration
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-duration-157)"""
+
         self.max_lens: BleSetting[settings.MaxLens] = BleSetting[settings.MaxLens](
             communicator, SettingId.MAX_LENS, settings.MaxLens
         )

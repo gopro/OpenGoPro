@@ -32,6 +32,8 @@ enum class SettingId(override val value: UByte) : IValuedEnum<UByte> {
   HYPERSMOOTH(135U),
   VIDEO_HORIZON_LEVELING(150U),
   PHOTO_HORIZON_LEVELING(151U),
+  VIDEO_DURATION(156U),
+  MULTI_SHOT_DURATION(157U),
   MAX_LENS(162U),
   HINDSIGHT(167U),
   SCHEDULED_CAPTURE(168U),
@@ -566,6 +568,63 @@ enum class PhotoHorizonLeveling(override val value: UByte) : IValuedEnum<UByte> 
         PhotoHorizonLeveling.entries.first { it.value == value.last() }
 
     override fun toUByteArray(value: PhotoHorizonLeveling) = value.value.toUByteArray()
+  }
+}
+
+/**
+ * Video Duration
+ *
+ * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-duration-156)
+ */
+enum class VideoDuration(override val value: UByte) : IValuedEnum<UByte> {
+  NUM_15_SECONDS(1U),
+  NUM_30_SECONDS(2U),
+  NUM_1_MINUTE(3U),
+  NUM_5_MINUTES(4U),
+  NUM_15_MINUTES(5U),
+  NUM_30_MINUTES(6U),
+  NUM_1_HOUR(7U),
+  NUM_2_HOURS(8U),
+  NUM_3_HOURS(9U),
+  NUM_5_SECONDS(10U),
+  NO_LIMIT(100U);
+
+  @ExperimentalUnsignedTypes
+  companion object : IUByteArrayCompanion<VideoDuration> {
+    override fun fromUByteArray(value: UByteArray) =
+        VideoDuration.entries.first { it.value == value.last() }
+
+    override fun toUByteArray(value: VideoDuration) = value.value.toUByteArray()
+  }
+}
+
+/**
+ * Multi Shot Duration
+ *
+ * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-duration-157)
+ */
+enum class MultiShotDuration(override val value: UByte) : IValuedEnum<UByte> {
+  NUM_15_SECONDS(1U),
+  NUM_30_SECONDS(2U),
+  NUM_1_MINUTE(3U),
+  NUM_5_MINUTES(4U),
+  NUM_15_MINUTES(5U),
+  NUM_30_MINUTES(6U),
+  NUM_1_HOUR(7U),
+  NUM_2_HOURS(8U),
+  NUM_3_HOURS(9U),
+  NO_LIMIT(100U);
+
+  @ExperimentalUnsignedTypes
+  companion object : IUByteArrayCompanion<MultiShotDuration> {
+    override fun fromUByteArray(value: UByteArray) =
+        MultiShotDuration.entries.first { it.value == value.last() }
+
+    override fun toUByteArray(value: MultiShotDuration) = value.value.toUByteArray()
   }
 }
 
