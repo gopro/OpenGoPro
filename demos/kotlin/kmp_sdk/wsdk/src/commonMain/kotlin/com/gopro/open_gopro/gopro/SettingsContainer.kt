@@ -95,6 +95,16 @@ class SettingsContainer internal constructor(marshaller: IOperationMarshaller) {
   val gps = Setting(SettingId.GPS, Gps, marshaller)
 
   /**
+   * LCD Brightness
+   *
+   * The LCD brightness as a percentage value from 10-100
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#lcd-brightness-88)
+   */
+  val lcdBrightness = Setting(SettingId.LCD_BRIGHTNESS, ULongByteTransformer(1), marshaller)
+
+  /**
    * LED
    *
    * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#led-91)
@@ -202,6 +212,11 @@ class SettingsContainer internal constructor(marshaller: IOperationMarshaller) {
 
   /**
    * Scheduled Capture
+   *
+   * Configure or disable the scheduled capture functionality to start encoding at a future
+   * Timelapse.
+   *
+   * TODO document bitmasked value.
    *
    * @see
    *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168)

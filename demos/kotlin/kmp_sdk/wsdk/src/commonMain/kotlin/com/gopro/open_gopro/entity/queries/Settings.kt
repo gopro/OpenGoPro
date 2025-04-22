@@ -20,6 +20,7 @@ enum class SettingId(override val value: UByte) : IValuedEnum<UByte> {
   WEBCAM_DIGITAL_LENSES(43U),
   AUTO_POWER_DOWN(59U),
   GPS(83U),
+  LCD_BRIGHTNESS(88U),
   LED(91U),
   VIDEO_ASPECT_RATIO(108U),
   VIDEO_LENS(121U),
