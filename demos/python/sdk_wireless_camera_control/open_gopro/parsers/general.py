@@ -25,6 +25,15 @@ ScheduledCaptureParser = ConstructDataclassByteParserBuilder(
 
 
 class IntByteParserBuilder(BytesParserBuilder[int]):
+    """Built / parse integers to / from bytes
+
+    Args:
+        length (int): length of byte array to store integer
+
+    Raises:
+        ValueError: _description_
+    """
+
     def __init__(self, length: int) -> None:
         match length:
             case 1:
@@ -34,10 +43,10 @@ class IntByteParserBuilder(BytesParserBuilder[int]):
             case _:
                 raise ValueError(f"Length {length} is not handled")
 
-    def parse(self, data: bytes) -> int:
+    def parse(self, data: bytes) -> int:  # noqa: D102
         return self._container.parse(data)
 
-    def build(self, obj: Any) -> bytes:
+    def build(self, obj: Any) -> bytes:  # noqa: D102
         match obj:
             case int():
                 return self._container.build(obj)
