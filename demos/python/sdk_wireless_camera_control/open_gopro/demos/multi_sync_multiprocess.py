@@ -4,13 +4,13 @@
 """Entrypoint for configuring and demonstrating Camera On the Home Network (COHN)."""
 
 from __future__ import annotations
-from pathlib import Path
+
 import argparse
 import asyncio
-from dataclasses import dataclass
 import multiprocessing as mp
+from dataclasses import dataclass
+from pathlib import Path
 from threading import Event
-import time
 
 from open_gopro import WirelessGoPro, constants
 from open_gopro.gopro_wired import WiredGoPro
@@ -21,6 +21,8 @@ from open_gopro.util import add_cli_args_and_parse
 
 @dataclass
 class GoPro:
+    """GoPro Target information"""
+
     serial: str
     name: str
     gopro: WirelessGoPro | None = None
@@ -28,9 +30,16 @@ class GoPro:
 
 
 def multi_record_via_usb(target: GoPro, record_event: Event, ready_event: Event) -> None:
+    """_summary_
+
+    Args:
+        target (GoPro): _description_
+        record_event (Event): _description_
+        ready_event (Event): _description_
+    """
     setup_logging(__name__, Path(f"{target.serial}.log"))
 
-    async def _execute():
+    async def _execute() -> None:
         async with WiredGoPro(target.serial) as gopro:
             ready_event.set()
             record_event.wait()
@@ -40,17 +49,24 @@ def multi_record_via_usb(target: GoPro, record_event: Event, ready_event: Event)
 
 
 def multi_record_via_cohn(target: GoPro, record_event: Event, ready_event: Event) -> None:
+    """_summary_
+
+    Args:
+        target (GoPro): _description_
+        record_event (Event): _description_
+        ready_event (Event): _description_
+    """
     logger = setup_logging(__name__, Path(f"{target.serial}.log"))
 
-    async def _execute():
+    async def _execute() -> None:
         try:
-            # # Start with just BLE connected in order to provision COHN
-            # async with WirelessGoPro(target=target.serial, interfaces={WirelessGoPro.Interface.BLE}) as gopro:
-            #     if await gopro.cohn.is_configured:
-            #         print("COHN is already configured :)")
-            #     else:
-            #         await gopro.access_point.connect("dabugdabug", "pleasedontguessme")
-            #         await gopro.cohn.configure(force_reprovision=True)
+            # Start with just BLE connected in order to provision COHN
+            async with WirelessGoPro(target=target.serial, interfaces={WirelessGoPro.Interface.BLE}) as gopro:
+                if await gopro.cohn.is_configured:
+                    print("COHN is already configured :)")
+                else:
+                    await gopro.access_point.connect("dabugdabug", "pleasedontguessme")
+                    await gopro.cohn.configure(force_reprovision=True)
             # # Now use COHN
             async with WirelessGoPro(target=target.serial, interfaces={WirelessGoPro.Interface.COHN}) as gopro:
                 ready_event.set()
@@ -65,7 +81,7 @@ def multi_record_via_cohn(target: GoPro, record_event: Event, ready_event: Event
     asyncio.run(_execute())
 
 
-def main(args: argparse.Namespace) -> None:
+def main(_: argparse.Namespace) -> None:
     gopro_targets = [
         GoPro("0711", "Hero12Left"),
         GoPro("0702", "Hero12Right"),

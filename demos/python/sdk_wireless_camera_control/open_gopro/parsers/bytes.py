@@ -153,8 +153,8 @@ class DateTimeByteParserBuilder(BytesParser, BytesBuilder):
 
         Args:
             obj (datetime.datetime): date and time
-            tzone (int | None, optional): timezone (as UTC offset). Defaults to None.
-            is_dst (bool | None, optional): is daylight savings time?. Defaults to None.
+            tzone (int | None): timezone (as UTC offset). Defaults to None.
+            is_dst (bool | None): is daylight savings time?. Defaults to None.
 
         Returns:
             bytes: bytestream built from datetime

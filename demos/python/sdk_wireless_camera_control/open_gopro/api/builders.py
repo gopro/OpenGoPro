@@ -98,8 +98,8 @@ class BleWriteCommand(BleMessage):
     Args:
         uuid (BleUUID): UUID to write to
         cmd (CmdId): command identifier
-        param_builder (BytesBuilder | None, optional): builds bytes from params. Defaults to None.
-        parser (Parser | None, optional): response parser to parse received bytes. Defaults to None.
+        param_builder (BytesBuilder | None): builds bytes from params. Defaults to None.
+        parser (Parser | None): response parser to parse received bytes. Defaults to None.
         rules (MessageRules): rules this Message must obey. Defaults to MessageRules().
     """
 
@@ -273,8 +273,8 @@ def ble_write_command(
     Args:
         uuid (BleUUID): UUID to write to
         cmd (CmdId): command identifier
-        param_builder (BytesBuilder | None, optional): builds bytes from params. Defaults to None.
-        parser (Parser | None, optional): response parser to parse received bytes. Defaults to None.
+        param_builder (BytesBuilder | None): builds bytes from params. Defaults to None.
+        parser (Parser | None): response parser to parse received bytes. Defaults to None.
         rules (MessageRules): rules this Message must obey. Defaults to MessageRules().
 
     Returns:
@@ -864,7 +864,7 @@ def http_put_json_command(
         endpoint (str): base endpoint
         components (list[str] | None): Additional path components (i.e. endpoint/{COMPONENT}). Defaults to None.
         arguments (list[str] | None): Any arguments to be appended after endpoint (i.e. endpoint?{ARGUMENT}). Defaults to None.
-        body_args (list[str] | None, optional): Arguments to be added to the body JSON. Defaults to None.
+        body_args (list[str] | None): Arguments to be added to the body JSON. Defaults to None.
         parser (Parser | None): Parser to handle received JSON. Defaults to None.
         identifier (str | None): explicit message identifier. If None, will be generated from endpoint.
         rules (MessageRules): rules this Message must obey. Defaults to MessageRules().

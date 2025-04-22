@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import datetime
+import json
 import tempfile
 from base64 import b64encode
 from dataclasses import asdict, dataclass
@@ -73,15 +74,43 @@ class CohnInfo(BaseModel):
 
     @cached_property
     def auth_token(self) -> str:
+        """Get the auth token from the username and password
+
+        Returns:
+            str: _description_
+        """
         token = b64encode(f"{self.username}:{self.password}".encode("utf-8")).decode("ascii")
         return f"Basic {token}"
 
-    # TODO this is ugly and probably unsecure. Why can't I pass a cert as a string to requests?
     @cached_property
     def certificate_as_path(self) -> Path:
+        """Write the certificate to a tempfile and return the tempfile
+
+        This is needed because requests will not take an in-memory certificate string
+
+        Returns:
+            Path: Path of temp certificate file
+        """
         with tempfile.NamedTemporaryFile(delete=False) as cert_file:
             cert_file.write(self.certificate.encode("utf-8"))
-            cert_file.close()
+        return Path(cert_file.name)
+
+    def __add__(self, other: CohnInfo) -> CohnInfo:
+        return CohnInfo(
+            ip_address=other.ip_address or self.ip_address,
+            username=other.username or self.username,
+            password=other.password or self.password,
+            certificate=other.certificate or self.certificate,
+        )
+
+    @property
+    def is_complete(self) -> bool:
+        """Are all of the fields non-empty?
+
+        Returns:
+            bool: True if complete, False otherwise
+        """
+        return bool(self.ip_address) and bool(self.username) and bool(self.password) and bool(self.certificate)
 
 
 @dataclass(frozen=True)
@@ -98,19 +127,27 @@ class ScheduledCapture:
         """Helper method to build a ScheduledCapture object from Python standard datetime.datetime
 
         Args:
+            dt (datetime.datetime): datetime to build from
             is_enabled (bool): is / should scheduled capture be enabled on the camera?
 
-    def __add__(self, other: CohnInfo) -> CohnInfo:
+        Returns:
+            ScheduledCapture: _description_
         """
         return cls(
+            hour=dt.hour,
+            minute=dt.minute,
+            is_enabled=is_enabled,
             is_24_hour=True,
         )
 
     def __str__(self) -> str:
         return json.dumps(asdict(self), indent=8)
 
+    @classmethod
+    def off(cls) -> ScheduledCapture:
         """Helper method to return a pre-filled ScheduledCapture object that can be used to turn scheduled capture off
 
         Returns:
+            ScheduledCapture: object with "is_enabled" set to False
         """
         return cls(0, 0, False, False)

@@ -19,7 +19,6 @@ from tinydb import TinyDB
 # These are imported this way for monkeypatching in pytest
 import open_gopro.features.access_point
 import open_gopro.features.cohn
-from open_gopro import proto
 from open_gopro.api import (
     BleCommands,
     BleSettings,
@@ -104,19 +103,24 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     >>> # Send some messages now
 
     Attributes:
-        WRITE_TIMEOUT (Final[int]): BLE Write Timeout. Not configurable.
+        WRITE_TIMEOUT (Final[int]): BLE Write Timeout in seconds. Not configurable.
 
     Args:
-        target (Pattern | None): A regex to search for the target GoPro's name. For example, "GoPro 0456").
-            Defaults to None (i.e. connect to first discovered GoPro)
-        wifi_interface (str | None): Set to specify the wifi interface the local machine will use to connect
-            to the GoPro. If None (or not set), first discovered interface will be used.
-        sudo_password (str | None): User password for sudo. If not passed, you will be prompted if a password
-            is needed which should only happen on Nix systems.
-        enable_wifi (bool): Optionally do not enable Wifi if set to False. Defaults to True.
+        target (str | None): The trailing digits of the target GoPro's serial number to search for.
+            Defaults to None which will connect to the first discovered GoPro.
+        host_wifi_interface (str | None): et to specify the wifi interface the local machine will use to connect
+            to the GoPro. Defaults to None in which case the first discovered interface will be used.
+        host_sudo_password (str | None): User password for sudo. Defaults to None in which case  you will
+            be prompted if a password is needed which should only happen on Nix systems.
+        cohn_credentials (CohnInfo | None): Optional Camera on the Home Network credentials. Defaults to
+            None in which case they will attempt be retrieved from the COHN database or connected camera.
+        cohn_db (Path): Path to COHN Database. Defaults to Path("cohn_db.json").
+        interfaces (set[WirelessGoPro.Interface] | None): Wireless interfaces for which to attempt to
+            establish communication channels. Defaults to None in which case both BLE and WiFi will be used.
         **kwargs (Any): additional parameters for internal use / testing
 
     Raises:
+        ValueError: Invalid combination of arguments.
         InterfaceConfigFailure: In order to communicate via Wifi, there must be an available
             Wifi Interface. By default during initialization, the Wifi driver will attempt to automatically
             discover such an interface. If it does not find any, it will raise this exception. Note that
@@ -132,6 +136,8 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         STATE_MANAGER = enum.auto()
 
     class Interface(enum.Enum):
+        """GoPro Wireless Interface selection"""
+
         BLE = enum.auto()
         WIFI_AP = enum.auto()
         COHN = enum.auto()  # WIFI_STA
@@ -143,11 +149,12 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         host_sudo_password: str | None = None,
         cohn_credentials: CohnInfo | None = None,
         cohn_db: Path = Path("cohn_db.json"),
-        interfaces: set[WirelessGoPro.Interface] = {Interface.BLE, Interface.WIFI_AP},
+        interfaces: set[WirelessGoPro.Interface] | None = None,
         **kwargs: Any,
     ) -> None:
         GoProBase.__init__(self, **kwargs)
         # Store initialization information
+        interfaces = interfaces or {WirelessGoPro.Interface.BLE, WirelessGoPro.Interface.WIFI_AP}
         self._should_enable_wifi = WirelessGoPro.Interface.WIFI_AP in interfaces
         self._should_enable_ble = WirelessGoPro.Interface.BLE in interfaces
         self._should_enable_cohn = WirelessGoPro.Interface.COHN in interfaces
@@ -216,17 +223,33 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
     @property
     def cohn(self) -> open_gopro.features.cohn.CohnFeature:
+        """The COHN feature abstraction
+
+        Raises:
+            GoProNotOpened: Feature is not yet available because GoPro has not yet been opened
+
+        Returns:
+            open_gopro.features.cohn.CohnFeature: COHN Feature
+        """
         try:
             return self._cohn
-        except AttributeError:
-            raise GoProNotOpened("")
+        except AttributeError as e:
+            raise GoProNotOpened("") from e
 
     @property
     def access_point(self) -> open_gopro.features.access_point.AccessPointFeature:
+        """The Access Point (AP) feature abstraction
+
+        Raises:
+            GoProNotOpened: Feature is not yet available because GoPro has not yet been opened
+
+        Returns:
+            open_gopro.features.access_point.AccessPointFeature: AP Feature
+        """
         try:
             return self._access_point
-        except AttributeError:
-            raise GoProNotOpened("")
+        except AttributeError as e:
+            raise GoProNotOpened("") from e
 
     @property
     def identifier(self) -> str:
@@ -235,8 +258,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         The identifier is the last 4 digits of the camera. That is, the same string that is used to
         scan for the camera for BLE.
 
-        If no target has been provided and a camera is not yet found, this will be None
-
         Raises:
             GoProNotOpened: Client is not opened yet so no identifier is available
 
@@ -244,7 +265,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             str: last 4 digits if available, else None
         """
         if not self._identifier:
-            raise RuntimeError("Identifier not yet set")
+            raise GoProNotOpened("Identifier not yet set")
         return self._identifier
 
     @property
@@ -322,6 +343,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         Raises:
             Exception: Any exceptions during opening are propagated through
             InvalidOpenGoProVersion: Only 2.0 is supported
+            InterfaceConfigFailure: Requested connection(s) failed to establish
 
         Args:
             timeout (int): How long to wait for each connection before timing out. Defaults to 10.
@@ -356,9 +378,8 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                     # TODO need to handle sending these if BLE does not exist
                     await self.ble_command.set_third_party_client_info()
                     # Set current dst-aware time. Don't assert on success since some old cameras don't support this command.
-	                dt, tz_offset, is_dst = get_current_dst_aware_time()
-                	await self.ble_command.set_date_time_tz_dst(date_time=dt, tz_offset=tz_offset, is_dst=is_dst)
-                
+                    dt, tz_offset, is_dst = get_current_dst_aware_time()
+                    await self.ble_command.set_date_time_tz_dst(date_time=dt, tz_offset=tz_offset, is_dst=is_dst)
 
                     # Find and configure API version
                     version = (await self.ble_command.get_open_gopro_api_version()).data
@@ -439,7 +460,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
         Args:
             callback (UpdateCb): callback to unregister
-            update (GoProBle._CompositeRegisterType | UpdateType | None, optional): Update type to unregister for. Defaults to
+            update (GoProBle._CompositeRegisterType | UpdateType | None): Update type to unregister for. Defaults to
                     None which will unregister the callback for all update types.
         """
         if update:

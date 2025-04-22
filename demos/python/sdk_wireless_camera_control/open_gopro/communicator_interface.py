@@ -263,7 +263,7 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
 
         Args:
             callback (UpdateCb): callback to unregister
-            update (_CompositeRegisterType | UpdateType | None, optional): Update type to unregister for. Defaults to
+            update (_CompositeRegisterType | UpdateType | None): Update type to unregister for. Defaults to
                     None which will unregister the callback for all update types.
         """
 

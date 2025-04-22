@@ -67,8 +67,8 @@ def scrub(obj: Any, bad_keys: list | None = None, bad_values: list | None = None
 
     Args:
         obj (Any): collection to scrub
-        bad_keys (list | None, optional): Keys to remove. Defaults to None.
-        bad_values (list | None, optional): Values to remove. Defaults to None.
+        bad_keys (list | None): Keys to remove. Defaults to None.
+        bad_values (list | None): Values to remove. Defaults to None.
 
     Raises:
         ValueError: Missing bad keys / values

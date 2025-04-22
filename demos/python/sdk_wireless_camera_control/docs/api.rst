@@ -73,6 +73,13 @@ These should not be imported directly and instead should be accessed using the r
 .. autoclass:: open_gopro.api.http_settings.HttpSettings
    :show-inheritance:
 
+Abstracted Features
+-------------------
+
+.. automodule:: open_gopro.features.cohn
+
+.. automodule:: open_gopro.features.access_point
+
 Base Types
 ----------
 
@@ -189,6 +196,8 @@ These are the various models that are returned in responses, used in commands, e
 .. autopydantic_model:: open_gopro.models.general.WebcamResponse
 
 .. autopydantic_model:: open_gopro.models.general.SupportedOption
+
+.. autopydantic_model:: open_gopro.models.general.CohnInfo
 
 .. autoclass:: open_gopro.models.general.ScheduledCapture
 

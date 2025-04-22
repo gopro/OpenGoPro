@@ -89,20 +89,14 @@ TYPE_ALIASES = {
     "IdType": "open_gopro.types.IdType",
 }
 
-# This is very broken.
-# https://github.com/sphinx-doc/sphinx/issues/10455
-# https://github.com/sphinx-doc/sphinx/issues/10785
-# autodoc_type_aliases = {
-# "CameraState": "open_gopro.types.CameraState",
-# "Path": "pathlib.Path",
-# }
-
 nitpick_ignore = [
     ("py:class", "T"),
     ("py:class", "T_co"),
     ("py:class", "ExceptionHandler"),
     ("py:class", "abc.ABC"),
     ("py:class", "InitVar"),
+    ("py:class", "Result"),
+    ("py:class", "returns.result.Result"),
     # TODO need to fix these
     ("py:class", "Path"),
     ("py:class", "JsonDict"),
@@ -112,6 +106,9 @@ nitpick_ignore_regex = [
     (r"py:class", r".*proto\..+"),
     (r"py:class", r".*_pb2\..+"),
     (r".*", r".*construct.*"),
+    (r"py:class", r".*TinyDB.*"),
+    (r"py:class", r".*asyncio.*"),
+    (r"py:class", r".*WirelessApi*"),
     # Generic Types that are pointless to document
     (r"py:class", r".*\.T"),
     (r"py:class", r".*\.T_co"),
