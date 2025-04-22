@@ -107,7 +107,7 @@ class ScheduledCapture:
         )
 
     def __str__(self) -> str:
-        return json.dumps(asdict(self), indent=4)
+        return json.dumps(asdict(self), indent=8)
 
     @classmethod
     def off(cls) -> ScheduledCapture:

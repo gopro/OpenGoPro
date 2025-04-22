@@ -35,6 +35,8 @@ class SettingId(GoProIntEnum):
     HYPERSMOOTH = 135
     VIDEO_HORIZON_LEVELING = 150
     PHOTO_HORIZON_LEVELING = 151
+    VIDEO_DURATION = 156
+    MULTI_SHOT_DURATION = 157
     MAX_LENS = 162
     HINDSIGHT = 167
     SCHEDULED_CAPTURE = 168
@@ -312,6 +314,37 @@ class PhotoHorizonLeveling(GoProIntEnum):
 
     OFF = 0
     LOCKED = 2
+
+
+class VideoDuration(GoProIntEnum):
+    """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-duration-156)"""
+
+    NUM_15_SECONDS = 1
+    NUM_30_SECONDS = 2
+    NUM_1_MINUTE = 3
+    NUM_5_MINUTES = 4
+    NUM_15_MINUTES = 5
+    NUM_30_MINUTES = 6
+    NUM_1_HOUR = 7
+    NUM_2_HOURS = 8
+    NUM_3_HOURS = 9
+    NUM_5_SECONDS = 10
+    NO_LIMIT = 100
+
+
+class MultiShotDuration(GoProIntEnum):
+    """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-duration-157)"""
+
+    NUM_15_SECONDS = 1
+    NUM_30_SECONDS = 2
+    NUM_1_MINUTE = 3
+    NUM_5_MINUTES = 4
+    NUM_15_MINUTES = 5
+    NUM_30_MINUTES = 6
+    NUM_1_HOUR = 7
+    NUM_2_HOURS = 8
+    NUM_3_HOURS = 9
+    NO_LIMIT = 100
 
 
 class MaxLens(GoProIntEnum):
