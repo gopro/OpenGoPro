@@ -9,7 +9,7 @@ import com.gopro.open_gopro.util.extensions.toInt
 import com.gopro.open_gopro.util.extensions.toUByte
 
 object ComplexQueryEntity {
-    data class ScheduledCapture(
+  data class ScheduledCapture(
       val hour: Int,
       val minute: Int,
       val is24hour: Boolean,

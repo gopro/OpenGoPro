@@ -174,49 +174,49 @@ class TestSettings {
     }
   }
 
-    @Test
-    fun `ulong bytearray conversions`() {
-        // GIVEN
-        val target = 0x01020304UL
+  @Test
+  fun `ulong bytearray conversions`() {
+    // GIVEN
+    val target = 0x01020304UL
 
-        // WHEN
-        val builtBytes = target.toUByteArray()
-        val parsedLong = builtBytes.asInt64UB()
+    // WHEN
+    val builtBytes = target.toUByteArray()
+    val parsedLong = builtBytes.asInt64UB()
 
-        // THEN
-        assertEquals(target, parsedLong)
-        assertContentEquals(builtBytes, ubyteArrayOf(0x04U, 0x03U, 0x02U, 0x01U))
-    }
+    // THEN
+    assertEquals(target, parsedLong)
+    assertContentEquals(builtBytes, ubyteArrayOf(0x04U, 0x03U, 0x02U, 0x01U))
+  }
 
-    @Test
-    fun `int 4 byte transformer`() {
-        // GIVEN
-        val target = 0x01020304UL
-        val transformer = ULongByteTransformer(4)
+  @Test
+  fun `int 4 byte transformer`() {
+    // GIVEN
+    val target = 0x01020304UL
+    val transformer = ULongByteTransformer(4)
 
-        // WHEN
-        val builtBytes = transformer.toUByteArray(target)
-        val parsedLong = transformer.fromUByteArray(builtBytes)
+    // WHEN
+    val builtBytes = transformer.toUByteArray(target)
+    val parsedLong = transformer.fromUByteArray(builtBytes)
 
-        // THEN
-        assertEquals(parsedLong, target)
-        assertContentEquals(builtBytes, ubyteArrayOf(0x04U, 0x03U, 0x02U, 0x01U))
-    }
+    // THEN
+    assertEquals(parsedLong, target)
+    assertContentEquals(builtBytes, ubyteArrayOf(0x04U, 0x03U, 0x02U, 0x01U))
+  }
 
-    @Test
-    fun `int 1 byte transformer`() {
-        // GIVEN
-        val target = 0xFEUL
-        val transformer = ULongByteTransformer(1)
+  @Test
+  fun `int 1 byte transformer`() {
+    // GIVEN
+    val target = 0xFEUL
+    val transformer = ULongByteTransformer(1)
 
-        // WHEN
-        val builtBytes = transformer.toUByteArray(target)
-        val parsedLong = transformer.fromUByteArray(builtBytes)
+    // WHEN
+    val builtBytes = transformer.toUByteArray(target)
+    val parsedLong = transformer.fromUByteArray(builtBytes)
 
-        // THEN
-        assertEquals(parsedLong, target)
-        assertContentEquals(builtBytes, ubyteArrayOf(0xFEU))
-    }
+    // THEN
+    assertEquals(parsedLong, target)
+    assertContentEquals(builtBytes, ubyteArrayOf(0xFEU))
+  }
 
   @Test
   fun `get multiple settings`() = runTest {

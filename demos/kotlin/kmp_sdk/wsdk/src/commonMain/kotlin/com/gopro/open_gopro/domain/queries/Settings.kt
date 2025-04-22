@@ -19,27 +19,28 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
 @ExperimentalUnsignedTypes
-internal class ULongByteTransformer(private val length: Int): IUByteArrayCompanion<ULong> {
-    init {
-        when (length) {
-            1, 4 -> {}
-            else -> throw NotImplementedError("Only lengths 1 and 4 are supported")
-        }
+internal class ULongByteTransformer(private val length: Int) : IUByteArrayCompanion<ULong> {
+  init {
+    when (length) {
+      1,
+      4 -> {}
+      else -> throw NotImplementedError("Only lengths 1 and 4 are supported")
     }
+  }
 
-    override fun fromUByteArray(value: UByteArray): ULong =
-        when (value.size) {
-            1 -> value.first().toULong()
-            4 -> value.asInt64UB()
-            else -> throw NotImplementedError("Only lengths 1 and 4 are supported")
-        }
+  override fun fromUByteArray(value: UByteArray): ULong =
+      when (value.size) {
+        1 -> value.first().toULong()
+        4 -> value.asInt64UB()
+        else -> throw NotImplementedError("Only lengths 1 and 4 are supported")
+      }
 
-    override fun toUByteArray(value: ULong): UByteArray =
-        when (length) {
-            1 -> value.toUByteArray().first().toUByteArray()
-            4 -> value.toUByteArray()
-            else -> throw NotImplementedError("Only lengths 1 and 4 are supported")
-        }
+  override fun toUByteArray(value: ULong): UByteArray =
+      when (length) {
+        1 -> value.toUByteArray().first().toUByteArray()
+        4 -> value.toUByteArray()
+        else -> throw NotImplementedError("Only lengths 1 and 4 are supported")
+      }
 }
 
 /**

@@ -3,14 +3,11 @@
 
 package com.gopro.open_gopro.operations
 
-/************************************************************************************************************
- *
+/**
+ * *********************************************************************************************************
  *
  * WARNING!!! This file is auto-generated. Do not modify it manually
- *
- *
  */
-
 import com.gopro.open_gopro.util.extensions.asInt64UB
 import com.gopro.open_gopro.util.extensions.toUByteArray
 
@@ -68,18 +65,17 @@ enum class SettingId(override val value: UByte) : IValuedEnum<UByte> {
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<SettingId> {
     override fun fromUByteArray(value: UByteArray) = entries.first { it.value == value.first() }
+
     override fun toUByteArray(value: SettingId) = value.value.toUByteArray()
   }
 }
 
-
-
 /**
  * Video Resolution
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-resolution-2)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-resolution-2)
  */
 enum class VideoResolution(override val value: UByte) : IValuedEnum<UByte> {
   NUM_4K(1U),
@@ -109,9 +105,9 @@ enum class VideoResolution(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<VideoResolution> {
-    override fun fromUByteArray(value: UByteArray) = VideoResolution.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        VideoResolution.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: VideoResolution) = value.value.toUByteArray()
   }
 }
@@ -119,9 +115,9 @@ enum class VideoResolution(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Frames Per Second
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#frames-per-second-3)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#frames-per-second-3)
  */
 enum class FramesPerSecond(override val value: UByte) : IValuedEnum<UByte> {
   NUM_240_0(0U),
@@ -139,9 +135,9 @@ enum class FramesPerSecond(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<FramesPerSecond> {
-    override fun fromUByteArray(value: UByteArray) = FramesPerSecond.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        FramesPerSecond.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: FramesPerSecond) = value.value.toUByteArray()
   }
 }
@@ -151,9 +147,9 @@ enum class FramesPerSecond(override val value: UByte) : IValuedEnum<UByte> {
  *
  * How frequently to take a video when performing a Video Timelapse
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-timelapse-rate-5)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-timelapse-rate-5)
  */
 enum class VideoTimelapseRate(override val value: UByte) : IValuedEnum<UByte> {
   NUM_0_5_SECONDS(0U),
@@ -171,9 +167,9 @@ enum class VideoTimelapseRate(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<VideoTimelapseRate> {
-    override fun fromUByteArray(value: UByteArray) = VideoTimelapseRate.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        VideoTimelapseRate.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: VideoTimelapseRate) = value.value.toUByteArray()
   }
 }
@@ -183,9 +179,9 @@ enum class VideoTimelapseRate(override val value: UByte) : IValuedEnum<UByte> {
  *
  * How frequently to take a photo when performing a Photo Timelapse.
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-timelapse-rate-30)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-timelapse-rate-30)
  */
 enum class PhotoTimelapseRate(override val value: ULong) : IValuedEnum<ULong> {
   NUM_3_SECONDS(11U),
@@ -203,9 +199,9 @@ enum class PhotoTimelapseRate(override val value: ULong) : IValuedEnum<ULong> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<PhotoTimelapseRate> {
-    override fun fromUByteArray(value: UByteArray) = PhotoTimelapseRate.entries.first {
-      it.value == value.asInt64UB()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        PhotoTimelapseRate.entries.first { it.value == value.asInt64UB() }
+
     override fun toUByteArray(value: PhotoTimelapseRate) = value.value.toUByteArray()
   }
 }
@@ -217,9 +213,9 @@ enum class PhotoTimelapseRate(override val value: ULong) : IValuedEnum<ULong> {
  *
  * This controls the Video or Photo Nightlapse rate if Setting 128 is set to 21 or 26 respectively.
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#nightlapse-rate-32)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#nightlapse-rate-32)
  */
 enum class NightlapseRate(override val value: ULong) : IValuedEnum<ULong> {
   NUM_4_SECONDS(4U),
@@ -237,9 +233,9 @@ enum class NightlapseRate(override val value: ULong) : IValuedEnum<ULong> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<NightlapseRate> {
-    override fun fromUByteArray(value: UByteArray) = NightlapseRate.entries.first {
-      it.value == value.asInt64UB()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        NightlapseRate.entries.first { it.value == value.asInt64UB() }
+
     override fun toUByteArray(value: NightlapseRate) = value.value.toUByteArray()
   }
 }
@@ -247,9 +243,9 @@ enum class NightlapseRate(override val value: ULong) : IValuedEnum<ULong> {
 /**
  * Webcam Digital Lenses
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#webcam-digital-lenses-43)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#webcam-digital-lenses-43)
  */
 enum class WebcamDigitalLenses(override val value: UByte) : IValuedEnum<UByte> {
   WIDE(0U),
@@ -259,9 +255,9 @@ enum class WebcamDigitalLenses(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<WebcamDigitalLenses> {
-    override fun fromUByteArray(value: UByteArray) = WebcamDigitalLenses.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        WebcamDigitalLenses.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: WebcamDigitalLenses) = value.value.toUByteArray()
   }
 }
@@ -269,9 +265,9 @@ enum class WebcamDigitalLenses(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Auto Power Down
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#auto-power-down-59)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#auto-power-down-59)
  */
 enum class AutoPowerDown(override val value: UByte) : IValuedEnum<UByte> {
   NEVER(0U),
@@ -284,9 +280,9 @@ enum class AutoPowerDown(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<AutoPowerDown> {
-    override fun fromUByteArray(value: UByteArray) = AutoPowerDown.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        AutoPowerDown.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: AutoPowerDown) = value.value.toUByteArray()
   }
 }
@@ -294,9 +290,8 @@ enum class AutoPowerDown(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * GPS
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#gps-83)
- *
  * @property value
+ * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#gps-83)
  */
 enum class Gps(override val value: UByte) : IValuedEnum<UByte> {
   OFF(0U),
@@ -304,9 +299,8 @@ enum class Gps(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<Gps> {
-    override fun fromUByteArray(value: UByteArray) = Gps.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) = Gps.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: Gps) = value.value.toUByteArray()
   }
 }
@@ -314,9 +308,8 @@ enum class Gps(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * LED
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#led-91)
- *
  * @property value
+ * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#led-91)
  */
 enum class Led(override val value: UByte) : IValuedEnum<UByte> {
   OFF(0U),
@@ -328,9 +321,8 @@ enum class Led(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<Led> {
-    override fun fromUByteArray(value: UByteArray) = Led.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) = Led.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: Led) = value.value.toUByteArray()
   }
 }
@@ -338,9 +330,9 @@ enum class Led(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Video Aspect Ratio
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-aspect-ratio-108)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-aspect-ratio-108)
  */
 enum class VideoAspectRatio(override val value: UByte) : IValuedEnum<UByte> {
   NUM_4_3(0U),
@@ -352,9 +344,9 @@ enum class VideoAspectRatio(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<VideoAspectRatio> {
-    override fun fromUByteArray(value: UByteArray) = VideoAspectRatio.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        VideoAspectRatio.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: VideoAspectRatio) = value.value.toUByteArray()
   }
 }
@@ -362,9 +354,9 @@ enum class VideoAspectRatio(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Video Lens
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-lens-121)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-lens-121)
  */
 enum class VideoLens(override val value: UByte) : IValuedEnum<UByte> {
   WIDE(0U),
@@ -383,9 +375,9 @@ enum class VideoLens(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<VideoLens> {
-    override fun fromUByteArray(value: UByteArray) = VideoLens.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        VideoLens.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: VideoLens) = value.value.toUByteArray()
   }
 }
@@ -393,9 +385,9 @@ enum class VideoLens(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Photo Lens
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-lens-122)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-lens-122)
  */
 enum class PhotoLens(override val value: UByte) : IValuedEnum<UByte> {
   WIDE_12_MP(0U),
@@ -416,9 +408,9 @@ enum class PhotoLens(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<PhotoLens> {
-    override fun fromUByteArray(value: UByteArray) = PhotoLens.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        PhotoLens.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: PhotoLens) = value.value.toUByteArray()
   }
 }
@@ -426,9 +418,9 @@ enum class PhotoLens(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Time Lapse Digital Lenses
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#time-lapse-digital-lenses-123)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#time-lapse-digital-lenses-123)
  */
 enum class TimeLapseDigitalLenses(override val value: UByte) : IValuedEnum<UByte> {
   NARROW(19U),
@@ -440,9 +432,9 @@ enum class TimeLapseDigitalLenses(override val value: UByte) : IValuedEnum<UByte
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<TimeLapseDigitalLenses> {
-    override fun fromUByteArray(value: UByteArray) = TimeLapseDigitalLenses.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        TimeLapseDigitalLenses.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: TimeLapseDigitalLenses) = value.value.toUByteArray()
   }
 }
@@ -450,9 +442,9 @@ enum class TimeLapseDigitalLenses(override val value: UByte) : IValuedEnum<UByte
 /**
  * Photo Output
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-output-125)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-output-125)
  */
 enum class PhotoOutput(override val value: UByte) : IValuedEnum<UByte> {
   STANDARD(0U),
@@ -462,9 +454,9 @@ enum class PhotoOutput(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<PhotoOutput> {
-    override fun fromUByteArray(value: UByteArray) = PhotoOutput.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        PhotoOutput.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: PhotoOutput) = value.value.toUByteArray()
   }
 }
@@ -472,9 +464,9 @@ enum class PhotoOutput(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Media Format
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#media-format-128)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#media-format-128)
  */
 enum class MediaFormat(override val value: UByte) : IValuedEnum<UByte> {
   TIME_LAPSE_VIDEO(13U),
@@ -484,9 +476,9 @@ enum class MediaFormat(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<MediaFormat> {
-    override fun fromUByteArray(value: UByteArray) = MediaFormat.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        MediaFormat.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: MediaFormat) = value.value.toUByteArray()
   }
 }
@@ -494,9 +486,9 @@ enum class MediaFormat(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Anti-Flicker
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#anti-flicker-134)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#anti-flicker-134)
  */
 enum class Anti_Flicker(override val value: UByte) : IValuedEnum<UByte> {
   NTSC(0U),
@@ -506,9 +498,9 @@ enum class Anti_Flicker(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<Anti_Flicker> {
-    override fun fromUByteArray(value: UByteArray) = Anti_Flicker.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        Anti_Flicker.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: Anti_Flicker) = value.value.toUByteArray()
   }
 }
@@ -516,9 +508,9 @@ enum class Anti_Flicker(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Hypersmooth
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#hypersmooth-135)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#hypersmooth-135)
  */
 enum class Hypersmooth(override val value: UByte) : IValuedEnum<UByte> {
   OFF(0U),
@@ -530,9 +522,9 @@ enum class Hypersmooth(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<Hypersmooth> {
-    override fun fromUByteArray(value: UByteArray) = Hypersmooth.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        Hypersmooth.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: Hypersmooth) = value.value.toUByteArray()
   }
 }
@@ -540,9 +532,9 @@ enum class Hypersmooth(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Video Horizon Leveling
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-horizon-leveling-150)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-horizon-leveling-150)
  */
 enum class VideoHorizonLeveling(override val value: UByte) : IValuedEnum<UByte> {
   OFF(0U),
@@ -550,9 +542,9 @@ enum class VideoHorizonLeveling(override val value: UByte) : IValuedEnum<UByte> 
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<VideoHorizonLeveling> {
-    override fun fromUByteArray(value: UByteArray) = VideoHorizonLeveling.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        VideoHorizonLeveling.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: VideoHorizonLeveling) = value.value.toUByteArray()
   }
 }
@@ -560,9 +552,9 @@ enum class VideoHorizonLeveling(override val value: UByte) : IValuedEnum<UByte> 
 /**
  * Photo Horizon Leveling
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-horizon-leveling-151)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-horizon-leveling-151)
  */
 enum class PhotoHorizonLeveling(override val value: UByte) : IValuedEnum<UByte> {
   OFF(0U),
@@ -570,9 +562,9 @@ enum class PhotoHorizonLeveling(override val value: UByte) : IValuedEnum<UByte> 
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<PhotoHorizonLeveling> {
-    override fun fromUByteArray(value: UByteArray) = PhotoHorizonLeveling.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        PhotoHorizonLeveling.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: PhotoHorizonLeveling) = value.value.toUByteArray()
   }
 }
@@ -580,9 +572,8 @@ enum class PhotoHorizonLeveling(override val value: UByte) : IValuedEnum<UByte> 
 /**
  * Max Lens
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-162)
- *
  * @property value
+ * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-162)
  */
 enum class MaxLens(override val value: UByte) : IValuedEnum<UByte> {
   OFF(0U),
@@ -590,9 +581,9 @@ enum class MaxLens(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<MaxLens> {
-    override fun fromUByteArray(value: UByteArray) = MaxLens.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        MaxLens.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: MaxLens) = value.value.toUByteArray()
   }
 }
@@ -600,9 +591,9 @@ enum class MaxLens(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * HindSight
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#hindsight-167)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#hindsight-167)
  */
 enum class Hindsight(override val value: UByte) : IValuedEnum<UByte> {
   NUM_15_SECONDS(2U),
@@ -611,9 +602,9 @@ enum class Hindsight(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<Hindsight> {
-    override fun fromUByteArray(value: UByteArray) = Hindsight.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        Hindsight.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: Hindsight) = value.value.toUByteArray()
   }
 }
@@ -621,9 +612,9 @@ enum class Hindsight(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Photo Single Interval
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-single-interval-171)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-single-interval-171)
  */
 enum class PhotoSingleInterval(override val value: UByte) : IValuedEnum<UByte> {
   OFF(0U),
@@ -639,9 +630,9 @@ enum class PhotoSingleInterval(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<PhotoSingleInterval> {
-    override fun fromUByteArray(value: UByteArray) = PhotoSingleInterval.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        PhotoSingleInterval.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: PhotoSingleInterval) = value.value.toUByteArray()
   }
 }
@@ -649,9 +640,9 @@ enum class PhotoSingleInterval(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Photo Interval Duration
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-interval-duration-172)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-interval-duration-172)
  */
 enum class PhotoIntervalDuration(override val value: UByte) : IValuedEnum<UByte> {
   OFF(0U),
@@ -667,9 +658,9 @@ enum class PhotoIntervalDuration(override val value: UByte) : IValuedEnum<UByte>
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<PhotoIntervalDuration> {
-    override fun fromUByteArray(value: UByteArray) = PhotoIntervalDuration.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        PhotoIntervalDuration.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: PhotoIntervalDuration) = value.value.toUByteArray()
   }
 }
@@ -677,9 +668,9 @@ enum class PhotoIntervalDuration(override val value: UByte) : IValuedEnum<UByte>
 /**
  * Video Performance Mode
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-performance-mode-173)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-performance-mode-173)
  */
 enum class VideoPerformanceMode(override val value: UByte) : IValuedEnum<UByte> {
   MAXIMUM_VIDEO_PERFORMANCE(0U),
@@ -688,9 +679,9 @@ enum class VideoPerformanceMode(override val value: UByte) : IValuedEnum<UByte> 
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<VideoPerformanceMode> {
-    override fun fromUByteArray(value: UByteArray) = VideoPerformanceMode.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        VideoPerformanceMode.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: VideoPerformanceMode) = value.value.toUByteArray()
   }
 }
@@ -698,9 +689,9 @@ enum class VideoPerformanceMode(override val value: UByte) : IValuedEnum<UByte> 
 /**
  * Control Mode
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#control-mode-175)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#control-mode-175)
  */
 enum class ControlMode(override val value: UByte) : IValuedEnum<UByte> {
   EASY(0U),
@@ -708,9 +699,9 @@ enum class ControlMode(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<ControlMode> {
-    override fun fromUByteArray(value: UByteArray) = ControlMode.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        ControlMode.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: ControlMode) = value.value.toUByteArray()
   }
 }
@@ -718,9 +709,9 @@ enum class ControlMode(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Easy Mode Speed
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-mode-speed-176)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-mode-speed-176)
  */
 enum class EasyModeSpeed(override val value: UByte) : IValuedEnum<UByte> {
   NUM_8X_ULTRA_SLO_MO(0U),
@@ -814,9 +805,9 @@ enum class EasyModeSpeed(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<EasyModeSpeed> {
-    override fun fromUByteArray(value: UByteArray) = EasyModeSpeed.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        EasyModeSpeed.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: EasyModeSpeed) = value.value.toUByteArray()
   }
 }
@@ -824,9 +815,9 @@ enum class EasyModeSpeed(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Enable Night Photo
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#enable-night-photo-177)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#enable-night-photo-177)
  */
 enum class EnableNightPhoto(override val value: UByte) : IValuedEnum<UByte> {
   OFF(0U),
@@ -834,9 +825,9 @@ enum class EnableNightPhoto(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<EnableNightPhoto> {
-    override fun fromUByteArray(value: UByteArray) = EnableNightPhoto.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        EnableNightPhoto.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: EnableNightPhoto) = value.value.toUByteArray()
   }
 }
@@ -844,9 +835,9 @@ enum class EnableNightPhoto(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Wireless Band
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#wireless-band-178)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#wireless-band-178)
  */
 enum class WirelessBand(override val value: UByte) : IValuedEnum<UByte> {
   NUM_2_4GHZ(0U),
@@ -854,9 +845,9 @@ enum class WirelessBand(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<WirelessBand> {
-    override fun fromUByteArray(value: UByteArray) = WirelessBand.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        WirelessBand.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: WirelessBand) = value.value.toUByteArray()
   }
 }
@@ -864,9 +855,9 @@ enum class WirelessBand(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Star Trails Length
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#star-trails-length-179)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#star-trails-length-179)
  */
 enum class StarTrailsLength(override val value: UByte) : IValuedEnum<UByte> {
   SHORT(1U),
@@ -875,9 +866,9 @@ enum class StarTrailsLength(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<StarTrailsLength> {
-    override fun fromUByteArray(value: UByteArray) = StarTrailsLength.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        StarTrailsLength.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: StarTrailsLength) = value.value.toUByteArray()
   }
 }
@@ -885,9 +876,9 @@ enum class StarTrailsLength(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * System Video Mode
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#system-video-mode-180)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#system-video-mode-180)
  */
 enum class SystemVideoMode(override val value: UByte) : IValuedEnum<UByte> {
   HIGHEST_QUALITY(0U),
@@ -898,9 +889,9 @@ enum class SystemVideoMode(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<SystemVideoMode> {
-    override fun fromUByteArray(value: UByteArray) = SystemVideoMode.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        SystemVideoMode.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: SystemVideoMode) = value.value.toUByteArray()
   }
 }
@@ -908,9 +899,9 @@ enum class SystemVideoMode(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Video Bit Rate
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-bit-rate-182)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-bit-rate-182)
  */
 enum class VideoBitRate(override val value: UByte) : IValuedEnum<UByte> {
   STANDARD(0U),
@@ -918,9 +909,9 @@ enum class VideoBitRate(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<VideoBitRate> {
-    override fun fromUByteArray(value: UByteArray) = VideoBitRate.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        VideoBitRate.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: VideoBitRate) = value.value.toUByteArray()
   }
 }
@@ -928,9 +919,9 @@ enum class VideoBitRate(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Bit Depth
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#bit-depth-183)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#bit-depth-183)
  */
 enum class BitDepth(override val value: UByte) : IValuedEnum<UByte> {
   NUM_8_BIT(0U),
@@ -938,9 +929,9 @@ enum class BitDepth(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<BitDepth> {
-    override fun fromUByteArray(value: UByteArray) = BitDepth.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        BitDepth.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: BitDepth) = value.value.toUByteArray()
   }
 }
@@ -948,9 +939,8 @@ enum class BitDepth(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Profiles
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#profiles-184)
- *
  * @property value
+ * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#profiles-184)
  */
 enum class Profiles(override val value: UByte) : IValuedEnum<UByte> {
   STANDARD(0U),
@@ -960,9 +950,9 @@ enum class Profiles(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<Profiles> {
-    override fun fromUByteArray(value: UByteArray) = Profiles.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        Profiles.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: Profiles) = value.value.toUByteArray()
   }
 }
@@ -970,9 +960,9 @@ enum class Profiles(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Video Easy Mode
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-easy-mode-186)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-easy-mode-186)
  */
 enum class VideoEasyMode(override val value: UByte) : IValuedEnum<UByte> {
   HIGHEST_QUALITY(0U),
@@ -983,9 +973,9 @@ enum class VideoEasyMode(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<VideoEasyMode> {
-    override fun fromUByteArray(value: UByteArray) = VideoEasyMode.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        VideoEasyMode.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: VideoEasyMode) = value.value.toUByteArray()
   }
 }
@@ -993,9 +983,9 @@ enum class VideoEasyMode(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Lapse Mode
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#lapse-mode-187)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#lapse-mode-187)
  */
 enum class LapseMode(override val value: UByte) : IValuedEnum<UByte> {
   TIMEWARP(0U),
@@ -1011,9 +1001,9 @@ enum class LapseMode(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<LapseMode> {
-    override fun fromUByteArray(value: UByteArray) = LapseMode.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        LapseMode.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: LapseMode) = value.value.toUByteArray()
   }
 }
@@ -1021,9 +1011,9 @@ enum class LapseMode(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Max Lens Mod
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-189)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-189)
  */
 enum class MaxLensMod(override val value: UByte) : IValuedEnum<UByte> {
   NONE(0U),
@@ -1041,9 +1031,9 @@ enum class MaxLensMod(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<MaxLensMod> {
-    override fun fromUByteArray(value: UByteArray) = MaxLensMod.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        MaxLensMod.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: MaxLensMod) = value.value.toUByteArray()
   }
 }
@@ -1051,9 +1041,9 @@ enum class MaxLensMod(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Max Lens Mod Enable
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-enable-190)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-enable-190)
  */
 enum class MaxLensModEnable(override val value: UByte) : IValuedEnum<UByte> {
   OFF(0U),
@@ -1061,9 +1051,9 @@ enum class MaxLensModEnable(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<MaxLensModEnable> {
-    override fun fromUByteArray(value: UByteArray) = MaxLensModEnable.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        MaxLensModEnable.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: MaxLensModEnable) = value.value.toUByteArray()
   }
 }
@@ -1071,9 +1061,9 @@ enum class MaxLensModEnable(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Easy Night Photo
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-night-photo-191)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-night-photo-191)
  */
 enum class EasyNightPhoto(override val value: UByte) : IValuedEnum<UByte> {
   SUPER_PHOTO(0U),
@@ -1082,9 +1072,9 @@ enum class EasyNightPhoto(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<EasyNightPhoto> {
-    override fun fromUByteArray(value: UByteArray) = EasyNightPhoto.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        EasyNightPhoto.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: EasyNightPhoto) = value.value.toUByteArray()
   }
 }
@@ -1092,9 +1082,9 @@ enum class EasyNightPhoto(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Multi Shot Aspect Ratio
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-aspect-ratio-192)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-aspect-ratio-192)
  */
 enum class MultiShotAspectRatio(override val value: UByte) : IValuedEnum<UByte> {
   NUM_4_3(0U),
@@ -1104,9 +1094,9 @@ enum class MultiShotAspectRatio(override val value: UByte) : IValuedEnum<UByte> 
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<MultiShotAspectRatio> {
-    override fun fromUByteArray(value: UByteArray) = MultiShotAspectRatio.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        MultiShotAspectRatio.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: MultiShotAspectRatio) = value.value.toUByteArray()
   }
 }
@@ -1114,9 +1104,8 @@ enum class MultiShotAspectRatio(override val value: UByte) : IValuedEnum<UByte> 
 /**
  * Framing
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#framing-193)
- *
  * @property value
+ * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#framing-193)
  */
 enum class Framing(override val value: UByte) : IValuedEnum<UByte> {
   WIDESCREEN(0U),
@@ -1131,9 +1120,9 @@ enum class Framing(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<Framing> {
-    override fun fromUByteArray(value: UByteArray) = Framing.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        Framing.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: Framing) = value.value.toUByteArray()
   }
 }
@@ -1141,9 +1130,9 @@ enum class Framing(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Camera Volume
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-volume-216)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-volume-216)
  */
 enum class CameraVolume(override val value: UByte) : IValuedEnum<UByte> {
   LOW(70U),
@@ -1152,9 +1141,9 @@ enum class CameraVolume(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<CameraVolume> {
-    override fun fromUByteArray(value: UByteArray) = CameraVolume.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        CameraVolume.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: CameraVolume) = value.value.toUByteArray()
   }
 }
@@ -1162,9 +1151,9 @@ enum class CameraVolume(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Setup Screen Saver
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-screen-saver-219)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-screen-saver-219)
  */
 enum class SetupScreenSaver(override val value: UByte) : IValuedEnum<UByte> {
   NUM_1_MIN(1U),
@@ -1174,9 +1163,9 @@ enum class SetupScreenSaver(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<SetupScreenSaver> {
-    override fun fromUByteArray(value: UByteArray) = SetupScreenSaver.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        SetupScreenSaver.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: SetupScreenSaver) = value.value.toUByteArray()
   }
 }
@@ -1184,9 +1173,9 @@ enum class SetupScreenSaver(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Setup Language
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-language-223)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-language-223)
  */
 enum class SetupLanguage(override val value: UByte) : IValuedEnum<UByte> {
   ENGLISH_US(0U),
@@ -1207,9 +1196,9 @@ enum class SetupLanguage(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<SetupLanguage> {
-    override fun fromUByteArray(value: UByteArray) = SetupLanguage.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        SetupLanguage.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: SetupLanguage) = value.value.toUByteArray()
   }
 }
@@ -1217,9 +1206,9 @@ enum class SetupLanguage(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Photo Mode
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-mode-227)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-mode-227)
  */
 enum class PhotoMode(override val value: UByte) : IValuedEnum<UByte> {
   SUPERPHOTO(0U),
@@ -1228,9 +1217,9 @@ enum class PhotoMode(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<PhotoMode> {
-    override fun fromUByteArray(value: UByteArray) = PhotoMode.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        PhotoMode.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: PhotoMode) = value.value.toUByteArray()
   }
 }
@@ -1238,9 +1227,9 @@ enum class PhotoMode(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Video Framing
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-framing-232)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-framing-232)
  */
 enum class VideoFraming(override val value: UByte) : IValuedEnum<UByte> {
   NUM_4_3(0U),
@@ -1252,9 +1241,9 @@ enum class VideoFraming(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<VideoFraming> {
-    override fun fromUByteArray(value: UByteArray) = VideoFraming.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        VideoFraming.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: VideoFraming) = value.value.toUByteArray()
   }
 }
@@ -1262,9 +1251,9 @@ enum class VideoFraming(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Multi Shot Framing
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-framing-233)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-framing-233)
  */
 enum class MultiShotFraming(override val value: UByte) : IValuedEnum<UByte> {
   NUM_4_3(0U),
@@ -1274,9 +1263,9 @@ enum class MultiShotFraming(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<MultiShotFraming> {
-    override fun fromUByteArray(value: UByteArray) = MultiShotFraming.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        MultiShotFraming.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: MultiShotFraming) = value.value.toUByteArray()
   }
 }
@@ -1284,9 +1273,9 @@ enum class MultiShotFraming(override val value: UByte) : IValuedEnum<UByte> {
 /**
  * Frame Rate
  *
- * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#frame-rate-234)
- *
  * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#frame-rate-234)
  */
 enum class FrameRate(override val value: UByte) : IValuedEnum<UByte> {
   NUM_240_0(0U),
@@ -1304,9 +1293,9 @@ enum class FrameRate(override val value: UByte) : IValuedEnum<UByte> {
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<FrameRate> {
-    override fun fromUByteArray(value: UByteArray) = FrameRate.entries.first {
-      it.value == value.last()
-    }
+    override fun fromUByteArray(value: UByteArray) =
+        FrameRate.entries.first { it.value == value.last() }
+
     override fun toUByteArray(value: FrameRate) = value.value.toUByteArray()
   }
 }

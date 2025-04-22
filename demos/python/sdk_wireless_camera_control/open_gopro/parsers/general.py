@@ -4,7 +4,8 @@
 """Monolithic Parser implementations"""
 
 from typing import Any
-from construct import BitsInteger, BitStruct, Flag, Int32ub, Int8ub, Padding
+
+from construct import BitsInteger, BitStruct, Flag, Int8ub, Int32ub, Padding
 
 from open_gopro.models import ScheduledCapture
 from open_gopro.parser_interface import BytesParserBuilder
