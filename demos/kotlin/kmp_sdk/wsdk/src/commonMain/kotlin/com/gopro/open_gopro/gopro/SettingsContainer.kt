@@ -195,6 +195,22 @@ class SettingsContainer internal constructor(marshaller: IOperationMarshaller) {
       Setting(SettingId.PHOTO_HORIZON_LEVELING, PhotoHorizonLeveling, marshaller)
 
   /**
+   * Video Duration
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-duration-156)
+   */
+  val videoDuration = Setting(SettingId.VIDEO_DURATION, VideoDuration, marshaller)
+
+  /**
+   * Multi Shot Duration
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-duration-157)
+   */
+  val multiShotDuration = Setting(SettingId.MULTI_SHOT_DURATION, MultiShotDuration, marshaller)
+
+  /**
    * Max Lens
    *
    * @see

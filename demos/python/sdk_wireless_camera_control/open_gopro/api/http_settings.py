@@ -189,6 +189,22 @@ class HttpSettings(HttpMessages[HttpSetting]):
 
         @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-horizon-leveling-151)"""
 
+        self.video_duration: HttpSetting[settings.VideoDuration] = HttpSetting[settings.VideoDuration](
+            communicator, SettingId.VIDEO_DURATION
+        )
+
+        """Video Duration
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-duration-156)"""
+
+        self.multi_shot_duration: HttpSetting[settings.MultiShotDuration] = HttpSetting[settings.MultiShotDuration](
+            communicator, SettingId.MULTI_SHOT_DURATION
+        )
+
+        """Multi Shot Duration
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-duration-157)"""
+
         self.max_lens: HttpSetting[settings.MaxLens] = HttpSetting[settings.MaxLens](communicator, SettingId.MAX_LENS)
 
         """Max Lens
