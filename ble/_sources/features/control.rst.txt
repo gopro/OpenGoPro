@@ -90,6 +90,21 @@ Operations
         :uuid: Command Response
         :message: ResponseGeneric
 
+.. operation:protobuf:: Set Camera Name
+    :operation-id: GPCAMERA_SET_CAMERA_NAME
+
+    .. operation:protobuf-message:: request
+        :feature-id: 0xF1
+        :action-id: 0x62
+        :uuid: Command
+        :message: WSDK_RequestSetCameraName
+
+    .. operation:protobuf-message:: response
+        :feature-id: 0xF1
+        :action-id: 0xE2
+        :uuid: Command Response
+        :message: ResponseGeneric
+
 .. operation:tlv-command:: Set Date Time
     :operation-id: GPCAMERA_SET_DATE_AND_TIME_ID
     :external:

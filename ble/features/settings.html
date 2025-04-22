@@ -142,7 +142,7 @@
   <title>Settings — GoPro BLE API 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3">
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094">
-      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=d4d8e761">
+      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=8b4707e3">
 
   
   <!--[if lt IE 9]>
@@ -426,6 +426,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#webcam-digital-lenses-43">Webcam Digital Lenses (43)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#auto-power-down-59">Auto Power Down (59)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gps-83">GPS (83)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lcd-brightness-88">LCD Brightness (88)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#led-91">LED (91)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#video-aspect-ratio-108">Video Aspect Ratio (108)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#video-lens-121">Video Lens (121)</a></li>
@@ -437,8 +438,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#hypersmooth-135">Hypersmooth (135)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#video-horizon-leveling-150">Video Horizon Leveling (150)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#photo-horizon-leveling-151">Photo Horizon Leveling (151)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#video-duration-156">Video Duration (156)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multi-shot-duration-157">Multi Shot Duration (157)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#max-lens-162">Max Lens (162)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#hindsight-167">HindSight (167)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scheduled-capture-168">Scheduled Capture (168)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#photo-single-interval-171">Photo Single Interval (171)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#photo-interval-duration-172">Photo Interval Duration (172)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#video-performance-mode-173">Video Performance Mode (173)</a></li>
@@ -1695,6 +1699,17 @@ to 21 or 26 respectively.</p>
 </table>
 <p>This is a integer value formatted as 8-bit unsigned big-endian.</p>
 </section>
+<section id="lcd-brightness-88">
+<span id="setting-88"></span><h3>LCD Brightness (88)<a class="headerlink" href="#lcd-brightness-88" title="Link to this heading"></a>
+</h3>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+<p>This is a integer value formatted as 8-bit unsigned big-endian.</p>
+<p>The LCD brightness as a percentage value from 10-100</p>
+</section>
 <section id="led-91">
 <span id="setting-91"></span><h3>LED (91)<a class="headerlink" href="#led-91" title="Link to this heading"></a>
 </h3>
@@ -2452,6 +2467,273 @@ to 21 or 26 respectively.</p>
 </table>
 <p>This is a integer value formatted as 8-bit unsigned big-endian.</p>
 </section>
+<section id="video-duration-156">
+<span id="setting-156"></span><h3>Video Duration (156)<a class="headerlink" href="#video-duration-156" title="Link to this heading"></a>
+</h3>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Option Name</th>
+<th class="head">Supported Cameras</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even">
+<td>1</td>
+<td>15 Seconds</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+<tr class="row-odd">
+<td>2</td>
+<td>30 Seconds</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+<tr class="row-even">
+<td>3</td>
+<td>1 Minute</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+<tr class="row-odd">
+<td>4</td>
+<td>5 Minutes</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+<tr class="row-even">
+<td>5</td>
+<td>15 Minutes</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+<tr class="row-odd">
+<td>6</td>
+<td>30 Minutes</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+<tr class="row-even">
+<td>7</td>
+<td>1 Hour</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+<tr class="row-odd">
+<td>8</td>
+<td>2 Hours</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+<tr class="row-even">
+<td>9</td>
+<td>3 Hours</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+<tr class="row-odd">
+<td>10</td>
+<td>5 Seconds</td>
+<td><img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8"></td>
+</tr>
+<tr class="row-even">
+<td>100</td>
+<td>No Limit</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+</tbody>
+</table>
+<p>This is a integer value formatted as 8-bit unsigned big-endian.</p>
+</section>
+<section id="multi-shot-duration-157">
+<span id="setting-157"></span><h3>Multi Shot Duration (157)<a class="headerlink" href="#multi-shot-duration-157" title="Link to this heading"></a>
+</h3>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Option Name</th>
+<th class="head">Supported Cameras</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even">
+<td>1</td>
+<td>15 Seconds</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+<tr class="row-odd">
+<td>2</td>
+<td>30 Seconds</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+<tr class="row-even">
+<td>3</td>
+<td>1 Minute</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+<tr class="row-odd">
+<td>4</td>
+<td>5 Minutes</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+<tr class="row-even">
+<td>5</td>
+<td>15 Minutes</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+<tr class="row-odd">
+<td>6</td>
+<td>30 Minutes</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+<tr class="row-even">
+<td>7</td>
+<td>1 Hour</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+<tr class="row-odd">
+<td>8</td>
+<td>2 Hours</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+<tr class="row-even">
+<td>9</td>
+<td>3 Hours</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+<tr class="row-odd">
+<td>100</td>
+<td>No Limit</td>
+<td>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+</td>
+</tr>
+</tbody>
+</table>
+<p>This is a integer value formatted as 8-bit unsigned big-endian.</p>
+</section>
 <section id="max-lens-162">
 <span id="setting-162"></span><h3>Max Lens (162)<a class="headerlink" href="#max-lens-162" title="Link to this heading"></a>
 </h3>
@@ -2542,6 +2824,61 @@ to 21 or 26 respectively.</p>
 </tbody>
 </table>
 <p>This is a integer value formatted as 8-bit unsigned big-endian.</p>
+</section>
+<section id="scheduled-capture-168">
+<span id="setting-168"></span><h3>Scheduled Capture (168)<a class="headerlink" href="#scheduled-capture-168" title="Link to this heading"></a>
+</h3>
+<img alt="https://img.shields.io/badge/HERO13Black-4363d8" src="https://img.shields.io/badge/HERO13Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12Black-911eb4" src="https://img.shields.io/badge/HERO12Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11Black-f032e6" src="https://img.shields.io/badge/HERO11Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10Black-bcf60c" src="https://img.shields.io/badge/HERO10Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9Black-fabebe" src="https://img.shields.io/badge/HERO9Black-fabebe">
+<p>This is a integer value formatted as 64-bit unsigned big-endian.</p>
+<p>Configure or disable the scheduled capture functionality to start
+encoding at a future time.</p>
+<p>This is a bit-masked value with the following bitwise definitions,
+numbered from least significant bit, with the example showing parsed
+fields from a sample of <code class="docutils literal notranslate"><span class="pre">0x00000c8b</span></code>.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd">
+<th class="head">Bit(s)</th>
+<th class="head">Definition</th>
+<th class="head">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even">
+<td>0</td>
+<td>Is Scheduled Capture Enabled?</td>
+<td>1</td>
+</tr>
+<tr class="row-odd">
+<td>1</td>
+<td>Is 24 hour format?</td>
+<td>1</td>
+</tr>
+<tr class="row-even">
+<td>2-8</td>
+<td>Minute</td>
+<td>34</td>
+</tr>
+<tr class="row-odd">
+<td>9-13</td>
+<td>Hour</td>
+<td>12</td>
+</tr>
+<tr class="row-even">
+<td>14-63</td>
+<td>Reserved</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>Note that when the scheduled capture time occurs, encoding will be
+started and continue indefinitely. One of the duration settings (156,
+157, 172) can be used to set the encoding duration depending on the
+camera mode.</p>
 </section>
 <section id="photo-single-interval-171">
 <span id="setting-171"></span><h3>Photo Single Interval (171)<a class="headerlink" href="#photo-single-interval-171" title="Link to this heading"></a>

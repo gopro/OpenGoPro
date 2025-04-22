@@ -116,7 +116,7 @@ Operations
       :uuid: Command Response
 
 .. operation:protobuf:: Set Preset Visibility
-   :operation-id: GPCAMERA_FEATURE_SET_PRESET_VISIBILITY
+   :operation-id: GPCAMERA_SET_PRESET_VISIBILITY
    :external:
 
     .. operation:protobuf-message:: request

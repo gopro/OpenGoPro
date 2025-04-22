@@ -8,7 +8,7 @@ var jekyllStore = [
         },
         {
             "title": "Open GoPro: ",
-            "excerpt": "Getting Started Open GoPro is an API for interacting with GoPro cameras that is developed and managed directly by GoPro. It provides developers and companies with an easy-to-use programming interface and helps integrate the cameras into their ecosystems. The API works with off-the-shelf cameras with standard firmware, is free-to-use under MIT license, and publicly available online on GitHub. Docs Detailed Bluetooth Low Energy (BLE) and HTTP Interface Specifications. BLE Spec→ HTTP Spec → Tutorials Walk-through tutorials in different languages / frameworks for getting started. ✏️ Tutorials → Demos Complete runnable examples in different languages to use as base for your project. ⚙️ Demos → Compatibility The Open GoPro API is supported on the following cameras / firmware versions: Camera Minimum FW Version HERO13 Black v01.10.00 HERO12 Black v01.10.00 HERO11 Black Mini v01.10.00 HERO11 Black v01.10.00 HERO10 Black v01.10.00 HERO9 Black v01.70.00 While we strive to provide the same API functionality and logic for all newly launched cameras, minor changes are sometimes necessary. These are typically a consequence of HW component upgrades or improving or optimizing FW architecture. Therefore support for some functions and commands might be model-specific. This is described in the compatibility tables in the documentation. Interfaces Users can interact with the camera over BLE, WiFi, or wired USB. Both Wifi and USB are operated through HTTP server with identical commands. It is important to note that due to hard constraints of power and the hardware design, some commands in Wi-Fi are not available in BLE, and vice-versa. Bluetooth Low Energy (BLE) BLE is the fastest way to control the cameras and allow command and control functionality. BLE advertising is used for initial camera pairing. BLE is a requirement for any type of Wireless control since camera WiFi must be enabled upon each connection via BLE. WiFi Wi-Fi needs to be switched on by a BLE command. Thanks to bigger data throughput than BLE, Wi-Fi allows not only for command &amp; control, but also for video streaming and media manipulation. Our newest cameras can act either as a Wi-Fi Access Point (creating its own Wi-fi network to which other devices connect) or as a Station (connecting as IP endpoint to any existing Wi-Fi network, similar to any other IP camera). API users can choose which mode to use. For more information, see the HTTP Specification. USB The USB connection can provide both data transfer and power to the camera. The power provided by the USB is sufficient for the camera to run indefinitely without the internal battery. However, the wired connection doesn’t allow for programmatic power on and off. Camera needs to be switched on manually or via BLE, and after the camera goes to sleep, it must be “woken up” again with a button press or via BLE. For monitoring and other use cases where the camera must be operated and switched on and off only via USB cable, there is a workaround with the Labs firmware - more detail in the FAQ. Control Camera and Record Remotely Here is a summary of currently supported per-interface features: Feature BLE WiFi USB Retrieve Camera State ✔️ ✔️ ✔️ Change Settings / Mode ✔️ ✔️ ✔️ Encode (Press shutter) ✔️ ✔️ ✔️ Stream Video   ✔️ ✔️ Media Management   ✔️ ✔️ Metadata Extraction   ✔️ ✔️ Camera Connect / Wake ✔️     BLE, WiFi, and USB can be used to change settings and modes, start and stop capture, query remaining battery life, SD card capacity, or camera status (such as “is it recording?”).  Most command-and-control functionality is disabled while the camera is recording video or is otherwise busy. There are 3 main recording modes for the cameras: photo, video, and timelapse. Within each mode, one can choose different frame rates, resolutions and FOV options. Note that not all cameras have all 3 recording modes, not all settings combinations are available for all camera models. The specification section links to json and xls files that show all available setting combinations per camera model. Stream Video Besides recording, the cameras can also stream video feed. The API provides 3 different ways to stream videos directly from the cameras, either via USB or wireless connection. Stream Type Description WiFi USB Record while Streaming Stream Initiation Wi-Fi Mode(s) Preview Moderate video quality, primarily for framing         \\ Stream Low latency stabilization ✔️ ✔️ Hero 12 [HTTP](https://gopro.github.io/OpenGoPro/httptag/Preview-Stream) AP, STA \\   Low power consumption     and later     Webcam Cinematic video quality         AP, STA \\ Mode Optional low latency stabilization ✔️ ✔️   [HTTP](https://gopro.github.io/OpenGoPro/httptag/Webcam)   Live Cinematic video quality         STA \\ Stream Optional hypersmooth stabilization ✔️   ✔️ [BLE Protobuf](https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html)   Each of the streaming types has different resolutions, bit rates, imaging pipelines, and different levels of configurability. Refer to the FAQ. Manipulate and Transfer Media Files When the camera records video, time lapse, or photo, the media is saved on the SD card with filenames according to the GoPro File Naming Convention. The cameras always record two versions of each video file Full resolution based on the selected settings (.mp4) Low resolution video proxy (.lrv) that can be used for editing or other operations where file size matters. The lrv file type can be renamed to mp4 and used for playback or further editing. Both versions exist in the same folder on the SD card. In addition, the cameras generate a thumbnail image (.thm) for each media file. The thm file type can be changed to jpeg if required. All three file types can be accessed, deleted, or copied via API commands. Extract Metadata GoPro cameras write metadata in each file, using a proprietary GPMF format. The metadata contains information including gyroscope, accelerometer, GPS, imaging-specific metadata, and several computed metrics such as scene classification. The metadata file cannot be edited or read while the camera is recording but can be accessed after the file has been written either entirely or selectively for a specific metric such as GPS. Use Multiple Cameras Simultaneously Controlling multiple cameras from one client is supported via BLE, Wifi, and USB with varying functionality depending on the protocol used. Refer to the table below. Protocol Available Functionality Notes BLE Command and control of several cameras Each camera can connect only to one BLE-enabled device at a time WiFi Command and control in Wi-fi station mode (COHN) COHN is available only from HERO12 onwards \\   Webcam and Preview Stream in Wi-fi station mode (COHN) Live-streaming (RTMP) RTMP stream must be initiated via BLE USB Command and control and streaming via Webcam mode Available only from HERO11 onward Use GoPro Cloud and Editing Engine The GoPro ecosystem includes a multitude of ways to edit, store, and replay content which are currently available for end-users as a part of paid subscription programs. Even when integrated into your ecosystem, GoPro cameras can take advantage of cloud backup and editing tools provided by GoPro including auto-upload to the cloud, automatic editing, and native live streaming. The GoPro cloud interface has been tailored to the needs of individual consumers. If you are interested in commercial usage, reach out to our business development team.",
+            "excerpt": "Getting Started Open GoPro is an API for interacting with GoPro cameras that is developed and managed directly by GoPro. It provides developers and companies with an easy-to-use programming interface and helps integrate the cameras into their ecosystems. The API works with off-the-shelf cameras with standard firmware, is free-to-use under MIT license, and publicly available online on GitHub. Docs Detailed Bluetooth Low Energy (BLE) and HTTP Interface Specifications. BLE Spec→ HTTP Spec → Tutorials Walk-through tutorials in different languages / frameworks for getting started. ✏️ Tutorials → Demos Complete runnable examples in different languages to use as base for your project. ⚙️ Demos → Compatibility The Open GoPro API is supported on the following cameras / firmware versions: | Camera | Minimum FW Version | | ————————————————————————————————————————– | :———————————————-: | | While we strive to provide the same API functionality and logic for all newly launched cameras, minor changes are sometimes necessary. These are typically a consequence of HW component upgrades or improving or optimizing FW architecture. Therefore support for some functions and commands might be model-specific. This is described in the compatibility tables in the documentation. Interfaces Users can interact with the camera over BLE, WiFi, or wired USB. Both Wifi and USB are operated through HTTP server with identical commands. It is important to note that due to hard constraints of power and the hardware design, some commands in Wi-Fi are not available in BLE, and vice-versa. Bluetooth Low Energy (BLE) BLE is the fastest way to control the cameras and allow command and control functionality. BLE advertising is used for initial camera pairing. BLE is a requirement for any type of Wireless control since camera WiFi must be enabled upon each connection via BLE. WiFi Wi-Fi needs to be switched on by a BLE command. Thanks to bigger data throughput than BLE, Wi-Fi allows not only for command &amp; control, but also for video streaming and media manipulation. Our newest cameras can act either as a Wi-Fi Access Point (creating its own Wi-fi network to which other devices connect) or as a Station (connecting as IP endpoint to any existing Wi-Fi network, similar to any other IP camera). API users can choose which mode to use. For more information, see the HTTP Specification. USB The USB connection can provide both data transfer and power to the camera. The power provided by the USB is sufficient for the camera to run indefinitely without the internal battery. However, the wired connection doesn’t allow for programmatic power on and off. Camera needs to be switched on manually or via BLE, and after the camera goes to sleep, it must be “woken up” again with a button press or via BLE. For monitoring and other use cases where the camera must be operated and switched on and off only via USB cable, there is a workaround with the Labs firmware - more detail in the FAQ. Control Camera and Record Remotely Here is a summary of currently supported per-interface features: Feature BLE WiFi USB Retrieve Camera State ✔️ ✔️ ✔️ Change Settings / Mode ✔️ ✔️ ✔️ Encode (Press shutter) ✔️ ✔️ ✔️ Stream Video   ✔️ ✔️ Media Management   ✔️ ✔️ Metadata Extraction   ✔️ ✔️ Camera Connect / Wake ✔️     BLE, WiFi, and USB can be used to change settings and modes, start and stop capture, query remaining battery life, SD card capacity, or camera status (such as “is it recording?”).  Most command-and-control functionality is disabled while the camera is recording video or is otherwise busy. There are 3 main recording modes for the cameras: photo, video, and timelapse. Within each mode, one can choose different frame rates, resolutions and FOV options. Note that not all cameras have all 3 recording modes, not all settings combinations are available for all camera models. The specification section links to json and xls files that show all available setting combinations per camera model. Stream Video Besides recording, the cameras can also stream video feed. The API provides 3 different ways to stream videos directly from the cameras, either via USB or wireless connection. Stream Type Description WiFi USB Record while Streaming Stream Initiation Wi-Fi Mode(s) Preview Moderate video quality, primarily for framing         \\ Stream Low latency stabilization ✔️ ✔️ Hero 12 [HTTP](https://gopro.github.io/OpenGoPro/httptag/Preview-Stream) AP, STA \\   Low power consumption     and later     Webcam Cinematic video quality         AP, STA \\ Mode Optional low latency stabilization ✔️ ✔️   [HTTP](https://gopro.github.io/OpenGoPro/httptag/Webcam)   Live Cinematic video quality         STA \\ Stream Optional hypersmooth stabilization ✔️   ✔️ [BLE Protobuf](https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html)   Each of the streaming types has different resolutions, bit rates, imaging pipelines, and different levels of configurability. Refer to the FAQ. Manipulate and Transfer Media Files When the camera records video, time lapse, or photo, the media is saved on the SD card with filenames according to the GoPro File Naming Convention. The cameras always record two versions of each video file Full resolution based on the selected settings (.mp4) Low resolution video proxy (.lrv) that can be used for editing or other operations where file size matters. The lrv file type can be renamed to mp4 and used for playback or further editing. Both versions exist in the same folder on the SD card. In addition, the cameras generate a thumbnail image (.thm) for each media file. The thm file type can be changed to jpeg if required. All three file types can be accessed, deleted, or copied via API commands. Extract Metadata GoPro cameras write metadata in each file, using a proprietary GPMF format. The metadata contains information including gyroscope, accelerometer, GPS, imaging-specific metadata, and several computed metrics such as scene classification. The metadata file cannot be edited or read while the camera is recording but can be accessed after the file has been written either entirely or selectively for a specific metric such as GPS. Use Multiple Cameras Simultaneously Controlling multiple cameras from one client is supported via BLE, Wifi, and USB with varying functionality depending on the protocol used. Refer to the table below. Protocol Available Functionality Notes BLE Command and control of several cameras Each camera can connect only to one BLE-enabled device at a time WiFi Command and control in Wi-fi station mode (COHN) COHN is available only from HERO12 onwards \\   Webcam and Preview Stream in Wi-fi station mode (COHN) Live-streaming (RTMP) RTMP stream must be initiated via BLE USB Command and control and streaming via Webcam mode Available only from HERO11 onward Use GoPro Cloud and Editing Engine The GoPro ecosystem includes a multitude of ways to edit, store, and replay content which are currently available for end-users as a part of paid subscription programs. Even when integrated into your ecosystem, GoPro cameras can take advantage of cloud backup and editing tools provided by GoPro including auto-upload to the cloud, automatic editing, and native live streaming. The GoPro cloud interface has been tailored to the needs of individual consumers. If you are interested in commercial usage, reach out to our business development team.",
             "categories": [],
             "tags": [],
             "url": "/OpenGoPro/#"
@@ -29,7 +29,7 @@ var jekyllStore = [
         },
         {
             "title": "Tutorial 2: Send BLE TLV Commands: ",
-            "excerpt": "This document will provide a walk-through tutorial to use the Open GoPro BLE Interface to send Type-Length-Value (TLV)commands and receive TLV responses. Commands in this sense are operations that are initiated by either: Writing to the Command Request UUID and receiving responses via the Command Response UUID. Writing to the Setting UUID and receiving responses via the Setting Response UUID A list of TLV commands can be found in the [Command ID Table]/OpenGoPro/ble/protocol/id_tables.htmlcommand-ids). This tutorial only considers sending these as one-off commands. That is, it does not consider state management / synchronization when sending multiple commands. This will be discussed in a future lab. Requirements It is assumed that the hardware and software requirements from the connecting BLE tutorial are present and configured correctly. It is suggested that you have first completed the connecting BLE tutorial before going through this tutorial. Just Show me the Demo(s)!! python kotlin Each of the scripts for this tutorial can be found in the Tutorial 2 directory. Python &gt;= 3.9 and &lt; 3.12 must be used as specified in the requirements Set Shutter You can test sending the Set Shutter command to your camera through BLE using the following script: $ python ble_command_set_shutter.py See the help for parameter definitions: $ python ble_command_set_shutter.py --help usage: ble_command_set_shutter.py [-h] [-i IDENTIFIER] Connect to a GoPro camera, set the shutter on, wait 2 seconds, then set the shutter off. optional arguments: -h, --help show this help message and exit -i IDENTIFIER, --identifier IDENTIFIER Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to Load Preset Group You can test sending the Load Preset Group command to your camera through BLE using the following script: $ python ble_command_load_group.py See the help for parameter definitions: $ python ble_command_load_group.py --help usage: ble_command_load_group.py [-h] [-i IDENTIFIER] Connect to a GoPro camera, then change the Preset Group to Video. optional arguments: -h, --help show this help message and exit -i IDENTIFIER, --identifier IDENTIFIER Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to Set the Video Resolution You can test sending the Set Video Resolution command to your camera through BLE using the following script: $ python ble_command_set_resolution.py See the help for parameter definitions: $ python ble_command_set_resolution.py --help usage: ble_command_set_resolution.py [-h] [-i IDENTIFIER] Connect to a GoPro camera, then change the resolution to 1080. optional arguments: -h, --help show this help message and exit -i IDENTIFIER, --identifier IDENTIFIER Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to Set the Frames Per Second (FPS) You can test sending the Set FPS command to your camera through BLE using the following script: $ python ble_command_set_fps.py See the help for parameter definitions: $ python ble_command_set_fps.py --help usage: ble_command_set_fps.py [-h] [-i IDENTIFIER] Connect to a GoPro camera, then attempt to change the fps to 240. optional arguments: -h, --help show this help message and exit -i IDENTIFIER, --identifier IDENTIFIER Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to The Kotlin file for this tutorial can be found on Github. To perform the tutorial, run the Android Studio project, select “Tutorial 2” from the dropdown and click on “Perform.” This requires that a GoPro is already connected via BLE, i.e. that Tutorial 1 was already run. You can check the BLE status at the top of the app. Perform Tutorial 2 This will start the tutorial and log to the screen as it executes. When the tutorial is complete, click “Exit Tutorial” to return to the Tutorial selection screen. Setup We must first connect as was discussed in the connecting BLE tutorial. In this case, however, we are defining a functional (albeit naive) notification handler that will: Log byte data and handle that the notification was received on Check if the response is what we expected Set an event to notify the writer that the response was received This is a very simple handler; response parsing will be expanded upon in the next tutorial. python kotlin async def notification_handler(characteristic: BleakGATTCharacteristic, data: bytearray) -&gt; None: logger.info(f'Received response at handle {characteristic.handle}: {data.hex(\":\")}') If this is the correct handle and the status is success, the command was a success if client.services.characteristics[characteristic.handle].uuid == response_uuid and data[2] == 0x00: logger.info(\"Command sent successfully\") Anything else is unexpected. This shouldn't happen else: logger.error(\"Unexpected response\") Notify the writer event.set() The event used above is a simple synchronization event that is only alerting the writer that a notification was received. For now, we’re just checking that the handle matches what is expected and that the status (third byte) is success (0x00). private val receivedData: Channel&lt;UByteArray&gt; = Channel() private fun naiveNotificationHandler(characteristic: UUID, data: UByteArray) { if ((characteristic == GoProUUID.CQ_COMMAND_RSP.uuid)) { CoroutineScope(Dispatchers.IO).launch { receivedData.send(data) } } } private val bleListeners by lazy { BleEventListener().apply { onNotification = ::naiveNotificationHandler } } The handler is simply verifying that the response was received on the correct UIUD and then notifying the received data. We are registering this notification handler with the BLE API before sending any data requests as such: ble.registerListener(goproAddress, bleListeners) There is much more to the synchronization and data parsing than this but this will be discussed in future tutorials. Command Overview All commands follow the same procedure: Write to the relevant request UUID Receive confirmation from GoPro (via notification from relevant response UUID) that request was received. GoPro reacts to command The notification response only indicates that the request was received and whether it was accepted or rejected. The relevant behavior of the GoPro must be observed to verify when the command’s effects have been applied. Here is the procedure from power-on to finish: Open GoPro user deviceOpen GoPro user deviceGoProGoProdevices are connected as in Tutorial 1Command Request (Write to Request UUID)Command Response (via notification to Response UUID)Apply effects of command when able Sending Commands Now that we are are connected, paired, and have enabled notifications (registered to our defined callback), we can send some commands. First, we need to define the UUIDs to write to / receive responses from, which are: python kotlin We’ll define these and any others used throughout the tutorials and store them in a GoProUUID class: class GoProUuid: COMMAND_REQ_UUID = GOPRO_BASE_UUID.format(\"0072\") COMMAND_RSP_UUID = GOPRO_BASE_UUID.format(\"0073\") SETTINGS_REQ_UUID = GOPRO_BASE_UUID.format(\"0074\") SETTINGS_RSP_UUID = GOPRO_BASE_UUID.format(\"0075\") QUERY_REQ_UUID = GOPRO_BASE_UUID.format(\"0076\") QUERY_RSP_UUID = GOPRO_BASE_UUID.format(\"0077\") WIFI_AP_SSID_UUID = GOPRO_BASE_UUID.format(\"0002\") WIFI_AP_PASSWORD_UUID = GOPRO_BASE_UUID.format(\"0003\") NETWORK_MANAGEMENT_REQ_UUID = GOPRO_BASE_UUID.format(\"0091\") NETWORK_MANAGEMENT_RSP_UUID = GOPRO_BASE_UUID.format(\"0092\") We’re using the GOPRO_BASE_UUID string imported from the module’s __init__.py to build these. These are defined in the GoProUUID class: const val GOPRO_UUID = \"0000FEA6-0000-1000-8000-00805f9b34fb\" const val GOPRO_BASE_UUID = \"b5f9%s-aa8d-11e3-9046-0002a5d5c51b\" enum class GoProUUID(val uuid: UUID) { WIFI_AP_PASSWORD(UUID.fromString(GOPRO_BASE_UUID.format(\"0003\"))), WIFI_AP_SSID(UUID.fromString(GOPRO_BASE_UUID.format(\"0002\"))), CQ_COMMAND(UUID.fromString(GOPRO_BASE_UUID.format(\"0072\"))), CQ_COMMAND_RSP(UUID.fromString(GOPRO_BASE_UUID.format(\"0073\"))), CQ_SETTING(UUID.fromString(GOPRO_BASE_UUID.format(\"0074\"))), CQ_SETTING_RSP(UUID.fromString(GOPRO_BASE_UUID.format(\"0075\"))), CQ_QUERY(UUID.fromString(GOPRO_BASE_UUID.format(\"0076\"))), CQ_QUERY_RSP(UUID.fromString(GOPRO_BASE_UUID.format(\"0077\"))); } Set Shutter The first command we will be sending is Set Shutter, which at byte level is: Command Bytes Set Shutter Off 0x03 0x01 0x01 0x00 Set Shutter On 0x03 0x01 0x01 0x01 Now, let’s write the bytes to the “Command Request” UUID to turn the shutter on and start encoding! python kotlin request_uuid = GoProUuid.COMMAND_REQ_UUID event.clear() request = bytes([3, 1, 1, 1]) await client.write_gatt_char(request_uuid.value, request, response=True) await event.wait() Wait to receive the notification response We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback. val setShutterOnCmd = ubyteArrayOf(0x03U, 0x01U, 0x01U, 0x01U) ble.writeCharacteristic(goproAddress, GoProUUID.CQ_COMMAND.uuid, setShutterOnCmd) // Wait to receive the notification response, then check its status checkStatus(receivedData.receive()) We’re waiting to receive the data from the queue that is posted to in the notification handler when the response is received. You should hear the camera beep and it will either take a picture or start recording depending on what mode it is in. Also note that we have received the “Command Status” notification response from the Command Response characteristic since we enabled its notifications in Enable Notifications. This can be seen in the demo log: python kotlin Setting the shutter on Writing to GoProUuid.COMMAND_REQ_UUID: 03:01:01:01 Received response at GoProUuid.COMMAND_RSP_UUID: 02:01:00 Command sent successfully Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==&gt; 03:01:01:01 Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 02:01:00 Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:01:00 Command sent successfully As expected, the response was received on the correct UUID and the status was “success” (third byte == 0x00). If you are recording a video, continue reading to set the shutter off: We’re waiting 2 seconds in case you are in video mode so that we can capture a 2 second video. python kotlin await asyncio.sleep(2) request_uuid = GoProUuid.COMMAND_REQ_UUID request = bytes([3, 1, 1, 0]) event.clear() await client.write_gatt_char(request_uuid.value, request, response=True) await event.wait() Wait to receive the notification response This will log in the console as follows: Setting the shutter off Writing to GoProUuid.COMMAND_REQ_UUID: 03:01:01:00 Received response at GoProUuid.COMMAND_RSP_UUID: 02:01:00 Command sent successfully delay(2000) val setShutterOffCmd = ubyteArrayOf(0x03U, 0x01U, 0x01U, 0x00U) // Wait to receive the notification response, then check its status checkStatus(receivedData.receive()) We’re waiting to receive the data from the queue that is posted to in the notification handler when the response is received. This will log as such: Setting the shutter off Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==&gt; 03:01:01:00 Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 02:01:00 Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:01:00 Command sent successfully Load Preset Group The next command we will be sending is Load Preset Group, which is used to toggle between the 3 groups of presets (video, photo, and timelapse). At byte level, the commands are: Command Bytes Load Video Preset Group 0x04 0x3E 0x02 0x03 0xE8 Load Photo Preset Group 0x04 0x3E 0x02 0x03 0xE9 Load Timelapse Preset Group 0x04 0x3E 0x02 0x03 0xEA Now, let’s write the bytes to the “Command Request” UUID to change the preset group to Video! python kotlin request_uuid = GoProUuid.COMMAND_REQ_UUID request = bytes([0x04, 0x3E, 0x02, 0x03, 0xE8]) event.clear() await client.write_gatt_char(request_uuid.value, request, response=True) await event.wait() Wait to receive the notification response We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback. val loadPreset = ubyteArrayOf(0x04U, 0x3EU, 0x02U, 0x03U, 0xE8U) ble.writeCharacteristic(goproAddress, GoProUUID.CQ_COMMAND.uuid, loadPreset) // Wait to receive the notification response, then check its status checkStatus(receivedData.receive()) We’re waiting to receive the data from the queue that is posted to in the notification handler when the response is received. You should hear the camera beep and move to the Video Preset Group. You can tell this by the logo at the top middle of the screen: Load Preset Group Also note that we have received the “Command Status” notification response from the Command Response characteristic since we enabled its notifications in Enable Notifications. This can be seen in the demo log: python kotlin Loading the video preset group... Sending to GoProUuid.COMMAND_REQ_UUID: 04:3e:02:03:e8 Received response at GoProUuid.COMMAND_RSP_UUID: 02:3e:00 Command sent successfully Loading Video Preset Group Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==&gt; 04:3E:02:03:E8 Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 02:3E:00 Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:3E:00 Command status received Command sent successfully As expected, the response was received on the correct UUID and the status was “success” (third byte == 0x00). Set the Video Resolution The next command we will be sending is Set Setting to set the Video Resolution. This is used to change the value of the Video Resolution setting. It is important to note that this only affects video resolution (not photo). Therefore, the Video Preset Group must be active in order for it to succeed. This can be done either manually through the camera UI or by sending Load Preset Group. This resolution only affects the current video preset. Each video preset can have its own independent values for video resolution. Here are some of the byte level commands for various video resolutions. Command Bytes Set Video Resolution to 1080 0x03 0x02 0x01 0x09 Set Video Resolution to 2.7K 0x03 0x02 0x01 0x04 Set Video Resolution to 5K 0x03 0x02 0x01 0x18 Now, let’s write the bytes to the “Setting Request” UUID to change the video resolution to 1080! python kotlin request_uuid = GoProUuid.COMMAND_REQ_UUID request = bytes([0x03, 0x02, 0x01, 0x09]) event.clear() await client.write_gatt_char(request_uuid.value, request, response=True) await event.wait() Wait to receive the notification response We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback. val setResolution = ubyteArrayOf(0x03U, 0x02U, 0x01U, 0x09U) ble.writeCharacteristic(goproAddress, GoProUUID.CQ_COMMAND.uuid, setResolution) // Wait to receive the notification response, then check its status checkStatus(receivedData.receive()) We’re waiting to receive the data from the queue that is posted to in the notification handler when the response is received. You should see the video resolution change to 1080 in the pill in the bottom-middle of the screen: Set Video Resolution Also note that we have received the “Command Status” notification response from the Command Response characteristic since we enabled its notifications in Enable Notifications. This can be seen in the demo log: python kotlin Setting the video resolution to 1080 Writing to GoProUuid.SETTINGS_REQ_UUID: 03:02:01:09 Received response at GoProUuid.SETTINGS_RSP_UUID: 02:02:00 Command sent successfully Setting resolution to 1080 Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==&gt; 03:02:01:09 Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 02:02:00 Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:02:00 Command status received Command sent successfully As expected, the response was received on the correct UUID and the status was “success” (third byte == 0x00). If the Preset Group was not Video, the status will not be success. Set the Frames Per Second (FPS) The next command we will be sending is Set Setting to set the FPS. This is used to change the value of the FPS setting. It is important to note that this setting is dependent on the video resolution. That is, certain FPS values are not valid with certain resolutions. In general, higher resolutions only allow lower FPS values. Other settings such as the current anti-flicker value may further limit possible FPS values. Futhermore, these capabilities all vary by camera. Check the camera capabilities to see which FPS values are valid for given use cases. Therefore, for this step of the tutorial, it is assumed that the resolution has been set to 1080 as in Set the Video Resolution. Here are some of the byte level commands for various FPS values. Command Bytes Set FPS to 24 0x03 0x03 0x01 0x0A Set FPS to 60 0x03 0x03 0x01 0x05 Set FPS to 240 0x03 0x03 0x01 0x00 Note that the possible FPS values can vary based on the Camera that is being operated on. Now, let’s write the bytes to the “Setting Request” UUID to change the FPS to 240! python kotlin request_uuid = GoProUuid.COMMAND_REQ_UUID request = bytes([0x03, 0x03, 0x01, 0x00]) event.clear() await client.write_gatt_char(request_uuid.value, request, response=True) await event.wait() Wait to receive the notification response We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback. val setFps = ubyteArrayOf(0x03U, 0x03U, 0x01U, 0x00U) ble.writeCharacteristic(goproAddress, GoProUUID.CQ_COMMAND.uuid, setFps) // Wait to receive the notification response, then check its status checkStatus(receivedData.receive()) We’re waiting to receive the data from the queue that is posted to in the notification handler when the response is received. You should see the FPS change to 240 in the pill in the bottom-middle of the screen: Set FPS Also note that we have received the “Command Status” notification response from the Command Response characteristic since we enabled its notifications in Enable Notifications.. This can be seen in the demo log: python kotlin Setting the fps to 240 Writing to GoProUuid.SETTINGS_REQ_UUID: 03:03:01:00 Received response at GoProUuid.SETTINGS_RSP_UUID: 02:03:00 Command sent successfully Setting the FPS to 240 Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==&gt; 03:03:01:00 Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 02:03:00 Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:03:00 Command status received Command sent successfully As expected, the response was received on the correct UUID and the status was “success” (third byte == 0x00). If the video resolution was higher, for example 5K, this would fail. Quiz time! 📚 ✏️ Which of the following is not a real preset group? A: Timelapse B: Photo C: Burst D: Video Submit Answer Correct!! 😃 Incorrect!! 😭 The correct answer is C. There are 3 preset groups (Timelapse, Photo, and Video). These can be set via the Load Preset Group command. True or False: Every combination of resolution and FPS value is valid. A: True B: False Submit Answer Correct!! 😃 Incorrect!! 😭 The correct answer is B. Each resolution can support all or only some FPS values. You can find out which resolutions support which FPS values by consulting the capabilities section of the spec. True or False: Every camera supports the same combination of resolution and FPS values. A: True B: False Submit Answer Correct!! 😃 Incorrect!! 😭 The correct answer is B. The only way to know what values are supported is to first check the Open GoPro version. See the relevant version of the BLE or WiFi spec to see what is supported. Troubleshooting See the first tutorial’s troubleshooting section. Good Job! Congratulations 🤙 You can now send any of the other BLE commands detailed in the Open GoPro documentation in a similar manner. To see how to parse responses, proceed to the next tutorial.",
+            "excerpt": "This document will provide a walk-through tutorial to use the Open GoPro BLE Interface to send Type-Length-Value (TLV)commands and receive TLV responses. Commands in this sense are operations that are initiated by either: Writing to the Command Request UUID and receiving responses via the Command Response UUID. Writing to the Setting UUID and receiving responses via the Setting Response UUID A list of TLV commands can be found in the [Command ID Table]/OpenGoPro/ble/protocol/id_tables.htmlcommand-ids). This tutorial only considers sending these as one-off commands. That is, it does not consider state management / synchronization when sending multiple commands. This will be discussed in a future lab. Requirements It is assumed that the hardware and software requirements from the connecting BLE tutorial are present and configured correctly. It is suggested that you have first completed the connecting BLE tutorial before going through this tutorial. Just Show me the Demo(s)!! python kotlin Each of the scripts for this tutorial can be found in the Tutorial 2 directory. Python &gt;= 3.9 and &lt; 3.12 must be used as specified in the requirements Set Shutter You can test sending the Set Shutter command to your camera through BLE using the following script: $ python ble_command_set_shutter.py See the help for parameter definitions: $ python ble_command_set_shutter.py --help usage: ble_command_set_shutter.py [-h] [-i IDENTIFIER] Connect to a GoPro camera, set the shutter on, wait 2 seconds, then set the shutter off. optional arguments: -h, --help show this help message and exit -i IDENTIFIER, --identifier IDENTIFIER Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to Load Preset Group You can test sending the Load Preset Group command to your camera through BLE using the following script: $ python ble_command_load_group.py See the help for parameter definitions: $ python ble_command_load_group.py --help usage: ble_command_load_group.py [-h] [-i IDENTIFIER] Connect to a GoPro camera, then change the Preset Group to Video. optional arguments: -h, --help show this help message and exit -i IDENTIFIER, --identifier IDENTIFIER Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to Set the Video Resolution You can test sending the Set Video Resolution command to your camera through BLE using the following script: $ python ble_command_set_resolution.py See the help for parameter definitions: $ python ble_command_set_resolution.py --help usage: ble_command_set_resolution.py [-h] [-i IDENTIFIER] Connect to a GoPro camera, then change the resolution to 1080. optional arguments: -h, --help show this help message and exit -i IDENTIFIER, --identifier IDENTIFIER Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to Set the Frames Per Second (FPS) You can test sending the Set FPS command to your camera through BLE using the following script: $ python ble_command_set_fps.py See the help for parameter definitions: $ python ble_command_set_fps.py --help usage: ble_command_set_fps.py [-h] [-i IDENTIFIER] Connect to a GoPro camera, then attempt to change the fps to 240. optional arguments: -h, --help show this help message and exit -i IDENTIFIER, --identifier IDENTIFIER Last 4 digits of GoPro serial number, which is the last 4 digits of the default camera SSID. If not used, first discovered GoPro will be connected to The Kotlin file for this tutorial can be found on Github. To perform the tutorial, run the Android Studio project, select “Tutorial 2” from the dropdown and click on “Perform.” This requires that a GoPro is already connected via BLE, i.e. that Tutorial 1 was already run. You can check the BLE status at the top of the app. Perform Tutorial 2 This will start the tutorial and log to the screen as it executes. When the tutorial is complete, click “Exit Tutorial” to return to the Tutorial selection screen. Setup We must first connect as was discussed in the connecting BLE tutorial. In this case, however, we are defining a functional (albeit naive) notification handler that will: Log byte data and handle that the notification was received on Check if the response is what we expected Set an event to notify the writer that the response was received This is a very simple handler; response parsing will be expanded upon in the next tutorial. python kotlin async def notification_handler(characteristic: BleakGATTCharacteristic, data: bytearray) -&gt; None: logger.info(f'Received response at handle {characteristic.handle}: {data.hex(\":\")}') If this is the correct handle and the status is success, the command was a success if client.services.characteristics[characteristic.handle].uuid == response_uuid and data[2] == 0x00: logger.info(\"Command sent successfully\") Anything else is unexpected. This shouldn't happen else: logger.error(\"Unexpected response\") Notify the writer event.set() The event used above is a simple synchronization event that is only alerting the writer that a notification was received. For now, we’re just checking that the handle matches what is expected and that the status (third byte) is success (0x00). private val receivedData: Channel&lt;UByteArray&gt; = Channel() private fun naiveNotificationHandler(characteristic: UUID, data: UByteArray) { if ((characteristic == GoProUUID.CQ_COMMAND_RSP.uuid)) { CoroutineScope(Dispatchers.IO).launch { receivedData.send(data) } } } private val bleListeners by lazy { BleEventListener().apply { onNotification = ::naiveNotificationHandler } } The handler is simply verifying that the response was received on the correct UIUD and then notifying the received data. We are registering this notification handler with the BLE API before sending any data requests as such: ble.registerListener(goproAddress, bleListeners) There is much more to the synchronization and data parsing than this but this will be discussed in future tutorials. Command Overview All commands follow the same procedure: Write to the relevant request UUID Receive confirmation from GoPro (via notification from relevant response UUID) that request was received. GoPro reacts to command The notification response only indicates that the request was received and whether it was accepted or rejected. The relevant behavior of the GoPro must be observed to verify when the command’s effects have been applied. Here is the procedure from power-on to finish: Open GoPro user deviceOpen GoPro user deviceGoProGoProdevices are connected as in Tutorial 1Command Request (Write to Request UUID)Command Response (via notification to Response UUID)Apply effects of command when able Sending Commands Now that we are are connected, paired, and have enabled notifications (registered to our defined callback), we can send some commands. First, we need to define the UUIDs to write to / receive responses from, which are: python kotlin We’ll define these and any others used throughout the tutorials and store them in a GoProUUID class: class GoProUuid: COMMAND_REQ_UUID = GOPRO_BASE_UUID.format(\"0072\") COMMAND_RSP_UUID = GOPRO_BASE_UUID.format(\"0073\") SETTINGS_REQ_UUID = GOPRO_BASE_UUID.format(\"0074\") SETTINGS_RSP_UUID = GOPRO_BASE_UUID.format(\"0075\") QUERY_REQ_UUID = GOPRO_BASE_UUID.format(\"0076\") QUERY_RSP_UUID = GOPRO_BASE_UUID.format(\"0077\") WIFI_AP_SSID_UUID = GOPRO_BASE_UUID.format(\"0002\") WIFI_AP_PASSWORD_UUID = GOPRO_BASE_UUID.format(\"0003\") NETWORK_MANAGEMENT_REQ_UUID = GOPRO_BASE_UUID.format(\"0091\") NETWORK_MANAGEMENT_RSP_UUID = GOPRO_BASE_UUID.format(\"0092\") We’re using the GOPRO_BASE_UUID string imported from the module’s __init__.py to build these. These are defined in the GoProUUID class: const val GOPRO_UUID = \"0000FEA6-0000-1000-8000-00805f9b34fb\" const val GOPRO_BASE_UUID = \"b5f9%s-aa8d-11e3-9046-0002a5d5c51b\" enum class GoProUUID(val uuid: UUID) { WIFI_AP_PASSWORD(UUID.fromString(GOPRO_BASE_UUID.format(\"0003\"))), WIFI_AP_SSID(UUID.fromString(GOPRO_BASE_UUID.format(\"0002\"))), CQ_COMMAND(UUID.fromString(GOPRO_BASE_UUID.format(\"0072\"))), CQ_COMMAND_RSP(UUID.fromString(GOPRO_BASE_UUID.format(\"0073\"))), CQ_SETTING(UUID.fromString(GOPRO_BASE_UUID.format(\"0074\"))), CQ_SETTING_RSP(UUID.fromString(GOPRO_BASE_UUID.format(\"0075\"))), CQ_QUERY(UUID.fromString(GOPRO_BASE_UUID.format(\"0076\"))), CQ_QUERY_RSP(UUID.fromString(GOPRO_BASE_UUID.format(\"0077\"))); } Set Shutter The first command we will be sending is Set Shutter, which at byte level is: Command Bytes Set Shutter Off 0x03 0x01 0x01 0x00 Set Shutter On 0x03 0x01 0x01 0x01 Now, let’s write the bytes to the “Command Request” UUID to turn the shutter on and start encoding! python kotlin request_uuid = GoProUuid.COMMAND_REQ_UUID event.clear() request = bytes([3, 1, 1, 1]) await client.write_gatt_char(request_uuid.value, request, response=True) await event.wait() Wait to receive the notification response We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback. val setShutterOnCmd = ubyteArrayOf(0x03U, 0x01U, 0x01U, 0x01U) ble.writeCharacteristic(goproAddress, GoProUUID.CQ_COMMAND.uuid, setShutterOnCmd) // Wait to receive the notification response, then check its status checkStatus(receivedData.receive()) We’re waiting to receive the data from the queue that is posted to in the notification handler when the response is received. You should hear the camera beep and it will either take a picture or start recording depending on what mode it is in. Also note that we have received the “Command Status” notification response from the Command Response characteristic since we enabled its notifications in Enable Notifications. This can be seen in the demo log: python kotlin Setting the shutter on Writing to GoProUuid.COMMAND_REQ_UUID: 03:01:01:01 Received response at GoProUuid.COMMAND_RSP_UUID: 02:01:00 Command sent successfully Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==&gt; 03:01:01:01 Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 02:01:00 Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:01:00 Command sent successfully As expected, the response was received on the correct UUID and the status was “success” (third byte == 0x00). If you are recording a video, continue reading to set the shutter off: We’re waiting 2 seconds in case you are in video mode so that we can capture a 2 second video. python kotlin await asyncio.sleep(2) request_uuid = GoProUuid.COMMAND_REQ_UUID request = bytes([3, 1, 1, 0]) event.clear() await client.write_gatt_char(request_uuid.value, request, response=True) await event.wait() Wait to receive the notification response This will log in the console as follows: Setting the shutter off Writing to GoProUuid.COMMAND_REQ_UUID: 03:01:01:00 Received response at GoProUuid.COMMAND_RSP_UUID: 02:01:00 Command sent successfully delay(2000) val setShutterOffCmd = ubyteArrayOf(0x03U, 0x01U, 0x01U, 0x00U) // Wait to receive the notification response, then check its status checkStatus(receivedData.receive()) We’re waiting to receive the data from the queue that is posted to in the notification handler when the response is received. This will log as such: Setting the shutter off Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==&gt; 03:01:01:00 Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 02:01:00 Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:01:00 Command sent successfully Load Preset Group The next command we will be sending is Load Preset Group, which is used to toggle between the 3 groups of presets (video, photo, and timelapse). At byte level, the commands are: Command Bytes Load Video Preset Group 0x04 0x3E 0x02 0x03 0xE8 Load Photo Preset Group 0x04 0x3E 0x02 0x03 0xE9 Load Timelapse Preset Group 0x04 0x3E 0x02 0x03 0xEA Now, let’s write the bytes to the “Command Request” UUID to change the preset group to Video! python kotlin request_uuid = GoProUuid.COMMAND_REQ_UUID request = bytes([0x04, 0x3E, 0x02, 0x03, 0xE8]) event.clear() await client.write_gatt_char(request_uuid.value, request, response=True) await event.wait() Wait to receive the notification response We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback. val loadPreset = ubyteArrayOf(0x04U, 0x3EU, 0x02U, 0x03U, 0xE8U) ble.writeCharacteristic(goproAddress, GoProUUID.CQ_COMMAND.uuid, loadPreset) // Wait to receive the notification response, then check its status checkStatus(receivedData.receive()) We’re waiting to receive the data from the queue that is posted to in the notification handler when the response is received. You should hear the camera beep and move to the Video Preset Group. You can tell this by the logo at the top middle of the screen: Load Preset Group Also note that we have received the “Command Status” notification response from the Command Response characteristic since we enabled its notifications in Enable Notifications. This can be seen in the demo log: python kotlin Loading the video preset group... Sending to GoProUuid.COMMAND_REQ_UUID: 04:3e:02:03:e8 Received response at GoProUuid.COMMAND_RSP_UUID: 02:3e:00 Command sent successfully Loading Video Preset Group Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==&gt; 04:3E:02:03:E8 Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 02:3E:00 Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:3E:00 Command status received Command sent successfully As expected, the response was received on the correct UUID and the status was “success” (third byte == 0x00). Set the Video Resolution The next command we will be sending is Set Setting to set the Video Resolution. This is used to change the value of the Video Resolution setting. It is important to note that this only affects video resolution (not photo). Therefore, the Video Preset Group must be active in order for it to succeed. This can be done either manually through the camera UI or by sending Load Preset Group. This resolution only affects the current video preset. Each video preset can have its own independent values for video resolution. Here are some of the byte level commands for various video resolutions. Command Bytes Set Video Resolution to 1080 0x03 0x02 0x01 0x09 Set Video Resolution to 2.7K 0x03 0x02 0x01 0x04 Set Video Resolution to 5K 0x03 0x02 0x01 0x18 Now, let’s write the bytes to the “Setting Request” UUID to change the video resolution to 1080! python kotlin request_uuid = GoProUuid.COMMAND_REQ_UUID request = bytes([0x03, 0x02, 0x01, 0x09]) event.clear() await client.write_gatt_char(request_uuid.value, request, response=True) await event.wait() Wait to receive the notification response We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback. val setResolution = ubyteArrayOf(0x03U, 0x02U, 0x01U, 0x09U) ble.writeCharacteristic(goproAddress, GoProUUID.CQ_COMMAND.uuid, setResolution) // Wait to receive the notification response, then check its status checkStatus(receivedData.receive()) We’re waiting to receive the data from the queue that is posted to in the notification handler when the response is received. You should see the video resolution change to 1080 in the pill in the bottom-middle of the screen: Set Video Resolution Also note that we have received the “Command Status” notification response from the Command Response characteristic since we enabled its notifications in Enable Notifications. This can be seen in the demo log: python kotlin Setting the video resolution to 1080 Writing to GoProUuid.SETTINGS_REQ_UUID: 03:02:01:09 Received response at GoProUuid.SETTINGS_RSP_UUID: 02:02:00 Command sent successfully Setting resolution to 1080 Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==&gt; 03:02:01:09 Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 02:02:00 Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:02:00 Command status received Command sent successfully As expected, the response was received on the correct UUID and the status was “success” (third byte == 0x00). If the Preset Group was not Video, the status will not be success. Set the Frames Per Second (FPS) The next command we will be sending is Set Setting to set the FPS. This is used to change the value of the FPS setting. It is important to note that this setting is dependent on the video resolution. That is, certain FPS values are not valid with certain resolutions. In general, higher resolutions only allow lower FPS values. Other settings such as the current anti-flicker value may further limit possible FPS values. Furthermore, these capabilities all vary by camera. Check the camera capabilities to see which FPS values are valid for given use cases. Therefore, for this step of the tutorial, it is assumed that the resolution has been set to 1080 as in Set the Video Resolution. Here are some of the byte level commands for various FPS values. Command Bytes Set FPS to 24 0x03 0x03 0x01 0x0A Set FPS to 60 0x03 0x03 0x01 0x05 Set FPS to 240 0x03 0x03 0x01 0x00 Note that the possible FPS values can vary based on the Camera that is being operated on. Now, let’s write the bytes to the “Setting Request” UUID to change the FPS to 240! python kotlin request_uuid = GoProUuid.COMMAND_REQ_UUID request = bytes([0x03, 0x03, 0x01, 0x00]) event.clear() await client.write_gatt_char(request_uuid.value, request, response=True) await event.wait() Wait to receive the notification response We make sure to clear the synchronization event before writing, then pend on the event until it is set in the notification callback. val setFps = ubyteArrayOf(0x03U, 0x03U, 0x01U, 0x00U) ble.writeCharacteristic(goproAddress, GoProUUID.CQ_COMMAND.uuid, setFps) // Wait to receive the notification response, then check its status checkStatus(receivedData.receive()) We’re waiting to receive the data from the queue that is posted to in the notification handler when the response is received. You should see the FPS change to 240 in the pill in the bottom-middle of the screen: Set FPS Also note that we have received the “Command Status” notification response from the Command Response characteristic since we enabled its notifications in Enable Notifications.. This can be seen in the demo log: python kotlin Setting the fps to 240 Writing to GoProUuid.SETTINGS_REQ_UUID: 03:03:01:00 Received response at GoProUuid.SETTINGS_RSP_UUID: 02:03:00 Command sent successfully Setting the FPS to 240 Writing characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b ==&gt; 03:03:01:00 Wrote characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b Characteristic b5f90073-aa8d-11e3-9046-0002a5d5c51b changed | value: 02:03:00 Received response on b5f90073-aa8d-11e3-9046-0002a5d5c51b: 02:03:00 Command status received Command sent successfully As expected, the response was received on the correct UUID and the status was “success” (third byte == 0x00). If the video resolution was higher, for example 5K, this would fail. Quiz time! 📚 ✏️ Which of the following is not a real preset group? A: Timelapse B: Photo C: Burst D: Video Submit Answer Correct!! 😃 Incorrect!! 😭 The correct answer is C. There are 3 preset groups (Timelapse, Photo, and Video). These can be set via the Load Preset Group command. True or False: Every combination of resolution and FPS value is valid. A: True B: False Submit Answer Correct!! 😃 Incorrect!! 😭 The correct answer is B. Each resolution can support all or only some FPS values. You can find out which resolutions support which FPS values by consulting the capabilities section of the spec. True or False: Every camera supports the same combination of resolution and FPS values. A: True B: False Submit Answer Correct!! 😃 Incorrect!! 😭 The correct answer is B. The only way to know what values are supported is to first check the Open GoPro version. See the relevant version of the BLE or WiFi spec to see what is supported. Troubleshooting See the first tutorial’s troubleshooting section. Good Job! Congratulations 🤙 You can now send any of the other BLE commands detailed in the Open GoPro documentation in a similar manner. To see how to parse responses, proceed to the next tutorial.",
             "categories": [],
             "tags": [],
             "url": "/OpenGoPro/tutorials/send-ble-commands#"
@@ -85,134 +85,6 @@ var jekyllStore = [
         },]
 
 let specStore = [
-    {
-        "title": "Scan For Access Points (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#scan-for-access-points",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Get Ap Scan Results (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#get-ap-scan-results",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Connect To Provisioned Access Point (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#connect-to-provisioned-access-point",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Connect To A New Access Point (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#connect-to-a-new-access-point",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Livestream Mode (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#set-livestream-mode",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Get Livestream Status (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#get-livestream-status",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Clear Cohn Certificate (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#clear-cohn-certificate",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Create Cohn Certificate (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#create-cohn-certificate",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Get Cohn Certificate (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#get-cohn-certificate",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Get Cohn Status (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#get-cohn-status",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Cohn Setting (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#set-cohn-setting",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Get Available Presets (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#get-available-presets",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Load Preset (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#load-preset",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Load Preset Group (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#load-preset-group",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Update Custom Preset (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#update-custom-preset",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Setting (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#set-setting",
-        "tags": [
-            "bleOperation"
-        ]
-    },
     {
         "title": "Get Date Time (BLE Operation)",
         "excerpt": "",
@@ -326,9 +198,89 @@ let specStore = [
         ]
     },
     {
-        "title": "Hilight Moment (BLE Operation)",
+        "title": "Get Available Presets (BLE Operation)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/hilights.html#hilight-moment",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#get-available-presets",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Load Preset (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#load-preset",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Load Preset Group (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#load-preset-group",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Update Custom Preset (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#update-custom-preset",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Setting (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#set-setting",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Livestream Mode (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#set-livestream-mode",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Get Livestream Status (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#get-livestream-status",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Scan For Access Points (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#scan-for-access-points",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Get Ap Scan Results (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#get-ap-scan-results",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Connect To Provisioned Access Point (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#connect-to-provisioned-access-point",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Connect To A New Access Point (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#connect-to-a-new-access-point",
         "tags": [
             "bleOperation"
         ]
@@ -401,6 +353,54 @@ let specStore = [
         "title": "Sleep (BLE Operation)",
         "excerpt": "",
         "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#sleep",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Hilight Moment (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/hilights.html#hilight-moment",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Clear Cohn Certificate (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#clear-cohn-certificate",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Create Cohn Certificate (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#create-cohn-certificate",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Get Cohn Certificate (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#get-cohn-certificate",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Get Cohn Status (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#get-cohn-status",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Cohn Setting (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#set-cohn-setting",
         "tags": [
             "bleOperation"
         ]
@@ -766,6 +766,90 @@ let specStore = [
         "tags": []
     },
     {
+        "title": "Data Protocol (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#data-protocol",
+        "tags": []
+    },
+    {
+        "title": "Packetization (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#packetization",
+        "tags": []
+    },
+    {
+        "title": "Packet Headers (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#packet-headers",
+        "tags": []
+    },
+    {
+        "title": "General 5 Bit Packets (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#general-5-bit-packets",
+        "tags": []
+    },
+    {
+        "title": "Extended 13 Bit Packets (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#extended-13-bit-packets",
+        "tags": []
+    },
+    {
+        "title": "Extended 16 Bit Packets (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#extended-16-bit-packets",
+        "tags": []
+    },
+    {
+        "title": "Continuation Packets (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#continuation-packets",
+        "tags": []
+    },
+    {
+        "title": "Decipher Message Payload Type (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#decipher-message-payload-type",
+        "tags": []
+    },
+    {
+        "title": "Message Payload (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#message-payload",
+        "tags": []
+    },
+    {
+        "title": "Type Length Value (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#type-length-value",
+        "tags": []
+    },
+    {
+        "title": "Commands (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#commands",
+        "tags": []
+    },
+    {
+        "title": "Queries (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#queries",
+        "tags": []
+    },
+    {
+        "title": "Protobuf (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#protobuf",
+        "tags": []
+    },
+    {
+        "title": "Backwards Compatibility (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#backwards-compatibility",
+        "tags": []
+    },
+    {
         "title": "Ble Setup (BLE Spec)",
         "excerpt": "",
         "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#ble-setup",
@@ -856,159 +940,363 @@ let specStore = [
         "tags": []
     },
     {
-        "title": "Data Protocol (BLE Spec)",
+        "title": "Query (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#data-protocol",
-        "tags": []
-    },
-    {
-        "title": "Packetization (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#packetization",
-        "tags": []
-    },
-    {
-        "title": "Packet Headers (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#packet-headers",
-        "tags": []
-    },
-    {
-        "title": "General 5 Bit Packets (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#general-5-bit-packets",
-        "tags": []
-    },
-    {
-        "title": "Extended 13 Bit Packets (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#extended-13-bit-packets",
-        "tags": []
-    },
-    {
-        "title": "Extended 16 Bit Packets (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#extended-16-bit-packets",
-        "tags": []
-    },
-    {
-        "title": "Continuation Packets (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#continuation-packets",
-        "tags": []
-    },
-    {
-        "title": "Decipher Message Payload Type (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#decipher-message-payload-type",
-        "tags": []
-    },
-    {
-        "title": "Message Payload (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#message-payload",
-        "tags": []
-    },
-    {
-        "title": "Type Length Value (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#type-length-value",
-        "tags": []
-    },
-    {
-        "title": "Commands (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#commands",
-        "tags": []
-    },
-    {
-        "title": "Queries (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#queries",
-        "tags": []
-    },
-    {
-        "title": "Protobuf (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#protobuf",
-        "tags": []
-    },
-    {
-        "title": "Backwards Compatibility (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#backwards-compatibility",
-        "tags": []
-    },
-    {
-        "title": "Access Point (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#access-point",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/query.html#query",
         "tags": []
     },
     {
         "title": "Operations (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#operations",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/query.html#operations",
         "tags": []
     },
     {
-        "title": "Disconnect From Access Point (BLE Spec)",
+        "title": "Presets (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#disconnect-from-access-point",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#presets",
         "tags": []
     },
     {
-        "title": "Live Streaming (BLE Spec)",
+        "title": "Recommended Usage (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#live-streaming",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#recommended-usage",
         "tags": []
     },
     {
-        "title": "Metadata (BLE Spec)",
+        "title": "Preset Modified Status (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#metadata",
-        "tags": []
-    },
-    {
-        "title": "Operations (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#operations",
-        "tags": []
-    },
-    {
-        "title": "Camera On The Home Network (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#camera-on-the-home-network",
-        "tags": []
-    },
-    {
-        "title": "Certificates (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#certificates",
-        "tags": []
-    },
-    {
-        "title": "Verifying Certificate (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#verifying-certificate",
-        "tags": []
-    },
-    {
-        "title": "View Certificate Details (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#view-certificate-details",
-        "tags": []
-    },
-    {
-        "title": "Provisioning Procedure (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#provisioning-procedure",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#preset-modified-status",
         "tags": []
     },
     {
         "title": "Operations (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#operations",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#operations",
+        "tags": []
+    },
+    {
+        "title": "Settings (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#settings",
+        "tags": []
+    },
+    {
+        "title": "Operations (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#operations",
+        "tags": []
+    },
+    {
+        "title": "Setting Ids (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#setting-ids",
+        "tags": []
+    },
+    {
+        "title": "Video Resolution 2 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-resolution-2",
+        "tags": []
+    },
+    {
+        "title": "Frames Per Second 3 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#frames-per-second-3",
+        "tags": []
+    },
+    {
+        "title": "Video Timelapse Rate 5 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-timelapse-rate-5",
+        "tags": []
+    },
+    {
+        "title": "Photo Timelapse Rate 30 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-timelapse-rate-30",
+        "tags": []
+    },
+    {
+        "title": "Nightlapse Rate 32 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#nightlapse-rate-32",
+        "tags": []
+    },
+    {
+        "title": "Webcam Digital Lenses 43 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#webcam-digital-lenses-43",
+        "tags": []
+    },
+    {
+        "title": "Auto Power Down 59 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#auto-power-down-59",
+        "tags": []
+    },
+    {
+        "title": "Gps 83 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#gps-83",
+        "tags": []
+    },
+    {
+        "title": "Lcd Brightness 88 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#lcd-brightness-88",
+        "tags": []
+    },
+    {
+        "title": "Led 91 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#led-91",
+        "tags": []
+    },
+    {
+        "title": "Video Aspect Ratio 108 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-aspect-ratio-108",
+        "tags": []
+    },
+    {
+        "title": "Video Lens 121 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-lens-121",
+        "tags": []
+    },
+    {
+        "title": "Photo Lens 122 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-lens-122",
+        "tags": []
+    },
+    {
+        "title": "Time Lapse Digital Lenses 123 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#time-lapse-digital-lenses-123",
+        "tags": []
+    },
+    {
+        "title": "Photo Output 125 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-output-125",
+        "tags": []
+    },
+    {
+        "title": "Media Format 128 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#media-format-128",
+        "tags": []
+    },
+    {
+        "title": "Anti Flicker 134 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#anti-flicker-134",
+        "tags": []
+    },
+    {
+        "title": "Hypersmooth 135 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#hypersmooth-135",
+        "tags": []
+    },
+    {
+        "title": "Video Horizon Leveling 150 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-horizon-leveling-150",
+        "tags": []
+    },
+    {
+        "title": "Photo Horizon Leveling 151 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-horizon-leveling-151",
+        "tags": []
+    },
+    {
+        "title": "Video Duration 156 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-duration-156",
+        "tags": []
+    },
+    {
+        "title": "Multi Shot Duration 157 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-duration-157",
+        "tags": []
+    },
+    {
+        "title": "Max Lens 162 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-162",
+        "tags": []
+    },
+    {
+        "title": "Hindsight 167 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#hindsight-167",
+        "tags": []
+    },
+    {
+        "title": "Scheduled Capture 168 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168",
+        "tags": []
+    },
+    {
+        "title": "Photo Single Interval 171 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-single-interval-171",
+        "tags": []
+    },
+    {
+        "title": "Photo Interval Duration 172 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-interval-duration-172",
+        "tags": []
+    },
+    {
+        "title": "Video Performance Mode 173 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-performance-mode-173",
+        "tags": []
+    },
+    {
+        "title": "Control Mode 175 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#control-mode-175",
+        "tags": []
+    },
+    {
+        "title": "Easy Mode Speed 176 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-mode-speed-176",
+        "tags": []
+    },
+    {
+        "title": "Enable Night Photo 177 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#enable-night-photo-177",
+        "tags": []
+    },
+    {
+        "title": "Wireless Band 178 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#wireless-band-178",
+        "tags": []
+    },
+    {
+        "title": "Star Trails Length 179 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#star-trails-length-179",
+        "tags": []
+    },
+    {
+        "title": "System Video Mode 180 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#system-video-mode-180",
+        "tags": []
+    },
+    {
+        "title": "Video Bit Rate 182 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-bit-rate-182",
+        "tags": []
+    },
+    {
+        "title": "Bit Depth 183 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#bit-depth-183",
+        "tags": []
+    },
+    {
+        "title": "Profiles 184 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#profiles-184",
+        "tags": []
+    },
+    {
+        "title": "Video Easy Mode 186 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-easy-mode-186",
+        "tags": []
+    },
+    {
+        "title": "Lapse Mode 187 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#lapse-mode-187",
+        "tags": []
+    },
+    {
+        "title": "Max Lens Mod 189 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-189",
+        "tags": []
+    },
+    {
+        "title": "Max Lens Mod Enable 190 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-enable-190",
+        "tags": []
+    },
+    {
+        "title": "Easy Night Photo 191 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-night-photo-191",
+        "tags": []
+    },
+    {
+        "title": "Multi Shot Aspect Ratio 192 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-aspect-ratio-192",
+        "tags": []
+    },
+    {
+        "title": "Framing 193 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#framing-193",
+        "tags": []
+    },
+    {
+        "title": "Camera Volume 216 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-volume-216",
+        "tags": []
+    },
+    {
+        "title": "Setup Screen Saver 219 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-screen-saver-219",
+        "tags": []
+    },
+    {
+        "title": "Setup Language 223 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-language-223",
+        "tags": []
+    },
+    {
+        "title": "Photo Mode 227 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-mode-227",
+        "tags": []
+    },
+    {
+        "title": "Video Framing 232 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-framing-232",
+        "tags": []
+    },
+    {
+        "title": "Multi Shot Framing 233 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-framing-233",
+        "tags": []
+    },
+    {
+        "title": "Frame Rate 234 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#frame-rate-234",
         "tags": []
     },
     {
@@ -1510,339 +1798,51 @@ let specStore = [
         "tags": []
     },
     {
-        "title": "Presets (BLE Spec)",
+        "title": "Live Streaming (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#presets",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#live-streaming",
         "tags": []
     },
     {
-        "title": "Recommended Usage (BLE Spec)",
+        "title": "Metadata (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#recommended-usage",
-        "tags": []
-    },
-    {
-        "title": "Preset Modified Status (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#preset-modified-status",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#metadata",
         "tags": []
     },
     {
         "title": "Operations (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#operations",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#operations",
         "tags": []
     },
     {
-        "title": "Settings (BLE Spec)",
+        "title": "Access Point (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#settings",
-        "tags": []
-    },
-    {
-        "title": "Operations (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#operations",
-        "tags": []
-    },
-    {
-        "title": "Setting Ids (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#setting-ids",
-        "tags": []
-    },
-    {
-        "title": "Video Resolution 2 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-resolution-2",
-        "tags": []
-    },
-    {
-        "title": "Frames Per Second 3 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#frames-per-second-3",
-        "tags": []
-    },
-    {
-        "title": "Video Timelapse Rate 5 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-timelapse-rate-5",
-        "tags": []
-    },
-    {
-        "title": "Photo Timelapse Rate 30 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-timelapse-rate-30",
-        "tags": []
-    },
-    {
-        "title": "Nightlapse Rate 32 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#nightlapse-rate-32",
-        "tags": []
-    },
-    {
-        "title": "Webcam Digital Lenses 43 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#webcam-digital-lenses-43",
-        "tags": []
-    },
-    {
-        "title": "Auto Power Down 59 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#auto-power-down-59",
-        "tags": []
-    },
-    {
-        "title": "Gps 83 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#gps-83",
-        "tags": []
-    },
-    {
-        "title": "Led 91 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#led-91",
-        "tags": []
-    },
-    {
-        "title": "Video Aspect Ratio 108 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-aspect-ratio-108",
-        "tags": []
-    },
-    {
-        "title": "Video Lens 121 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-lens-121",
-        "tags": []
-    },
-    {
-        "title": "Photo Lens 122 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-lens-122",
-        "tags": []
-    },
-    {
-        "title": "Time Lapse Digital Lenses 123 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#time-lapse-digital-lenses-123",
-        "tags": []
-    },
-    {
-        "title": "Photo Output 125 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-output-125",
-        "tags": []
-    },
-    {
-        "title": "Media Format 128 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#media-format-128",
-        "tags": []
-    },
-    {
-        "title": "Anti Flicker 134 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#anti-flicker-134",
-        "tags": []
-    },
-    {
-        "title": "Hypersmooth 135 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#hypersmooth-135",
-        "tags": []
-    },
-    {
-        "title": "Video Horizon Leveling 150 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-horizon-leveling-150",
-        "tags": []
-    },
-    {
-        "title": "Photo Horizon Leveling 151 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-horizon-leveling-151",
-        "tags": []
-    },
-    {
-        "title": "Max Lens 162 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-162",
-        "tags": []
-    },
-    {
-        "title": "Hindsight 167 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#hindsight-167",
-        "tags": []
-    },
-    {
-        "title": "Photo Single Interval 171 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-single-interval-171",
-        "tags": []
-    },
-    {
-        "title": "Photo Interval Duration 172 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-interval-duration-172",
-        "tags": []
-    },
-    {
-        "title": "Video Performance Mode 173 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-performance-mode-173",
-        "tags": []
-    },
-    {
-        "title": "Control Mode 175 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#control-mode-175",
-        "tags": []
-    },
-    {
-        "title": "Easy Mode Speed 176 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-mode-speed-176",
-        "tags": []
-    },
-    {
-        "title": "Enable Night Photo 177 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#enable-night-photo-177",
-        "tags": []
-    },
-    {
-        "title": "Wireless Band 178 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#wireless-band-178",
-        "tags": []
-    },
-    {
-        "title": "Star Trails Length 179 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#star-trails-length-179",
-        "tags": []
-    },
-    {
-        "title": "System Video Mode 180 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#system-video-mode-180",
-        "tags": []
-    },
-    {
-        "title": "Video Bit Rate 182 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-bit-rate-182",
-        "tags": []
-    },
-    {
-        "title": "Bit Depth 183 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#bit-depth-183",
-        "tags": []
-    },
-    {
-        "title": "Profiles 184 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#profiles-184",
-        "tags": []
-    },
-    {
-        "title": "Video Easy Mode 186 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-easy-mode-186",
-        "tags": []
-    },
-    {
-        "title": "Lapse Mode 187 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#lapse-mode-187",
-        "tags": []
-    },
-    {
-        "title": "Max Lens Mod 189 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-189",
-        "tags": []
-    },
-    {
-        "title": "Max Lens Mod Enable 190 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-enable-190",
-        "tags": []
-    },
-    {
-        "title": "Easy Night Photo 191 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-night-photo-191",
-        "tags": []
-    },
-    {
-        "title": "Multi Shot Aspect Ratio 192 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-aspect-ratio-192",
-        "tags": []
-    },
-    {
-        "title": "Framing 193 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#framing-193",
-        "tags": []
-    },
-    {
-        "title": "Camera Volume 216 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-volume-216",
-        "tags": []
-    },
-    {
-        "title": "Setup Screen Saver 219 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-screen-saver-219",
-        "tags": []
-    },
-    {
-        "title": "Setup Language 223 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-language-223",
-        "tags": []
-    },
-    {
-        "title": "Photo Mode 227 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-mode-227",
-        "tags": []
-    },
-    {
-        "title": "Video Framing 232 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-framing-232",
-        "tags": []
-    },
-    {
-        "title": "Multi Shot Framing 233 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-framing-233",
-        "tags": []
-    },
-    {
-        "title": "Frame Rate 234 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#frame-rate-234",
-        "tags": []
-    },
-    {
-        "title": "Query (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/query.html#query",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#access-point",
         "tags": []
     },
     {
         "title": "Operations (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/query.html#operations",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#operations",
+        "tags": []
+    },
+    {
+        "title": "Disconnect From Access Point (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#disconnect-from-access-point",
+        "tags": []
+    },
+    {
+        "title": "Control (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#control",
+        "tags": []
+    },
+    {
+        "title": "Operations (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#operations",
         "tags": []
     },
     {
@@ -1858,15 +1858,39 @@ let specStore = [
         "tags": []
     },
     {
-        "title": "Control (BLE Spec)",
+        "title": "Camera On The Home Network (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#control",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#camera-on-the-home-network",
+        "tags": []
+    },
+    {
+        "title": "Certificates (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#certificates",
+        "tags": []
+    },
+    {
+        "title": "Verifying Certificate (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#verifying-certificate",
+        "tags": []
+    },
+    {
+        "title": "View Certificate Details (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#view-certificate-details",
+        "tags": []
+    },
+    {
+        "title": "Provisioning Procedure (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#provisioning-procedure",
         "tags": []
     },
     {
         "title": "Operations (BLE Spec)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#operations",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#operations",
         "tags": []
     },
     {
@@ -2182,6 +2206,14 @@ let specStore = [
         ]
     },
     {
+        "title": "Get The Camera Name (HTTP Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_GET_CAMERA_NAME",
+        "tags": [
+            "httpOperation"
+        ]
+    },
+    {
         "title": "Get Available Presets (HTTP Operation)",
         "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4363d8)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-911eb4)\n ![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-46f0f0)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-f032e6)\n ![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-bcf60c)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-fabebe)\n \n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nGet the currently available Preset Groups and Presets, the set of which\n[depends](#tag/Presets/Presets) on the current camera settings.\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_PRESETS_GET",
@@ -2201,14 +2233,6 @@ let specStore = [
         "title": "Load Preset Group By Id (HTTP Operation)",
         "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4363d8)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-911eb4)\n ![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-46f0f0)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-f032e6)\n ![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-bcf60c)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-fabebe)\n \n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_PRESET_SET_GROUP",
-        "tags": [
-            "httpOperation"
-        ]
-    },
-    {
-        "title": "Set Preset Ui Visibility (HTTP Operation)",
-        "excerpt": "Shows or hides a Preset in the camera UI.\n\nNote that a Preset's visibility determines how it is returned as part of the\n[Get Available Presets](#tag/Presets/operation/OGP_PRESETS_GET) response.\n",
-        "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_FEATURE_SET_PRESET_VISIBILITY",
         "tags": [
             "httpOperation"
         ]
@@ -2310,6 +2334,22 @@ let specStore = [
         ]
     },
     {
+        "title": "Video Duration (156) (HTTP Operation)",
+        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4363d8)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-911eb4)\n ![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-f032e6)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-bcf60c)\n ![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-fabebe)\n\n",
+        "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::156",
+        "tags": [
+            "httpOperation"
+        ]
+    },
+    {
+        "title": "Multi Shot Duration (157) (HTTP Operation)",
+        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4363d8)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-911eb4)\n ![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-f032e6)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-bcf60c)\n ![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-fabebe)\n\n",
+        "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::157",
+        "tags": [
+            "httpOperation"
+        ]
+    },
+    {
         "title": "Max Lens (162) (HTTP Operation)",
         "excerpt": "\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-f032e6)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-bcf60c)\n ![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-fabebe)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::162",
@@ -2321,6 +2361,14 @@ let specStore = [
         "title": "Hindsight (167) (HTTP Operation)",
         "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4363d8)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-911eb4)\n ![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-f032e6)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-bcf60c)\n ![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-fabebe)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::167",
+        "tags": [
+            "httpOperation"
+        ]
+    },
+    {
+        "title": "Scheduled Capture (168) (HTTP Operation)",
+        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4363d8)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-911eb4)\n ![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-f032e6)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-bcf60c)\n ![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-fabebe)\n\nConfigure or disable the scheduled capture functionality to start encoding at a future time.\n\nThis is a bit-masked value with the following bitwise definitions,\nnumbered from least significant bit, with the example showing parsed fields from a sample of `0x00000c8b`.\n\n| Bit(s) | Definition                    | Example |\n| ------ | ----------------------------- | ------- |\n| 0      | Is Scheduled Capture Enabled? | 1       |\n| 1      | Is 24 hour format?            | 1       |\n| 2-8    | Minute                        | 34      |\n| 9-13   | Hour                          | 12      |\n| 14-63  | Reserved                      | 0       |\n\nNote that when the scheduled capture time occurs, encoding will be started and continue indefinitely.  One\nof the duration settings (156, 157, 172) can be used to set the encoding duration depending on the camera mode.\n",
+        "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::168",
         "tags": [
             "httpOperation"
         ]
@@ -2593,6 +2641,14 @@ let specStore = [
         "title": "Gps (83) (HTTP Operation)",
         "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4363d8)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-f032e6)\n ![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-bcf60c)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-fabebe)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::83",
+        "tags": [
+            "httpOperation"
+        ]
+    },
+    {
+        "title": "Lcd Brightness (88) (HTTP Operation)",
+        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4363d8)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-911eb4)\n ![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-f032e6)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-bcf60c)\n ![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-fabebe)\n\nThe LCD brightness as a percentage value from 10-100",
+        "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::88",
         "tags": [
             "httpOperation"
         ]

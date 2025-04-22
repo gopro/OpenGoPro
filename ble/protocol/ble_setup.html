@@ -142,7 +142,7 @@
   <title>BLE Setup — GoPro BLE API 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3">
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094">
-      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=d4d8e761">
+      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=8b4707e3">
 
   
   <!--[if lt IE 9]>
@@ -426,6 +426,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#webcam-digital-lenses-43">Webcam Digital Lenses (43)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#auto-power-down-59">Auto Power Down (59)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#gps-83">GPS (83)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#lcd-brightness-88">LCD Brightness (88)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#led-91">LED (91)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#video-aspect-ratio-108">Video Aspect Ratio (108)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#video-lens-121">Video Lens (121)</a></li>
@@ -437,8 +438,11 @@
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#hypersmooth-135">Hypersmooth (135)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#video-horizon-leveling-150">Video Horizon Leveling (150)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#photo-horizon-leveling-151">Photo Horizon Leveling (151)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#video-duration-156">Video Duration (156)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#multi-shot-duration-157">Multi Shot Duration (157)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#max-lens-162">Max Lens (162)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#hindsight-167">HindSight (167)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#scheduled-capture-168">Scheduled Capture (168)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#photo-single-interval-171">Photo Single Interval (171)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#photo-interval-duration-172">Photo Interval Duration (172)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#video-performance-mode-173">Video Performance Mode (173)</a></li>
@@ -612,12 +616,18 @@ camera UI.</p>
 <p>Once in pairing mode, the camera will send BLE advertisements while it is ON and for the first 8 hours after the camera
 is put to sleep. During this time, the camera is discoverable and can be connected to. If the camera is in sleep mode,
 connecting to it will cause the camera to wake and boot up.</p>
+<p>The following sections detail the Advertising and Scan Response data. This data consists of
+<a class="reference external" href="https://academy.nordicsemi.com/courses/bluetooth-low-energy-fundamentals/lessons/lesson-2-bluetooth-le-advertising/topic/advertisement-packet">BLE Spec defined</a>
+Type-Length-Value fields such as <cite>Manufacturer Specific Data</cite> and <cite>Service Data</cite>. These fields are identified via
+the “AD Type” column where the integer value is specified in
+Section 2.3 of the <a class="reference external" href="https://www.bluetooth.com/wp-content/uploads/Files/Specification/HTML/Assigned_Numbers/out/en/Assigned_Numbers.pdf">Bluetooth Assigned Numbers</a>.</p>
 <section id="advertising-data">
 <h3>Advertising Data<a class="headerlink" href="#advertising-data" title="Link to this heading"></a>
 </h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd">
+<th class="head">AD Type</th>
 <th class="head">Byte(s)</th>
 <th class="head">Description</th>
 <th class="head">Bit Documentation</th>
@@ -626,6 +636,7 @@ connecting to it will cause the camera to wake and boot up.</p>
 </thead>
 <tbody>
 <tr class="row-even">
+<td rowspan="3">Flags (1)</td>
 <td>0</td>
 <td>Flags Length</td>
 <td>
@@ -634,7 +645,7 @@ connecting to it will cause the camera to wake and boot up.</p>
 </tr>
 <tr class="row-odd">
 <td>1</td>
-<td>Flags Type</td>
+<td>Flags AD Type</td>
 <td>
 </td>
 <td>Always 1</td>
@@ -644,9 +655,14 @@ connecting to it will cause the camera to wake and boot up.</p>
 <td>Flags</td>
 <td>
 </td>
-<td>See the BLE Spec</td>
+<td>See section 1.3 of the <a class="reference external" href="https://www.bluetooth.com/specifications/specs/core-specification-supplement-10/">BLE Spec Core Supplement</a>
+</td>
 </tr>
 <tr class="row-odd">
+<td rowspan="3">Incomplete
+16-bit
+Service
+UUIDs (2)</td>
 <td>3</td>
 <td>UUIDs length</td>
 <td>
@@ -655,7 +671,7 @@ connecting to it will cause the camera to wake and boot up.</p>
 </tr>
 <tr class="row-even">
 <td>4</td>
-<td>UUIDs type</td>
+<td>UUIDs AD type</td>
 <td>
 </td>
 <td>Always 2</td>
@@ -665,18 +681,20 @@ connecting to it will cause the camera to wake and boot up.</p>
 <td>UUIDS</td>
 <td>
 </td>
-<td>Always 0xFEA6. This can be used to filter for GoPros</td>
+<td>Little Endian. Always 0xFEA6. This can be used to filter for GoPros</td>
 </tr>
 <tr class="row-even">
+<td rowspan="26">Manufacturer
+Data (16)</td>
 <td>7</td>
 <td>Manufacturer Data Length</td>
 <td>
 </td>
-<td>Always 16</td>
+<td>Always 15</td>
 </tr>
 <tr class="row-odd">
 <td>8</td>
-<td>Manufacturer Data Type</td>
+<td>Manufacturer Data AD Type</td>
 <td>
 </td>
 <td>Always 0xFF</td>
@@ -699,15 +717,15 @@ connecting to it will cause the camera to wake and boot up.</p>
 <td rowspan="6">12</td>
 <td rowspan="6">Camera Status</td>
 <td>Bit 0: Processor State</td>
-<td>0 == low power. 1 == awake</td>
+<td>0 == low power, 1 == awake</td>
 </tr>
 <tr class="row-odd">
 <td>Bit 1: WiFi AP State</td>
-<td>0 == off. 1 == on.</td>
+<td>0 == off, 1 == on</td>
 </tr>
 <tr class="row-even">
 <td>Bit 2: Peripheral Pairing State</td>
-<td>0 == not pairing. 1 == pairing.</td>
+<td>0 == not pairing, 1 == pairing</td>
 </tr>
 <tr class="row-odd">
 <td>Bit 3: Is Central Role Enabled?</td>
@@ -720,7 +738,7 @@ connecting to it will cause the camera to wake and boot up.</p>
 </td>
 </tr>
 <tr class="row-odd">
-<td>Bits 5-8: Reserved</td>
+<td>Bits 5-7: Reserved</td>
 <td>
 </td>
 </tr>
@@ -735,11 +753,11 @@ connecting to it will cause the camera to wake and boot up.</p>
 <td rowspan="7">14</td>
 <td rowspan="7">Camera Capabilities</td>
 <td>Bit 0: Command and Control</td>
-<td>Supports  Command, Settings, and Query characteristics.</td>
+<td>Supports  Command, Settings, and Query characteristics</td>
 </tr>
 <tr class="row-even">
 <td>Bit 1: BLE Metadata</td>
-<td>LE Sensor Data GATT Characteristics.</td>
+<td>LE Sensor Data GATT Characteristics</td>
 </tr>
 <tr class="row-odd">
 <td>Bit 2: Wideband Audio</td>
@@ -760,12 +778,12 @@ connecting to it will cause the camera to wake and boot up.</p>
 <td>Supports status bit for New Media Available</td>
 </tr>
 <tr class="row-odd">
-<td>Bits 6-8: Reserved</td>
+<td>Bits 6-7: Reserved</td>
 <td>
 </td>
 </tr>
 <tr class="row-even">
-<td>15</td>
+<td>15-21</td>
 <td>Reserved</td>
 <td>
 </td>
@@ -773,47 +791,39 @@ connecting to it will cause the camera to wake and boot up.</p>
 </td>
 </tr>
 <tr class="row-odd">
-<td>16-21</td>
-<td>ID Hash</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr class="row-even">
 <td rowspan="7">22</td>
 <td rowspan="7">Media Offload Status</td>
 <td>Bit 0: Available</td>
 <td>
 </td>
 </tr>
-<tr class="row-odd">
+<tr class="row-even">
 <td>Bit 1: New Media Available</td>
 <td>
 </td>
 </tr>
-<tr class="row-even">
+<tr class="row-odd">
 <td>Bit 2: Battery OK</td>
 <td>
 </td>
 </tr>
-<tr class="row-odd">
+<tr class="row-even">
 <td>Bit 3: SD Card OK</td>
 <td>
 </td>
 </tr>
-<tr class="row-even">
+<tr class="row-odd">
 <td>Bit 4: Busy</td>
 <td>
 </td>
 </tr>
-<tr class="row-odd">
+<tr class="row-even">
 <td>Bit 5: Paused</td>
 <td>
 </td>
 </tr>
-<tr class="row-even">
-<td>Bits 6-8: Reserved</td>
+<tr class="row-odd">
+<td>Bits 6-7: Reserved</td>
 <td>
 </td>
 </tr>
@@ -826,6 +836,7 @@ connecting to it will cause the camera to wake and boot up.</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd">
+<th class="head">AD Type</th>
 <th class="head">Byte(s)</th>
 <th class="head">Description</th>
 <th class="head">Notes</th>
@@ -833,29 +844,32 @@ connecting to it will cause the camera to wake and boot up.</p>
 </thead>
 <tbody>
 <tr class="row-even">
+<td rowspan="3">Local Name (9)</td>
 <td>0</td>
-<td>Name Length</td>
+<td>Local Name Length</td>
 <td>Always 11</td>
 </tr>
 <tr class="row-odd">
 <td>1</td>
-<td>Name Type</td>
-<td>Always 0x09</td>
+<td>Local Name AD Type</td>
+<td>Always 9</td>
 </tr>
 <tr class="row-even">
 <td>2-11</td>
-<td>Name</td>
-<td>ASCII Camera Name, i.e. GoPro 1234</td>
+<td>Local Name</td>
+<td>ASCII Camera Name, i.e. “GoPro 1234”</td>
 </tr>
 <tr class="row-odd">
+<td rowspan="5">Service
+Data (22)</td>
 <td>12</td>
 <td>Service Data Length</td>
 <td>Always 11</td>
 </tr>
 <tr class="row-even">
 <td>13</td>
-<td>Service Data Type</td>
-<td>Always 0x16</td>
+<td>Service Data AD Type</td>
+<td>Always 22</td>
 </tr>
 <tr class="row-odd">
 <td>14-15</td>
@@ -864,7 +878,7 @@ connecting to it will cause the camera to wake and boot up.</p>
 </tr>
 <tr class="row-even">
 <td>16-19</td>
-<td>AP Mac Address</td>
+<td>AP MAC Address</td>
 <td>
 </td>
 </tr>
