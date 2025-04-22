@@ -36,9 +36,18 @@ from open_gopro.constants import (
 )
 from open_gopro.enum import GoProIntEnum
 from open_gopro.logger import Logger
-from open_gopro.models.response import GlobalParsers, GoProResp
-from open_gopro.parser_interface import BytesBuilder, BytesParserBuilder, Parser
-from open_gopro.parsers import ByteParserBuilders
+from open_gopro.models import GoProResp
+from open_gopro.parser_interface import (
+    BytesBuilder,
+    BytesParserBuilder,
+    GlobalParsers,
+    Parser,
+)
+from open_gopro.parsers.bytes import (
+    ConstructByteParserBuilder,
+    GoProEnumByteParserBuilder,
+    ProtobufByteParser,
+)
 from open_gopro.types import CameraState, JsonDict, Protobuf, UpdateCb
 
 logger = logging.getLogger(__name__)
@@ -199,7 +208,7 @@ class BleProtoCommand(BleMessage):
         additional_matching_ids: set[ActionId | CmdId] | None = None,
     ) -> None:
         p = parser or Parser()
-        p.byte_json_adapter = ByteParserBuilders.Protobuf(response_proto)
+        p.byte_json_adapter = ProtobufByteParser(response_proto)
         super().__init__(uuid=uuid, parser=p, identifier=response_action_id)
         self.feature_id = feature_id
         self.action_id = action_id
@@ -458,11 +467,11 @@ class BleSettingFacade(Generic[ValueType]):
         # TODO abstract this
         parser = Parser[CameraState]()
         if isinstance(parser_builder, construct.Construct):
-            parser.byte_json_adapter = ByteParserBuilders.Construct(parser_builder)
+            parser.byte_json_adapter = ConstructByteParserBuilder(parser_builder)
         elif isinstance(parser_builder, BytesParserBuilder):
             parser.byte_json_adapter = parser_builder
         elif issubclass(parser_builder, GoProIntEnum):
-            parser.byte_json_adapter = ByteParserBuilders.GoProEnum(parser_builder)
+            parser.byte_json_adapter = GoProEnumByteParserBuilder(parser_builder)
         else:
             raise TypeError(f"Unexpected {parser_builder=}")
         GlobalParsers.add(identifier, parser)
@@ -689,11 +698,11 @@ class BleStatusFacade(Generic[ValueType]):
         parser_builder = Parser[CameraState]()
         # Is it a protobuf enum?
         if isinstance(parser, construct.Construct):
-            parser_builder.byte_json_adapter = ByteParserBuilders.Construct(parser)
+            parser_builder.byte_json_adapter = ConstructByteParserBuilder(parser)
         elif isinstance(parser, BytesParserBuilder):
             parser_builder.byte_json_adapter = parser
         elif issubclass(parser, GoProIntEnum):
-            parser_builder.byte_json_adapter = ByteParserBuilders.GoProEnum(parser)
+            parser_builder.byte_json_adapter = GoProEnumByteParserBuilder(parser)
         else:
             raise TypeError(f"Unexpected {parser_builder=}")
         GlobalParsers.add(identifier, parser_builder)

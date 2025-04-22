@@ -9,6 +9,7 @@ package com.gopro.open_gopro.gopro
  * WARNING!!! This file is auto-generated. Do not modify it manually
  */
 import com.gopro.open_gopro.domain.api.IOperationMarshaller
+import com.gopro.open_gopro.entity.queries.ComplexQueryEntity
 import com.gopro.open_gopro.operations.*
 
 /**
@@ -19,14 +20,6 @@ import com.gopro.open_gopro.operations.*
  */
 @OptIn(ExperimentalUnsignedTypes::class)
 class SettingsContainer internal constructor(marshaller: IOperationMarshaller) {
-
-  /**
-   * Media Format
-   *
-   * @see
-   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#media-format-128)
-   */
-  val mediaFormat = Setting(SettingId.MEDIA_FORMAT, MediaFormat, marshaller)
 
   /**
    * Video Resolution
@@ -53,6 +46,119 @@ class SettingsContainer internal constructor(marshaller: IOperationMarshaller) {
    *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-timelapse-rate-5)
    */
   val videoTimelapseRate = Setting(SettingId.VIDEO_TIMELAPSE_RATE, VideoTimelapseRate, marshaller)
+
+  /**
+   * Photo Timelapse Rate
+   *
+   * How frequently to take a photo when performing a Photo Timelapse.
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-timelapse-rate-30)
+   */
+  val photoTimelapseRate = Setting(SettingId.PHOTO_TIMELAPSE_RATE, PhotoTimelapseRate, marshaller)
+
+  /**
+   * Nightlapse Rate
+   *
+   * How frequently to take a video or photo when performing a Nightlapse.
+   *
+   * This controls the Video or Photo Nightlapse rate if Setting 128 is set to 21 or 26
+   * respectively.
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#nightlapse-rate-32)
+   */
+  val nightlapseRate = Setting(SettingId.NIGHTLAPSE_RATE, NightlapseRate, marshaller)
+
+  /**
+   * Webcam Digital Lenses
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#webcam-digital-lenses-43)
+   */
+  val webcamDigitalLenses =
+      Setting(SettingId.WEBCAM_DIGITAL_LENSES, WebcamDigitalLenses, marshaller)
+
+  /**
+   * Auto Power Down
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#auto-power-down-59)
+   */
+  val autoPowerDown = Setting(SettingId.AUTO_POWER_DOWN, AutoPowerDown, marshaller)
+
+  /**
+   * GPS
+   *
+   * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#gps-83)
+   */
+  val gps = Setting(SettingId.GPS, Gps, marshaller)
+
+  /**
+   * LCD Brightness
+   *
+   * The LCD brightness as a percentage value from 10-100
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#lcd-brightness-88)
+   */
+  val lcdBrightness = Setting(SettingId.LCD_BRIGHTNESS, ULongByteTransformer(1), marshaller)
+
+  /**
+   * LED
+   *
+   * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#led-91)
+   */
+  val led = Setting(SettingId.LED, Led, marshaller)
+
+  /**
+   * Video Aspect Ratio
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-aspect-ratio-108)
+   */
+  val videoAspectRatio = Setting(SettingId.VIDEO_ASPECT_RATIO, VideoAspectRatio, marshaller)
+
+  /**
+   * Video Lens
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-lens-121)
+   */
+  val videoLens = Setting(SettingId.VIDEO_LENS, VideoLens, marshaller)
+
+  /**
+   * Photo Lens
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-lens-122)
+   */
+  val photoLens = Setting(SettingId.PHOTO_LENS, PhotoLens, marshaller)
+
+  /**
+   * Time Lapse Digital Lenses
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#time-lapse-digital-lenses-123)
+   */
+  val timeLapseDigitalLenses =
+      Setting(SettingId.TIME_LAPSE_DIGITAL_LENSES, TimeLapseDigitalLenses, marshaller)
+
+  /**
+   * Photo Output
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-output-125)
+   */
+  val photoOutput = Setting(SettingId.PHOTO_OUTPUT, PhotoOutput, marshaller)
+
+  /**
+   * Media Format
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#media-format-128)
+   */
+  val mediaFormat = Setting(SettingId.MEDIA_FORMAT, MediaFormat, marshaller)
 
   /**
    * Anti-Flicker
@@ -89,27 +195,20 @@ class SettingsContainer internal constructor(marshaller: IOperationMarshaller) {
       Setting(SettingId.PHOTO_HORIZON_LEVELING, PhotoHorizonLeveling, marshaller)
 
   /**
-   * Photo Timelapse Rate
-   *
-   * How frequently to take a photo when performing a Photo Timelapse.
+   * Video Duration
    *
    * @see
-   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-timelapse-rate-30)
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-duration-156)
    */
-  val photoTimelapseRate = Setting(SettingId.PHOTO_TIMELAPSE_RATE, PhotoTimelapseRate, marshaller)
+  val videoDuration = Setting(SettingId.VIDEO_DURATION, VideoDuration, marshaller)
 
   /**
-   * Nightlapse Rate
-   *
-   * How frequently to take a video or photo when performing a Nightlapse.
-   *
-   * This controls the Video or Photo Nightlapse rate if Setting 128 is set to 21 or 26
-   * respectively.
+   * Multi Shot Duration
    *
    * @see
-   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#nightlapse-rate-32)
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-duration-157)
    */
-  val nightlapseRate = Setting(SettingId.NIGHTLAPSE_RATE, NightlapseRate, marshaller)
+  val multiShotDuration = Setting(SettingId.MULTI_SHOT_DURATION, MultiShotDuration, marshaller)
 
   /**
    * Max Lens
@@ -128,13 +227,18 @@ class SettingsContainer internal constructor(marshaller: IOperationMarshaller) {
   val hindsight = Setting(SettingId.HINDSIGHT, Hindsight, marshaller)
 
   /**
-   * Webcam Digital Lenses
+   * Scheduled Capture
+   *
+   * Configure or disable the scheduled capture functionality to start encoding at a future
+   * Timelapse.
+   *
+   * TODO document bitmasked value.
    *
    * @see
-   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#webcam-digital-lenses-43)
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168)
    */
-  val webcamDigitalLenses =
-      Setting(SettingId.WEBCAM_DIGITAL_LENSES, WebcamDigitalLenses, marshaller)
+  val scheduledCapture =
+      Setting(SettingId.SCHEDULED_CAPTURE, ComplexQueryEntity.ScheduledCapture, marshaller)
 
   /**
    * Photo Single Interval
@@ -244,14 +348,6 @@ class SettingsContainer internal constructor(marshaller: IOperationMarshaller) {
   val videoEasyMode = Setting(SettingId.VIDEO_EASY_MODE, VideoEasyMode, marshaller)
 
   /**
-   * Auto Power Down
-   *
-   * @see
-   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#auto-power-down-59)
-   */
-  val autoPowerDown = Setting(SettingId.AUTO_POWER_DOWN, AutoPowerDown, marshaller)
-
-  /**
    * Lapse Mode
    *
    * @see
@@ -301,26 +397,12 @@ class SettingsContainer internal constructor(marshaller: IOperationMarshaller) {
   val framing = Setting(SettingId.FRAMING, Framing, marshaller)
 
   /**
-   * GPS
-   *
-   * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#gps-83)
-   */
-  val gps = Setting(SettingId.GPS, Gps, marshaller)
-
-  /**
    * Camera Volume
    *
    * @see
    *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-volume-216)
    */
   val cameraVolume = Setting(SettingId.CAMERA_VOLUME, CameraVolume, marshaller)
-
-  /**
-   * LED
-   *
-   * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#led-91)
-   */
-  val led = Setting(SettingId.LED, Led, marshaller)
 
   /**
    * Setup Screen Saver
@@ -369,45 +451,4 @@ class SettingsContainer internal constructor(marshaller: IOperationMarshaller) {
    *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#frame-rate-234)
    */
   val frameRate = Setting(SettingId.FRAME_RATE, FrameRate, marshaller)
-
-  /**
-   * Video Aspect Ratio
-   *
-   * @see
-   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-aspect-ratio-108)
-   */
-  val videoAspectRatio = Setting(SettingId.VIDEO_ASPECT_RATIO, VideoAspectRatio, marshaller)
-
-  /**
-   * Video Lens
-   *
-   * @see
-   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-lens-121)
-   */
-  val videoLens = Setting(SettingId.VIDEO_LENS, VideoLens, marshaller)
-
-  /**
-   * Photo Lens
-   *
-   * @see
-   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-lens-122)
-   */
-  val photoLens = Setting(SettingId.PHOTO_LENS, PhotoLens, marshaller)
-
-  /**
-   * Time Lapse Digital Lenses
-   *
-   * @see
-   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#time-lapse-digital-lenses-123)
-   */
-  val timeLapseDigitalLenses =
-      Setting(SettingId.TIME_LAPSE_DIGITAL_LENSES, TimeLapseDigitalLenses, marshaller)
-
-  /**
-   * Photo Output
-   *
-   * @see
-   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-output-125)
-   */
-  val photoOutput = Setting(SettingId.PHOTO_OUTPUT, PhotoOutput, marshaller)
 }

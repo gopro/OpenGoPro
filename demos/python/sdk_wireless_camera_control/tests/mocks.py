@@ -36,7 +36,7 @@ from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
 from open_gopro.features.access_point import AccessPointFeature
 from open_gopro.features.base_feature import BaseFeature
 from open_gopro.gopro_base import GoProBase
-from open_gopro.models.response import GoProResp
+from open_gopro.models import GoProResp
 from open_gopro.types import CameraState, UpdateCb, UpdateType
 from open_gopro.wifi import SsidState, WifiController
 from tests import mock_good_response, versions

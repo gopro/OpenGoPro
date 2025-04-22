@@ -6,10 +6,9 @@
 from __future__ import annotations
 
 import datetime
-import os
 import tempfile
 from base64 import b64encode
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from functools import cached_property
 from pathlib import Path
 
@@ -83,16 +82,35 @@ class CohnInfo(BaseModel):
         with tempfile.NamedTemporaryFile(delete=False) as cert_file:
             cert_file.write(self.certificate.encode("utf-8"))
             cert_file.close()
-            return Path(cert_file.name)
+
+
+@dataclass(frozen=True)
+class ScheduledCapture:
+    """Scheduled capture request / status"""
+
+    hour: int
+    minute: int
+    is_enabled: bool
+    is_24_hour: bool
+
+    @classmethod
+    def from_datetime(cls, dt: datetime.datetime, is_enabled: bool) -> ScheduledCapture:
+        """Helper method to build a ScheduledCapture object from Python standard datetime.datetime
+
+        Args:
+            is_enabled (bool): is / should scheduled capture be enabled on the camera?
 
     def __add__(self, other: CohnInfo) -> CohnInfo:
-        return CohnInfo(
-            ip_address=other.ip_address or self.ip_address,
-            username=other.username or self.username,
-            password=other.password or self.password,
-            certificate=other.certificate or self.certificate,
+        """
+        return cls(
+            is_24_hour=True,
         )
 
-    @property
-    def is_complete(self) -> bool:
-        return "" not in {self.ip_address, self.username, self.password, self.certificate}
+    def __str__(self) -> str:
+        return json.dumps(asdict(self), indent=8)
+
+        """Helper method to return a pre-filled ScheduledCapture object that can be used to turn scheduled capture off
+
+        Returns:
+        """
+        return cls(0, 0, False, False)

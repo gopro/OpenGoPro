@@ -11,27 +11,36 @@ import com.gopro.open_gopro.domain.communicator.bleCommunicator.ResponseId
 import com.gopro.open_gopro.entity.communicator.GpStatus
 import com.gopro.open_gopro.entity.communicator.QueryId
 import com.gopro.open_gopro.operations.IUByteArrayCompanion
-import com.gopro.open_gopro.operations.IValuedEnum
 import com.gopro.open_gopro.operations.SettingId
+import com.gopro.open_gopro.util.extensions.asInt64UB
 import com.gopro.open_gopro.util.extensions.toUByteArray
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
-@OptIn(ExperimentalUnsignedTypes::class)
-internal class UByteArrayEnumTransformer<T>(private val companion: IUByteArrayCompanion<T>) where
-T : Enum<T>,
-T : IValuedEnum<*> {
-  fun toUByteArray(value: T): UByteArray =
-      if (value.value is UByte) {
-        ubyteArrayOf(value.value as UByte)
-      } else if (value.value is ULong) {
-        (value.value as ULong).toUByteArray()
-      } else {
-        throw Exception("Only Enums of value type UByte and ULong can be converted to UByteArray")
+@ExperimentalUnsignedTypes
+internal class ULongByteTransformer(private val length: Int) : IUByteArrayCompanion<ULong> {
+  init {
+    when (length) {
+      1,
+      4 -> {}
+      else -> throw NotImplementedError("Only lengths 1 and 4 are supported")
+    }
+  }
+
+  override fun fromUByteArray(value: UByteArray): ULong =
+      when (value.size) {
+        1 -> value.first().toULong()
+        4 -> value.asInt64UB()
+        else -> throw NotImplementedError("Only lengths 1 and 4 are supported")
       }
 
-  fun fromUByteArray(data: UByteArray): T = companion.fromUByteArray(data)
+  override fun toUByteArray(value: ULong): UByteArray =
+      when (length) {
+        1 -> value.toUByteArray().first().toUByteArray()
+        4 -> value.toUByteArray()
+        else -> throw NotImplementedError("Only lengths 1 and 4 are supported")
+      }
 }
 
 /**
@@ -40,18 +49,16 @@ T : IValuedEnum<*> {
  * @param T Setting data type
  * @property settingId Setting ID
  * @property marshaller operation marshaller to marshal the queries
- * @param enum Enum data type
+ * @param byteTransformer Enum data type
  * @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html)
  */
 @OptIn(ExperimentalUnsignedTypes::class)
-class Setting<T>
+class Setting<T : Any>
 internal constructor(
     private val settingId: SettingId,
-    enum: IUByteArrayCompanion<T>,
+    private val byteTransformer: IUByteArrayCompanion<T>,
     private val marshaller: IOperationMarshaller,
-) where T : Enum<T>, T : IValuedEnum<*> {
-  private val byteTransformer = UByteArrayEnumTransformer(enum)
-
+) {
   private inner class SetSettingValue(private val value: T) :
       BaseOperation<Unit>("Set Setting Value::${settingId.name}") {
     override suspend fun execute(communicator: BleCommunicator): Result<Unit> =

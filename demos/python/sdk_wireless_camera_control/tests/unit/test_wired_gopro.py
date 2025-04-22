@@ -14,7 +14,7 @@ import pytest
 
 from open_gopro import WiredGoPro
 from open_gopro.constants import statuses
-from open_gopro.models.network_scan_responses import DnsScanResponse
+from open_gopro.models import DnsScanResponse
 from open_gopro.wifi.mdns_scanner import ZeroconfListener, find_first_ip_addr
 
 
