@@ -5,12 +5,12 @@
 
 import argparse
 import asyncio
-from pathlib import Path
 from datetime import timedelta
+from pathlib import Path
 
 from rich.console import Console
 
-from open_gopro import WiredGoPro, WirelessGoPro, proto
+from open_gopro import WirelessGoPro, constants, proto
 from open_gopro.gopro_base import GoProBase
 from open_gopro.logger import setup_logging
 from open_gopro.models.general import ScheduledCapture
@@ -38,7 +38,8 @@ async def main(args: argparse.Namespace) -> None:
             assert (await gopro.ble_setting.scheduled_capture.get_value()).ok
 
             # Set the video duration
-            TODO
+            assert (await gopro.ble_setting.video_duration.set(constants.settings.VideoDuration.NUM_15_SECONDS)).ok
+
             # Configure scheduled capture for one minute in the future
             capture_time = now + timedelta(minutes=1)
             assert (
