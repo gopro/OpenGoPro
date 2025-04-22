@@ -123,6 +123,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_settings.BleSettings.hindsight"><code class="docutils literal notranslate"><span class="pre">BleSettings.hindsight</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_settings.BleSettings.hypersmooth"><code class="docutils literal notranslate"><span class="pre">BleSettings.hypersmooth</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_settings.BleSettings.lapse_mode"><code class="docutils literal notranslate"><span class="pre">BleSettings.lapse_mode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_settings.BleSettings.lcd_brightness"><code class="docutils literal notranslate"><span class="pre">BleSettings.lcd_brightness</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_settings.BleSettings.led"><code class="docutils literal notranslate"><span class="pre">BleSettings.led</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_settings.BleSettings.max_lens"><code class="docutils literal notranslate"><span class="pre">BleSettings.max_lens</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_settings.BleSettings.max_lens_mod"><code class="docutils literal notranslate"><span class="pre">BleSettings.max_lens_mod</span></code></a></li>
@@ -294,6 +295,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_settings.HttpSettings.hindsight"><code class="docutils literal notranslate"><span class="pre">HttpSettings.hindsight</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_settings.HttpSettings.hypersmooth"><code class="docutils literal notranslate"><span class="pre">HttpSettings.hypersmooth</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_settings.HttpSettings.lapse_mode"><code class="docutils literal notranslate"><span class="pre">HttpSettings.lapse_mode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_settings.HttpSettings.lcd_brightness"><code class="docutils literal notranslate"><span class="pre">HttpSettings.lcd_brightness</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_settings.HttpSettings.led"><code class="docutils literal notranslate"><span class="pre">HttpSettings.led</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_settings.HttpSettings.max_lens"><code class="docutils literal notranslate"><span class="pre">HttpSettings.max_lens</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_settings.HttpSettings.max_lens_mod"><code class="docutils literal notranslate"><span class="pre">HttpSettings.max_lens_mod</span></code></a></li>
@@ -911,6 +913,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.settings.SettingId.HINDSIGHT"><code class="docutils literal notranslate"><span class="pre">SettingId.HINDSIGHT</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.settings.SettingId.HYPERSMOOTH"><code class="docutils literal notranslate"><span class="pre">SettingId.HYPERSMOOTH</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.settings.SettingId.LAPSE_MODE"><code class="docutils literal notranslate"><span class="pre">SettingId.LAPSE_MODE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.settings.SettingId.LCD_BRIGHTNESS"><code class="docutils literal notranslate"><span class="pre">SettingId.LCD_BRIGHTNESS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.settings.SettingId.LED"><code class="docutils literal notranslate"><span class="pre">SettingId.LED</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.settings.SettingId.MAX_LENS"><code class="docutils literal notranslate"><span class="pre">SettingId.MAX_LENS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.settings.SettingId.MAX_LENS_MOD"><code class="docutils literal notranslate"><span class="pre">SettingId.MAX_LENS_MOD</span></code></a></li>
@@ -3064,6 +3067,14 @@ unregister for. Defaults to None (don’t unregister for any).</p></li>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.ble_settings.BleSettings.lcd_brightness">
+<span class="sig-name descname"><span class="pre">lcd_brightness</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.api.builders.BleSettingFacade" title="open_gopro.api.builders.BleSettingFacade"><span class="pre">BleSettingFacade</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#open_gopro.api.ble_settings.BleSettings.lcd_brightness" title="Link to this definition"></a></dt>
+<dd><p>LCD Brightness</p>
+<p>The LCD brightness as a percentage value from 10-100</p>
+<p>See [Open GoPro Spec](<a class="reference external" href="https://gopro.github.io/OpenGoPro/ble/features/settings.html#lcd-brightness-88">https://gopro.github.io/OpenGoPro/ble/features/settings.html#lcd-brightness-88</a>)</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.api.ble_settings.BleSettings.led">
 <span class="sig-name descname"><span class="pre">led</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.api.builders.BleSettingFacade" title="open_gopro.api.builders.BleSettingFacade"><span class="pre">BleSettingFacade</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.constants.settings.Led" title="open_gopro.constants.settings.Led"><span class="pre">Led</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#open_gopro.api.ble_settings.BleSettings.led" title="Link to this definition"></a></dt>
 <dd><p>LED</p>
@@ -3184,6 +3195,10 @@ unregister for. Defaults to None (don’t unregister for any).</p></li>
 <dt class="sig sig-object py" id="open_gopro.api.ble_settings.BleSettings.scheduled_capture">
 <span class="sig-name descname"><span class="pre">scheduled_capture</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.api.builders.BleSettingFacade" title="open_gopro.api.builders.BleSettingFacade"><span class="pre">BleSettingFacade</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.models.general.ScheduledCapture" title="open_gopro.models.general.ScheduledCapture"><span class="pre">ScheduledCapture</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#open_gopro.api.ble_settings.BleSettings.scheduled_capture" title="Link to this definition"></a></dt>
 <dd><p>Scheduled Capture</p>
+<p>Configure or disable the scheduled capture functionality to start encoding at a future Timelapse.</p>
+<blockquote>
+<div><p>TODO document bitmasked value.</p>
+</div></blockquote>
 <p>See [Open GoPro Spec](<a class="reference external" href="https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168">https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168</a>)</p>
 </dd></dl>
 
@@ -4701,6 +4716,14 @@ be used.</p></li>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.api.http_settings.HttpSettings.lcd_brightness">
+<span class="sig-name descname"><span class="pre">lcd_brightness</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.api.builders.HttpSetting" title="open_gopro.api.builders.HttpSetting"><span class="pre">HttpSetting</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#open_gopro.api.http_settings.HttpSettings.lcd_brightness" title="Link to this definition"></a></dt>
+<dd><p>LCD Brightness</p>
+<p>The LCD brightness as a percentage value from 10-100</p>
+<p>&#64;see [Open GoPro Spec](<a class="reference external" href="https://gopro.github.io/OpenGoPro/ble/features/settings.html#lcd-brightness-88">https://gopro.github.io/OpenGoPro/ble/features/settings.html#lcd-brightness-88</a>)</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.api.http_settings.HttpSettings.led">
 <span class="sig-name descname"><span class="pre">led</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.api.builders.HttpSetting" title="open_gopro.api.builders.HttpSetting"><span class="pre">HttpSetting</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.constants.settings.Led" title="open_gopro.constants.settings.Led"><span class="pre">Led</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#open_gopro.api.http_settings.HttpSettings.led" title="Link to this definition"></a></dt>
 <dd><p>LED</p>
@@ -4821,6 +4844,10 @@ be used.</p></li>
 <dt class="sig sig-object py" id="open_gopro.api.http_settings.HttpSettings.scheduled_capture">
 <span class="sig-name descname"><span class="pre">scheduled_capture</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.api.builders.HttpSetting" title="open_gopro.api.builders.HttpSetting"><span class="pre">HttpSetting</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.models.general.ScheduledCapture" title="open_gopro.models.general.ScheduledCapture"><span class="pre">ScheduledCapture</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#open_gopro.api.http_settings.HttpSettings.scheduled_capture" title="Link to this definition"></a></dt>
 <dd><p>Scheduled Capture</p>
+<p>Configure or disable the scheduled capture functionality to start encoding at a future Timelapse.</p>
+<blockquote>
+<div><p>TODO document bitmasked value.</p>
+</div></blockquote>
 <p>&#64;see [Open GoPro Spec](<a class="reference external" href="https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168">https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168</a>)</p>
 </dd></dl>
 
@@ -8622,6 +8649,11 @@ Defaults to always_false.</p></li>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.constants.settings.SettingId.LAPSE_MODE">
 <span class="sig-name descname"><span class="pre">LAPSE_MODE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">187</span></em><a class="headerlink" href="#open_gopro.constants.settings.SettingId.LAPSE_MODE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.settings.SettingId.LCD_BRIGHTNESS">
+<span class="sig-name descname"><span class="pre">LCD_BRIGHTNESS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">88</span></em><a class="headerlink" href="#open_gopro.constants.settings.SettingId.LCD_BRIGHTNESS" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
