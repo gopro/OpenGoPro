@@ -6,8 +6,11 @@ import com.gopro.open_gopro.domain.communicator.bleCommunicator.bleFragment
 import com.gopro.open_gopro.entity.network.ble.BleNotification
 import com.gopro.open_gopro.entity.network.ble.GpUuid
 import com.gopro.open_gopro.entity.queries.ComplexQueryEntity
+import com.gopro.open_gopro.gopro.ULongByteTransformer
 import com.gopro.open_gopro.operations.VideoResolution
+import com.gopro.open_gopro.util.extensions.asInt64UB
 import com.gopro.open_gopro.util.extensions.toTlvMap
+import com.gopro.open_gopro.util.extensions.toUByteArray
 import fakes.BleApiSpy
 import fakes.buildFakeSettingsContainer
 import kotlin.test.Test
@@ -170,6 +173,50 @@ class TestSettings {
       assertTrue { isEnabled }
     }
   }
+
+    @Test
+    fun `ulong bytearray conversions`() {
+        // GIVEN
+        val target = 0x01020304UL
+
+        // WHEN
+        val builtBytes = target.toUByteArray()
+        val parsedLong = builtBytes.asInt64UB()
+
+        // THEN
+        assertEquals(target, parsedLong)
+        assertContentEquals(builtBytes, ubyteArrayOf(0x04U, 0x03U, 0x02U, 0x01U))
+    }
+
+    @Test
+    fun `int 4 byte transformer`() {
+        // GIVEN
+        val target = 0x01020304UL
+        val transformer = ULongByteTransformer(4)
+
+        // WHEN
+        val builtBytes = transformer.toUByteArray(target)
+        val parsedLong = transformer.fromUByteArray(builtBytes)
+
+        // THEN
+        assertEquals(parsedLong, target)
+        assertContentEquals(builtBytes, ubyteArrayOf(0x04U, 0x03U, 0x02U, 0x01U))
+    }
+
+    @Test
+    fun `int 1 byte transformer`() {
+        // GIVEN
+        val target = 0xFEUL
+        val transformer = ULongByteTransformer(1)
+
+        // WHEN
+        val builtBytes = transformer.toUByteArray(target)
+        val parsedLong = transformer.fromUByteArray(builtBytes)
+
+        // THEN
+        assertEquals(parsedLong, target)
+        assertContentEquals(builtBytes, ubyteArrayOf(0xFEU))
+    }
 
   @Test
   fun `get multiple settings`() = runTest {

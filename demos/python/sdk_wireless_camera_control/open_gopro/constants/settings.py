@@ -23,6 +23,7 @@ class SettingId(GoProIntEnum):
     WEBCAM_DIGITAL_LENSES = 43
     AUTO_POWER_DOWN = 59
     GPS = 83
+    LCD_BRIGHTNESS = 88
     LED = 91
     VIDEO_ASPECT_RATIO = 108
     VIDEO_LENS = 121

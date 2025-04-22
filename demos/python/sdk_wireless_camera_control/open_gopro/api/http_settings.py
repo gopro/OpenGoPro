@@ -68,7 +68,7 @@ class HttpSettings(HttpMessages[HttpSetting]):
         """Nightlapse Rate
 
         How frequently to take a video or photo when performing a Nightlapse.
-		
+
 		This controls the Video or Photo Nightlapse rate if Setting 128 is set to 21 or 26 respectively.
 
         @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#nightlapse-rate-32)"""
@@ -94,6 +94,14 @@ class HttpSettings(HttpMessages[HttpSetting]):
         """GPS
 
         @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#gps-83)"""
+
+        self.lcd_brightness: HttpSetting[int] = HttpSetting[int](communicator, SettingId.LCD_BRIGHTNESS)
+
+        """LCD Brightness
+
+        The LCD brightness as a percentage value from 10-100
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#lcd-brightness-88)"""
 
         self.led: HttpSetting[settings.Led] = HttpSetting[settings.Led](communicator, SettingId.LED)
 
@@ -200,6 +208,10 @@ class HttpSettings(HttpMessages[HttpSetting]):
         )
 
         """Scheduled Capture
+
+        Configure or disable the scheduled capture functionality to start encoding at a future Timelapse.
+
+		TODO document bitmasked value.
 
         @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168)"""
 

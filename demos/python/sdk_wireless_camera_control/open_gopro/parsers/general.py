@@ -3,9 +3,11 @@
 
 """Monolithic Parser implementations"""
 
-from construct import BitsInteger, BitStruct, Flag, Int32ub, Padding
+from typing import Any
+from construct import BitsInteger, BitStruct, Flag, Int32ub, Int8ub, Padding
 
 from open_gopro.models import ScheduledCapture
+from open_gopro.parser_interface import BytesParserBuilder
 from open_gopro.parsers.bytes import ConstructDataclassByteParserBuilder
 
 ScheduledCaptureParser = ConstructDataclassByteParserBuilder(
@@ -19,3 +21,26 @@ ScheduledCaptureParser = ConstructDataclassByteParserBuilder(
     data_class=ScheduledCapture,
     int_builder=Int32ub,
 )
+
+
+class IntByteParserBuilder(BytesParserBuilder[int]):
+    def __init__(self, length: int) -> None:
+        match length:
+            case 1:
+                self._container = Int8ub
+            case 4:
+                self._container = Int32ub
+            case _:
+                raise ValueError(f"Length {length} is not handled")
+
+    def parse(self, data: bytes) -> int:
+        return self._container.parse(data)
+
+    def build(self, obj: Any) -> bytes:
+        match obj:
+            case int():
+                return self._container.build(obj)
+            case str():
+                return self._container.build(int(obj))
+            case _:
+                raise TypeError(f"Can not build bytes from object of type {type(obj)}")

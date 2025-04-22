@@ -3,4 +3,4 @@
 
 """Parser interface and implementations"""
 
-from .general import ScheduledCaptureParser
+from .general import ScheduledCaptureParser, IntByteParserBuilder

@@ -5,11 +5,14 @@ package com.gopro.open_gopro.operations
 
 import com.gopro.open_gopro.util.extensions.toUByteArray
 
-/**
- * *********************************************************************************************************
+/************************************************************************************************************
+ *
  *
  * WARNING!!! This file is auto-generated. Do not modify it manually
+ *
+ *
  */
+
 enum class StatusId(override val value: UByte) : IValuedEnum<UByte> {
   BATTERY_PRESENT(1U),
   INTERNAL_BATTERY_BARS(2U),
@@ -96,7 +99,6 @@ enum class StatusId(override val value: UByte) : IValuedEnum<UByte> {
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<StatusId> {
     override fun fromUByteArray(value: UByteArray) = entries.first { it.value == value.last() }
-
     override fun toUByteArray(value: StatusId): UByteArray = value.value.toUByteArray()
   }
 }
