@@ -151,7 +151,7 @@ but the end user should never need to use these directly.
 Flows
 ^^^^^
 
-.. automodule:: open_gopro.api.status_flow
+.. automodule:: open_gopro.api.gopro_flow
    :show-inheritance:
 
 .. automodule:: open_gopro.flow

@@ -13,10 +13,10 @@ from open_gopro.types import UpdateType
 
 T = TypeVar("T")
 I = TypeVar("I")
-C = TypeVar("C", bound="StatusFlowSeparateInitial")
+C = TypeVar("C", bound="GoproRegisterFlowDistinctInitial")
 
 
-class StatusFlowSeparateInitial(Flow[T], Generic[I, T]):
+class GoproRegisterFlowDistinctInitial(Flow[T], Generic[I, T]):
     """Status Flow for asynchronous camera statuses where the initial status is a different type than proceeding status notifications.
 
     Args:
@@ -51,7 +51,7 @@ class StatusFlowSeparateInitial(Flow[T], Generic[I, T]):
         """
         return self._initial_response
 
-    async def __aenter__(self) -> StatusFlowSeparateInitial[I, T]:
+    async def __aenter__(self) -> GoproRegisterFlowDistinctInitial[I, T]:
         if not self._is_open:
             await self.start()
         return self
@@ -105,7 +105,7 @@ class StatusFlowSeparateInitial(Flow[T], Generic[I, T]):
         self._is_open = False
 
 
-class StatusFlow(StatusFlowSeparateInitial[T, T], Generic[T]):
+class GoproRegisterFlow(GoproRegisterFlowDistinctInitial[T, T], Generic[T]):
     """Status Flow for asynchronous camera statuses where all received statuses are the same type.
 
     Args:

@@ -16,7 +16,7 @@ import construct
 import wrapt
 from returns.result import ResultE
 
-from open_gopro.api.status_flow import StatusFlow
+from open_gopro.api.gopro_flow import GoproRegisterFlow
 from open_gopro.ble import BleUUID
 from open_gopro.communicator_interface import (
     BleMessage,
@@ -727,11 +727,11 @@ class BleStatusFacade(Generic[T]):
         )
         return await self._communicator._send_ble_message(message)
 
-    async def get_value_flow(self) -> ResultE[StatusFlow[T]]:
+    async def get_value_flow(self) -> ResultE[GoproRegisterFlow[T]]:
         """Register for asynchronous notifications when a status changes.
 
         Returns:
-            ResultE[StatusFlow[T]]: current status value
+            ResultE[GoproRegisterFlow[T]]: current status value
         """
         register_message = BleStatusFacade.BleStatusMessageBase(
             BleStatusFacade.UUID,
@@ -747,7 +747,7 @@ class BleStatusFacade(Generic[T]):
         )
 
         return ResultE.from_value(
-            await StatusFlow[T](
+            await GoproRegisterFlow[T](
                 gopro=self._communicator,
                 update=self._identifier,
                 register_command=self._communicator._send_ble_message(register_message),

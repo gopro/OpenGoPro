@@ -3,7 +3,10 @@ from optparse import Values
 
 import pytest
 
-from open_gopro.api.status_flow import StatusFlow, StatusFlowSeparateInitial
+from open_gopro.api.gopro_flow import (
+    GoproRegisterFlow,
+    GoproRegisterFlowDistinctInitial,
+)
 from open_gopro.constants.statuses import StatusId
 from open_gopro.flow import Flow, FlowManager
 from tests.mocks import MockWirelessGoPro
@@ -288,7 +291,7 @@ async def test_flow_take_2():
 async def test_status_flow_basic(mock_wireless_gopro_basic: MockWirelessGoPro):
     # GIVEN
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
-    flow = await StatusFlow(
+    flow = await GoproRegisterFlow(
         gopro=mock_wireless_gopro_basic,
         update=StatusId.ENCODING,
         register_command=mock_wireless_gopro_basic.mock_gopro_resp(True),
@@ -315,7 +318,7 @@ async def test_status_flow_basic(mock_wireless_gopro_basic: MockWirelessGoPro):
 async def test_status_flow_different_initial_response(mock_wireless_gopro_basic: MockWirelessGoPro):
     # GIVEN
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
-    flow = await StatusFlowSeparateInitial(
+    flow = await GoproRegisterFlowDistinctInitial(
         gopro=mock_wireless_gopro_basic,
         update=StatusId.ENCODING,
         register_command=mock_wireless_gopro_basic.ble_command.get_open_gopro_api_version(),

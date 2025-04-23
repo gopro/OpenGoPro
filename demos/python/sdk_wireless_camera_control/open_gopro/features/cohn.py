@@ -11,7 +11,7 @@ from tinydb import TinyDB
 
 from open_gopro import proto
 from open_gopro.api import WirelessApi
-from open_gopro.api.status_flow import StatusFlow
+from open_gopro.api.gopro_flow import GoproRegisterFlow
 from open_gopro.constants import ActionId
 from open_gopro.db import CohnDb
 from open_gopro.exceptions import GoProNotOpened
@@ -45,7 +45,7 @@ class CohnFeature(BaseFeature):
         if cohn_credentials:
             self.credentials = cohn_credentials
         # TODO close this
-        self._status_flow = StatusFlow(
+        self._status_flow = GoproRegisterFlow(
             gopro=self._gopro,
             update=ActionId.RESPONSE_GET_COHN_STATUS,
             register_command=self._gopro.ble_command.cohn_get_status(register=True),
