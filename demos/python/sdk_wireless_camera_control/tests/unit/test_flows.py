@@ -1,5 +1,4 @@
 import asyncio
-from optparse import Values
 
 import pytest
 
@@ -60,7 +59,7 @@ async def test_flow_on_start_async_action():
         on_start.set()
 
     assert await flow.on_start(set_on_start).single() == 0
-    assert asyncio.wait_for(on_start.wait(), 1)
+    assert await asyncio.wait_for(on_start.wait(), 1)
     assert flow.current == 0
     assert await flow.single() == 1
     assert flow.current == 1

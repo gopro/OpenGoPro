@@ -137,7 +137,7 @@ async def test_ble_setting():
     assert not d
 
     # Register value updates
-    await message.register_value_update(None)
+    await message.get_value_flow()
     d = communicator.message._as_dict(**dummy_kwargs)
     assert d.pop("id") == QueryCmdId.REG_SETTING_VAL_UPDATE
     assert d.pop("setting_id") == SettingId.MAX_LENS
@@ -146,30 +146,10 @@ async def test_ble_setting():
     assert_kwargs(d)
     assert not d
 
-    # Unregister value updates
-    await message.unregister_value_update(None)
-    d = communicator.message._as_dict(**dummy_kwargs)
-    assert d.pop("id") == QueryCmdId.UNREG_SETTING_VAL_UPDATE
-    assert d.pop("setting_id") == SettingId.MAX_LENS
-    assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUID.CQ_QUERY
-    assert_kwargs(d)
-    assert not d
-
     # Register capability updates
-    await message.register_capability_update(None)
+    await message.get_capabilities_flow()
     d = communicator.message._as_dict(**dummy_kwargs)
     assert d.pop("id") == QueryCmdId.REG_CAPABILITIES_UPDATE
-    assert d.pop("setting_id") == SettingId.MAX_LENS
-    assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUID.CQ_QUERY
-    assert_kwargs(d)
-    assert not d
-
-    # Unregister capability updates
-    await message.unregister_capability_update(None)
-    d = communicator.message._as_dict(**dummy_kwargs)
-    assert d.pop("id") == QueryCmdId.UNREG_CAPABILITIES_UPDATE
     assert d.pop("setting_id") == SettingId.MAX_LENS
     assert d.pop("protocol") == GoProResp.Protocol.BLE
     assert d.pop("uuid") == GoProUUID.CQ_QUERY

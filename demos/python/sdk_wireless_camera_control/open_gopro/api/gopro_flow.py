@@ -139,6 +139,7 @@ class GoproRegisterFlow(GoproRegisterFlowDistinctInitial[T, T], Generic[T]):
         initial_response = await self._register_command
         if not initial_response.ok:
             raise GoProError(f"Failed to start receiving status ==> {self._update}")
+        self._initial_response = initial_response.data
         await self._emit_status(self._update, initial_response.data)
         self._is_open = True
         return self

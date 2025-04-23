@@ -1,5 +1,6 @@
 # mocks.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Thu Mar 20 21:57:17 UTC 2025
+from __future__ import annotations
 
 import asyncio
 import re
@@ -33,7 +34,6 @@ from open_gopro.communicator_interface import (
 )
 from open_gopro.constants import CmdId, GoProUUID, StatusId
 from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
-from open_gopro.features.access_point import AccessPointFeature
 from open_gopro.features.base_feature import BaseFeature
 from open_gopro.gopro_base import GoProBase
 from open_gopro.models import GoProResp
@@ -105,6 +105,11 @@ class MockBleCommunicator(GoProBle):
             "target",
         )
         self._api = api_versions[test_version](self)
+        self._ble_message_response: GoProResp = None
+        self.spy: dict = {}
+
+    def set_ble_message_response(self, response: MockGoproResp) -> None:
+        self._ble_message_response = response
 
     def identifier(self) -> str:
         return "identifier"
@@ -126,12 +131,14 @@ class MockBleCommunicator(GoProBle):
     async def _send_ble_message(
         self, message: BleMessage, rules: MessageRules = MessageRules(), **kwargs: Any
     ) -> GoProResp:
-        return dict(uuid=message._uuid, packet=message._build_data(**kwargs))
+        self.spy = dict(uuid=message._uuid, packet=message._build_data(**kwargs))
+        return self._ble_message_response
 
     async def _read_ble_characteristic(
         self, message: BleMessage, rules: MessageRules = MessageRules(), **kwargs: Any
     ) -> GoProResp:
-        return dict(uuid=message._uuid)
+        self.spy = dict(uuid=message._uuid)
+        return self._ble_message_response
 
     @property
     def ble_command(self) -> BleCommands:
@@ -220,7 +227,7 @@ class MockWifiCommunicator(GoProWifi):
         return self._api.http_setting
 
 
-class DataPatch:
+class MockGoproResp:
     def __init__(self, value: Any) -> None:
         self.value = value
 
@@ -243,7 +250,7 @@ class MockWiredGoPro(WiredGoPro):
         self.state_response: CameraState = {}
 
     async def _mock_get_state(self, *args, **kwargs):
-        return DataPatch(self.state_response)
+        return MockGoproResp(self.state_response)
 
     def set_state_response(self, response: CameraState):
         self.state_response = response
@@ -252,7 +259,7 @@ class MockWiredGoPro(WiredGoPro):
         return
 
     async def _mock_get_version(self, *args, **kwargs):
-        return DataPatch("2.0")
+        return MockGoproResp("2.0")
 
 
 class MockFeature(BaseFeature):
@@ -303,7 +310,7 @@ class MockWirelessGoPro(WirelessGoPro):
         self.ble_status.ap_mode.get_value = self._mock_wifi_check
 
     async def mock_gopro_resp(self, value: T) -> GoProResp[T]:
-        return DataPatch(value)
+        return MockGoproResp(value)
 
     async def _open_wifi(self, timeout: int = 15, retries: int = 5) -> None:
         self._api.ble_command.get_wifi_password = self._mock_password
@@ -332,20 +339,20 @@ class MockWirelessGoPro(WirelessGoPro):
     ) -> GoProResp:
         raise NotImplementedError
 
-    async def _mock_get_cohn_status(self, *args, **kwargs) -> DataPatch:
-        return DataPatch(NotifyCOHNStatus(status=EnumCOHNStatus.COHN_UNPROVISIONED))
+    async def _mock_get_cohn_status(self, *args, **kwargs) -> MockGoproResp:
+        return MockGoproResp(NotifyCOHNStatus(status=EnumCOHNStatus.COHN_UNPROVISIONED))
 
-    async def _mock_version(self) -> DataPatch:
-        return DataPatch("2.0")
+    async def _mock_version(self) -> MockGoproResp:
+        return MockGoproResp("2.0")
 
-    async def _mock_password(self) -> DataPatch:
-        return DataPatch("password")
+    async def _mock_password(self) -> MockGoproResp:
+        return MockGoproResp("password")
 
-    async def _mock_wifi_check(self) -> DataPatch:
-        return DataPatch(True)
+    async def _mock_wifi_check(self) -> MockGoproResp:
+        return MockGoproResp(True)
 
-    async def _mock_ssid(self) -> DataPatch:
-        return DataPatch("ssid")
+    async def _mock_ssid(self) -> MockGoproResp:
+        return MockGoproResp("ssid")
 
     async def _mock_empty_return(self, *args, **kwargs) -> None:
         return None
@@ -359,15 +366,15 @@ class MockWirelessGoPro(WirelessGoPro):
         # for packet in self._test_response_data:
         #     self._notification_handler(0, packet)
 
-    async def _mock_get_cohn_cohn_cert(self) -> DataPatch:
+    async def _mock_get_cohn_cohn_cert(self) -> MockGoproResp:
         @dataclass
         class MockCert:
             cert: str
 
-        return DataPatch(MockCert("cert"))
+        return MockGoproResp(MockCert("cert"))
 
-    async def _mock_get_ap_entries(self) -> DataPatch:
-        return DataPatch("ap_entries")
+    async def _mock_get_ap_entries(self) -> MockGoproResp:
+        return MockGoproResp("ap_entries")
 
     @property
     def is_ble_connected(self) -> bool:
@@ -414,10 +421,10 @@ class MockGoProMaintainBle(WirelessGoPro):
         return None
 
     async def _mock_register_encoding(self, *args):
-        return DataPatch({StatusId.ENCODING: 1})
+        return MockGoproResp({StatusId.ENCODING: 1})
 
     async def _mock_register_busy(self, *args):
-        return DataPatch({StatusId.BUSY: 1})
+        return MockGoproResp({StatusId.BUSY: 1})
 
     async def mock_handle2uuid(self, *args):
         return GoProUUID.CQ_QUERY_RESP
@@ -425,5 +432,5 @@ class MockGoProMaintainBle(WirelessGoPro):
     async def _open_ble(self, timeout: int, retries: int) -> None:
         await super()._open_ble(timeout=timeout, retries=retries)
 
-    async def _mock_get_version(self) -> DataPatch:
-        return DataPatch("2.0")
+    async def _mock_get_version(self) -> MockGoproResp:
+        return MockGoproResp("2.0")

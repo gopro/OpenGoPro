@@ -50,7 +50,7 @@ from open_gopro.parsers.bytes import (
     GoProEnumByteParserBuilder,
     ProtobufByteParser,
 )
-from open_gopro.types import CameraState, JsonDict, Protobuf, UpdateCb
+from open_gopro.types import CameraState, JsonDict, Protobuf
 
 logger = logging.getLogger(__name__)
 
@@ -569,81 +569,59 @@ class BleSettingFacade(Generic[T]):
         """
         raise NotImplementedError("Not implemented on camera!")
 
-    async def register_value_update(self, callback: UpdateCb) -> GoProResp[None]:
-        """Register for asynchronous notifications when a given setting ID's value updates.
-
-        Args:
-            callback (UpdateCb): callback to be notified with
+    async def get_value_flow(self) -> ResultE[GoproRegisterFlow[T]]:
+        """Receive a data flow of asynchronously notified setting values.
 
         Returns:
-            GoProResp[None]: Current value of respective setting ID
+            ResultE[GoproRegisterFlow[T]]: data flow if successful otherwise an error
         """
-        message = BleSettingFacade.BleSettingMessageBase(
+        register_message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
             QueryCmdId.REG_SETTING_VAL_UPDATE,
             self._identifier,
             lambda **_: self._build_cmd(QueryCmdId.REG_SETTING_VAL_UPDATE),
         )
-        if (response := await self._communicator._send_ble_message(message)).ok:
-            self._communicator.register_update(callback, self._identifier)
-        return response
-
-    async def unregister_value_update(self, callback: UpdateCb) -> GoProResp[None]:
-        """Stop receiving notifications when a given setting ID's value updates.
-
-        Args:
-            callback (UpdateCb): callback to be notified with
-
-        Returns:
-            GoProResp[None]: Status of unregister
-        """
-        message = BleSettingFacade.BleSettingMessageBase(
+        unregister_message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
             QueryCmdId.UNREG_SETTING_VAL_UPDATE,
             self._identifier,
             lambda **_: self._build_cmd(QueryCmdId.UNREG_SETTING_VAL_UPDATE),
         )
-        if (response := await self._communicator._send_ble_message(message)).ok:
-            self._communicator.unregister_update(callback, self._identifier)
-        return response
+        return ResultE.from_value(
+            await GoproRegisterFlow[T](
+                gopro=self._communicator,
+                update=self._identifier,
+                register_command=self._communicator._send_ble_message(register_message),
+                unregister_command=self._communicator._send_ble_message(unregister_message),
+            ).start()
+        )
 
-    async def register_capability_update(self, callback: UpdateCb) -> GoProResp[None]:
-        """Register for asynchronous notifications when a given setting ID's capabilities update.
-
-        Args:
-            callback (UpdateCb): callback to be notified with
+    async def get_capabilities_flow(self) -> ResultE[GoproRegisterFlow[list[T]]]:
+        """Receive a data flow of asynchronously notified lists of setting value capabilities.
 
         Returns:
-            GoProResp[None]: Current capabilities of respective setting ID
+            ResultE[GoproRegisterFlow[list[T]]]: data flow if successful otherwise an error
         """
-        message = BleSettingFacade.BleSettingMessageBase(
+        register_message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
             QueryCmdId.REG_CAPABILITIES_UPDATE,
             self._identifier,
             lambda **_: self._build_cmd(QueryCmdId.REG_CAPABILITIES_UPDATE),
         )
-        if (response := await self._communicator._send_ble_message(message)).ok:
-            self._communicator.unregister_update(callback, self._identifier)
-        return response
-
-    async def unregister_capability_update(self, callback: UpdateCb) -> GoProResp[None]:
-        """Stop receiving notifications when a given setting ID's capabilities change.
-
-        Args:
-            callback (UpdateCb): callback to be notified with
-
-        Returns:
-            GoProResp[None]: Status of unregister
-        """
-        message = BleSettingFacade.BleSettingMessageBase(
+        unregister_message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
             QueryCmdId.UNREG_CAPABILITIES_UPDATE,
             self._identifier,
             lambda **_: self._build_cmd(QueryCmdId.UNREG_CAPABILITIES_UPDATE),
         )
-        if (response := await self._communicator._send_ble_message(message)).ok:
-            self._communicator.unregister_update(callback, self._identifier)
-        return response
+        return ResultE.from_value(
+            await GoproRegisterFlow[list[T]](
+                gopro=self._communicator,
+                update=self._identifier,
+                register_command=self._communicator._send_ble_message(register_message),
+                unregister_command=self._communicator._send_ble_message(unregister_message),
+            ).start()
+        )
 
     def __str__(self) -> str:
         return str(self._identifier).lower().replace("_", " ").title()

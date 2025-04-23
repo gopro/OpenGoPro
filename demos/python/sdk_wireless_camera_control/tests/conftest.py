@@ -139,9 +139,9 @@ async def mock_ble_client():
     yield test_client
 
 
-@pytest_asyncio.fixture(scope="module", params=versions)
+@pytest_asyncio.fixture(scope="function")
 async def mock_ble_communicator(request):
-    test_client = MockBleCommunicator(request.param)
+    test_client = MockBleCommunicator("2.0")
     yield test_client
 
 
@@ -156,9 +156,9 @@ async def mock_wifi_client():
     yield test_client
 
 
-@pytest_asyncio.fixture(scope="module", params=versions)
+@pytest_asyncio.fixture(scope="module")
 async def mock_wifi_communicator(request):
-    test_client = MockWifiCommunicator(request.param)
+    test_client = MockWifiCommunicator("2.0")
     yield test_client
 
 

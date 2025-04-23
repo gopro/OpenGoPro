@@ -424,6 +424,9 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         """
         await self._close_wifi()
         await self._close_ble()
+        if self._should_maintain_state:
+            for task in [*self._status_tasks, *self._state_acquire_lock_tasks]:
+                task.cancel()
         self._open = False
 
     def register_update(self, callback: UpdateCb, update: UpdateType) -> None:
