@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import asyncio
-from doctest import debug
 import logging
 from inspect import iscoroutinefunction
 from types import TracebackType
@@ -20,6 +19,14 @@ from typing import (
 from uuid import uuid1
 
 T = TypeVar("T")
+C = TypeVar("C", bound="Flow")
+
+
+SyncAction: TypeAlias = Callable[[T], None]
+AsyncAction: TypeAlias = Callable[[T], Coroutine[Any, Any, None]]
+SyncFilter: TypeAlias = Callable[[T], bool]
+AsyncFilter: TypeAlias = Callable[[T], Coroutine[Any, Any, bool]]
+
 
 # pylint: disable=redefined-builtin
 
@@ -88,20 +95,13 @@ class FlowManager(Generic[T]):
 
 # https://gist.github.com/jspahrsummers/32a8096667cf9f17d5e8fddeb081b202
 
-C = TypeVar("C", bound="Flow")
-
-
-SyncAction: TypeAlias = Callable[[T], None]
-AsyncAction: TypeAlias = Callable[[T], Coroutine[Any, Any, None]]
-SyncFilter: TypeAlias = Callable[[T], bool]
-AsyncFilter: TypeAlias = Callable[[T], Coroutine[Any, Any, bool]]
-
 
 class Flow(AsyncGenerator[T, Any], Generic[T]):
     """The asynchronous data flow
 
     Args:
         manager (FlowManager[T]): manager to send data to the flow
+        debug_id (str | None): Identifier to log for debugging. Defaults to None (will use generated UUID).
     """
 
     def __init__(self, manager: FlowManager[T], debug_id: str | None = None) -> None:
@@ -110,8 +110,8 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
         self._debug_id = debug_id or str(self._id)
         self._current: T | None = None
         self._manager = manager
-        self._on_start_actions: list[SyncAction | AsyncAction] = []
-        self._per_value_actions: list[SyncAction | AsyncAction] = []
+        self._on_start_actions: list[SyncAction[T] | AsyncAction[T]] = []
+        self._per_value_actions: list[SyncAction[T] | AsyncAction[T]] = []
         self._manager.add_flow(self)
         self._take_count: int | None = None
         # TODO handle cleanup
@@ -121,18 +121,48 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
     def __hash__(self) -> int:
         return self._id
 
-    def _mux_action(self, action: SyncAction | AsyncAction | None, value: T, tg: asyncio.TaskGroup) -> None:
-        if action:
-            if iscoroutinefunction(action):
+    def _mux_action(
+        self,
+        action: SyncAction[T] | AsyncAction[T],
+        value: T,
+        tg: asyncio.TaskGroup | None = None,
+    ) -> None:
+        """Execute an action that is either synchronous or asynchronous
+
+        If tg is passed, the async action will be added to the task group. Otherwise an anonymous async task will be
+        created. In both cases, this function will return without awaiting the created task.
+
+        Note! If action is synchronous, this will block until the action returns.
+
+        Args:
+            action (SyncAction[T] | AsyncAction[T]): action to execute
+            value (T): value to pass to action
+            tg (asyncio.TaskGroup | None, optional): Task group to add async action. Defaults to None (don't add to any
+                task group).
+        """
+        if iscoroutinefunction(action):
+            if tg:
                 tg.create_task(action(value))
             else:
-                action(value)
-
-    async def _mux_filter_blocking(self, action: SyncFilter | AsyncFilter, value: T) -> bool:
-        if iscoroutinefunction(action):
-            return await action(value)
+                asyncio.create_task(action(value))
         else:
-            return action(value)
+            action(value)
+
+    async def _mux_filter_blocking(self, filter: SyncFilter | AsyncFilter, value: T) -> bool:
+        """Execute a filter that is either synchronous or asynchronous
+
+        Note! This will await / block until the action completes.
+
+        Args:
+            filter (SyncFilter | AsyncFilter): Filter to execute
+            value (T): value to analyze with filter
+
+        Returns:
+            bool: _description_
+        """
+        if iscoroutinefunction(filter):
+            return await filter(value)
+        return filter(value)  # type: ignore
 
     @property
     def current(self) -> T | None:
@@ -154,7 +184,7 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
             num (int): number of values to ignore
 
         Returns:
-            Flow[T]: modified flow
+            C: modified flow
         """
         # TODO do we want current to reflect the dropped values? Probably not...
         for _ in range(num):
@@ -162,17 +192,25 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
         return self
 
     def take(self: C, num: int) -> C:
+        """Configure the flow collection to stop after receiving a certain amount of values
+
+        Args:
+            num (int): number of values to take
+
+        Returns:
+            C: modified flow
+        """
         self._take_count = self._count + num + 1
         return self
 
-    def on_start(self: C, action: SyncAction | AsyncAction) -> C:
+    def on_start(self: C, action: SyncAction[T] | AsyncAction[T]) -> C:
         """Register a callback action to be called when the flow starts collecting
 
         Args:
-            action (SyncAction | AsyncAction): Callback action
+            action (SyncAction[T] | AsyncAction[T]): Callback action
 
         Returns:
-            Flow[T]: modified flow
+            C: modified flow
         """
         self._on_start_actions.append(action)
         return self
@@ -204,14 +242,20 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
         assert value is not None
         return value
 
-    async def collect(self, action: SyncAction | AsyncAction | None) -> T | None:
+    async def collect(self, action: SyncAction[T] | AsyncAction[T] | None) -> T:
         """Terminal receiver to indefinitely collect received values
 
         Note! If the action is synchronous, collecting will block on it
         Note! This will not return until all actions have completed
 
         Args:
-            action (SyncAction | AsyncAction | None): Action to call on each received value
+            action (SyncAction[T] | AsyncAction[T] | None): Action to call on each received value
+
+        Raises:
+            RuntimeError: Failed to collect any values
+
+        Returns:
+            T: last received value
         """
         return_value: T | None = None
         async with asyncio.TaskGroup() as tg:
@@ -219,20 +263,27 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
                 # TODO do we want / need should_close. It's not currently being handled
                 while not self._should_close:
                     return_value = await self.single()
-                    self._mux_action(action, return_value, tg)
+                    if action:
+                        self._mux_action(action, return_value, tg)
+                return_value = self.current
             except StopAsyncIteration:
                 return_value = self.current
-        return return_value
+        if return_value:
+            return return_value
+        raise RuntimeError("Failed to collect any values")
 
-    async def collect_until(self, filter: SyncFilter, action: SyncAction | AsyncAction) -> T | None:
+    async def collect_until(self, filter: SyncFilter[T], action: SyncAction[T] | AsyncAction[T]) -> T:
         """Terminal receiver to collected received values until a filter is matched
 
         Note! If the action is synchronous, collecting will block on it
         Note! This will not return until all actions have completed
 
         Args:
-            filter (SyncFilter): Filter to apply
-            action (SyncAction | AsyncAction): Action called on each received value
+            filter (SyncFilter[T]): Filter to apply
+            action (SyncAction[T] | AsyncAction[T]): Action called on each received value
+
+        Raises:
+            RuntimeError: Failed to collect any values
 
         Returns:
             T: Last value that was received when the filter matched
@@ -249,16 +300,21 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
                         self._mux_action(action, return_value, tg)
             except StopAsyncIteration:
                 return_value = self.current
-        return return_value
+        if return_value:
+            return return_value
+        raise RuntimeError("Failed to collect any values")
 
-    async def collect_while(self, action: SyncFilter | AsyncFilter) -> T | None:
+    async def collect_while(self, action: SyncFilter[T] | AsyncFilter[T]) -> T:
         """Terminal receiver to collect received value while a filter is matched
 
         Note that this will block / await until the filter action is complete.
 
         Args:
-            action (SyncFilter | AsyncFilter ): Action / filter that is called one ach received value.
+            action (SyncFilter[T] | AsyncFilter[T] ): Action / filter that is called one ach received value.
                 It also functions as the filter and should thus return whether or not the filter matches.
+
+        Raises:
+            RuntimeError: Failed to collect any values
 
         Returns:
             T: Last value that was received while the filter matched.
@@ -266,12 +322,16 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
         try:
             if self.current and not self._mux_filter_blocking(action, self.current):
                 return self.current
-            else:
-                while not self._should_close:
-                    if not await self._mux_filter_blocking(action, value := await self.single()):
-                        return value
-        except StopAsyncIteration:
-            return self.current
+            while not self._should_close:
+                if not await self._mux_filter_blocking(action, value := await self.single()):
+                    return value
+            if self.current:
+                return self.current
+            raise RuntimeError("Failed to collect any values")
+        except StopAsyncIteration as exc:
+            if self.current:
+                return self.current
+            raise RuntimeError("Failed to collect any values") from exc
 
     # Async Generator Methods
 
@@ -330,7 +390,7 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
             self._count += 1
             if self._count == 1:
                 for action in self._on_start_actions:
-                    action(value)
+                    self._mux_action(action, value)
             if self._take_count and self._count == self._take_count:
                 break
             return value

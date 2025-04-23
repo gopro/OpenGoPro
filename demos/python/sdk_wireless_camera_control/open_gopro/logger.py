@@ -91,7 +91,7 @@ class Logger:
             )
             self.file_handler.setFormatter(file_formatter)
             # Set to TRACE for concurrency debugging
-            self.file_handler.setLevel(logging.TRACE)
+            self.file_handler.setLevel(logging.DEBUG)
             logger.addHandler(self.file_handler)
             self.addLoggingHandler(self.file_handler)
         else:

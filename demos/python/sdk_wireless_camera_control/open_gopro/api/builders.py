@@ -731,7 +731,7 @@ class BleStatusFacade(Generic[T]):
         """Register for asynchronous notifications when a status changes.
 
         Returns:
-            GoProResp[T]: current status value
+            ResultE[StatusFlow[T]]: current status value
         """
         register_message = BleStatusFacade.BleStatusMessageBase(
             BleStatusFacade.UUID,

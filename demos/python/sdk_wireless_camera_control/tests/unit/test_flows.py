@@ -1,6 +1,7 @@
-from optparse import Values
-import pytest
 import asyncio
+from optparse import Values
+
+import pytest
 
 from open_gopro.api.status_flow import StatusFlow, StatusFlowSeparateInitial
 from open_gopro.constants.statuses import StatusId
@@ -41,7 +42,29 @@ async def test_flow_single():
 
 
 @pytest.mark.asyncio
-async def test_flow_on_start():
+async def test_flow_on_start_async_action():
+    # GIVEN
+    manager: FlowManager[int] = FlowManager()
+    flow = Flow(manager)
+    on_start = asyncio.Event()
+
+    # WHEN
+    await manager.emit(0)
+    await manager.emit(1)
+
+    # THEN
+    async def set_on_start(value: int):
+        on_start.set()
+
+    assert await flow.on_start(set_on_start).single() == 0
+    assert asyncio.wait_for(on_start.wait(), 1)
+    assert flow.current == 0
+    assert await flow.single() == 1
+    assert flow.current == 1
+
+
+@pytest.mark.asyncio
+async def test_flow_on_start_sync_action():
     # GIVEN
     manager: FlowManager[int] = FlowManager()
     flow = Flow(manager)

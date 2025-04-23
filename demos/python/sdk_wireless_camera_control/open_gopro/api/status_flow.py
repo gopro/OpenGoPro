@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 from types import TracebackType
-from typing import Any, Callable, Coroutine, Generic, TypeVar
+from typing import Any, Coroutine, Generic, TypeVar
 
 from open_gopro.communicator_interface import BaseGoProCommunicator
 from open_gopro.exceptions import GoProError
-from open_gopro.flow import Flow, FlowManager
+from open_gopro.flow import AsyncAction, Flow, FlowManager, SyncAction
 from open_gopro.models.response import GoProResp
 from open_gopro.types import UpdateType
 
@@ -20,7 +20,7 @@ class StatusFlowSeparateInitial(Flow[T], Generic[I, T]):
     """Status Flow for asynchronous camera statuses where the initial status is a different type than proceeding status notifications.
 
     Args:
-        gopro (GoProBase[WirelessApi]): gopro camera to operate on
+        gopro (BaseGoProCommunicator): gopro camera to operate on
         update (UpdateType): the status's update type
         register_command (Coroutine[Any, Any, GoProResp[I]]): command to call to start receiving statuses
         unregister_command (Coroutine[Any, Any, Any] | None): Command to call to stop receiving statuses. Defaults to None.
@@ -72,7 +72,6 @@ class StatusFlowSeparateInitial(Flow[T], Generic[I, T]):
         """Configure the camera to start receiving statuses.
 
         Raises:
-            GoProNotOpened: Can't start because there is no BLE connection
             GoProError: Register command returned a failure status
 
         Returns:
@@ -86,11 +85,11 @@ class StatusFlowSeparateInitial(Flow[T], Generic[I, T]):
         self._is_open = True
         return self
 
-    def on_start(self: C, action: Callable[[T], None]) -> C:
+    def on_start(self: C, action: SyncAction | AsyncAction) -> C:
         """Register a callback to be called when the first status is collected.
 
         Args:
-            action (Callable[[T], None]): action to be called on start
+            action (SyncAction | AsyncAction): action to be called on start
 
         Returns:
             C: modified status flow
@@ -110,7 +109,7 @@ class StatusFlow(StatusFlowSeparateInitial[T, T], Generic[T]):
     """Status Flow for asynchronous camera statuses where all received statuses are the same type.
 
     Args:
-        gopro (GoProBase[WirelessApi]): gopro camera to operate on
+        gopro (BaseGoProCommunicator): gopro camera to operate on
         update (UpdateType): the status's update type
         register_command (Coroutine[Any, Any, GoProResp[T]]): command to call to start receiving statuses
         unregister_command (Coroutine[Any, Any, Any] | None): Command to call to stop receiving statuses. Defaults to None.
@@ -131,7 +130,6 @@ class StatusFlow(StatusFlowSeparateInitial[T, T], Generic[T]):
         The initial response will be treated and emitted the same as subsequent responses.
 
         Raises:
-            GoProNotOpened: Can't start because there is no BLE connection
             GoProError: Register command returned a failure status
 
         Returns:

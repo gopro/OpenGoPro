@@ -16,6 +16,7 @@ from rich.console import Console
 
 from open_gopro import WirelessGoPro
 from open_gopro.constants import StatusId
+from open_gopro.constants.statuses import InternalBatteryBars
 from open_gopro.logger import set_stream_logging_level, setup_logging
 from open_gopro.util import add_cli_args_and_parse, ainput
 
@@ -93,10 +94,10 @@ async def main(args: argparse.Namespace) -> None:
         async with WirelessGoPro(args.identifier, interfaces={WirelessGoPro.Interface.BLE}) as gopro:
             set_stream_logging_level(logging.ERROR)
 
-            async def process_percentage(status):
+            async def process_percentage(status: int) -> None:
                 await process_status(StatusId.INTERNAL_BATTERY_PERCENTAGE, status)
 
-            async def process_bars(status):
+            async def process_bars(status: InternalBatteryBars) -> None:
                 await process_status(StatusId.INTERNAL_BATTERY_BARS, status)
 
             await asyncio.wait(

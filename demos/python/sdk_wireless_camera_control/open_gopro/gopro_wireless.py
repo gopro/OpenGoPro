@@ -591,10 +591,10 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             await self._ready_lock.acquire()
             logger.trace("Control has initial lock")  # type: ignore
 
-            async def _handle_encoding(status: int):
+            async def _handle_encoding(status: int) -> None:
                 await self._update_internal_state(StatusId.ENCODING, status)
 
-            async def _handle_busy(status: int):
+            async def _handle_busy(status: int) -> None:
                 await self._update_internal_state(StatusId.BUSY, status)
 
             self._status_tasks.append(

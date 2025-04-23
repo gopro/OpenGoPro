@@ -6,7 +6,6 @@ from datetime import date
 
 from open_gopro import WirelessGoPro
 
-from sphinx.ext.intersphinx import missing_reference
 from open_gopro.wifi.controller import SsidState, WifiController
 
 
@@ -87,19 +86,31 @@ TYPE_ALIASES = {
     "ResponseType": "open_gopro.types.ResponseType",
     "Protobuf": "open_gopro.types.Protobuf",
     "IdType": "open_gopro.types.IdType",
+    "SyncAction": "open_gopro.flow.SyncAction",
+    "AsyncAction": "open_gopro.flow.AsyncAction",
+    "SyncFilter": "open_gopro.flow.SyncFilter",
+    "AsyncFilter": "open_gopro.flow.AsyncFilter",
 }
 
 nitpick_ignore = [
     ("py:class", "T"),
+    ("py:class", "C"),
+    ("py:class", "I"),
     ("py:class", "T_co"),
     ("py:class", "ExceptionHandler"),
     ("py:class", "abc.ABC"),
     ("py:class", "InitVar"),
     ("py:class", "Result"),
+    ("py:class", "ResultE"),
     ("py:class", "returns.result.Result"),
+    ("py:class", "TracebackType"),
     # TODO need to fix these
     ("py:class", "Path"),
     ("py:class", "JsonDict"),
+    ("py:class", "SyncAction"),
+    ("py:class", "AsyncAction"),
+    ("py:class", "SyncFilter"),
+    ("py:class", "AsyncFilter"),
     ("py:class", "ValueType"),
 ]
 nitpick_ignore_regex = [
@@ -111,6 +122,11 @@ nitpick_ignore_regex = [
     (r"py:class", r".*WirelessApi*"),
     # Generic Types that are pointless to document
     (r"py:class", r".*\.T"),
+    (r"py:class", r".*\.C"),
+    (r"py:class", r".*\.I"),
+    (r"py:obj", r".*\.C"),
+    (r"py:obj", r".*\.I"),
+    (r"py:obj", r".*\.T"),
     (r"py:class", r".*\.T_co"),
     (r"py:class", r".*BleHandle"),
     (r"py:class", r".*BleDevice"),

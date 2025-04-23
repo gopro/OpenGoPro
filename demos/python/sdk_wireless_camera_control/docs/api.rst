@@ -148,6 +148,15 @@ but the end user should never need to use these directly.
 
 .. autoclass:: open_gopro.communicator_interface.MessageRules
 
+Flows
+^^^^^
+
+.. automodule:: open_gopro.api.status_flow
+   :show-inheritance:
+
+.. automodule:: open_gopro.flow
+   :show-inheritance:
+
 Responses
 =========
 
