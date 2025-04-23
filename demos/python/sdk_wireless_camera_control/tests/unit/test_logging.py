@@ -197,19 +197,9 @@ async def test_ble_status():
     assert not d
 
     # Register value updates
-    await message.register_value_update(None)
+    await message.get_value_flow()
     d = communicator.message._as_dict(**dummy_kwargs)
     assert d.pop("id") == QueryCmdId.REG_STATUS_VAL_UPDATE
-    assert d.pop("status_id") == StatusId.MICROPHONE_ACCESSORY
-    assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUID.CQ_QUERY
-    assert_kwargs(d)
-    assert not d
-
-    # Unregister value updates
-    await message.unregister_value_update(None)
-    d = communicator.message._as_dict(**dummy_kwargs)
-    assert d.pop("id") == QueryCmdId.UNREG_STATUS_VAL_UPDATE
     assert d.pop("status_id") == StatusId.MICROPHONE_ACCESSORY
     assert d.pop("protocol") == GoProResp.Protocol.BLE
     assert d.pop("uuid") == GoProUUID.CQ_QUERY

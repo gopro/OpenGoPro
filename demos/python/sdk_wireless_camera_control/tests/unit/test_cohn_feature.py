@@ -54,13 +54,6 @@ async def test_cohn_feature_starts_successfully(cohn_feature: CohnFeature):
 
 
 @pytest.mark.asyncio
-async def test_cohn_feature_start_times_out(cohn_feature: CohnFeature):
-    # WHEN / THEN
-    with pytest.raises(TimeoutError):
-        await cohn_feature.wait_for_ready(timeout=0.1)
-
-
-@pytest.mark.asyncio
 async def test_cohn_feature_is_configured(cohn_feature: CohnFeature):
     # WHEN
     async def send_cohn_status():

@@ -213,7 +213,8 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         self._ble_disconnect_event: asyncio.Event
 
         if self._should_maintain_state:
-            self._state_tasks: list[asyncio.Task] = []
+            self._status_tasks: list[asyncio.Task] = []
+            self._state_acquire_lock_tasks: list[asyncio.Task] = []
             self._lock_owner: WirelessGoPro._LockOwner | None = WirelessGoPro._LockOwner.STATE_MANAGER
             self._ready_lock: asyncio.Lock
             self._keep_alive_task: asyncio.Task
@@ -537,8 +538,9 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                 logger.trace(f"{wrapped.__name__} released the lock")  # type: ignore
             # Is there any special handling required after receiving the response?
             if rules.should_wait_for_encoding_start(**kwargs):
-                logger.trace("Waiting to receive encoding started.")  # type: ignore
+                logger.trace("Message enforcer waiting to receive encoding started.")  # type: ignore
                 await self._encoding_started.wait()
+                logger.trace("Message enforcer received encoding started.")  # type: ignore
                 self._encoding_started.clear()
         return response
 
@@ -585,11 +587,24 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         # Start state maintenance
         if self._should_maintain_state:
             self._ble_disconnect_event.clear()
+            logger.trace("Control initially acquiring lock")  # type: ignore
             await self._ready_lock.acquire()
-            encoding = (await self.ble_status.encoding.register_value_update(self._update_internal_state)).data
-            await self._update_internal_state(StatusId.ENCODING, encoding)
-            busy = (await self.ble_status.busy.register_value_update(self._update_internal_state)).data
-            await self._update_internal_state(StatusId.BUSY, busy)
+            logger.trace("Control has initial lock")  # type: ignore
+
+            async def _handle_encoding(status: int):
+                await self._update_internal_state(StatusId.ENCODING, status)
+
+            async def _handle_busy(status: int):
+                await self._update_internal_state(StatusId.BUSY, status)
+
+            self._status_tasks.append(
+                asyncio.create_task(
+                    (await self.ble_status.encoding.get_value_flow()).unwrap().collect(_handle_encoding)
+                )
+            )
+            self._status_tasks.append(
+                asyncio.create_task((await self.ble_status.busy.get_value_flow()).unwrap().collect(_handle_busy))
+            )
         logger.info("BLE is ready!")
 
     async def _update_internal_state(self, update: UpdateType, value: int) -> None:
@@ -604,12 +619,13 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             value (int): updated value
         """
         # Cancel any currently pending state update tasks
-        for task in self._state_tasks:
+        for task in self._state_acquire_lock_tasks:
             logger.trace("Cancelling pending acquire task.")  # type: ignore
             task.cancel()
-        self._state_tasks = []
+        self._state_acquire_lock_tasks = []
 
         logger.trace(f"State update received {update.name} ==> {value}")  # type: ignore
+        # TODO does this need to be an instance property in order to be reentrant safe?
         should_notify_encoding = False
         if update == StatusId.ENCODING:
             self._encoding = bool(value)
@@ -624,13 +640,15 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             self._lock_owner = None
             self._ready_lock.release()
             logger.trace("Control released lock")  # type: ignore
-        elif not (self._lock_owner is WirelessGoPro._LockOwner.STATE_MANAGER) and not await self.is_ready:
+        elif self._lock_owner is not WirelessGoPro._LockOwner.STATE_MANAGER and not await self.is_ready:
             logger.trace("Control acquiring lock")  # type: ignore
             task = asyncio.create_task(self._ready_lock.acquire())
-            self._state_tasks.append(task)
+            self._state_acquire_lock_tasks.append(task)
             await task
             logger.trace("Control has lock")  # type: ignore
             self._lock_owner = WirelessGoPro._LockOwner.STATE_MANAGER
+        else:
+            logger.trace("Nothing for control to do")  # type: ignore
 
         if should_notify_encoding and self.is_open:
             logger.trace("Control setting encoded started")  # type: ignore
@@ -684,7 +702,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             # Accumulate the packet
             self._active_builders[uuid].accumulate(data)
             if (builder := self._active_builders[uuid]).is_finished_accumulating:
-                logger.trace(f"Finished accumulating on {uuid}")  # type: ignore
                 # Clear active response from response dict
                 del self._active_builders[uuid]
                 await self._route_response(builder.build())

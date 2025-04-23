@@ -59,6 +59,8 @@ class Logger:
             "open_gopro.parsers.general",
             "open_gopro.wifi.adapters.wireless",
             "open_gopro.wifi.mdns_scanner",
+            "open_gopro.flow",
+            "open_gopro.api.status_flow",
             "open_gopro.models.response",
             "open_gopro.models.network_scan_response",
             "open_gopro.features.cohn",
@@ -89,7 +91,7 @@ class Logger:
             )
             self.file_handler.setFormatter(file_formatter)
             # Set to TRACE for concurrency debugging
-            self.file_handler.setLevel(logging.DEBUG)
+            self.file_handler.setLevel(logging.TRACE)
             logger.addHandler(self.file_handler)
             self.addLoggingHandler(self.file_handler)
         else:

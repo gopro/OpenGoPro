@@ -14,7 +14,9 @@ from typing import Any, Callable, Final, Generic, Protocol, TypeVar, Union
 
 import construct
 import wrapt
+from returns.result import ResultE
 
+from open_gopro.api.status_flow import StatusFlow
 from open_gopro.ble import BleUUID
 from open_gopro.communicator_interface import (
     BleMessage,
@@ -51,8 +53,6 @@ from open_gopro.parsers.bytes import (
 from open_gopro.types import CameraState, JsonDict, Protobuf, UpdateCb
 
 logger = logging.getLogger(__name__)
-
-ValueType = TypeVar("ValueType")
 
 QueryParserType = Union[construct.Construct, type[GoProIntEnum], BytesParserBuilder]
 
@@ -416,7 +416,7 @@ class BuilderProtocol(Protocol):
         ...
 
 
-class BleSettingFacade(Generic[ValueType]):
+class BleSettingFacade(Generic[T]):
     """Wrapper around BleSetting since a BleSetting's message definition changes based on how it is being operated on.
 
     Raises:
@@ -491,11 +491,11 @@ class BleSettingFacade(Generic[ValueType]):
         """
         return bytearray([cmd.value, int(self._identifier)])
 
-    async def set(self, value: ValueType) -> GoProResp[None]:
+    async def set(self, value: T) -> GoProResp[None]:
         """Set the value of the setting.
 
         Args:
-            value (ValueType): The argument to use to set the setting value.
+            value (T): The argument to use to set the setting value.
 
         Returns:
             GoProResp[None]: Status of set
@@ -519,11 +519,11 @@ class BleSettingFacade(Generic[ValueType]):
         )
         return await self._communicator._send_ble_message(message)
 
-    async def get_value(self) -> GoProResp[ValueType]:
+    async def get_value(self) -> GoProResp[T]:
         """Get the settings value.
 
         Returns:
-            GoProResp[ValueType]: settings value
+            GoProResp[T]: settings value
         """
         message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
@@ -544,11 +544,11 @@ class BleSettingFacade(Generic[ValueType]):
         """
         raise NotImplementedError("Not implemented on camera!")
 
-    async def get_capabilities_values(self) -> GoProResp[list[ValueType]]:
+    async def get_capabilities_values(self) -> GoProResp[list[T]]:
         """Get currently supported settings capabilities values.
 
         Returns:
-            GoProResp[list[ValueType]]: settings capabilities values
+            GoProResp[list[T]]: settings capabilities values
         """
         message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
@@ -649,7 +649,7 @@ class BleSettingFacade(Generic[ValueType]):
         return str(self._identifier).lower().replace("_", " ").title()
 
 
-class BleStatusFacade(Generic[ValueType]):
+class BleStatusFacade(Generic[T]):
     """Wrapper around BleStatus since a BleStatus's message definition changes based on how it is being operated on.
 
     Attributes:
@@ -713,11 +713,11 @@ class BleStatusFacade(Generic[ValueType]):
     def __str__(self) -> str:
         return str(self._identifier).lower().replace("_", " ").title()
 
-    async def get_value(self) -> GoProResp[ValueType]:
+    async def get_value(self) -> GoProResp[T]:
         """Get the current value of a status.
 
         Returns:
-            GoProResp[ValueType]: current status value
+            GoProResp[T]: current status value
         """
         message = BleStatusFacade.BleStatusMessageBase(
             BleStatusFacade.UUID,
@@ -727,43 +727,33 @@ class BleStatusFacade(Generic[ValueType]):
         )
         return await self._communicator._send_ble_message(message)
 
-    async def register_value_update(self, callback: UpdateCb) -> GoProResp[ValueType]:
+    async def get_value_flow(self) -> ResultE[StatusFlow[T]]:
         """Register for asynchronous notifications when a status changes.
 
-        Args:
-            callback (UpdateCb): callback to be notified with
-
         Returns:
-            GoProResp[ValueType]: current status value
+            GoProResp[T]: current status value
         """
-        message = BleStatusFacade.BleStatusMessageBase(
+        register_message = BleStatusFacade.BleStatusMessageBase(
             BleStatusFacade.UUID,
             QueryCmdId.REG_STATUS_VAL_UPDATE,
             self._identifier,
             lambda *args: self._build_cmd(QueryCmdId.REG_STATUS_VAL_UPDATE),
         )
-        if (response := await self._communicator._send_ble_message(message)).ok:
-            self._communicator.register_update(callback, self._identifier)
-        return response
-
-    async def unregister_value_update(self, callback: UpdateCb) -> GoProResp[None]:
-        """Stop receiving notifications when status changes.
-
-        Args:
-            callback (UpdateCb): callback to be notified with
-
-        Returns:
-            GoProResp[None]: Status of unregister
-        """
-        message = BleStatusFacade.BleStatusMessageBase(
+        unregister_message = BleStatusFacade.BleStatusMessageBase(
             BleStatusFacade.UUID,
             QueryCmdId.UNREG_STATUS_VAL_UPDATE,
             self._identifier,
             lambda *args: self._build_cmd(QueryCmdId.UNREG_STATUS_VAL_UPDATE),
         )
-        if (response := await self._communicator._send_ble_message(message)).ok:
-            self._communicator.register_update(callback, self._identifier)
-        return response
+
+        return ResultE.from_value(
+            await StatusFlow[T](
+                gopro=self._communicator,
+                update=self._identifier,
+                register_command=self._communicator._send_ble_message(register_message),
+                unregister_command=self._communicator._send_ble_message(unregister_message),
+            ).start()
+        )
 
     def _build_cmd(self, cmd: QueryCmdId) -> bytearray:
         """Build the data for a given status command.
@@ -888,7 +878,7 @@ def http_put_json_command(
     return wrapper
 
 
-class HttpSetting(HttpMessage, Generic[ValueType]):
+class HttpSetting(HttpMessage, Generic[T]):
     """An individual camera setting that is interacted with via Wifi."""
 
     def __init__(self, communicator: GoProHttp, identifier: SettingId) -> None:
@@ -911,11 +901,11 @@ class HttpSetting(HttpMessage, Generic[ValueType]):
         """
         return self._endpoint.format(setting=int(self._identifier), option=int(kwargs["value"]))
 
-    async def set(self, value: ValueType) -> GoProResp:
+    async def set(self, value: T) -> GoProResp:
         """Set the value of the setting.
 
         Args:
-            value (ValueType): value to set setting
+            value (T): value to set setting
 
         Returns:
             GoProResp: Status of set

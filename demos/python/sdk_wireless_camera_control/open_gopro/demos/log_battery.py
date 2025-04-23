@@ -10,11 +10,11 @@ import logging
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Optional
+from typing import Literal
 
 from rich.console import Console
 
-from open_gopro import WirelessGoPro, types
+from open_gopro import WirelessGoPro
 from open_gopro.constants import StatusId
 from open_gopro.logger import set_stream_logging_level, setup_logging
 from open_gopro.util import add_cli_args_and_parse, ainput
@@ -59,21 +59,24 @@ def dump_results_as_csv(location: Path) -> None:
             w.writerow([s.index, (s.time - initial_time).seconds, s.percentage, s.bars])
 
 
-async def process_battery_notifications(update: types.UpdateType, value: int) -> None:
-    """Handle asynchronous battery update notifications
+async def process_status(
+    update: Literal[StatusId.INTERNAL_BATTERY_BARS, StatusId.INTERNAL_BATTERY_PERCENTAGE],
+    value: int,
+) -> None:
+    """TODO
 
     Args:
-        update (types.UpdateType): type of update
-        value (int): value of update
+        update (Literal[StatusId.INTERNAL_BATTERY_BARS, StatusId.INTERNAL_BATTERY_PERCENTAGE]): _description_
+        value (int): _description_
     """
-
     global last_percentage
     global last_bars
 
-    if update == StatusId.INTERNAL_BATTERY_PERCENTAGE:
-        last_percentage = value
-    elif update == StatusId.INTERNAL_BATTERY_BARS:
-        last_bars = value
+    match update:
+        case StatusId.INTERNAL_BATTERY_PERCENTAGE:
+            last_percentage = value
+        case StatusId.INTERNAL_BATTERY_BARS:
+            last_bars = value
 
     # Append and print sample
     global SAMPLE_INDEX
@@ -85,50 +88,31 @@ async def process_battery_notifications(update: types.UpdateType, value: int) ->
 async def main(args: argparse.Namespace) -> None:
     logger = setup_logging(__name__, args.log)
 
-    gopro: Optional[WirelessGoPro] = None
+    gopro: WirelessGoPro | None = None
     try:
-        async with WirelessGoPro(args.identifier, enable_wifi=False) as gopro:
+        async with WirelessGoPro(args.identifier, interfaces={WirelessGoPro.Interface.BLE}) as gopro:
             set_stream_logging_level(logging.ERROR)
 
-            async def log_battery() -> None:
-                global SAMPLE_INDEX
-                if args.poll:
-                    with console.status("[bold green]Polling the battery until it dies..."):
-                        while True:
-                            SAMPLES.append(
-                                Sample(
-                                    index=SAMPLE_INDEX,
-                                    percentage=(await gopro.ble_status.internal_battery_percentage.get_value()).data,
-                                    bars=(await gopro.ble_status.internal_battery_bars.get_value()).data,
-                                )
-                            )
-                            console.print(str(SAMPLES[-1]))
-                            SAMPLE_INDEX += 1
-                            await asyncio.sleep(args.poll)
-                else:  # Not polling. Set up notifications
-                    global last_bars
-                    global last_percentage
+            async def process_percentage(status):
+                await process_status(StatusId.INTERNAL_BATTERY_PERCENTAGE, status)
 
-                    console.print("Configuring battery notifications...")
-                    # Enable notifications of the relevant battery statuses. Also store initial values.
-                    last_bars = (
-                        await gopro.ble_status.internal_battery_bars.register_value_update(
-                            process_battery_notifications
-                        )
-                    ).data
-                    last_percentage = (
-                        await gopro.ble_status.internal_battery_percentage.register_value_update(
-                            process_battery_notifications
-                        )
-                    ).data
-                    # Append initial sample
-                    SAMPLES.append(Sample(index=SAMPLE_INDEX, percentage=last_percentage, bars=last_bars))
-                    SAMPLE_INDEX += 1
-                    console.print(str(SAMPLES[-1]))
-                    console.print("[bold green]Receiving battery notifications until it dies...")
+            async def process_bars(status):
+                await process_status(StatusId.INTERNAL_BATTERY_BARS, status)
 
-            asyncio.create_task(log_battery())
-            await ainput("[purple]Press enter to exit.", console.print)
+            await asyncio.wait(
+                [
+                    asyncio.create_task(
+                        (await gopro.ble_status.internal_battery_percentage.get_value_flow())
+                        .unwrap()
+                        .collect(process_percentage)
+                    ),
+                    asyncio.create_task(
+                        (await gopro.ble_status.internal_battery_bars.get_value_flow()).unwrap().collect(process_bars)
+                    ),
+                    asyncio.create_task(ainput("[purple]Press enter to exit.", console.print)),
+                ],
+                return_when=asyncio.FIRST_COMPLETED,
+            )
             console.print("Exiting...")
 
     except KeyboardInterrupt:
@@ -143,13 +127,6 @@ async def main(args: argparse.Namespace) -> None:
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Connect to the GoPro via BLE only and continuously read the battery (either by polling or notifications)."
-    )
-    parser.add_argument(
-        "-p",
-        "--poll",
-        type=int,
-        help="Set to poll the battery at a given interval. If not set, battery level will be notified instead. Defaults to notifications.",
-        default=None,
     )
     return add_cli_args_and_parse(parser, wifi=False)
 

@@ -5,7 +5,7 @@ import asyncio
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Generic, Optional, Pattern
+from typing import Any, Generic, Optional, Pattern, TypeVar
 
 from open_gopro import WiredGoPro, WirelessGoPro
 from open_gopro.api import (
@@ -37,6 +37,7 @@ from open_gopro.features.access_point import AccessPointFeature
 from open_gopro.features.base_feature import BaseFeature
 from open_gopro.gopro_base import GoProBase
 from open_gopro.models import GoProResp
+from open_gopro.proto.cohn_pb2 import EnumCOHNStatus, NotifyCOHNStatus
 from open_gopro.types import CameraState, UpdateCb, UpdateType
 from open_gopro.wifi import SsidState, WifiController
 from tests import mock_good_response, versions
@@ -274,6 +275,9 @@ class MockFeatures:
     AccessPointFeature = MockFeature
 
 
+T = TypeVar("T")
+
+
 class MockWirelessGoPro(WirelessGoPro):
     def __init__(self, test_version: str) -> None:
         super().__init__(
@@ -289,6 +293,7 @@ class MockWirelessGoPro(WirelessGoPro):
         self._api.http_command.get_open_gopro_api_version = self._mock_version
         self._api.ble_command.cohn_get_certificate = self._mock_get_cohn_cohn_cert
         self._api.ble_command.get_ap_entries = self._mock_get_ap_entries
+        self._api.ble_command.cohn_get_status = self._mock_get_cohn_status
         self.http_command.set_third_party_client_info = self._mock_empty_return
         self._ble.write = self._mock_write
         self._ble._gatt_table = MockGattTable()
@@ -296,6 +301,9 @@ class MockWirelessGoPro(WirelessGoPro):
         self._test_response_uuid = GoProUUID.CQ_COMMAND
         self._test_response_data = bytearray()
         self.ble_status.ap_mode.get_value = self._mock_wifi_check
+
+    async def mock_gopro_resp(self, value: T) -> GoProResp[T]:
+        return DataPatch(value)
 
     async def _open_wifi(self, timeout: int = 15, retries: int = 5) -> None:
         self._api.ble_command.get_wifi_password = self._mock_password
@@ -323,6 +331,9 @@ class MockWirelessGoPro(WirelessGoPro):
         self, message: BleMessage, rules: MessageRules = MessageRules(), **kwargs: Any
     ) -> GoProResp:
         raise NotImplementedError
+
+    async def _mock_get_cohn_status(self, *args, **kwargs) -> DataPatch:
+        return DataPatch(NotifyCOHNStatus(status=EnumCOHNStatus.COHN_UNPROVISIONED))
 
     async def _mock_version(self) -> DataPatch:
         return DataPatch("2.0")
