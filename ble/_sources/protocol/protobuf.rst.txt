@@ -2650,6 +2650,12 @@ Notification: :ref:`proto-notifprovisioningstate` sent periodically as provision
 
      - Secondary DNS
 
+   * - bypass_eula_check
+     - bool
+     - 10
+
+     - Allow network configuration without internet connectivity
+
 
 
 
