@@ -241,6 +241,7 @@ class RequestConnectNew(google.protobuf.message.Message):
     SUBNET_FIELD_NUMBER: builtins.int
     DNS_PRIMARY_FIELD_NUMBER: builtins.int
     DNS_SECONDARY_FIELD_NUMBER: builtins.int
+    BYPASS_EULA_CHECK_FIELD_NUMBER: builtins.int
     ssid: builtins.str
     "AP SSID"
     password: builtins.str
@@ -255,6 +256,8 @@ class RequestConnectNew(google.protobuf.message.Message):
     "Primary DNS"
     dns_secondary: builtins.bytes
     "Secondary DNS"
+    bypass_eula_check: builtins.bool
+    "Allow network configuration without internet connectivity"
 
     def __init__(
         self,
@@ -265,11 +268,14 @@ class RequestConnectNew(google.protobuf.message.Message):
         gateway: builtins.bytes | None = ...,
         subnet: builtins.bytes | None = ...,
         dns_primary: builtins.bytes | None = ...,
-        dns_secondary: builtins.bytes | None = ...
+        dns_secondary: builtins.bytes | None = ...,
+        bypass_eula_check: builtins.bool | None = ...
     ) -> None: ...
     def HasField(
         self,
         field_name: typing_extensions.Literal[
+            "bypass_eula_check",
+            b"bypass_eula_check",
             "dns_primary",
             b"dns_primary",
             "dns_secondary",
@@ -289,6 +295,8 @@ class RequestConnectNew(google.protobuf.message.Message):
     def ClearField(
         self,
         field_name: typing_extensions.Literal[
+            "bypass_eula_check",
+            b"bypass_eula_check",
             "dns_primary",
             b"dns_primary",
             "dns_secondary",

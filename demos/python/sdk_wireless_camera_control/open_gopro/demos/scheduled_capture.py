@@ -5,14 +5,14 @@
 
 import argparse
 import asyncio
-from datetime import timedelta
 import logging
+from datetime import timedelta
 
 from rich.console import Console
 
 from open_gopro import WirelessGoPro, constants, proto
 from open_gopro.gopro_base import GoProBase
-from open_gopro.logger import setup_logging, set_stream_logging_level
+from open_gopro.logger import set_stream_logging_level, setup_logging
 from open_gopro.models.general import ScheduledCapture
 from open_gopro.util import add_cli_args_and_parse, get_current_dst_aware_time
 

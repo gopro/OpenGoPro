@@ -1,6 +1,3 @@
-/* network_management.kt/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Tue Apr 22 17:06:20 UTC 2025 */
-
 @file:OptIn(pbandk.PublicForGeneratedCode::class)
 
 package com.gopro.open_gopro.operations
@@ -341,6 +338,7 @@ internal data class RequestConnectNew(
     val subnet: pbandk.ByteArr? = null,
     val dnsPrimary: pbandk.ByteArr? = null,
     val dnsSecondary: pbandk.ByteArr? = null,
+    val bypassEulaCheck: Boolean? = null,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
   override operator fun plus(
@@ -367,7 +365,7 @@ internal data class RequestConnectNew(
             messageClass = com.gopro.open_gopro.operations.RequestConnectNew::class,
             messageCompanion = this,
             fields =
-                buildList(7) {
+                buildList(8) {
                   add(
                       pbandk.FieldDescriptor(
                           messageDescriptor = this@Companion::descriptor,
@@ -424,6 +422,15 @@ internal data class RequestConnectNew(
                           type = pbandk.FieldDescriptor.Type.Primitive.Bytes(hasPresence = true),
                           jsonName = "dnsSecondary",
                           value = com.gopro.open_gopro.operations.RequestConnectNew::dnsSecondary))
+                  add(
+                      pbandk.FieldDescriptor(
+                          messageDescriptor = this@Companion::descriptor,
+                          name = "bypass_eula_check",
+                          number = 10,
+                          type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
+                          jsonName = "bypassEulaCheck",
+                          value =
+                              com.gopro.open_gopro.operations.RequestConnectNew::bypassEulaCheck))
                 })
   }
 }
@@ -995,6 +1002,7 @@ private fun RequestConnectNew.protoMergeImpl(plus: pbandk.Message?): RequestConn
           subnet = plus.subnet ?: subnet,
           dnsPrimary = plus.dnsPrimary ?: dnsPrimary,
           dnsSecondary = plus.dnsSecondary ?: dnsSecondary,
+          bypassEulaCheck = plus.bypassEulaCheck ?: bypassEulaCheck,
           unknownFields = unknownFields + plus.unknownFields)
     } ?: this
 
@@ -1009,6 +1017,7 @@ private fun RequestConnectNew.Companion.decodeWithImpl(
   var subnet: pbandk.ByteArr? = null
   var dnsPrimary: pbandk.ByteArr? = null
   var dnsSecondary: pbandk.ByteArr? = null
+  var bypassEulaCheck: Boolean? = null
 
   val unknownFields =
       u.readMessage(this) { _fieldNumber, _fieldValue ->
@@ -1020,6 +1029,7 @@ private fun RequestConnectNew.Companion.decodeWithImpl(
           5 -> subnet = _fieldValue as pbandk.ByteArr
           6 -> dnsPrimary = _fieldValue as pbandk.ByteArr
           7 -> dnsSecondary = _fieldValue as pbandk.ByteArr
+          10 -> bypassEulaCheck = _fieldValue as Boolean
         }
       }
 
@@ -1030,7 +1040,15 @@ private fun RequestConnectNew.Companion.decodeWithImpl(
     throw pbandk.InvalidProtocolBufferException.missingRequiredField("password")
   }
   return RequestConnectNew(
-      ssid!!, password!!, staticIp, gateway, subnet, dnsPrimary, dnsSecondary, unknownFields)
+      ssid!!,
+      password!!,
+      staticIp,
+      gateway,
+      subnet,
+      dnsPrimary,
+      dnsSecondary,
+      bypassEulaCheck,
+      unknownFields)
 }
 
 private fun RequestGetApEntries.protoMergeImpl(plus: pbandk.Message?): RequestGetApEntries =
