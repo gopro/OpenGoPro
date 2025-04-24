@@ -18,6 +18,7 @@ from open_gopro.exceptions import GoProNotOpened
 from open_gopro.features.base_feature import BaseFeature
 from open_gopro.gopro_base import GoProBase
 from open_gopro.models.general import CohnInfo
+from open_gopro.proto.cohn_pb2 import NotifyCOHNStatus
 
 logger = logging.getLogger(__name__)
 
@@ -70,7 +71,7 @@ class CohnFeature(BaseFeature):
                 async with self._status_flow.on_start(lambda _: self._ready_event.set()) as flow:
 
                     async def process_status(status: proto.NotifyCOHNStatus) -> None:
-                        logger.debug(f"Received COHN status: {status}")
+                        logger.error(f"Feature Received COHN status: {status}")
 
                     await flow.collect(process_status)
             else:
@@ -157,13 +158,16 @@ class CohnFeature(BaseFeature):
 
         logger.info("Provisioning COHN")
         try:
+
+            def check_cohn_status(status: NotifyCOHNStatus) -> bool:
+                logger.critical(f"Wait for provisioning checking COHN status: {status}")
+                return status.status == proto.EnumCOHNStatus.COHN_PROVISIONED
+
             async with asyncio.timeout(timeout):
                 async with asyncio.TaskGroup() as tg:
                     # Always override. Assume if we're here, we are purposely (re)configuring COHN
                     create_cert = tg.create_task(self._gopro.ble_command.cohn_create_certificate(override=True))
-                    wait_for_provisioning_status = tg.create_task(
-                        self._status_flow.first(lambda status: status.status == proto.EnumCOHNStatus.COHN_PROVISIONED)
-                    )
+                    wait_for_provisioning_status = tg.create_task(self._status_flow.first(check_cohn_status))
             assert create_cert.result().ok
             status = wait_for_provisioning_status.result()
             logger.info("COHN is provisioned!!")
@@ -204,10 +208,13 @@ class CohnFeature(BaseFeature):
         try:
             if not self.is_connected:
                 logger.info("Waiting for COHN to be connected")
+
+                def catch_connected_status(status: NotifyCOHNStatus) -> bool:
+                    logger.critical(f"Wait for connected processing cohn status: {status}")
+                    return status.state == proto.EnumCOHNNetworkState.COHN_STATE_NetworkConnected
+
                 status = await asyncio.wait_for(
-                    self._status_flow.first(
-                        lambda status: status.state == proto.EnumCOHNNetworkState.COHN_STATE_NetworkConnected
-                    ),
+                    self._status_flow.first(catch_connected_status),
                     timeout,
                 )
                 # On some cameras, the IP address only comes with this status. Let's just always take all of the

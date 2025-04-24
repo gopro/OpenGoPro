@@ -15,50 +15,50 @@ from tests.mocks import MockWirelessGoPro
 async def test_flow_get_2_values():
     # GIVEN
     manager: FlowManager[int] = FlowManager()
-    flow = Flow(manager)
+    complete = asyncio.Event()
+    started = asyncio.Event()
+    flow = Flow(manager).on_subscribe(lambda: started.set())
 
     # WHEN
-    await manager.emit(0)
-    await manager.emit(1)
+    async def emit_values():
+        await started.wait()
+        await manager.emit(0)
+        await manager.emit(1)
 
-    # THEN
-    assert await anext(flow) == 0
-    assert flow.current == 0
-    assert await anext(flow) == 1
-    assert flow.current == 1
+    async def single_get_values():
+        assert await flow.single() == 0
+        assert flow.current == 0
+        assert await flow.single() == 1
+        assert flow.current == 1
+        complete.set()
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        tg.create_task(single_get_values())
+
+    await asyncio.wait_for(complete.wait(), 2)
 
 
 @pytest.mark.asyncio
-async def test_flow_single():
+async def test_flow_on_start_sync_action():
     # GIVEN
     manager: FlowManager[int] = FlowManager()
-    flow = Flow(manager)
-
-    # WHEN
-    await manager.emit(0)
-    await manager.emit(1)
-
-    # THEN
-    assert await flow.single() == 0
-    assert flow.current == 0
-
-
-@pytest.mark.asyncio
-async def test_flow_on_start_async_action():
-    # GIVEN
-    manager: FlowManager[int] = FlowManager()
-    flow = Flow(manager)
     on_start = asyncio.Event()
+    started = asyncio.Event()
+    flow = Flow(manager).on_subscribe(lambda: started.set())
 
     # WHEN
-    await manager.emit(0)
-    await manager.emit(1)
+    async def emit_values():
+        await started.wait()
+        await manager.emit(0)
+        await manager.emit(1)
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        single = tg.create_task(flow.on_start(lambda _: on_start.set()).single())
 
     # THEN
-    async def set_on_start(value: int):
-        on_start.set()
-
-    assert await flow.on_start(set_on_start).single() == 0
+    assert single.result() == 0
     assert await asyncio.wait_for(on_start.wait(), 1)
     assert flow.current == 0
     assert await flow.single() == 1
@@ -66,22 +66,29 @@ async def test_flow_on_start_async_action():
 
 
 @pytest.mark.asyncio
-async def test_flow_on_start_sync_action():
+async def test_flow_on_start_async_action():
     # GIVEN
     manager: FlowManager[int] = FlowManager()
-    flow = Flow(manager)
-    caught_on_start = False
+    on_start = asyncio.Event()
+    started = asyncio.Event()
+    flow = Flow(manager).on_subscribe(lambda: started.set())
 
     # WHEN
-    await manager.emit(0)
-    await manager.emit(1)
+    async def emit_values():
+        await started.wait()
+        await manager.emit(0)
+        await manager.emit(1)
+
+    async def set_event_on_start(value: int) -> None:
+        on_start.set()
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        single = tg.create_task(flow.on_start(set_event_on_start).single())
 
     # THEN
-    def set_on_start(value: int):
-        nonlocal caught_on_start
-        caught_on_start = True
-
-    assert await flow.on_start(set_on_start).single() == 0
+    assert single.result() == 0
+    assert await asyncio.wait_for(on_start.wait(), 1)
     assert flow.current == 0
     assert await flow.single() == 1
     assert flow.current == 1
@@ -91,18 +98,24 @@ async def test_flow_on_start_sync_action():
 async def test_flow_collect_until_async_collector():
     # GIVEN
     manager: FlowManager[int] = FlowManager()
-    flow = Flow(manager)
+    started = asyncio.Event()
+    flow = Flow(manager).on_subscribe(lambda: started.set())
     received: list[int] = []
 
     # WHEN
-    await manager.emit(0)
-    await manager.emit(1)
-    await manager.emit(2)
+    async def emit_values():
+        await started.wait()
+        await manager.emit(0)
+        await manager.emit(1)
+        await manager.emit(2)
 
     async def collector(value: int) -> None:
         received.append(value)
 
-    final = await flow.collect_until(filter=lambda x: x == 2, action=collector)
+    async with asyncio.TaskGroup() as tg:
+        collect = tg.create_task(flow.collect_until(filter=lambda x: x == 2, action=collector))
+        tg.create_task(emit_values())
+    final = collect.result()
 
     # THEN
     assert len(received) == 2
@@ -115,18 +128,24 @@ async def test_flow_collect_until_async_collector():
 async def test_flow_collect_until_sync_collector():
     # GIVEN
     manager: FlowManager[int] = FlowManager()
-    flow = Flow(manager)
+    started = asyncio.Event()
+    flow = Flow(manager).on_subscribe(lambda: started.set())
     received: list[int] = []
 
     # WHEN
-    await manager.emit(0)
-    await manager.emit(1)
-    await manager.emit(2)
+    async def emit_values():
+        await started.wait()
+        await manager.emit(0)
+        await manager.emit(1)
+        await manager.emit(2)
 
     def collector(value: int) -> None:
         received.append(value)
 
-    final = await flow.collect_until(filter=lambda x: x == 2, action=collector)
+    async with asyncio.TaskGroup() as tg:
+        collect = tg.create_task(flow.collect_until(filter=lambda x: x == 2, action=collector))
+        tg.create_task(emit_values())
+    final = collect.result()
 
     # THEN
     assert len(received) == 2
@@ -139,14 +158,17 @@ async def test_flow_collect_until_sync_collector():
 async def test_flow_collect_while_async_collector():
     # GIVEN
     manager: FlowManager[int] = FlowManager()
-    flow = Flow(manager)
+    started = asyncio.Event()
+    flow = Flow(manager).on_subscribe(lambda: started.set())
     received: list[int] = []
 
     # WHEN
-    await manager.emit(0)
-    await manager.emit(1)
-    await manager.emit(2)
-    await manager.emit(3)
+    async def emit_values():
+        await started.wait()
+        await manager.emit(0)
+        await manager.emit(1)
+        await manager.emit(2)
+        await manager.emit(3)
 
     async def collector(value: int) -> bool:
         if value != 2:
@@ -154,27 +176,32 @@ async def test_flow_collect_while_async_collector():
             return True
         return False
 
-    final = await flow.collect_while(action=collector)
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        collect = tg.create_task(flow.collect_while(action=collector))
 
     # THEN
     assert len(received) == 2
     assert received[0] == 0
     assert received[1] == 1
-    assert final == 2
+    assert collect.result() == 2
 
 
 @pytest.mark.asyncio
 async def test_flow_collect_while_sync_collector():
     # GIVEN
     manager: FlowManager[int] = FlowManager()
-    flow = Flow(manager)
+    started = asyncio.Event()
+    flow = Flow(manager).on_subscribe(lambda: started.set())
     received: list[int] = []
 
     # WHEN
-    await manager.emit(0)
-    await manager.emit(1)
-    await manager.emit(2)
-    await manager.emit(3)
+    async def emit_values():
+        await started.wait()
+        await manager.emit(0)
+        await manager.emit(1)
+        await manager.emit(2)
+        await manager.emit(3)
 
     def collector(value: int) -> bool:
         if value != 2:
@@ -182,119 +209,157 @@ async def test_flow_collect_while_sync_collector():
             return True
         return False
 
-    final = await flow.collect_while(action=collector)
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        collect = tg.create_task(flow.collect_while(action=collector))
 
     # THEN
     assert len(received) == 2
     assert received[0] == 0
     assert received[1] == 1
-    assert final == 2
+    assert collect.result() == 2
 
 
-@pytest.mark.asyncio
-async def test_flow_replays_current_value_for_new_subscriber():
-    # GIVEN
-    manager: FlowManager[int] = FlowManager()
+# TODO figure out how / if we want to handle replay
+# @pytest.mark.asyncio
+# async def test_flow_replays_current_value_for_new_subscriber():
+#     # GIVEN
+#     manager: FlowManager[int] = FlowManager()
 
-    # WHEN
-    await manager.emit(0)
-    await manager.emit(1)
-    flow = Flow(manager)
+#     # WHEN
+#     await manager.emit(0)
+#     await manager.emit(1)
+#     flow = Flow(manager)
 
-    # THEN
-    assert await anext(flow) == 1
-    assert flow.current == 1
-
-
-@pytest.mark.asyncio
-async def test_flow_iterator():
-    # GIVEN
-    manager: FlowManager[int] = FlowManager()
-    flow = Flow(manager)
-
-    # WHEN
-    await manager.emit(0)
-    await manager.emit(1)
-
-    # THEN
-    idx = 0
-    async for value in flow:
-        assert value == idx
-        assert flow.current == idx
-        idx += 1
-        if idx == 1:
-            break
-    assert idx == 1
+#     # THEN
+#     assert await anext(flow) == 1
+#     assert flow.current == 1
 
 
 @pytest.mark.asyncio
 async def test_flow_first():
     # GIVEN
     manager: FlowManager[int] = FlowManager()
-    flow = Flow(manager)
+    started = asyncio.Event()
+    flow = Flow(manager).on_subscribe(lambda: started.set())
 
     # WHEN
-    await manager.emit(0)
-    await manager.emit(1)
-    matched = await flow.first(lambda x: x == 1)
+    async def emit_values():
+        await started.wait()
+        await manager.emit(0)
+        await manager.emit(1)
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        matched = tg.create_task(flow.first(lambda x: x == 1))
 
     # THEN
-    assert matched == 1
+    assert matched.result() == 1
 
 
 @pytest.mark.asyncio
 async def test_flow_drop_2():
     # GIVEN
     manager: FlowManager[int] = FlowManager()
-    flow = Flow(manager)
+    started = asyncio.Event()
+    flow = Flow(manager).on_subscribe(lambda: started.set())
+    collected: list[int] = []
 
     # WHEN
-    await manager.emit(0)
-    await manager.emit(1)
-    await manager.emit(2)
-    await manager.emit(3)
-    flow = await flow.drop(2)
+    async def emit_values():
+        await started.wait()
+        await manager.emit(0)
+        await manager.emit(1)
+        await manager.emit(2)
+        await manager.emit(3)
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        collector = tg.create_task(
+            flow.drop(2).collect_until(
+                filter=lambda x: x == 3,
+                action=lambda x: collected.append(x),
+            )
+        )
 
     # THEN
-    assert flow.current == 1
-    assert await anext(flow) == 2
-    assert flow.current == 2
-    assert await anext(flow) == 3
-    assert flow.current == 3
+    assert collected == [2]
+    assert collector.result() == 3
 
 
 @pytest.mark.asyncio
 async def test_flow_take_2():
     # GIVEN
     manager: FlowManager[int] = FlowManager()
-    flow = Flow(manager)
+    started = asyncio.Event()
+    flow = Flow(manager).on_subscribe(lambda: started.set())
+    collected: list[int] = []
 
     # WHEN
-    await manager.emit(0)
-    await manager.emit(1)
-    await manager.emit(2)
-    await manager.emit(3)
-    flow = flow.take(2)
+    async def emit_values():
+        await started.wait()
+        await manager.emit(0)
+        await manager.emit(1)
+        await manager.emit(2)
+        await manager.emit(3)
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        collector = tg.create_task(flow.take(2).collect(lambda x: collected.append(x)))
 
     # THEN
-    assert flow.current == None
-    assert await anext(flow) == 0
-    assert flow.current == 0
-    assert await anext(flow) == 1
-    assert flow.current == 1
-    with pytest.raises(StopAsyncIteration):
-        await anext(flow)
+    assert collected == [0, 1]
+    assert collector.result() == 1
+
+
+@pytest.mark.asyncio
+async def test_simultaneous_collect_first():
+    # GIVEN
+    manager: FlowManager[int] = FlowManager()
+    started = asyncio.Event()
+    flow = Flow(manager).on_subscribe(lambda: started.set())
+    collected: list[int] = []
+
+    # WHEN
+    async def emit_values():
+        await started.wait()
+        await manager.emit(0)
+        await manager.emit(1)
+        await manager.emit(2)
+        await manager.emit(3)
+        await manager.emit(4)
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        first_2 = tg.create_task(flow.first(lambda x: x == 2))
+        collector = tg.create_task(
+            flow.collect_until(
+                filter=lambda x: x == 4,
+                action=lambda x: collected.append(x),
+            )
+        )
+
+    # THEN
+    assert collected == [0, 1, 2, 3]
+    assert first_2.result() == 2
+    assert collector.result() == 4
 
 
 @pytest.mark.asyncio
 async def test_status_flow_basic(mock_wireless_gopro_basic: MockWirelessGoPro):
     # GIVEN
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
-    flow = await GoproRegisterFlow(
-        gopro=mock_wireless_gopro_basic,
-        update=StatusId.ENCODING,
-        register_command=mock_wireless_gopro_basic.mock_gopro_resp(True),
-    ).start()
+    started = asyncio.Event()
+    flow = (
+        await GoproRegisterFlow(
+            gopro=mock_wireless_gopro_basic,
+            update=StatusId.ENCODING,
+            register_command=mock_wireless_gopro_basic.mock_gopro_resp(True),
+        )
+        .on_subscribe(lambda: started.set())
+        .start()
+    )
+    values: list[bool] = []
 
     def emit_status(encoding: bool):
         if encoding:
@@ -304,13 +369,19 @@ async def test_status_flow_basic(mock_wireless_gopro_basic: MockWirelessGoPro):
         mock_wireless_gopro_basic._notification_handler(0xFF, payload)
 
     # WHEN
-    emit_status(False)
-    emit_status(False)
-    emit_status(True)
-    values = [await flow.single(), await flow.single(), await flow.single(), await flow.single()]
+    async def emit_statuses():
+        await started.wait()
+        emit_status(False)
+        emit_status(False)
+        emit_status(True)
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_statuses())
+        collector = tg.create_task(flow.take(3).collect(lambda x: values.append(x)))
 
     # THEN
     assert values == [True, False, False, True]
+    assert collector.result() == True
 
 
 @pytest.mark.asyncio

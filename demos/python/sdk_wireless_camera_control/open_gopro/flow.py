@@ -16,7 +16,7 @@ from typing import (
     TypeAlias,
     TypeVar,
 )
-from uuid import uuid1
+from uuid import UUID, uuid1
 
 T = TypeVar("T")
 C = TypeVar("C", bound="Flow")
@@ -39,31 +39,31 @@ class FlowManager(Generic[T]):
     def __init__(self, debug_id: str = "") -> None:
         self._debug_id = debug_id
         self._replay: T | None = None
-        self._q_dict: dict[Flow, asyncio.Queue[T]] = {}
+        self._q_dict: dict[UUID, asyncio.Queue[T]] = {}
         # TODO handle cleanup
 
-    def add_flow(self, flow: Flow[T]) -> None:
+    def add_flow(self, uuid: UUID) -> None:
         """Add a flow to receive collected values
 
         Args:
             flow (Flow[T]): Flow to add
         """
-        if flow not in self._q_dict:
-            self._q_dict[flow] = asyncio.Queue()
+        if uuid not in self._q_dict:
+            self._q_dict[uuid] = asyncio.Queue()
             # Replay the current value if we have it
             if self._replay:
-                self._q_dict[flow].put_nowait(self._replay)
+                self._q_dict[uuid].put_nowait(self._replay)
 
-    def remove_flow(self, flow: Flow[T]) -> None:
+    def remove_flow(self, uuid: UUID) -> None:
         """Remove a flow from receiving collected values
 
         Args:
             flow (Flow[T]): Flow to remove
         """
-        if flow in self._q_dict:
-            del self._q_dict[flow]
+        if uuid in self._q_dict:
+            del self._q_dict[uuid]
 
-    async def get_value(self, flow: Flow[T]) -> T:
+    async def get_value(self, uuid: UUID) -> T:
         """Get the next value per-flow
 
         Args:
@@ -75,11 +75,12 @@ class FlowManager(Generic[T]):
         Returns:
             T: Received value
         """
-        if flow not in self._q_dict:
+        if uuid not in self._q_dict:
             logger.error("Attempted to get value from a non-registered flow.")
             raise RuntimeError("Flow has not been added!")
             # TODO exception is not propagating
-        return await self._q_dict[flow].get()
+        value = await self._q_dict[uuid].get()
+        return value
 
     async def emit(self, value: T) -> None:
         """Receive a value and queue it for per-flow retrieval
@@ -88,15 +89,15 @@ class FlowManager(Generic[T]):
             value (T): Value to queue
         """
         self._replay = value
-        for flow, q in self._q_dict.items():
-            logger.trace(f"Flow manager {self._debug_id} emitting {value} to flow {flow._debug_id}")  # type: ignore
+        for uuid, q in self._q_dict.items():
+            logger.trace(f"Flow manager {self._debug_id} emitting {value} to flow {uuid}")  # type: ignore
             await q.put(value)
 
 
 # https://gist.github.com/jspahrsummers/32a8096667cf9f17d5e8fddeb081b202
 
 
-class Flow(AsyncGenerator[T, Any], Generic[T]):
+class Flow(Generic[T]):
     """The asynchronous data flow
 
     Args:
@@ -106,20 +107,17 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
 
     def __init__(self, manager: FlowManager[T], debug_id: str | None = None) -> None:
         self._count = 0
-        self._id = uuid1().int
-        self._debug_id = debug_id or str(self._id)
+        self._debug_id = debug_id or ""
         self._current: T | None = None
         self._manager = manager
         self._on_start_actions: list[SyncAction[T] | AsyncAction[T]] = []
+        self._on_subscribe_actions: list[Callable[[], None] | Callable[[], Coroutine[Any, Any, None]]] = []
         self._per_value_actions: list[SyncAction[T] | AsyncAction[T]] = []
-        self._manager.add_flow(self)
         self._take_count: int | None = None
+        self._drop_count: int = 0
         # TODO handle cleanup
         # TODO there is certainly a better way to do this using the unimplemented dunders below
         self._should_close = False
-
-    def __hash__(self) -> int:
-        return self._id
 
     def _mux_action(
         self,
@@ -176,8 +174,8 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
         """
         return self._current
 
-    # TODO should this be treated the same as take?
-    async def drop(self: C, num: int) -> C:
+    # TODO we need to add a pipeline for this to be used at the same time as take
+    def drop(self: C, num: int) -> C:
         """Collect the first num values and ignore them
 
         Args:
@@ -186,9 +184,7 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
         Returns:
             C: modified flow
         """
-        # TODO do we want current to reflect the dropped values? Probably not...
-        for _ in range(num):
-            await anext(self)
+        self._drop_count = num
         return self
 
     def take(self: C, num: int) -> C:
@@ -203,6 +199,10 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
         self._take_count = self._count + num + 1
         return self
 
+    def on_subscribe(self: C, action: Callable[[], None] | Callable[[], Coroutine[Any, Any, None]]) -> C:
+        self._on_subscribe_actions.append(action)
+        return self
+
     def on_start(self: C, action: SyncAction[T] | AsyncAction[T]) -> C:
         """Register a callback action to be called when the flow starts collecting
 
@@ -214,6 +214,8 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
         """
         self._on_start_actions.append(action)
         return self
+
+    # TODO add on_subscribed
 
     async def first(self, filter: SyncFilter) -> T:
         """Terminal receiver to collect only the first received value that matches a given filter
@@ -227,8 +229,11 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
         Returns:
             T: first value matching filter
         """
-        while (value := await anext(self)) is not None:
+        uuid = uuid1()
+        self._manager.add_flow(uuid)
+        while (value := await self._get_next(uuid)) is not None:
             if filter(value):
+                self._manager.remove_flow(uuid)
                 return value
         raise NotImplementedError
 
@@ -238,11 +243,14 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
         Returns:
             T: First received value
         """
-        value = await anext(self)
+        uuid = uuid1()
+        self._manager.add_flow(uuid)
+        value = await self._get_next(uuid)
         assert value is not None
+        self._manager.remove_flow(uuid)
         return value
 
-    async def collect(self, action: SyncAction[T] | AsyncAction[T] | None) -> T:
+    async def collect(self, action: SyncAction[T] | AsyncAction[T] | None = None) -> T:
         """Terminal receiver to indefinitely collect received values
 
         Note! If the action is synchronous, collecting will block on it
@@ -257,18 +265,21 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
         Returns:
             T: last received value
         """
+        uuid = uuid1()
+        self._manager.add_flow(uuid)
         return_value: T | None = None
         async with asyncio.TaskGroup() as tg:
             try:
                 # TODO do we want / need should_close. It's not currently being handled
                 while not self._should_close:
-                    return_value = await self.single()
+                    return_value = await self._get_next(uuid)
                     if action:
                         self._mux_action(action, return_value, tg)
                 return_value = self.current
             except StopAsyncIteration:
-                return_value = self.current
-        if return_value:
+                pass
+        self._manager.remove_flow(uuid)
+        if return_value is not None:
             return return_value
         raise RuntimeError("Failed to collect any values")
 
@@ -288,6 +299,8 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
         Returns:
             T: Last value that was received when the filter matched
         """
+        uuid = uuid1()
+        self._manager.add_flow(uuid)
         return_value: T | None = None
         async with asyncio.TaskGroup() as tg:
             try:
@@ -295,12 +308,13 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
                     return_value = self.current
                 else:
                     while not self._should_close:
-                        if filter(return_value := await self.single()):
+                        if filter(return_value := await self._get_next(uuid)):
                             break
                         self._mux_action(action, return_value, tg)
             except StopAsyncIteration:
                 return_value = self.current
-        if return_value:
+        self._manager.remove_flow(uuid)
+        if return_value is not None:
             return return_value
         raise RuntimeError("Failed to collect any values")
 
@@ -320,78 +334,43 @@ class Flow(AsyncGenerator[T, Any], Generic[T]):
             T: Last value that was received while the filter matched.
         """
         try:
+            uuid = uuid1()
+            self._manager.add_flow(uuid)
             if self.current and not self._mux_filter_blocking(action, self.current):
+                self._manager.remove_flow(uuid)
                 return self.current
             while not self._should_close:
-                if not await self._mux_filter_blocking(action, value := await self.single()):
+                if not await self._mux_filter_blocking(action, value := await self._get_next(uuid)):
+                    self._manager.remove_flow(uuid)
                     return value
+            self._manager.remove_flow(uuid)
             if self.current:
                 return self.current
             raise RuntimeError("Failed to collect any values")
         except StopAsyncIteration as exc:
+            self._manager.remove_flow(uuid)
             if self.current:
                 return self.current
             raise RuntimeError("Failed to collect any values") from exc
 
-    # Async Generator Methods
-
-    async def asend(self, value: Any) -> T:
-        """TODO
-
-        Args:
-            value (Any): _description_
-
-        Raises:
-            NotImplementedError: _description_
-
-        Returns:
-            T: _description_
-        """
-        raise NotImplementedError
-
-    async def aclose(self) -> None:
-        """TODO
-
-        Raises:
-            NotImplementedError: _description_
-        """
-        raise NotImplementedError
-
-    # TODO figure out the signature here
-    async def athrow(  # type: ignore
-        self,
-        typ: type[BaseException],
-        val: BaseException | object = None,
-        tb: TracebackType | None = None,
-    ) -> Any:
-        """_summary_
-
-        Args:
-            typ (type[BaseException]): _description_
-            val (BaseException | object): _description_. Defaults to None.
-            tb (TracebackType | None): _description_. Defaults to None.
-
-        Raises:
-            NotImplementedError: _description_
-
-        Returns:
-            Any: _description_
-        """
-        raise NotImplementedError
-
-    def __aiter__(self) -> AsyncIterator[T]:
-        return self
-
-    async def __anext__(self) -> T:
-        while (value := await self._manager.get_value(self)) is not None:
-            self._current = value
-            for action in self._per_value_actions:
-                action(value)
-            self._count += 1
-            if self._count == 1:
-                for action in self._on_start_actions:
-                    self._mux_action(action, value)
-            if self._take_count and self._count == self._take_count:
-                break
-            return value
-        raise StopAsyncIteration
+    async def _get_next(self, uuid: UUID) -> T:
+        if self._count == 0:
+            for action in self._on_subscribe_actions:
+                if iscoroutinefunction(action):
+                    await action()
+                action()
+        if self._drop_count:
+            for _ in range(self._drop_count):
+                await self._manager.get_value(uuid)
+            self._drop_count = 0
+        value = await self._manager.get_value(uuid)
+        self._current = value
+        for action in self._per_value_actions:
+            action(value)
+        self._count += 1
+        if self._count == 1:
+            for action in self._on_start_actions:
+                self._mux_action(action, value)
+        if self._take_count and self._count == self._take_count:
+            raise StopAsyncIteration
+        return value

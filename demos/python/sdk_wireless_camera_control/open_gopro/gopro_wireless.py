@@ -353,7 +353,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         # Set up concurrency
         self._loop = asyncio.get_running_loop()
         self._ble_disconnect_event = asyncio.Event()
-
         self._cohn = open_gopro.features.cohn.CohnFeature(
             cohn_db=TinyDB(self._cohn_db_path, indent=4),
             gopro=self,
@@ -394,6 +393,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                 if self._should_enable_wifi:
                     await self._open_wifi(timeout, retries)
                 elif self._should_enable_cohn:
+                    # TODO DNS scan?
                     if await self.cohn.is_configured:
                         self._is_cohn_configured = True
                     else:
@@ -587,6 +587,9 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         # Establish connection, pair, etc.
         await self._ble.open(timeout, retries)
         self._is_ble_connected = True
+        self._identifier = self._ble._identifier
+        if not self._identifier:
+            raise GoProNotOpened("Failed to read identifier from opening BLE")
         # Start state maintenance
         if self._should_maintain_state:
             self._ble_disconnect_event.clear()
