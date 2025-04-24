@@ -580,6 +580,9 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     async def _open_ble(self, timeout: int = 10, retries: int = 5) -> None:
         """Connect the instance to a device via BLE.
 
+        Raises:
+            InterfaceConfigFailure: failed to get identifier from BLE client
+
         Args:
             timeout (int): Time in seconds before considering establishment failed. Defaults to 10 seconds.
             retries (int): How many tries to reconnect after failures. Defaults to 5.
@@ -587,9 +590,10 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         # Establish connection, pair, etc.
         await self._ble.open(timeout, retries)
         self._is_ble_connected = True
-        self._identifier = self._ble._identifier
-        if not self._identifier:
-            raise GoProNotOpened("Failed to read identifier from opening BLE")
+        if not self._ble.identifier:
+            raise InterfaceConfigFailure("Failed to get identifier from BLE client")
+        self._identifier = self._ble.identifier[-4:]
+
         # Start state maintenance
         if self._should_maintain_state:
             self._ble_disconnect_event.clear()

@@ -104,6 +104,7 @@ nitpick_ignore = [
     ("py:class", "ResultE"),
     ("py:class", "returns.result.Result"),
     ("py:class", "TracebackType"),
+    ("py:class", "UUID"),
     # TODO need to fix these
     ("py:class", "Path"),
     ("py:class", "JsonDict"),

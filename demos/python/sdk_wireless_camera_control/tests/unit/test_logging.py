@@ -136,26 +136,6 @@ async def test_ble_setting():
     assert_kwargs(d)
     assert not d
 
-    # Register value updates
-    await message.get_value_flow()
-    d = communicator.message._as_dict(**dummy_kwargs)
-    assert d.pop("id") == QueryCmdId.REG_SETTING_VAL_UPDATE
-    assert d.pop("setting_id") == SettingId.MAX_LENS
-    assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUID.CQ_QUERY
-    assert_kwargs(d)
-    assert not d
-
-    # Register capability updates
-    await message.get_capabilities_flow()
-    d = communicator.message._as_dict(**dummy_kwargs)
-    assert d.pop("id") == QueryCmdId.REG_CAPABILITIES_UPDATE
-    assert d.pop("setting_id") == SettingId.MAX_LENS
-    assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUID.CQ_QUERY
-    assert_kwargs(d)
-    assert not d
-
 
 @pytest.mark.asyncio
 async def test_ble_status():
@@ -170,16 +150,6 @@ async def test_ble_status():
     await message.get_value()
     d = communicator.message._as_dict(**dummy_kwargs)
     assert d.pop("id") == QueryCmdId.GET_STATUS_VAL
-    assert d.pop("status_id") == StatusId.MICROPHONE_ACCESSORY
-    assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUID.CQ_QUERY
-    assert_kwargs(d)
-    assert not d
-
-    # Register value updates
-    await message.get_value_flow()
-    d = communicator.message._as_dict(**dummy_kwargs)
-    assert d.pop("id") == QueryCmdId.REG_STATUS_VAL_UPDATE
     assert d.pop("status_id") == StatusId.MICROPHONE_ACCESSORY
     assert d.pop("protocol") == GoProResp.Protocol.BLE
     assert d.pop("uuid") == GoProUUID.CQ_QUERY

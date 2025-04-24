@@ -72,7 +72,7 @@ async def test_gopro_open(mock_wireless_gopro_basic: WirelessGoPro):
     await mock_wireless_gopro_basic.open()
     assert mock_wireless_gopro_basic.is_ble_connected
     assert mock_wireless_gopro_basic.is_http_connected
-    assert mock_wireless_gopro_basic.identifier == "scanned_device"
+    assert mock_wireless_gopro_basic.identifier == "vice"
 
 
 @pytest.mark.asyncio

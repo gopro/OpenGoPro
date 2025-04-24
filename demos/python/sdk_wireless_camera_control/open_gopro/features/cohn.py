@@ -69,7 +69,7 @@ class CohnFeature(BaseFeature):
         while True:
             if self._gopro.is_ble_connected:
                 async with self._status_flow.on_start(lambda _: self._ready_event.set()) as flow:
-                    await flow.collect(lambda s: logger.error(f"Feature Received COHN status: {s}"))
+                    await flow.collect(lambda s: logger.debug(f"Feature Received COHN status: {s}"))
             else:
                 await asyncio.sleep(1)
 
@@ -205,7 +205,7 @@ class CohnFeature(BaseFeature):
             if not self.is_connected:
                 logger.info("Waiting for COHN to be connected")
 
-                status = await asyncio.wait_for(
+                await asyncio.wait_for(
                     self._status_flow.first(
                         lambda s: s.state == proto.EnumCOHNNetworkState.COHN_STATE_NetworkConnected
                     ),

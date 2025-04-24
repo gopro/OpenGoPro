@@ -1,14 +1,13 @@
 """Async generators to process asynchronous data flows."""
 
 from __future__ import annotations
-from dataclasses import dataclass
+
 import asyncio
 import logging
+from dataclasses import dataclass
 from inspect import iscoroutinefunction
-from typing import Any, Callable, Coroutine, Generic, TypeAlias, TypeVar
+from typing import Any, Callable, Coroutine, Final, Generic, TypeAlias, TypeVar
 from uuid import UUID, uuid1
-
-from returns.result import Result, Success, Failure
 
 T = TypeVar("T")
 C = TypeVar("C", bound="Flow")
@@ -27,19 +26,28 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FlowValue(Generic[T]):
+    """Base class for value returned from flow "generator"""
+
     value: T
 
 
 @dataclass
-class Continue(FlowValue[T]): ...
+class Continue(FlowValue[T]):
+    """A flow value from a successful read that indicates reads can continue"""
 
 
 @dataclass
-class Complete(FlowValue[T]): ...
+class Complete(FlowValue[T]):
+    """A flow value from a read that indicates the read is complete either via success or error"""
 
 
 class FlowManager(Generic[T]):
-    """Flow manager to manage sending values from one data stream to one or more flows"""
+    """Flow manager to manage sending values from one data stream to one or more flows
+
+    Args:
+        capacity (int): cache size. Defaults to 1000.
+        debug_id (str): Identifier for debug logging. Defaults to "".
+    """
 
     def __init__(self, capacity: int = 1000, debug_id: str = "") -> None:
         self._debug_id = debug_id
@@ -54,7 +62,8 @@ class FlowManager(Generic[T]):
         """Add a flow to receive collected values
 
         Args:
-            flow (Flow[T]): Flow to add
+            uuid (UUID): flow identifier
+            replay (int): how many values to replay from cache
         """
         if uuid not in self._q_dict:
             self._q_dict[uuid] = asyncio.Queue()
@@ -68,7 +77,7 @@ class FlowManager(Generic[T]):
         """Remove a flow from receiving collected values
 
         Args:
-            flow (Flow[T]): Flow to remove
+            uuid (UUID): flow identifier
         """
         if uuid in self._q_dict:
             del self._q_dict[uuid]
@@ -77,7 +86,7 @@ class FlowManager(Generic[T]):
         """Get the next value per-flow
 
         Args:
-            flow (Flow[T]): flow to access value for
+            uuid (UUID):: flow identifier to access value for
 
         Raises:
             RuntimeError: Flow has not yet been added
@@ -113,12 +122,15 @@ class FlowManager(Generic[T]):
 class Flow(Generic[T]):
     """The asynchronous data flow
 
+    Attributes:
+        REPLAY_ALL (Final[int]): Special integer value to indicate all values should be replayed
+
     Args:
         manager (FlowManager[T]): manager to send data to the flow
         debug_id (str | None): Identifier to log for debugging. Defaults to None (will use generated UUID).
     """
 
-    REPLAY_ALL = -1
+    REPLAY_ALL: Final[int] = -1
 
     def __init__(self, manager: FlowManager[T], debug_id: str | None = None) -> None:
         self._count = 0
@@ -213,7 +225,19 @@ class Flow(Generic[T]):
         self._take_count = self._count + num
         return self
 
-    def on_subscribe(self: C, action: Callable[[], None] | Callable[[], Coroutine[Any, Any, None]]) -> C:
+    # TODO should this be moved to add_flow in the manager?
+    def on_subscribe(
+        self: C,
+        action: Callable[[], None] | Callable[[], Coroutine[Any, Any, None]],
+    ) -> C:
+        """Register to receive a callback when the a terminal operator starts collecting
+
+        Args:
+            action (Callable[[], None] | Callable[[], Coroutine[Any, Any, None]]): Callback
+
+        Returns:
+            C: modified flow
+        """
         self._on_subscribe_actions.append(action)
         return self
 
@@ -229,13 +253,12 @@ class Flow(Generic[T]):
         self._on_start_actions.append(action)
         return self
 
-    # TODO add on_subscribed
-
     async def first(self, filter: SyncFilter, replay: int = 1) -> T:
         """Terminal receiver to collect only the first received value that matches a given filter
 
         Args:
             filter (SyncFilter): Filter to apply
+            replay (int): how many values to replay from cache. Defaults to 1.
 
         Raises:
             NotImplementedError: TODO Need to handle what happens if flow ends before filter is triggered
@@ -259,6 +282,9 @@ class Flow(Generic[T]):
     async def single(self, replay: int = 1) -> T:
         """Terminal receiver to collect the first received value.
 
+        Args:
+            replay (int): how many values to replay from cache. Defaults to 1.
+
         Returns:
             T: First received value
         """
@@ -281,6 +307,7 @@ class Flow(Generic[T]):
 
         Args:
             action (SyncAction[T] | AsyncAction[T] | None): Action to call on each received value
+            replay (int): how many values to replay from cache. Defaults to 1.
 
         Raises:
             RuntimeError: Failed to collect any values
@@ -320,6 +347,7 @@ class Flow(Generic[T]):
         Args:
             filter (SyncFilter[T]): Filter to apply
             action (SyncAction[T] | AsyncAction[T]): Action called on each received value
+            replay (int): how many values to replay from cache. Defaults to 1.
 
         Raises:
             RuntimeError: Failed to collect any values
@@ -338,6 +366,7 @@ class Flow(Generic[T]):
                     match await self._get_next(uuid):
                         case Continue(value):
                             return_value = value
+                            assert return_value is not None
                             if filter(value):
                                 break
                             self._mux_action(action, return_value, tg)
@@ -359,8 +388,9 @@ class Flow(Generic[T]):
         Note that this will block / await until the filter action is complete.
 
         Args:
-            action (SyncFilter[T] | AsyncFilter[T] ): Action / filter that is called one ach received value.
+            action (SyncFilter[T] | AsyncFilter[T]): Action / filter that is called one ach received value.
                 It also functions as the filter and should thus return whether or not the filter matches.
+            replay (int): how many values to replay from cache. Defaults to 1.
 
         Raises:
             RuntimeError: Failed to collect any values
@@ -380,6 +410,7 @@ class Flow(Generic[T]):
                     return_value = value
                     if not await self._mux_filter_blocking(action, value):
                         self._manager.remove_flow(uuid)
+                        assert return_value is not None
                         return return_value
                 case Complete(value):
                     self._manager.remove_flow(uuid)
@@ -392,6 +423,17 @@ class Flow(Generic[T]):
         raise RuntimeError("Failed to collect any values")
 
     async def _get_next(self, uuid: UUID) -> FlowValue[T]:
+        """Get the next flow value from the manager
+
+        Args:
+            uuid (UUID): Flow identifier
+
+        Raises:
+            RuntimeError: Flow ended without receiving any values
+
+        Returns:
+            FlowValue[T]: Latest flow value
+        """
         if self._count == 0:
             for action in self._on_subscribe_actions:
                 if iscoroutinefunction(action):
@@ -406,10 +448,10 @@ class Flow(Generic[T]):
                 await self._manager.get_value(uuid)
             self._drop_count = 0
         value = await self._manager.get_value(uuid)
-        for action in self._per_value_actions:
-            action(value)
+        for action in self._per_value_actions:  # type: ignore
+            action(value)  # type: ignore
         self._count += 1
         if self._count == 1:
-            for action in self._on_start_actions:
-                self._mux_action(action, value)
+            for action in self._on_start_actions:  # type: ignore
+                self._mux_action(action, value)  # type: ignore
         return Continue(value)

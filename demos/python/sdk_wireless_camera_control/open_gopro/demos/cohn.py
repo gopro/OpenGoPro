@@ -34,7 +34,7 @@ async def main(args: argparse.Namespace) -> None:
             is_configured = await gopro.cohn.is_configured
             if (not args.ssid or not args.password) and not is_configured:
                 raise ValueError("COHN needs to be provisioned but you didn't pass SSID credentials.")
-            elif args.ssid and args.password:
+            if args.ssid and args.password:
                 await gopro.access_point.connect(args.ssid, args.password)
                 await gopro.cohn.configure(force_reprovision=True)
 
@@ -50,8 +50,12 @@ async def main(args: argparse.Namespace) -> None:
             # Prove we can communicate via the COHN HTTP channel without a BLE or Wifi connection
             assert (await gopro.http_command.get_camera_state()).ok
             console.print("Successfully communicated via COHN!!")
+            assert gopro.cohn.credentials
             console.print(
-                f"Sample curl command: {CURL_TEMPLATE.format(password=gopro.cohn.credentials.password, ip_addr=gopro.cohn.credentials.ip_address)}"  # type: ignore
+                f"Sample curl command: {CURL_TEMPLATE.format(
+                    password=gopro.cohn.credentials.password,
+                    ip_addr=gopro.cohn.credentials.ip_address,
+                )}"
             )
 
     except Exception as e:  # pylint: disable = broad-except
