@@ -409,7 +409,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                 return
 
             except Exception as e:  # pylint: disable=broad-exception-caught
-                logger.error(f"Error while opening: {e}")
+                logger.error(f"Error while opening: {repr(e)}")
                 await self.close()
                 if retry >= RETRIES - 1:
                     raise e

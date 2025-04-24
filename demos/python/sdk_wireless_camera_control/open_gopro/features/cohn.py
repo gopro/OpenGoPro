@@ -69,11 +69,7 @@ class CohnFeature(BaseFeature):
         while True:
             if self._gopro.is_ble_connected:
                 async with self._status_flow.on_start(lambda _: self._ready_event.set()) as flow:
-
-                    async def process_status(status: proto.NotifyCOHNStatus) -> None:
-                        logger.error(f"Feature Received COHN status: {status}")
-
-                    await flow.collect(process_status)
+                    await flow.collect(lambda s: logger.error(f"Feature Received COHN status: {s}"))
             else:
                 await asyncio.sleep(1)
 
@@ -209,23 +205,28 @@ class CohnFeature(BaseFeature):
             if not self.is_connected:
                 logger.info("Waiting for COHN to be connected")
 
-                def catch_connected_status(status: NotifyCOHNStatus) -> bool:
-                    logger.critical(f"Wait for connected processing cohn status: {status}")
-                    return status.state == proto.EnumCOHNNetworkState.COHN_STATE_NetworkConnected
-
                 status = await asyncio.wait_for(
-                    self._status_flow.first(catch_connected_status),
+                    self._status_flow.first(
+                        lambda s: s.state == proto.EnumCOHNNetworkState.COHN_STATE_NetworkConnected
+                    ),
                     timeout,
                 )
-                # On some cameras, the IP address only comes with this status. Let's just always take all of the
-                # new information available here (everything but the cert)
-                assert self.credentials
+            logger.info("COHN is connected")
+            assert self.credentials
+            if not self.credentials.is_complete:
+                # On some cameras, the IP address only comes with this status. Let's just always take all of the availble
+                # information from the current status(everything but the cert)
                 self.credentials = CohnInfo(
-                    username=status.username,
-                    password=status.password,
-                    ip_address=status.ipaddress,
+                    username=self.status.username,
+                    password=self.status.password,
+                    ip_address=self.status.ipaddress,
                     certificate=self.credentials.certificate,
                 )
+                # If the credentials are still not complete at this point, something bad has happened
+                if not self.credentials.is_complete:
+                    logger.error("Failed to get COHN credentials")
+                    return Result.from_failure(RuntimeError("Failed to get COHN credentials"))
+
         except TimeoutError as exc:
             return Result.from_failure(exc)
         assert self.credentials

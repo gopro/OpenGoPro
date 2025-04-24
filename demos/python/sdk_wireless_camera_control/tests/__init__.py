@@ -15,5 +15,5 @@ mock_good_response = GoProResp(
     protocol=GoProResp.Protocol.BLE,
     status=constants.ErrorCode.SUCCESS,
     identifier="test response",
-    data=None,
+    data=True,
 )

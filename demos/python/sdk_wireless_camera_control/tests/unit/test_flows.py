@@ -12,7 +12,7 @@ from tests.mocks import MockWirelessGoPro
 
 
 @pytest.mark.asyncio
-async def test_flow_get_2_values():
+async def test_flow_single():
     # GIVEN
     manager: FlowManager[int] = FlowManager()
     complete = asyncio.Event()
@@ -23,12 +23,52 @@ async def test_flow_get_2_values():
     async def emit_values():
         await started.wait()
         await manager.emit(0)
-        await manager.emit(1)
 
     async def single_get_values():
         assert await flow.single() == 0
         assert flow.current == 0
-        assert await flow.single() == 1
+        complete.set()
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        tg.create_task(single_get_values())
+
+    await asyncio.wait_for(complete.wait(), 2)
+
+
+@pytest.mark.asyncio
+async def test_flow_single_with_replay():
+    # GIVEN
+    manager: FlowManager[int] = FlowManager()
+    flow = Flow(manager)
+
+    # WHEN
+    await manager.emit(0)
+    result = await flow.single(replay=Flow.REPLAY_ALL)
+
+    # THEN
+    assert result == 0
+
+
+@pytest.mark.asyncio
+async def test_flow_get_2_values_via_replay():
+    # GIVEN
+    manager: FlowManager[int] = FlowManager()
+    complete = asyncio.Event()
+    started = asyncio.Event()
+    flow = Flow(manager)
+
+    # WHEN
+    async def emit_values():
+        await manager.emit(0)
+        await manager.emit(1)
+        started.set()
+
+    async def single_get_values():
+        await started.wait()
+        assert await flow.single(replay=Flow.REPLAY_ALL) == 0
+        assert flow.current == 1
+        assert await flow.single(replay=Flow.REPLAY_ALL) == 0
         assert flow.current == 1
         complete.set()
 
@@ -51,7 +91,6 @@ async def test_flow_on_start_sync_action():
     async def emit_values():
         await started.wait()
         await manager.emit(0)
-        await manager.emit(1)
 
     async with asyncio.TaskGroup() as tg:
         tg.create_task(emit_values())
@@ -61,8 +100,6 @@ async def test_flow_on_start_sync_action():
     assert single.result() == 0
     assert await asyncio.wait_for(on_start.wait(), 1)
     assert flow.current == 0
-    assert await flow.single() == 1
-    assert flow.current == 1
 
 
 @pytest.mark.asyncio
@@ -77,7 +114,6 @@ async def test_flow_on_start_async_action():
     async def emit_values():
         await started.wait()
         await manager.emit(0)
-        await manager.emit(1)
 
     async def set_event_on_start(value: int) -> None:
         on_start.set()
@@ -90,8 +126,6 @@ async def test_flow_on_start_async_action():
     assert single.result() == 0
     assert await asyncio.wait_for(on_start.wait(), 1)
     assert flow.current == 0
-    assert await flow.single() == 1
-    assert flow.current == 1
 
 
 @pytest.mark.asyncio
@@ -372,27 +406,35 @@ async def test_status_flow_basic(mock_wireless_gopro_basic: MockWirelessGoPro):
     async def emit_statuses():
         await started.wait()
         emit_status(False)
-        emit_status(False)
         emit_status(True)
+        emit_status(False)
+
+    async def collect(status):
+        values.append(status)
 
     async with asyncio.TaskGroup() as tg:
         tg.create_task(emit_statuses())
-        collector = tg.create_task(flow.take(3).collect(lambda x: values.append(x)))
+        collector = tg.create_task(flow.take(4).collect(collect))
 
     # THEN
-    assert values == [True, False, False, True]
-    assert collector.result() == True
+    assert values == [True, False, True, False]
+    assert collector.result() == False
 
 
 @pytest.mark.asyncio
 async def test_status_flow_different_initial_response(mock_wireless_gopro_basic: MockWirelessGoPro):
     # GIVEN
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
-    flow = await GoproRegisterFlowDistinctInitial(
-        gopro=mock_wireless_gopro_basic,
-        update=StatusId.ENCODING,
-        register_command=mock_wireless_gopro_basic.ble_command.get_open_gopro_api_version(),
-    ).start()
+    started = asyncio.Event()
+    flow = (
+        await GoproRegisterFlowDistinctInitial(
+            gopro=mock_wireless_gopro_basic,
+            update=StatusId.ENCODING,
+            register_command=mock_wireless_gopro_basic.ble_command.get_open_gopro_api_version(),
+        )
+        .on_subscribe(lambda: started.set())
+        .start()
+    )
 
     def emit_status(encoding: bool):
         if encoding:
@@ -402,17 +444,23 @@ async def test_status_flow_different_initial_response(mock_wireless_gopro_basic:
         mock_wireless_gopro_basic._notification_handler(0xFF, payload)
 
     # WHEN
-    emit_status(False)
-    emit_status(False)
     values: list[str | bool] = []
-    async with flow:
-        values.append(flow.initial_response)
-        emit_status(True)
-        emit_status(True)
-        emit_status(True)
-        emit_status(True)
 
-        await flow.take(2).collect(lambda status: values.append(status))
+    async def emit_values():
+        await started.wait()
+        emit_status(True)
+        emit_status(False)
+        emit_status(True)
+        emit_status(False)
+
+    async def receive_values():
+        async with flow:
+            values.append(flow.initial_response)
+            await flow.take(4).collect(lambda status: values.append(status))
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        collector = tg.create_task(receive_values())
 
     # THEN
-    assert values == ["2.0", False, False]
+    assert values == ["2.0", True, False, True, False]
