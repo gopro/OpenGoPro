@@ -7,7 +7,7 @@ from typing import Any, Coroutine, Generic, TypeVar
 
 from open_gopro.communicator_interface import BaseGoProCommunicator
 from open_gopro.exceptions import GoProError
-from open_gopro.flow import AsyncAction, Flow, FlowManager, SyncAction
+from open_gopro.flow import AsyncAction, Flow, SyncAction
 from open_gopro.models.response import GoProResp
 from open_gopro.types import UpdateType
 
@@ -34,13 +34,12 @@ class GoproRegisterFlowDistinctInitial(Flow[T], Generic[I, T]):
         unregister_command: Coroutine[Any, Any, Any] | None = None,
     ) -> None:
         self._gopro = gopro
-        self._flow_manager: FlowManager[T] = FlowManager(debug_id=str(update))
         self._update = update
         self._register_command = register_command
         self._unregister_command = unregister_command
         self._initial_response: I
         self._is_open = False
-        super().__init__(manager=self._flow_manager, debug_id=str(update))
+        super().__init__(debug_id=str(update))
 
     @property
     def initial_response(self) -> I:
@@ -66,7 +65,7 @@ class GoproRegisterFlowDistinctInitial(Flow[T], Generic[I, T]):
         Args:
             value (T): Value of received status.
         """
-        await self._flow_manager.emit(value)
+        await self.emit(value)
 
     async def start(self: C) -> C:
         """Configure the camera to start receiving statuses.

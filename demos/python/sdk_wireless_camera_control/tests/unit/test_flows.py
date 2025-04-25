@@ -7,22 +7,21 @@ from open_gopro.api.gopro_flow import (
     GoproRegisterFlowDistinctInitial,
 )
 from open_gopro.constants.statuses import StatusId
-from open_gopro.flow import Flow, FlowManager
+from open_gopro.flow import Flow
 from tests.mocks import MockWirelessGoPro
 
 
 @pytest.mark.asyncio
 async def test_flow_single():
     # GIVEN
-    manager: FlowManager[int] = FlowManager()
     complete = asyncio.Event()
     started = asyncio.Event()
-    flow = Flow(manager).on_subscribe(lambda: started.set())
+    flow = Flow().on_subscribe(lambda: started.set())
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await manager.emit(0)
+        await flow.emit(0)
 
     async def single_get_values():
         assert await flow.single() == 0
@@ -39,11 +38,10 @@ async def test_flow_single():
 @pytest.mark.asyncio
 async def test_flow_single_with_replay():
     # GIVEN
-    manager: FlowManager[int] = FlowManager()
-    flow = Flow(manager)
+    flow = Flow()
 
     # WHEN
-    await manager.emit(0)
+    await flow.emit(0)
     result = await flow.single(replay=Flow.REPLAY_ALL)
 
     # THEN
@@ -53,15 +51,14 @@ async def test_flow_single_with_replay():
 @pytest.mark.asyncio
 async def test_flow_get_2_values_via_replay():
     # GIVEN
-    manager: FlowManager[int] = FlowManager()
     complete = asyncio.Event()
     started = asyncio.Event()
-    flow = Flow(manager)
+    flow = Flow()
 
     # WHEN
     async def emit_values():
-        await manager.emit(0)
-        await manager.emit(1)
+        await flow.emit(0)
+        await flow.emit(1)
         started.set()
 
     async def single_get_values():
@@ -82,15 +79,14 @@ async def test_flow_get_2_values_via_replay():
 @pytest.mark.asyncio
 async def test_flow_on_start_sync_action():
     # GIVEN
-    manager: FlowManager[int] = FlowManager()
     on_start = asyncio.Event()
     started = asyncio.Event()
-    flow = Flow(manager).on_subscribe(lambda: started.set())
+    flow = Flow().on_subscribe(lambda: started.set())
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await manager.emit(0)
+        await flow.emit(0)
 
     async with asyncio.TaskGroup() as tg:
         tg.create_task(emit_values())
@@ -105,15 +101,14 @@ async def test_flow_on_start_sync_action():
 @pytest.mark.asyncio
 async def test_flow_on_start_async_action():
     # GIVEN
-    manager: FlowManager[int] = FlowManager()
     on_start = asyncio.Event()
     started = asyncio.Event()
-    flow = Flow(manager).on_subscribe(lambda: started.set())
+    flow = Flow().on_subscribe(lambda: started.set())
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await manager.emit(0)
+        await flow.emit(0)
 
     async def set_event_on_start(value: int) -> None:
         on_start.set()
@@ -131,17 +126,16 @@ async def test_flow_on_start_async_action():
 @pytest.mark.asyncio
 async def test_flow_collect_until_async_collector():
     # GIVEN
-    manager: FlowManager[int] = FlowManager()
     started = asyncio.Event()
-    flow = Flow(manager).on_subscribe(lambda: started.set())
+    flow = Flow().on_subscribe(lambda: started.set())
     received: list[int] = []
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await manager.emit(0)
-        await manager.emit(1)
-        await manager.emit(2)
+        await flow.emit(0)
+        await flow.emit(1)
+        await flow.emit(2)
 
     async def collector(value: int) -> None:
         received.append(value)
@@ -161,17 +155,16 @@ async def test_flow_collect_until_async_collector():
 @pytest.mark.asyncio
 async def test_flow_collect_until_sync_collector():
     # GIVEN
-    manager: FlowManager[int] = FlowManager()
     started = asyncio.Event()
-    flow = Flow(manager).on_subscribe(lambda: started.set())
+    flow = Flow().on_subscribe(lambda: started.set())
     received: list[int] = []
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await manager.emit(0)
-        await manager.emit(1)
-        await manager.emit(2)
+        await flow.emit(0)
+        await flow.emit(1)
+        await flow.emit(2)
 
     def collector(value: int) -> None:
         received.append(value)
@@ -191,18 +184,17 @@ async def test_flow_collect_until_sync_collector():
 @pytest.mark.asyncio
 async def test_flow_collect_while_async_collector():
     # GIVEN
-    manager: FlowManager[int] = FlowManager()
     started = asyncio.Event()
-    flow = Flow(manager).on_subscribe(lambda: started.set())
+    flow = Flow().on_subscribe(lambda: started.set())
     received: list[int] = []
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await manager.emit(0)
-        await manager.emit(1)
-        await manager.emit(2)
-        await manager.emit(3)
+        await flow.emit(0)
+        await flow.emit(1)
+        await flow.emit(2)
+        await flow.emit(3)
 
     async def collector(value: int) -> bool:
         if value != 2:
@@ -224,18 +216,17 @@ async def test_flow_collect_while_async_collector():
 @pytest.mark.asyncio
 async def test_flow_collect_while_sync_collector():
     # GIVEN
-    manager: FlowManager[int] = FlowManager()
     started = asyncio.Event()
-    flow = Flow(manager).on_subscribe(lambda: started.set())
+    flow = Flow().on_subscribe(lambda: started.set())
     received: list[int] = []
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await manager.emit(0)
-        await manager.emit(1)
-        await manager.emit(2)
-        await manager.emit(3)
+        await flow.emit(0)
+        await flow.emit(1)
+        await flow.emit(2)
+        await flow.emit(3)
 
     def collector(value: int) -> bool:
         if value != 2:
@@ -257,15 +248,14 @@ async def test_flow_collect_while_sync_collector():
 @pytest.mark.asyncio
 async def test_flow_first():
     # GIVEN
-    manager: FlowManager[int] = FlowManager()
     started = asyncio.Event()
-    flow = Flow(manager).on_subscribe(lambda: started.set())
+    flow = Flow().on_subscribe(lambda: started.set())
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await manager.emit(0)
-        await manager.emit(1)
+        await flow.emit(0)
+        await flow.emit(1)
 
     async with asyncio.TaskGroup() as tg:
         tg.create_task(emit_values())
@@ -278,18 +268,17 @@ async def test_flow_first():
 @pytest.mark.asyncio
 async def test_flow_drop_2():
     # GIVEN
-    manager: FlowManager[int] = FlowManager()
     started = asyncio.Event()
-    flow = Flow(manager).on_subscribe(lambda: started.set())
+    flow = Flow().on_subscribe(lambda: started.set())
     collected: list[int] = []
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await manager.emit(0)
-        await manager.emit(1)
-        await manager.emit(2)
-        await manager.emit(3)
+        await flow.emit(0)
+        await flow.emit(1)
+        await flow.emit(2)
+        await flow.emit(3)
 
     async with asyncio.TaskGroup() as tg:
         tg.create_task(emit_values())
@@ -308,18 +297,17 @@ async def test_flow_drop_2():
 @pytest.mark.asyncio
 async def test_flow_take_2():
     # GIVEN
-    manager: FlowManager[int] = FlowManager()
     started = asyncio.Event()
-    flow = Flow(manager).on_subscribe(lambda: started.set())
+    flow = Flow().on_subscribe(lambda: started.set())
     collected: list[int] = []
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await manager.emit(0)
-        await manager.emit(1)
-        await manager.emit(2)
-        await manager.emit(3)
+        await flow.emit(0)
+        await flow.emit(1)
+        await flow.emit(2)
+        await flow.emit(3)
 
     async with asyncio.TaskGroup() as tg:
         tg.create_task(emit_values())
@@ -333,19 +321,18 @@ async def test_flow_take_2():
 @pytest.mark.asyncio
 async def test_simultaneous_collect_first():
     # GIVEN
-    manager: FlowManager[int] = FlowManager()
     started = asyncio.Event()
-    flow = Flow(manager).on_subscribe(lambda: started.set())
+    flow = Flow().on_subscribe(lambda: started.set())
     collected: list[int] = []
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await manager.emit(0)
-        await manager.emit(1)
-        await manager.emit(2)
-        await manager.emit(3)
-        await manager.emit(4)
+        await flow.emit(0)
+        await flow.emit(1)
+        await flow.emit(2)
+        await flow.emit(3)
+        await flow.emit(4)
 
     async with asyncio.TaskGroup() as tg:
         tg.create_task(emit_values())

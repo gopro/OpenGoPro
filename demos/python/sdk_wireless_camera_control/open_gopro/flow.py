@@ -5,7 +5,7 @@ from __future__ import annotations
 import asyncio
 import logging
 from copy import copy
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from inspect import iscoroutinefunction
 from typing import Any, Callable, Coroutine, Final, Generic, TypeAlias, TypeVar
 from uuid import UUID, uuid1
@@ -42,48 +42,93 @@ class Complete(FlowValue[T]):
     """A flow value from a read that indicates the read is complete either via success or error"""
 
 
-class FlowManager(Generic[T]):
-    """Flow manager to manage sending values from one data stream to one or more flows
+T_I = TypeVar("T_I")
+
+
+class Flow(Generic[T]):
+    """The asynchronous data flow
+
+    Attributes:
+        REPLAY_ALL (Final[int]): Special integer value to indicate all values should be replayed
 
     Args:
-        capacity (int): cache size. Defaults to 1000.
-        debug_id (str): Identifier for debug logging. Defaults to "".
+        debug_id (str | None): Identifier to log for debugging. Defaults to None (will use generated UUID).
     """
 
-    def __init__(self, capacity: int = 1000, debug_id: str = "") -> None:
-        self._debug_id = debug_id
+    REPLAY_ALL: Final[int] = -1
+    FLOW_IDX = 0
+
+    @dataclass
+    class SharedData(Generic[T_I]):
+        current: T_I | None = None
+        cache: list[T_I] = field(default_factory=list)
+        q_dict: dict[UUID, asyncio.Queue[T_I]] = field(default_factory=dict)
+
+        def __post_init__(self) -> None:
+            self._condition = asyncio.Condition()
+
+        async def __aenter__(self):
+            print("acquired condition")
+            await self._condition.acquire()
+            return self
+
+        async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
+            print("released condition")
+            self._condition.release()
+
+    def __init__(self, capacity: int = 1000, debug_id: str | None = None) -> None:
+        self._lock = asyncio.Condition()
+        self._count = 0
         self._capacity = capacity
-        # TODO do these need concurrency protection? yes.
-        self._cache: list[T] = []
-        self._q_dict: dict[UUID, asyncio.Queue[T]] = {}
-        self._current: T | None = None
+        self._debug_id = debug_id or str(Flow.FLOW_IDX)
+        Flow.FLOW_IDX += 1
+        self._on_start_actions: list[SyncAction[T] | AsyncAction[T]] = []
+        self._on_subscribe_actions: list[Callable[[], None] | Callable[[], Coroutine[Any, Any, None]]] = []
+        self._per_value_actions: list[SyncAction[T] | AsyncAction[T]] = []
+        self._take_count: int | None = None
+        self._drop_count: int = 0
+        # TODO these need concurrency protection.
+        self._shared_data = Flow.SharedData[T]()
         # TODO handle cleanup
 
-    def add_flow(self, uuid: UUID, replay: int) -> None:
+    def __copy__(self) -> Flow:
+        flow = Flow(capacity=self._capacity, debug_id=self._debug_id)
+        # TODO do we actually want to copy all of these?
+        flow._on_start_actions = self._on_start_actions
+        flow._on_subscribe_actions = self._on_subscribe_actions
+        flow._per_value_actions = self._per_value_actions
+        flow._take_count = self._take_count
+        flow._drop_count = self._drop_count
+        flow._shared_data = self._shared_data
+        return flow
+
+    async def _add_collector(self, uuid: UUID, replay: int) -> None:
         """Add a flow to receive collected values
 
         Args:
             uuid (UUID): flow identifier
             replay (int): how many values to replay from cache
         """
-        if uuid not in self._q_dict:
-            self._q_dict[uuid] = asyncio.Queue()
-            if replay == Flow.REPLAY_ALL:
-                replay = len(self._cache)
-            head = max(len(self._cache) - replay, 0)
-            for value in self._cache[head:]:
-                self._q_dict[uuid].put_nowait(value)
+        async with self._shared_data:
+            if uuid not in self._shared_data.q_dict:
+                self._shared_data.q_dict[uuid] = asyncio.Queue()
+                if replay == Flow.REPLAY_ALL:
+                    replay = len(self._shared_data.cache)
+                head = max(len(self._shared_data.cache) - replay, 0)
+                for value in self._shared_data.cache[head:]:
+                    self._shared_data.q_dict[uuid].put_nowait(value)
 
-    def remove_flow(self, uuid: UUID) -> None:
+    async def _remove_collector(self, uuid: UUID) -> None:
         """Remove a flow from receiving collected values
 
         Args:
             uuid (UUID): flow identifier
         """
-        if uuid in self._q_dict:
-            del self._q_dict[uuid]
+        async with self._shared_data:
+            if uuid in self._shared_data.q_dict:
+                del self._shared_data.q_dict[uuid]
 
-    async def get_value(self, uuid: UUID) -> T:
+    async def _get_value(self, uuid: UUID) -> T:
         """Get the next value per-flow
 
         Args:
@@ -95,12 +140,14 @@ class FlowManager(Generic[T]):
         Returns:
             T: Received value
         """
-        if uuid not in self._q_dict:
-            logger.error("Attempted to get value from a non-registered flow.")
-            raise RuntimeError("Flow has not been added!")
-            # TODO exception is not propagating
-        value = await self._q_dict[uuid].get()
-        return value
+        async with self._shared_data:
+            if uuid not in self._shared_data.q_dict:
+                logger.error("Attempted to get value from a non-registered flow.")
+                raise RuntimeError("Flow has not been added!")
+            q = self._shared_data.q_dict[uuid]
+        # Note! This can't be called inside shared data context as it will cause a deadlock. We've already retrieved
+        # the q here which is itself coroutine-safe so just await it.
+        return await q.get()
 
     async def emit(self, value: T) -> None:
         """Receive a value and queue it for per-flow retrieval
@@ -108,51 +155,14 @@ class FlowManager(Generic[T]):
         Args:
             value (T): Value to queue
         """
-        self._current = value
-        self._cache.append(value)
-        if len(self._cache) > self._capacity:
-            self._cache.pop(0)
-        for uuid, q in self._q_dict.items():
-            logger.trace(f"Flow manager {self._debug_id} emitting {value} to flow {uuid}")  # type: ignore
-            await q.put(value)
-
-
-# https://gist.github.com/jspahrsummers/32a8096667cf9f17d5e8fddeb081b202
-
-
-class Flow(Generic[T]):
-    """The asynchronous data flow
-
-    Attributes:
-        REPLAY_ALL (Final[int]): Special integer value to indicate all values should be replayed
-
-    Args:
-        manager (FlowManager[T]): manager to send data to the flow
-        debug_id (str | None): Identifier to log for debugging. Defaults to None (will use generated UUID).
-    """
-
-    REPLAY_ALL: Final[int] = -1
-
-    def __copy__(self) -> Flow:
-        flow = Flow(manager=self._manager, debug_id=self._debug_id)
-        # TODO do we actually want to copy all of these?
-        flow._on_start_actions = self._on_start_actions
-        flow._on_subscribe_actions = self._on_subscribe_actions
-        flow._per_value_actions = self._per_value_actions
-        flow._take_count = self._take_count
-        flow._drop_count = self._drop_count
-        return flow
-
-    def __init__(self, manager: FlowManager[T], debug_id: str | None = None) -> None:
-        self._count = 0
-        self._debug_id = debug_id or ""
-        self._manager = manager
-        self._on_start_actions: list[SyncAction[T] | AsyncAction[T]] = []
-        self._on_subscribe_actions: list[Callable[[], None] | Callable[[], Coroutine[Any, Any, None]]] = []
-        self._per_value_actions: list[SyncAction[T] | AsyncAction[T]] = []
-        self._take_count: int | None = None
-        self._drop_count: int = 0
-        # TODO handle cleanup
+        async with self._shared_data:
+            self._shared_data.current = value
+            self._shared_data.cache.append(value)
+            if len(self._shared_data.cache) > self._capacity:
+                self._shared_data.cache.pop(0)
+            for uuid, q in self._shared_data.q_dict.items():
+                logger.trace(f"Flow manager {self._debug_id} emitting {value} to flow {uuid}")  # type: ignore
+                await q.put(value)
 
     def _mux_action(
         self,
@@ -207,7 +217,7 @@ class Flow(Generic[T]):
         Returns:
             T | None: Most recently collected value, or None if no values were collected yet
         """
-        return self._manager._current
+        return self._shared_data.current
 
     ####################################################################################################################
     ##### Flow Manipulators
@@ -240,7 +250,7 @@ class Flow(Generic[T]):
         flow._take_count = flow._count + num
         return flow
 
-    # TODO should this be moved to add_flow in the manager?
+    # TODO should this be moved to _add_collector in the manager?
     def on_subscribe(
         self: C,
         action: Callable[[], None] | Callable[[], Coroutine[Any, Any, None]],
@@ -286,15 +296,15 @@ class Flow(Generic[T]):
             T: first value matching filter
         """
         uuid = uuid1()
-        self._manager.add_flow(uuid, replay)
+        await self._add_collector(uuid, replay)
         while True:
             match await self._get_next(uuid):
                 case Continue(value):
                     if filter(value):
-                        self._manager.remove_flow(uuid)
+                        await self._remove_collector(uuid)
                         return value
                 case Complete(value):
-                    self._manager.remove_flow(uuid)
+                    await self._remove_collector(uuid)
                     return value
 
     async def single(self, replay: int = 1) -> T:
@@ -307,10 +317,10 @@ class Flow(Generic[T]):
             T: First received value
         """
         uuid = uuid1()
-        self._manager.add_flow(uuid, replay)
+        await self._add_collector(uuid, replay)
         flow_value = await self._get_next(uuid)
         assert flow_value is not None
-        self._manager.remove_flow(uuid)
+        await self._remove_collector(uuid)
         return flow_value.value
 
     async def collect(
@@ -334,7 +344,7 @@ class Flow(Generic[T]):
             T: last received value
         """
         uuid = uuid1()
-        self._manager.add_flow(uuid, replay)
+        await self._add_collector(uuid, replay)
         return_value: T | None = None
         async with asyncio.TaskGroup() as tg:
             while True:
@@ -345,9 +355,10 @@ class Flow(Generic[T]):
                             self._mux_action(action, value, tg)
                     case Complete(value):
                         break
-        self._manager.remove_flow(uuid)
-        if return_value is not None:
-            return return_value
+        await self._remove_collector(uuid)
+        if return_value is None:
+            raise RuntimeError("Failed to collect any values")
+        return return_value
 
     async def collect_until(
         self,
@@ -372,7 +383,7 @@ class Flow(Generic[T]):
             T: Last value that was received when the filter matched
         """
         uuid = uuid1()
-        self._manager.add_flow(uuid, replay)
+        await self._add_collector(uuid, replay)
         return_value: T | None = None
         async with asyncio.TaskGroup() as tg:
             if self.current and filter(self.current):
@@ -389,7 +400,7 @@ class Flow(Generic[T]):
                         case Complete(value):
                             return_value = value
                             break
-        self._manager.remove_flow(uuid)
+        await self._remove_collector(uuid)
         if return_value is not None:
             return return_value
         raise RuntimeError("Failed to collect any values")
@@ -415,9 +426,9 @@ class Flow(Generic[T]):
             T: Last value that was received while the filter matched.
         """
         uuid = uuid1()
-        self._manager.add_flow(uuid, replay)
+        await self._add_collector(uuid, replay)
         if self.current and not self._mux_filter_blocking(action, self.current):
-            self._manager.remove_flow(uuid)
+            await self._remove_collector(uuid)
             return self.current
         while True:
             return_value: T | None = None
@@ -425,11 +436,11 @@ class Flow(Generic[T]):
                 case Continue(value):
                     return_value = value
                     if not await self._mux_filter_blocking(action, value):
-                        self._manager.remove_flow(uuid)
+                        await self._remove_collector(uuid)
                         assert return_value is not None
                         return return_value
                 case Complete(value):
-                    self._manager.remove_flow(uuid)
+                    await self._remove_collector(uuid)
                     if return_value is None:
                         raise RuntimeError("Failed to collect any values")
                     return return_value
@@ -457,9 +468,9 @@ class Flow(Generic[T]):
             return Complete(self.current)
         if self._drop_count:
             for _ in range(self._drop_count):
-                await self._manager.get_value(uuid)
+                await self._get_value(uuid)
             self._drop_count = 0
-        value = await self._manager.get_value(uuid)
+        value = await self._get_value(uuid)
         for action in self._per_value_actions:  # type: ignore
             action(value)  # type: ignore
         self._count += 1
