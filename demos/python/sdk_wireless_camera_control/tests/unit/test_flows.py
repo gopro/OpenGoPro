@@ -391,6 +391,64 @@ async def test_flow_filter_then_take():
 
 
 @pytest.mark.asyncio
+async def test_flow_map_then_filter():
+    # GIVEN
+    started = asyncio.Event()
+    flow = Flow().on_subscribe(lambda: started.set())
+    collected: list[str] = []
+
+    # WHEN
+    async def emit_values():
+        await started.wait()
+        await flow.emit(0)
+        await flow.emit(1)
+        await flow.emit(2)
+        await flow.emit(3)
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        collector = tg.create_task(
+            flow.take(4)
+            .map(mapper=lambda x: x + 2)
+            .filter(filter=lambda x: x % 2 == 0)
+            .collect(action=lambda x: collected.append(x))
+        )
+
+    # THEN
+    assert collected == [2, 4]
+    assert collector.result() == 4
+
+
+@pytest.mark.asyncio
+async def test_flow_filter_then_map():
+    # GIVEN
+    started = asyncio.Event()
+    flow = Flow().on_subscribe(lambda: started.set())
+    collected: list[str] = []
+
+    # WHEN
+    async def emit_values():
+        await started.wait()
+        await flow.emit(0)
+        await flow.emit(1)
+        await flow.emit(2)
+        await flow.emit(3)
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        collector = tg.create_task(
+            flow.take(4)
+            .filter(filter=lambda x: x >= 2)
+            .map(mapper=lambda x: x + 2)
+            .collect(action=lambda x: collected.append(x))
+        )
+
+    # THEN
+    assert collected == [4, 5]
+    assert collector.result() == 5
+
+
+@pytest.mark.asyncio
 async def test_simultaneous_collect_first():
     # GIVEN
     started = asyncio.Event()
