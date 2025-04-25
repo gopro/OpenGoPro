@@ -10,6 +10,7 @@ from inspect import iscoroutinefunction
 from typing import Any, Callable, Coroutine, Final, Generic, TypeAlias, TypeVar
 from uuid import UUID, uuid1
 
+O = TypeVar("O")
 T = TypeVar("T")
 C = TypeVar("C", bound="Flow")
 
@@ -18,7 +19,6 @@ SyncAction: TypeAlias = Callable[[T], None]
 AsyncAction: TypeAlias = Callable[[T], Coroutine[Any, Any, None]]
 SyncFilter: TypeAlias = Callable[[T], bool]
 AsyncFilter: TypeAlias = Callable[[T], Coroutine[Any, Any, bool]]
-
 
 # pylint: disable=redefined-builtin
 
@@ -68,15 +68,13 @@ class Flow(Generic[T]):
             self._condition = asyncio.Condition()
 
         async def __aenter__(self):
-            print("acquired condition")
             await self._condition.acquire()
             return self
 
         async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
-            print("released condition")
             self._condition.release()
 
-    def __init__(self, capacity: int = 1000, debug_id: str | None = None) -> None:
+    def __init__(self, capacity: int = 100, debug_id: str | None = None) -> None:
         self._lock = asyncio.Condition()
         self._count = 0
         self._capacity = capacity
@@ -87,8 +85,9 @@ class Flow(Generic[T]):
         self._per_value_actions: list[SyncAction[T] | AsyncAction[T]] = []
         self._take_count: int | None = None
         self._drop_count: int = 0
-        # TODO these need concurrency protection.
         self._shared_data = Flow.SharedData[T]()
+        self._mappers: list[Callable[[Any], T]] = []
+        self._filters: list[SyncFilter] = []
         # TODO handle cleanup
 
     def __copy__(self) -> Flow:
@@ -97,6 +96,8 @@ class Flow(Generic[T]):
         flow._on_start_actions = self._on_start_actions
         flow._on_subscribe_actions = self._on_subscribe_actions
         flow._per_value_actions = self._per_value_actions
+        flow._mappers = self._mappers
+        flow._filters = self._filters
         flow._take_count = self._take_count
         flow._drop_count = self._drop_count
         flow._shared_data = self._shared_data
@@ -127,27 +128,6 @@ class Flow(Generic[T]):
         async with self._shared_data:
             if uuid in self._shared_data.q_dict:
                 del self._shared_data.q_dict[uuid]
-
-    async def _get_value(self, uuid: UUID) -> T:
-        """Get the next value per-flow
-
-        Args:
-            uuid (UUID):: flow identifier to access value for
-
-        Raises:
-            RuntimeError: Flow has not yet been added
-
-        Returns:
-            T: Received value
-        """
-        async with self._shared_data:
-            if uuid not in self._shared_data.q_dict:
-                logger.error("Attempted to get value from a non-registered flow.")
-                raise RuntimeError("Flow has not been added!")
-            q = self._shared_data.q_dict[uuid]
-        # Note! This can't be called inside shared data context as it will cause a deadlock. We've already retrieved
-        # the q here which is itself coroutine-safe so just await it.
-        return await q.get()
 
     async def emit(self, value: T) -> None:
         """Receive a value and queue it for per-flow retrieval
@@ -250,7 +230,18 @@ class Flow(Generic[T]):
         flow._take_count = flow._count + num
         return flow
 
-    # TODO should this be moved to _add_collector in the manager?
+    # TODO we lost C. Is this going to work with subclasses? Maybe we need an interface / protocol
+    def map(self, mapper: Callable[[T], O]) -> Flow[O]:
+        flow = copy(self)
+        flow._mappers.append(mapper)  # type: ignore
+        return flow  # type: ignore
+
+    def filter(self: C, filter: SyncFilter) -> C:
+        flow = copy(self)
+        flow._filters.append(filter)
+        return flow
+
+    # TODO should this be done per collector?
     def on_subscribe(
         self: C,
         action: Callable[[], None] | Callable[[], Coroutine[Any, Any, None]],
@@ -266,6 +257,7 @@ class Flow(Generic[T]):
         self._on_subscribe_actions.append(action)
         return self
 
+    # TODO should this be done per collector?
     def on_start(self: C, action: SyncAction[T] | AsyncAction[T]) -> C:
         """Register a callback action to be called when the flow starts collecting
 
@@ -445,6 +437,9 @@ class Flow(Generic[T]):
                         raise RuntimeError("Failed to collect any values")
                     return return_value
 
+    # TODO we have no way of ordering manipulators. I.e. a take always comes before a filter. We need a pipeline
+
+    # TODO should we be using an async generator?
     async def _get_next(self, uuid: UUID) -> FlowValue[T]:
         """Get the next flow value from the manager
 
@@ -457,24 +452,56 @@ class Flow(Generic[T]):
         Returns:
             FlowValue[T]: Latest flow value
         """
-        if self._count == 0:
-            for action in self._on_subscribe_actions:
-                if iscoroutinefunction(action):
-                    await action()
-                action()
-        if self._take_count and self._count == self._take_count:
-            if self.current is None:
-                raise RuntimeError("Failed to collect any values")
-            return Complete(self.current)
-        if self._drop_count:
-            for _ in range(self._drop_count):
-                await self._get_value(uuid)
-            self._drop_count = 0
-        value = await self._get_value(uuid)
-        for action in self._per_value_actions:  # type: ignore
-            action(value)  # type: ignore
-        self._count += 1
-        if self._count == 1:
-            for action in self._on_start_actions:  # type: ignore
-                self._mux_action(action, value)  # type: ignore
-        return Continue(value)
+        while True:
+            # If we've reached our take limit, return (or raise if no value)
+            # We do this first so that the previous iteration returns a valid value
+            if self._take_count and self._count == self._take_count:
+                if self.current is None:
+                    raise RuntimeError("Failed to collect any values")
+                return Complete(self.current)
+
+            # If this is the first time entering, notify all on-subscribe listeners
+            if self._count == 0:
+                for action in self._on_subscribe_actions:
+                    if iscoroutinefunction(action):
+                        await action()
+                    action()
+
+            # Acquire the condition and read the per-collector value
+            async with self._shared_data:
+                if uuid not in self._shared_data.q_dict:
+                    logger.error("Attempted to get value from a non-registered flow.")
+                    raise RuntimeError("Flow has not been added!")
+                q = self._shared_data.q_dict[uuid]
+            # Note! This can't be called inside shared data context as it will cause a deadlock. We've already retrieved
+            # the q here which is itself coroutine-safe so just await it.
+            value = await q.get()
+            self._count += 1
+
+            # Find a non-dropped, non-filtered value.
+            # First map it...
+            for mapper in self._mappers:
+                value = mapper(value)
+            # See if its filtered
+            should_continue = False
+            for filter in self._filters:
+                if not (filter(value)):
+                    should_continue = True
+                    break
+            # It was filtered so advance the top level while loop
+            if should_continue:
+                continue
+            # It wasn't filtered. See if we're dropping values.
+            if self._drop_count > 0:
+                self._drop_count -= 1
+                continue
+            # At this point, the value will be returned
+            # If this is the first value, notify on start listeners
+            if self._count == 1:
+                for action in self._on_start_actions:
+                    self._mux_action(action, value)
+            # Notify per-value actions
+            for action in self._per_value_actions:
+                action(value)
+            # We've made it! Return the continuing value
+            return Continue(value)

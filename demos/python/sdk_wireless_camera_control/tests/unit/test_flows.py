@@ -319,6 +319,78 @@ async def test_flow_take_2():
 
 
 @pytest.mark.asyncio
+async def test_flow_map():
+    # GIVEN
+    started = asyncio.Event()
+    flow = Flow().on_subscribe(lambda: started.set())
+    collected: list[str] = []
+
+    # WHEN
+    async def emit_values():
+        await started.wait()
+        await flow.emit(0)
+        await flow.emit(1)
+        await flow.emit(2)
+        await flow.emit(3)
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        collector = tg.create_task(flow.take(2).map(lambda x: str(x)).collect(lambda x: collected.append(x)))
+
+    # THEN
+    assert collected == ["0", "1"]
+    assert collector.result() == "1"
+
+
+@pytest.mark.asyncio
+async def test_flow_filter():
+    # GIVEN
+    started = asyncio.Event()
+    flow = Flow().on_subscribe(lambda: started.set())
+    collected: list[str] = []
+
+    # WHEN
+    async def emit_values():
+        await started.wait()
+        await flow.emit(0)
+        await flow.emit(1)
+        await flow.emit(2)
+        await flow.emit(3)
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        collector = tg.create_task(flow.take(4).filter(lambda x: x % 2 == 0).collect(lambda x: collected.append(x)))
+
+    # THEN
+    assert collected == [0, 2]
+    assert collector.result() == 2
+
+
+@pytest.mark.asyncio
+async def test_flow_filter_then_take():
+    # GIVEN
+    started = asyncio.Event()
+    flow = Flow().on_subscribe(lambda: started.set())
+    collected: list[str] = []
+
+    # WHEN
+    async def emit_values():
+        await started.wait()
+        await flow.emit(0)
+        await flow.emit(1)
+        await flow.emit(2)
+        await flow.emit(3)
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        collector = tg.create_task(flow.filter(lambda x: x % 2 == 0).take(2).collect(lambda x: collected.append(x)))
+
+    # THEN
+    assert collected == [0, 2]
+    assert collector.result() == 2
+
+
+@pytest.mark.asyncio
 async def test_simultaneous_collect_first():
     # GIVEN
     started = asyncio.Event()
