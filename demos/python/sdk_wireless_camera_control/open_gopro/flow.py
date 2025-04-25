@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+from copy import copy
 from dataclasses import dataclass
 from inspect import iscoroutinefunction
 from typing import Any, Callable, Coroutine, Final, Generic, TypeAlias, TypeVar
@@ -132,6 +133,16 @@ class Flow(Generic[T]):
 
     REPLAY_ALL: Final[int] = -1
 
+    def __copy__(self) -> Flow:
+        flow = Flow(manager=self._manager, debug_id=self._debug_id)
+        # TODO do we actually want to copy all of these?
+        flow._on_start_actions = self._on_start_actions
+        flow._on_subscribe_actions = self._on_subscribe_actions
+        flow._per_value_actions = self._per_value_actions
+        flow._take_count = self._take_count
+        flow._drop_count = self._drop_count
+        return flow
+
     def __init__(self, manager: FlowManager[T], debug_id: str | None = None) -> None:
         self._count = 0
         self._debug_id = debug_id or ""
@@ -142,8 +153,6 @@ class Flow(Generic[T]):
         self._take_count: int | None = None
         self._drop_count: int = 0
         # TODO handle cleanup
-        # TODO there is certainly a better way to do this using the unimplemented dunders below
-        self._should_close = False
 
     def _mux_action(
         self,
@@ -200,6 +209,10 @@ class Flow(Generic[T]):
         """
         return self._manager._current
 
+    ####################################################################################################################
+    ##### Flow Manipulators
+    ####################################################################################################################
+
     # TODO we need to add a pipeline for this to be used at the same time as take
     def drop(self: C, num: int) -> C:
         """Collect the first num values and ignore them
@@ -210,8 +223,9 @@ class Flow(Generic[T]):
         Returns:
             C: modified flow
         """
-        self._drop_count = num
-        return self
+        flow = copy(self)
+        flow._drop_count = num
+        return flow
 
     def take(self: C, num: int) -> C:
         """Configure the flow collection to stop after receiving a certain amount of values
@@ -222,8 +236,9 @@ class Flow(Generic[T]):
         Returns:
             C: modified flow
         """
-        self._take_count = self._count + num
-        return self
+        flow = copy(self)
+        flow._take_count = flow._count + num
+        return flow
 
     # TODO should this be moved to add_flow in the manager?
     def on_subscribe(
@@ -253,6 +268,10 @@ class Flow(Generic[T]):
         self._on_start_actions.append(action)
         return self
 
+    ####################################################################################################################
+    ##### Terminal Operators
+    ############
+
     async def first(self, filter: SyncFilter, replay: int = 1) -> T:
         """Terminal receiver to collect only the first received value that matches a given filter
 
@@ -268,7 +287,7 @@ class Flow(Generic[T]):
         """
         uuid = uuid1()
         self._manager.add_flow(uuid, replay)
-        while not self._should_close:
+        while True:
             match await self._get_next(uuid):
                 case Continue(value):
                     if filter(value):
@@ -277,7 +296,6 @@ class Flow(Generic[T]):
                 case Complete(value):
                     self._manager.remove_flow(uuid)
                     return value
-        raise NotImplementedError
 
     async def single(self, replay: int = 1) -> T:
         """Terminal receiver to collect the first received value.
@@ -319,8 +337,7 @@ class Flow(Generic[T]):
         self._manager.add_flow(uuid, replay)
         return_value: T | None = None
         async with asyncio.TaskGroup() as tg:
-            # TODO do we want / need should_close. It's not currently being handled
-            while not self._should_close:
+            while True:
                 match await self._get_next(uuid):
                     case Continue(value):
                         return_value = value
@@ -331,7 +348,6 @@ class Flow(Generic[T]):
         self._manager.remove_flow(uuid)
         if return_value is not None:
             return return_value
-        raise RuntimeError("Failed to collect any values")
 
     async def collect_until(
         self,
@@ -362,7 +378,7 @@ class Flow(Generic[T]):
             if self.current and filter(self.current):
                 return_value = self.current
             else:
-                while not self._should_close:
+                while True:
                     match await self._get_next(uuid):
                         case Continue(value):
                             return_value = value
@@ -403,7 +419,7 @@ class Flow(Generic[T]):
         if self.current and not self._mux_filter_blocking(action, self.current):
             self._manager.remove_flow(uuid)
             return self.current
-        while not self._should_close:
+        while True:
             return_value: T | None = None
             match await self._get_next(uuid):
                 case Continue(value):
@@ -417,10 +433,6 @@ class Flow(Generic[T]):
                     if return_value is None:
                         raise RuntimeError("Failed to collect any values")
                     return return_value
-        self._manager.remove_flow(uuid)
-        if self.current:
-            return self.current
-        raise RuntimeError("Failed to collect any values")
 
     async def _get_next(self, uuid: UUID) -> FlowValue[T]:
         """Get the next flow value from the manager

@@ -254,22 +254,6 @@ async def test_flow_collect_while_sync_collector():
     assert collect.result() == 2
 
 
-# TODO figure out how / if we want to handle replay
-# @pytest.mark.asyncio
-# async def test_flow_replays_current_value_for_new_subscriber():
-#     # GIVEN
-#     manager: FlowManager[int] = FlowManager()
-
-#     # WHEN
-#     await manager.emit(0)
-#     await manager.emit(1)
-#     flow = Flow(manager)
-
-#     # THEN
-#     assert await anext(flow) == 1
-#     assert flow.current == 1
-
-
 @pytest.mark.asyncio
 async def test_flow_first():
     # GIVEN
