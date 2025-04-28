@@ -1,18 +1,5 @@
 $dokka.format:html-v1
 $dokka.linkExtension:html
-$dokka.location:com.gopro.open_gopro.domain.communicator.bleCommunicator////PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.domain.communicator.bleCommunicator/index.html
-$dokka.location:com.gopro.open_gopro.domain.communicator.bleCommunicator//logger/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.domain.communicator.bleCommunicator/logger.html
-$dokka.location:com.gopro.open_gopro.entity.queries////PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.entity.queries/index.html
-$dokka.location:com.gopro.open_gopro.entity.queries/ComplexQueryEntity.ScheduledCapture.Companion///PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.entity.queries/-complex-query-entity/-scheduled-capture/-companion/index.html
-$dokka.location:com.gopro.open_gopro.entity.queries/ComplexQueryEntity.ScheduledCapture.Companion/fromUByteArray/#kotlin.UByteArray/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.entity.queries/-complex-query-entity/-scheduled-capture/-companion/from-u-byte-array.html
-$dokka.location:com.gopro.open_gopro.entity.queries/ComplexQueryEntity.ScheduledCapture.Companion/toUByteArray/#com.gopro.open_gopro.entity.queries.ComplexQueryEntity.ScheduledCapture/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.entity.queries/-complex-query-entity/-scheduled-capture/-companion/to-u-byte-array.html
-$dokka.location:com.gopro.open_gopro.entity.queries/ComplexQueryEntity.ScheduledCapture///PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.entity.queries/-complex-query-entity/-scheduled-capture/index.html
-$dokka.location:com.gopro.open_gopro.entity.queries/ComplexQueryEntity.ScheduledCapture/ScheduledCapture/#kotlin.Int#kotlin.Int#kotlin.Boolean#kotlin.Boolean/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.entity.queries/-complex-query-entity/-scheduled-capture/-scheduled-capture.html
-$dokka.location:com.gopro.open_gopro.entity.queries/ComplexQueryEntity.ScheduledCapture/hour/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.entity.queries/-complex-query-entity/-scheduled-capture/hour.html
-$dokka.location:com.gopro.open_gopro.entity.queries/ComplexQueryEntity.ScheduledCapture/is24hour/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.entity.queries/-complex-query-entity/-scheduled-capture/is24hour.html
-$dokka.location:com.gopro.open_gopro.entity.queries/ComplexQueryEntity.ScheduledCapture/isEnabled/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.entity.queries/-complex-query-entity/-scheduled-capture/is-enabled.html
-$dokka.location:com.gopro.open_gopro.entity.queries/ComplexQueryEntity.ScheduledCapture/minute/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.entity.queries/-complex-query-entity/-scheduled-capture/minute.html
-$dokka.location:com.gopro.open_gopro.entity.queries/ComplexQueryEntity///PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.entity.queries/-complex-query-entity/index.html
 $dokka.location:com.gopro.open_gopro.gopro////PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/index.html
 $dokka.location:com.gopro.open_gopro.gopro/AccessPointFeature///PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-access-point-feature/index.html
 $dokka.location:com.gopro.open_gopro.gopro/AccessPointFeature/connectAccessPoint/#kotlin.String#kotlin.String/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-access-point-feature/connect-access-point.html
@@ -359,6 +346,16 @@ $dokka.location:com.gopro.open_gopro.operations/CohnStatus/ssid/#/PointingToDecl
 $dokka.location:com.gopro.open_gopro.operations/CohnStatus/state/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.operations/-cohn-status/state.html
 $dokka.location:com.gopro.open_gopro.operations/CohnStatus/status/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.operations/-cohn-status/status.html
 $dokka.location:com.gopro.open_gopro.operations/CohnStatus/username/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.operations/-cohn-status/username.html
+$dokka.location:com.gopro.open_gopro.operations/ComplexQueryEntity.ScheduledCapture.Companion///PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.operations/-complex-query-entity/-scheduled-capture/-companion/index.html
+$dokka.location:com.gopro.open_gopro.operations/ComplexQueryEntity.ScheduledCapture.Companion/fromUByteArray/#kotlin.UByteArray/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.operations/-complex-query-entity/-scheduled-capture/-companion/from-u-byte-array.html
+$dokka.location:com.gopro.open_gopro.operations/ComplexQueryEntity.ScheduledCapture.Companion/toUByteArray/#com.gopro.open_gopro.operations.ComplexQueryEntity.ScheduledCapture/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.operations/-complex-query-entity/-scheduled-capture/-companion/to-u-byte-array.html
+$dokka.location:com.gopro.open_gopro.operations/ComplexQueryEntity.ScheduledCapture///PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.operations/-complex-query-entity/-scheduled-capture/index.html
+$dokka.location:com.gopro.open_gopro.operations/ComplexQueryEntity.ScheduledCapture/ScheduledCapture/#kotlin.Int#kotlin.Int#kotlin.Boolean#kotlin.Boolean/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.operations/-complex-query-entity/-scheduled-capture/-scheduled-capture.html
+$dokka.location:com.gopro.open_gopro.operations/ComplexQueryEntity.ScheduledCapture/hour/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.operations/-complex-query-entity/-scheduled-capture/hour.html
+$dokka.location:com.gopro.open_gopro.operations/ComplexQueryEntity.ScheduledCapture/is24hour/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.operations/-complex-query-entity/-scheduled-capture/is24hour.html
+$dokka.location:com.gopro.open_gopro.operations/ComplexQueryEntity.ScheduledCapture/isEnabled/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.operations/-complex-query-entity/-scheduled-capture/is-enabled.html
+$dokka.location:com.gopro.open_gopro.operations/ComplexQueryEntity.ScheduledCapture/minute/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.operations/-complex-query-entity/-scheduled-capture/minute.html
+$dokka.location:com.gopro.open_gopro.operations/ComplexQueryEntity///PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.operations/-complex-query-entity/index.html
 $dokka.location:com.gopro.open_gopro.operations/ControlMode.Companion///PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.operations/-control-mode/-companion/index.html
 $dokka.location:com.gopro.open_gopro.operations/ControlMode.Companion/fromUByteArray/#kotlin.UByteArray/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.operations/-control-mode/-companion/from-u-byte-array.html
 $dokka.location:com.gopro.open_gopro.operations/ControlMode.Companion/toUByteArray/#com.gopro.open_gopro.operations.ControlMode/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.operations/-control-mode/-companion/to-u-byte-array.html
@@ -1797,7 +1794,5 @@ $dokka.location:com.gopro.open_gopro/ScanResult///PointingToDeclaration/-open -
 $dokka.location:com.gopro.open_gopro/ScanResult/id/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro/-scan-result/id.html
 $dokka.location:com.gopro.open_gopro/ScanResult/networkType/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro/-scan-result/network-type.html
 com.gopro.open_gopro
-com.gopro.open_gopro.domain.communicator.bleCommunicator
-com.gopro.open_gopro.entity.queries
 com.gopro.open_gopro.gopro
 com.gopro.open_gopro.operations
