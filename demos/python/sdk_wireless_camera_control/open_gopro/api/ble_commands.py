@@ -659,6 +659,10 @@ class BleCommands(BleMessages[BleMessage]):
         Returns:
             GoProResp[proto.ResponseConnectNew]: Command status of request
         """
+        # Hard code bypass_eula_check to True.
+        # On cameras where it is supported, the connection should succeed regardless of whether or not there is internet access.
+        # On cameras where it is not supported, it should be ignored.
+        return {"bypass_eula_check": True}  # type: ignore
 
     @ble_proto_command(
         uuid=GoProUUID.CQ_COMMAND,

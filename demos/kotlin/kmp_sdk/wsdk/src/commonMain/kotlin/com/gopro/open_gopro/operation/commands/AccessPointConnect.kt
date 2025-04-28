@@ -79,7 +79,11 @@ internal class ConnectNewAccessPoint(val ssid: String, val password: String) :
         .executeProtobufCommand(
             FeatureId.NETWORK_MANAGEMENT,
             ActionId.REQUEST_WIFI_CONNECT_NEW,
-            RequestConnectNew(ssid = ssid, password = password).encodeToByteArray(),
+            // Hard code bypass_eula_check to True.
+            // On cameras where it is supported, the connection should succeed regardless of whether \
+            // or not there is internet access.
+            // On cameras where it is not supported, it should be ignore
+            RequestConnectNew(ssid = ssid, password = password, bypassEulaCheck = true).encodeToByteArray(),
             ResponseId.Protobuf(
                 FeatureId.NETWORK_MANAGEMENT, ActionId.REQUEST_WIFI_CONNECT_NEW_RSP),
             GpUuid.CM_NET_MGMT_COMM)
