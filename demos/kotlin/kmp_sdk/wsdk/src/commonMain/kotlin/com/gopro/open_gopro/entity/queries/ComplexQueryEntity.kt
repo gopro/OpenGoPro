@@ -8,7 +8,7 @@ import com.gopro.open_gopro.util.extensions.toBoolean
 import com.gopro.open_gopro.util.extensions.toInt
 import com.gopro.open_gopro.util.extensions.toUByte
 
-object ComplexQueryEntity {
+internal object ComplexQueryEntity {
   data class ScheduledCapture(
       val hour: Int,
       val minute: Int,
