@@ -8,6 +8,7 @@ internal enum class CommandId(val value: UByte) {
   SLEEP(0x05U),
   SET_LOCAL_DATE_TIME(0x0DU),
   GET_LOCAL_DATE_TIME(0x0EU),
+  REBOOT(0x11U),
   SET_DATE_TIME(0x0FU),
   GET_DATE_TIME(0x10U),
   SET_AP_MODE(0x17U),
