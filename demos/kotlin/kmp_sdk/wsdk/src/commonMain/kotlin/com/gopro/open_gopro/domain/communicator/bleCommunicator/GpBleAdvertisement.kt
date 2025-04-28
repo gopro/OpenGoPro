@@ -8,7 +8,7 @@ import com.gopro.open_gopro.GoProId
 import com.gopro.open_gopro.util.extensions.toBoolean
 import kotlin.experimental.and
 
-val logger = Logger.withTag("GpBleAdvertisement")
+private val logger = Logger.withTag("GpBleAdvertisement")
 
 internal val cameraIdMap =
     mapOf(

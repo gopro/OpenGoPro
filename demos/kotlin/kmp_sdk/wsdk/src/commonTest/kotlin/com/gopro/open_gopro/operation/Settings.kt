@@ -5,8 +5,8 @@ import com.gopro.open_gopro.domain.communicator.BleCommunicator
 import com.gopro.open_gopro.domain.communicator.bleCommunicator.bleFragment
 import com.gopro.open_gopro.entity.network.ble.BleNotification
 import com.gopro.open_gopro.entity.network.ble.GpUuid
-import com.gopro.open_gopro.entity.queries.ComplexQueryEntity
 import com.gopro.open_gopro.gopro.ULongByteTransformer
+import com.gopro.open_gopro.operations.ComplexQueryEntity
 import com.gopro.open_gopro.operations.VideoResolution
 import com.gopro.open_gopro.util.extensions.asInt64UB
 import com.gopro.open_gopro.util.extensions.toTlvMap
