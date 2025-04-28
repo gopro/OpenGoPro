@@ -308,6 +308,7 @@
 <li class="toctree-l2">
 <a class="reference internal" href="#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#keep-alive"><code class="docutils literal notranslate"><span class="pre">Keep</span> <span class="pre">Alive</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reboot-the-camera"><code class="docutils literal notranslate"><span class="pre">Reboot</span> <span class="pre">the</span> <span class="pre">Camera</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-analytics"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Analytics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-ap-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-camera-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Control</span></code></a></li>
@@ -658,6 +659,55 @@ messages every 3.0 seconds after a connection is established.</p>
 </dt>
 <dd class="field-odd">
 <p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Settings Response</em></a></p>
+</dd>
+</dl>
+</dd>
+</dl>
+
+<dl class="operation tlv-command" id="GPCAMERA_SYSTEM_RESET">
+<dt class="sig sig-object operation" id="reboot-the-camera">
+<span class="sig-name descname"><span class="pre">Reboot</span> <span class="pre">the</span> <span class="pre">Camera</span></span><a class="headerlink" href="#reboot-the-camera" title="Link to this definition"></a>
+</dt>
+<dd>
+<img alt="https://img.shields.io/badge/HERO13 Black-4363d8" src="https://img.shields.io/badge/HERO13%20Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12 Black-911eb4" src="https://img.shields.io/badge/HERO12%20Black-911eb4">
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/data_protocol.html#commands"><em>TLV command</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span>
+</dt>
+<dd class="field-even">0x11</dd>
+</dl>
+<p>Reboot the camera, approximating a battery pull</p>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Request</span></span>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
+</dd>
+</dl>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Response</span></span>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command Response</em></a></p>
 </dd>
 </dl>
 </dd>

@@ -46,6 +46,18 @@ Operations
     .. operation:tlv-message:: Response
         :uuid: Settings Response
 
+.. operation:tlv-command:: Reboot the Camera
+    :operation-id: GPCAMERA_SYSTEM_RESET
+    :external:
+    :id: 0x11
+
+    Reboot the camera, approximating a battery pull
+
+    .. operation:tlv-message:: Request
+        :uuid: Command
+    .. operation:tlv-message:: Response
+        :uuid: Command Response
+
 .. operation:tlv-command:: Set Analytics
     :operation-id: GPCAMERA_ANALYTICS_SET_CLIENT_INFO
     :external:
