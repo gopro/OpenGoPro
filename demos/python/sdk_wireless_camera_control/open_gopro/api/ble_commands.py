@@ -662,7 +662,11 @@ class BleCommands(BleMessages[BleMessage]):
         # Hard code bypass_eula_check to True.
         # On cameras where it is supported, the connection should succeed regardless of whether or not there is internet access.
         # On cameras where it is not supported, it should be ignored.
-        return {"bypass_eula_check": True}  # type: ignore
+        return {  # type: ignore
+            "ssid": ssid,
+            "password": password,
+            "bypass_eula_check": True,
+        }
 
     @ble_proto_command(
         uuid=GoProUUID.CQ_COMMAND,
