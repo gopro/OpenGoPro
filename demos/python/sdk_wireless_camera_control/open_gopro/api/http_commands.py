@@ -278,6 +278,19 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """
         return {"mode": "start" if shutter is constants.Toggle.ENABLE else "stop"}  # type: ignore
 
+    @http_get_json_command(
+        endpoint="gp/gpControl/command/system/reset",
+        rules=MessageRules(
+            fastpass_analyzer=lambda **_: True,
+        ),
+    )
+    async def reboot(self) -> GoProResp[None]:
+        """Reboot the camera (approximating a battery pull)
+
+        Returns:
+            GoProResp[None]: command status
+        """
+
     @http_get_json_command(endpoint="gopro/camera/control/set_ui_controller", arguments=["p"])
     async def set_camera_control(self, *, mode: constants.CameraControl) -> GoProResp[None]:
         """Configure global behaviors by setting camera control (to i.e. Idle, External)
@@ -479,7 +492,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """
 
     @http_get_binary_command(endpoint="gopro/media/screennail", arguments=["path"])
-    async def get_screennail__call__(self, *, camera_file: str, local_file: Path | None = None) -> GoProResp[Path]:
+    async def get_screennail(self, *, camera_file: str, local_file: Path | None = None) -> GoProResp[Path]:
         """Get screennail for a file.
 
         If local_file is none, the output location will be the same name as the camera_file.

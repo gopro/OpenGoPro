@@ -9,6 +9,7 @@ import com.gopro.open_gopro.operations.VideoResolution
 import com.gopro.open_gopro.operations.isFinished
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -37,6 +38,10 @@ fun app(appContext: OgpSdkAppContext) {
 
     // Set the shutter
     gopro.commands.setShutter(true)
+
+    // Wait a little bit...
+    delay(4000)
+    gopro.commands.reboot()
   }
 }
 

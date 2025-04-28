@@ -299,6 +299,20 @@ class BleCommands(BleMessages[BleMessage]):
             GoProResp[TzDstDateTime]: response as JSON
         """
 
+    @ble_write_command(
+        uuid=GoProUUID.CQ_COMMAND,
+        cmd=CmdId.REBOOT,
+        rules=MessageRules(
+            fastpass_analyzer=lambda **_: True,
+        ),
+    )
+    async def reboot(self) -> GoProResp[None]:
+        """Reboot the camera (approximating a battery pull)
+
+        Returns:
+            GoProResp[None]: Empty response
+        """
+
     ######################################################################################################
     #                          BLE DIRECT CHARACTERISTIC READ COMMANDS
     ######################################################################################################
