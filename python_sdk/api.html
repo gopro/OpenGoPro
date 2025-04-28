@@ -85,6 +85,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.load_preset"><code class="docutils literal notranslate"><span class="pre">BleCommands.load_preset()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.load_preset_group"><code class="docutils literal notranslate"><span class="pre">BleCommands.load_preset_group()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.power_down"><code class="docutils literal notranslate"><span class="pre">BleCommands.power_down()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.reboot"><code class="docutils literal notranslate"><span class="pre">BleCommands.reboot()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.register_for_all_capabilities"><code class="docutils literal notranslate"><span class="pre">BleCommands.register_for_all_capabilities()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.register_for_all_settings"><code class="docutils literal notranslate"><span class="pre">BleCommands.register_for_all_settings()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.register_for_all_statuses"><code class="docutils literal notranslate"><span class="pre">BleCommands.register_for_all_statuses()</span></code></a></li>
@@ -257,12 +258,13 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.get_media_metadata"><code class="docutils literal notranslate"><span class="pre">HttpCommands.get_media_metadata()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.get_open_gopro_api_version"><code class="docutils literal notranslate"><span class="pre">HttpCommands.get_open_gopro_api_version()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.get_preset_status"><code class="docutils literal notranslate"><span class="pre">HttpCommands.get_preset_status()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.get_screennail__call__"><code class="docutils literal notranslate"><span class="pre">HttpCommands.get_screennail__call__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.get_screennail"><code class="docutils literal notranslate"><span class="pre">HttpCommands.get_screennail()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.get_telemetry"><code class="docutils literal notranslate"><span class="pre">HttpCommands.get_telemetry()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.get_thumbnail"><code class="docutils literal notranslate"><span class="pre">HttpCommands.get_thumbnail()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.get_webcam_version"><code class="docutils literal notranslate"><span class="pre">HttpCommands.get_webcam_version()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.load_preset"><code class="docutils literal notranslate"><span class="pre">HttpCommands.load_preset()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.load_preset_group"><code class="docutils literal notranslate"><span class="pre">HttpCommands.load_preset_group()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.reboot"><code class="docutils literal notranslate"><span class="pre">HttpCommands.reboot()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.remove_file_hilight"><code class="docutils literal notranslate"><span class="pre">HttpCommands.remove_file_hilight()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.set_camera_control"><code class="docutils literal notranslate"><span class="pre">HttpCommands.set_camera_control()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.http_commands.HttpCommands.set_date_time"><code class="docutils literal notranslate"><span class="pre">HttpCommands.set_date_time()</span></code></a></li>
@@ -442,6 +444,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.constants.CmdId.LOAD_PRESET"><code class="docutils literal notranslate"><span class="pre">CmdId.LOAD_PRESET</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.constants.CmdId.LOAD_PRESET_GROUP"><code class="docutils literal notranslate"><span class="pre">CmdId.LOAD_PRESET_GROUP</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.constants.CmdId.POWER_DOWN"><code class="docutils literal notranslate"><span class="pre">CmdId.POWER_DOWN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.constants.CmdId.REBOOT"><code class="docutils literal notranslate"><span class="pre">CmdId.REBOOT</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.constants.CmdId.REGISTER_ALL_CAPABILITIES"><code class="docutils literal notranslate"><span class="pre">CmdId.REGISTER_ALL_CAPABILITIES</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.constants.CmdId.REGISTER_ALL_SETTINGS"><code class="docutils literal notranslate"><span class="pre">CmdId.REGISTER_ALL_SETTINGS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.constants.constants.CmdId.REGISTER_ALL_STATUSES"><code class="docutils literal notranslate"><span class="pre">CmdId.REGISTER_ALL_STATUSES</span></code></a></li>
@@ -2634,6 +2637,20 @@ updates to unregister for. Defaults to None.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.reboot">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reboot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.reboot" title="Link to this definition"></a></dt>
+<dd><p>Reboot the camera (approximating a battery pull)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Empty response</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a>[None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.register_for_all_capabilities">
 <em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register_for_all_capabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.13)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#open_gopro.constants.settings.SettingId" title="open_gopro.constants.settings.SettingId"><span class="pre">SettingId</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.constants.statuses.StatusId" title="open_gopro.constants.statuses.StatusId"><span class="pre">StatusId</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.constants.constants.ActionId" title="open_gopro.constants.constants.ActionId"><span class="pre">ActionId</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Coroutine" title="(in Python v3.13)"><span class="pre">Coroutine</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.register_for_all_capabilities" title="Link to this definition"></a></dt>
 <dd><p>Register push notifications for all capabilities</p>
@@ -4269,8 +4286,8 @@ of the duration settings (156, 157, 172) can be used to set the encoding duratio
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="open_gopro.api.http_commands.HttpCommands.get_screennail__call__">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_screennail__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><span class="pre">Path</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.http_commands.HttpCommands.get_screennail__call__" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="open_gopro.api.http_commands.HttpCommands.get_screennail">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_screennail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><span class="pre">Path</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.http_commands.HttpCommands.get_screennail" title="Link to this definition"></a></dt>
 <dd><p>Get screennail for a file.</p>
 <p>If local_file is none, the output location will be the same name as the camera_file.</p>
 <dl class="field-list simple">
@@ -4377,6 +4394,20 @@ of the duration settings (156, 157, 172) can be used to set the encoding duratio
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a>[None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.api.http_commands.HttpCommands.reboot">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reboot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.http_commands.HttpCommands.reboot" title="Link to this definition"></a></dt>
+<dd><p>Reboot the camera (approximating a battery pull)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>command status</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a>[None]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -6778,6 +6809,11 @@ Defaults to always_false.</p></li>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.constants.constants.CmdId.POWER_DOWN">
 <span class="sig-name descname"><span class="pre">POWER_DOWN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#open_gopro.constants.constants.CmdId.POWER_DOWN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.constants.constants.CmdId.REBOOT">
+<span class="sig-name descname"><span class="pre">REBOOT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">17</span></em><a class="headerlink" href="#open_gopro.constants.constants.CmdId.REBOOT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
