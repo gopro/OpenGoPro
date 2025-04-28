@@ -33,7 +33,7 @@ uuid = "0.8.4"
 # https://ktor.io/changelog/
 ktor = "3.1.1"
 # https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-navigation-routing.html
-navigationCompose = "2.8.0-alpha02"
+navigationCompose = "2.9.10-alpha01"
 lifecycleViewModel = "2.8.7"
 # https://insert-koin.io/docs/setup/koin/
 koin = "4.1.0-Beta5"
@@ -47,7 +47,7 @@ datastorePreferencesCoreJvm = "1.1.1"
 # https://github.com/google/protobuf-gradle-plugin?tab=readme-ov-file#latest-version
 googleProtobuf = "0.9.4"
 # https://github.com/z4kn4fein/kotlin-semver/releases/tag/2.0.0
-version = "2.0.0"
+version = "3.0.0"
 # https://github.com/coil-kt/coil/releases
 coil3 = "3.0.0-alpha06"
 # https://developer.android.com/jetpack/androidx/releases/media3
