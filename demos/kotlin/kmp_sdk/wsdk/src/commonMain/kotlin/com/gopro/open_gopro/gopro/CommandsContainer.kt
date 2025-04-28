@@ -53,6 +53,7 @@ import com.gopro.open_gopro.operations.commands.PreviewStreamStart
 import com.gopro.open_gopro.operations.commands.PreviewStreamStop
 import com.gopro.open_gopro.operations.commands.ReadWifiPassword
 import com.gopro.open_gopro.operations.commands.ReadWifiSsid
+import com.gopro.open_gopro.operations.commands.Reboot
 import com.gopro.open_gopro.operations.commands.SetApMode
 import com.gopro.open_gopro.operations.commands.SetCameraControl
 import com.gopro.open_gopro.operations.commands.SetDigitalZoom
@@ -426,6 +427,17 @@ class CommandsContainer internal constructor(private val marshaller: IOperationM
   internal suspend fun getCohnCertificate() = marshaller.marshal(CohnGetCert())
 
   internal suspend fun clearCohnCertificate() = marshaller.marshal(CohnClearCert())
+
+  /**
+   * Reboot the camera (approximating a battery pull)
+   *
+   * @see [Open GoPro Spec](TODO)
+   */
+  suspend fun reboot() =
+      marshaller.marshal(Reboot) {
+        // It's always fastpass
+        isFastpass { _, _ -> true }
+      }
 
   internal suspend fun createCohnCertificate(override: Boolean) =
       marshaller.marshal(CohnCreateCert(override))
