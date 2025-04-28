@@ -9,6 +9,12 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
+0.19.7 (April-28-2025)
+----------------------
+* Add Reboot Command
+* Hardcode bypass_eula_check to True to allow connecting to networks without internet access.
+* Add scheduled capture setting (and support for other future quantitative settings)
+
 0.19.6 (April-8-2025)
 ---------------------
 * Update dependencies

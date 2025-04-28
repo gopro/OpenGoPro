@@ -7,6 +7,7 @@ package fakes
 
 import com.benasher44.uuid.Uuid
 import com.gopro.open_gopro.domain.communicator.BleCommunicator
+import com.gopro.open_gopro.domain.communicator.bleCommunicator.AccumulatedGpBleResponse
 import com.gopro.open_gopro.domain.communicator.bleCommunicator.bleFragment
 import com.gopro.open_gopro.domain.network.IBleApi
 import com.gopro.open_gopro.entity.network.ble.BleAdvertisement
@@ -86,6 +87,8 @@ internal class FakeBleApi(
 
   private var messageCounter = 0
 
+  private var accumulatingResponse: AccumulatedGpBleResponse? = null
+
   var shouldWriteSucceed = true
 
   suspend fun sendNextMessage() {
@@ -126,7 +129,17 @@ internal class FakeBleApi(
       data: UByteArray
   ): Result<Unit> {
     spies += BleApiSpy.Write(device, uuid, data)
-    sendNextMessage()
+    // We need to accumulate potentially partial write payloads here and only send the next BLE
+    // response on the next message
+    // For now, we assume there is only ever one concurrent accumulating response
+    accumulatingResponse =
+        (accumulatingResponse ?: AccumulatedGpBleResponse(GpUuid.fromUuid(uuid)!!)).apply {
+          accumulate(data)
+        }
+    if (accumulatingResponse?.isReceived == true) {
+      sendNextMessage()
+      accumulatingResponse = null
+    }
     return Result.success(Unit)
   }
 
