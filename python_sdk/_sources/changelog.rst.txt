@@ -9,6 +9,10 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
+Unreleased
+----------
+* Default ainput printer arg to None to support non-terminal applications without access to stdout
+
 0.19.7 (April-28-2025)
 ----------------------
 * Add Reboot Command
