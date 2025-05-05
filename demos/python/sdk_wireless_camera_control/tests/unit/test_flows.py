@@ -366,8 +366,6 @@ async def test_flow_filter():
     assert collector.result() == 2
 
 
-# TODO need to redesign to handle any order of transformations
-@pytest.mark.xfail
 @pytest.mark.asyncio
 async def test_flow_filter_then_take():
     # GIVEN
@@ -421,8 +419,6 @@ async def test_flow_map_then_filter():
     assert collector.result() == 4
 
 
-# TODO need to redesign to handle any order of transformations
-@pytest.mark.xfail
 @pytest.mark.asyncio
 async def test_flow_filter_then_map():
     # GIVEN
@@ -450,6 +446,30 @@ async def test_flow_filter_then_map():
     # THEN
     assert collected == [4, 5]
     assert collector.result() == 5
+
+
+@pytest.mark.asyncio
+async def test_take_then_take():
+    # GIVEN
+    started = asyncio.Event()
+    flow = Flow().on_subscribe(lambda: started.set())
+    collected: list[str] = []
+
+    # WHEN
+    async def emit_values():
+        await started.wait()
+        await flow.emit(0)
+        await flow.emit(1)
+        await flow.emit(2)
+        await flow.emit(3)
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        collector = tg.create_task(flow.take(4).take(2).collect(lambda x: collected.append(x)))
+
+    # THEN
+    assert collected == [0, 1]
+    assert collector.result() == 1
 
 
 @pytest.mark.asyncio

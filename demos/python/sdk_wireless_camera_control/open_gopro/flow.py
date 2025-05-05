@@ -5,7 +5,7 @@ order-dependent: different orders will result in different behavior :(
 """
 
 from __future__ import annotations
-
+import enum
 import asyncio
 import logging
 from copy import copy
@@ -47,6 +47,44 @@ class Complete(FlowValue[T]):
 
 
 T_I = TypeVar("T_I")
+
+
+@dataclass
+class FlowManipulator:
+    def __post_init__(self) -> None:
+        self.hash = int(uuid1())
+
+    def __hash__(self) -> int:
+        return self.hash
+
+    # It's really an identity check
+    def __eq__(self, other: FlowManipulator) -> bool:
+        return self.hash == other.hash
+
+
+@dataclass
+class TakeManipulator(FlowManipulator):
+    remaining: int
+
+
+@dataclass
+class DropManipulator(FlowManipulator):
+    remaining: int
+
+
+@dataclass
+class FilterManipulator(FlowManipulator):
+    check: AsyncFilter | SyncFilter
+
+
+@dataclass
+class MapManipulator(FlowManipulator, Generic[T, O]):
+    mapper: Callable[[T], O]
+
+
+# TODO how to handle reduce?
+
+Truncator: TypeAlias = TakeManipulator | DropManipulator | FilterManipulator
 
 
 class Flow(Generic[T]):
@@ -91,11 +129,8 @@ class Flow(Generic[T]):
         self._on_start_actions: list[SyncAction[T] | AsyncAction[T]] = []
         self._on_subscribe_actions: list[Callable[[], None] | Callable[[], Coroutine[Any, Any, None]]] = []
         self._per_value_actions: list[SyncAction[T] | AsyncAction[T]] = []
-        self._take_count: int | None = None
-        self._drop_count: int = 0
         self._shared_data = Flow.SharedData[T]()
-        self._mappers: list[Callable[[Any], T]] = []
-        self._filters: list[SyncFilter] = []
+        self._manipulators: list[FlowManipulator] = []
         # TODO handle cleanup
 
     def __copy__(self) -> Flow[T]:
@@ -104,10 +139,7 @@ class Flow(Generic[T]):
         flow._on_start_actions = self._on_start_actions
         flow._on_subscribe_actions = self._on_subscribe_actions
         flow._per_value_actions = self._per_value_actions
-        flow._mappers = self._mappers
-        flow._filters = self._filters
-        flow._take_count = self._take_count
-        flow._drop_count = self._drop_count
+        flow._manipulators = self._manipulators
         flow._shared_data = self._shared_data
         return flow
 
@@ -222,7 +254,7 @@ class Flow(Generic[T]):
             C: modified flow
         """
         flow = copy(self)
-        flow._drop_count = num
+        flow._manipulators.append(DropManipulator(num))
         return flow
 
     def take(self: C, num: int) -> C:
@@ -235,7 +267,7 @@ class Flow(Generic[T]):
             C: modified flow
         """
         flow = copy(self)
-        flow._take_count = flow._count + num
+        flow._manipulators.append(TakeManipulator(num))
         return flow
 
     # TODO we lost C. Is this going to work with subclasses? Maybe we need an interface / protocol
@@ -249,11 +281,11 @@ class Flow(Generic[T]):
             Flow[O]: Mapped flow
         """
         flow = copy(self)
-        flow._mappers.append(mapper)  # type: ignore
+        flow._manipulators.append(MapManipulator(mapper))
         return flow  # type: ignore
 
     def filter(self: C, filter: SyncFilter) -> C:
-        """Filter out elements using the provided boolean check
+        """Returns a flow containing only values of the original flow that match the given predicate
 
         Args:
             filter (SyncFilter): filter to apply
@@ -262,7 +294,7 @@ class Flow(Generic[T]):
             C: modified flow
         """
         flow = copy(self)
-        flow._filters.append(filter)
+        flow._manipulators.append(FilterManipulator(filter))
         return flow
 
     # TODO should this be done per collector?
@@ -458,7 +490,22 @@ class Flow(Generic[T]):
                         raise RuntimeError("Failed to collect any values")
                     return return_value
 
-    # TODO we have no way of ordering manipulators. I.e. a take always comes before a filter. We need a pipeline
+    @property
+    def _current_manipulator_chain(self) -> list[FlowManipulator]:
+        idx = -1
+        for idx, manipulator in enumerate(self._manipulators):
+            if isinstance(manipulator, DropManipulator):
+                break
+        return self._manipulators[: idx + 1]
+
+    @property
+    def _current_take_truncator(self) -> TakeManipulator | None:
+        for manip in self._current_manipulator_chain:
+            if isinstance(manip, TakeManipulator):
+                return manip
+
+    def _remove_manipulator(self, manipulator: FlowManipulator) -> None:
+        self._manipulators = [m for m in self._manipulators if m != manipulator]
 
     # TODO should we be using an async generator?
     async def _get_next(self, uuid: UUID) -> FlowValue[T]:
@@ -474,12 +521,17 @@ class Flow(Generic[T]):
             FlowValue[T]: Latest flow value
         """
         while True:
-            # If we've reached our take limit, return (or raise if no value)
-            # We do this first so that the previous iteration returns a valid value
-            if self._take_count and self._count == self._take_count:
-                if self.current is None:
-                    raise RuntimeError("Failed to collect any values")
-                return Complete(self.current)
+            if self._current_manipulator_chain:
+                if isinstance(dropper := self._current_manipulator_chain[-1], DropManipulator):
+                    if dropper.remaining == 0:
+                        self._remove_manipulator(dropper)
+                if taker := self._current_take_truncator:
+                    # If we've reached our take limit, return (or raise if no value)
+                    # We do this first so that the previous iteration returns a valid value
+                    if taker.remaining == 0:
+                        if self.current is None:
+                            raise RuntimeError("Failed to collect any values")
+                        return Complete(self.current)
 
             # If this is the first time entering, notify all on-subscribe listeners
             if self._count == 0:
@@ -499,23 +551,25 @@ class Flow(Generic[T]):
             value = await q.get()
             self._count += 1
 
-            # Find a non-dropped, non-filtered value.
-            # First map it...
-            for mapper in self._mappers:
-                value = mapper(value)
-            # See if its filtered
-            should_continue = False
-            for filter in self._filters:
-                if not filter(value):
-                    should_continue = True
-                    break
-            # It was filtered so advance the top level while loop
-            if should_continue:
+            advance_to_next_value = False
+            for manipulator in self._current_manipulator_chain:
+                # Update truncator and truncate if needed
+                match manipulator:
+                    case TakeManipulator():
+                        manipulator.remaining -= 1
+                    case DropManipulator():
+                        manipulator.remaining -= 1
+                        advance_to_next_value = True
+                        break
+                    case FilterManipulator():
+                        if not manipulator.check(value):
+                            advance_to_next_value = True
+                            break
+                    case MapManipulator():
+                        value = manipulator.mapper(value)
+            if advance_to_next_value:
                 continue
-            # It wasn't filtered. See if we're dropping values.
-            if self._drop_count > 0:
-                self._drop_count -= 1
-                continue
+
             # At this point, the value will be returned
             # If this is the first value, notify on start listeners
             if self._count == 1:
