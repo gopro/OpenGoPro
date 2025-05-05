@@ -12,12 +12,18 @@ from pathlib import Path
 from rich.console import Console
 
 from open_gopro import WirelessGoPro
+from open_gopro.demos import COHN_CURL_CMD_TEMPLATE
 from open_gopro.logger import setup_logging
 from open_gopro.util import add_cli_args_and_parse
 
 console = Console()  # rich consoler printer
 
-CURL_TEMPLATE = r"""curl --insecure -v -u 'gopro:{password}' --cacert cohn.crt 'https://{ip_addr}/gopro/camera/state'"""
+
+def build_sample_curl_command(gopro: WirelessGoPro) -> str:
+    assert gopro.cohn.credentials
+    return f"Sample curl command: {COHN_CURL_CMD_TEMPLATE.format(
+        password=gopro.cohn.credentials.password,
+        ip_addr=gopro.cohn.credentials.ip_address,)}"
 
 
 async def main(args: argparse.Namespace) -> None:
@@ -31,15 +37,17 @@ async def main(args: argparse.Namespace) -> None:
             interfaces={WirelessGoPro.Interface.BLE},
             cohn_db=args.db,
         ) as gopro:
-            is_configured = await gopro.cohn.is_configured
-            if (not args.ssid or not args.password) and not is_configured:
-                raise ValueError("COHN needs to be provisioned but you didn't pass SSID credentials.")
-            if args.ssid and args.password:
+            if await gopro.cohn.is_configured:
+                console.print("COHN is already configured.")
+            else:
+                if not args.ssid or not args.password:
+                    raise ValueError("COHN needs to be provisioned but you didn't pass SSID or password.")
                 await gopro.access_point.connect(args.ssid, args.password)
                 await gopro.cohn.configure(force_reprovision=True)
 
             console.print("[blue]COHN is ready for communication. Dropping the BLE connection.")
 
+        console.print(build_sample_curl_command(gopro))
         identifier = gopro.identifier
         # Now create an object with only COHN
         async with WirelessGoPro(
@@ -50,13 +58,6 @@ async def main(args: argparse.Namespace) -> None:
             # Prove we can communicate via the COHN HTTP channel without a BLE or Wifi connection
             assert (await gopro.http_command.get_camera_state()).ok
             console.print("Successfully communicated via COHN!!")
-            assert gopro.cohn.credentials
-            console.print(
-                f"Sample curl command: {CURL_TEMPLATE.format(
-                    password=gopro.cohn.credentials.password,
-                    ip_addr=gopro.cohn.credentials.ip_address,
-                )}"
-            )
 
     except Exception as e:  # pylint: disable = broad-except
         logger.error(repr(e))

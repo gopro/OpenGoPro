@@ -137,7 +137,7 @@ class CohnFeature(BaseFeature):
         return self.status.status == proto.EnumCOHNStatus.COHN_PROVISIONED
 
     async def _provision_cohn(self, timeout: int = 60) -> Result[CohnInfo, TimeoutError]:
-        """Provision the camera, forcing reprovision if it is already provisioned.
+        """Provision the camera, clearing any current certificate and forcing reprovision
 
         Args:
             timeout (int): How long in seconds to wait before considering the provision a failure.
@@ -154,19 +154,17 @@ class CohnFeature(BaseFeature):
 
         logger.info("Provisioning COHN")
         try:
+            # Start fresh by clearing cert and wait until we receive unprovisioned status
+            assert (await self._gopro.ble_command.cohn_clear_certificate()).ok
+            await self._status_flow.first(lambda status: status.status == proto.EnumCOHNStatus.COHN_UNPROVISIONED)
+            logger.info("COHN has been unprovisioned")
 
-            def check_cohn_status(status: NotifyCOHNStatus) -> bool:
-                logger.critical(f"Wait for provisioning checking COHN status: {status}")
-                return status.status == proto.EnumCOHNStatus.COHN_PROVISIONED
-
-            async with asyncio.timeout(timeout):
-                async with asyncio.TaskGroup() as tg:
-                    # Always override. Assume if we're here, we are purposely (re)configuring COHN
-                    create_cert = tg.create_task(self._gopro.ble_command.cohn_create_certificate(override=True))
-                    wait_for_provisioning_status = tg.create_task(self._status_flow.first(check_cohn_status))
-            assert create_cert.result().ok
-            status = wait_for_provisioning_status.result()
-            logger.info("COHN is provisioned!!")
+            # Reprovision and wait until we receive provisioned status
+            assert (await self._gopro.ble_command.cohn_create_certificate(override=True)).ok
+            status = await self._status_flow.first(
+                lambda status: status.status == proto.EnumCOHNStatus.COHN_PROVISIONED
+            )
+            logger.info("COHN has been successfully provisioned!!")
 
             cert = (await self._gopro.ble_command.cohn_get_certificate()).data.cert
             credentials = CohnInfo(

@@ -2,3 +2,5 @@
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:05:46 PM
 
 """Demos to show how to use Open GoPro package"""
+
+COHN_CURL_CMD_TEMPLATE = r"""curl --insecure -v -u 'gopro:{password}' --cacert cohn.crt 'https://{ip_addr}/gopro/camera/state'"""

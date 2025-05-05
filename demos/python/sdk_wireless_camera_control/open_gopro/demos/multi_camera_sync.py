@@ -11,12 +11,14 @@ import multiprocessing as mp
 from dataclasses import dataclass
 from pathlib import Path
 from threading import Event
+from typing import Any
 
-from open_gopro import WirelessGoPro, constants
+from open_gopro import WirelessGoPro, constants, proto
 from open_gopro.gopro_wired import WiredGoPro
 from open_gopro.logger import setup_logging
 from open_gopro.models.general import CohnInfo
 from open_gopro.util import add_cli_args_and_parse
+from open_gopro.demos import COHN_CURL_CMD_TEMPLATE
 
 
 @dataclass
@@ -29,18 +31,19 @@ class GoPro:
     cohn: CohnInfo | None = None
 
 
-def multi_record_via_usb(target: GoPro, record_event: Event, ready_event: Event) -> None:
-    """_summary_
+def multi_record_via_usb(target: GoPro, record_event: Event, ready_event: Event, **_: Any) -> None:
+    """Multiprocess target to synchronized record via USB
 
     Args:
-        target (GoPro): _description_
-        record_event (Event): _description_
-        ready_event (Event): _description_
+        target (GoPro): gopro to communicate with
+        record_event (Event): event to wait on to start recording
+        ready_event (Event): event to notify manager that this target is ready
     """
     setup_logging(__name__, Path(f"{target.serial}.log"))
 
     async def _execute() -> None:
         async with WiredGoPro(target.serial) as gopro:
+            await gopro.http_command.load_preset_group(group=proto.EnumPresetGroup.PRESET_GROUP_ID_PHOTO)
             ready_event.set()
             record_event.wait()
             await gopro.http_command.set_shutter(shutter=constants.Toggle.ENABLE)
@@ -48,13 +51,15 @@ def multi_record_via_usb(target: GoPro, record_event: Event, ready_event: Event)
     asyncio.run(_execute())
 
 
-def multi_record_via_cohn(target: GoPro, record_event: Event, ready_event: Event) -> None:
-    """_summary_
+def multi_record_via_cohn(target: GoPro, record_event: Event, ready_event: Event, ssid: str, password: str) -> None:
+    """Multiprocess target to synchronized record via COHN
 
     Args:
-        target (GoPro): _description_
-        record_event (Event): _description_
-        ready_event (Event): _description_
+        target (GoPro): gopro to communicate with
+        record_event (Event): event to wait on to start recording
+        ready_event (Event): event to notify manager that this target is ready
+        ssid (str): WiFi SSID to connect to if COHN provisioning is needed
+        password (str): WiFi password to use if COHN provisioning is needed
     """
     logger = setup_logging(__name__, Path(f"{target.serial}.log"))
 
@@ -65,10 +70,20 @@ def multi_record_via_cohn(target: GoPro, record_event: Event, ready_event: Event
                 if await gopro.cohn.is_configured:
                     print("COHN is already configured :)")
                 else:
-                    await gopro.access_point.connect("dabugdabug", "pleasedontguessme")
+                    if not (ssid and password):
+                        raise ValueError("COHN provisioning is needed but SSID and password were not provided")
+                    await gopro.access_point.connect(ssid, password)
                     await gopro.cohn.configure(force_reprovision=True)
+            assert gopro.cohn.credentials
+            print(
+                f"Sample curl command: {COHN_CURL_CMD_TEMPLATE.format(
+                    password=gopro.cohn.credentials.password,
+                    ip_addr=gopro.cohn.credentials.ip_address,
+                )}"
+            )
             # # Now use COHN
             async with WirelessGoPro(target=target.serial, interfaces={WirelessGoPro.Interface.COHN}) as gopro:
+                await gopro.http_command.load_preset_group(group=proto.EnumPresetGroup.PRESET_GROUP_ID_PHOTO)
                 ready_event.set()
                 record_event.wait()
                 await gopro.http_command.set_shutter(shutter=constants.Toggle.ENABLE)
@@ -81,20 +96,30 @@ def multi_record_via_cohn(target: GoPro, record_event: Event, ready_event: Event
     asyncio.run(_execute())
 
 
-def main(_: argparse.Namespace) -> None:
-    gopro_targets = [
-        GoPro("0711", "Hero12Left"),
-        GoPro("0702", "Hero12Right"),
-        # GoPro("0053", "Hero13"),
-    ]
+def multi_record_via_ble(target: GoPro, record_event: Event, ready_event: Event, **_: Any) -> None:
+    """Multiprocess target to synchronized record via BLE
+
+    Args:
+        target (GoPro): gopro to communicate with
+        record_event (Event): event to wait on to start recording
+        ready_event (Event): event to notify manager that this target is ready
+    """
+    raise NotImplementedError
+
+
+def main(args: argparse.Namespace) -> None:
+    gopro_targets = [GoPro(serial, f"Device {idx}") for idx, serial in enumerate(args.devices)]
     record_event = mp.Event()
     ready_events = [mp.Event() for _ in gopro_targets]
+    match args.interface:
+        case "usb":
+            target = multi_record_via_usb
+        case "cohn":
+            target = multi_record_via_cohn
+        case "ble":
+            target = multi_record_via_ble
     processes = [
-        mp.Process(
-            # target=multi_record_via_usb,
-            target=multi_record_via_cohn,
-            args=(gopro_target, record_event, event),
-        )
+        mp.Process(target=target, args=(gopro_target, record_event, event, args.ssid, args.password))
         for event, gopro_target in zip(ready_events, gopro_targets)
     ]
     for event, process in zip(ready_events, processes):
@@ -108,6 +133,18 @@ def main(_: argparse.Namespace) -> None:
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Provision / connect a camera for COHN. SSID and password must be passed if COHN is not currently provisioned."
+    )
+    parser.add_argument(
+        "interface",
+        type=str,
+        choices=["usb", "cohn", "ble"],
+        help="Interface to communicate with the target devices",
+    )
+    parser.add_argument(
+        "devices",
+        type=str,
+        nargs="+",
+        help="list of devices to communicate with as last 4 digits of device serial number",
     )
     parser.add_argument(
         "--ssid",
