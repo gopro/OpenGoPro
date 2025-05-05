@@ -42,8 +42,8 @@ def multi_record_via_usb(  # pylint: disable = unused-argument
         target (GoPro): gopro to communicate with
         record_event (Event): event to wait on to start recording
         ready_event (Event): event to notify manager that this target is ready
-        ssid (str | None): WiFi SSID to connect to if COHN provisioning is needed
-        password (str | None): WiFi password to use if COHN provisioning is needed
+        ssid (str | None): not used
+        password (str | None): not used
     """
     setup_logging(__name__, Path(f"{target.serial}.log"))
 
@@ -114,8 +114,8 @@ def multi_record_via_ble(  # pylint: disable = unused-argument
         target (GoPro): gopro to communicate with
         record_event (Event): event to wait on to start recording
         ready_event (Event): event to notify manager that this target is ready
-        ssid (str | None): WiFi SSID to connect to if COHN provisioning is needed
-        password (str | None): WiFi password to use if COHN provisioning is needed
+        ssid (str | None): not used
+        password (str | None): not used
     """
     setup_logging(__name__, Path(f"{target.serial}.log"))
 
@@ -144,6 +144,9 @@ def main(args: argparse.Namespace) -> None:
         mp.Process(target=target, args=(gopro_target, record_event, event, args.ssid, args.password))
         for event, gopro_target in zip(ready_events, gopro_targets)
     ]
+    # This will serialize the initialization of each process. This is fine since we only care about synchronizing the
+    # recording after initialization. And I don't trust OS-level BLE to operate correctly receiving simultaneous
+    # commands.
     for event, process in zip(ready_events, processes):
         process.start()
         event.wait()
