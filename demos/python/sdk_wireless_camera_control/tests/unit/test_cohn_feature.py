@@ -6,7 +6,7 @@ from returns.pipeline import is_successful
 from tinydb import TinyDB
 from tinydb.storages import MemoryStorage
 
-from open_gopro.features.cohn import CohnFeature
+from open_gopro.features.cohn_feature import CohnFeature
 from open_gopro.gopro_wireless import WirelessGoPro
 from open_gopro.models.general import CohnInfo
 from open_gopro.proto.cohn_pb2 import (

@@ -76,9 +76,9 @@ These should not be imported directly and instead should be accessed using the r
 Abstracted Features
 -------------------
 
-.. automodule:: open_gopro.features.cohn
+.. automodule:: open_gopro.features.cohn_feature
 
-.. automodule:: open_gopro.features.access_point
+.. automodule:: open_gopro.features.access_point_feature
 
 Base Types
 ----------

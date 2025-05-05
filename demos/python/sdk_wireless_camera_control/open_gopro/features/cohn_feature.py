@@ -153,9 +153,9 @@ class CohnFeature(BaseFeature):
 
         logger.info("Provisioning COHN")
         try:
-            async with asyncio.Timeout(timeout):
+            async with asyncio.timeout(timeout):
                 # Start fresh by clearing cert and wait until we receive unprovisioned status
-                assert (await self._gopro.ble_command.cohn_clear_certificate()).ok
+                await self._gopro.ble_command.cohn_clear_certificate()
                 await self._status_flow.first(lambda status: status.status == proto.EnumCOHNStatus.COHN_UNPROVISIONED)
                 logger.info("COHN has been unprovisioned")
 

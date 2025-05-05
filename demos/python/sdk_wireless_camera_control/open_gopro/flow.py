@@ -5,7 +5,7 @@ order-dependent: different orders will result in different behavior :(
 """
 
 from __future__ import annotations
-import enum
+
 import asyncio
 import logging
 from copy import copy
@@ -51,6 +51,8 @@ T_I = TypeVar("T_I")
 
 @dataclass
 class FlowManipulator:
+    """Base flow manipulator data class."""
+
     def __post_init__(self) -> None:
         self.hash = int(uuid1())
 
@@ -58,27 +60,37 @@ class FlowManipulator:
         return self.hash
 
     # It's really an identity check
-    def __eq__(self, other: FlowManipulator) -> bool:
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, FlowManipulator):
+            raise TypeError("Can only compare equality with FlowManipulator")
         return self.hash == other.hash
 
 
 @dataclass
 class TakeManipulator(FlowManipulator):
+    """A manipulator to only take the first remaining elements"""
+
     remaining: int
 
 
 @dataclass
 class DropManipulator(FlowManipulator):
+    """A manipulator to skip the first remaining elements"""
+
     remaining: int
 
 
 @dataclass
 class FilterManipulator(FlowManipulator):
+    """A manipulator to apply a filter"""
+
     check: AsyncFilter | SyncFilter
 
 
 @dataclass
 class MapManipulator(FlowManipulator, Generic[T, O]):
+    """A manipulator to apply a map transformation"""
+
     mapper: Callable[[T], O]
 
 
@@ -492,19 +504,32 @@ class Flow(Generic[T]):
 
     @property
     def _current_manipulator_chain(self) -> list[FlowManipulator]:
+        """Get the manipulator chain from first element to the the first discovered drop manipulator
+
+        Returns:
+            list[FlowManipulator]: _description_
+        """
         idx = -1
         for idx, manipulator in enumerate(self._manipulators):
             if isinstance(manipulator, DropManipulator):
                 break
         return self._manipulators[: idx + 1]
 
+    # TODO is this correct? We only care about the final take?
     @property
-    def _current_take_truncator(self) -> TakeManipulator | None:
-        for manip in self._current_manipulator_chain:
+    def _last_take_truncator(self) -> TakeManipulator | None:
+        """Get the last specified take manipulator"""
+        for manip in reversed(self._current_manipulator_chain):
             if isinstance(manip, TakeManipulator):
                 return manip
+        return None
 
     def _remove_manipulator(self, manipulator: FlowManipulator) -> None:
+        """Remove a manipulator from the list of manipulators
+
+        Args:
+            manipulator (FlowManipulator): manipulator to remove
+        """
         self._manipulators = [m for m in self._manipulators if m != manipulator]
 
     # TODO should we be using an async generator?
@@ -525,7 +550,7 @@ class Flow(Generic[T]):
                 if isinstance(dropper := self._current_manipulator_chain[-1], DropManipulator):
                     if dropper.remaining == 0:
                         self._remove_manipulator(dropper)
-                if taker := self._current_take_truncator:
+                if taker := self._last_take_truncator:
                     # If we've reached our take limit, return (or raise if no value)
                     # We do this first so that the previous iteration returns a valid value
                     if taker.remaining == 0:

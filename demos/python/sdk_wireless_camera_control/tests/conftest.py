@@ -174,8 +174,8 @@ async def mock_wired_gopro():
 
 
 def mock_features(monkeypatch):
-    monkeypatch.setattr("open_gopro.features.access_point", MockFeatures)
-    monkeypatch.setattr("open_gopro.features.cohn", MockFeatures)
+    monkeypatch.setattr("open_gopro.features.access_point_feature", MockFeatures)
+    monkeypatch.setattr("open_gopro.features.cohn_feature", MockFeatures)
 
 
 @pytest_asyncio.fixture(scope="function")

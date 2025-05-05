@@ -449,7 +449,7 @@ async def test_flow_filter_then_map():
 
 
 @pytest.mark.asyncio
-async def test_take_then_take():
+async def test_take_then_take_only_takes_second():
     # GIVEN
     started = asyncio.Event()
     flow = Flow().on_subscribe(lambda: started.set())
@@ -470,6 +470,116 @@ async def test_take_then_take():
     # THEN
     assert collected == [0, 1]
     assert collector.result() == 1
+
+
+# TODO this should fail with a timeout. Or maybe kill the first flow (take 2) and throw some type of error.
+@pytest.mark.xfail
+@pytest.mark.asyncio
+async def test_take_then_take_too_many_hangs():
+    # GIVEN
+    started = asyncio.Event()
+    flow = Flow().on_subscribe(lambda: started.set())
+    collected: list[str] = []
+
+    # WHEN
+    async def emit_values():
+        await started.wait()
+        await flow.emit(0)
+        await flow.emit(1)
+        await flow.emit(2)
+        await flow.emit(3)
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        collector = tg.create_task(flow.take(2).take(4).collect(lambda x: collected.append(x)))
+
+    # THEN
+    assert collected == [0, 1]
+    assert collector.result() == 1
+
+
+@pytest.mark.asyncio
+async def test_take_then_drop():
+    # GIVEN
+    started = asyncio.Event()
+    flow = Flow().on_subscribe(lambda: started.set())
+    collected: list[str] = []
+
+    # WHEN
+    async def emit_values():
+        await started.wait()
+        await flow.emit(0)
+        await flow.emit(1)
+        await flow.emit(2)
+        await flow.emit(3)
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        collector = tg.create_task(flow.take(3).drop(1).collect(lambda x: collected.append(x)))
+
+    # THEN
+    assert collected == [1, 2]
+    assert collector.result() == 2
+
+
+@pytest.mark.asyncio
+async def test_drop_then_take():
+    # GIVEN
+    started = asyncio.Event()
+    flow = Flow().on_subscribe(lambda: started.set())
+    collected: list[str] = []
+
+    # WHEN
+    async def emit_values():
+        await started.wait()
+        await flow.emit(0)
+        await flow.emit(1)
+        await flow.emit(2)
+        await flow.emit(3)
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        collector = tg.create_task(flow.drop(1).take(3).collect(lambda x: collected.append(x)))
+
+    # THEN
+    assert collected == [1, 2, 3]
+    assert collector.result() == 3
+
+
+@pytest.mark.asyncio
+async def test_complex_flow():
+    # GIVEN
+    started = asyncio.Event()
+    flow = Flow().on_subscribe(lambda: started.set())
+    collected: list[str] = []
+
+    # WHEN
+    async def emit_values():
+        await started.wait()
+        await flow.emit(0)  # drop
+        await flow.emit(1)  # drop
+        await flow.emit(2)  # take 1, filtered out by second filter
+        await flow.emit(3)  # filtered out
+        await flow.emit(4)  # take 2
+        await flow.emit(5)  # filtered out
+        await flow.emit(6)  # take 3
+        await flow.emit(7)  # ignored
+        await flow.emit(8)  # ignored
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        collector = tg.create_task(
+            flow.drop(2)
+            .filter(lambda x: x % 2 == 0)
+            .map(lambda x: x * 100)
+            .take(3)
+            .filter(lambda x: x > 200)
+            .collect(lambda x: collected.append(x))
+        )
+
+    # THEN
+    assert collected == [400, 600]
+    assert collector.result() == 600
 
 
 @pytest.mark.asyncio

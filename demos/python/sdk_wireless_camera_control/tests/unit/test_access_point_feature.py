@@ -5,7 +5,7 @@ import pytest
 import pytest_asyncio
 from returns.pipeline import is_successful
 
-from open_gopro.features.access_point import AccessPointFeature
+from open_gopro.features.access_point_feature import AccessPointFeature
 from open_gopro.gopro_wireless import WirelessGoPro
 from open_gopro.models.general import CohnInfo
 from open_gopro.proto.cohn_pb2 import (
