@@ -18,7 +18,6 @@ from open_gopro.exceptions import GoProNotOpened
 from open_gopro.features.base_feature import BaseFeature
 from open_gopro.gopro_base import GoProBase
 from open_gopro.models.general import CohnInfo
-from open_gopro.proto.cohn_pb2 import NotifyCOHNStatus
 
 logger = logging.getLogger(__name__)
 
@@ -154,27 +153,28 @@ class CohnFeature(BaseFeature):
 
         logger.info("Provisioning COHN")
         try:
-            # Start fresh by clearing cert and wait until we receive unprovisioned status
-            assert (await self._gopro.ble_command.cohn_clear_certificate()).ok
-            await self._status_flow.first(lambda status: status.status == proto.EnumCOHNStatus.COHN_UNPROVISIONED)
-            logger.info("COHN has been unprovisioned")
+            async with asyncio.Timeout(timeout):
+                # Start fresh by clearing cert and wait until we receive unprovisioned status
+                assert (await self._gopro.ble_command.cohn_clear_certificate()).ok
+                await self._status_flow.first(lambda status: status.status == proto.EnumCOHNStatus.COHN_UNPROVISIONED)
+                logger.info("COHN has been unprovisioned")
 
-            # Reprovision and wait until we receive provisioned status
-            assert (await self._gopro.ble_command.cohn_create_certificate(override=True)).ok
-            status = await self._status_flow.first(
-                lambda status: status.status == proto.EnumCOHNStatus.COHN_PROVISIONED
-            )
-            logger.info("COHN has been successfully provisioned!!")
+                # Reprovision and wait until we receive provisioned status
+                assert (await self._gopro.ble_command.cohn_create_certificate(override=True)).ok
+                status = await self._status_flow.first(
+                    lambda status: status.status == proto.EnumCOHNStatus.COHN_PROVISIONED
+                )
+                logger.info("COHN has been successfully provisioned!!")
 
-            cert = (await self._gopro.ble_command.cohn_get_certificate()).data.cert
-            credentials = CohnInfo(
-                ip_address=status.ipaddress,
-                username=status.username,
-                password=status.password,
-                certificate=cert,
-            )
-            self.credentials = credentials
-            return Result.from_value(credentials)
+                cert = (await self._gopro.ble_command.cohn_get_certificate()).data.cert
+                credentials = CohnInfo(
+                    ip_address=status.ipaddress,
+                    username=status.username,
+                    password=status.password,
+                    certificate=cert,
+                )
+                self.credentials = credentials
+                return Result.from_value(credentials)
         except TimeoutError as exc:
             return Result.from_failure(exc)
 

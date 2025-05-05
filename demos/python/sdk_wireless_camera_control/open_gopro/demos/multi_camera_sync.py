@@ -11,14 +11,12 @@ import multiprocessing as mp
 from dataclasses import dataclass
 from pathlib import Path
 from threading import Event
-from typing import Any
 
 from open_gopro import WirelessGoPro, constants, proto
 from open_gopro.gopro_wired import WiredGoPro
 from open_gopro.logger import setup_logging
 from open_gopro.models.general import CohnInfo
 from open_gopro.util import add_cli_args_and_parse
-from open_gopro.demos import COHN_CURL_CMD_TEMPLATE
 
 
 @dataclass
@@ -31,13 +29,21 @@ class GoPro:
     cohn: CohnInfo | None = None
 
 
-def multi_record_via_usb(target: GoPro, record_event: Event, ready_event: Event, **_: Any) -> None:
+def multi_record_via_usb(  # pylint: disable = unused-argument
+    target: GoPro,
+    record_event: Event,
+    ready_event: Event,
+    ssid: str | None,
+    password: str | None,
+) -> None:
     """Multiprocess target to synchronized record via USB
 
     Args:
         target (GoPro): gopro to communicate with
         record_event (Event): event to wait on to start recording
         ready_event (Event): event to notify manager that this target is ready
+        ssid (str | None): WiFi SSID to connect to if COHN provisioning is needed
+        password (str | None): WiFi password to use if COHN provisioning is needed
     """
     setup_logging(__name__, Path(f"{target.serial}.log"))
 
@@ -51,15 +57,21 @@ def multi_record_via_usb(target: GoPro, record_event: Event, ready_event: Event,
     asyncio.run(_execute())
 
 
-def multi_record_via_cohn(target: GoPro, record_event: Event, ready_event: Event, ssid: str, password: str) -> None:
+def multi_record_via_cohn(
+    target: GoPro,
+    record_event: Event,
+    ready_event: Event,
+    ssid: str | None,
+    password: str | None,
+) -> None:
     """Multiprocess target to synchronized record via COHN
 
     Args:
         target (GoPro): gopro to communicate with
         record_event (Event): event to wait on to start recording
         ready_event (Event): event to notify manager that this target is ready
-        ssid (str): WiFi SSID to connect to if COHN provisioning is needed
-        password (str): WiFi password to use if COHN provisioning is needed
+        ssid (str | None): WiFi SSID to connect to if COHN provisioning is needed
+        password (str | None): WiFi password to use if COHN provisioning is needed
     """
     logger = setup_logging(__name__, Path(f"{target.serial}.log"))
 
@@ -68,19 +80,12 @@ def multi_record_via_cohn(target: GoPro, record_event: Event, ready_event: Event
             # Start with just BLE connected in order to provision COHN
             async with WirelessGoPro(target=target.serial, interfaces={WirelessGoPro.Interface.BLE}) as gopro:
                 if await gopro.cohn.is_configured:
-                    print("COHN is already configured :)")
+                    print("COHN is already configured.")
                 else:
                     if not (ssid and password):
                         raise ValueError("COHN provisioning is needed but SSID and password were not provided")
                     await gopro.access_point.connect(ssid, password)
                     await gopro.cohn.configure(force_reprovision=True)
-            assert gopro.cohn.credentials
-            print(
-                f"Sample curl command: {COHN_CURL_CMD_TEMPLATE.format(
-                    password=gopro.cohn.credentials.password,
-                    ip_addr=gopro.cohn.credentials.ip_address,
-                )}"
-            )
             # # Now use COHN
             async with WirelessGoPro(target=target.serial, interfaces={WirelessGoPro.Interface.COHN}) as gopro:
                 await gopro.http_command.load_preset_group(group=proto.EnumPresetGroup.PRESET_GROUP_ID_PHOTO)
@@ -96,13 +101,24 @@ def multi_record_via_cohn(target: GoPro, record_event: Event, ready_event: Event
     asyncio.run(_execute())
 
 
-def multi_record_via_ble(target: GoPro, record_event: Event, ready_event: Event, **_: Any) -> None:
+def multi_record_via_ble(  # pylint: disable = unused-argument
+    target: GoPro,
+    record_event: Event,
+    ready_event: Event,
+    ssid: str | None,
+    password: str | None,
+) -> None:
     """Multiprocess target to synchronized record via BLE
+
+    Raises:
+        NotImplementedError: Not yet implemented
 
     Args:
         target (GoPro): gopro to communicate with
         record_event (Event): event to wait on to start recording
         ready_event (Event): event to notify manager that this target is ready
+        ssid (str | None): WiFi SSID to connect to if COHN provisioning is needed
+        password (str | None): WiFi password to use if COHN provisioning is needed
     """
     raise NotImplementedError
 

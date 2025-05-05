@@ -12,18 +12,14 @@ from pathlib import Path
 from rich.console import Console
 
 from open_gopro import WirelessGoPro
-from open_gopro.demos import COHN_CURL_CMD_TEMPLATE
 from open_gopro.logger import setup_logging
 from open_gopro.util import add_cli_args_and_parse
 
 console = Console()  # rich consoler printer
 
-
-def build_sample_curl_command(gopro: WirelessGoPro) -> str:
-    assert gopro.cohn.credentials
-    return f"Sample curl command: {COHN_CURL_CMD_TEMPLATE.format(
-        password=gopro.cohn.credentials.password,
-        ip_addr=gopro.cohn.credentials.ip_address,)}"
+COHN_CURL_CMD_TEMPLATE = (
+    r"""curl --insecure -v -u 'gopro:{password}' --cacert cohn.crt 'https://{ip_addr}/gopro/camera/state'"""
+)
 
 
 async def main(args: argparse.Namespace) -> None:
@@ -47,7 +43,12 @@ async def main(args: argparse.Namespace) -> None:
 
             console.print("[blue]COHN is ready for communication. Dropping the BLE connection.")
 
-        console.print(build_sample_curl_command(gopro))
+        assert gopro.cohn.credentials
+        console.print(
+            f"Sample curl command: {COHN_CURL_CMD_TEMPLATE.format(
+            password=gopro.cohn.credentials.password,
+            ip_addr=gopro.cohn.credentials.ip_address,)}"
+        )
         identifier = gopro.identifier
         # Now create an object with only COHN
         async with WirelessGoPro(
