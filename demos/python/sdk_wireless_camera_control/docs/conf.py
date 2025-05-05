@@ -94,6 +94,8 @@ TYPE_ALIASES = {
 
 nitpick_ignore = [
     ("py:class", "T"),
+    ("py:class", "O"),
+    ("py:class", "T_I"),
     ("py:class", "C"),
     ("py:class", "I"),
     ("py:class", "T_co"),
@@ -105,7 +107,6 @@ nitpick_ignore = [
     ("py:class", "returns.result.Result"),
     ("py:class", "TracebackType"),
     ("py:class", "UUID"),
-    # TODO need to fix these
     ("py:class", "Path"),
     ("py:class", "JsonDict"),
     ("py:class", "SyncAction"),
@@ -123,9 +124,13 @@ nitpick_ignore_regex = [
     (r"py:class", r".*WirelessApi*"),
     # Generic Types that are pointless to document
     (r"py:class", r".*\.T"),
+    (r"py:class", r".*\.T_I"),
+    (r"py:class", r".*\.O"),
     (r"py:class", r".*\.C"),
     (r"py:class", r".*\.I"),
     (r"py:obj", r".*\.C"),
+    (r"py:obj", r".*\.T_I"),
+    (r"py:obj", r".*\.O"),
     (r"py:obj", r".*\.I"),
     (r"py:obj", r".*\.T"),
     (r"py:class", r".*\.T_co"),

@@ -1,4 +1,8 @@
-"""Async generators to process asynchronous data flows."""
+"""Async generators to process asynchronous data flows.
+
+TODO!!! This is fairly untested and has known issues for multiple transformations. Also chained transformations are
+order-dependent: different orders will result in different behavior :(
+"""
 
 from __future__ import annotations
 
@@ -7,7 +11,7 @@ import logging
 from copy import copy
 from dataclasses import dataclass, field
 from inspect import iscoroutinefunction
-from typing import Any, Callable, Coroutine, Final, Generic, TypeAlias, TypeVar
+from typing import Any, Callable, Coroutine, Final, Generic, Self, TypeAlias, TypeVar
 from uuid import UUID, uuid1
 
 O = TypeVar("O")
@@ -50,28 +54,32 @@ class Flow(Generic[T]):
 
     Attributes:
         REPLAY_ALL (Final[int]): Special integer value to indicate all values should be replayed
+        FLOW_IDX (int): counter of flow instantiations used for debugging
 
     Args:
+        capacity (int): Maximum values to store for replay. Defaults to 100.
         debug_id (str | None): Identifier to log for debugging. Defaults to None (will use generated UUID).
     """
 
     REPLAY_ALL: Final[int] = -1
-    FLOW_IDX = 0
+    FLOW_IDX: int = 0
 
     @dataclass
     class SharedData(Generic[T_I]):
+        """Common data used for internal management that should be accessed in critical sections"""
+
         current: T_I | None = None
         cache: list[T_I] = field(default_factory=list)
         q_dict: dict[UUID, asyncio.Queue[T_I]] = field(default_factory=dict)
 
-        def __post_init__(self) -> None:
+        def __post_init__(self) -> None:  # noqa
             self._condition = asyncio.Condition()
 
-        async def __aenter__(self):
+        async def __aenter__(self) -> Self:  # noqa
             await self._condition.acquire()
             return self
 
-        async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
+        async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:  # noqa
             self._condition.release()
 
     def __init__(self, capacity: int = 100, debug_id: str | None = None) -> None:
@@ -90,8 +98,8 @@ class Flow(Generic[T]):
         self._filters: list[SyncFilter] = []
         # TODO handle cleanup
 
-    def __copy__(self) -> Flow:
-        flow = Flow(capacity=self._capacity, debug_id=self._debug_id)
+    def __copy__(self) -> Flow[T]:
+        flow = Flow[T](capacity=self._capacity, debug_id=self._debug_id)
         # TODO do we actually want to copy all of these?
         flow._on_start_actions = self._on_start_actions
         flow._on_subscribe_actions = self._on_subscribe_actions
@@ -232,11 +240,27 @@ class Flow(Generic[T]):
 
     # TODO we lost C. Is this going to work with subclasses? Maybe we need an interface / protocol
     def map(self, mapper: Callable[[T], O]) -> Flow[O]:
+        """Apply the map transform on data elements
+
+        Args:
+            mapper (Callable[[T], O]): map transform to apply
+
+        Returns:
+            Flow[O]: Mapped flow
+        """
         flow = copy(self)
         flow._mappers.append(mapper)  # type: ignore
         return flow  # type: ignore
 
     def filter(self: C, filter: SyncFilter) -> C:
+        """Filter out elements using the provided boolean check
+
+        Args:
+            filter (SyncFilter): filter to apply
+
+        Returns:
+            C: modified flow
+        """
         flow = copy(self)
         flow._filters.append(filter)
         return flow
@@ -280,9 +304,6 @@ class Flow(Generic[T]):
         Args:
             filter (SyncFilter): Filter to apply
             replay (int): how many values to replay from cache. Defaults to 1.
-
-        Raises:
-            NotImplementedError: TODO Need to handle what happens if flow ends before filter is triggered
 
         Returns:
             T: first value matching filter
@@ -485,7 +506,7 @@ class Flow(Generic[T]):
             # See if its filtered
             should_continue = False
             for filter in self._filters:
-                if not (filter(value)):
+                if not filter(value):
                     should_continue = True
                     break
             # It was filtered so advance the top level while loop
@@ -498,10 +519,10 @@ class Flow(Generic[T]):
             # At this point, the value will be returned
             # If this is the first value, notify on start listeners
             if self._count == 1:
-                for action in self._on_start_actions:
-                    self._mux_action(action, value)
+                for action in self._on_start_actions:  # type: ignore
+                    self._mux_action(action, value)  # type: ignore
             # Notify per-value actions
-            for action in self._per_value_actions:
-                action(value)
+            for action in self._per_value_actions:  # type: ignore
+                action(value)  # type: ignore
             # We've made it! Return the continuing value
             return Continue(value)

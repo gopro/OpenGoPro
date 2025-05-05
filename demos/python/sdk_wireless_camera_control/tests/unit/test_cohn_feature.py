@@ -43,7 +43,7 @@ async def cohn_feature(mock_wireless_gopro_basic: WirelessGoPro):
 async def test_cohn_feature_starts_successfully(cohn_feature: CohnFeature):
     # WHEN
     async def send_cohn_status():
-        await cohn_feature._status_flow._flow_manager.emit(NotifyCOHNStatus())
+        await cohn_feature._status_flow.emit(NotifyCOHNStatus())
 
     async with asyncio.TaskGroup() as task_group:
         task_group.create_task(send_cohn_status())
@@ -57,7 +57,7 @@ async def test_cohn_feature_starts_successfully(cohn_feature: CohnFeature):
 async def test_cohn_feature_is_configured(cohn_feature: CohnFeature):
     # WHEN
     async def send_cohn_status():
-        await cohn_feature._status_flow._flow_manager.emit(provisioned_status)
+        await cohn_feature._status_flow.emit(provisioned_status)
 
     async with asyncio.TaskGroup() as tg:
         tg.create_task(send_cohn_status())
@@ -72,8 +72,8 @@ async def test_cohn_feature_is_configured(cohn_feature: CohnFeature):
 async def test_cohn_feature_configure_without_provisioning(cohn_feature: CohnFeature):
     # WHEN
     async def send_cohn_status():
-        await cohn_feature._status_flow._flow_manager.emit(provisioned_status)
-        await cohn_feature._status_flow._flow_manager.emit(connected_status)
+        await cohn_feature._status_flow.emit(provisioned_status)
+        await cohn_feature._status_flow.emit(connected_status)
 
     async with asyncio.TaskGroup() as task_group:
         task_group.create_task(send_cohn_status())
@@ -90,14 +90,14 @@ async def test_cohn_feature_configure_without_provisioning(cohn_feature: CohnFea
 async def test_cohn_feature_provision(cohn_feature: CohnFeature):
     # WHEN
     async def send_cohn_unprovisioned():
-        await cohn_feature._status_flow._flow_manager.emit(unprovisioned_status)
+        await cohn_feature._status_flow.emit(unprovisioned_status)
 
     async with asyncio.TaskGroup() as task_group:
         task_group.create_task(send_cohn_unprovisioned())
         task_group.create_task(cohn_feature.wait_for_ready())
 
     async def send_cohn_provisioned():
-        await cohn_feature._status_flow._flow_manager.emit(connected_status)
+        await cohn_feature._status_flow.emit(connected_status)
 
     async with asyncio.TaskGroup() as task_group:
         task_group.create_task(send_cohn_provisioned())
