@@ -776,7 +776,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         builder.set_packet(received_data)
         return builder.build()
 
-    # TODO make decorator?
     def _handle_cohn(self, message: HttpMessage) -> HttpMessage:
         """Prepend COHN headers if COHN is provisioned
 
@@ -787,7 +786,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             HttpMessage: potentially modified HTTP message
         """
         try:
-            if self.cohn.credentials:
+            if self._should_enable_cohn and self.cohn.credentials:
                 message._headers["Authorization"] = self.cohn.credentials.auth_token
                 message._certificate = self.cohn.credentials.certificate_as_path
             return message
@@ -847,7 +846,11 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     @property
     def _base_url(self) -> str:
         try:
-            return f"https://{self.cohn.credentials.ip_address}/" if self.cohn.credentials else "http://10.5.5.9:8080/"
+            return (
+                f"https://{self.cohn.credentials.ip_address}/"
+                if self._should_enable_cohn and self.cohn.credentials
+                else "http://10.5.5.9:8080/"
+            )
         except GoProNotOpened:
             return "http://10.5.5.9:8080/"
 

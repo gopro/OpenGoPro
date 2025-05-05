@@ -9,7 +9,6 @@ from returns.pipeline import is_successful
 from returns.result import Result
 from tinydb import TinyDB
 
-from open_gopro import proto
 from open_gopro.api import WirelessApi
 from open_gopro.api.gopro_flow import GoproRegisterFlow
 from open_gopro.constants import ActionId
@@ -18,6 +17,11 @@ from open_gopro.exceptions import GoProNotOpened
 from open_gopro.features.base_feature import BaseFeature
 from open_gopro.gopro_base import GoProBase
 from open_gopro.models.general import CohnInfo
+from open_gopro.proto import (
+    EnumCOHNNetworkState,
+    EnumCOHNStatus,
+    NotifyCOHNStatus,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -86,18 +90,17 @@ class CohnFeature(BaseFeature):
         self._db.insert_or_update_credentials(self._gopro.identifier, new_credentials)
 
     @property
-    def status(self) -> proto.NotifyCOHNStatus:
+    def status(self) -> NotifyCOHNStatus:
         """The current COHN status
 
         Raises:
             GoProNotOpened: There is no status yet because the camera is not yet ready.
 
         Returns:
-            proto.NotifyCOHNStatus: The current COHN status
+            NotifyCOHNStatus: The current COHN status
         """
-        if not self.is_ready:
+        if not self.is_ready or not self._status_flow.current:
             raise GoProNotOpened("COHN feature is not yet ready")
-        assert self._status_flow.current
         return self._status_flow.current
 
     @property
@@ -112,6 +115,7 @@ class CohnFeature(BaseFeature):
         if self.credentials and self.credentials.is_complete:
             # Validate COHN
             try:
+                # Ensure we can send an HTTP command via COHN
                 return (await self._gopro.http_command.get_open_gopro_api_version()).ok
             except Exception as exc:  # pylint: disable=broad-exception-caught
                 logger.error(repr(exc))
@@ -124,7 +128,7 @@ class CohnFeature(BaseFeature):
         Returns:
             bool: True if connected, False otherwise
         """
-        return self.status.state == proto.EnumCOHNNetworkState.COHN_STATE_NetworkConnected
+        return self.status.state == EnumCOHNNetworkState.COHN_STATE_NetworkConnected
 
     @property
     def _is_provisioned(self) -> bool:
@@ -133,7 +137,7 @@ class CohnFeature(BaseFeature):
         Returns:
             bool: True if provisioned, False otherwise
         """
-        return self.status.status == proto.EnumCOHNStatus.COHN_PROVISIONED
+        return self.status.status == EnumCOHNStatus.COHN_PROVISIONED
 
     async def _provision_cohn(self, timeout: int = 60) -> Result[CohnInfo, TimeoutError]:
         """Provision the camera, clearing any current certificate and forcing reprovision
@@ -156,14 +160,12 @@ class CohnFeature(BaseFeature):
             async with asyncio.timeout(timeout):
                 # Start fresh by clearing cert and wait until we receive unprovisioned status
                 await self._gopro.ble_command.cohn_clear_certificate()
-                await self._status_flow.first(lambda status: status.status == proto.EnumCOHNStatus.COHN_UNPROVISIONED)
+                await self._status_flow.first(lambda status: status.status == EnumCOHNStatus.COHN_UNPROVISIONED)
                 logger.info("COHN has been unprovisioned")
 
                 # Reprovision and wait until we receive provisioned status
                 assert (await self._gopro.ble_command.cohn_create_certificate(override=True)).ok
-                status = await self._status_flow.first(
-                    lambda status: status.status == proto.EnumCOHNStatus.COHN_PROVISIONED
-                )
+                status = await self._status_flow.first(lambda status: status.status == EnumCOHNStatus.COHN_PROVISIONED)
                 logger.info("COHN has been successfully provisioned!!")
 
                 cert = (await self._gopro.ble_command.cohn_get_certificate()).data.cert
@@ -199,34 +201,30 @@ class CohnFeature(BaseFeature):
         if force_reprovision or not await self.is_configured:
             if not is_successful(result := await self._provision_cohn()):
                 return result
+        # We should at least have incomplete credentials after provisioning
+        assert self.credentials
         try:
             if not self.is_connected:
                 logger.info("Waiting for COHN to be connected")
 
-                await asyncio.wait_for(
-                    self._status_flow.first(
-                        lambda s: s.state == proto.EnumCOHNNetworkState.COHN_STATE_NetworkConnected
-                    ),
-                    timeout,
-                )
+                async with asyncio.timeout(timeout):
+                    await self._status_flow.first(lambda s: s.state == EnumCOHNNetworkState.COHN_STATE_NetworkConnected)
+
             logger.info("COHN is connected")
-            assert self.credentials
-            if not self.credentials.is_complete:
-                # On some cameras, the IP address only comes with this status. Let's just always take all of the availble
-                # information from the current status(everything but the cert)
-                self.credentials = CohnInfo(
-                    username=self.status.username,
-                    password=self.status.password,
-                    ip_address=self.status.ipaddress,
-                    certificate=self.credentials.certificate,
-                )
-                # If the credentials are still not complete at this point, something bad has happened
-                if not self.credentials.is_complete:
-                    logger.error("Failed to get COHN credentials")
-                    return Result.from_failure(RuntimeError("Failed to get COHN credentials"))
+            # On some cameras, the IP address only comes with this status. Let's just always take all of the available
+            # information from the current status which was potentially just retrieved from connecting.
+            self.credentials = CohnInfo(
+                username=self.status.username,
+                password=self.status.password,
+                ip_address=self.status.ipaddress,
+                certificate=self.credentials.certificate,
+            )
 
         except TimeoutError as exc:
             return Result.from_failure(exc)
-        assert self.credentials
+        # If the credentials are still not complete at this point, something bad has happened
+        if not self.credentials.is_complete:
+            logger.error("Failed to get COHN credentials")
+            return Result.from_failure(RuntimeError("Failed to get COHN credentials"))
         logger.info("COHN is provisioned, connected, and ready for communication")
         return Result.from_value(self.credentials)

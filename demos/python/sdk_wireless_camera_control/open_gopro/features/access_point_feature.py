@@ -6,11 +6,22 @@ import logging
 from returns.pipeline import is_successful
 from returns.result import Result
 
-from open_gopro import proto
 from open_gopro.api.gopro_flow import GoproRegisterFlowDistinctInitial
 from open_gopro.constants import ActionId
 from open_gopro.exceptions import GoProError, ResponseTimeout
 from open_gopro.features.base_feature import BaseFeature
+from open_gopro.proto import (
+    EnumProvisioning,
+    EnumResultGeneric,
+    EnumScanEntryFlags,
+    EnumScanning,
+    NotifProvisioningState,
+    NotifStartScanning,
+    ResponseConnect,
+    ResponseConnectNew,
+    ResponseGetApEntries,
+    ResponseStartScanning,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -29,31 +40,28 @@ class AccessPointFeature(BaseFeature):
     def close(self) -> None:  # noqa: D102
         return
 
-    async def scan_wifi_networks(self) -> Result[proto.ResponseGetApEntries, GoProError]:
+    async def scan_wifi_networks(self, timeout: int = 60) -> Result[ResponseGetApEntries, GoProError]:
         """Instruct the camera to scan for WiFi networks
 
+        Args:
+            timeout (int): How long (in seconds) to attempt to connect before considering the connection a
+                failure. Defaults to 60.
+
         Returns:
-            Result[proto.ResponseGetApEntries, GoProError]: Discovered AP entries on success or error
+            Result[ResponseGetApEntries, GoProError]: Discovered AP entries on success or error
         """
         # Wait to receive scanning success
         logger.info("Scanning for Wifi networks")
 
-        async with GoproRegisterFlowDistinctInitial[proto.ResponseStartScanning, proto.NotifStartScanning](
+        async with GoproRegisterFlowDistinctInitial[ResponseStartScanning, NotifStartScanning](
             gopro=self._gopro,
             update=ActionId.NOTIF_START_SCAN,
             register_command=self._gopro.ble_command.scan_wifi_networks(),
-        ) as flow:
-            if flow.initial_response.result != proto.EnumResultGeneric.RESULT_SUCCESS:
+        ) as flow, asyncio.timeout(timeout):
+            if flow.initial_response.result != EnumResultGeneric.RESULT_SUCCESS:
                 return Result.from_failure(GoProError("Failed to start scanning."))
 
-            async def collect(scan_result: proto.NotifStartScanning) -> bool:
-                if scan_result.scanning_state == proto.EnumScanning.SCANNING_SUCCESS:
-                    return False
-                error_message = f"Scan failed: {str(scan_result.scanning_state)}"
-                logger.error(error_message)
-                return False
-
-            result = await flow.collect_while(collect)
+            result = await flow.first(lambda s: s.scanning_state == EnumScanning.SCANNING_SUCCESS)
             entries = await self._gopro.ble_command.get_ap_entries(scan_id=result.scan_id)
             return Result.from_value(entries.data)
 
@@ -76,7 +84,7 @@ class AccessPointFeature(BaseFeature):
             for entry in response.unwrap().entries:
                 if entry.ssid == ssid:
                     # Are we already provisioned?
-                    if entry.scan_entry_flags & proto.EnumScanEntryFlags.SCAN_FLAG_CONFIGURED:
+                    if entry.scan_entry_flags & EnumScanEntryFlags.SCAN_FLAG_CONFIGURED:
                         logger.info(f"Connecting to already provisioned network {ssid}...")
                         command = self._gopro.ble_command.request_wifi_connect(ssid=ssid)
                     else:
@@ -84,23 +92,22 @@ class AccessPointFeature(BaseFeature):
                         command = self._gopro.ble_command.request_wifi_connect_new(ssid=ssid, password=password)
 
                     async with GoproRegisterFlowDistinctInitial[
-                        proto.ResponseConnect | proto.ResponseConnectNew, proto.NotifProvisioningState
+                        ResponseConnect | ResponseConnectNew,
+                        NotifProvisioningState,
                     ](
                         gopro=self._gopro,
                         update=ActionId.NOTIF_PROVIS_STATE,
                         register_command=command,
                     ) as flow:
-                        if flow.initial_response.result != proto.EnumResultGeneric.RESULT_SUCCESS:
+                        if flow.initial_response.result != EnumResultGeneric.RESULT_SUCCESS:
                             return Result.from_failure(GoProError("Failed to start scanning."))
 
                         try:
-                            await asyncio.wait_for(
-                                flow.first(
-                                    lambda s: s.provisioning_state == proto.EnumProvisioning.PROVISIONING_SUCCESS_NEW_AP
-                                ),
-                                timeout,
-                            )
-                            return Result.from_value(None)
+                            async with asyncio.timeout(timeout):
+                                await flow.first(
+                                    lambda s: s.provisioning_state == EnumProvisioning.PROVISIONING_SUCCESS_NEW_AP
+                                )
+                                return Result.from_value(None)
                         except TimeoutError:
                             return Result.from_failure(ResponseTimeout(timeout))
             logger.error(f"Could not find ssid {ssid}")
