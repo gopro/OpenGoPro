@@ -1291,14 +1291,14 @@ testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
 name = "poethepoet"
-version = "0.33.1"
+version = "0.34.0"
 description = "A task runner that works well with poetry."
 optional = false
 python-versions = ">=3.9"
 groups = ["dev"]
 files = [
-    {file = "poethepoet-0.33.1-py3-none-any.whl", hash = "sha256:b86d80a81b2ca4e4ce8e8f716cc6004a1a1cdead027778bc07d1c26cb3664770"},
-    {file = "poethepoet-0.33.1.tar.gz", hash = "sha256:8775e09b64f773278b5483659ff238a708723491efadeedd1c2cbf773558cb4c"},
+    {file = "poethepoet-0.34.0-py3-none-any.whl", hash = "sha256:c472d6f0fdb341b48d346f4ccd49779840c15b30dfd6bc6347a80d6274b5e34e"},
+    {file = "poethepoet-0.34.0.tar.gz", hash = "sha256:86203acce555bbfe45cb6ccac61ba8b16a5784264484195874da457ddabf5850"},
 ]
 
 [package.dependencies]
@@ -1497,14 +1497,14 @@ yaml = ["pyyaml (>=6.0.1)"]
 
 [[package]]
 name = "pydoclint"
-version = "0.6.5"
+version = "0.6.6"
 description = "A Python docstring linter that checks arguments, returns, yields, and raises sections"
 optional = false
 python-versions = ">=3.9"
 groups = ["dev"]
 files = [
-    {file = "pydoclint-0.6.5-py2.py3-none-any.whl", hash = "sha256:a83565803f77b6f4f3934d85ec661f36c3c8931c9ae8c2b36775b5880c1f09b0"},
-    {file = "pydoclint-0.6.5.tar.gz", hash = "sha256:e7e630d34808ea3f7cd44fc0d412b3f7997cf6a1d28e1dddbbc721ea6190bb04"},
+    {file = "pydoclint-0.6.6-py2.py3-none-any.whl", hash = "sha256:7ce8ed36f60f9201bf1c1edacb32c55eb051af80fdd7304480c6419ee0ced43c"},
+    {file = "pydoclint-0.6.6.tar.gz", hash = "sha256:22862a8494d05cdf22574d6533f4c47933c0ae1674b0f8b961d6ef42536eaa69"},
 ]
 
 [package.dependencies]

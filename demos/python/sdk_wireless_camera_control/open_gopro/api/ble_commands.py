@@ -299,6 +299,20 @@ class BleCommands(BleMessages[BleMessage]):
             GoProResp[TzDstDateTime]: response as JSON
         """
 
+    @ble_write_command(
+        uuid=GoProUUID.CQ_COMMAND,
+        cmd=CmdId.REBOOT,
+        rules=MessageRules(
+            fastpass_analyzer=lambda **_: True,
+        ),
+    )
+    async def reboot(self) -> GoProResp[None]:
+        """Reboot the camera (approximating a battery pull)
+
+        Returns:
+            GoProResp[None]: Empty response
+        """
+
     ######################################################################################################
     #                          BLE DIRECT CHARACTERISTIC READ COMMANDS
     ######################################################################################################
@@ -645,6 +659,14 @@ class BleCommands(BleMessages[BleMessage]):
         Returns:
             GoProResp[proto.ResponseConnectNew]: Command status of request
         """
+        # Hard code bypass_eula_check to True.
+        # On cameras where it is supported, the connection should succeed regardless of whether or not there is internet access.
+        # On cameras where it is not supported, it should be ignored.
+        return {  # type: ignore
+            "ssid": ssid,
+            "password": password,
+            "bypass_eula_check": True,
+        }
 
     @ble_proto_command(
         uuid=GoProUUID.CQ_COMMAND,

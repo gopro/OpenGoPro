@@ -10,6 +10,7 @@ import com.gopro.open_gopro.domain.communicator.bleCommunicator.bleFragment
 import com.gopro.open_gopro.entity.communicator.ActionId
 import com.gopro.open_gopro.entity.communicator.FeatureId
 import com.gopro.open_gopro.entity.network.ble.GpUuid
+import com.gopro.open_gopro.gopro.CameraInternalError
 import com.gopro.open_gopro.operations.commands.AccessPointGetScanResults
 import com.gopro.open_gopro.operations.commands.AccessPointScan
 import com.gopro.open_gopro.operations.commands.ConnectNewAccessPoint
@@ -337,6 +338,7 @@ class TestBleCommands {
 
     // THEN
     assertTrue { result.isFailure }
+    assertTrue { result.exceptionOrNull() is CameraInternalError }
   }
 
   @Test

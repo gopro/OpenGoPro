@@ -9,7 +9,6 @@ package com.gopro.open_gopro.gopro
  * WARNING!!! This file is auto-generated. Do not modify it manually
  */
 import com.gopro.open_gopro.domain.api.IOperationMarshaller
-import com.gopro.open_gopro.entity.queries.ComplexQueryEntity
 import com.gopro.open_gopro.operations.*
 
 /**
@@ -229,10 +228,22 @@ class SettingsContainer internal constructor(marshaller: IOperationMarshaller) {
   /**
    * Scheduled Capture
    *
-   * Configure or disable the scheduled capture functionality to start encoding at a future
-   * Timelapse.
+   * Configure or disable the scheduled capture functionality to start encoding at a future time.
    *
-   * TODO document bitmasked value.
+   * This is a bit-masked value with the following bitwise definitions, numbered from least
+   * significant bit, with the example showing parsed fields from a sample of `0x00000c8b`.
+   *
+   * | Bit(s) | Definition                    | Example |
+   * |--------|-------------------------------|---------|
+   * | 0      | Is Scheduled Capture Enabled? | 1       |
+   * | 1      | Is 24 hour format?            | 1       |
+   * | 2-8    | Minute                        | 34      |
+   * | 9-13   | Hour                          | 12      |
+   * | 14-63  | Reserved                      | 0       |
+   *
+   * Note that when the scheduled capture time occurs, encoding will be started and continue
+   * indefinitely. One of the duration settings (156, 157, 172) can be used to set the encoding
+   * duration depending on the camera mode.
    *
    * @see
    *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168)

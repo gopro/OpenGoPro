@@ -306,16 +306,25 @@ def add_cli_args_and_parse(
     return args
 
 
-async def ainput(string: str, printer: Callable = sys.stdout.write) -> str:
+async def ainput(string: str, printer: Callable | None = None) -> str:
     """Async version of input
+
+    Raises:
+        ValueError: Can not access default sys.stdout.write
 
     Args:
         string (str): prompt string
-        printer (Callable): Callable to display prompt. Defaults to sys.stdout.write.
+        printer (Callable | None): Printer used to display prompt. Defaults to None in which case sys.stdout.write
+            will attempt to be used.
 
     Returns:
         str: Input read from console
     """
+    if not printer:
+        try:
+            printer = sys.stdout.write
+        except AttributeError as e:
+            raise ValueError("No printer was passed and default standard out writer does not exist.") from e
     await asyncio.get_event_loop().run_in_executor(None, lambda s=string: printer(s + " "))  # type: ignore
     return await asyncio.get_event_loop().run_in_executor(None, sys.stdin.readline)
 
