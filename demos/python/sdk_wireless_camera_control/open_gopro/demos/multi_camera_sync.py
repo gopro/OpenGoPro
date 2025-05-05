@@ -110,9 +110,6 @@ def multi_record_via_ble(  # pylint: disable = unused-argument
 ) -> None:
     """Multiprocess target to synchronized record via BLE
 
-    Raises:
-        NotImplementedError: Not yet implemented
-
     Args:
         target (GoPro): gopro to communicate with
         record_event (Event): event to wait on to start recording
@@ -120,7 +117,16 @@ def multi_record_via_ble(  # pylint: disable = unused-argument
         ssid (str | None): WiFi SSID to connect to if COHN provisioning is needed
         password (str | None): WiFi password to use if COHN provisioning is needed
     """
-    raise NotImplementedError
+    setup_logging(__name__, Path(f"{target.serial}.log"))
+
+    async def _execute() -> None:
+        async with WirelessGoPro(target.serial, interfaces={WirelessGoPro.Interface.BLE}) as gopro:
+            await gopro.ble_command.load_preset_group(group=proto.EnumPresetGroup.PRESET_GROUP_ID_PHOTO)
+            ready_event.set()
+            record_event.wait()
+            await gopro.ble_command.set_shutter(shutter=constants.Toggle.ENABLE)
+
+    asyncio.run(_execute())
 
 
 def main(args: argparse.Namespace) -> None:
