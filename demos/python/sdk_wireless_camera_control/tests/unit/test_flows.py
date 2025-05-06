@@ -1,12 +1,14 @@
 import asyncio
+import re
+from uuid import UUID
 
 import pytest
 
-from open_gopro.api.gopro_flow import (
-    GoproRegisterFlow,
-    GoproRegisterFlowDistinctInitial,
+from open_gopro.domain.flow import Complete, Flow
+from open_gopro.domain.gopro_flow import (
+    GoproFlow,
+    GoproFlowDistinctInitial,
 )
-from open_gopro.domain.flow import Flow
 from open_gopro.models.constants.statuses import StatusId
 from tests.mocks import MockWirelessGoPro
 
@@ -620,7 +622,7 @@ async def test_status_flow_basic(mock_wireless_gopro_basic: MockWirelessGoPro):
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
     started = asyncio.Event()
     flow = (
-        await GoproRegisterFlow(
+        await GoproFlow(
             gopro=mock_wireless_gopro_basic,
             update=StatusId.ENCODING,
             register_command=mock_wireless_gopro_basic.mock_gopro_resp(True),
@@ -662,7 +664,7 @@ async def test_status_flow_different_initial_response(mock_wireless_gopro_basic:
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
     started = asyncio.Event()
     flow = (
-        await GoproRegisterFlowDistinctInitial(
+        await GoproFlowDistinctInitial(
             gopro=mock_wireless_gopro_basic,
             update=StatusId.ENCODING,
             register_command=mock_wireless_gopro_basic.ble_command.get_open_gopro_api_version(),
@@ -699,3 +701,18 @@ async def test_status_flow_different_initial_response(mock_wireless_gopro_basic:
 
     # THEN
     assert values == ["2.0", True, False, True, False]
+
+    async def test_flow_as_generator():
+        """Test generator with no values"""
+        flow = Flow[int]()
+
+        await flow.emit(0)
+        await flow.emit(1)
+        await flow.emit(2)
+
+        # Consume generator - should not yield any values
+        values = []
+        async for value in flow.take(2).as_generator(replay=Flow.REPLAY_ALL):
+            values.append(value)
+
+        assert len(values) == 3

@@ -6,8 +6,8 @@ import logging
 from returns.pipeline import is_successful
 from returns.result import Result
 
-from open_gopro.api.gopro_flow import GoproRegisterFlowDistinctInitial
 from open_gopro.domain.exceptions import GoProError, ResponseTimeout
+from open_gopro.domain.gopro_flow import GoproFlowDistinctInitial
 from open_gopro.features.base_feature import BaseFeature
 from open_gopro.models import proto
 from open_gopro.models.constants import ActionId
@@ -53,7 +53,7 @@ class AccessPointFeature(BaseFeature):
         # Wait to receive scanning success
         logger.info("Scanning for Wifi networks")
 
-        async with GoproRegisterFlowDistinctInitial[ResponseStartScanning, NotifStartScanning](
+        async with GoproFlowDistinctInitial[ResponseStartScanning, NotifStartScanning](
             gopro=self._gopro,
             update=ActionId.NOTIF_START_SCAN,
             register_command=self._gopro.ble_command.scan_wifi_networks(),
@@ -91,7 +91,7 @@ class AccessPointFeature(BaseFeature):
                         logger.info(f"Provisioning new network {ssid}...")
                         command = self._gopro.ble_command.request_wifi_connect_new(ssid=ssid, password=password)
 
-                    async with GoproRegisterFlowDistinctInitial[
+                    async with GoproFlowDistinctInitial[
                         ResponseConnect | ResponseConnectNew,
                         NotifProvisioningState,
                     ](

@@ -43,12 +43,12 @@ from open_gopro.domain.exceptions import (
     InvalidOpenGoProVersion,
     ResponseTimeout,
 )
-from open_gopro.domain.gopro_base import (
+from open_gopro.domain.types import ResponseType, UpdateCb, UpdateType
+from open_gopro.gopro_base import (
     GoProBase,
     GoProMessageInterface,
     enforce_message_rules,
 )
-from open_gopro.domain.types import ResponseType, UpdateCb, UpdateType
 from open_gopro.models import CohnInfo, GoProResp
 from open_gopro.models.constants import ActionId, GoProUUID, StatusId
 from open_gopro.models.constants.settings import SettingId

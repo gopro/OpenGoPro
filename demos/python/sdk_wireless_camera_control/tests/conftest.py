@@ -11,7 +11,7 @@ from typing import Any, Generator
 import pytest
 import pytest_asyncio
 
-from open_gopro.domain.gopro_base import GoProBase
+from open_gopro.gopro_base import GoProBase
 from open_gopro.network.ble import (
     BleClient,
     Characteristic,

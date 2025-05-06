@@ -11,7 +11,17 @@ import logging
 from copy import copy
 from dataclasses import dataclass, field
 from inspect import iscoroutinefunction
-from typing import Any, Callable, Coroutine, Final, Generic, Self, TypeAlias, TypeVar
+from typing import (
+    Any,
+    AsyncGenerator,
+    Callable,
+    Coroutine,
+    Final,
+    Generic,
+    Self,
+    TypeAlias,
+    TypeVar,
+)
 from uuid import UUID, uuid1
 
 O = TypeVar("O")
@@ -340,7 +350,7 @@ class Flow(Generic[T]):
 
     ####################################################################################################################
     ##### Terminal Operators
-    ############
+    ####################################################################################################################
 
     async def first(self, filter: SyncFilter, replay: int = 1) -> T:
         """Terminal receiver to collect only the first received value that matches a given filter
@@ -502,6 +512,33 @@ class Flow(Generic[T]):
                         raise RuntimeError("Failed to collect any values")
                     return return_value
 
+    def as_generator(self, replay: int = 1) -> AsyncGenerator[T, None]:
+        """Get an async generator to yield values from the flow
+
+        Args:
+            replay (int): how many values to replay from cache. Defaults to 1.
+
+        Returns:
+            AsyncGenerator[T, None]: async generator to yield values from the flow
+        """
+
+        async def _async_gen() -> AsyncGenerator[T, None]:
+            """Async generator to yield values from the flow"""
+            uuid = uuid1()
+            await self._add_collector(uuid, replay=replay)
+            try:
+                while True:
+                    match await self._get_next(uuid):
+                        case Continue(value):
+                            yield value
+                        case Complete(value):
+                            yield value
+                            break
+            finally:
+                await self._remove_collector(uuid)
+
+        return _async_gen()
+
     @property
     def _current_manipulator_chain(self) -> list[FlowManipulator]:
         """Get the manipulator chain from first element to the the first discovered drop manipulator
@@ -515,7 +552,7 @@ class Flow(Generic[T]):
                 break
         return self._manipulators[: idx + 1]
 
-    # TODO is this correct? We only care about the final take?
+    # TODO needs review. Take does not behave consistently with more than 1.
     @property
     def _last_take_truncator(self) -> TakeManipulator | None:
         """Get the last specified take manipulator"""
@@ -532,7 +569,6 @@ class Flow(Generic[T]):
         """
         self._manipulators = [m for m in self._manipulators if m != manipulator]
 
-    # TODO should we be using an async generator?
     async def _get_next(self, uuid: UUID) -> FlowValue[T]:
         """Get the next flow value from the manager
 

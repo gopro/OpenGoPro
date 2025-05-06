@@ -107,6 +107,31 @@ class MessageRules:
 class BaseGoProCommunicator(ABC):
     """Common Communicator interface"""
 
+    class _CompositeRegisterType(enum.Enum):
+        """A composite register type to signify all elements of a given set should be (un)registered for"""
+
+        ALL_SETTINGS = enum.auto()
+        ALL_STATUSES = enum.auto()
+
+    @abstractmethod
+    def _register_update(self, callback: UpdateCb, update: _CompositeRegisterType | UpdateType) -> None:
+        """Common register method for both public UpdateType and "protected" internal register type
+
+        Args:
+            callback (UpdateCb): callback to register
+            update (_CompositeRegisterType | UpdateType): update type to register for
+        """
+
+    @abstractmethod
+    def _unregister_update(self, callback: UpdateCb, update: _CompositeRegisterType | UpdateType | None = None) -> None:
+        """Common unregister method for both public UpdateType and "protected" internal register type
+
+        Args:
+            callback (UpdateCb): callback to unregister
+            update (_CompositeRegisterType | UpdateType | None): Update type to unregister for. Defaults to
+                    None which will unregister the callback for all update types.
+        """
+
     @property
     @abstractmethod
     def identifier(self) -> str:
@@ -227,12 +252,6 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
         target (str | BleDevice): device to connect to or trailing digits of serial number
     """
 
-    class _CompositeRegisterType(enum.Enum):
-        """A composite register type to signify all elements of a given set should be (un)registered for"""
-
-        ALL_SETTINGS = enum.auto()
-        ALL_STATUSES = enum.auto()
-
     def __init__(
         self,
         controller: BLEController,
@@ -247,25 +266,6 @@ class GoProBle(BaseGoProCommunicator, Generic[BleHandle, BleDevice]):
             (re.compile(r"GoPro [A-Z0-9]{4}") if target is None else f".*{target}", [GoProUUID.S_CONTROL_QUERY]),
             uuids=GoProUUID,
         )
-
-    @abstractmethod
-    def _register_update(self, callback: UpdateCb, update: _CompositeRegisterType | UpdateType) -> None:
-        """Common register method for both public UpdateType and "protected" internal register type
-
-        Args:
-            callback (UpdateCb): callback to register
-            update (_CompositeRegisterType | UpdateType): update type to register for
-        """
-
-    @abstractmethod
-    def _unregister_update(self, callback: UpdateCb, update: _CompositeRegisterType | UpdateType | None = None) -> None:
-        """Common unregister method for both public UpdateType and "protected" internal register type
-
-        Args:
-            callback (UpdateCb): callback to unregister
-            update (_CompositeRegisterType | UpdateType | None): Update type to unregister for. Defaults to
-                    None which will unregister the callback for all update types.
-        """
 
     @abstractmethod
     async def _send_ble_message(

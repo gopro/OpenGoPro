@@ -19,6 +19,7 @@ from open_gopro.api import (
     WiredApi,
 )
 from open_gopro.domain.communicator_interface import (
+    BaseGoProCommunicator,
     GoProWiredInterface,
     Message,
     MessageRules,
@@ -28,8 +29,8 @@ from open_gopro.domain.exceptions import (
     GoProNotOpened,
     InvalidOpenGoProVersion,
 )
-from open_gopro.domain.gopro_base import GoProBase
 from open_gopro.domain.types import CameraState, UpdateCb, UpdateType
+from open_gopro.gopro_base import GoProBase
 from open_gopro.models import GoProResp, constants
 from open_gopro.models.constants import StatusId
 
@@ -229,6 +230,16 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
             bool: True if yes, False if no
         """
         return self.is_open
+
+    def _register_update(
+        self, callback: UpdateCb, update: BaseGoProCommunicator._CompositeRegisterType | UpdateType
+    ) -> None:
+        raise NotImplementedError
+
+    def _unregister_update(
+        self, callback: UpdateCb, update: BaseGoProCommunicator._CompositeRegisterType | UpdateType | None = None
+    ) -> None:
+        raise NotImplementedError
 
     def register_update(self, callback: UpdateCb, update: UpdateType) -> None:
         """Register for callbacks when an update occurs

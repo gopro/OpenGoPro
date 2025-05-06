@@ -24,10 +24,10 @@ from construct import (
     Struct,
     this,
 )
+from returns.result import ResultE
 
 from open_gopro.api.builders import (
     BleAsyncResponse,
-    RegisterUnregisterAll,
     ble_proto_command,
     ble_read_command,
     ble_register_command,
@@ -38,8 +38,9 @@ from open_gopro.domain.communicator_interface import (
     BleMessages,
     MessageRules,
 )
+from open_gopro.domain.gopro_flow import GoproFlow
 from open_gopro.domain.parser_interface import GlobalParsers, Parser
-from open_gopro.domain.types import CameraState, UpdateCb
+from open_gopro.domain.types import CameraState
 from open_gopro.models import CameraInfo, GoProResp, TzDstDateTime, constants, proto
 from open_gopro.models.constants import (
     ActionId,
@@ -352,100 +353,28 @@ class BleCommands(BleMessages[BleMessage]):
     #                          REGISTER / UNREGISTER ALL COMMANDS
     ######################################################################################################
 
-    @ble_register_command(
-        GoProUUID.CQ_QUERY,
-        CmdId.REGISTER_ALL_STATUSES,
-        update_set=StatusId,
-        action=RegisterUnregisterAll.Action.REGISTER,
-    )
-    async def register_for_all_statuses(self, callback: UpdateCb) -> GoProResp[None]:
+    @ble_register_command(GoProUUID.CQ_QUERY, CmdId.REGISTER_ALL_STATUSES, update_set=StatusId)
+    async def register_for_all_statuses(self) -> ResultE[GoproFlow[dict[StatusId, Any]]]:
         """Register push notifications for all statuses
-
-        Args:
-            callback (UpdateCb): callback to be notified with
 
         Returns:
             GoProResp[None]: command status and current value of all statuses
         """
 
-    @ble_register_command(
-        GoProUUID.CQ_QUERY,
-        CmdId.UNREGISTER_ALL_STATUSES,
-        update_set=StatusId,
-        action=RegisterUnregisterAll.Action.UNREGISTER,
-    )
-    async def unregister_for_all_statuses(self, callback: UpdateCb) -> GoProResp[None]:
-        """Unregister push notifications for all statuses
-
-        Args:
-            callback (UpdateCb): callback to be notified with
-
-        Returns:
-            GoProResp[None]: command status
-        """
-
-    @ble_register_command(
-        GoProUUID.CQ_QUERY,
-        CmdId.REGISTER_ALL_SETTINGS,
-        update_set=SettingId,
-        action=RegisterUnregisterAll.Action.REGISTER,
-    )
-    async def register_for_all_settings(self, callback: UpdateCb) -> GoProResp[None]:
+    @ble_register_command(GoProUUID.CQ_QUERY, CmdId.REGISTER_ALL_SETTINGS, update_set=SettingId)
+    async def register_for_all_settings(self) -> ResultE[GoproFlow[dict[SettingId, Any]]]:
         """Register push notifications for all settings
-
-        Args:
-            callback (UpdateCb): callback to be notified with
 
         Returns:
             GoProResp[None]: command status and current value of all settings
         """
 
-    @ble_register_command(
-        GoProUUID.CQ_QUERY,
-        CmdId.UNREGISTER_ALL_SETTINGS,
-        update_set=SettingId,
-        action=RegisterUnregisterAll.Action.UNREGISTER,
-    )
-    async def unregister_for_all_settings(self, callback: UpdateCb) -> GoProResp[None]:
-        """Unregister push notifications for all settings
-
-        Args:
-            callback (UpdateCb): callback to be notified with
-
-        Returns:
-            GoProResp[None]: command status
-        """
-
-    @ble_register_command(
-        GoProUUID.CQ_QUERY,
-        CmdId.REGISTER_ALL_CAPABILITIES,
-        update_set=SettingId,
-        action=RegisterUnregisterAll.Action.REGISTER,
-    )
-    async def register_for_all_capabilities(self, callback: UpdateCb) -> GoProResp[None]:
+    @ble_register_command(GoProUUID.CQ_QUERY, CmdId.REGISTER_ALL_CAPABILITIES, update_set=SettingId)
+    async def register_for_all_capabilities(self) -> ResultE[GoproFlow[dict[SettingId, list[Any]]]]:
         """Register push notifications for all capabilities
-
-        Args:
-            callback (UpdateCb): callback to be notified with
 
         Returns:
             GoProResp[None]: command status and current value of all capabilities
-        """
-
-    @ble_register_command(
-        GoProUUID.CQ_QUERY,
-        CmdId.UNREGISTER_ALL_CAPABILITIES,
-        update_set=SettingId,
-        action=RegisterUnregisterAll.Action.UNREGISTER,
-    )
-    async def unregister_for_all_capabilities(self, callback: UpdateCb) -> GoProResp[None]:
-        """Unregister push notifications for all capabilities
-
-        Args:
-            callback (UpdateCb): callback to be notified with
-
-        Returns:
-            GoProResp[None]: command status
         """
 
     ######################################################################################################

@@ -11,7 +11,7 @@ from datetime import timedelta
 from rich.console import Console
 
 from open_gopro import WirelessGoPro
-from open_gopro.domain.gopro_base import GoProBase
+from open_gopro.gopro_base import GoProBase
 from open_gopro.models import constants, proto
 from open_gopro.models.general import ScheduledCapture
 from open_gopro.util import add_cli_args_and_parse, get_current_dst_aware_time
