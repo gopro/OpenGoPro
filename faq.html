@@ -9,8 +9,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>FAQ and Known Issues :  Open GoPro</title>
-<meta name="description" content="Open Source GoPro Interface">
+<!-- begin _includes/seo.html --><title>FAQ and Known Issues -</title>
+<meta name="description" content="">
 
 
   <meta name="author" content="GoPro">
@@ -19,12 +19,10 @@
 
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
-<meta property="og:site_name" content="Open GoPro">
+<meta property="og:site_name" content="">
 <meta property="og:title" content="FAQ and Known Issues">
 <meta property="og:url" content="https://gopro.github.io/OpenGoPro/faq">
 
-
-  <meta property="og:description" content="Open Source GoPro Interface">
 
 
 
@@ -115,10 +113,8 @@
     <div class="masthead__menu">
       <nav id="site-nav" class="greedy-nav">
         
-          <a class="site-logo" href="/OpenGoPro/"><img src="/OpenGoPro/assets/images/logos/logo.png" alt="Open GoPro"></a>
-        
         <a class="site-title" href="/OpenGoPro/">
-          Open GoPro
+          
           
         </a>
         <ul class="visible-links">
@@ -368,7 +364,7 @@
         
         <h1 id="frequently-asked-questions-faq">Frequently Asked Questions (FAQ)</h1>
 
-<p>If you have somehow stumbled here first, note that there are specifications, demos, and tutorials which
+<p>If you have somehow stumbled here  first, note that there are specifications, demos, and tutorials which
 expand upon much of the information here. These can be found, among other places, from the <a href="/OpenGoPro/">home page</a>.</p>
 
 <h2 id="connectivity">Connectivity</h2>
@@ -830,6 +826,20 @@ action ID 0xFF. These should be ignored.</p>
 </div>
 </div>
 
+<div class="accordion-container anchored">
+    <button class="accordion">Media Info File Size is invalid over 32-bit max integers<i class="fa fa-chevron-down"></i></button>
+    <div class="panel">
+<p>See the <a href="https://github.com/gopro/OpenGoPro/issues/740">Github Issue</a>
+To workaround this:</p>
+<ul>
+  <li>read the file size from the <a href="https://gopro.github.io/OpenGoPro/http#tag/Media/operation/OGP_MEDIA_LIST">Media List</a>
+</li>
+  <li>read the file size from a <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/HEAD">HEAD</a> operation on the <a href="https://gopro.github.io/OpenGoPro/http#tag/Media/operation/OGP_DOWNLOAD_MEDIA">file resource</a>
+</li>
+</ul>
+</div>
+</div>
+
 <h2 id="hero-11-v011000-specific">Hero 11 (v01.10.00) Specific</h2>
 
 <div class="accordion-container anchored">
@@ -943,7 +953,7 @@ action ID 0xFF. These should be ignored.</p>
 </div>
 
 <div class="page__footer-copyright">
-    © 2025 GoPro. Powered by
+    © 2025 . Powered by
     <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp;
     <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.
     <p>
