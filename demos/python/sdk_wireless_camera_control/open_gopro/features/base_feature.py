@@ -4,7 +4,7 @@ import asyncio
 from abc import ABC, abstractmethod
 
 from open_gopro.api.api import WirelessApi
-from open_gopro.gopro_base import GoProBase
+from open_gopro.domain.gopro_base import GoProBase
 
 
 class BaseFeature(ABC):

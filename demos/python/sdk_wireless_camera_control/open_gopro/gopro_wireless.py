@@ -29,7 +29,9 @@ from open_gopro.api import (
 )
 from open_gopro.ble import BleakWrapperController, BleUUID
 from open_gopro.ble.controller import BLEController
-from open_gopro.communicator_interface import (
+from open_gopro.constants import ActionId, GoProUUID, StatusId
+from open_gopro.constants.settings import SettingId
+from open_gopro.domain.communicator_interface import (
     BleMessage,
     GoProBle,
     GoProWirelessInterface,
@@ -37,9 +39,7 @@ from open_gopro.communicator_interface import (
     Message,
     MessageRules,
 )
-from open_gopro.constants import ActionId, GoProUUID, StatusId
-from open_gopro.constants.settings import SettingId
-from open_gopro.exceptions import (
+from open_gopro.domain.exceptions import (
     ConnectFailed,
     ConnectionTerminated,
     GoProNotOpened,
@@ -47,16 +47,16 @@ from open_gopro.exceptions import (
     InvalidOpenGoProVersion,
     ResponseTimeout,
 )
-from open_gopro.gopro_base import (
+from open_gopro.domain.gopro_base import (
     GoProBase,
     GoProMessageInterface,
     enforce_message_rules,
 )
-from open_gopro.logger import Logger
+from open_gopro.domain.types import ResponseType, UpdateCb, UpdateType
 from open_gopro.models import CohnInfo, GoProResp
 from open_gopro.parsers.response import BleRespBuilder
-from open_gopro.types import ResponseType, UpdateCb, UpdateType
 from open_gopro.util import SnapshotQueue, get_current_dst_aware_time, pretty_print
+from open_gopro.util.logger import Logger
 from open_gopro.wifi import WifiCli
 from open_gopro.wifi.controller import WifiController
 

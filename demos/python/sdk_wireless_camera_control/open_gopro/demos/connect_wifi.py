@@ -11,8 +11,8 @@ from typing import Optional
 from rich.console import Console
 
 from open_gopro import WirelessGoPro
-from open_gopro.logger import set_stream_logging_level, setup_logging
 from open_gopro.util import add_cli_args_and_parse, ainput
+from open_gopro.util.logger import set_stream_logging_level, setup_logging
 
 console = Console()
 

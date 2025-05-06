@@ -13,9 +13,9 @@ from open_gopro.api import WirelessApi
 from open_gopro.api.gopro_flow import GoproRegisterFlow
 from open_gopro.constants import ActionId
 from open_gopro.db import CohnDb
-from open_gopro.exceptions import GoProNotOpened
+from open_gopro.domain.exceptions import GoProNotOpened
+from open_gopro.domain.gopro_base import GoProBase
 from open_gopro.features.base_feature import BaseFeature
-from open_gopro.gopro_base import GoProBase
 from open_gopro.models.general import CohnInfo
 from open_gopro.proto import (
     EnumCOHNNetworkState,

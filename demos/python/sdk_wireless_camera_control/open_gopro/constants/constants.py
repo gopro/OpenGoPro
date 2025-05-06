@@ -7,7 +7,7 @@
 
 from __future__ import annotations
 
-from open_gopro.enum import GoProEnum, GoProIntEnum
+from open_gopro.domain.enum import GoProEnum, GoProIntEnum
 
 
 class ErrorCode(GoProIntEnum):

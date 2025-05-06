@@ -14,7 +14,7 @@ import zeroconf
 # Imported this way for monkeypatching in pytest
 import zeroconf.asyncio
 
-from open_gopro.exceptions import FailedToFindDevice
+from open_gopro.domain.exceptions import FailedToFindDevice
 from open_gopro.models import DnsScanResponse
 
 logger = logging.getLogger(__name__)

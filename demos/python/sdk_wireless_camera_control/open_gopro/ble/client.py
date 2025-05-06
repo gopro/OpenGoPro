@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Generic, Optional, Pattern
 
 from open_gopro.ble import BleUUID
-from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
+from open_gopro.domain.exceptions import ConnectFailed, FailedToFindDevice
 
 from .controller import (
     BLEController,

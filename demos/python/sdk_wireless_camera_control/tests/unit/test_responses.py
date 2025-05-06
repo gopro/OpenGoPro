@@ -17,7 +17,7 @@ from open_gopro.constants import (
     SettingId,
     StatusId,
 )
-from open_gopro.parser_interface import Parser
+from open_gopro.domain.parser_interface import Parser
 from open_gopro.parsers.json import CameraStateJsonParser
 from open_gopro.parsers.response import (
     BleRespBuilder,

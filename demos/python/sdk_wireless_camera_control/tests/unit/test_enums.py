@@ -6,7 +6,7 @@
 import enum
 
 from open_gopro import proto
-from open_gopro.enum import GoProIntEnum, enum_factory
+from open_gopro.domain.enum import GoProIntEnum, enum_factory
 
 
 class EnumTest(GoProIntEnum):

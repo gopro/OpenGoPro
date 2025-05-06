@@ -26,8 +26,7 @@ from open_gopro.ble import (
     NotiHandlerType,
 )
 from open_gopro.constants import GoProUUID
-from open_gopro.models import GoProBlePacketHeader, GoProResp
-from open_gopro.parser_interface import (
+from open_gopro.domain.parser_interface import (
     BytesParser,
     BytesTransformer,
     GlobalParsers,
@@ -35,7 +34,8 @@ from open_gopro.parser_interface import (
     JsonTransformer,
     Parser,
 )
-from open_gopro.types import IdType, JsonDict, UpdateCb, UpdateType
+from open_gopro.domain.types import IdType, JsonDict, UpdateCb, UpdateType
+from open_gopro.models import GoProBlePacketHeader, GoProResp
 from open_gopro.wifi import WifiClient, WifiController
 
 logger = logging.getLogger(__name__)

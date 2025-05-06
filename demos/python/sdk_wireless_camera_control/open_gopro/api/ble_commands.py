@@ -34,7 +34,6 @@ from open_gopro.api.builders import (
     ble_register_command,
     ble_write_command,
 )
-from open_gopro.communicator_interface import BleMessage, BleMessages, MessageRules
 from open_gopro.constants import (
     ActionId,
     CmdId,
@@ -43,8 +42,14 @@ from open_gopro.constants import (
     SettingId,
     StatusId,
 )
+from open_gopro.domain.communicator_interface import (
+    BleMessage,
+    BleMessages,
+    MessageRules,
+)
+from open_gopro.domain.parser_interface import GlobalParsers, Parser
+from open_gopro.domain.types import CameraState, UpdateCb
 from open_gopro.models import CameraInfo, GoProResp, TzDstDateTime
-from open_gopro.parser_interface import GlobalParsers, Parser
 from open_gopro.parsers.bytes import (
     ConstructByteParserBuilder,
     DateTimeByteParserBuilder,
@@ -55,7 +60,6 @@ from open_gopro.parsers.json import (
     LambdaJsonParser,
     PydanticAdapterJsonParser,
 )
-from open_gopro.types import CameraState, UpdateCb
 
 logger = logging.getLogger(__name__)
 

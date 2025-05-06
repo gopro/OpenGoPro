@@ -26,19 +26,19 @@ from open_gopro.api import (
     WiredApi,
     WirelessApi,
 )
-from open_gopro.communicator_interface import (
+from open_gopro.constants import ErrorCode
+from open_gopro.domain.communicator_interface import (
     GoProHttp,
     HttpMessage,
     Message,
     MessageRules,
 )
-from open_gopro.constants import ErrorCode
-from open_gopro.exceptions import GoProNotOpened, ResponseTimeout
-from open_gopro.logger import Logger
+from open_gopro.domain.exceptions import GoProNotOpened, ResponseTimeout
+from open_gopro.domain.types import JsonDict
 from open_gopro.models import GoProResp
 from open_gopro.parsers.response import RequestsHttpRespBuilderDirector
-from open_gopro.types import JsonDict
 from open_gopro.util import pretty_print
+from open_gopro.util.logger import Logger
 
 logger = logging.getLogger(__name__)
 

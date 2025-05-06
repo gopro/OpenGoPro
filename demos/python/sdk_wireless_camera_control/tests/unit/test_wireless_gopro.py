@@ -14,14 +14,14 @@ import requests
 import requests_mock
 
 from open_gopro import constants
-from open_gopro.communicator_interface import HttpMessage
 from open_gopro.constants import ErrorCode, QueryCmdId, SettingId, StatusId, settings
 from open_gopro.constants.statuses import InternalBatteryBars
-from open_gopro.exceptions import GoProNotOpened, ResponseTimeout
+from open_gopro.domain.communicator_interface import HttpMessage
+from open_gopro.domain.exceptions import GoProNotOpened, ResponseTimeout
+from open_gopro.domain.parser_interface import GlobalParsers
+from open_gopro.domain.types import UpdateType
 from open_gopro.gopro_wireless import WirelessGoPro
 from open_gopro.models import GoProResp
-from open_gopro.parser_interface import GlobalParsers
-from open_gopro.types import UpdateType
 from tests import mock_good_response
 from tests.mocks import MockGoProMaintainBle
 
@@ -82,7 +82,7 @@ async def test_http_get(mock_wireless_gopro_basic: WirelessGoPro, monkeypatch):
     adapter = requests_mock.Adapter()
     session.mount(mock_wireless_gopro_basic._base_url + message._endpoint, adapter)
     adapter.register_uri("GET", mock_wireless_gopro_basic._base_url + message._endpoint, json="{}")
-    monkeypatch.setattr("open_gopro.gopro_base.requests.get", session.get)
+    monkeypatch.setattr("open_gopro.domain.gopro_base.requests.get", session.get)
     response = await mock_wireless_gopro_basic._get_json(message)
     assert response.ok
 
@@ -95,7 +95,7 @@ async def test_http_file(mock_wireless_gopro_basic: WirelessGoPro, monkeypatch):
     adapter = requests_mock.Adapter()
     session.mount(mock_wireless_gopro_basic._base_url + message._endpoint, adapter)
     adapter.register_uri("GET", mock_wireless_gopro_basic._base_url + message._endpoint, text="BINARY DATA")
-    monkeypatch.setattr("open_gopro.gopro_base.requests.get", session.get)
+    monkeypatch.setattr("open_gopro.domain.gopro_base.requests.get", session.get)
     await mock_wireless_gopro_basic._get_stream(message, camera_file=out_file, local_file=out_file)
     assert out_file.exists()
 
@@ -110,7 +110,7 @@ async def test_http_response_timeout(mock_wireless_gopro_basic: WirelessGoPro, m
         adapter.register_uri(
             "GET", mock_wireless_gopro_basic._base_url + message._endpoint, exc=requests.exceptions.ConnectTimeout
         )
-        monkeypatch.setattr("open_gopro.gopro_base.requests.get", session.get)
+        monkeypatch.setattr("open_gopro.domain.gopro_base.requests.get", session.get)
         await mock_wireless_gopro_basic._get_json(message, timeout=1)
 
 
@@ -127,7 +127,7 @@ async def test_http_response_error(mock_wireless_gopro_basic: WirelessGoPro, mon
         reason="something bad happened",
         json="{}",
     )
-    monkeypatch.setattr("open_gopro.gopro_base.requests.get", session.get)
+    monkeypatch.setattr("open_gopro.domain.gopro_base.requests.get", session.get)
     response = await mock_wireless_gopro_basic._get_json(message)
     assert not response.ok
 

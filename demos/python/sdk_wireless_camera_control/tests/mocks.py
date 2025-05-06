@@ -25,20 +25,20 @@ from open_gopro.ble import (
     DisconnectHandlerType,
     NotiHandlerType,
 )
-from open_gopro.communicator_interface import (
+from open_gopro.constants import CmdId, GoProUUID, StatusId
+from open_gopro.domain.communicator_interface import (
     BleMessage,
     GoProBle,
     GoProWifi,
     HttpMessage,
     MessageRules,
 )
-from open_gopro.constants import CmdId, GoProUUID, StatusId
-from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
+from open_gopro.domain.exceptions import ConnectFailed, FailedToFindDevice
+from open_gopro.domain.gopro_base import GoProBase
+from open_gopro.domain.types import CameraState, UpdateCb, UpdateType
 from open_gopro.features.base_feature import BaseFeature
-from open_gopro.gopro_base import GoProBase
 from open_gopro.models import GoProResp
 from open_gopro.proto.cohn_pb2 import EnumCOHNStatus, NotifyCOHNStatus
-from open_gopro.types import CameraState, UpdateCb, UpdateType
 from open_gopro.wifi import SsidState, WifiController
 from tests import mock_good_response, versions
 

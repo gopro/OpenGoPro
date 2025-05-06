@@ -15,9 +15,13 @@ from construct import Construct, Flag, Int16sb, Int16ub
 from google.protobuf import descriptor
 from google.protobuf.json_format import MessageToDict as ProtobufToDict
 
-from open_gopro.enum import GoProIntEnum, enum_factory
-from open_gopro.parser_interface import BytesBuilder, BytesParser, BytesParserBuilder
-from open_gopro.types import Protobuf
+from open_gopro.domain.enum import GoProIntEnum, enum_factory
+from open_gopro.domain.parser_interface import (
+    BytesBuilder,
+    BytesParser,
+    BytesParserBuilder,
+)
+from open_gopro.domain.types import Protobuf
 from open_gopro.util import is_dataclass_instance, pretty_print, to_dict
 
 logger = logging.getLogger(__name__)

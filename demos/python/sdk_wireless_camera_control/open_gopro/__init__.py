@@ -14,7 +14,7 @@ if sys.version_info.major != 3 or not 10 <= sys.version_info.minor < 13:
 
 import logging
 
-from open_gopro.logger import Logger
+from open_gopro.util.logger import Logger
 
 Logger.addLoggingLevel("TRACE", logging.DEBUG - 5)
 

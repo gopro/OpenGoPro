@@ -12,9 +12,9 @@
 from construct import Flag, GreedyString, Int8ub, Int32ub, Int64ub
 
 from open_gopro.api.builders import BleStatusFacade as BleStatus
-from open_gopro.communicator_interface import BleMessages, GoProBle
 from open_gopro.constants import StatusId
 from open_gopro.constants.statuses import *  # pylint: disable = wildcard-import, unused-wildcard-import
+from open_gopro.domain.communicator_interface import BleMessages, GoProBle
 
 
 class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
@@ -163,7 +163,7 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
         """Connected WiFi SSID
 
         The name of the wireless network that the camera is connected to where the camera is acting as a client/station.
-		
+
 		When read via BLE, this value is big-endian byte-encoded int32.
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#connected-wifi-ssid-29)"""
@@ -174,7 +174,7 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
         """Access Point SSID
 
         The name of the network that the camera sets up in AP mode for other devices to connect to.
-		
+
 		When read via BLE, this value is big-endian byte-encoded int32.
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#access-point-ssid-30)"""
@@ -204,9 +204,9 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
         """Remaining Photos
 
         How many photos can be taken with current settings before sdcard is full.
-		
+
 		Alternatively, this is:
-		
+
 		- the remaining timelapse capability if Setting 128 is set to Timelapse Photo
 		- the remaining nightlapse capability if Setting 128 is set to Nightlapse Photo
 
@@ -216,9 +216,9 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
         """Remaining Video Time
 
         How many seconds of video can be captured with current settings before sdcard is full
-		
+
 		Alternatively, this is:
-		
+
 		- the remaining timelapse capability if Setting 128 is set to Timelapse Video
 		- the remaining nightlapse capability if Setting 128 is set to Nightlapse Video
 
@@ -491,9 +491,9 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
         """Preset Modified
 
         The value of this status is set to zero when the client sends a Get Preset Status message to the camera.
-		
+
 		The value of this status is set to a non-zero value when:
-		
+
 		- Preset settings submenu is exited in the camera UI (whether any settings were changed or not)
 		- A new preset is created
 		- A preset is deleted

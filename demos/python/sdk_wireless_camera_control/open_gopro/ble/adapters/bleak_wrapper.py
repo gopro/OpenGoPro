@@ -31,7 +31,7 @@ from open_gopro.ble import (
     Service,
     UUIDs,
 )
-from open_gopro.exceptions import ConnectFailed
+from open_gopro.domain.exceptions import ConnectFailed
 from open_gopro.util import Singleton
 
 logger = logging.getLogger(__name__)

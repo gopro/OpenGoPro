@@ -19,16 +19,20 @@ from open_gopro.api import (
     HttpSettings,
     WiredApi,
 )
-from open_gopro.communicator_interface import GoProWiredInterface, Message, MessageRules
 from open_gopro.constants import StatusId
-from open_gopro.exceptions import (
+from open_gopro.domain.communicator_interface import (
+    GoProWiredInterface,
+    Message,
+    MessageRules,
+)
+from open_gopro.domain.exceptions import (
     FailedToFindDevice,
     GoProNotOpened,
     InvalidOpenGoProVersion,
 )
-from open_gopro.gopro_base import GoProBase
+from open_gopro.domain.gopro_base import GoProBase
+from open_gopro.domain.types import CameraState, UpdateCb, UpdateType
 from open_gopro.models import GoProResp
-from open_gopro.types import CameraState, UpdateCb, UpdateType
 
 logger = logging.getLogger(__name__)
 

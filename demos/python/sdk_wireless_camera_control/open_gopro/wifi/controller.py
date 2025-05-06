@@ -10,7 +10,7 @@ from abc import ABC, abstractmethod
 from enum import IntEnum, auto
 from typing import Optional
 
-from open_gopro.exceptions import InterfaceConfigFailure
+from open_gopro.domain.exceptions import InterfaceConfigFailure
 
 logger = logging.getLogger(__name__)
 

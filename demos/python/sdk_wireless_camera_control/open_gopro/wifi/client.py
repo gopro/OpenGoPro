@@ -8,7 +8,7 @@ from __future__ import annotations
 import logging
 from typing import Optional
 
-from open_gopro.exceptions import ConnectFailed
+from open_gopro.domain.exceptions import ConnectFailed
 
 from .controller import SsidState, WifiController
 

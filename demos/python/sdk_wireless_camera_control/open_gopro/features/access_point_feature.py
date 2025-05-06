@@ -8,7 +8,7 @@ from returns.result import Result
 
 from open_gopro.api.gopro_flow import GoproRegisterFlowDistinctInitial
 from open_gopro.constants import ActionId
-from open_gopro.exceptions import GoProError, ResponseTimeout
+from open_gopro.domain.exceptions import GoProError, ResponseTimeout
 from open_gopro.features.base_feature import BaseFeature
 from open_gopro.proto import (
     EnumProvisioning,

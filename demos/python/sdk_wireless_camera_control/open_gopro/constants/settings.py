@@ -9,7 +9,7 @@
 #
 ########################################################################################################################
 
-from open_gopro.enum import GoProIntEnum
+from open_gopro.domain.enum import GoProIntEnum
 
 
 class SettingId(GoProIntEnum):

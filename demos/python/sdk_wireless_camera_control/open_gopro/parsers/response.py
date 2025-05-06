@@ -22,12 +22,12 @@ from open_gopro.constants import (
     SettingId,
     StatusId,
 )
-from open_gopro.exceptions import ResponseParseError
+from open_gopro.domain.exceptions import ResponseParseError
+from open_gopro.domain.parser_interface import GlobalParsers, Parser
+from open_gopro.domain.types import CameraState, JsonDict, ResponseType
 from open_gopro.models import GoProBlePacketHeader, GoProResp
-from open_gopro.parser_interface import GlobalParsers, Parser
 from open_gopro.parsers.json import LambdaJsonParser
 from open_gopro.proto import EnumResultGeneric
-from open_gopro.types import CameraState, JsonDict, ResponseType
 
 CONT_MASK: Final = 0b10000000
 HDR_MASK: Final = 0b01100000

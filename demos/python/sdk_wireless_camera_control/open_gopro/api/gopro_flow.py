@@ -5,11 +5,11 @@ from __future__ import annotations
 from types import TracebackType
 from typing import Any, Coroutine, Generic, TypeVar
 
-from open_gopro.communicator_interface import BaseGoProCommunicator
-from open_gopro.exceptions import GoProError
-from open_gopro.flow import AsyncAction, Flow, SyncAction
+from open_gopro.domain.communicator_interface import BaseGoProCommunicator
+from open_gopro.domain.exceptions import GoProError
+from open_gopro.domain.flow import AsyncAction, Flow, SyncAction
+from open_gopro.domain.types import UpdateType
 from open_gopro.models.response import GoProResp
-from open_gopro.types import UpdateType
 
 T = TypeVar("T")
 I = TypeVar("I")

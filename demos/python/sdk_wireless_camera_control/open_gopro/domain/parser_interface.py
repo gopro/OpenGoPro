@@ -11,7 +11,7 @@ from collections import defaultdict
 from typing import Any, Callable, ClassVar, Generic, Protocol, TypeVar, cast
 
 from open_gopro.constants import ActionId, FeatureId
-from open_gopro.types import JsonDict, ResponseType
+from open_gopro.domain.types import JsonDict, ResponseType
 
 logger = logging.getLogger(__name__)
 

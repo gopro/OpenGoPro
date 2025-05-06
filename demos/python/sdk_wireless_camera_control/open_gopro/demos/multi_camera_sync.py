@@ -14,9 +14,9 @@ from threading import Event
 
 from open_gopro import WirelessGoPro, constants, proto
 from open_gopro.gopro_wired import WiredGoPro
-from open_gopro.logger import setup_logging
 from open_gopro.models.general import CohnInfo
 from open_gopro.util import add_cli_args_and_parse
+from open_gopro.util.logger import setup_logging
 
 
 @dataclass

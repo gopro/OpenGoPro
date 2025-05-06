@@ -8,7 +8,7 @@
 
 import pytest
 
-from open_gopro.exceptions import ConnectFailed
+from open_gopro.domain.exceptions import ConnectFailed
 from open_gopro.wifi import WifiClient
 
 

@@ -4,15 +4,15 @@
 import pytest
 
 from open_gopro.api.ble_commands import BleCommands
-from open_gopro.communicator_interface import GoProBle
 from open_gopro.constants import CmdId
+from open_gopro.domain.communicator_interface import GoProBle
+from open_gopro.domain.parser_interface import GlobalParsers, Parser
 from open_gopro.models.network_scan_responses import (
     GoProAdvData,
     adv_data_struct,
     manuf_data_struct,
     scan_response_struct,
 )
-from open_gopro.parser_interface import GlobalParsers, Parser
 from open_gopro.parsers.bytes import BytesParserBuilder, ProtobufByteParser
 from open_gopro.proto import EnumResultGeneric, ResponseGetApEntries
 

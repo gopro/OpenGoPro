@@ -10,8 +10,8 @@ from typing import Any
 from rich.console import Console
 
 from open_gopro import WirelessGoPro, constants, proto
-from open_gopro.logger import setup_logging
 from open_gopro.util import add_cli_args_and_parse, ainput
+from open_gopro.util.logger import setup_logging
 
 console = Console()  # rich consoler printer
 

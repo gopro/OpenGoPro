@@ -7,7 +7,7 @@ from open_gopro.api.gopro_flow import (
     GoproRegisterFlowDistinctInitial,
 )
 from open_gopro.constants.statuses import StatusId
-from open_gopro.flow import Flow
+from open_gopro.domain.flow import Flow
 from tests.mocks import MockWirelessGoPro
 
 

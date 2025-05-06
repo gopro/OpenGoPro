@@ -18,15 +18,6 @@ from returns.result import ResultE
 
 from open_gopro.api.gopro_flow import GoproRegisterFlow
 from open_gopro.ble import BleUUID
-from open_gopro.communicator_interface import (
-    BleMessage,
-    BleMessages,
-    GoProBle,
-    GoProHttp,
-    HttpMessage,
-    HttpMessages,
-    MessageRules,
-)
 from open_gopro.constants import (
     ActionId,
     CmdId,
@@ -36,21 +27,30 @@ from open_gopro.constants import (
     SettingId,
     StatusId,
 )
-from open_gopro.enum import GoProIntEnum
-from open_gopro.logger import Logger
-from open_gopro.models import GoProResp
-from open_gopro.parser_interface import (
+from open_gopro.domain.communicator_interface import (
+    BleMessage,
+    BleMessages,
+    GoProBle,
+    GoProHttp,
+    HttpMessage,
+    HttpMessages,
+    MessageRules,
+)
+from open_gopro.domain.enum import GoProIntEnum
+from open_gopro.domain.parser_interface import (
     BytesBuilder,
     BytesParserBuilder,
     GlobalParsers,
     Parser,
 )
+from open_gopro.domain.types import CameraState, JsonDict, Protobuf
+from open_gopro.models import GoProResp
 from open_gopro.parsers.bytes import (
     ConstructByteParserBuilder,
     GoProEnumByteParserBuilder,
     ProtobufByteParser,
 )
-from open_gopro.types import CameraState, JsonDict, Protobuf
+from open_gopro.util.logger import Logger
 
 logger = logging.getLogger(__name__)
 
