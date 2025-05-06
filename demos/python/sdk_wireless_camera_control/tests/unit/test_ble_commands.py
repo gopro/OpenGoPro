@@ -5,9 +5,9 @@
 import pytest
 from construct import Int32ub
 
-from open_gopro import constants
 from open_gopro.api.builders import BleSettingFacade
-from open_gopro.constants import GoProUUID, SettingId
+from open_gopro.models import constants
+from open_gopro.models.constants import GoProUUID, SettingId
 from tests.mocks import MockBleCommunicator, MockGoproResp
 
 

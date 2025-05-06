@@ -9,7 +9,7 @@
 import pytest
 
 from open_gopro.domain.exceptions import ConnectFailed
-from open_gopro.wifi import WifiClient
+from open_gopro.network.wifi import WifiClient
 
 
 @pytest.mark.asyncio

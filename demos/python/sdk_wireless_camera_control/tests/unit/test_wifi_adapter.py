@@ -10,7 +10,7 @@ from typing import Literal
 
 import pytest
 
-from open_gopro.wifi.adapters.wireless import SsidState, WifiCli
+from open_gopro.network.wifi.adapters.wireless import SsidState, WifiCli
 
 operating_systems = ["windows"]
 

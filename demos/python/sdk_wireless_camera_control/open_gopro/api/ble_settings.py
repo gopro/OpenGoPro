@@ -11,8 +11,8 @@
 
 from open_gopro import models, parsers
 from open_gopro.api.builders import BleSettingFacade as BleSetting
-from open_gopro.constants import SettingId, settings
 from open_gopro.domain.communicator_interface import BleMessages, GoProBle
+from open_gopro.models.constants import SettingId, settings
 
 
 class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):

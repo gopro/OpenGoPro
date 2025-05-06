@@ -19,7 +19,8 @@ from bleak.backends.device import BLEDevice as BleakDevice
 from bleak.backends.scanner import AdvertisementData
 from packaging.version import Version
 
-from open_gopro.ble import (
+from open_gopro.domain.exceptions import ConnectFailed
+from open_gopro.network.ble import (
     BLEController,
     BleUUID,
     Characteristic,
@@ -31,7 +32,6 @@ from open_gopro.ble import (
     Service,
     UUIDs,
 )
-from open_gopro.domain.exceptions import ConnectFailed
 from open_gopro.util import Singleton
 
 logger = logging.getLogger(__name__)

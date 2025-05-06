@@ -9,10 +9,10 @@ from dataclasses import dataclass, field
 
 import pytest
 
-from open_gopro.ble import BleUUID
-from open_gopro.ble.adapters.bleak_wrapper import BleakWrapperController
-from open_gopro.constants import GoProUUID
 from open_gopro.domain.exceptions import ConnectFailed, FailedToFindDevice
+from open_gopro.models.constants import GoProUUID
+from open_gopro.network.ble import BleUUID
+from open_gopro.network.ble.adapters.bleak_wrapper import BleakWrapperController
 
 
 def test_singleton(mock_bleak_wrapper: BleakWrapperController):

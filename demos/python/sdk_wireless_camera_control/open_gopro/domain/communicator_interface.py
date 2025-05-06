@@ -16,16 +16,6 @@ from urllib.parse import urlencode
 
 from construct import Bit, BitsInteger, BitStruct, Const, Construct, Padding
 
-from open_gopro.ble import (
-    BleClient,
-    BLEController,
-    BleDevice,
-    BleHandle,
-    BleUUID,
-    DisconnectHandlerType,
-    NotiHandlerType,
-)
-from open_gopro.constants import GoProUUID
 from open_gopro.domain.parser_interface import (
     BytesParser,
     BytesTransformer,
@@ -36,7 +26,17 @@ from open_gopro.domain.parser_interface import (
 )
 from open_gopro.domain.types import IdType, JsonDict, UpdateCb, UpdateType
 from open_gopro.models import GoProBlePacketHeader, GoProResp
-from open_gopro.wifi import WifiClient, WifiController
+from open_gopro.models.constants import GoProUUID
+from open_gopro.network.ble import (
+    BleClient,
+    BLEController,
+    BleDevice,
+    BleHandle,
+    BleUUID,
+    DisconnectHandlerType,
+    NotiHandlerType,
+)
+from open_gopro.network.wifi import WifiClient, WifiController
 
 logger = logging.getLogger(__name__)
 

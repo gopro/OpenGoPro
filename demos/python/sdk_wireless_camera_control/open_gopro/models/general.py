@@ -15,8 +15,8 @@ from pathlib import Path
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from open_gopro.constants import SettingId, WebcamError, WebcamStatus
 from open_gopro.models.bases import CustomBaseModel
+from open_gopro.models.constants import SettingId, WebcamError, WebcamStatus
 
 
 class CameraInfo(CustomBaseModel):

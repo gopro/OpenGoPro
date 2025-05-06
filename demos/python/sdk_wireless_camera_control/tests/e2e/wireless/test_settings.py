@@ -2,7 +2,7 @@ import pytest
 import pytest_asyncio
 
 from open_gopro import WirelessGoPro, proto
-from open_gopro.constants import settings
+from open_gopro.models.constants import settings
 
 
 @pytest_asyncio.fixture(loop_scope="function")

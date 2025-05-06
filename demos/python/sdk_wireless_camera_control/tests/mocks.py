@@ -17,15 +17,6 @@ from open_gopro.api import (
     HttpSettings,
     WirelessApi,
 )
-from open_gopro.ble import (
-    BLEController,
-    BleDevice,
-    BleHandle,
-    BleUUID,
-    DisconnectHandlerType,
-    NotiHandlerType,
-)
-from open_gopro.constants import CmdId, GoProUUID, StatusId
 from open_gopro.domain.communicator_interface import (
     BleMessage,
     GoProBle,
@@ -38,8 +29,17 @@ from open_gopro.domain.gopro_base import GoProBase
 from open_gopro.domain.types import CameraState, UpdateCb, UpdateType
 from open_gopro.features.base_feature import BaseFeature
 from open_gopro.models import GoProResp
+from open_gopro.models.constants import CmdId, GoProUUID, StatusId
+from open_gopro.network.ble import (
+    BLEController,
+    BleDevice,
+    BleHandle,
+    BleUUID,
+    DisconnectHandlerType,
+    NotiHandlerType,
+)
+from open_gopro.network.wifi import SsidState, WifiController
 from open_gopro.proto.cohn_pb2 import EnumCOHNStatus, NotifyCOHNStatus
-from open_gopro.wifi import SsidState, WifiController
 from tests import mock_good_response, versions
 
 api_versions = {"2.0": WirelessApi}

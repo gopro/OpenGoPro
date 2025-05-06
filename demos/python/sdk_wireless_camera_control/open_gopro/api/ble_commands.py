@@ -25,7 +25,7 @@ from construct import (
     this,
 )
 
-from open_gopro import constants, proto
+from open_gopro import proto
 from open_gopro.api.builders import (
     BleAsyncResponse,
     RegisterUnregisterAll,
@@ -34,14 +34,6 @@ from open_gopro.api.builders import (
     ble_register_command,
     ble_write_command,
 )
-from open_gopro.constants import (
-    ActionId,
-    CmdId,
-    FeatureId,
-    GoProUUID,
-    SettingId,
-    StatusId,
-)
 from open_gopro.domain.communicator_interface import (
     BleMessage,
     BleMessages,
@@ -49,7 +41,15 @@ from open_gopro.domain.communicator_interface import (
 )
 from open_gopro.domain.parser_interface import GlobalParsers, Parser
 from open_gopro.domain.types import CameraState, UpdateCb
-from open_gopro.models import CameraInfo, GoProResp, TzDstDateTime
+from open_gopro.models import CameraInfo, GoProResp, TzDstDateTime, constants
+from open_gopro.models.constants import (
+    ActionId,
+    CmdId,
+    FeatureId,
+    GoProUUID,
+    SettingId,
+    StatusId,
+)
 from open_gopro.parsers.bytes import (
     ConstructByteParserBuilder,
     DateTimeByteParserBuilder,

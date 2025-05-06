@@ -6,7 +6,7 @@
 from dataclasses import dataclass
 from typing import Final
 
-from open_gopro.ble import BleUUID, UUIDs
+from open_gopro.network.ble import BleUUID, UUIDs
 
 GOPRO_BASE_UUID: Final = "b5f9{}-aa8d-11e3-9046-0002a5d5c51b"
 

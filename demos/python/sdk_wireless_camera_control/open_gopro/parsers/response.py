@@ -11,8 +11,11 @@ from typing import Any, Final, Generic, TypeVar
 
 import requests
 
-from open_gopro.ble import BleUUID
-from open_gopro.constants import (
+from open_gopro.domain.exceptions import ResponseParseError
+from open_gopro.domain.parser_interface import GlobalParsers, Parser
+from open_gopro.domain.types import CameraState, JsonDict, ResponseType
+from open_gopro.models import GoProBlePacketHeader, GoProResp
+from open_gopro.models.constants import (
     ActionId,
     CmdId,
     ErrorCode,
@@ -22,10 +25,7 @@ from open_gopro.constants import (
     SettingId,
     StatusId,
 )
-from open_gopro.domain.exceptions import ResponseParseError
-from open_gopro.domain.parser_interface import GlobalParsers, Parser
-from open_gopro.domain.types import CameraState, JsonDict, ResponseType
-from open_gopro.models import GoProBlePacketHeader, GoProResp
+from open_gopro.network.ble import BleUUID
 from open_gopro.parsers.json import LambdaJsonParser
 from open_gopro.proto import EnumResultGeneric
 

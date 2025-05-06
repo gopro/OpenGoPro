@@ -6,7 +6,7 @@ from datetime import date
 
 from open_gopro import WirelessGoPro
 
-from open_gopro.wifi.controller import SsidState, WifiController
+from open_gopro.network.wifi.controller import SsidState, WifiController
 
 
 class MockWifiController(WifiController):

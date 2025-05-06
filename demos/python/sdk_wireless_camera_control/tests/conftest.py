@@ -11,12 +11,19 @@ from typing import Any, Generator
 import pytest
 import pytest_asyncio
 
-from open_gopro.ble import BleClient, Characteristic, Descriptor, GattDB, Service, UUIDs
-from open_gopro.ble.adapters.bleak_wrapper import BleakWrapperController
-from open_gopro.ble.services import CharProps
 from open_gopro.domain.gopro_base import GoProBase
+from open_gopro.network.ble import (
+    BleClient,
+    Characteristic,
+    Descriptor,
+    GattDB,
+    Service,
+    UUIDs,
+)
+from open_gopro.network.ble.adapters.bleak_wrapper import BleakWrapperController
+from open_gopro.network.ble.services import CharProps
+from open_gopro.network.wifi import WifiClient
 from open_gopro.util.logger import set_logging_level, setup_logging
-from open_gopro.wifi import WifiClient
 from tests import versions
 from tests.mocks import (
     MockBleCommunicator,

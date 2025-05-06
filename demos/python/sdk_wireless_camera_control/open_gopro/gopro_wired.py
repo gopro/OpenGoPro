@@ -9,8 +9,7 @@ import asyncio
 import logging
 from typing import Any, Callable, Final
 
-import open_gopro.wifi.mdns_scanner  # Imported this way for pytest monkeypatching
-from open_gopro import constants
+import open_gopro.network.wifi.mdns_scanner  # Imported this way for pytest monkeypatching
 from open_gopro.api import (
     BleCommands,
     BleSettings,
@@ -19,7 +18,6 @@ from open_gopro.api import (
     HttpSettings,
     WiredApi,
 )
-from open_gopro.constants import StatusId
 from open_gopro.domain.communicator_interface import (
     GoProWiredInterface,
     Message,
@@ -32,7 +30,8 @@ from open_gopro.domain.exceptions import (
 )
 from open_gopro.domain.gopro_base import GoProBase
 from open_gopro.domain.types import CameraState, UpdateCb, UpdateType
-from open_gopro.models import GoProResp
+from open_gopro.models import GoProResp, constants
+from open_gopro.models.constants import StatusId
 
 logger = logging.getLogger(__name__)
 
@@ -97,7 +96,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         if not self._serial:
             for retry in range(1, retries + 1):
                 try:
-                    response = await open_gopro.wifi.mdns_scanner.find_first_ip_addr(
+                    response = await open_gopro.network.wifi.mdns_scanner.find_first_ip_addr(
                         WiredGoPro._MDNS_SERVICE_NAME, timeout
                     )
                     self._serial = response.name.split(".")[0]

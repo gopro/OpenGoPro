@@ -11,7 +11,7 @@ import datetime
 import logging
 from pathlib import Path
 
-from open_gopro import constants, proto
+from open_gopro import proto
 from open_gopro.api.builders import (
     http_get_binary_command,
     http_get_json_command,
@@ -31,6 +31,7 @@ from open_gopro.models import (
     MediaMetadata,
     MediaPath,
     WebcamResponse,
+    constants,
 )
 from open_gopro.parsers.json import (
     CameraStateJsonParser,

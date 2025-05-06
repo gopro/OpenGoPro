@@ -7,9 +7,10 @@ from pathlib import Path
 
 import pytest
 
-from open_gopro import constants, proto
-from open_gopro.constants.settings import FramesPerSecond
+from open_gopro import proto
 from open_gopro.domain.gopro_base import GoProBase
+from open_gopro.models import constants
+from open_gopro.models.constants.settings import FramesPerSecond
 
 camera_file = "100GOPRO/XXX.mp4"
 

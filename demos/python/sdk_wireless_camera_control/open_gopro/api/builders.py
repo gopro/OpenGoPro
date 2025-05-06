@@ -17,16 +17,6 @@ import wrapt
 from returns.result import ResultE
 
 from open_gopro.api.gopro_flow import GoproRegisterFlow
-from open_gopro.ble import BleUUID
-from open_gopro.constants import (
-    ActionId,
-    CmdId,
-    FeatureId,
-    GoProUUID,
-    QueryCmdId,
-    SettingId,
-    StatusId,
-)
 from open_gopro.domain.communicator_interface import (
     BleMessage,
     BleMessages,
@@ -45,6 +35,16 @@ from open_gopro.domain.parser_interface import (
 )
 from open_gopro.domain.types import CameraState, JsonDict, Protobuf
 from open_gopro.models import GoProResp
+from open_gopro.models.constants import (
+    ActionId,
+    CmdId,
+    FeatureId,
+    GoProUUID,
+    QueryCmdId,
+    SettingId,
+    StatusId,
+)
+from open_gopro.network.ble import BleUUID
 from open_gopro.parsers.bytes import (
     ConstructByteParserBuilder,
     GoProEnumByteParserBuilder,

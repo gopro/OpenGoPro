@@ -23,8 +23,8 @@ from typing import Any, Callable, Optional
 import wrapt
 from packaging.version import Version
 
+from open_gopro.network.wifi import SsidState, WifiController
 from open_gopro.util import cmd
-from open_gopro.wifi import SsidState, WifiController
 
 logger = logging.getLogger(__name__)
 

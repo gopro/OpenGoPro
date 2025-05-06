@@ -15,7 +15,8 @@ from open_gopro.api.builders import (
     BleWriteCommand,
     HttpSetting,
 )
-from open_gopro.constants import (
+from open_gopro.domain.communicator_interface import HttpMessage, Message
+from open_gopro.models.constants import (
     ActionId,
     CmdId,
     ErrorCode,
@@ -25,7 +26,6 @@ from open_gopro.constants import (
     SettingId,
     StatusId,
 )
-from open_gopro.domain.communicator_interface import HttpMessage, Message
 
 dummy_kwargs = {"first": 1, "second": 2}
 

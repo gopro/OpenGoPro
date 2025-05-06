@@ -10,8 +10,8 @@ import re
 
 import pytest
 
-from open_gopro.ble import BleClient
 from open_gopro.domain.exceptions import ConnectFailed, FailedToFindDevice
+from open_gopro.network.ble import BleClient
 
 
 def disconnection_handler(_) -> None:
