@@ -4,7 +4,7 @@ import pytest
 from tinydb import TinyDB
 from tinydb.storages import MemoryStorage
 
-from open_gopro.db import CohnDb
+from open_gopro.database.cohn_db import CohnDb
 from open_gopro.models.general import CohnInfo
 
 

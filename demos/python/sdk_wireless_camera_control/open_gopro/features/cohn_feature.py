@@ -11,7 +11,7 @@ from tinydb import TinyDB
 
 from open_gopro.api import WirelessApi
 from open_gopro.api.gopro_flow import GoproRegisterFlow
-from open_gopro.db import CohnDb
+from open_gopro.database.cohn_db import CohnDb
 from open_gopro.domain.exceptions import GoProNotOpened
 from open_gopro.domain.gopro_base import GoProBase
 from open_gopro.features.base_feature import BaseFeature
