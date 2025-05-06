@@ -30,6 +30,7 @@ from open_gopro.domain.types import CameraState, UpdateCb, UpdateType
 from open_gopro.features.base_feature import BaseFeature
 from open_gopro.models import GoProResp
 from open_gopro.models.constants import CmdId, GoProUUID, StatusId
+from open_gopro.models.proto.cohn_pb2 import EnumCOHNStatus, NotifyCOHNStatus
 from open_gopro.network.ble import (
     BLEController,
     BleDevice,
@@ -39,7 +40,6 @@ from open_gopro.network.ble import (
     NotiHandlerType,
 )
 from open_gopro.network.wifi import SsidState, WifiController
-from open_gopro.proto.cohn_pb2 import EnumCOHNStatus, NotifyCOHNStatus
 from tests import mock_good_response, versions
 
 api_versions = {"2.0": WirelessApi}

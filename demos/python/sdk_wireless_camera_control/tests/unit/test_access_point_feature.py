@@ -8,16 +8,16 @@ from returns.pipeline import is_successful
 from open_gopro.features.access_point_feature import AccessPointFeature
 from open_gopro.gopro_wireless import WirelessGoPro
 from open_gopro.models.general import CohnInfo
-from open_gopro.proto.cohn_pb2 import (
+from open_gopro.models.proto.cohn_pb2 import (
     EnumCOHNNetworkState,
     EnumCOHNStatus,
     NotifyCOHNStatus,
 )
-from open_gopro.proto.network_management_pb2 import (
+from open_gopro.models.proto.network_management_pb2 import (
     NotifStartScanning,
     ResponseStartScanning,
 )
-from open_gopro.proto.response_generic_pb2 import EnumResultGeneric
+from open_gopro.models.proto.response_generic_pb2 import EnumResultGeneric
 
 provisioned_status = NotifyCOHNStatus(status=EnumCOHNStatus.COHN_PROVISIONED)
 unprovisioned_status = NotifyCOHNStatus(status=EnumCOHNStatus.COHN_UNPROVISIONED)

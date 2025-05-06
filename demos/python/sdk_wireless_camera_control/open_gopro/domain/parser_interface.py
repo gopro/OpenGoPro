@@ -219,7 +219,7 @@ class GlobalParsers:
         """Attempt to get a callable that will translate an input value to the ID-appropriate value.
 
         For example, _get_query_container(SettingId.VIDEO_RESOLUTION) will return
-        :py:class:`open_gopro.constants.settings.VideoResolution`
+        :py:class:`open_gopro.models.constants.settings.VideoResolution`
 
         As another example, _get_query_container(StatusId.TURBO_TRANSFER) will return bool()
 

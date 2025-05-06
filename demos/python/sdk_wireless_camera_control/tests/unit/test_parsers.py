@@ -13,8 +13,8 @@ from open_gopro.models.network_scan_responses import (
     manuf_data_struct,
     scan_response_struct,
 )
+from open_gopro.models.proto import EnumResultGeneric, ResponseGetApEntries
 from open_gopro.parsers.bytes import BytesParserBuilder, ProtobufByteParser
-from open_gopro.proto import EnumResultGeneric, ResponseGetApEntries
 
 
 def test_version_response(mock_ble_communicator: GoProBle):

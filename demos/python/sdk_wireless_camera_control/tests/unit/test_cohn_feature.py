@@ -9,7 +9,7 @@ from tinydb.storages import MemoryStorage
 from open_gopro.features.cohn_feature import CohnFeature
 from open_gopro.gopro_wireless import WirelessGoPro
 from open_gopro.models.general import CohnInfo
-from open_gopro.proto.cohn_pb2 import (
+from open_gopro.models.proto.cohn_pb2 import (
     EnumCOHNNetworkState,
     EnumCOHNStatus,
     NotifyCOHNStatus,

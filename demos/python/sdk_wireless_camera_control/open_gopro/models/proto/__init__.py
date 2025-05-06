@@ -3,9 +3,9 @@
 
 """Protobufs that will be needed by the user.
 
-They are imported here so they can be imported from open_gopro.proto
+They are imported here so they can be imported from
 """
-from open_gopro.proto.cohn_pb2 import (
+from .cohn_pb2 import (
     EnumCOHNNetworkState,
     EnumCOHNStatus,
     NotifyCOHNStatus,
@@ -16,7 +16,7 @@ from open_gopro.proto.cohn_pb2 import (
     RequestSetCOHNSetting,
     ResponseCOHNCert,
 )
-from open_gopro.proto.live_streaming_pb2 import (
+from .live_streaming_pb2 import (
     EnumLens,
     EnumLiveStreamStatus,
     EnumRegisterLiveStreamStatus,
@@ -25,11 +25,11 @@ from open_gopro.proto.live_streaming_pb2 import (
     RequestGetLiveStreamStatus,
     RequestSetLiveStreamMode,
 )
-from open_gopro.proto.media_pb2 import (
+from .media_pb2 import (
     RequestGetLastCapturedMedia,
     ResponseLastCapturedMedia,
 )
-from open_gopro.proto.network_management_pb2 import (
+from .network_management_pb2 import (
     EnumProvisioning,
     EnumScanEntryFlags,
     EnumScanning,
@@ -45,7 +45,7 @@ from open_gopro.proto.network_management_pb2 import (
     ResponseGetApEntries,
     ResponseStartScanning,
 )
-from open_gopro.proto.preset_status_pb2 import (
+from .preset_status_pb2 import (
     EnumPresetGroup,
     EnumPresetIcon,
     EnumPresetTitle,
@@ -55,17 +55,17 @@ from open_gopro.proto.preset_status_pb2 import (
     PresetSetting,
     RequestCustomPresetUpdate,
 )
-from open_gopro.proto.request_get_preset_status_pb2 import (
+from .request_get_preset_status_pb2 import (
     EnumRegisterPresetStatus,
     RequestGetPresetStatus,
 )
-from open_gopro.proto.response_generic_pb2 import (
+from .response_generic_pb2 import (
     EnumResultGeneric,
     Media,
     ResponseGeneric,
 )
-from open_gopro.proto.set_camera_control_status_pb2 import (
+from .set_camera_control_status_pb2 import (
     EnumCameraControlStatus,
     RequestSetCameraControlStatus,
 )
-from open_gopro.proto.turbo_transfer_pb2 import RequestSetTurboActive
+from .turbo_transfer_pb2 import RequestSetTurboActive

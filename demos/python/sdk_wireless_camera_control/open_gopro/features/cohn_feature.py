@@ -15,13 +15,10 @@ from open_gopro.db import CohnDb
 from open_gopro.domain.exceptions import GoProNotOpened
 from open_gopro.domain.gopro_base import GoProBase
 from open_gopro.features.base_feature import BaseFeature
+from open_gopro.models import proto
 from open_gopro.models.constants import ActionId
 from open_gopro.models.general import CohnInfo
-from open_gopro.proto import (
-    EnumCOHNNetworkState,
-    EnumCOHNStatus,
-    NotifyCOHNStatus,
-)
+from open_gopro.models.proto import EnumCOHNNetworkState, EnumCOHNStatus
 
 logger = logging.getLogger(__name__)
 
@@ -90,14 +87,14 @@ class CohnFeature(BaseFeature):
         self._db.insert_or_update_credentials(self._gopro.identifier, new_credentials)
 
     @property
-    def status(self) -> NotifyCOHNStatus:
+    def status(self) -> proto.NotifyCOHNStatus:
         """The current COHN status
 
         Raises:
             GoProNotOpened: There is no status yet because the camera is not yet ready.
 
         Returns:
-            NotifyCOHNStatus: The current COHN status
+            proto.NotifyCOHNStatus: The current COHN status
         """
         if not self.is_ready or not self._status_flow.current:
             raise GoProNotOpened("COHN feature is not yet ready")

@@ -25,7 +25,6 @@ from construct import (
     this,
 )
 
-from open_gopro import proto
 from open_gopro.api.builders import (
     BleAsyncResponse,
     RegisterUnregisterAll,
@@ -41,7 +40,7 @@ from open_gopro.domain.communicator_interface import (
 )
 from open_gopro.domain.parser_interface import GlobalParsers, Parser
 from open_gopro.domain.types import CameraState, UpdateCb
-from open_gopro.models import CameraInfo, GoProResp, TzDstDateTime, constants
+from open_gopro.models import CameraInfo, GoProResp, TzDstDateTime, constants, proto
 from open_gopro.models.constants import (
     ActionId,
     CmdId,
@@ -510,7 +509,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Get information about what Preset Groups and Presets the camera supports in its current state
 
         Also optionally (un)register for preset / group preset modified notifications which  will be
-        sent asynchronously as :py:attr:`open_gopro.constants.constants.ActionId.PRESET_MODIFIED_NOTIFICATION`
+        sent asynchronously as :py:attr:`open_gopro.models.constants.constants.ActionId.PRESET_MODIFIED_NOTIFICATION`
 
         Args:
             register (list[proto.EnumRegisterPresetStatus.ValueType] | None): Types of preset modified
@@ -633,7 +632,7 @@ class BleCommands(BleMessages[BleMessage]):
     async def request_wifi_connect(self, *, ssid: str) -> GoProResp[proto.ResponseConnect]:
         """Request the camera to connect to a WiFi network that is already provisioned.
 
-        Updates will be sent as :py:attr:`open_gopro.constants.constants.ActionId.NOTIF_PROVIS_STATE`
+        Updates will be sent as :py:attr:`open_gopro.models.constants.constants.ActionId.NOTIF_PROVIS_STATE`
 
         Args:
             ssid (str): SSID to connect to
@@ -654,7 +653,7 @@ class BleCommands(BleMessages[BleMessage]):
     async def request_wifi_connect_new(self, *, ssid: str, password: str) -> GoProResp[proto.ResponseConnectNew]:
         """Request the camera to connect to a WiFi network that is not already provisioned.
 
-        Updates will be sent as :py:attr:`open_gopro.constants.constants.ActionId.NOTIF_PROVIS_STATE`
+        Updates will be sent as :py:attr:`open_gopro.models.constants.constants.ActionId.NOTIF_PROVIS_STATE`
 
         Args:
             ssid (str): SSID to connect to

@@ -6,9 +6,8 @@ from typing import AsyncGenerator
 
 import pytest
 
-from open_gopro import proto
 from open_gopro.gopro_wired import WiredGoPro
-from open_gopro.models import MediaPath, constants
+from open_gopro.models import MediaPath, constants, proto
 
 
 @pytest.fixture(scope="function")

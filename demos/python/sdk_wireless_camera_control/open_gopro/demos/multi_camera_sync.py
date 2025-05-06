@@ -12,8 +12,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from threading import Event
 
-from open_gopro import WirelessGoPro, constants, proto
+from open_gopro import WirelessGoPro
 from open_gopro.gopro_wired import WiredGoPro
+from open_gopro.models import constants, proto
 from open_gopro.models.general import CohnInfo
 from open_gopro.util import add_cli_args_and_parse
 from open_gopro.util.logger import setup_logging

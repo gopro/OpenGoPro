@@ -56,7 +56,7 @@ These are both the base types that are used to implement the API (BLE Setting, B
 version-specific API's themselves.
 
 These should not be imported directly and instead should be accessed using the relevant properties (`ble_command`,
-`wifi_setting`, etc.) of a GoPro(:class:`open_gopro.gopro_base.GoProBase`) instance.
+`wifi_setting`, etc.) of a GoPro(:class:`open_gopro.domain.gopro_base.GoProBase`) instance.
 
 .. autoclass:: open_gopro.api.ble_commands.BleCommands
    :show-inheritance:
@@ -83,14 +83,14 @@ Abstracted Features
 Base Types
 ----------
 
-.. automodule:: open_gopro.types
+.. automodule:: open_gopro.domain.types
 
 GoPro Enum
 ^^^^^^^^^^
 
-.. autoclass:: open_gopro.enum.GoProEnum
+.. autoclass:: open_gopro.domain.enum.GoProEnum
 
-.. autoclass:: open_gopro.enum.GoProIntEnum
+.. autoclass:: open_gopro.domain.enum.GoProIntEnum
 
 BLE Setting
 ^^^^^^^^^^^
@@ -128,25 +128,25 @@ Message Bases
 These are the base types that are used to implement version-specific API's. These are published for reference
 but the end user should never need to use these directly.
 
-.. autoclass:: open_gopro.communicator_interface.Message
+.. autoclass:: open_gopro.domain.communicator_interface.Message
    :show-inheritance:
 
-.. autoclass:: open_gopro.communicator_interface.HttpMessage
+.. autoclass:: open_gopro.domain.communicator_interface.HttpMessage
    :show-inheritance:
 
-.. autoclass:: open_gopro.communicator_interface.BleMessage
+.. autoclass:: open_gopro.domain.communicator_interface.BleMessage
    :show-inheritance:
 
-.. autoclass:: open_gopro.communicator_interface.Messages
+.. autoclass:: open_gopro.domain.communicator_interface.Messages
    :show-inheritance:
 
-.. autoclass:: open_gopro.communicator_interface.BleMessages
+.. autoclass:: open_gopro.domain.communicator_interface.BleMessages
    :show-inheritance:
 
-.. autoclass:: open_gopro.communicator_interface.HttpMessages
+.. autoclass:: open_gopro.domain.communicator_interface.HttpMessages
    :show-inheritance:
 
-.. autoclass:: open_gopro.communicator_interface.MessageRules
+.. autoclass:: open_gopro.domain.communicator_interface.MessageRules
 
 Flows
 ^^^^^
@@ -154,7 +154,7 @@ Flows
 .. automodule:: open_gopro.api.gopro_flow
    :show-inheritance:
 
-.. automodule:: open_gopro.flow
+.. automodule:: open_gopro.domain.flow
    :show-inheritance:
 
 Responses
@@ -219,60 +219,60 @@ These can be imported as:
 
    from open_gopro import constants
 
-.. automodule:: open_gopro.constants
+.. automodule:: open_gopro.models.constants
    :undoc-members:
    :exclude-members: CmdType, GoProEnumMeta, GoProFlagEnum, ProducerType, ResponseType, enum_factory
 
-.. automodule:: open_gopro.constants.constants
+.. automodule:: open_gopro.models.constants.constants
    :undoc-members:
 
-.. automodule:: open_gopro.constants.settings
+.. automodule:: open_gopro.models.constants.settings
    :undoc-members:
 
-.. automodule:: open_gopro.constants.statuses
+.. automodule:: open_gopro.models.constants.statuses
    :undoc-members:
 
 Exceptions
 ==========
 
-.. automodule:: open_gopro.exceptions
+.. automodule:: open_gopro.domain.exceptions
    :undoc-members:
 
 Common Interface
 ================
 
-.. automodule:: open_gopro.parser_interface
+.. automodule:: open_gopro.domain.parser_interface
 
-.. autoclass:: open_gopro.gopro_base.GoProBase
+.. autoclass:: open_gopro.domain.gopro_base.GoProBase
 
-.. autoclass:: open_gopro.communicator_interface.GoProBle
+.. autoclass:: open_gopro.domain.communicator_interface.GoProBle
 
-.. autoclass:: open_gopro.communicator_interface.GoProHttp
+.. autoclass:: open_gopro.domain.communicator_interface.GoProHttp
 
-.. autoclass:: open_gopro.communicator_interface.GoProWifi
+.. autoclass:: open_gopro.domain.communicator_interface.GoProWifi
 
-.. autoclass:: open_gopro.communicator_interface.GoProWiredInterface
+.. autoclass:: open_gopro.domain.communicator_interface.GoProWiredInterface
 
-.. autoclass:: open_gopro.communicator_interface.GoProWirelessInterface
+.. autoclass:: open_gopro.domain.communicator_interface.GoProWirelessInterface
 
-.. autoclass:: open_gopro.communicator_interface.BaseGoProCommunicator
+.. autoclass:: open_gopro.domain.communicator_interface.BaseGoProCommunicator
 
 
 BLE Interface
 =============
 
-.. automodule:: open_gopro.ble.controller
+.. automodule:: open_gopro.network.ble.controller
 
-.. automodule:: open_gopro.ble.client
+.. automodule:: open_gopro.network.ble.client
 
 BLEServices
 -----------
 
-.. automodule:: open_gopro.ble.services
+.. automodule:: open_gopro.network.ble.services
 
 WiFi Interface
 ==============
 
-.. automodule:: open_gopro.wifi.controller
+.. automodule:: open_gopro.network.wifi.controller
 
-.. automodule:: open_gopro.wifi.client
+.. automodule:: open_gopro.network.wifi.client

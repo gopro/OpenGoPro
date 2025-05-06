@@ -25,9 +25,9 @@ from open_gopro.models.constants import (
     SettingId,
     StatusId,
 )
+from open_gopro.models.proto import EnumResultGeneric
 from open_gopro.network.ble import BleUUID
 from open_gopro.parsers.json import LambdaJsonParser
-from open_gopro.proto import EnumResultGeneric
 
 CONT_MASK: Final = 0b10000000
 HDR_MASK: Final = 0b01100000

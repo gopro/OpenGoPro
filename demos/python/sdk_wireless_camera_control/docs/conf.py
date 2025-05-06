@@ -67,10 +67,6 @@ intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
 }
 
-# The version info for the project you're documenting, acts as replacement
-# for |version| and |release|, also used in various other places throughout
-# the built documents.
-
 # Extract version set from pyproject.toml
 import importlib.metadata as importlib_metadata
 
@@ -79,13 +75,13 @@ version = importlib_metadata.version("open_gopro")
 nitpicky = True
 
 TYPE_ALIASES = {
-    "CameraState": "open_gopro.types.CameraState",
-    "UpdateCb": "open_gopro.types.UpdateCb",
-    "UpdateType": "open_gopro.types.UpdateType",
+    "CameraState": "open_gopro.domain.types.CameraState",
+    "UpdateCb": "open_gopro.domain.types.UpdateCb",
+    "UpdateType": "open_gopro.domain.types.UpdateType",
     "JsonDict": "open_gopro.JsonDict",
-    "ResponseType": "open_gopro.types.ResponseType",
-    "Protobuf": "open_gopro.types.Protobuf",
-    "IdType": "open_gopro.types.IdType",
+    "ResponseType": "open_gopro.domain.types.ResponseType",
+    "Protobuf": "open_gopro.domain.types.Protobuf",
+    "IdType": "open_gopro.domain.types.IdType",
     "SyncAction": "open_gopro.flow.SyncAction",
     "AsyncAction": "open_gopro.flow.AsyncAction",
     "SyncFilter": "open_gopro.flow.SyncFilter",

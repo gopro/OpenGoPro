@@ -9,7 +9,8 @@ from typing import Any
 
 from rich.console import Console
 
-from open_gopro import WirelessGoPro, constants, proto
+from open_gopro import WirelessGoPro
+from open_gopro.models import constants, proto
 from open_gopro.util import add_cli_args_and_parse, ainput
 from open_gopro.util.logger import setup_logging
 

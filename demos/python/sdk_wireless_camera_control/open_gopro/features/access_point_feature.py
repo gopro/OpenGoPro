@@ -9,8 +9,9 @@ from returns.result import Result
 from open_gopro.api.gopro_flow import GoproRegisterFlowDistinctInitial
 from open_gopro.domain.exceptions import GoProError, ResponseTimeout
 from open_gopro.features.base_feature import BaseFeature
+from open_gopro.models import proto
 from open_gopro.models.constants import ActionId
-from open_gopro.proto import (
+from open_gopro.models.proto import (
     EnumProvisioning,
     EnumResultGeneric,
     EnumScanEntryFlags,
@@ -19,7 +20,6 @@ from open_gopro.proto import (
     NotifStartScanning,
     ResponseConnect,
     ResponseConnectNew,
-    ResponseGetApEntries,
     ResponseStartScanning,
 )
 
@@ -40,7 +40,7 @@ class AccessPointFeature(BaseFeature):
     def close(self) -> None:  # noqa: D102
         return
 
-    async def scan_wifi_networks(self, timeout: int = 60) -> Result[ResponseGetApEntries, GoProError]:
+    async def scan_wifi_networks(self, timeout: int = 60) -> Result[proto.ResponseGetApEntries, GoProError]:
         """Instruct the camera to scan for WiFi networks
 
         Args:
@@ -48,7 +48,7 @@ class AccessPointFeature(BaseFeature):
                 failure. Defaults to 60.
 
         Returns:
-            Result[ResponseGetApEntries, GoProError]: Discovered AP entries on success or error
+            Result[proto.ResponseGetApEntries, GoProError]: Discovered AP entries on success or error
         """
         # Wait to receive scanning success
         logger.info("Scanning for Wifi networks")
