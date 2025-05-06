@@ -11,7 +11,8 @@ assignees: ''
 
 **Component**
 What is the bug in?
-- Demos (python sdk, etc)
+- SDKs (Python / Kotlin)
+- Other Demos
 - Tutorials
 - Documentation
 - Specs (BLE, HTTP)
@@ -28,6 +29,13 @@ Steps to reproduce the behavior:
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
+
+**Logs**
+If this is a bug in API communication, the bug report must contain parsed logs of the communication. If this bug is
+regarding:
+- Python SDK. Get logs as specified in [troubleshooting](https://gopro.github.io/OpenGoPro/python_sdk/troubleshooting.html)
+- Kotlin SDK. Provide the relevant sections of the [Logcat](https://developer.android.com/studio/debug/logcat) file
+- Your own example: provide parsed human-readable logs.
 
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
