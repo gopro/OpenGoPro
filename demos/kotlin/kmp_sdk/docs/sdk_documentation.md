@@ -2,7 +2,7 @@
 
 <img alt="GoPro Logo" src="https://raw.githubusercontent.com/gopro/OpenGoPro/gh-pages/assets/images/logos/logo.png" width="50%" style="max-width: 500px;"/>
 
-Welcome to the API Documentation for the [Open GoPro Kotlin Multiplatfrom SDK](TODO link to Maven). 
+Welcome to the API Documentation for the [Open GoPro Kotlin Multi-platform SDK](TODO link to Maven).
 
 This document is strictly about library usage. For a high level overview and a demo app, see
 the OGP KMP SDK on [Github](https://github.com/gopro/OpenGoPro/tree/main/demos/kotlin/kmp_sdk).
@@ -14,7 +14,7 @@ The general procedure is:
     // App context is platform-specific context passed from application
     val sdk = OgpSdk(Dispatchers.IO, appContext)
    ```
-1. Discover and connect to a GoPro Device. A successful connection will store it in the SDK's (runtime) database.
+2. Discover and connect to a GoPro Device. A successful connection will store it in the SDK's (runtime) database.
    ```kotlin
     // Discover and take the first device we find
     val device = sdk.discover(NetworkType.BLE).first()
@@ -23,13 +23,13 @@ The general procedure is:
     val goproId = sdk.connect(device).getOrThrow()
     ```
 
-2. Now that the device is connected and stored in the SDK, retrieve the GoPro object from the SDK. This can be done any
+3. Now that the device is connected and stored in the SDK, retrieve the GoPro object from the SDK. This can be done any
    number of times after connection.
    ```kotlin
     // Now retrieve the gopro (assume success)
     val gopro = sdk.getGoPro(goproId).getOrThrow()
    ```
-3. Manipulate the retrieved GoPro as desired
+4. Manipulate the retrieved GoPro as desired
    ```kotlin
     // Set the shutter
     gopro.commands.setShutter(true)
