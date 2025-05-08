@@ -45,14 +45,15 @@ class CohnFeature(BaseFeature):
         self._db = CohnDb(cohn_db)
         if cohn_credentials:
             self.credentials = cohn_credentials
+        self._ready_event = asyncio.Event()
         # TODO close this
         self._status_flow = GoproFlow(
             gopro=self._gopro,
             update=ActionId.RESPONSE_GET_COHN_STATUS,
             register_command=self._gopro.ble_command.cohn_get_status(register=True),
-        )
+        ).on_start(lambda _: self._ready_event.set())
+        self._status_generator = self._status_flow.observe()
         self._status_task: asyncio.Task = asyncio.create_task(self._track_status())
-        self._ready_event = asyncio.Event()
 
     @property
     def is_ready(self) -> bool:  # noqa: D102
@@ -68,8 +69,8 @@ class CohnFeature(BaseFeature):
         """Task to continuously monitor COHN status"""
         while True:
             if self._gopro.is_ble_connected:
-                async with self._status_flow.on_start(lambda _: self._ready_event.set()) as flow:
-                    await flow.collect(lambda s: logger.debug(f"Feature Received COHN status: {s}"))
+                async for status in self._status_generator:
+                    logger.debug(f"Feature Received COHN status: {status}")
             else:
                 await asyncio.sleep(1)
 
@@ -157,12 +158,12 @@ class CohnFeature(BaseFeature):
             async with asyncio.timeout(timeout):
                 # Start fresh by clearing cert and wait until we receive unprovisioned status
                 await self._gopro.ble_command.cohn_clear_certificate()
-                await self._status_flow.first(lambda status: status.status == EnumCOHNStatus.COHN_UNPROVISIONED)
+                await self._status_generator.first(lambda status: status.status == EnumCOHNStatus.COHN_UNPROVISIONED)
                 logger.info("COHN has been unprovisioned")
 
                 # Reprovision and wait until we receive provisioned status
                 assert (await self._gopro.ble_command.cohn_create_certificate(override=True)).ok
-                status = await self._status_flow.first(lambda status: status.status == EnumCOHNStatus.COHN_PROVISIONED)
+                status = await self._status_generator.first(lambda status: status.status == EnumCOHNStatus.COHN_PROVISIONED)
                 logger.info("COHN has been successfully provisioned!!")
 
                 cert = (await self._gopro.ble_command.cohn_get_certificate()).data.cert
@@ -205,7 +206,7 @@ class CohnFeature(BaseFeature):
                 logger.info("Waiting for COHN to be connected")
 
                 async with asyncio.timeout(timeout):
-                    await self._status_flow.first(lambda s: s.state == EnumCOHNNetworkState.COHN_STATE_NetworkConnected)
+                    await self._status_generator.first(lambda s: s.state == EnumCOHNNetworkState.COHN_STATE_NetworkConnected)
 
             logger.info("COHN is connected")
             # On some cameras, the IP address only comes with this status. Let's just always take all of the available

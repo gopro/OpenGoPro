@@ -61,7 +61,7 @@ class AccessPointFeature(BaseFeature):
             if flow.initial_response.result != EnumResultGeneric.RESULT_SUCCESS:
                 return Result.from_failure(GoProError("Failed to start scanning."))
 
-            result = await flow.first(lambda s: s.scanning_state == EnumScanning.SCANNING_SUCCESS)
+            result = await flow.observe().first(lambda s: s.scanning_state == EnumScanning.SCANNING_SUCCESS)
             entries = await self._gopro.ble_command.get_ap_entries(scan_id=result.scan_id)
             return Result.from_value(entries.data)
 
@@ -104,7 +104,7 @@ class AccessPointFeature(BaseFeature):
 
                         try:
                             async with asyncio.timeout(timeout):
-                                await flow.first(
+                                await flow.observe().first(
                                     lambda s: s.provisioning_state == EnumProvisioning.PROVISIONING_SUCCESS_NEW_AP
                                 )
                                 return Result.from_value(None)

@@ -55,6 +55,7 @@ pytz = "*"
 tzlocal = "*"
 tinydb = "^4.8.2"
 returns = {extras = ["compatible-mypy"], version = "^0.25.0"}
+asyncstdlib = "^3.13.1"
 
 [tool.poetry.extras]
 gui = ["opencv-python", "pillow"]

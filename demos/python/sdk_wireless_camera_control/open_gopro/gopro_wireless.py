@@ -601,20 +601,16 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             await self._ready_lock.acquire()
             logger.trace("Control has initial lock")  # type: ignore
 
-            async def _handle_encoding(status: int) -> None:
-                await self._update_internal_state(StatusId.ENCODING, status)
+            async def _handle_encoding() -> None:
+                async for encoding_status in (await self.ble_status.encoding.get_value_flow()).unwrap().observe():
+                    await self._update_internal_state(StatusId.ENCODING, encoding_status)
 
-            async def _handle_busy(status: int) -> None:
-                await self._update_internal_state(StatusId.BUSY, status)
+            async def _handle_busy() -> None:
+                async for busy_status in (await self.ble_status.busy.get_value_flow()).unwrap().observe():
+                    await self._update_internal_state(StatusId.BUSY, busy_status)
 
-            self._status_tasks.append(
-                asyncio.create_task(
-                    (await self.ble_status.encoding.get_value_flow()).unwrap().collect(_handle_encoding)
-                )
-            )
-            self._status_tasks.append(
-                asyncio.create_task((await self.ble_status.busy.get_value_flow()).unwrap().collect(_handle_busy))
-            )
+            self._status_tasks.append(asyncio.create_task(_handle_encoding()))
+            self._status_tasks.append(asyncio.create_task(_handle_busy()))
         logger.info("BLE is ready!")
 
     async def _update_internal_state(self, update: UpdateType, value: int) -> None:
