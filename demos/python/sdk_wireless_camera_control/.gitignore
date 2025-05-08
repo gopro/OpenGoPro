@@ -2,6 +2,7 @@
 **/*.crt
 **/*.jpg
 **/*.mp4
+**/*.gpmf
 **/temp
 
 # Docs output

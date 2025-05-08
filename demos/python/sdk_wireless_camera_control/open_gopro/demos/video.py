@@ -43,9 +43,14 @@ async def main(args: argparse.Namespace) -> None:
             # The video (is most likely) the difference between the two sets
             video = media_set_after.difference(media_set_before).pop()
 
-            # Download the video
+            # Download the video and GPMF
             console.print(f"Downloading {video.filename}...")
-            await gopro.http_command.download_file(camera_file=video.filename, local_file=args.output)
+            await gopro.http_command.download_file(
+                camera_file=video.filename, local_file=args.output.with_suffix(".mp4")
+            )
+            await gopro.http_command.get_gpmf_data(
+                camera_file=video.filename, local_file=args.output.with_suffix(".gpmf")
+            )
             console.print(f"Success!! :smiley: File has been downloaded to {args.output}")
     except Exception as e:  # pylint: disable = broad-except
         logger.error(repr(e))
@@ -62,8 +67,8 @@ def parse_arguments() -> argparse.Namespace:
         "-o",
         "--output",
         type=Path,
-        help="Where to write the video to. If not set, write to 'video.mp4'",
-        default=Path("video.mp4"),
+        help="Where to write the video to (not including file type). If not set, write to 'video'",
+        default=Path("video"),
     )
     parser.add_argument(
         "--wired",

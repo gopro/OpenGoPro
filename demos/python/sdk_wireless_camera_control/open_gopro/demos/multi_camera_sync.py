@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import datetime
 import multiprocessing as mp
 from dataclasses import dataclass
 from pathlib import Path
@@ -15,7 +16,7 @@ from threading import Event
 from open_gopro import WirelessGoPro
 from open_gopro.gopro_wired import WiredGoPro
 from open_gopro.models import constants, proto
-from open_gopro.models.general import CohnInfo
+from open_gopro.models.general import CohnInfo, ScheduledCapture
 from open_gopro.util import add_cli_args_and_parse
 from open_gopro.util.logger import setup_logging
 
@@ -130,6 +131,44 @@ def multi_record_via_ble(  # pylint: disable = unused-argument
     asyncio.run(_execute())
 
 
+def multi_record_via_scheduled_capture(  # pylint: disable = unused-argument
+    target: GoPro,
+    record_event: Event,
+    ready_event: Event,
+    ssid: str | None,
+    password: str | None,
+) -> None:
+    """Multiprocess target to synchronized record via Scheduled Capture over BLE
+
+    Args:
+        target (GoPro): gopro to communicate with
+        record_event (Event): event to wait on to start recording
+        ready_event (Event): event to notify manager that this target is ready
+        ssid (str | None): not used
+        password (str | None): not used
+    """
+    logger = setup_logging(__name__, Path(f"{target.serial}.log"))
+
+    async def _execute() -> None:
+        async with WirelessGoPro(target.serial, interfaces={WirelessGoPro.Interface.BLE}) as gopro:
+            await gopro.ble_command.load_preset_group(group=proto.EnumPresetGroup.PRESET_GROUP_ID_PHOTO)
+            camera_now = (await gopro.ble_command.get_date_time_tz_dst()).data.datetime
+            capture_time = camera_now + datetime.timedelta(minutes=1)
+            logger.info(f"Camera time is {camera_now}. Recording at {capture_time}")
+            await gopro.ble_setting.scheduled_capture.set(
+                ScheduledCapture(
+                    hour=capture_time.hour,
+                    minute=capture_time.minute,
+                    is_24_hour=True,
+                    is_enabled=True,
+                )
+            )
+            ready_event.set()
+            record_event.wait()
+
+    asyncio.run(_execute())
+
+
 def main(args: argparse.Namespace) -> None:
     gopro_targets = [GoPro(serial, f"Device {idx}") for idx, serial in enumerate(args.devices)]
     record_event = mp.Event()
@@ -141,6 +180,8 @@ def main(args: argparse.Namespace) -> None:
             target = multi_record_via_cohn
         case "ble":
             target = multi_record_via_ble
+        case "scheduled_capture":
+            target = multi_record_via_scheduled_capture
     processes = [
         mp.Process(target=target, args=(gopro_target, record_event, event, args.ssid, args.password))
         for event, gopro_target in zip(ready_events, gopro_targets)
@@ -163,7 +204,7 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument(
         "interface",
         type=str,
-        choices=["usb", "cohn", "ble"],
+        choices=["usb", "cohn", "ble", "scheduled_capture"],
         help="Interface to communicate with the target devices",
     )
     parser.add_argument(
