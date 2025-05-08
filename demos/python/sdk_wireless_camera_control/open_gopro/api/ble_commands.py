@@ -38,7 +38,7 @@ from open_gopro.domain.communicator_interface import (
     BleMessages,
     MessageRules,
 )
-from open_gopro.domain.gopro_flow import GoproFlow
+from open_gopro.domain.gopro_observable import GoProObservable
 from open_gopro.domain.parser_interface import GlobalParsers, Parser
 from open_gopro.domain.types import CameraState
 from open_gopro.models import CameraInfo, GoProResp, TzDstDateTime, constants, proto
@@ -354,7 +354,7 @@ class BleCommands(BleMessages[BleMessage]):
     ######################################################################################################
 
     @ble_register_command(GoProUUID.CQ_QUERY, CmdId.REGISTER_ALL_STATUSES, update_set=StatusId)
-    async def register_for_all_statuses(self) -> ResultE[GoproFlow[dict[StatusId, Any]]]:
+    async def register_for_all_statuses(self) -> ResultE[GoProObservable[dict[StatusId, Any]]]:
         """Register push notifications for all statuses
 
         Returns:
@@ -362,7 +362,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_register_command(GoProUUID.CQ_QUERY, CmdId.REGISTER_ALL_SETTINGS, update_set=SettingId)
-    async def register_for_all_settings(self) -> ResultE[GoproFlow[dict[SettingId, Any]]]:
+    async def register_for_all_settings(self) -> ResultE[GoProObservable[dict[SettingId, Any]]]:
         """Register push notifications for all settings
 
         Returns:
@@ -370,7 +370,7 @@ class BleCommands(BleMessages[BleMessage]):
         """
 
     @ble_register_command(GoProUUID.CQ_QUERY, CmdId.REGISTER_ALL_CAPABILITIES, update_set=SettingId)
-    async def register_for_all_capabilities(self) -> ResultE[GoproFlow[dict[SettingId, list[Any]]]]:
+    async def register_for_all_capabilities(self) -> ResultE[GoProObservable[dict[SettingId, list[Any]]]]:
         """Register push notifications for all capabilities
 
         Returns:

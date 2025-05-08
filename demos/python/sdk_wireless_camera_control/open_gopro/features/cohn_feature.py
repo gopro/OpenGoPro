@@ -12,7 +12,7 @@ from tinydb import TinyDB
 from open_gopro.api import WirelessApi
 from open_gopro.database.cohn_db import CohnDb
 from open_gopro.domain.exceptions import GoProNotOpened
-from open_gopro.domain.gopro_flow import GoproFlow
+from open_gopro.domain.gopro_observable import GoProObservable
 from open_gopro.features.base_feature import BaseFeature
 from open_gopro.gopro_base import GoProBase
 from open_gopro.models import proto
@@ -47,7 +47,7 @@ class CohnFeature(BaseFeature):
             self.credentials = cohn_credentials
         self._ready_event = asyncio.Event()
         # TODO close this
-        self._status_flow = GoproFlow(
+        self._status_flow = GoProObservable(
             gopro=self._gopro,
             update=ActionId.RESPONSE_GET_COHN_STATUS,
             register_command=self._gopro.ble_command.cohn_get_status(register=True),
@@ -163,7 +163,9 @@ class CohnFeature(BaseFeature):
 
                 # Reprovision and wait until we receive provisioned status
                 assert (await self._gopro.ble_command.cohn_create_certificate(override=True)).ok
-                status = await self._status_generator.first(lambda status: status.status == EnumCOHNStatus.COHN_PROVISIONED)
+                status = await self._status_generator.first(
+                    lambda status: status.status == EnumCOHNStatus.COHN_PROVISIONED
+                )
                 logger.info("COHN has been successfully provisioned!!")
 
                 cert = (await self._gopro.ble_command.cohn_get_certificate()).data.cert
@@ -206,7 +208,9 @@ class CohnFeature(BaseFeature):
                 logger.info("Waiting for COHN to be connected")
 
                 async with asyncio.timeout(timeout):
-                    await self._status_generator.first(lambda s: s.state == EnumCOHNNetworkState.COHN_STATE_NetworkConnected)
+                    await self._status_generator.first(
+                        lambda s: s.state == EnumCOHNNetworkState.COHN_STATE_NetworkConnected
+                    )
 
             logger.info("COHN is connected")
             # On some cameras, the IP address only comes with this status. Let's just always take all of the available

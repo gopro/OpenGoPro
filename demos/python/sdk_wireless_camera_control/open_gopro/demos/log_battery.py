@@ -16,8 +16,7 @@ from rich.console import Console
 
 from open_gopro import WirelessGoPro
 from open_gopro.models.constants import StatusId
-from open_gopro.models.constants.statuses import InternalBatteryBars
-from open_gopro.util import add_cli_args_and_parse, ainput
+from open_gopro.util import add_cli_args_and_parse
 from open_gopro.util.logger import set_stream_logging_level, setup_logging
 
 console = Console()
@@ -94,23 +93,20 @@ async def main(args: argparse.Namespace) -> None:
         async with WirelessGoPro(args.identifier, interfaces={WirelessGoPro.Interface.BLE}) as gopro:
             set_stream_logging_level(logging.ERROR)
 
-            async def process_percentage(status: int) -> None:
-                await process_status(StatusId.INTERNAL_BATTERY_PERCENTAGE, status)
+            async def process_percentage() -> None:
+                async for percentage in (
+                    (await gopro.ble_status.internal_battery_percentage.get_value_flow()).unwrap().observe()
+                ):
+                    await process_status(StatusId.INTERNAL_BATTERY_PERCENTAGE, percentage)
 
-            async def process_bars(status: InternalBatteryBars) -> None:
-                await process_status(StatusId.INTERNAL_BATTERY_BARS, status)
+            async def process_bars() -> None:
+                async for bars in (await gopro.ble_status.internal_battery_bars.get_value_flow()).unwrap().observe():
+                    await process_status(StatusId.INTERNAL_BATTERY_BARS, bars)
 
             await asyncio.wait(
                 [
-                    asyncio.create_task(
-                        (await gopro.ble_status.internal_battery_percentage.get_value_flow())
-                        .unwrap()
-                        .collect(process_percentage)
-                    ),
-                    asyncio.create_task(
-                        (await gopro.ble_status.internal_battery_bars.get_value_flow()).unwrap().collect(process_bars)
-                    ),
-                    asyncio.create_task(ainput("[purple]Press enter to exit.", console.print)),
+                    asyncio.create_task(process_percentage()),
+                    asyncio.create_task(process_bars()),
                 ],
                 return_when=asyncio.FIRST_COMPLETED,
             )

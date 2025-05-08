@@ -27,7 +27,7 @@ from open_gopro.domain.communicator_interface import (
 )
 from open_gopro.domain.enum import GoProIntEnum
 from open_gopro.domain.exceptions import GoProError
-from open_gopro.domain.gopro_flow import GoproCompositeFlow, GoproFlow
+from open_gopro.domain.gopro_observable import GoProCompositeObservable, GoProObservable
 from open_gopro.domain.parser_interface import (
     BytesBuilder,
     BytesParserBuilder,
@@ -330,7 +330,9 @@ def ble_register_command(
     unregister_message = RegisterUnregisterAll(uuid, cmd, update_set, RegisterUnregisterAll.Action.UNREGISTER, parser)
 
     @wrapt.decorator
-    async def wrapper(wrapped: Callable, instance: BleMessages, _: Any, kwargs: Any) -> ResultE[GoproCompositeFlow]:
+    async def wrapper(
+        wrapped: Callable, instance: BleMessages, _: Any, kwargs: Any
+    ) -> ResultE[GoProCompositeObservable]:
         internal_update_type = (
             GoProBle._CompositeRegisterType.ALL_STATUSES
             if update_set == StatusId
@@ -338,7 +340,7 @@ def ble_register_command(
         )
         try:
             return ResultE.from_value(
-                await GoproCompositeFlow(
+                await GoProCompositeObservable(
                     gopro=instance._communicator,
                     update=internal_update_type,
                     register_command=instance._communicator._send_ble_message(
@@ -578,7 +580,7 @@ class BleSettingFacade(Generic[T]):
         """
         raise NotImplementedError("Not implemented on camera!")
 
-    async def get_value_flow(self) -> ResultE[GoproFlow[T]]:
+    async def get_value_flow(self) -> ResultE[GoProObservable[T]]:
         """Receive a data flow of asynchronously notified setting values.
 
         Returns:
@@ -597,7 +599,7 @@ class BleSettingFacade(Generic[T]):
             lambda **_: self._build_cmd(QueryCmdId.UNREG_SETTING_VAL_UPDATE),
         )
         return ResultE.from_value(
-            await GoproFlow[T](
+            await GoProObservable[T](
                 gopro=self._communicator,
                 update=self._identifier,
                 register_command=self._communicator._send_ble_message(register_message),
@@ -605,7 +607,7 @@ class BleSettingFacade(Generic[T]):
             ).start()
         )
 
-    async def get_capabilities_flow(self) -> ResultE[GoproFlow[list[T]]]:
+    async def get_capabilities_flow(self) -> ResultE[GoProObservable[list[T]]]:
         """Receive a data flow of asynchronously notified lists of setting value capabilities.
 
         Returns:
@@ -624,7 +626,7 @@ class BleSettingFacade(Generic[T]):
             lambda **_: self._build_cmd(QueryCmdId.UNREG_CAPABILITIES_UPDATE),
         )
         return ResultE.from_value(
-            await GoproFlow[list[T]](
+            await GoProObservable[list[T]](
                 gopro=self._communicator,
                 update=self._identifier,
                 register_command=self._communicator._send_ble_message(register_message),
@@ -714,7 +716,7 @@ class BleStatusFacade(Generic[T]):
         )
         return await self._communicator._send_ble_message(message)
 
-    async def get_value_flow(self) -> ResultE[GoproFlow[T]]:
+    async def get_value_flow(self) -> ResultE[GoProObservable[T]]:
         """Register for asynchronous notifications when a status changes.
 
         Returns:
@@ -734,7 +736,7 @@ class BleStatusFacade(Generic[T]):
         )
 
         return ResultE.from_value(
-            await GoproFlow[T](
+            await GoProObservable[T](
                 gopro=self._communicator,
                 update=self._identifier,
                 register_command=self._communicator._send_ble_message(register_message),
