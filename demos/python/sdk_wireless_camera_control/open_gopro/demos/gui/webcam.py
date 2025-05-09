@@ -54,19 +54,31 @@ async def wait_for_webcam_status(gopro: GoProBase, statuses: set[WebcamStatus], 
         return False
 
 
+# TODO handle COHN
+
+
 async def main(args: argparse.Namespace) -> int:
     logger = setup_logging(__name__, args.log)
     gopro: GoProBase | None = None
 
-    # TODO handle COHN
     try:
+        wireless_interfaces: set[WirelessGoPro.Interface] = set()
+        if args.cohn:
+            wireless_interfaces = wireless_interfaces.union({WirelessGoPro.Interface.BLE, WirelessGoPro.Interface.COHN})
+        elif args.wifi:
+            wireless_interfaces = wireless_interfaces.union(
+                {WirelessGoPro.Interface.BLE, WirelessGoPro.Interface.WIFI_AP}
+            )
         async with (
-            WirelessGoPro(args.identifier, host_wifi_interface=args.wifi_interface, enable_wifi=not args.cohn)
-            if bool(args.cohn or args.wireless)
+            WirelessGoPro(
+                args.identifier,
+                host_wifi_interface=args.wifi_interface,
+                interfaces=wireless_interfaces,
+            )
+            if wireless_interfaces
             else WiredGoPro(args.identifier)
         ) as gopro:
             assert gopro
-
             await gopro.http_command.wired_usb_control(control=constants.Toggle.DISABLE)
 
             await gopro.http_command.set_shutter(shutter=constants.Toggle.DISABLE)
@@ -104,19 +116,23 @@ async def main(args: argparse.Namespace) -> int:
 
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Setup and view a GoPro webcam using TS protocol.")
-    protocol = parser.add_argument_group("protocol", "Mutually exclusive Protocol option if not default wired USB.")
+    protocol = parser.add_argument_group(
+        "protocol",
+        "Mutually exclusive Protocol option if not default wired USB.",
+    )
     group = protocol.add_mutually_exclusive_group()
     group.add_argument(
-        "--wireless",
+        "--wifi",
         action="store_true",
-        help="Set to use wireless (BLE / WIFI) instead of wired (USB)) interface",
+        help="Set to use wireless (BLE / WIFI AP) instead of wired (USB)) interface",
     )
-    group.add_argument(
-        "--cohn",
-        action="store_true",
-        help="Communicate via COHN. Assumes COHN is already provisioned.",
-    )
-    return add_cli_args_and_parse(parser)
+    # group.add_argument(
+    #     "--cohn",
+    #     action="store_true",
+    #     help="Communicate via COHN. Assumes COHN is already provisioned",
+    # )
+    args = add_cli_args_and_parse(parser)
+    return args
 
 
 # Needed for poetry scripts defined in pyproject.toml
