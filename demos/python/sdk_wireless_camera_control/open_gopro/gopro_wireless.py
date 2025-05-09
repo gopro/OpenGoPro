@@ -66,6 +66,45 @@ from open_gopro.util.logger import Logger
 logger = logging.getLogger(__name__)
 
 
+class _ReadyLock:
+    """Camera ready state lock manager"""
+
+    class _LockOwner(enum.Enum):
+        """Current owner of the communication lock"""
+
+        RULE_ENFORCER = enum.auto()
+        STATE_MANAGER = enum.auto()
+
+    def __init__(self):
+        self.lock = asyncio.Lock()
+        self.owner = None
+
+    async def __aenter__(self):
+        """Acquire lock with clear ownership tracking"""
+        await self.lock.acquire()
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        """Release lock and clear ownership"""
+        if self.lock.locked():
+            self.lock.release()
+            self.owner = None
+
+    async def acquire(self, owner: _LockOwner):
+        logger.trace(f"{owner.name} acquiring lock")  # type: ignore
+        """Acquire lock with specified owner"""
+        await self.lock.acquire()
+        self.owner = owner
+        logger.trace(f"{owner.name} acquired lock")  # type: ignore
+
+    def release(self):
+        """Release lock if locked"""
+        if self.lock.locked():
+            logger.trace(f"{self.owner.name} releasing lock")  # type: ignore
+            self.lock.release()
+            self.owner = None
+
+
 class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     """The top-level BLE and Wifi interface to a Wireless GoPro device.
 
@@ -131,12 +170,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     """
 
     WRITE_TIMEOUT: Final[int] = 5
-
-    class _LockOwner(enum.Enum):
-        """Current owner of the communication lock"""
-
-        RULE_ENFORCER = enum.auto()
-        STATE_MANAGER = enum.auto()
 
     class Interface(enum.Enum):
         """GoPro Wireless Interface selection"""
@@ -218,8 +251,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         if self._should_maintain_state:
             self._status_tasks: list[asyncio.Task] = []
             self._state_acquire_lock_tasks: list[asyncio.Task] = []
-            self._lock_owner: WirelessGoPro._LockOwner | None = WirelessGoPro._LockOwner.STATE_MANAGER
-            self._ready_lock: asyncio.Lock
+            self._ready_lock: _ReadyLock
             self._keep_alive_task: asyncio.Task
             self._encoding: bool
             self._busy: bool
@@ -366,7 +398,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
         # If we are to perform BLE housekeeping
         if self._should_maintain_state:
-            self._ready_lock = asyncio.Lock()
+            self._ready_lock = _ReadyLock()
             self._keep_alive_task = asyncio.create_task(self._periodic_keep_alive())
             self._encoding = True
             self._busy = True
@@ -526,29 +558,23 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     async def _enforce_message_rules(
         self, wrapped: Callable, message: Message, rules: MessageRules = MessageRules(), **kwargs: Any
     ) -> GoProResp:
-        # Acquire ready lock unless we are initializing or this is a Set Shutter Off command
+        """Enforce rules around message sending"""
+
         if self._should_maintain_state and self.is_open and not rules.is_fastpass(**kwargs):
-            logger.trace(f"[Concurrency] {wrapped.__name__} acquiring lock")  # type: ignore
-            await self._ready_lock.acquire()
-            logger.trace(f"[Concurrency] {wrapped.__name__} has the lock")  # type: ignore
-            self._lock_owner = WirelessGoPro._LockOwner.RULE_ENFORCER
-            response = await wrapped(message, **kwargs)
-        else:  # Either we're not maintaining state, we're not opened yet, or this is a fastpass message
+            logger.trace("Rule enforcer acquiring lock")  # type: ignore
+            async with self._ready_lock as lock:
+                lock.owner = _ReadyLock._LockOwner.RULE_ENFORCER
+                logger.trace("Rule enforcer acquired lock")  # type: ignore
+                response = await wrapped(message, **kwargs)
+            logger.trace("Rule enforcer released lock")  # type: ignore
+        else:
             response = await wrapped(message, **kwargs)
 
-        # Release the lock if we acquired it
-        if self._should_maintain_state:
-            if self._lock_owner is WirelessGoPro._LockOwner.RULE_ENFORCER:
-                logger.trace(f"[Concurrency] {wrapped.__name__} releasing the lock")  # type: ignore
-                self._lock_owner = None
-                self._ready_lock.release()
-                logger.trace(f"[Concurrency] {wrapped.__name__} released the lock")  # type: ignore
-            # Is there any special handling required after receiving the response?
-            if rules.should_wait_for_encoding_start(**kwargs):
-                logger.trace("[Concurrency] Message enforcer waiting to receive encoding started.")  # type: ignore
-                await self._encoding_started.wait()
-                logger.trace("[Concurrency] Message enforcer received encoding started.")  # type: ignore
-                self._encoding_started.clear()
+        # Handle post-response actions
+        if self._should_maintain_state and rules.should_wait_for_encoding_start(**kwargs):
+            await self._encoding_started.wait()
+            self._encoding_started.clear()
+
         return response
 
     async def _notify_listeners(self, update: UpdateType, value: Any) -> None:
@@ -598,12 +624,13 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             raise InterfaceConfigFailure("Failed to get identifier from BLE client")
         self._identifier = self._ble.identifier[-4:]
 
+        logger.trace("State manager initially acquiring lock")  # type: ignore
+        await self._ready_lock.acquire(_ReadyLock._LockOwner.STATE_MANAGER)
+        logger.trace("State manager initially acquired lock")  # type: ignore
+
         # Start state maintenance
         if self._should_maintain_state:
             self._ble_disconnect_event.clear()
-            logger.trace("[Concurrency] State Manager initially acquiring lock")  # type: ignore
-            await self._ready_lock.acquire()
-            logger.trace("[Concurrency] State Manager has initial lock")  # type: ignore
 
             async def _handle_encoding(observable: GoProObservable) -> None:
                 async for encoding_status in observable.observe(debug_id=StatusId.ENCODING.name):
@@ -622,53 +649,40 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         logger.info("BLE is ready!")
 
     async def _update_internal_state(self, update: UpdateType, value: int) -> None:
-        """Update the internal state based on a status update.
-
-        # Note!!! This needs to be reentrant-safe
-
-        Used to update encoding and / or busy status
-
-        Args:
-            update (UpdateType): type of update (status ID)
-            value (int): updated value
-        """
-        # Cancel any currently pending state update tasks
+        """Update internal state based on camera status changes"""
+        # Clean up pending tasks
+        logger.trace(f"Received internal state update {update}: {value}")  # type: ignore
         for task in self._state_acquire_lock_tasks:
-            logger.trace("[Concurrency] State Manager Cancelling pending acquire task.")  # type: ignore
             task.cancel()
-        self._state_acquire_lock_tasks = []
+        self._state_acquire_lock_tasks.clear()
 
-        logger.trace(f"[Concurrency] State Manager State update received {update.name} ==> {value}")  # type: ignore
-        should_notify_encoding = False
+        # Update state variables
+        previous_ready = await self.is_ready
+        encoding_started = False
         if update == StatusId.ENCODING:
+            encoding_started = not self._encoding and bool(value)
             self._encoding = bool(value)
-            if self._encoding:
-                should_notify_encoding = True
         elif update == StatusId.BUSY:
             self._busy = bool(value)
-        logger.trace(f"[Concurrency] State Manager Current internal states: {self._encoding=} {self._busy=}")  # type: ignore
+        current_ready = await self.is_ready
+        logger.trace(f"Current state: {self._encoding=}, {self._busy=}, {current_ready=}")  # type: ignore
 
-        if self._lock_owner is WirelessGoPro._LockOwner.STATE_MANAGER and await self.is_ready:
-            logger.trace("[Concurrency] State Manager releasing lock")  # type: ignore
-            self._lock_owner = None
-            self._ready_lock.release()
-            logger.trace("[Concurrency] State Manager released lock")  # type: ignore
-        elif self._lock_owner is not WirelessGoPro._LockOwner.STATE_MANAGER and not await self.is_ready:
-            logger.trace("[Concurrency] State Manager acquiring lock")  # type: ignore
+        # Handle lock state transitions based on camera readiness
+        if self._ready_lock.owner == _ReadyLock._LockOwner.STATE_MANAGER:
+            if current_ready and not previous_ready:
+                # Camera became ready, release lock
+                self._ready_lock.release()
+        elif not current_ready and self._ready_lock.owner != _ReadyLock._LockOwner.STATE_MANAGER:
+            # Camera became busy, acquire lock
             try:
-                task = asyncio.create_task(self._ready_lock.acquire())
-                # TODO should this and the enxt few lines be in one task?
+                task = asyncio.create_task(self._ready_lock.acquire(_ReadyLock._LockOwner.STATE_MANAGER))
                 self._state_acquire_lock_tasks.append(task)
                 await task
-                logger.trace("[Concurrency] State Manager has lock")  # type: ignore
-                self._lock_owner = WirelessGoPro._LockOwner.STATE_MANAGER
             except asyncio.CancelledError:
-                logger.trace("[Concurrency] State Manager acquire lock cancelled")  # type: ignore
-        else:
-            logger.trace("[Concurrency] State Manager nothing to do")  # type: ignore
+                pass
 
-        if should_notify_encoding and self.is_open:
-            logger.trace("[Concurrency] State Manager setting encoded started")  # type: ignore
+        # Notify encoding started if applicable
+        if encoding_started and self.is_open:
             self._encoding_started.set()
 
     async def _route_response(self, response: GoProResp) -> None:

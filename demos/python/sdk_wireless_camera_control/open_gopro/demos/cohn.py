@@ -27,29 +27,33 @@ async def main(args: argparse.Namespace) -> None:
 
     gopro: WirelessGoPro | None = None
     try:
-        # Start with Wifi Disabled (i.e. don't allow camera in AP mode) and only connect BLE to check COHN status / provision
-        async with WirelessGoPro(
-            target=args.identifier,
-            interfaces={WirelessGoPro.Interface.BLE},
-            cohn_db=args.db,
-        ) as gopro:
-            if await gopro.cohn.is_configured:
-                console.print("COHN is already configured.")
-            else:
-                if not args.ssid or not args.password:
-                    raise ValueError("COHN needs to be provisioned but you didn't pass SSID or password.")
-                await gopro.access_point.connect(args.ssid, args.password)
-                await gopro.cohn.configure(force_reprovision=True)
+        # If we weren't explicitly passed an identifier, we will try to find the first camera available
+        if identifier := args.identifier:
+            console.print(f"Attempting to directly communicate via COHN to GoPro {identifier}")
+        else:
+            # Start with Wifi Disabled (i.e. don't allow camera in AP mode) and only connect BLE to check COHN status / provision
+            async with WirelessGoPro(
+                target=args.identifier,
+                interfaces={WirelessGoPro.Interface.BLE},
+                cohn_db=args.db,
+            ) as gopro:
+                if await gopro.cohn.is_configured:
+                    console.print("COHN is already configured.")
+                else:
+                    if not args.ssid or not args.password:
+                        raise ValueError("COHN needs to be provisioned but you didn't pass SSID or password.")
+                    await gopro.access_point.connect(args.ssid, args.password)
+                    await gopro.cohn.configure(force_reprovision=True)
 
-            console.print("[blue]COHN is ready for communication. Dropping the BLE connection.")
+                console.print("[blue]COHN is ready for communication. Dropping the BLE connection.")
 
-        assert gopro.cohn.credentials
-        console.print(
-            f"Sample curl command: {COHN_CURL_CMD_TEMPLATE.format(
-            password=gopro.cohn.credentials.password,
-            ip_addr=gopro.cohn.credentials.ip_address,)}"
-        )
-        identifier = gopro.identifier
+            assert gopro.cohn.credentials
+            console.print(
+                f"Sample curl command: {COHN_CURL_CMD_TEMPLATE.format(
+                password=gopro.cohn.credentials.password,
+                ip_addr=gopro.cohn.credentials.ip_address,)}"
+            )
+            identifier = gopro.identifier
         # Now create an object with only COHN
         async with WirelessGoPro(
             target=identifier,

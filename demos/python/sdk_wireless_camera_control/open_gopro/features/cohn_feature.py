@@ -112,14 +112,7 @@ class CohnFeature(BaseFeature):
         Returns:
             bool: True if configured, False otherwise
         """
-        if self.credentials and self.credentials.is_complete:
-            # Validate COHN
-            try:
-                # Ensure we can send an HTTP command via COHN
-                return (await self._gopro.http_command.get_open_gopro_api_version()).ok
-            except Exception as exc:  # pylint: disable=broad-exception-caught
-                logger.error(repr(exc))
-        return False
+        return bool(self.credentials and self.credentials.is_complete)
 
     @property
     def is_connected(self) -> bool:
