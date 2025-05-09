@@ -160,11 +160,11 @@ sequence = ["_clean_artifacts", "_clean_tests", "_clean_docs", "_clean_build"]
 help = "Clean everything"
 
 [tool.poe.tasks.all]
-sequence = ["format", "lint", "tests", "docs"]
-help = "Format, check types, lint, check docstrings, and run unit tests"
+sequence = ["format", "lint", "tests", "docs", "licenses"]
+help = "Format, check types, lint, check docstrings, run unit tests, and update license report."
 
 [tool.poe.tasks.licenses]
-shell = """licensecheck > licenses.csv"""
+cmd = "licensecheck"
 help = "Analyze dependency licenses"
 
 [tool.mypy]
@@ -289,3 +289,4 @@ should-declare-assert-error-if-assert-statement-exists = false
 [tool.licensecheck]
 using = "PEP631"
 format = 'csv'
+file = "thirdPartyDependencies.csv"

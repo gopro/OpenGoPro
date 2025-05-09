@@ -1,7 +1,7 @@
-# gopro.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# gopro_wireless.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:05:47 PM
 
-"""Implements top level interface to GoPro module."""
+"""Implements top level interface to Wireless GoPros."""
 
 from __future__ import annotations
 
@@ -13,6 +13,7 @@ import traceback
 from collections import defaultdict
 from copy import deepcopy
 from pathlib import Path
+from types import TracebackType
 from typing import Any, Callable, Final
 
 from tinydb import TinyDB
@@ -75,29 +76,33 @@ class _ReadyLock:
         RULE_ENFORCER = enum.auto()
         STATE_MANAGER = enum.auto()
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.lock = asyncio.Lock()
-        self.owner = None
+        self.owner: _ReadyLock._LockOwner | None = None
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> _ReadyLock:
         """Acquire lock with clear ownership tracking"""
         await self.lock.acquire()
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type: BaseException, exc_val: Any, exc_tb: TracebackType) -> None:
         """Release lock and clear ownership"""
         if self.lock.locked():
             self.lock.release()
             self.owner = None
 
-    async def acquire(self, owner: _LockOwner):
+    async def acquire(self, owner: _LockOwner) -> None:
+        """Acquire lock with specified owner
+
+        Args:
+            owner (_LockOwner): Owner attempting to acquire lock
+        """
         logger.trace(f"{owner.name} acquiring lock")  # type: ignore
-        """Acquire lock with specified owner"""
         await self.lock.acquire()
         self.owner = owner
         logger.trace(f"{owner.name} acquired lock")  # type: ignore
 
-    def release(self):
+    def release(self) -> None:
         """Release lock if locked"""
         if self.lock.locked():
             logger.trace(f"{self.owner.name} releasing lock")  # type: ignore
@@ -559,7 +564,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         self, wrapped: Callable, message: Message, rules: MessageRules = MessageRules(), **kwargs: Any
     ) -> GoProResp:
         """Enforce rules around message sending"""
-
         if self._should_maintain_state and self.is_open and not rules.is_fastpass(**kwargs):
             logger.trace("Rule enforcer acquiring lock")  # type: ignore
             async with self._ready_lock as lock:
@@ -624,12 +628,12 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             raise InterfaceConfigFailure("Failed to get identifier from BLE client")
         self._identifier = self._ble.identifier[-4:]
 
-        logger.trace("State manager initially acquiring lock")  # type: ignore
-        await self._ready_lock.acquire(_ReadyLock._LockOwner.STATE_MANAGER)
-        logger.trace("State manager initially acquired lock")  # type: ignore
-
         # Start state maintenance
         if self._should_maintain_state:
+            logger.trace("State manager initially acquiring lock")  # type: ignore
+            await self._ready_lock.acquire(_ReadyLock._LockOwner.STATE_MANAGER)
+            logger.trace("State manager initially acquired lock")  # type: ignore
+
             self._ble_disconnect_event.clear()
 
             async def _handle_encoding(observable: GoProObservable) -> None:

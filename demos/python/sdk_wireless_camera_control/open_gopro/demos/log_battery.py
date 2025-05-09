@@ -16,7 +16,7 @@ from rich.console import Console
 
 from open_gopro import WirelessGoPro
 from open_gopro.models.constants import StatusId
-from open_gopro.util import add_cli_args_and_parse
+from open_gopro.util import add_cli_args_and_parse, ainput
 from open_gopro.util.logger import set_stream_logging_level, setup_logging
 
 console = Console()
@@ -109,6 +109,7 @@ async def main(args: argparse.Namespace) -> None:
                 [
                     asyncio.create_task(process_percentage()),
                     asyncio.create_task(process_bars()),
+                    asyncio.create_task(ainput("Press enter to stop exit...")),
                 ],
                 return_when=asyncio.FIRST_COMPLETED,
             )
@@ -124,9 +125,7 @@ async def main(args: argparse.Namespace) -> None:
 
 
 def parse_arguments() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Connect to the GoPro via BLE only and continuously read the battery (either by polling or notifications)."
-    )
+    parser = argparse.ArgumentParser(description="Connect to the GoPro via BLE only and track the battery status.")
     return add_cli_args_and_parse(parser, wifi=False)
 
 

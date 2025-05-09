@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import textwrap
 from pathlib import Path
 
 from rich.console import Console
@@ -46,13 +47,6 @@ async def main(args: argparse.Namespace) -> None:
                     await gopro.cohn.configure(force_reprovision=True)
 
                 console.print("[blue]COHN is ready for communication. Dropping the BLE connection.")
-
-            assert gopro.cohn.credentials
-            console.print(
-                f"Sample curl command: {COHN_CURL_CMD_TEMPLATE.format(
-                password=gopro.cohn.credentials.password,
-                ip_addr=gopro.cohn.credentials.ip_address,)}"
-            )
             identifier = gopro.identifier
         # Now create an object with only COHN
         async with WirelessGoPro(
@@ -63,6 +57,12 @@ async def main(args: argparse.Namespace) -> None:
             # Prove we can communicate via the COHN HTTP channel without a BLE or Wifi connection
             assert (await gopro.http_command.get_camera_state()).ok
             console.print("Successfully communicated via COHN!!")
+            assert gopro.cohn.credentials
+            console.print(
+                f"Sample curl command: {COHN_CURL_CMD_TEMPLATE.format(
+                password=gopro.cohn.credentials.password,
+                ip_addr=gopro.cohn.credentials.ip_address,)}"
+            )
 
     except Exception as e:  # pylint: disable = broad-except
         logger.error(repr(e))
@@ -73,18 +73,47 @@ async def main(args: argparse.Namespace) -> None:
 
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Provision / connect a camera for COHN. SSID and password must be passed if COHN is not currently provisioned."
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description=textwrap.dedent(
+            """\
+        Open GoPro Camera on the Home Network (COHN) Utility
+        ----------------------------------------------------
+        This utility is used to configure and demonstrate the Camera On the Home Network (COHN) feature of GoPro cameras.
+        COHN allows the camera to be accessed over a local network using HTTP, without the need for a direct Wi-Fi or
+        Bluetooth connection.
+
+        There are three main modes of operation that are chosen based on the arguments passed to this script:
+
+        1. COHN Provisioning: If the camera is not already provisioned for COHN, you can provide the SSID (--ssid) and
+           password (--password) of the Wi-Fi network to which the camera should connect. The script will then
+           (re)configure the camera for COHN using these credentials.
+
+        2. COHN Communication without initial BLE check: If the camera is already provisioned for COHN, you can directly
+           communicate with it using the COHN HTTP channel. This is done by passing the camera's identifier (--identifier)
+           which is the trailing 4 digits of the serial number.
+
+        3. COHN Communication with initial BLE check: If you don't provide an identifier, the script will first attempt to
+           find the first available camera using BLE. If it finds a camera that is already provisioned for COHN,
+           it will connect to it and demonstrate COHN communication. If it finds a camera that is not provisioned for COHN,
+           it will return an error message and exit if you didn't pass SSID and password. If you pass SSID and password,
+           this is the same as the first mode of operation.
+
+        Therefore, the general procedure for a freshly factory-reset camera is:
+            1. Use operation mode 1 to provision COHN
+            2. Use operation mode 2 to communicate with (only) COHN
+        """
+        ),
     )
     parser.add_argument(
         "--ssid",
         type=str,
-        help="WiFi SSID to connect to if not currently provisioned for COHN.",
+        help="WiFi SSID to connect. Mutually inclusive with --password.",
         default=None,
     )
     parser.add_argument(
         "--password",
         type=str,
-        help="Password of WiFi SSID.",
+        help="Password of WiFi SSID. Mutually inclusive with --ssid.",
         default=None,
     )
     parser.add_argument(
@@ -93,7 +122,10 @@ def parse_arguments() -> argparse.Namespace:
         help="path to COHN database file. Defaults to cohn_db.json",
         default=Path("cohn_db.json"),
     )
-    return add_cli_args_and_parse(parser, wifi=False)
+    args = add_cli_args_and_parse(parser, wifi=False)
+    if args.ssid and not args.password:
+        parser.error("The --ssid argument requires --password to also be set.")
+    return args
 
 
 # Needed for poetry scripts defined in pyproject.toml

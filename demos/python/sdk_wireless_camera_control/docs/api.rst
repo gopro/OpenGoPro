@@ -56,7 +56,7 @@ These are both the base types that are used to implement the API (BLE Setting, B
 version-specific API's themselves.
 
 These should not be imported directly and instead should be accessed using the relevant properties (`ble_command`,
-`wifi_setting`, etc.) of a GoPro(:class:`open_gopro.domain.gopro_base.GoProBase`) instance.
+`wifi_setting`, etc.) of a GoPro(:class:`open_gopro.gopro_base.GoProBase`) instance.
 
 .. autoclass:: open_gopro.api.ble_commands.BleCommands
    :show-inheritance:
@@ -148,13 +148,13 @@ but the end user should never need to use these directly.
 
 .. autoclass:: open_gopro.domain.communicator_interface.MessageRules
 
-Flows
-^^^^^
+Observables
+^^^^^^^^^^^
 
-.. automodule:: open_gopro.api.gopro_flow
+.. automodule:: open_gopro.domain.observable
    :show-inheritance:
 
-.. automodule:: open_gopro.domain.flow
+.. automodule:: open_gopro.domain.gopro_observable
    :show-inheritance:
 
 Responses
@@ -243,7 +243,7 @@ Common Interface
 
 .. automodule:: open_gopro.domain.parser_interface
 
-.. autoclass:: open_gopro.domain.gopro_base.GoProBase
+.. autoclass:: open_gopro.gopro_base.GoProBase
 
 .. autoclass:: open_gopro.domain.communicator_interface.GoProBle
 

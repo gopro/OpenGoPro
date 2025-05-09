@@ -29,6 +29,7 @@ async def main(args: argparse.Namespace) -> None:
         async with WirelessGoPro(args.identifier, enable_wifi=False) as gopro:
             assert gopro
             set_stream_logging_level(logging.WARNING)
+            await gopro.ble_setting.control_mode.set(constants.settings.ControlMode.PRO)
 
             console.print("Entering Video Mode")
             assert (await gopro.ble_command.load_preset_group(group=proto.EnumPresetGroup.PRESET_GROUP_ID_VIDEO)).ok
@@ -50,8 +51,14 @@ async def main(args: argparse.Namespace) -> None:
             capture_time = now + timedelta(minutes=1)
             console.print(f"Scheduling a scheduled capture at {capture_time}")
             assert (
-                await gopro.ble_setting.scheduled_capture.set(ScheduledCapture.from_datetime(capture_time, True))
+                await gopro.ble_setting.scheduled_capture.set(
+                    ScheduledCapture.from_datetime(
+                        dt=capture_time,
+                        is_enabled=True,
+                    )
+                )
             ).ok
+
             console.print("Scheduled capture is configured successfully :smiley:")
             console.print("Exiting...")
 

@@ -140,6 +140,7 @@ nitpick_ignore_regex = [
     (r"py:class", r".*ValueType"),
     (r"py:obj", r".*communicator_interface.MessageType"),
     (r"py:class", r".*dataclasses.*"),
+    (r"py:class", r".*BaseGoProCommunicator._CompositeRegisterType.*"),
 ]
 
 

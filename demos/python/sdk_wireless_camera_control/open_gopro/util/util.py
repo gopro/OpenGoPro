@@ -275,7 +275,12 @@ def add_cli_args_and_parse(
         argparse.Namespace: modified argument parser
     """
     # Common args
-    parser.add_argument("--log", type=Path, help="Location to store detailed log", default="gopro_demo.log")
+    parser.add_argument(
+        "--log",
+        type=Path,
+        help="Location to store detailed log. Defaults to gopro_demo.log",
+        default="gopro_demo.log",
+    )
 
     if bluetooth:
         parser.add_argument(
@@ -299,6 +304,7 @@ def add_cli_args_and_parse(
             help="Set to read sudo password from stdin. If not set, you will be prompted for password if needed",
         )
 
+    parser.epilog = "Note that a minimal log is written to stdout. An extremely detailed log is written to the path set by the --log argument."
     args = parser.parse_args()
     if wifi:
         args.password = sys.stdin.readline() if args.password else None
