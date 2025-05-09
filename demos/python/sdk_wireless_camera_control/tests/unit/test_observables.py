@@ -15,21 +15,21 @@ from tests.mocks import MockWirelessGoPro
 
 
 @pytest.mark.asyncio
-async def test_base_flow():
+async def test_base_observable():
     # GIVEN
     complete = asyncio.Event()
     started = asyncio.Event()
-    flow = Observable[int]().on_subscribe(lambda: started.set())
+    observable = Observable[int]().on_subscribe(lambda: started.set())
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await flow.emit(0)
+        await observable.emit(0)
 
     async def single_get_values():
-        flow_gen = flow.observe()
-        assert await anext(flow_gen) == 0
-        assert flow.current == 0
+        observer = observable.observe()
+        assert await anext(observer) == 0
+        assert observable.current == 0
         complete.set()
 
     async with asyncio.TaskGroup() as tg:
@@ -40,123 +40,123 @@ async def test_base_flow():
 
 
 @pytest.mark.asyncio
-async def test_flow_with_default_replay():
+async def test_observable_with_default_replay():
     # GIVEN
-    flow = Observable[int]()
+    observable = Observable[int]()
 
     # WHEN
-    await flow.emit(0)
-    await flow.emit(1)
-    result = await anext(flow.observe())
+    await observable.emit(0)
+    await observable.emit(1)
+    result = await anext(observable.observe())
 
     # THEN
     assert result == 1
 
 
 @pytest.mark.asyncio
-async def test_flow_with_max_replay():
+async def test_observable_with_max_replay():
     # GIVEN
-    flow = Observable[int]()
+    observable = Observable[int]()
     results: list[int] = []
-    flow_gen = flow.observe(replay=Observable.REPLAY_ALL)
+    observer = observable.observe(replay=Observable.REPLAY_ALL)
 
     # WHEN
-    await flow.emit(0)
-    await flow.emit(1)
-    await flow.emit(2)
-    results.append(await anext(flow_gen))
-    results.append(await anext(flow_gen))
-    results.append(await anext(flow_gen))
+    await observable.emit(0)
+    await observable.emit(1)
+    await observable.emit(2)
+    results.append(await anext(observer))
+    results.append(await anext(observer))
+    results.append(await anext(observer))
 
     # THEN
     assert results == [0, 1, 2]
 
 
 @pytest.mark.asyncio
-async def test_flow_with_no_replay_times_out():
+async def test_observable_with_no_replay_times_out():
     # GIVEN
-    flow = Observable[int]()
+    observable = Observable[int]()
     results: list[int] = []
-    flow_gen = flow.observe(replay=0)
+    observer = observable.observe(replay=0)
 
     # WHEN
-    await flow.emit(0)
-    await flow.emit(1)
-    await flow.emit(2)
+    await observable.emit(0)
+    await observable.emit(1)
+    await observable.emit(2)
 
     # THEN
     with pytest.raises(asyncio.TimeoutError):
-        await asyncio.wait_for(anext(flow_gen), timeout=0.5)
+        await asyncio.wait_for(anext(observer), timeout=0.5)
 
 
 @pytest.mark.asyncio
-async def test_flow_on_start_sync_action():
+async def test_observable_on_start_sync_action():
     # GIVEN
     on_start = asyncio.Event()
     started = asyncio.Event()
-    flow = Observable().on_subscribe(lambda: started.set())
+    observable = Observable().on_subscribe(lambda: started.set())
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await flow.emit(0)
+        await observable.emit(0)
 
-    flow = flow.on_start(lambda _: on_start.set())
-    flow_gen = flow.observe()
+    observable = observable.on_start(lambda _: on_start.set())
+    observer = observable.observe()
     async with asyncio.TaskGroup() as tg:
         tg.create_task(emit_values())
-        single = tg.create_task(anext(flow_gen))
+        single = tg.create_task(anext(observer))
 
     # THEN
     assert single.result() == 0
     assert await asyncio.wait_for(on_start.wait(), 1)
-    assert flow.current == 0
+    assert observable.current == 0
 
 
 @pytest.mark.asyncio
-async def test_flow_on_start_async_action():
+async def test_observable_on_start_async_action():
     # GIVEN
     on_start = asyncio.Event()
     started = asyncio.Event()
-    flow = Observable().on_subscribe(lambda: started.set())
+    observable = Observable().on_subscribe(lambda: started.set())
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await flow.emit(0)
+        await observable.emit(0)
 
     async def set_event_on_start(value: int) -> None:
         on_start.set()
 
-    flow = flow.on_start(set_event_on_start)
-    flow_gen = flow.observe()
+    observable = observable.on_start(set_event_on_start)
+    observer = observable.observe()
     async with asyncio.TaskGroup() as tg:
         tg.create_task(emit_values())
-        single = tg.create_task(anext(flow_gen))
+        single = tg.create_task(anext(observer))
 
     # THEN
     assert single.result() == 0
     assert await asyncio.wait_for(on_start.wait(), 1)
-    assert flow.current == 0
+    assert observable.current == 0
 
 
 @pytest.mark.asyncio
-async def test_flow_take_while():
+async def test_observable_take_while():
     # GIVEN
     started = asyncio.Event()
-    flow = Observable[int]().on_subscribe(lambda: started.set())
-    flow_gen = flow.observe()
+    observable = Observable[int]().on_subscribe(lambda: started.set())
+    observer = observable.observe()
     received: list[int] = []
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await flow.emit(0)
-        await flow.emit(1)
-        await flow.emit(2)
+        await observable.emit(0)
+        await observable.emit(1)
+        await observable.emit(2)
 
     async def collector() -> None:
-        async for value in takewhile(lambda x: x != 2, flow_gen):
+        async for value in takewhile(lambda x: x != 2, observer):
             received.append(value)
 
     async with asyncio.TaskGroup() as tg:
@@ -170,23 +170,23 @@ async def test_flow_take_while():
 
 
 @pytest.mark.asyncio
-async def test_flow_drop_while():
+async def test_observable_drop_while():
     # GIVEN
     started = asyncio.Event()
-    flow = Observable[int]().on_subscribe(lambda: started.set())
-    flow_gen = flow.observe()
+    observable = Observable[int]().on_subscribe(lambda: started.set())
+    observer = observable.observe()
     received: list[int] = []
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await flow.emit(0)
-        await flow.emit(1)
-        await flow.emit(2)
-        await flow.emit(3)
+        await observable.emit(0)
+        await observable.emit(1)
+        await observable.emit(2)
+        await observable.emit(3)
 
     async def collector() -> None:
-        async for value in dropwhile(lambda x: x < 2, flow_gen):
+        async for value in dropwhile(lambda x: x < 2, observer):
             received.append(value)
             if value == 3:
                 break
@@ -202,45 +202,45 @@ async def test_flow_drop_while():
 
 
 @pytest.mark.asyncio
-async def test_flow_first_matching():
+async def test_observable_first_matching():
     # GIVEN
     started = asyncio.Event()
-    flow = Observable[int]().on_subscribe(lambda: started.set())
-    flow_gen = flow.observe()
+    observable = Observable[int]().on_subscribe(lambda: started.set())
+    observer = observable.observe()
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await flow.emit(0)
-        await flow.emit(1)
+        await observable.emit(0)
+        await observable.emit(1)
 
     async with asyncio.TaskGroup() as tg:
         tg.create_task(emit_values())
-        matched = tg.create_task(flow_gen.first(lambda x: x == 1))
+        matched = tg.create_task(observer.first(lambda x: x == 1))
 
     # THEN
     assert matched.result() == 1
 
 
 @pytest.mark.asyncio
-async def test_flow_slice():
+async def test_observable_slice():
     # GIVEN
     started = asyncio.Event()
-    flow = Observable[int]().on_subscribe(lambda: started.set())
-    flow_gen = flow.observe()
+    observable = Observable[int]().on_subscribe(lambda: started.set())
+    observer = observable.observe()
     collected: list[int] = []
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await flow.emit(0)
-        await flow.emit(1)
-        await flow.emit(2)
-        await flow.emit(3)
-        await flow.emit(4)
+        await observable.emit(0)
+        await observable.emit(1)
+        await observable.emit(2)
+        await observable.emit(3)
+        await observable.emit(4)
 
     async def collect():
-        async for value in islice(flow_gen, 1, 3):
+        async for value in islice(observer, 1, 3):
             collected.append(value)
 
     async with asyncio.TaskGroup() as tg:
@@ -252,21 +252,21 @@ async def test_flow_slice():
 
 
 @pytest.mark.asyncio
-async def test_flow_map():
+async def test_observable_map():
     # GIVEN
     started = asyncio.Event()
-    flow = Observable[int]().on_subscribe(lambda: started.set())
-    flow_gen = flow.observe()
+    observable = Observable[int]().on_subscribe(lambda: started.set())
+    observer = observable.observe()
     collected: list[str] = []
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await flow.emit(0)
-        await flow.emit(1)
+        await observable.emit(0)
+        await observable.emit(1)
 
     async def collect():
-        async for idx, value in enumerate(map(lambda x: str(x), flow_gen)):
+        async for idx, value in enumerate(map(lambda x: str(x), observer)):
             collected.append(value)
             if idx == 1:
                 break
@@ -280,25 +280,25 @@ async def test_flow_map():
 
 
 @pytest.mark.asyncio
-async def test_flow_filter():
+async def test_observable_filter():
     # GIVEN
     started = asyncio.Event()
-    flow = Observable[int]().on_subscribe(lambda: started.set())
-    flow_gen = flow.observe()
+    observable = Observable[int]().on_subscribe(lambda: started.set())
+    observer = observable.observe()
     collected: list[int] = []
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await flow.emit(0)
-        await flow.emit(1)
-        await flow.emit(2)
-        await flow.emit(3)
-        await flow.emit(4)
-        await flow.emit(5)
+        await observable.emit(0)
+        await observable.emit(1)
+        await observable.emit(2)
+        await observable.emit(3)
+        await observable.emit(4)
+        await observable.emit(5)
 
     async def collect():
-        async for idx, value in enumerate(filter(lambda x: x % 2 == 0, flow_gen)):
+        async for idx, value in enumerate(filter(lambda x: x % 2 == 0, observer)):
             collected.append(value)
             if idx == 2:
                 break
@@ -312,25 +312,25 @@ async def test_flow_filter():
 
 
 @pytest.mark.asyncio
-async def test_flow_filter_then_take_2():
+async def test_observable_filter_then_take_2():
     # GIVEN
     started = asyncio.Event()
-    flow = Observable[int]().on_subscribe(lambda: started.set())
-    flow_gen = flow.observe()
+    observable = Observable[int]().on_subscribe(lambda: started.set())
+    observer = observable.observe()
     collected: list[int] = []
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await flow.emit(0)
-        await flow.emit(1)
-        await flow.emit(2)
-        await flow.emit(3)
-        await flow.emit(4)
-        await flow.emit(5)
+        await observable.emit(0)
+        await observable.emit(1)
+        await observable.emit(2)
+        await observable.emit(3)
+        await observable.emit(4)
+        await observable.emit(5)
 
     async def collect():
-        async for value in islice(filter(lambda x: x % 2 == 0, flow_gen), 2):
+        async for value in islice(filter(lambda x: x % 2 == 0, observer), 2):
             collected.append(value)
 
     async with asyncio.TaskGroup() as tg:
@@ -342,23 +342,23 @@ async def test_flow_filter_then_take_2():
 
 
 @pytest.mark.asyncio
-async def test_flow_map_then_filter():
+async def test_observable_map_then_filter():
     # GIVEN
     started = asyncio.Event()
-    flow = Observable[int]().on_subscribe(lambda: started.set())
-    flow_gen = flow.observe()
+    observable = Observable[int]().on_subscribe(lambda: started.set())
+    observer = observable.observe()
     collected: list[int] = []
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await flow.emit(0)
-        await flow.emit(1)
-        await flow.emit(2)
-        await flow.emit(3)
+        await observable.emit(0)
+        await observable.emit(1)
+        await observable.emit(2)
+        await observable.emit(3)
 
     async def collect():
-        async for value in islice(filter(lambda x: x % 2 == 0, map(lambda x: x + 2, flow_gen)), 2):
+        async for value in islice(filter(lambda x: x % 2 == 0, map(lambda x: x + 2, observer)), 2):
             collected.append(value)
 
     async with asyncio.TaskGroup() as tg:
@@ -370,23 +370,23 @@ async def test_flow_map_then_filter():
 
 
 @pytest.mark.asyncio
-async def test_flow_filter_then_map():
+async def test_observable_filter_then_map():
     # GIVEN
     started = asyncio.Event()
-    flow = Observable[int]().on_subscribe(lambda: started.set())
-    flow_gen = flow.observe()
+    observable = Observable[int]().on_subscribe(lambda: started.set())
+    observer = observable.observe()
     collected: list[int] = []
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await flow.emit(0)
-        await flow.emit(1)
-        await flow.emit(2)
-        await flow.emit(3)
+        await observable.emit(0)
+        await observable.emit(1)
+        await observable.emit(2)
+        await observable.emit(3)
 
     async def collect():
-        async for value in islice(map(lambda x: x * 100, filter(lambda x: x >= 2, flow_gen)), 2):
+        async for value in islice(map(lambda x: x * 100, filter(lambda x: x >= 2, observer)), 2):
             collected.append(value)
 
     async with asyncio.TaskGroup() as tg:
@@ -401,20 +401,20 @@ async def test_flow_filter_then_map():
 async def test_take_then_take_only_takes_second():
     # GIVEN
     started = asyncio.Event()
-    flow = Observable[int]().on_subscribe(lambda: started.set())
-    flow_gen = flow.observe()
+    observable = Observable[int]().on_subscribe(lambda: started.set())
+    observer = observable.observe()
     collected: list[int] = []
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await flow.emit(0)
-        await flow.emit(1)
-        await flow.emit(2)
-        await flow.emit(3)
+        await observable.emit(0)
+        await observable.emit(1)
+        await observable.emit(2)
+        await observable.emit(3)
 
     async def collect():
-        async for value in islice(islice(flow_gen, 4), 2):
+        async for value in islice(islice(observer, 4), 2):
             collected.append(value)
 
     async with asyncio.TaskGroup() as tg:
@@ -429,33 +429,33 @@ async def test_take_then_take_only_takes_second():
 async def test_simultaneous_collect():
     # GIVEN
     started = asyncio.Event()
-    flow = Observable().on_subscribe(lambda: started.set())
-    flow_gen1 = flow.observe(replay=Observable.REPLAY_ALL)
-    flow_gen2 = flow.observe(replay=Observable.REPLAY_ALL)
+    observable = Observable().on_subscribe(lambda: started.set())
+    observer1 = observable.observe(replay=Observable.REPLAY_ALL)
+    observer2 = observable.observe(replay=Observable.REPLAY_ALL)
     collected1: list[int] = []
     collected2: list[int] = []
 
     # WHEN
     async def emit_values():
         await started.wait()
-        await flow.emit(0)
-        await flow.emit(1)
-        await flow.emit(2)
-        await flow.emit(3)
-        await flow.emit(4)
+        await observable.emit(0)
+        await observable.emit(1)
+        await observable.emit(2)
+        await observable.emit(3)
+        await observable.emit(4)
 
-    async def collect_flow_gen1():
-        async for value in islice(flow_gen1, 5):
+    async def collect_observer1():
+        async for value in islice(observer1, 5):
             collected1.append(value)
 
-    async def collect_flow_gen2():
-        async for value in islice(flow_gen2, 5):
+    async def collect_observer2():
+        async for value in islice(observer2, 5):
             collected2.append(value)
 
     async with asyncio.TaskGroup() as tg:
         tg.create_task(emit_values())
-        tg.create_task(collect_flow_gen1())
-        tg.create_task(collect_flow_gen2())
+        tg.create_task(collect_observer1())
+        tg.create_task(collect_observer2())
 
     # THEN
     assert collected1 == [0, 1, 2, 3, 4]
@@ -463,11 +463,11 @@ async def test_simultaneous_collect():
 
 
 @pytest.mark.asyncio
-async def test_status_flow_basic(mock_wireless_gopro_basic: MockWirelessGoPro):
+async def test_status_observable_basic(mock_wireless_gopro_basic: MockWirelessGoPro):
     # GIVEN
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
     started = asyncio.Event()
-    flow = (
+    observable = (
         await GoProObservable(
             gopro=mock_wireless_gopro_basic,
             update=StatusId.ENCODING,
@@ -476,7 +476,7 @@ async def test_status_flow_basic(mock_wireless_gopro_basic: MockWirelessGoPro):
         .on_subscribe(lambda: started.set())
         .start()
     )
-    flow_gen = flow.observe()
+    observer = observable.observe()
     values: list[bool] = []
 
     def emit_status(encoding: bool):
@@ -494,7 +494,7 @@ async def test_status_flow_basic(mock_wireless_gopro_basic: MockWirelessGoPro):
         emit_status(False)
 
     async def collect():
-        async for value in islice(flow_gen, 4):
+        async for value in islice(observer, 4):
             values.append(value)
 
     async with asyncio.TaskGroup() as tg:
@@ -506,11 +506,11 @@ async def test_status_flow_basic(mock_wireless_gopro_basic: MockWirelessGoPro):
 
 
 @pytest.mark.asyncio
-async def test_status_flow_different_initial_response(mock_wireless_gopro_basic: MockWirelessGoPro):
+async def test_status_observable_different_initial_response(mock_wireless_gopro_basic: MockWirelessGoPro):
     # GIVEN
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
     started = asyncio.Event()
-    flow = (
+    observable = (
         await GoproObserverDistinctInitial(
             gopro=mock_wireless_gopro_basic,
             update=StatusId.ENCODING,
@@ -519,7 +519,7 @@ async def test_status_flow_different_initial_response(mock_wireless_gopro_basic:
         .on_subscribe(lambda: started.set())
         .start()
     )
-    flow_gen = flow.observe()
+    observer = observable.observe()
 
     def emit_status(encoding: bool):
         if encoding:
@@ -539,9 +539,9 @@ async def test_status_flow_different_initial_response(mock_wireless_gopro_basic:
         emit_status(False)
 
     async def receive_values():
-        async with flow:
-            values.append(flow.initial_response)
-            async for value in islice(flow_gen, 4):
+        async with observable:
+            values.append(observable.initial_response)
+            async for value in islice(observer, 4):
                 values.append(value)
 
     async with asyncio.TaskGroup() as tg:

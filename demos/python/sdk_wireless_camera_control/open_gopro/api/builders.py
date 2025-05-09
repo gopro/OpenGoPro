@@ -580,11 +580,11 @@ class BleSettingFacade(Generic[T]):
         """
         raise NotImplementedError("Not implemented on camera!")
 
-    async def get_value_flow(self) -> ResultE[GoProObservable[T]]:
-        """Receive a data flow of asynchronously notified setting values.
+    async def get_value_observable(self) -> ResultE[GoProObservable[T]]:
+        """Receive an observable of asynchronously notified setting values.
 
         Returns:
-            ResultE[GoproRegisterFlow[T]]: data flow if successful otherwise an error
+            ResultE[GoProObservable[T]]: data observable if successful otherwise an error
         """
         register_message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
@@ -607,11 +607,11 @@ class BleSettingFacade(Generic[T]):
             ).start()
         )
 
-    async def get_capabilities_flow(self) -> ResultE[GoProObservable[list[T]]]:
-        """Receive a data flow of asynchronously notified lists of setting value capabilities.
+    async def get_capabilities_observable(self) -> ResultE[GoProObservable[list[T]]]:
+        """Receive an observable of asynchronously notified lists of setting value capabilities.
 
         Returns:
-            ResultE[GoproRegisterFlow[list[T]]]: data flow if successful otherwise an error
+            ResultE[GoProObservable[list[T]]]: data observable if successful otherwise an error
         """
         register_message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
@@ -720,7 +720,7 @@ class BleStatusFacade(Generic[T]):
         """Register for asynchronous notifications when a status changes.
 
         Returns:
-            ResultE[GoproRegisterFlow[T]]: current status value
+            ResultE[GoProObservable[T]]: current status value
         """
         register_message = BleStatusFacade.BleStatusMessageBase(
             BleStatusFacade.UUID,

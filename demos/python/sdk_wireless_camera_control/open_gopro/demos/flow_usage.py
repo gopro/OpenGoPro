@@ -36,6 +36,7 @@ async def main(args: argparse.Namespace) -> None:
             console.print(f"Setting capability update: {setting} = {value}")
 
     try:
+        # TODO
         async with WirelessGoPro(args.identifier) as gopro:
             setting_value_flow = (await gopro.ble_command.register_for_all_settings()).unwrap()
             setting_capability_flow = (await gopro.ble_command.register_for_all_capabilities()).unwrap()

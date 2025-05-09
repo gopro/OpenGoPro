@@ -1,4 +1,4 @@
-"""Async generators to process asynchronous data flows."""
+"""Observable / observer async generators to process asynchronous data stream."""
 
 # pylint: disable=redefined-builtin
 
@@ -42,24 +42,24 @@ T_I = TypeVar("T_I")
 class Observer(AsyncGenerator[T, None]):
     """Async generator wrapper with added control methods"""
 
-    def __init__(self, flow: Observable[T], uuid: UUID, replay: int, debug_id: str | None = None) -> None:
-        self.flow = flow
-        self.uuid = uuid
-        self.replay = replay
+    def __init__(self, observable: Observable[T], uuid: UUID, replay: int, debug_id: str | None = None) -> None:
+        self._observable = observable
+        self._uuid = uuid
+        self._replay = replay
         self._debug_id = debug_id or str(uuid)
-        self.is_active = False
+        self._is_active = False
 
     def __aiter__(self) -> Self:
         return self
 
     async def __anext__(self) -> T:
-        if not self.is_active:
-            self.is_active = True
-            await self.flow._add_collector(self.uuid, replay=self.replay)
+        if not self._is_active:
+            self._is_active = True
+            await self._observable._add_observer(self._uuid, replay=self._replay)
 
         try:
             logger.trace(f"Observer {self._debug_id} waiting for next value")  # type: ignore
-            value = await self.flow._get_next(self.uuid)
+            value = await self._observable._get_next(self._uuid)
             logger.trace(f"Observer {self._debug_id} received value: {value}")  # type: ignore
             return value
         except Exception as e:
@@ -80,9 +80,9 @@ class Observer(AsyncGenerator[T, None]):
 
     async def _cleanup(self) -> None:
         """Clean up resources when generator is done"""
-        if self.is_active:
-            self.is_active = False
-            await self.flow._remove_collector(self.uuid)
+        if self._is_active:
+            self._is_active = False
+            await self._observable._remove_observer(self._uuid)
 
     async def aclose(self) -> None:
         """Properly close the generator and clean up resources"""
@@ -90,7 +90,7 @@ class Observer(AsyncGenerator[T, None]):
 
     async def athrow(self, typ: Any, val: Any = None, tb: Any = None) -> NoReturn:
         """Throw an exception into the generator"""
-        if not self.is_active:
+        if not self._is_active:
             raise StopAsyncIteration
 
         # Cleanup first
@@ -104,7 +104,7 @@ class Observer(AsyncGenerator[T, None]):
 
     async def asend(self, value: None) -> T:
         """Send a value into the generator (required by protocol)"""
-        if not self.is_active:
+        if not self._is_active:
             raise StopAsyncIteration
 
         # We don't really use the sent value, so just advance to next item
@@ -112,11 +112,11 @@ class Observer(AsyncGenerator[T, None]):
 
 
 class Observable(Generic[T]):
-    """The asynchronous data flow
+    """The source of asynchronous data
 
     Attributes:
         REPLAY_ALL (Final[int]): Special integer value to indicate all values should be replayed
-        FLOW_IDX (int): counter of flow instantiations used for debugging
+        OBS_IDX (int): counter of observable instantiations used for debugging
 
     Args:
         capacity (int): Maximum values to store for replay. Defaults to 100.
@@ -124,7 +124,7 @@ class Observable(Generic[T]):
     """
 
     REPLAY_ALL: Final[int] = -1
-    FLOW_IDX: int = 0
+    OBS_IDX: int = 0
 
     @dataclass
     class SharedData(Generic[T_I]):
@@ -148,28 +148,19 @@ class Observable(Generic[T]):
         self._lock = asyncio.Condition()
         self._count = 0
         self._capacity = capacity
-        self._debug_id = debug_id or str(Observable.FLOW_IDX)
-        Observable.FLOW_IDX += 1
+        self._debug_id = debug_id or str(Observable.OBS_IDX)
+        Observable.OBS_IDX += 1
         self._on_start_actions: list[SyncAction[T] | AsyncAction[T]] = []
         self._on_subscribe_actions: list[Callable[[], None] | Callable[[], Coroutine[Any, Any, None]]] = []
         self._per_value_actions: list[SyncAction[T] | AsyncAction[T]] = []
         self._shared_data = Observable.SharedData[T]()
         # TODO handle cleanup
 
-    def __copy__(self) -> Observable[T]:
-        flow = Observable[T](capacity=self._capacity, debug_id=self._debug_id)
-        # TODO do we actually want to copy all of these?
-        flow._on_start_actions = self._on_start_actions
-        flow._on_subscribe_actions = self._on_subscribe_actions
-        flow._per_value_actions = self._per_value_actions
-        flow._shared_data = self._shared_data
-        return flow
-
-    async def _add_collector(self, uuid: UUID, replay: int) -> None:
-        """Add a flow to receive collected values
+    async def _add_observer(self, uuid: UUID, replay: int) -> None:
+        """Add an observer to receive collected values
 
         Args:
-            uuid (UUID): flow identifier
+            uuid (UUID): observer identifier
             replay (int): how many values to replay from cache
         """
         async with self._shared_data:
@@ -181,18 +172,18 @@ class Observable(Generic[T]):
                 for value in self._shared_data.cache[head:]:
                     self._shared_data.q_dict[uuid].put_nowait(value)
 
-    async def _remove_collector(self, uuid: UUID) -> None:
-        """Remove a flow from receiving collected values
+    async def _remove_observer(self, uuid: UUID) -> None:
+        """Remove an observer from receiving collected values
 
         Args:
-            uuid (UUID): flow identifier
+            uuid (UUID): observer identifier
         """
         async with self._shared_data:
             if uuid in self._shared_data.q_dict:
                 del self._shared_data.q_dict[uuid]
 
     async def emit(self, value: T) -> None:
-        """Receive a value and queue it for per-flow retrieval
+        """Receive a value and queue it for per-observer retrieval
 
         Args:
             value (T): Value to queue
@@ -251,7 +242,7 @@ class Observable(Generic[T]):
 
     @property
     def current(self) -> T | None:
-        """Get the most recently collected value of the flow.
+        """Get the most recently collected value of the observable.
 
         Note that this does not indicate the value in real-time. It is the most recent value that was collected
         from a receiver.
@@ -261,29 +252,30 @@ class Observable(Generic[T]):
         """
         return self._shared_data.current
 
+    # TODO what is the difference betwenn this and on_start?
     def on_subscribe(
         self: C,
         action: Callable[[], None] | Callable[[], Coroutine[Any, Any, None]],
     ) -> C:
-        """Register to receive a callback when the a terminal operator starts collecting
+        """Register to receive a callback to be called when the observable starts emitting
 
         Args:
             action (Callable[[], None] | Callable[[], Coroutine[Any, Any, None]]): Callback
 
         Returns:
-            C: modified flow
+            C: modified observable
         """
         self._on_subscribe_actions.append(action)
         return self
 
     def on_start(self: C, action: SyncAction[T] | AsyncAction[T]) -> C:
-        """Register a callback action to be called when the flow starts collecting
+        """Register a callback action to be called when the observable starts emitting
 
         Args:
             action (SyncAction[T] | AsyncAction[T]): Callback action
 
         Returns:
-            C: modified flow
+            C: modified observable
         """
         self._on_start_actions.append(action)
         return self
@@ -293,30 +285,29 @@ class Observable(Generic[T]):
     ####################################################################################################################
 
     def observe(self, replay: int = 1, debug_id: str | None = None) -> Observer[T]:
-        """Get an async generator to yield values from the flow
+        """Get an async generator to yield values from the observable
 
         Args:
             replay (int): how many values to replay from cache. Defaults to 1.
             debug_id (str | None): Identifier for debug logging. Defaults to None (will use generated UUID).
 
         Returns:
-            AsyncGenerator[T, None]: async generator to yield values from the flow
+            Observer[T]: async generator to yield values from the observable
         """
-
         # Create the enhanced generator with a unique ID
         return Observer(self, uuid1(), replay, debug_id=debug_id)
 
     async def _get_next(self, uuid: UUID) -> T:
-        """Get the next flow value from the manager
+        """Get the next per-observer value
 
         Args:
-            uuid (UUID): Flow identifier
+            uuid (UUID): observer identifier
 
         Raises:
-            RuntimeError: Flow ended without receiving any values
+            RuntimeError: Observer ended without receiving any values
 
         Returns:
-            FlowValue[T]: Latest flow value
+            T: Latest per-observer value
         """
         while True:
             # If this is the first time entering, notify all on-subscribe listeners

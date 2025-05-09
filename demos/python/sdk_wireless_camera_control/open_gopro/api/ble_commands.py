@@ -358,7 +358,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Register push notifications for all statuses
 
         Returns:
-            GoProResp[None]: command status and current value of all statuses
+            ResultE[GoProObservable[dict[StatusId, Any]]]: command status and current value of all statuses
         """
 
     @ble_register_command(GoProUUID.CQ_QUERY, CmdId.REGISTER_ALL_SETTINGS, update_set=SettingId)
@@ -366,7 +366,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Register push notifications for all settings
 
         Returns:
-            GoProResp[None]: command status and current value of all settings
+            ResultE[GoProObservable[dict[SettingId, Any]]]: command status and current value of all settings
         """
 
     @ble_register_command(GoProUUID.CQ_QUERY, CmdId.REGISTER_ALL_CAPABILITIES, update_set=SettingId)
@@ -374,7 +374,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Register push notifications for all capabilities
 
         Returns:
-            GoProResp[None]: command status and current value of all capabilities
+            ResultE[GoProObservable[dict[SettingId, list[Any]]]]: command status and current value of all capabilities
         """
 
     ######################################################################################################

@@ -57,11 +57,11 @@ class AccessPointFeature(BaseFeature):
             gopro=self._gopro,
             update=ActionId.NOTIF_START_SCAN,
             register_command=self._gopro.ble_command.scan_wifi_networks(),
-        ) as flow, asyncio.timeout(timeout):
-            if flow.initial_response.result != EnumResultGeneric.RESULT_SUCCESS:
+        ) as observable, asyncio.timeout(timeout):
+            if observable.initial_response.result != EnumResultGeneric.RESULT_SUCCESS:
                 return Result.from_failure(GoProError("Failed to start scanning."))
 
-            result = await flow.observe().first(lambda s: s.scanning_state == EnumScanning.SCANNING_SUCCESS)
+            result = await observable.observe().first(lambda s: s.scanning_state == EnumScanning.SCANNING_SUCCESS)
             entries = await self._gopro.ble_command.get_ap_entries(scan_id=result.scan_id)
             return Result.from_value(entries.data)
 
@@ -98,13 +98,13 @@ class AccessPointFeature(BaseFeature):
                         gopro=self._gopro,
                         update=ActionId.NOTIF_PROVIS_STATE,
                         register_command=command,
-                    ) as flow:
-                        if flow.initial_response.result != EnumResultGeneric.RESULT_SUCCESS:
+                    ) as observable:
+                        if observable.initial_response.result != EnumResultGeneric.RESULT_SUCCESS:
                             return Result.from_failure(GoProError("Failed to start scanning."))
 
                         try:
                             async with asyncio.timeout(timeout):
-                                await flow.observe().first(
+                                await observable.observe().first(
                                     lambda s: s.provisioning_state == EnumProvisioning.PROVISIONING_SUCCESS_NEW_AP
                                 )
                                 return Result.from_value(None)

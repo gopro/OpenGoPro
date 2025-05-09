@@ -42,33 +42,3 @@ async def ap_feature(mock_wireless_gopro_basic: WirelessGoPro):
 async def test_ap_feature_starts_successfully(ap_feature: AccessPointFeature):
     await ap_feature.wait_for_ready()
     assert ap_feature.is_ready
-
-
-# TODO. We need to monkey patch status flow...
-# @pytest.mark.asyncio
-# async def test_ap_feature_scan(ap_feature: AccessPointFeature):
-#     # GIVEN
-#     scan_response = ResponseStartScanning(result=EnumResultGeneric.RESULT_SUCCESS)
-#     scan_notification = NotifStartScanning(scan_id=9)
-
-#     # WHEN
-#     async def send_scanning_success():
-#         await ap_feature._status_flow._flow_manager.emit(unprovisioned_status)
-
-#     async with asyncio.TaskGroup() as task_group:
-#         task_group.create_task(send_scanning_success())
-#         task_group.create_task(ap_feature.sc)
-
-#     assert not ap_feature.is_configured
-
-#     async def send_cohn_provisioned():
-#         await ap_feature._status_flow._flow_manager.emit(connected_status)
-
-#     async with asyncio.TaskGroup() as task_group:
-#         task_group.create_task(send_cohn_provisioned())
-#         configure_task = task_group.create_task(ap_feature.configure())
-#     result = configure_task.result()
-
-#     # THEN
-#     assert is_successful(result)
-#     assert result.unwrap() == cohn_credentials

@@ -82,10 +82,10 @@ TYPE_ALIASES = {
     "ResponseType": "open_gopro.domain.types.ResponseType",
     "Protobuf": "open_gopro.domain.types.Protobuf",
     "IdType": "open_gopro.domain.types.IdType",
-    "SyncAction": "open_gopro.flow.SyncAction",
-    "AsyncAction": "open_gopro.flow.AsyncAction",
-    "SyncFilter": "open_gopro.flow.SyncFilter",
-    "AsyncFilter": "open_gopro.flow.AsyncFilter",
+    "SyncAction": "open_gopro.observable.SyncAction",
+    "AsyncAction": "open_gopro.observable.AsyncAction",
+    "SyncFilter": "open_gopro.observable.SyncFilter",
+    "AsyncFilter": "open_gopro.observable.AsyncFilter",
 }
 
 nitpick_ignore = [
