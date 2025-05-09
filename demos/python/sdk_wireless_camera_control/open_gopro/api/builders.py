@@ -716,7 +716,7 @@ class BleStatusFacade(Generic[T]):
         )
         return await self._communicator._send_ble_message(message)
 
-    async def get_value_flow(self) -> ResultE[GoProObservable[T]]:
+    async def get_value_observable(self) -> ResultE[GoProObservable[T]]:
         """Register for asynchronous notifications when a status changes.
 
         Returns:

@@ -95,12 +95,14 @@ async def main(args: argparse.Namespace) -> None:
 
             async def process_percentage() -> None:
                 async for percentage in (
-                    (await gopro.ble_status.internal_battery_percentage.get_value_flow()).unwrap().observe()
+                    (await gopro.ble_status.internal_battery_percentage.get_value_observable()).unwrap().observe()
                 ):
                     await process_status(StatusId.INTERNAL_BATTERY_PERCENTAGE, percentage)
 
             async def process_bars() -> None:
-                async for bars in (await gopro.ble_status.internal_battery_bars.get_value_flow()).unwrap().observe():
+                async for bars in (
+                    (await gopro.ble_status.internal_battery_bars.get_value_observable()).unwrap().observe()
+                ):
                     await process_status(StatusId.INTERNAL_BATTERY_BARS, bars)
 
             await asyncio.wait(

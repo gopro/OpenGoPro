@@ -47,12 +47,11 @@ class CohnFeature(BaseFeature):
             self.credentials = cohn_credentials
         self._ready_event = asyncio.Event()
         # TODO close this
-        self._status_flow = GoProObservable(
+        self._status_observable = GoProObservable(
             gopro=self._gopro,
             update=ActionId.RESPONSE_GET_COHN_STATUS,
             register_command=self._gopro.ble_command.cohn_get_status(register=True),
         ).on_start(lambda _: self._ready_event.set())
-        self._status_generator = self._status_flow.observe()
         self._status_task: asyncio.Task = asyncio.create_task(self._track_status())
 
     @property
@@ -60,7 +59,9 @@ class CohnFeature(BaseFeature):
         return self._ready_event.is_set()
 
     async def wait_for_ready(self, timeout: float = 60) -> None:  # noqa: D102
+        logger.debug("Waiting for COHN to be ready")
         await asyncio.wait_for(self._ready_event.wait(), timeout)
+        logger.debug("COHN is ready")
 
     def close(self) -> None:  # noqa: D102
         self._status_task.cancel()
@@ -69,8 +70,9 @@ class CohnFeature(BaseFeature):
         """Task to continuously monitor COHN status"""
         while True:
             if self._gopro.is_ble_connected:
-                async for status in self._status_generator:
-                    logger.debug(f"Feature Received COHN status: {status}")
+                async with self._status_observable as observable:
+                    async for status in observable.observe(debug_id="Cohn Feature"):
+                        logger.debug(f"Feature Received COHN status: {status}")
             else:
                 await asyncio.sleep(1)
 
@@ -97,9 +99,9 @@ class CohnFeature(BaseFeature):
         Returns:
             proto.NotifyCOHNStatus: The current COHN status
         """
-        if not self.is_ready or not self._status_flow.current:
+        if not self.is_ready or not self._status_observable.current:
             raise GoProNotOpened("COHN feature is not yet ready")
-        return self._status_flow.current
+        return self._status_observable.current
 
     @property
     async def is_configured(self) -> bool:
@@ -158,12 +160,14 @@ class CohnFeature(BaseFeature):
             async with asyncio.timeout(timeout):
                 # Start fresh by clearing cert and wait until we receive unprovisioned status
                 await self._gopro.ble_command.cohn_clear_certificate()
-                await self._status_generator.first(lambda status: status.status == EnumCOHNStatus.COHN_UNPROVISIONED)
+                await self._status_observable.observe().first(
+                    lambda status: status.status == EnumCOHNStatus.COHN_UNPROVISIONED
+                )
                 logger.info("COHN has been unprovisioned")
 
                 # Reprovision and wait until we receive provisioned status
                 assert (await self._gopro.ble_command.cohn_create_certificate(override=True)).ok
-                status = await self._status_generator.first(
+                status = await self._status_observable.observe().first(
                     lambda status: status.status == EnumCOHNStatus.COHN_PROVISIONED
                 )
                 logger.info("COHN has been successfully provisioned!!")
@@ -208,7 +212,7 @@ class CohnFeature(BaseFeature):
                 logger.info("Waiting for COHN to be connected")
 
                 async with asyncio.timeout(timeout):
-                    await self._status_generator.first(
+                    await self._status_observable.observe().first(
                         lambda s: s.state == EnumCOHNNetworkState.COHN_STATE_NetworkConnected
                     )
 
