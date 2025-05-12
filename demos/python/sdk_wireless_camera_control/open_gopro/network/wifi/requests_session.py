@@ -1,6 +1,7 @@
 """Helper methods for modifying SSL / requests configuration."""
 
 import ssl
+from pathlib import Path
 from typing import Any
 
 import requests
@@ -15,8 +16,11 @@ from requests.adapters import (
 
 # In Python >= 3.13 , ssl.create_default_context() sets ssl.VERIFY_X509_PARTIAL_CHAIN and ssl.VERIFY_X509_STRICT as
 # default flags. We need to remove these flags to allow GoPro cameras to work with the requests library.
-def create_less_strict_requests_session() -> requests.Session:
+def create_less_strict_requests_session(cert: Path) -> requests.Session:
     """Create a requests session with less strict SSL verification for GoPro cameras
+
+    Args:
+        cert(Path): Path to the CA certificate file to use for SSL verification
 
     Returns:
         requests.Session: A requests session with a custom SSL context
@@ -36,7 +40,7 @@ def create_less_strict_requests_session() -> requests.Session:
             return super().init_poolmanager(*args, **kwargs)
 
     # Create a custom SSL context with the strict flags removed
-    context = ssl.create_default_context()
+    context = ssl.create_default_context(cafile=cert)
 
     # Remove the new strict verification flags
     context.verify_flags &= ~ssl.VERIFY_X509_PARTIAL_CHAIN

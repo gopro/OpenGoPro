@@ -24,6 +24,11 @@ COHN_CURL_CMD_TEMPLATE = (
 
 
 def dump_cohn_collateral(gopro: WirelessGoPro) -> None:
+    """Print the COHN credentials and write the certificate to a file.
+
+    Args:
+        gopro (WirelessGoPro): gopro to retrieve the credentials from
+    """
     assert gopro.cohn.credentials
     console.print(
         f"Sample curl command: {COHN_CURL_CMD_TEMPLATE.format(

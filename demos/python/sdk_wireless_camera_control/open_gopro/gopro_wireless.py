@@ -898,7 +898,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     @property
     def _requests_session(self) -> requests.Session:
         return (
-            create_less_strict_requests_session()
+            create_less_strict_requests_session(self.cohn.credentials.certificate_as_path)
             if self._should_enable_cohn and self.cohn.credentials
             else requests.Session()
         )
