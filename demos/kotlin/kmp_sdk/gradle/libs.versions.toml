@@ -11,7 +11,7 @@ androidx-lifecycle = "2.8.4"
 androidx-material = "1.12.0"
 # https://plugins.gradle.org/plugin/org.jetbrains.compose
 compose-plugin = "1.7.3"
-uiToolingPreview = "1.7.3"
+uiToolingPreview = "1.9.0+dev2451"
 junit = "4.13.2"
 # https://central.sonatype.com/artifact/io.insert-koin/koin-test-junit4/versions
 koinTestJunit4 = "4.0.0"
