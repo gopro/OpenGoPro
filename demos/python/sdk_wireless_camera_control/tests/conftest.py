@@ -11,16 +11,24 @@ from typing import Any, Generator
 import pytest
 import pytest_asyncio
 
-from open_gopro.ble import BleClient, Characteristic, Descriptor, GattDB, Service, UUIDs
-from open_gopro.ble.adapters.bleak_wrapper import BleakWrapperController
-from open_gopro.ble.services import CharProps
 from open_gopro.gopro_base import GoProBase
-from open_gopro.logger import set_logging_level, setup_logging
-from open_gopro.wifi import WifiClient
+from open_gopro.network.ble import (
+    BleClient,
+    Characteristic,
+    Descriptor,
+    GattDB,
+    Service,
+    UUIDs,
+)
+from open_gopro.network.ble.adapters.bleak_wrapper import BleakWrapperController
+from open_gopro.network.ble.services import CharProps
+from open_gopro.network.wifi import WifiClient
+from open_gopro.util.logger import set_logging_level, setup_logging
 from tests import versions
 from tests.mocks import (
     MockBleCommunicator,
     MockBleController,
+    MockFeatures,
     MockGoProMaintainBle,
     MockWifiCommunicator,
     MockWifiController,
@@ -133,14 +141,14 @@ async def mock_ble_client():
         controller=MockBleController(),
         disconnected_cb=disconnection_handler,
         notification_cb=notification_handler,  # type: ignore
-        target=(re.compile("device"), []),
+        target=(re.compile(".*device"), []),
     )
     yield test_client
 
 
-@pytest_asyncio.fixture(scope="module", params=versions)
+@pytest_asyncio.fixture(scope="function")
 async def mock_ble_communicator(request):
-    test_client = MockBleCommunicator(request.param)
+    test_client = MockBleCommunicator("2.0")
     yield test_client
 
 
@@ -155,9 +163,9 @@ async def mock_wifi_client():
     yield test_client
 
 
-@pytest_asyncio.fixture(scope="module", params=versions)
+@pytest_asyncio.fixture(scope="module")
 async def mock_wifi_communicator(request):
-    test_client = MockWifiCommunicator(request.param)
+    test_client = MockWifiCommunicator("2.0")
     yield test_client
 
 
@@ -172,15 +180,22 @@ async def mock_wired_gopro():
     yield test_client
 
 
-@pytest_asyncio.fixture(params=versions)
-async def mock_wireless_gopro_basic(request):
-    test_client = MockWirelessGoPro(request.param)
+def mock_features(monkeypatch):
+    monkeypatch.setattr("open_gopro.features.access_point_feature", MockFeatures)
+    monkeypatch.setattr("open_gopro.features.cohn_feature", MockFeatures)
+
+
+@pytest_asyncio.fixture(scope="function")
+async def mock_wireless_gopro_basic(request, monkeypatch):
+    mock_features(monkeypatch)
+    test_client = MockWirelessGoPro("2.0")
     GoProBase.HTTP_GET_RETRIES = 1  # type: ignore
     yield test_client
     test_client.close()
 
 
 @pytest_asyncio.fixture(scope="function")
-async def mock_wireless_gopro():
+async def mock_wireless_gopro(monkeypatch):
+    mock_features(monkeypatch)
     test_client = MockGoProMaintainBle()
     yield test_client

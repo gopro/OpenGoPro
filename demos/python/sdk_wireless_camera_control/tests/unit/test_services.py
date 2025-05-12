@@ -7,8 +7,8 @@ import uuid
 
 import pytest
 
-from open_gopro.ble import BleUUID, Characteristic, Descriptor, GattDB, Service
-from open_gopro.ble.services import BLE_BASE_UUID, UUIDs, UUIDsMeta
+from open_gopro.network.ble import BleUUID, Characteristic, Descriptor, GattDB, Service
+from open_gopro.network.ble.services import BLE_BASE_UUID, UUIDs, UUIDsMeta
 
 
 def test_128_bit_uuid():

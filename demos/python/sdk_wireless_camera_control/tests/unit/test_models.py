@@ -3,7 +3,6 @@
 
 from typing import Final
 
-from open_gopro.constants import constants
 from open_gopro.models import (
     GroupedMediaItem,
     HttpInvalidSettingResponse,
@@ -15,6 +14,7 @@ from open_gopro.models import (
     VideoMetadata,
     WebcamResponse,
 )
+from open_gopro.models.constants import constants
 from open_gopro.parsers import ScheduledCaptureParser
 
 SINGLE_MEDIA_ITEM: Final = {

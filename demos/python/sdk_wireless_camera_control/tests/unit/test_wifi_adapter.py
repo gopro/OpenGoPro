@@ -10,7 +10,7 @@ from typing import Literal
 
 import pytest
 
-from open_gopro.wifi.adapters.wireless import SsidState, WifiCli
+from open_gopro.network.wifi.adapters.wireless import SsidState, WifiCli
 
 operating_systems = ["windows"]
 
@@ -203,9 +203,9 @@ class MockOs:
 def command_sender(request, monkeypatch):
     command_sender = CommandSender.from_os(request.param)
     mock_os = MockOs(request.param)
-    monkeypatch.setattr("open_gopro.wifi.adapters.wireless.cmd", command_sender)
-    monkeypatch.setattr("open_gopro.wifi.adapters.wireless.os", mock_os)
-    monkeypatch.setattr("open_gopro.wifi.adapters.wireless.which", command_sender.which)
+    monkeypatch.setattr("open_gopro.network.wifi.adapters.wireless.cmd", command_sender)
+    monkeypatch.setattr("open_gopro.network.wifi.adapters.wireless.os", mock_os)
+    monkeypatch.setattr("open_gopro.network.wifi.adapters.wireless.which", command_sender.which)
     yield command_sender
 
 

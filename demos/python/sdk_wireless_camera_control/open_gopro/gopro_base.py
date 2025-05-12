@@ -26,19 +26,19 @@ from open_gopro.api import (
     WiredApi,
     WirelessApi,
 )
-from open_gopro.communicator_interface import (
+from open_gopro.domain.communicator_interface import (
     GoProHttp,
     HttpMessage,
     Message,
     MessageRules,
 )
-from open_gopro.constants import ErrorCode
-from open_gopro.exceptions import GoProNotOpened, ResponseTimeout
-from open_gopro.logger import Logger
+from open_gopro.domain.exceptions import GoProNotOpened, ResponseTimeout
+from open_gopro.domain.types import JsonDict
 from open_gopro.models import GoProResp
+from open_gopro.models.constants import ErrorCode
 from open_gopro.parsers.response import RequestsHttpRespBuilderDirector
-from open_gopro.types import JsonDict
 from open_gopro.util import pretty_print
+from open_gopro.util.logger import Logger
 
 logger = logging.getLogger(__name__)
 
@@ -152,6 +152,15 @@ class GoProBase(GoProHttp, Generic[ApiType]):
 
     @property
     @abstractmethod
+    def _requests_session(self) -> requests.Session:
+        """The requests session used to communicate with the GoPro Client
+
+        Returns:
+            requests.Session: requests session
+        """
+
+    @property
+    @abstractmethod
     def identifier(self) -> str:
         """Unique identifier for the connected GoPro Client
 
@@ -240,31 +249,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
 
         Returns:
             bool: True if yes, False if no
-        """
-
-    @abstractmethod
-    async def configure_cohn(self, timeout: int = 60) -> bool:
-        """Prepare Camera on the Home Network
-
-        Provision if not provisioned
-        Then wait for COHN to be connected and ready
-
-        Args:
-            timeout (int): time in seconds to wait for COHN to be ready. Defaults to 60.
-
-        Returns:
-            bool: True if success, False otherwise
-        """
-
-    @property
-    @abstractmethod
-    async def is_cohn_provisioned(self) -> bool:
-        """Is COHN currently provisioned?
-
-        Get the current COHN status from the camera
-
-        Returns:
-            bool: True if COHN is provisioned, False otherwise
         """
 
     ##########################################################################################################
@@ -374,14 +358,23 @@ class GoProBase(GoProHttp, Generic[ApiType]):
 
     @enforce_message_rules
     async def _get_json(
-        self, message: HttpMessage, *, timeout: int = HTTP_TIMEOUT, rules: MessageRules = MessageRules(), **kwargs: Any
+        self,
+        message: HttpMessage,
+        *,
+        timeout: int = HTTP_TIMEOUT,
+        rules: MessageRules = MessageRules(),
+        **kwargs: Any,
     ) -> GoProResp:
         url = self._base_url + message.build_url(**kwargs)
         logger.debug(f"Sending:  {url}")
         logger.info(Logger.build_log_tx_str(pretty_print(message._as_dict(**kwargs))))
         for retry in range(1, GoProBase.HTTP_GET_RETRIES + 1):
             try:
-                http_response = requests.get(url, timeout=timeout, **self._build_http_request_args(message))
+                http_response = self._requests_session.get(
+                    url,
+                    timeout=timeout,
+                    **self._build_http_request_args(message),
+                )
                 logger.trace(f"received raw json: {json.dumps(http_response.json() if http_response.text else {}, indent=4)}")  # type: ignore
                 if not http_response.ok:
                     logger.warning(f"Received non-success status {http_response.status_code}: {http_response.reason}")
@@ -403,11 +396,21 @@ class GoProBase(GoProHttp, Generic[ApiType]):
 
     @enforce_message_rules
     async def _get_stream(
-        self, message: HttpMessage, *, timeout: int = HTTP_TIMEOUT, rules: MessageRules = MessageRules(), **kwargs: Any
+        self,
+        message: HttpMessage,
+        *,
+        timeout: int = HTTP_TIMEOUT,
+        rules: MessageRules = MessageRules(),
+        **kwargs: Any,
     ) -> GoProResp:
         url = self._base_url + message.build_url(path=kwargs["camera_file"])
         logger.debug(f"Sending:  {url}")
-        with requests.get(url, stream=True, timeout=timeout, **self._build_http_request_args(message)) as request:
+        with self._requests_session.get(
+            url,
+            stream=True,
+            timeout=timeout,
+            **self._build_http_request_args(message),
+        ) as request:
             request.raise_for_status()
             file = kwargs["local_file"]
             with open(file, "wb") as f:
@@ -419,14 +422,24 @@ class GoProBase(GoProHttp, Generic[ApiType]):
 
     @enforce_message_rules
     async def _put_json(
-        self, message: HttpMessage, *, timeout: int = HTTP_TIMEOUT, rules: MessageRules = MessageRules(), **kwargs: Any
+        self,
+        message: HttpMessage,
+        *,
+        timeout: int = HTTP_TIMEOUT,
+        rules: MessageRules = MessageRules(),
+        **kwargs: Any,
     ) -> GoProResp:
         url = self._base_url + message.build_url(**kwargs)
         body = message.build_body(**kwargs)
         logger.debug(f"Sending:  {url} with body: {json.dumps(body, indent=4)}")
         for retry in range(1, GoProBase.HTTP_GET_RETRIES + 1):
             try:
-                http_response = requests.put(url, timeout=timeout, json=body, **self._build_http_request_args(message))
+                http_response = self._requests_session.put(
+                    url,
+                    timeout=timeout,
+                    json=body,
+                    **self._build_http_request_args(message),
+                )
                 logger.trace(f"received raw json: {json.dumps(http_response.json() if http_response.text else {}, indent=4)}")  # type: ignore
                 if not http_response.ok:
                     logger.warning(f"Received non-success status {http_response.status_code}: {http_response.reason}")

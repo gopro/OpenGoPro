@@ -13,9 +13,9 @@ from typing import Final
 import pytest
 
 from open_gopro import WiredGoPro
-from open_gopro.constants import statuses
 from open_gopro.models import DnsScanResponse
-from open_gopro.wifi.mdns_scanner import ZeroconfListener, find_first_ip_addr
+from open_gopro.models.constants import statuses
+from open_gopro.network.wifi.mdns_scanner import ZeroconfListener, find_first_ip_addr
 
 
 @pytest.mark.asyncio
@@ -91,7 +91,7 @@ async def test_wired_lifecycle(mock_wired_gopro: WiredGoPro, monkeypatch):
             }
         )
 
-    monkeypatch.setattr("open_gopro.wifi.mdns_scanner", MockMdnsScanner)
+    monkeypatch.setattr("open_gopro.network.wifi.mdns_scanner", MockMdnsScanner)
     await asyncio.gather(mock_wired_gopro.open(), set_ready())
     assert mock_wired_gopro.is_open
     assert await mock_wired_gopro.is_ready

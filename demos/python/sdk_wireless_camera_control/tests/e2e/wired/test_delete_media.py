@@ -6,15 +6,14 @@ from typing import AsyncGenerator
 
 import pytest
 
-from open_gopro import constants, proto
 from open_gopro.gopro_wired import WiredGoPro
-from open_gopro.models import MediaPath
+from open_gopro.models import MediaPath, constants, proto
 
 
 @pytest.fixture(scope="function")
 async def gopro() -> AsyncGenerator[WiredGoPro, None]:
     async with WiredGoPro() as gopro:
-        assert (await gopro.http_setting.controls.set(constants.settings.Controls.PRO)).ok
+        assert (await gopro.http_setting.control_mode.set(constants.settings.ControlMode.PRO)).ok
         assert (await gopro.http_command.delete_all()).ok
         yield gopro
 

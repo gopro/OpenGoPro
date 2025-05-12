@@ -9,6 +9,14 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
+0.20.0 (May-12-2025)
+--------------------
+* NOTE! This is a major update and includes breaking API changes
+* Major refactor to support any combination of network interfaces for WirelessGoPro
+* Add observable / observer base type and use for asynchronous push notification operations
+* Maintain database of COHN credentials
+* Remove Python 3.10 and add 3.13 support
+
 0.19.8 (April-30-2025)
 ----------------------
 * Default ainput printer arg to None to support non-terminal applications without access to stdout
