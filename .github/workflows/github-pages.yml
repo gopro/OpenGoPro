@@ -121,16 +121,16 @@ jobs:
               shell: bash
               run: sudo apt-get update && sudo apt install -y graphviz
 
-            - name: Set up Python 3.12.8
+            - name: Set up Python 3.13.3
               uses: actions/setup-python@v5
               with:
-                  python-version: 3.12.8
+                  python-version: 3.13.3
 
             - name: Restore cached pip environment
               uses: actions/cache@v4
               with:
                   path: ${{ matrix.path }}
-                  key: ${{ runner.os }}-3.12.8-pip-${{ hashFiles('demos/python/sdk_wireless_camera_control/poetry.lock') }}
+                  key: ${{ runner.os }}-3.13.3-pip-${{ hashFiles('demos/python/sdk_wireless_camera_control/poetry.lock') }}
                   restore-keys: |
                       ${{ runner.os }}-pip-
 
