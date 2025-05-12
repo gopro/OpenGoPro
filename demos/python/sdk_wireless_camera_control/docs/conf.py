@@ -3,10 +3,20 @@
 
 from __future__ import annotations
 from datetime import date
+import sys
 
+import sphinx
 from open_gopro import WirelessGoPro
 
 from open_gopro.network.wifi.controller import SsidState, WifiController
+
+# Workaround for https://github.com/sphinx-doc/sphinx/issues/13178 in Python 3.13
+if sys.version_info[:2] >= (3, 13) and sphinx.version_info[:2] < (8, 2):
+    import pathlib
+
+    from sphinx.util.typing import _INVALID_BUILTIN_CLASSES
+
+    _INVALID_BUILTIN_CLASSES[pathlib.Path] = "pathlib.Path"  # type: ignore
 
 
 class MockWifiController(WifiController):
@@ -92,7 +102,6 @@ nitpick_ignore = [
     ("py:class", "T"),
     ("py:class", "O"),
     ("py:class", "T_I"),
-    ("py:class", "C"),
     ("py:class", "I"),
     ("py:class", "T_co"),
     ("py:class", "ExceptionHandler"),
@@ -122,9 +131,7 @@ nitpick_ignore_regex = [
     (r"py:class", r".*\.T"),
     (r"py:class", r".*\.T_I"),
     (r"py:class", r".*\.O"),
-    (r"py:class", r".*\.C"),
     (r"py:class", r".*\.I"),
-    (r"py:obj", r".*\.C"),
     (r"py:obj", r".*\.T_I"),
     (r"py:obj", r".*\.O"),
     (r"py:obj", r".*\.I"),

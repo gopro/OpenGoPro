@@ -15,6 +15,7 @@ and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0
 * Major refactor to support any combination of network interfaces for WirelessGoPro
 * Add observable / observer base type and use for asynchronous push notification operations
 * Maintain database of COHN credentials
+* Remove Python 3.10 and add 3.13 support
 
 0.19.8 (April-30-2025)
 ----------------------

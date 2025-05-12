@@ -22,6 +22,7 @@ from typing import (
     Final,
     Generic,
     NoReturn,
+    Self,
     TypeAlias,
     TypeVar,
 )
@@ -31,7 +32,6 @@ from asyncstdlib import anext, filter
 
 O = TypeVar("O")
 T = TypeVar("T")
-C = TypeVar("C", bound="Observable")
 
 
 SyncAction: TypeAlias = Callable[[T], None]
@@ -261,28 +261,28 @@ class Observable(Generic[T]):
 
     # TODO what is the difference betwenn this and on_start?
     def on_subscribe(
-        self: C,
+        self,
         action: Callable[[], None] | Callable[[], Coroutine[Any, Any, None]],
-    ) -> C:
+    ) -> Self:
         """Register to receive a callback to be called when the observable starts emitting
 
         Args:
             action (Callable[[], None] | Callable[[], Coroutine[Any, Any, None]]): Callback
 
         Returns:
-            C: modified observable
+            Self: modified observable
         """
         self._on_subscribe_actions.append(action)
         return self
 
-    def on_start(self: C, action: SyncAction[T] | AsyncAction[T]) -> C:
+    def on_start(self, action: SyncAction[T] | AsyncAction[T]) -> Self:
         """Register a callback action to be called when the observable starts emitting
 
         Args:
             action (SyncAction[T] | AsyncAction[T]): Callback action
 
         Returns:
-            C: modified observable
+            Self: modified observable
         """
         self._on_start_actions.append(action)
         return self

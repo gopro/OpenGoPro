@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import logging
 from types import TracebackType
-from typing import Any, Coroutine, Generic, TypeVar
+from typing import Any, Coroutine, Generic, Self, TypeVar
 
 from open_gopro.domain.communicator_interface import BaseGoProCommunicator
 from open_gopro.domain.exceptions import GoProError
@@ -14,7 +14,6 @@ from open_gopro.models.response import GoProResp
 
 T = TypeVar("T")
 I = TypeVar("I")
-C = TypeVar("C", bound="GoproObserverDistinctInitial")
 
 logger = logging.getLogger(__name__)
 
@@ -70,14 +69,14 @@ class GoproObserverDistinctInitial(Observable[T], Generic[I, T]):
         """
         await self.emit(value)
 
-    async def start(self: C) -> C:
+    async def start(self: Self) -> Self:
         """Configure the camera to start receiving notifications.
 
         Raises:
             GoProError: Register command returned a failure update
 
         Returns:
-            C: modified observable
+            Self: modified observable
         """
         self._gopro._register_update(self._emit_value, self._update)
         initial_response = await self._register_command
@@ -114,7 +113,7 @@ class GoProObservable(GoproObserverDistinctInitial[T, T]):
     ) -> None:
         super().__init__(gopro, update, register_command, unregister_command)
 
-    async def start(self: C) -> C:
+    async def start(self: Self) -> Self:
         """Configure the camera to start receiving notifications.
 
         The initial response will be treated and emitted the same as subsequent responses.
@@ -123,7 +122,7 @@ class GoProObservable(GoproObserverDistinctInitial[T, T]):
             GoProError: Register command returned a failure updates
 
         Returns:
-            C: modified observable
+            Self: modified observable
         """
         self._gopro._register_update(self._emit_value, self._update)
         initial_response = await self._register_command
