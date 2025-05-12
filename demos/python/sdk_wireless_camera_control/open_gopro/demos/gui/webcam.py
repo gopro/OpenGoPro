@@ -63,9 +63,10 @@ async def main(args: argparse.Namespace) -> int:
 
     try:
         wireless_interfaces: set[WirelessGoPro.Interface] = set()
-        if args.cohn:
-            wireless_interfaces = wireless_interfaces.union({WirelessGoPro.Interface.BLE, WirelessGoPro.Interface.COHN})
-        elif args.wifi:
+        # if args.cohn:
+        #     wireless_interfaces = wireless_interfaces.union({WirelessGoPro.Interface.BLE, WirelessGoPro.Interface.COHN})
+        # elif args.wifi:
+        if args.wifi:
             wireless_interfaces = wireless_interfaces.union(
                 {WirelessGoPro.Interface.BLE, WirelessGoPro.Interface.WIFI_AP}
             )

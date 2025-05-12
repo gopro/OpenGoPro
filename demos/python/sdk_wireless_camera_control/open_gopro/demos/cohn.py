@@ -78,25 +78,31 @@ def parse_arguments() -> argparse.Namespace:
             """\
         Open GoPro Camera on the Home Network (COHN) Utility
         ----------------------------------------------------
-        This utility is used to configure and demonstrate the Camera On the Home Network (COHN) feature of GoPro cameras.
-        COHN allows the camera to be accessed over a local network using HTTP, without the need for a direct Wi-Fi or
-        Bluetooth connection.
+        This utility is used to configure and demonstrate the Camera On the Home
+        Network (COHN) feature of GoPro cameras. COHN allows the camera to be accessed
+        over a local network using HTTP, without the need for a direct Wi-Fi or Bluetooth
+        connection.
 
-        There are three main modes of operation that are chosen based on the arguments passed to this script:
+        There are three main modes of operation that are chosen based on the arguments
+        passed to this script:
 
-        1. COHN Provisioning: If the camera is not already provisioned for COHN, you can provide the SSID (--ssid) and
-           password (--password) of the Wi-Fi network to which the camera should connect. The script will then
-           (re)configure the camera for COHN using these credentials.
+        1. COHN Provisioning: If the camera is not already provisioned for COHN, you can
+           provide the SSID (--ssid) and password (--password) of the Wi-Fi network to
+           which the camera should connect. The script will then (re)configure the camera
+           for COHN using these credentials.
 
-        2. COHN Communication without initial BLE check: If the camera is already provisioned for COHN, you can directly
-           communicate with it using the COHN HTTP channel. This is done by passing the camera's identifier (--identifier)
+        2. COHN Communication without initial BLE check: If the camera is already
+           provisioned for COHN, you can directly communicate with it using the COHN
+           HTTP channel. This is done by passing the camera's identifier (--identifier)
            which is the trailing 4 digits of the serial number.
 
-        3. COHN Communication with initial BLE check: If you don't provide an identifier, the script will first attempt to
-           find the first available camera using BLE. If it finds a camera that is already provisioned for COHN,
-           it will connect to it and demonstrate COHN communication. If it finds a camera that is not provisioned for COHN,
-           it will return an error message and exit if you didn't pass SSID and password. If you pass SSID and password,
-           this is the same as the first mode of operation.
+        3. COHN Communication with initial BLE check: If you don't provide an identifier,
+           the script will first attempt to find the first available camera using BLE. If
+           it finds a camera that is already provisioned for COHN, it will connect to it
+           and demonstrate COHN communication. If it finds a camera that is not provisioned
+           for COHN, it will return an error message and exit if you didn't pass SSID and
+           password. If you pass SSID and password, this is the same as the first mode of
+           operation.
 
         Therefore, the general procedure for a freshly factory-reset camera is:
             1. Use operation mode 1 to provision COHN
