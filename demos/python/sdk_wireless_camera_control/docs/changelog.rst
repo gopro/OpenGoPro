@@ -14,6 +14,7 @@ and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0
 * NOTE! This is a major update and includes breaking API changes
 * Major refactor to support any combination of network interfaces for WirelessGoPro
 * Add observable / observer base type and use for asynchronous push notification operations
+* Maintain database of COHN credentials
 
 0.19.8 (April-30-2025)
 ----------------------
