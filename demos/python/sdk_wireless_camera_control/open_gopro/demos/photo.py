@@ -29,6 +29,12 @@ async def main(args: argparse.Namespace) -> None:
             if args.wired
             else WirelessGoPro(args.identifier, host_wifi_interface=args.wifi_interface)
         ) as gopro:
+            # Send a command to register for FPS value notifications and unwrap the result to get the observable
+            async with (await gopro.ble_setting.frames_per_second.get_value_observable()).unwrap() as fps_observable:
+                # Start observing to print each update
+                async for fps in fps_observable.observe():
+                    console.print(f"FPS: {fps}")
+
             assert gopro
             assert (await gopro.http_command.load_preset_group(group=proto.EnumPresetGroup.PRESET_GROUP_ID_PHOTO)).ok
 

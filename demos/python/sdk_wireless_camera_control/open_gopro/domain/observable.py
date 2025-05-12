@@ -1,4 +1,10 @@
-"""Observable / observer async generators to process asynchronous data stream."""
+"""Observable / observer async generators to process asynchronous data stream.
+
+An Observable is a source of asynchronous data that can be observed by multiple observers. Observers can
+subscribe to the observable to retrieve an async generator observe and asynchronously receive updates when new data is
+emitted. The observer can also perform actions on the data as it is emitted, such as filtering or transforming the data
+using the [asyncstdlib](https://pypi.org/project/asyncstdlib) library to manipulate the async generator.
+"""
 
 # pylint: disable=redefined-builtin
 
@@ -127,7 +133,7 @@ class Observable(Generic[T]):
     OBS_IDX: int = 0
 
     @dataclass
-    class SharedData(Generic[T_I]):
+    class _SharedData(Generic[T_I]):
         """Common data used for internal management that should be accessed in critical sections"""
 
         current: T_I | None = None
@@ -153,7 +159,7 @@ class Observable(Generic[T]):
         self._on_start_actions: list[SyncAction[T] | AsyncAction[T]] = []
         self._on_subscribe_actions: list[Callable[[], None] | Callable[[], Coroutine[Any, Any, None]]] = []
         self._per_value_actions: list[SyncAction[T] | AsyncAction[T]] = []
-        self._shared_data = Observable.SharedData[T]()
+        self._shared_data = Observable._SharedData[T]()
         # TODO handle cleanup
 
     async def _add_observer(self, uuid: UUID, replay: int) -> None:
@@ -184,6 +190,8 @@ class Observable(Generic[T]):
 
     async def emit(self, value: T) -> None:
         """Receive a value and queue it for per-observer retrieval
+
+        Not intended to be used by the observer.
 
         Args:
             value (T): Value to queue

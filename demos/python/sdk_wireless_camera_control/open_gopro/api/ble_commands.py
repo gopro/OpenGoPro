@@ -354,27 +354,30 @@ class BleCommands(BleMessages[BleMessage]):
     ######################################################################################################
 
     @ble_register_command(GoProUUID.CQ_QUERY, CmdId.REGISTER_ALL_STATUSES, update_set=StatusId)
-    async def register_for_all_statuses(self) -> ResultE[GoProObservable[dict[StatusId, Any]]]:
+    async def get_observable_for_all_statuses(self) -> ResultE[GoProObservable[dict[StatusId, Any]]]:
         """Register push notifications for all statuses
 
         Returns:
             ResultE[GoProObservable[dict[StatusId, Any]]]: command status and current value of all statuses
+                indexed by StatusId
         """
 
     @ble_register_command(GoProUUID.CQ_QUERY, CmdId.REGISTER_ALL_SETTINGS, update_set=SettingId)
-    async def register_for_all_settings(self) -> ResultE[GoProObservable[dict[SettingId, Any]]]:
+    async def get_observable_for_all_settings(self) -> ResultE[GoProObservable[dict[SettingId, Any]]]:
         """Register push notifications for all settings
 
         Returns:
             ResultE[GoProObservable[dict[SettingId, Any]]]: command status and current value of all settings
+                indexed by SettingId
         """
 
     @ble_register_command(GoProUUID.CQ_QUERY, CmdId.REGISTER_ALL_CAPABILITIES, update_set=SettingId)
-    async def register_for_all_capabilities(self) -> ResultE[GoProObservable[dict[SettingId, list[Any]]]]:
+    async def get_observable_for_all_capabilities(self) -> ResultE[GoProObservable[dict[SettingId, list[Any]]]]:
         """Register push notifications for all capabilities
 
         Returns:
             ResultE[GoProObservable[dict[SettingId, list[Any]]]]: command status and current value of all capabilities
+                indexed by SettingId
         """
 
     ######################################################################################################

@@ -53,7 +53,7 @@ from open_gopro.gopro_base import (
     GoProMessageInterface,
     enforce_message_rules,
 )
-from open_gopro.models import CohnInfo, GoProResp
+from open_gopro.models import GoProResp
 from open_gopro.models.constants import ActionId, GoProUUID, StatusId
 from open_gopro.models.constants.settings import SettingId
 from open_gopro.network.ble import BleakWrapperController, BleUUID
@@ -131,10 +131,16 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     - establishing Wifi connection
     - transferring data
 
-    It will also do some synchronization, etc:
+    This will handle, for COHN:
+    - connecting to Access Point and provisioning COHN
+    - maintaining the COHN credential database
+    - appending COHN headers to HTTP requests
+
+    It will also do some state management, etc:
 
     - ensuring camera is ready / not encoding before transferring data
     - sending keep alive signal periodically
+    - tracking COHN state
 
     If no target arg is passed in, the first discovered BLE GoPro device will be connected to.
 
@@ -155,12 +161,12 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     Args:
         target (str | None): The trailing digits of the target GoPro's serial number to search for.
             Defaults to None which will connect to the first discovered GoPro.
-        host_wifi_interface (str | None): et to specify the wifi interface the local machine will use to connect
-            to the GoPro. Defaults to None in which case the first discovered interface will be used.
-        host_sudo_password (str | None): User password for sudo. Defaults to None in which case  you will
-            be prompted if a password is needed which should only happen on Nix systems.
-        cohn_credentials (CohnInfo | None): Optional Camera on the Home Network credentials. Defaults to
-            None in which case they will attempt be retrieved from the COHN database or connected camera.
+        host_wifi_interface (str | None): used to specify the wifi interface the local machine will use to connect
+            to the GoPro. Defaults to None in which case the first discovered interface will be used. This is only
+            needed if you have multiple wifi interfaces on your machine.
+        host_sudo_password (str | None): User password for sudo. Defaults to None in which case you will
+            be prompted if a password is needed which should only happen on Nix systems. This is only needed for
+            Nix systems where the user does not have passwordless sudo access to the wifi interface.
         cohn_db (Path): Path to COHN Database. Defaults to Path("cohn_db.json").
         interfaces (set[WirelessGoPro.Interface] | None): Wireless interfaces for which to attempt to
             establish communication channels. Defaults to None in which case both BLE and WiFi will be used.
@@ -179,16 +185,15 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     class Interface(enum.Enum):
         """GoPro Wireless Interface selection"""
 
-        BLE = enum.auto()
-        WIFI_AP = enum.auto()
-        COHN = enum.auto()  # WIFI_STA
+        BLE = enum.auto()  #: Bluetooth Low Energy
+        WIFI_AP = enum.auto()  #: Wifi Access Point
+        COHN = enum.auto()  #: Camera on the Home Network (WIFI_STA mode).
 
     def __init__(
         self,
         target: str | None = None,
         host_wifi_interface: str | None = None,
         host_sudo_password: str | None = None,
-        cohn_credentials: CohnInfo | None = None,
         cohn_db: Path = Path("cohn_db.json"),
         interfaces: set[WirelessGoPro.Interface] | None = None,
         **kwargs: Any,
@@ -200,7 +205,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         self._should_enable_ble = WirelessGoPro.Interface.BLE in interfaces
         self._should_enable_cohn = WirelessGoPro.Interface.COHN in interfaces
         self._cohn_db_path = cohn_db
-        self._cohn_credentials = cohn_credentials
+        self._cohn_credentials = kwargs.get("cohn_credentials")
         self._is_cohn_configured = False
 
         # Valid parameter selections
@@ -322,6 +327,8 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     @property
     def is_http_connected(self) -> bool:
         """Are we connected via HTTP to the GoPro device?
+
+        That is, are we connected to the camera's access point or via COHN?
 
         Returns:
             bool: True if yes, False if no

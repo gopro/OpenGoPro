@@ -154,8 +154,12 @@ Observables
 .. automodule:: open_gopro.domain.observable
    :show-inheritance:
 
-.. automodule:: open_gopro.domain.gopro_observable
+.. autoclass:: open_gopro.domain.gopro_observable.GoproObserverDistinctInitial
    :show-inheritance:
+
+.. autoclass:: open_gopro.domain.gopro_observable.GoProObservable
+   :show-inheritance:
+   :inherited-members:
 
 Responses
 =========

@@ -46,10 +46,10 @@ class GoproObserverDistinctInitial(Observable[T], Generic[I, T]):
 
     @property
     def initial_response(self) -> I:
-        """Initial status response received from the register command.
+        """Initial update received from the register command.
 
         Returns:
-            I: Initial status
+            I: Initial update
         """
         return self._initial_response
 
@@ -74,7 +74,7 @@ class GoproObserverDistinctInitial(Observable[T], Generic[I, T]):
         """Configure the camera to start receiving notifications.
 
         Raises:
-            GoProError: Register command returned a failure status
+            GoProError: Register command returned a failure update
 
         Returns:
             C: modified observable
@@ -82,7 +82,7 @@ class GoproObserverDistinctInitial(Observable[T], Generic[I, T]):
         self._gopro._register_update(self._emit_value, self._update)
         initial_response = await self._register_command
         if not initial_response.ok:
-            raise GoProError(f"Failed to start receiving status ==> {self._update}")
+            raise GoProError(f"Failed to start receiving update ==> {self._update}")
         self._initial_response = initial_response.data
         self._is_open = True
         return self
@@ -100,7 +100,7 @@ class GoProObservable(GoproObserverDistinctInitial[T, T]):
 
     Args:
         gopro (BaseGoProCommunicator): gopro camera to operate on
-        update (UpdateType | BaseGoProCommunicator._CompositeRegisterType): the status's update type
+        update (UpdateType | BaseGoProCommunicator._CompositeRegisterType): the update's update type
         register_command (Coroutine[Any, Any, GoProResp[T]]): command to call to start receiving notifications
         unregister_command (Coroutine[Any, Any, Any] | None): Command to call to stop receiving notifications. Defaults to None.
     """
@@ -120,7 +120,7 @@ class GoProObservable(GoproObserverDistinctInitial[T, T]):
         The initial response will be treated and emitted the same as subsequent responses.
 
         Raises:
-            GoProError: Register command returned a failure status
+            GoProError: Register command returned a failure updates
 
         Returns:
             C: modified observable
@@ -128,7 +128,7 @@ class GoProObservable(GoproObserverDistinctInitial[T, T]):
         self._gopro._register_update(self._emit_value, self._update)
         initial_response = await self._register_command
         if not initial_response.ok:
-            raise GoProError(f"Failed to start receiving status ==> {self._update}")
+            raise GoProError(f"Failed to start receiving updates ==> {self._update}")
         self._initial_response = initial_response.data
         await self._emit_value(self._update, initial_response.data)
         self._is_open = True
@@ -140,7 +140,7 @@ class GoProCompositeObservable(GoProObservable[dict[UpdateType | BaseGoProCommun
 
     Args:
         gopro (BaseGoProCommunicator): gopro camera to operate on
-        update (UpdateType | BaseGoProCommunicator._CompositeRegisterType): the status's update type
+        update (UpdateType | BaseGoProCommunicator._CompositeRegisterType): the updates's update type
         register_command (Coroutine[Any, Any, GoProResp[T]]): command to call to start receiving notifications
         unregister_command (Coroutine[Any, Any, Any] | None): Command to call to stop receiving notifications. Defaults to None.
     """
