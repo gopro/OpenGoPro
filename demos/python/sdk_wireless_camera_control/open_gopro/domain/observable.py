@@ -22,7 +22,6 @@ from typing import (
     Final,
     Generic,
     NoReturn,
-    Self,
     TypeAlias,
     TypeVar,
 )
@@ -55,7 +54,7 @@ class Observer(AsyncGenerator[T, None]):
         self._debug_id = debug_id or str(uuid)
         self._is_active = False
 
-    def __aiter__(self) -> Self:
+    def __aiter__(self) -> Observer[T]:
         return self
 
     async def __anext__(self) -> T:
@@ -143,7 +142,7 @@ class Observable(Generic[T]):
         def __post_init__(self) -> None:  # noqa
             self._condition = asyncio.Condition()
 
-        async def __aenter__(self) -> Self:  # noqa
+        async def __aenter__(self) -> Observable._SharedData[T_I]:  # noqa
             await self._condition.acquire()
             return self
 
