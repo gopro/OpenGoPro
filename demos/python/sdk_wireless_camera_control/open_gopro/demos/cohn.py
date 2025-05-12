@@ -23,6 +23,17 @@ COHN_CURL_CMD_TEMPLATE = (
 )
 
 
+def dump_cohn_collateral(gopro: WirelessGoPro) -> None:
+    assert gopro.cohn.credentials
+    console.print(
+        f"Sample curl command: {COHN_CURL_CMD_TEMPLATE.format(
+        password=gopro.cohn.credentials.password,
+        ip_addr=gopro.cohn.credentials.ip_address,)}"
+    )
+    with open("cohn.crt", "w") as f:
+        f.write(gopro.cohn.credentials.certificate)
+
+
 async def main(args: argparse.Namespace) -> None:
     logger = setup_logging(__name__, args.log)
 
@@ -47,6 +58,8 @@ async def main(args: argparse.Namespace) -> None:
                     await gopro.cohn.configure(force_reprovision=True)
 
                 console.print("[blue]COHN is ready for communication. Dropping the BLE connection.")
+                dump_cohn_collateral(gopro)
+
             identifier = gopro.identifier
         # Now create an object with only COHN
         async with WirelessGoPro(
@@ -57,12 +70,7 @@ async def main(args: argparse.Namespace) -> None:
             # Prove we can communicate via the COHN HTTP channel without a BLE or Wifi connection
             assert (await gopro.http_command.get_camera_state()).ok
             console.print("Successfully communicated via COHN!!")
-            assert gopro.cohn.credentials
-            console.print(
-                f"Sample curl command: {COHN_CURL_CMD_TEMPLATE.format(
-                password=gopro.cohn.credentials.password,
-                ip_addr=gopro.cohn.credentials.ip_address,)}"
-            )
+            dump_cohn_collateral(gopro)
 
     except Exception as e:  # pylint: disable = broad-except
         logger.error(repr(e))

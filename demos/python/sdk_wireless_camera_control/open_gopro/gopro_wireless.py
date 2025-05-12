@@ -16,6 +16,7 @@ from pathlib import Path
 from types import TracebackType
 from typing import Any, Callable, Final
 
+import requests
 from tinydb import TinyDB
 
 import open_gopro.features.access_point_feature
@@ -60,6 +61,7 @@ from open_gopro.network.ble import BleakWrapperController, BleUUID
 from open_gopro.network.ble.controller import BLEController
 from open_gopro.network.wifi import WifiCli
 from open_gopro.network.wifi.controller import WifiController
+from open_gopro.network.wifi.requests_session import create_less_strict_requests_session
 from open_gopro.parsers.response import BleRespBuilder
 from open_gopro.util import SnapshotQueue, get_current_dst_aware_time, pretty_print
 from open_gopro.util.logger import Logger
@@ -892,6 +894,14 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             )
         except GoProNotOpened:
             return "http://10.5.5.9:8080/"
+
+    @property
+    def _requests_session(self) -> requests.Session:
+        return (
+            create_less_strict_requests_session()
+            if self._should_enable_cohn and self.cohn.credentials
+            else requests.Session()
+        )
 
     @property
     def _api(self) -> WirelessApi:

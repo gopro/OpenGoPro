@@ -9,6 +9,8 @@ import asyncio
 import logging
 from typing import Any, Callable, Final
 
+import requests
+
 import open_gopro.network.wifi.mdns_scanner  # Imported this way for pytest monkeypatching
 from open_gopro.api import (
     BleCommands,
@@ -357,3 +359,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         if not self._serial:
             raise GoProNotOpened("Serial / IP has not yet been discovered")
         return WiredGoPro._BASE_ENDPOINT.format(ip=WiredGoPro._BASE_IP.format(*self._serial[-3:]))
+
+    @property
+    def _requests_session(self) -> requests.Session:
+        return requests.Session()

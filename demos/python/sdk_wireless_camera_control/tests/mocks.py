@@ -8,6 +8,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Generic, Optional, Pattern, TypeVar
 
+import requests
+
 from open_gopro import WiredGoPro, WirelessGoPro
 from open_gopro.api import (
     BleCommands,
@@ -316,6 +318,13 @@ class MockWirelessGoPro(WirelessGoPro):
         self._test_response_uuid = GoProUUID.CQ_COMMAND
         self._test_response_data = bytearray()
         self.ble_status.ap_mode.get_value = self._mock_wifi_check
+
+    def set_requests_session(self, session: requests.Session) -> None:
+        self._mock_requests_session = session
+
+    @property
+    def _requests_session(self) -> requests.Session:
+        return self._mock_requests_session
 
     async def mock_gopro_resp(self, value: T) -> GoProResp[T]:
         return MockGoproResp(value)
