@@ -1,3 +1,6 @@
+# observable.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Mon May 12 23:03:50 UTC 2025
+
 """Observable / observer async generators to process asynchronous data stream.
 
 An Observable is a source of asynchronous data that can be observed by multiple observers. Observers can
