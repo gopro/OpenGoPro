@@ -62,7 +62,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#sending-messages">Sending Messages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#selecting-parameters">Selecting Parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#synchronous-data-operations">Synchronous Data Operations</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#commands">Commands</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#statuses">Statuses</a></li>
@@ -124,7 +123,7 @@ information, see the <a class="reference internal" href="api.html#api-reference"
 <blockquote>
 <div><ul class="simple">
 <li><p><a class="reference internal" href="api.html#open_gopro.gopro_wired.WiredGoPro" title="open_gopro.gopro_wired.WiredGoPro"><code class="xref py py-class docutils literal notranslate"><span class="pre">WiredGoPro</span></code></a> to communicate with the GoPro via USB HTTP</p></li>
-<li><p><a class="reference internal" href="api.html#open_gopro.gopro_wireless.WirelessGoPro" title="open_gopro.gopro_wireless.WirelessGoPro"><code class="xref py py-class docutils literal notranslate"><span class="pre">WirelessGoPro</span></code></a> to communicate with the GoPro via BLE and optionally WiFi HTTP</p></li>
+<li><p><a class="reference internal" href="api.html#open_gopro.gopro_wireless.WirelessGoPro" title="open_gopro.gopro_wireless.WirelessGoPro"><code class="xref py py-class docutils literal notranslate"><span class="pre">WirelessGoPro</span></code></a> to communicate with the GoPro via BLE and optionally HTTP (WiFi / Camera on the Home Network)</p></li>
 </ul>
 </div></blockquote>
 <p>An individual instance of one of the above classes corresponds to a (potentially not yet) connected GoPro
@@ -178,22 +177,44 @@ the context manager. See the below sections for opening information specific to 
 <span class="c1"># Send some messages now</span>
 </pre></div>
 </div>
-<p>In either case, the following will have occurred before the camera is ready to communicate:</p>
-<ol class="arabic simple">
-<li><p>scan for camera</p></li>
+<p>If, as above,  an identifier is not passed to the <cite>WirelessGoPro</cite>, a network scan will occur and the first discovered
+GoPro will be used.</p>
+<p>See the API Reference for <a class="reference internal" href="api.html#open_gopro.gopro_wireless.WirelessGoPro" title="open_gopro.gopro_wireless.WirelessGoPro"><code class="xref py py-class docutils literal notranslate"><span class="pre">WirelessGoPro</span></code></a> for all the arguments that can be passed.
+The most common argument to configure is the <cite>interface</cite> argument which specifies the type of wireless connections to use.</p>
+<p>The most common combinations are:</p>
+<ul>
+<li><p><a class="reference internal" href="api.html#open_gopro.gopro_wireless.WirelessGoPro.Interface.BLE" title="open_gopro.gopro_wireless.WirelessGoPro.Interface.BLE"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BLE</span></code></a>: The GoPro will only be connected via BLE. The following will be performed:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>scan BLE advertisements for camera</p></li>
 <li><p>connect to camera via BLE</p></li>
 <li><p>enable notifications</p></li>
 <li><p>pair (if needed)</p></li>
 <li><p>discover characteristics</p></li>
-<li><p>initialize (register for internal status notifications)</p></li>
+<li><p>initialize (register for internal state notifications)</p></li>
 <li><p>discover Open GoPro version</p></li>
-<li><p>connect via WiFi (unless specified not to via argument)</p></li>
+<li><p>set the camera’s datetime to match the host computer’s datetime</p></li>
 </ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>While a BLE connection is always needed, the WiFi connection is optional. To configure this (and other
-instance arguments) see the API Reference for <a class="reference internal" href="api.html#open_gopro.gopro_wireless.WirelessGoPro" title="open_gopro.gopro_wireless.WirelessGoPro"><code class="xref py py-class docutils literal notranslate"><span class="pre">WirelessGoPro</span></code></a></p>
-</div>
+</div></blockquote>
+</li>
+<li><p><a class="reference internal" href="api.html#open_gopro.gopro_wireless.WirelessGoPro.Interface.BLE" title="open_gopro.gopro_wireless.WirelessGoPro.Interface.BLE"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BLE</span></code></a> and <a class="reference internal" href="api.html#open_gopro.gopro_wireless.WirelessGoPro.Interface.WIFI_AP" title="open_gopro.gopro_wireless.WirelessGoPro.Interface.WIFI_AP"><code class="xref py py-attr docutils literal notranslate"><span class="pre">WIFI_AP</span></code></a>: The GoPro will first connect via BLE (performing the above steps) and then connect via WiFi. The following will be performed:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>discover camera’s WiFi SSID and password</p></li>
+<li><p>connect via WiFi</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p><a class="reference internal" href="api.html#open_gopro.gopro_wireless.WirelessGoPro.Interface.COHN" title="open_gopro.gopro_wireless.WirelessGoPro.Interface.COHN"><code class="xref py py-attr docutils literal notranslate"><span class="pre">COHN</span></code></a>: Communicate only via COHN to a previously provisioned GoPro. The following will be performed:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>mDNS scan for camera</p></li>
+<li><p>attempt to retrieve camera’s COHN credentials from COHN database</p></li>
+<li><p>use COHN credentials when communicating via HTTP</p></li>
+</ol>
+</div></blockquote>
+</li>
+</ul>
 </section>
 <section id="wired-opening">
 <h3>Wired Opening<a class="headerlink" href="#wired-opening" title="Link to this heading"></a></h3>
@@ -222,8 +243,8 @@ for a connected GoPro.</p>
 <p>The GoPro’s state can be checked via several properties.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="api.html#open_gopro.gopro_base.GoProBase.is_ble_connected" title="open_gopro.gopro_base.GoProBase.is_ble_connected"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_ble_connected()</span></code></a></p></li>
-<li><p><a class="reference internal" href="api.html#open_gopro.gopro_base.GoProBase.is_http_connected" title="open_gopro.gopro_base.GoProBase.is_http_connected"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_http_connected()</span></code></a></p></li>
-<li><p><a class="reference internal" href="api.html#open_gopro.gopro_base.GoProBase.is_open" title="open_gopro.gopro_base.GoProBase.is_open"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_open()</span></code></a></p></li>
+<li><p><a class="reference internal" href="api.html#open_gopro.gopro_base.GoProBase.is_http_connected" title="open_gopro.gopro_base.GoProBase.is_http_connected"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_http_connected()</span></code></a>: Do we have a WiFi AP or COHN communication channel?</p></li>
+<li><p><a class="reference internal" href="api.html#open_gopro.gopro_base.GoProBase.is_open" title="open_gopro.gopro_base.GoProBase.is_open"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_open()</span></code></a>: Is the camera ready for the client to use it for communication?</p></li>
 </ul>
 <section id="api-version">
 <h4>API Version<a class="headerlink" href="#api-version" title="Link to this heading"></a></h4>
@@ -259,16 +280,18 @@ messages to the camera (provided that the camera is <a class="reference internal
 by transport protocol where the superset of message groups are:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 25.0%" />
-<col style="width: 25.0%" />
-<col style="width: 25.0%" />
-<col style="width: 25.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Message Group</p></th>
 <th class="head"><p>WiredGoPro</p></th>
-<th class="head"><p>WirelessGoPro (WiFi Enabled)</p></th>
-<th class="head"><p>WirelessGoPro (WiFi Disabled)</p></th>
+<th class="head"><p>WirelessGoPro (HTTP and BLE available)</p></th>
+<th class="head"><p>WirelessGoPro (only BLE available)</p></th>
+<th class="head"><p>WirelessGoPro (only HTTP available)</p></th>
 </tr>
 </thead>
 <tbody>
@@ -276,26 +299,31 @@ by transport protocol where the superset of message groups are:</p>
 <td><p>✔️</p></td>
 <td><p>✔️</p></td>
 <td><p>❌</p></td>
+<td><p>✔️</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api.html#open_gopro.gopro_base.GoProBase.http_setting" title="open_gopro.gopro_base.GoProBase.http_setting"><code class="xref py py-meth docutils literal notranslate"><span class="pre">http_setting()</span></code></a></p></td>
 <td><p>✔️</p></td>
 <td><p>✔️</p></td>
 <td><p>❌</p></td>
+<td><p>✔️</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api.html#open_gopro.gopro_base.GoProBase.ble_command" title="open_gopro.gopro_base.GoProBase.ble_command"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ble_command()</span></code></a></p></td>
 <td><p>❌</p></td>
 <td><p>✔️</p></td>
 <td><p>✔️</p></td>
+<td><p>❌</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api.html#open_gopro.gopro_base.GoProBase.ble_setting" title="open_gopro.gopro_base.GoProBase.ble_setting"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ble_setting()</span></code></a></p></td>
 <td><p>❌</p></td>
 <td><p>✔️</p></td>
 <td><p>✔️</p></td>
+<td><p>❌</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api.html#open_gopro.gopro_base.GoProBase.ble_status" title="open_gopro.gopro_base.GoProBase.ble_status"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ble_status()</span></code></a></p></td>
 <td><p>❌</p></td>
 <td><p>✔️</p></td>
 <td><p>✔️</p></td>
+<td><p>❌</p></td>
 </tr>
 </tbody>
 </table>
@@ -304,7 +332,7 @@ the relevant property is accessed.</p>
 <p>All messages are communicated via one of two strategies:</p>
 <ul class="simple">
 <li><p>Performing synchronous <a class="reference internal" href="#synchronous-data-operations"><span class="std std-ref">data operations</span></a> to send a message and receive a GoPro Response</p></li>
-<li><p>Registering for <a class="reference internal" href="#asynchronous-push-notifications"><span class="std std-ref">asynchronous push notifications</span></a> and getting these after they are enqueued</p></li>
+<li><p>Registering for <a class="reference internal" href="#asynchronous-push-notifications"><span class="std std-ref">asynchronous push notifications</span></a> to retrieve an observable stream.</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -312,23 +340,6 @@ the relevant property is accessed.</p>
 Do not confuse this with <cite>asyncio</cite>: all operations from the user’s perspective are awaitable.</p>
 </div>
 <p>Both of these patterns will be expanded upon below. But first, a note on selecting parameters for use with messages…</p>
-<section id="selecting-parameters">
-<h3>Selecting Parameters<a class="headerlink" href="#selecting-parameters" title="Link to this heading"></a></h3>
-<p>Whenever a parameter is required for a message, it will be type-hinted in the method definition as either a standard Python type
-or an Enum from the <a class="reference internal" href="api.html#constants"><span class="std std-ref">constants</span></a> module.</p>
-<p>Here is a full example for clarity:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">open_gopro</span><span class="w"> </span><span class="kn">import</span> <span class="n">WirelessGoPro</span><span class="p">,</span> <span class="n">Params</span>
-
-<span class="k">async</span> <span class="k">with</span> <span class="n">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
-    <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_command</span><span class="o">.</span><span class="n">set_shutter</span><span class="p">(</span><span class="n">shutter</span><span class="o">=</span><span class="n">constants</span><span class="o">.</span><span class="n">Toggle</span><span class="o">.</span><span class="n">ENABLE</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>The message signature can also be found from the API Reference. For example, here is the documentation
-of the above message: <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.set_shutter" title="open_gopro.api.ble_commands.BleCommands.set_shutter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_shutter()</span></code></a></p>
-</div>
-</section>
 <section id="synchronous-data-operations">
 <h3>Synchronous Data Operations<a class="headerlink" href="#synchronous-data-operations" title="Link to this heading"></a></h3>
 <div class="admonition note">
@@ -414,59 +425,53 @@ the current capabilities for a given setting (via BLE only) using the <cite>get_
 <section id="asynchronous-push-notifications">
 <h3>Asynchronous Push Notifications<a class="headerlink" href="#asynchronous-push-notifications" title="Link to this heading"></a></h3>
 <p>This section describes how to register for and handle asynchronous push notifications. This is only relevant for BLE.</p>
-<p>It is possible to enable push notifications for any of the following:</p>
-<ul class="simple">
-<li><p>setting values via <a class="reference internal" href="api.html#open_gopro.api.builders.BleSettingFacade.register_value_update" title="open_gopro.api.builders.BleSettingFacade.register_value_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_value_update()</span></code></a></p></li>
-<li><p>setting capabilities via <a class="reference internal" href="api.html#open_gopro.api.builders.BleSettingFacade.register_capability_update" title="open_gopro.api.builders.BleSettingFacade.register_capability_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_capability_update()</span></code></a></p></li>
-<li><p>status values via <a class="reference internal" href="api.html#open_gopro.api.builders.BleStatusFacade.register_value_update" title="open_gopro.api.builders.BleStatusFacade.register_value_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_value_update()</span></code></a></p></li>
-</ul>
-<p>Firstly, the desired settings / ID must be registered for and given a callback to handle received notifications.</p>
-<p><a class="reference internal" href="api.html#open_gopro.communicator_interface.BaseGoProCommunicator.register_update" title="open_gopro.communicator_interface.BaseGoProCommunicator.register_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_update()</span></code></a>.</p>
-<p>Once registered, the camera will send a push notification when the relevant setting / status changes. These
-responses will then be sent to the registered callback for handling.</p>
-<p>It is possible to stop receiving notifications by issuing the relevant unregister command, i.e.:</p>
-<ul class="simple">
-<li><p>setting values via <a class="reference internal" href="api.html#open_gopro.api.builders.BleSettingFacade.unregister_value_update" title="open_gopro.api.builders.BleSettingFacade.unregister_value_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unregister_value_update()</span></code></a></p></li>
-<li><p>setting capabilities via <a class="reference internal" href="api.html#open_gopro.api.builders.BleSettingFacade.unregister_capability_update" title="open_gopro.api.builders.BleSettingFacade.unregister_capability_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unregister_capability_update()</span></code></a></p></li>
-<li><p>status values via <a class="reference internal" href="api.html#open_gopro.api.builders.BleStatusFacade.unregister_value_update" title="open_gopro.api.builders.BleStatusFacade.unregister_value_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unregister_value_update()</span></code></a></p></li>
-</ul>
-<p>Here is an example of registering for and receiving FOV updates:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">process_battery_notifications</span><span class="p">(</span><span class="n">update</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">update</span> <span class="o">==</span> <span class="n">constants</span><span class="o">.</span><span class="n">StatusId</span><span class="o">.</span><span class="n">INTERNAL_BATTERY_PERCENTAGE</span><span class="p">:</span>
-        <span class="o">...</span>
-    <span class="k">elif</span> <span class="n">update</span> <span class="o">==</span> <span class="n">constants</span><span class="o">.</span><span class="n">StatusId</span><span class="o">.</span><span class="n">INTERNAL_BATTERY_BARS</span><span class="p">:</span>
-        <span class="o">...</span>
-
-<span class="k">async</span> <span class="k">with</span> <span class="n">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
-    <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_status</span><span class="o">.</span><span class="n">internal_battery_percentage</span><span class="o">.</span><span class="n">register_value_update</span><span class="p">(</span><span class="n">process_battery_notifications</span><span class="p">)</span>
-    <span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_status</span><span class="o">.</span><span class="n">internal_battery_bars</span><span class="o">.</span><span class="n">register_value_update</span><span class="p">(</span><span class="n">process_battery_notifications</span><span class="p">)</span>
-</pre></div>
-</div>
+<p>These operations will send commands to the camera to register for update notifications and then return an
+<a class="reference internal" href="api.html#open_gopro.domain.gopro_observable.GoProObservable" title="open_gopro.domain.gopro_observable.GoProObservable"><code class="xref py py-class docutils literal notranslate"><span class="pre">GoProObservable</span></code></a> object which can be used to retrieve
+create <a class="reference internal" href="api.html#open_gopro.domain.observable.Observer" title="open_gopro.domain.observable.Observer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Observer</span></code></a> objects to asynchronously retrieve the updates.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <cite>register_XXX_update</cite> methods also return the current value / capabilities.</p>
+<p>It is recommended to use the <a class="reference internal" href="api.html#open_gopro.domain.gopro_observable.GoProObservable" title="open_gopro.domain.gopro_observable.GoProObservable"><code class="xref py py-class docutils literal notranslate"><span class="pre">GoProObservable</span></code></a> as a context manager to ensure that
+notifications are properly unregistered for when finished.</p>
 </div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The coupling of command ID to command is not obvious. This is a temporary solution and will be improved upon
-in a future release.</p>
+<p>It is possible to enable push notifications for any of the following:</p>
+<ul class="simple">
+<li><p>setting values via <a class="reference internal" href="api.html#open_gopro.api.builders.BleSettingFacade.get_value_observable" title="open_gopro.api.builders.BleSettingFacade.get_value_observable"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_value_observable()</span></code></a></p></li>
+<li><p>setting capabilities via <a class="reference internal" href="api.html#open_gopro.api.builders.BleSettingFacade.get_capabilities_observable" title="open_gopro.api.builders.BleSettingFacade.get_capabilities_observable"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_capabilities_observable()</span></code></a></p></li>
+<li><p>status values via <a class="reference internal" href="api.html#open_gopro.api.builders.BleStatusFacade.get_value_observable" title="open_gopro.api.builders.BleStatusFacade.get_value_observable"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_value_observable()</span></code></a></p></li>
+</ul>
+<p>Once executed, the camera will send a push notification when the relevant setting / status changes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All of these methods return the <cite>Observable</cite> wrapped in a <a class="reference external" href="https://returns.readthedocs.io/en/latest/pages/result.html">Result</a>
+object for failure handling. The <cite>Result</cite> object can be unwrapped using the <cite>unwrap</cite> method.</p>
 </div>
+<p>Here is an example of registering for and receiving FPS updates:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">with</span> <span class="n">WirelessGoPro</span><span class="p">()</span> <span class="k">as</span> <span class="n">gopro</span><span class="p">:</span>
+    <span class="c1"># Send a command to register for FPS value notifications and unwrap the result to get the observable</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="p">(</span><span class="k">await</span> <span class="n">gopro</span><span class="o">.</span><span class="n">ble_setting</span><span class="o">.</span><span class="n">frames_per_second</span><span class="o">.</span><span class="n">get_value_observable</span><span class="p">())</span><span class="o">.</span><span class="n">unwrap</span><span class="p">()</span> <span class="k">as</span> <span class="n">fps_observable</span><span class="p">:</span>
+        <span class="c1"># Start observing to print each update</span>
+        <span class="k">async</span> <span class="k">for</span> <span class="n">fps</span> <span class="ow">in</span> <span class="n">fps_observable</span><span class="o">.</span><span class="n">observe</span><span class="p">():</span>
+            <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;FPS: </span><span class="si">{</span><span class="n">fps</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="c1"># break at some point...</span>
+            <span class="k">break</span>
+    <span class="c1"># FPS value updates are registered when exiting the context manager</span>
+</pre></div>
+</div>
+<p>The observer can be mapped, filtered, etc by functions from the <a class="reference external" href="https://asyncstdlib.readthedocs.io/en/stable/">asyncstdlib</a>
+as well as helper methods from the base <a class="reference internal" href="api.html#open_gopro.domain.observable.Observer" title="open_gopro.domain.observable.Observer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Observer</span></code></a>.</p>
 <p>It is also possible to register / unregister for <strong>all</strong> settings, statuses, and / or capabilities
 via one API call using the following commands:</p>
 <ul class="simple">
-<li><p>register for all setting notifications via <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.register_for_all_settings" title="open_gopro.api.ble_commands.BleCommands.register_for_all_settings"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_for_all_settings()</span></code></a></p></li>
-<li><p>register for all status notifications via <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.register_for_all_statuses" title="open_gopro.api.ble_commands.BleCommands.register_for_all_statuses"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_for_all_statuses()</span></code></a></p></li>
-<li><p>register for all capability notifications via <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.register_for_all_capabilities" title="open_gopro.api.ble_commands.BleCommands.register_for_all_capabilities"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_for_all_capabilities()</span></code></a></p></li>
-<li><p>unregister for all setting notifications via <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings" title="open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unregister_for_all_settings()</span></code></a></p></li>
-<li><p>unregister for all status notifications via <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.unregister_for_all_statuses" title="open_gopro.api.ble_commands.BleCommands.unregister_for_all_statuses"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unregister_for_all_statuses()</span></code></a></p></li>
-<li><p>unregister for all capability notifications via <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.unregister_for_all_capabilities" title="open_gopro.api.ble_commands.BleCommands.unregister_for_all_capabilities"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unregister_for_all_capabilities()</span></code></a></p></li>
+<li><p>register for all setting notifications via <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.get_observable_for_all_settings" title="open_gopro.api.ble_commands.BleCommands.get_observable_for_all_settings"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_observable_for_all_settings()</span></code></a></p></li>
+<li><p>register for all status notifications via <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.get_observable_for_all_statuses" title="open_gopro.api.ble_commands.BleCommands.get_observable_for_all_statuses"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_observable_for_all_statuses()</span></code></a></p></li>
+<li><p>register for all capability notifications via <a class="reference internal" href="api.html#open_gopro.api.ble_commands.BleCommands.get_observable_for_all_capabilities" title="open_gopro.api.ble_commands.BleCommands.get_observable_for_all_capabilities"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_observable_for_all_capabilities()</span></code></a></p></li>
 </ul>
 </section>
 </section>
 <section id="handling-responses">
 <h2>Handling Responses<a class="headerlink" href="#handling-responses" title="Link to this heading"></a></h2>
 <p>Unless otherwise stated, all commands, settings, and status operations return a <cite>GoProResp</cite>
-(<a class="reference internal" href="api.html#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><code class="xref py py-class docutils literal notranslate"><span class="pre">GoProResp</span></code></a>) which is a container around a JSON serializable dict with some helper
+(<a class="reference internal" href="api.html#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><code class="xref py py-class docutils literal notranslate"><span class="pre">GoProResp</span></code></a>) which is a container around the <cite>data</cite> payload with some helper
 functions.</p>
 <section id="response-structure">
 <h3>Response Structure<a class="headerlink" href="#response-structure" title="Link to this heading"></a></h3>

@@ -1,8 +1,8 @@
 <map id="inheritancece88257e1f" name="inheritancece88257e1f">
 <area shape="rect" id="node1" href="https://docs.python.org/3/library/abc.html#abc.ABC" target="_top" title="Helper class that provides a standard way to create an ABC using" alt="" coords="103,299,175,324"/>
-<area shape="rect" id="node2" href="#open_gopro.communicator_interface.BaseGoProCommunicator" target="_top" title="Common Communicator interface" alt="" coords="45,225,234,251"/>
-<area shape="rect" id="node5" href="#open_gopro.communicator_interface.GoProHttp" target="_top" title="Interface definition for all HTTP communicators" alt="" coords="5,152,95,177"/>
-<area shape="rect" id="node6" href="#open_gopro.communicator_interface.GoProWiredInterface" target="_top" title="The top&#45;level interface for a Wired Open GoPro controller" alt="" coords="150,79,307,104"/>
+<area shape="rect" id="node2" href="#open_gopro.domain.communicator_interface.BaseGoProCommunicator" target="_top" title="Common Communicator interface" alt="" coords="45,225,234,251"/>
+<area shape="rect" id="node5" href="#open_gopro.domain.communicator_interface.GoProHttp" target="_top" title="Interface definition for all HTTP communicators" alt="" coords="5,152,95,177"/>
+<area shape="rect" id="node6" href="#open_gopro.domain.communicator_interface.GoProWiredInterface" target="_top" title="The top&#45;level interface for a Wired Open GoPro controller" alt="" coords="150,79,307,104"/>
 <area shape="rect" id="node3" href="https://docs.python.org/3/library/typing.html#typing.Generic" target="_top" title="Abstract base class for generic types." alt="" coords="119,152,191,177"/>
 <area shape="rect" id="node4" href="#open_gopro.gopro_base.GoProBase" target="_top" title="The base class for communicating with all GoPro Clients" alt="" coords="33,79,126,104"/>
 <area shape="rect" id="node7" href="#open_gopro.gopro_wired.WiredGoPro" target="_top" title="The top&#45;level USB interface to a Wired GoPro device." alt="" coords="105,5,203,31"/>
