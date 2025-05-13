@@ -71,7 +71,7 @@ class StreamFeature(BaseFeature):
         options: StreamOptions,
     ) -> ResultE[None]:
         if self.is_streaming:
-            return ResultE.from_failure(GoProError("A stream is already active"))
+            return ResultE.from_failure(GoProError(f"Stream {self.current_stream} is already active"))
 
         controller: StreamController
         match stream_type:

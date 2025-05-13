@@ -19,7 +19,6 @@ class StreamController(ABC, Generic[T]):
     class StreamStatus(enum.Enum):
         """Enum for the different types of stream status."""
 
-        NOT_READY = enum.auto()
         STARTING = enum.auto()
         STARTED = enum.auto()
         STOPPING = enum.auto()

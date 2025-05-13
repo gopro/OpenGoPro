@@ -51,11 +51,10 @@ class WebcamStreamController(StreamController[WebcamStreamOptions]):
             await asyncio.sleep(1)
 
     @property
-    def is_available(self) -> bool:
+    def is_available(self) -> bool:  # noqa: D102
         return True if self.gopro.is_http_connected else False
 
     async def start(self, options: WebcamStreamOptions) -> ResultE[None]:
-        self._status_task = asyncio.create_task(self._track_status())
         if not self.is_available:
             logger.error("Webcam is not available")
             return ResultE.from_failure(GoProError("Webcam is not available"))
@@ -63,6 +62,7 @@ class WebcamStreamController(StreamController[WebcamStreamOptions]):
             logger.warning("Webcam is already started / starting")
             return ResultE.from_failure(GoProError("Webcam is already started / starting"))
 
+        self._status_task = asyncio.create_task(self._track_status())
         self.current_options = options
         await self.status_observable.emit(StreamController.StreamStatus.STARTING)
 
@@ -80,6 +80,7 @@ class WebcamStreamController(StreamController[WebcamStreamOptions]):
             status := (await self.gopro.http_command.webcam_start(protocol=self.current_options.protocol)).data.error
         ) != WebcamError.SUCCESS:
             logger.error(f"Couldn't start webcam: {status}")
+            self._cleanup()
             return ResultE.from_failure(GoProError(f"Couldn't start webcam: {status}"))
         await self.status_observable.observe().first(lambda s: s == StreamController.StreamStatus.STARTED)
         return ResultE.from_value(None)
@@ -110,7 +111,7 @@ class WebcamStreamController(StreamController[WebcamStreamOptions]):
 
     @property
     def status(self) -> StreamController.StreamStatus:
-        return self.status_observable.current or StreamController.StreamStatus.NOT_READY
+        return self.status_observable.current or StreamController.StreamStatus.STOPPED
 
     @property
     def stream_type(self) -> StreamType:
