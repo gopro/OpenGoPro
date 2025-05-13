@@ -2,19 +2,17 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from dataclasses import dataclass
 
 from returns.result import ResultE
 
-from open_gopro.features.streaming.base_stream import StreamController, StreamType
 from open_gopro.domain.exceptions import GoProError
+from open_gopro.domain.observable import Observable
+from open_gopro.features.streaming.base_stream import StreamController, StreamType
 from open_gopro.gopro_base import GoProBase
 from open_gopro.models.constants import Toggle
 from open_gopro.models.streaming import (
     WebcamError,
-    WebcamFOV,
     WebcamProtocol,
-    WebcamResolution,
     WebcamStatus,
     WebcamStreamOptions,
 )
@@ -25,17 +23,48 @@ logger = logging.getLogger(__name__)
 class WebcamStreamController(StreamController[WebcamStreamOptions]):
     def __init__(self, gopro: GoProBase) -> None:
         super().__init__(gopro)
-        self._status = StreamController.StreamStatus.NOT_READY
+        self.status_observable = Observable[StreamController.StreamStatus](
+            debug_id="webcam stream controller status tracker"
+        )
         self.current_options: WebcamStreamOptions | None = None
+        self._status_task: asyncio.Task | None = None
+
+    async def _track_status(self) -> None:
+        # Poll until status is received
+        # TODO cleanup?
+        while True:
+            response = (await self.gopro.http_command.webcam_status()).data
+            if response.error != WebcamError.SUCCESS:
+                # Something bad happened
+                logger.error(f"Received webcam error: {response.error}")
+                return  # TODO throw instead?
+            logger.debug(f"Webcam stream controller received status: {response.status}")
+            match response.status:
+                case WebcamStatus.OFF:
+                    await self.status_observable.emit(StreamController.StreamStatus.STOPPED)
+                case WebcamStatus.IDLE:
+                    await self.status_observable.emit(StreamController.StreamStatus.STOPPED)
+                case WebcamStatus.HIGH_POWER_PREVIEW:
+                    await self.status_observable.emit(StreamController.StreamStatus.STARTED)
+                case WebcamStatus.LOW_POWER_PREVIEW:
+                    await self.status_observable.emit(StreamController.StreamStatus.STARTED)
+            await asyncio.sleep(1)
 
     @property
     def is_available(self) -> bool:
         return True if self.gopro.is_http_connected else False
 
-    # TODO check if webcam is available, or if already started
     async def start(self, options: WebcamStreamOptions) -> ResultE[None]:
+        self._status_task = asyncio.create_task(self._track_status())
+        if not self.is_available:
+            logger.error("Webcam is not available")
+            return ResultE.from_failure(GoProError("Webcam is not available"))
+        if self.status in (StreamController.StreamStatus.STARTED, StreamController.StreamStatus.STARTING):
+            logger.warning("Webcam is already started / starting")
+            return ResultE.from_failure(GoProError("Webcam is already started / starting"))
+
         self.current_options = options
-        self._status = StreamController.StreamStatus.STARTING
+        await self.status_observable.emit(StreamController.StreamStatus.STARTING)
 
         await self.gopro.http_command.set_shutter(shutter=Toggle.DISABLE)
         if (await self.gopro.http_command.webcam_status()).data.status not in {
@@ -44,7 +73,7 @@ class WebcamStreamController(StreamController[WebcamStreamOptions]):
         }:
             logger.warning("Webcam is currently on. Turning if off.")
             assert (await self.gopro.http_command.webcam_stop()).ok
-            await self._wait_for_webcam_status({WebcamStatus.OFF})
+            await self.status_observable.observe().first(lambda s: s == StreamController.StreamStatus.STOPPED)
 
         logger.info("Starting webcam...")
         if (
@@ -52,67 +81,40 @@ class WebcamStreamController(StreamController[WebcamStreamOptions]):
         ) != WebcamError.SUCCESS:
             logger.error(f"Couldn't start webcam: {status}")
             return ResultE.from_failure(GoProError(f"Couldn't start webcam: {status}"))
-        await self._wait_for_webcam_status({WebcamStatus.HIGH_POWER_PREVIEW})
-        self._status = StreamController.StreamStatus.STARTED
+        await self.status_observable.observe().first(lambda s: s == StreamController.StreamStatus.STARTED)
         return ResultE.from_value(None)
 
-    # TODO check if webcam is available, or if already stopped
     async def stop(self) -> ResultE[None]:
-        self._status = StreamController.StreamStatus.STOPPING
+        if not self.is_available:
+            logger.error("Webcam is not available")
+            return ResultE.from_failure(GoProError("Webcam is not available"))
+        if self.status == StreamController.StreamStatus.STOPPED:
+            logger.warning("Webcam is already stopped")
+            return ResultE.from_failure(GoProError("Webcam is already stopped"))
+
+        await self.status_observable.emit(StreamController.StreamStatus.STOPPING)
         logger.info("Stopping webcam...")
+        # First wait for it top stop
         assert (await self.gopro.http_command.webcam_stop()).ok
-        await self._wait_for_webcam_status({WebcamStatus.OFF, WebcamStatus.IDLE})
-        assert (await self.gopro.http_command.webcam_exit()).ok
-        await self._wait_for_webcam_status({WebcamStatus.OFF})
-        self._status = StreamController.StreamStatus.STOPPED
-        self.current_options = None
+        await self.status_observable.observe().first(lambda s: s == StreamController.StreamStatus.STOPPED)
+        # Now just tell it to exit
+        await self.gopro.http_command.webcam_exit()
+        self._cleanup()
         return ResultE.from_value(None)
 
-    # TODO track status
+    def _cleanup(self) -> None:
+        if self._status_task:
+            self._status_task.cancel()
+            self._status_task = None
+        self.current_options = None
+
     @property
     def status(self) -> StreamController.StreamStatus:
-        return self._status
-
-    @status.setter
-    def status(self, value: StreamController.StreamStatus) -> None:
-        if value in (StreamController.StreamStatus.STOPPED, StreamController.StreamStatus.NOT_READY):
-            if self.is_available:
-                self._status = StreamController.StreamStatus.READY
-        else:
-            self._status = value
+        return self.status_observable.current or StreamController.StreamStatus.NOT_READY
 
     @property
     def stream_type(self) -> StreamType:
         return StreamType.WEBCAM
-
-    async def _wait_for_webcam_status(self, statuses: set[WebcamStatus], timeout: int = 10) -> bool:
-        """Wait for specified webcam status(es) for a given timeout
-
-        Args:
-            statuses (set[WebcamStatus]): statuses to wait for
-            timeout (int): timeout in seconds. Defaults to 10.
-
-        Returns:
-            bool: True if status was received before timing out, False if timed out or received error
-        """
-
-        async def poll_for_status() -> bool:
-            # Poll until status is received
-            while True:
-                response = (await self.gopro.http_command.webcam_status()).data
-                if response.error != WebcamError.SUCCESS:
-                    # Something bad happened
-                    logger.error(f"Received webcam error: {response.error}")
-                    return False
-                if response.status in statuses:
-                    # We found the desired status
-                    return True
-
-        # Wait for either status or timeout
-        try:
-            return await asyncio.wait_for(poll_for_status(), timeout)
-        except TimeoutError:
-            return False
 
     @property
     def url(self) -> str:

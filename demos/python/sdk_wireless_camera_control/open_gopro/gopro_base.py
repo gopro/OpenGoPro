@@ -33,9 +33,9 @@ from open_gopro.domain.communicator_interface import (
     MessageRules,
 )
 from open_gopro.domain.exceptions import GoProNotOpened, ResponseTimeout
-from open_gopro.models.types import JsonDict
 from open_gopro.models import GoProResp
 from open_gopro.models.constants import ErrorCode
+from open_gopro.models.types import JsonDict
 from open_gopro.parsers.response import RequestsHttpRespBuilderDirector
 from open_gopro.util import pretty_print
 from open_gopro.util.logger import Logger

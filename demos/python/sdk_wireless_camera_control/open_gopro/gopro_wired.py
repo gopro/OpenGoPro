@@ -32,10 +32,10 @@ from open_gopro.domain.exceptions import (
     GoProNotOpened,
     InvalidOpenGoProVersion,
 )
-from open_gopro.models.types import CameraState, UpdateCb, UpdateType
 from open_gopro.gopro_base import GoProBase
 from open_gopro.models import GoProResp, constants
 from open_gopro.models.constants import StatusId
+from open_gopro.models.types import CameraState, UpdateCb, UpdateType
 
 logger = logging.getLogger(__name__)
 

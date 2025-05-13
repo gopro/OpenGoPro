@@ -11,8 +11,8 @@ from dataclasses import dataclass
 from typing import Generic, TypeVar
 
 from open_gopro.domain.enum import GoProIntEnum
-from open_gopro.models.types import ResponseType
 from open_gopro.models.constants import ErrorCode, QueryCmdId
+from open_gopro.models.types import ResponseType
 from open_gopro.util import pretty_print
 
 logger = logging.getLogger(__name__)

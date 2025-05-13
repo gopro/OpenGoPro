@@ -6,7 +6,6 @@ from pydantic import Field
 
 from open_gopro.domain.enum import GoProEnum, GoProIntEnum
 from open_gopro.models.bases import CustomBaseModel
-from open_gopro.models.constants import Toggle
 from open_gopro.models.general import SupportedOption
 from open_gopro.models.proto import EnumLens, EnumWindowSize
 

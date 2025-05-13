@@ -1,22 +1,12 @@
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass
 
 from returns.result import ResultE
 
 from open_gopro.features.streaming.base_stream import StreamController, StreamType
-from open_gopro.domain.exceptions import GoProError
 from open_gopro.gopro_base import GoProBase
-from open_gopro.models.constants import Toggle
-from open_gopro.models.streaming import (
-    LivestreamOptions,
-    WebcamError,
-    WebcamFOV,
-    WebcamProtocol,
-    WebcamResolution,
-    WebcamStatus,
-)
+from open_gopro.models.streaming import LivestreamOptions
 
 logger = logging.getLogger(__name__)
 

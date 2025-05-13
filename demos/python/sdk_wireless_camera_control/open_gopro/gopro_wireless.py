@@ -47,7 +47,6 @@ from open_gopro.domain.exceptions import (
 
 # These are imported this way for monkeypatching in pytest
 from open_gopro.domain.gopro_observable import GoProObservable
-from open_gopro.models.types import ResponseType, UpdateCb, UpdateType
 from open_gopro.gopro_base import (
     GoProBase,
     GoProMessageInterface,
@@ -56,6 +55,7 @@ from open_gopro.gopro_base import (
 from open_gopro.models import GoProResp
 from open_gopro.models.constants import ActionId, GoProUUID, StatusId
 from open_gopro.models.constants.settings import SettingId
+from open_gopro.models.types import ResponseType, UpdateCb, UpdateType
 from open_gopro.network.ble import BleakWrapperController, BleUUID
 from open_gopro.network.ble.controller import BLEController
 from open_gopro.network.wifi import WifiCli

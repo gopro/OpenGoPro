@@ -6,9 +6,9 @@ from typing import TypeAlias
 
 from returns.result import ResultE
 
-from open_gopro.features.streaming.base_stream import StreamController, StreamType
 from open_gopro.domain.exceptions import GoProError
 from open_gopro.features.base_feature import BaseFeature
+from open_gopro.features.streaming.base_stream import StreamController, StreamType
 from open_gopro.features.streaming.livestream import (
     LiveStreamController,
     LivestreamOptions,
@@ -98,7 +98,7 @@ class StreamFeature(BaseFeature):
 
         self._current = controller
         logger.info(f"Starting {stream_type.name.title()} stream")
-        return await self._current.start(options)  # type: ignore
+        return await self._current.start(options)
 
     async def stop_active_stream(self) -> ResultE[None]:
         """Stop the currently active stream.

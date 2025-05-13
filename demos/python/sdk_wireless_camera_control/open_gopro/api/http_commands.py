@@ -22,7 +22,6 @@ from open_gopro.domain.communicator_interface import (
     MessageRules,
 )
 from open_gopro.domain.parser_interface import Parser
-from open_gopro.models.types import CameraState, JsonDict
 from open_gopro.models import (
     CameraInfo,
     GoProResp,
@@ -34,6 +33,7 @@ from open_gopro.models import (
     streaming,
 )
 from open_gopro.models.streaming import WebcamResponse
+from open_gopro.models.types import CameraState, JsonDict
 from open_gopro.parsers.json import (
     CameraStateJsonParser,
     LambdaJsonParser,
