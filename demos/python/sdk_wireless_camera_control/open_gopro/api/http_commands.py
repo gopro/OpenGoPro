@@ -29,10 +29,11 @@ from open_gopro.models import (
     MediaList,
     MediaMetadata,
     MediaPath,
-    WebcamResponse,
     constants,
     proto,
+    streaming,
 )
+from open_gopro.models.streaming import WebcamResponse
 from open_gopro.parsers.json import (
     CameraStateJsonParser,
     LambdaJsonParser,
@@ -424,10 +425,10 @@ class HttpCommands(HttpMessages[HttpMessage]):
     async def webcam_start(
         self,
         *,
-        resolution: constants.WebcamResolution | None = None,
-        fov: constants.WebcamFOV | None = None,
+        resolution: streaming.WebcamResolution | None = None,
+        fov: streaming.WebcamFOV | None = None,
         port: int | None = None,
-        protocol: constants.WebcamProtocol | None = None,
+        protocol: streaming.WebcamProtocol | None = None,
     ) -> GoProResp[WebcamResponse]:
         """Start the webcam.
 

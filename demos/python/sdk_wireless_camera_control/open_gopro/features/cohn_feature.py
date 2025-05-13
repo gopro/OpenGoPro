@@ -7,12 +7,12 @@ from __future__ import annotations
 
 import asyncio
 import logging
+from typing import Any
 
 from returns.pipeline import is_successful
 from returns.result import Result
 from tinydb import TinyDB
 
-from open_gopro.api import WirelessApi
 from open_gopro.database.cohn_db import CohnDb
 from open_gopro.domain.exceptions import GoProNotOpened
 from open_gopro.domain.gopro_observable import GoProObservable
@@ -40,7 +40,7 @@ class CohnFeature(BaseFeature):
     def __init__(
         self,
         cohn_db: TinyDB,
-        gopro: GoProBase[WirelessApi],
+        gopro: GoProBase[Any],
         loop: asyncio.AbstractEventLoop,
         cohn_credentials: CohnInfo | None = None,
     ) -> None:
@@ -66,7 +66,7 @@ class CohnFeature(BaseFeature):
         await asyncio.wait_for(self._ready_event.wait(), timeout)
         logger.debug("COHN is ready")
 
-    def close(self) -> None:  # noqa: D102
+    async def close(self) -> None:  # noqa: D102
         self._status_task.cancel()
 
     async def _track_status(self) -> None:

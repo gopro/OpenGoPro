@@ -12,9 +12,9 @@ from open_gopro.models import (
     PhotoMetadata,
     ScheduledCapture,
     VideoMetadata,
-    WebcamResponse,
+    streaming,
 )
-from open_gopro.models.constants import constants
+from open_gopro.models.streaming import WebcamResponse
 from open_gopro.parsers import ScheduledCaptureParser
 
 SINGLE_MEDIA_ITEM: Final = {
@@ -216,8 +216,8 @@ WEBCAM_SUCCESS_RSP = {
 
 def test_webcam_success_response():
     response = WebcamResponse(**WEBCAM_SUCCESS_RSP)
-    assert response.status == constants.WebcamStatus.HIGH_POWER_PREVIEW
-    assert response.error == constants.WebcamError.SUCCESS
+    assert response.status == streaming.WebcamStatus.HIGH_POWER_PREVIEW
+    assert response.error == streaming.WebcamError.SUCCESS
 
 
 WEBCAM_FAILURE_RSP = {
@@ -247,7 +247,7 @@ WEBCAM_FAILURE_RSP = {
 
 def test_webcam_failure_response():
     response = WebcamResponse(**WEBCAM_FAILURE_RSP)
-    assert response.error == constants.WebcamError.SHUTTER
+    assert response.error == streaming.WebcamError.SHUTTER
     # Test our scrubbing of null values
     assert "None" not in str(response)
 

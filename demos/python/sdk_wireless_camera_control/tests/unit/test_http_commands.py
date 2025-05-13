@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 
 from open_gopro.gopro_base import GoProBase
-from open_gopro.models import constants, proto
+from open_gopro.models import constants, proto, streaming
 from open_gopro.models.constants.settings import FramesPerSecond
 
 camera_file = "100GOPRO/XXX.mp4"
@@ -73,7 +73,7 @@ async def test_with_multiple_params(mock_wifi_communicator: GoProBase):
 
 @pytest.mark.asyncio
 async def test_string_arg(mock_wifi_communicator: GoProBase):
-    response = await mock_wifi_communicator.http_command.webcam_start(protocol=constants.WebcamProtocol.RTSP)
+    response = await mock_wifi_communicator.http_command.webcam_start(protocol=streaming.WebcamProtocol.RTSP)
     assert response.url == f"gopro/webcam/start?protocol=RTSP"
 
 

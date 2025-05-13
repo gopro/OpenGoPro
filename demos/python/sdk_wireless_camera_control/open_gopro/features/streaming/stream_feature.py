@@ -1,0 +1,114 @@
+from __future__ import annotations
+
+import asyncio
+import logging
+from typing import TypeAlias, TypeVar
+
+from returns.result import ResultE
+
+from open_gopro.api import WirelessApi
+from open_gopro.features.streaming.base_stream import StreamController, StreamType
+from open_gopro.domain.exceptions import GoProError
+from open_gopro.features.base_feature import BaseFeature
+from open_gopro.features.streaming.livestream import (
+    LiveStreamController,
+    LivestreamOptions,
+)
+from open_gopro.features.streaming.preview_stream import (
+    PreviewStreamController,
+    PreviewStreamOptions,
+)
+from open_gopro.features.streaming.webcam_stream import (
+    WebcamStreamController,
+    WebcamStreamOptions,
+)
+from open_gopro.gopro_base import GoProBase
+
+logger = logging.getLogger(__name__)
+
+
+StreamOptions: TypeAlias = WebcamStreamOptions | LivestreamOptions | PreviewStreamOptions
+
+
+class StreamFeature(BaseFeature):
+    """Abstracted stream functionality for all type of video streams.
+
+    There can only ever be one stream open at a time.
+    """
+
+    def __init__(
+        self,
+        gopro: GoProBase,
+        loop: asyncio.AbstractEventLoop,
+    ) -> None:
+        super().__init__(gopro, loop)
+        self._current: StreamController | None = None
+
+    @property
+    def current_stream(self) -> StreamType | None:
+        return self._current.stream_type if self._current else None
+
+    @property
+    def is_streaming(self) -> bool:
+        """Check if a stream is currently active.
+
+        Returns:
+            bool: True if a stream is active, False otherwise.
+        """
+        return self._current is not None
+
+    @property
+    def url(self) -> str | None:
+        """Get the URL of the current stream.
+
+        Returns:
+            str | None: The URL of the current stream, or None if no stream is active.
+        """
+        return self._current.url if self._current else None
+
+    async def start_stream(
+        self,
+        stream_type: StreamType,
+        options: StreamOptions,
+    ) -> ResultE[None]:
+        # TODO validate readiness / existence
+
+        if self.is_streaming:
+            return ResultE.from_failure(GoProError("A stream is already active"))
+
+        controller: StreamController
+        match stream_type:
+            case StreamType.WEBCAM:
+                controller = WebcamStreamController(self._gopro)
+            case StreamType.LIVE:
+                controller = LiveStreamController(self._gopro)
+            case StreamType.PREVIEW:
+                controller = PreviewStreamController(self._gopro)
+
+        if not controller.is_available():
+            return ResultE.from_failure(GoProError(f"{stream_type} is not available"))
+
+        return ResultE.from_value(None)
+
+    async def stop_active_stream(self) -> ResultE[None]:
+        """Stop the currently active stream.
+
+        Returns:
+            ResultE[None]: Result of the operation.
+        """
+        if self.is_streaming:
+            assert self._current
+            await self._current.stop()
+
+        return ResultE.from_value(None)
+
+    @property
+    def is_ready(self) -> bool:  # noqa: D102
+        # Always ready. We'll track stream status when they are requested to be opened
+        return True
+
+    async def wait_for_ready(self, timeout: float = 60) -> None:  # noqa: D102
+        return
+
+    async def close(self) -> None:  # noqa: D102
+        await self.stop_active_stream()

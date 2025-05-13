@@ -42,5 +42,5 @@ class BaseFeature(ABC):
         """Wait until the feature is ready to use"""
 
     @abstractmethod
-    def close(self) -> None:
+    async def close(self) -> None:
         """Close the feature for use."""

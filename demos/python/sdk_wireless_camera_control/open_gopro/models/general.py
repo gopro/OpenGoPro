@@ -16,7 +16,7 @@ from pathlib import Path
 from pydantic import BaseModel, ConfigDict, Field
 
 from open_gopro.models.bases import CustomBaseModel
-from open_gopro.models.constants import SettingId, WebcamError, WebcamStatus
+from open_gopro.models.constants import SettingId
 
 
 class CameraInfo(CustomBaseModel):
@@ -44,15 +44,6 @@ class SupportedOption(CustomBaseModel):
 
     display_name: str
     id: int
-
-
-class WebcamResponse(CustomBaseModel):
-    """Common Response from Webcam Commands"""
-
-    status: WebcamStatus | None = Field(default=None)
-    error: WebcamError
-    setting_id: str | None = Field(default=None)
-    supported_options: list[SupportedOption] | None = Field(default=None)
 
 
 class HttpInvalidSettingResponse(CustomBaseModel):

@@ -40,7 +40,7 @@ class AccessPointFeature(BaseFeature):
     async def wait_for_ready(self) -> None:  # noqa: D102
         return
 
-    def close(self) -> None:  # noqa: D102
+    async def close(self) -> None:  # noqa: D102
         return
 
     async def scan_wifi_networks(self, timeout: int = 60) -> Result[proto.ResponseGetApEntries, GoProError]:
