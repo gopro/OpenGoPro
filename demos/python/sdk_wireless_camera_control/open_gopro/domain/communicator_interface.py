@@ -24,7 +24,7 @@ from open_gopro.domain.parser_interface import (
     JsonTransformer,
     Parser,
 )
-from open_gopro.domain.types import IdType, JsonDict, UpdateCb, UpdateType
+from open_gopro.models.types import IdType, JsonDict, UpdateCb, UpdateType
 from open_gopro.models import GoProBlePacketHeader, GoProResp
 from open_gopro.models.constants import GoProUUID
 from open_gopro.network.ble import (

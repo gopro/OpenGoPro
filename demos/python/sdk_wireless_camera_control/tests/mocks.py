@@ -27,7 +27,7 @@ from open_gopro.domain.communicator_interface import (
     MessageRules,
 )
 from open_gopro.domain.exceptions import ConnectFailed, FailedToFindDevice
-from open_gopro.domain.types import CameraState, UpdateCb, UpdateType
+from open_gopro.models.types import CameraState, UpdateCb, UpdateType
 from open_gopro.features.base_feature import BaseFeature
 from open_gopro.gopro_base import GoProBase
 from open_gopro.models import GoProResp

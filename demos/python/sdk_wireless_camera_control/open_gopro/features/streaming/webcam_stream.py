@@ -28,6 +28,7 @@ class WebcamStreamController(StreamController[WebcamStreamOptions]):
         self._status = StreamController.StreamStatus.NOT_READY
         self.current_options: WebcamStreamOptions | None = None
 
+    @property
     def is_available(self) -> bool:
         return True if self.gopro.is_http_connected else False
 
@@ -35,7 +36,6 @@ class WebcamStreamController(StreamController[WebcamStreamOptions]):
     async def start(self, options: WebcamStreamOptions) -> ResultE[None]:
         self.current_options = options
         self._status = StreamController.StreamStatus.STARTING
-        await self.gopro.http_command.wired_usb_control(control=Toggle.DISABLE)
 
         await self.gopro.http_command.set_shutter(shutter=Toggle.DISABLE)
         if (await self.gopro.http_command.webcam_status()).data.status not in {
@@ -68,6 +68,7 @@ class WebcamStreamController(StreamController[WebcamStreamOptions]):
         self.current_options = None
         return ResultE.from_value(None)
 
+    # TODO track status
     @property
     def status(self) -> StreamController.StreamStatus:
         return self._status
@@ -75,7 +76,7 @@ class WebcamStreamController(StreamController[WebcamStreamOptions]):
     @status.setter
     def status(self, value: StreamController.StreamStatus) -> None:
         if value in (StreamController.StreamStatus.STOPPED, StreamController.StreamStatus.NOT_READY):
-            if self.is_available():
+            if self.is_available:
                 self._status = StreamController.StreamStatus.READY
         else:
             self._status = value

@@ -29,6 +29,7 @@ class StreamController(ABC, Generic[T]):
     def __init__(self, gopro: GoProBase) -> None:
         self.gopro = gopro
 
+    @property
     @abstractmethod
     def is_available(self) -> bool:
         """Check if the stream is available.

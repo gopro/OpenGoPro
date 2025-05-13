@@ -40,7 +40,7 @@ from open_gopro.domain.communicator_interface import (
 )
 from open_gopro.domain.gopro_observable import GoProObservable
 from open_gopro.domain.parser_interface import GlobalParsers, Parser
-from open_gopro.domain.types import CameraState
+from open_gopro.models.types import CameraState
 from open_gopro.models import CameraInfo, GoProResp, TzDstDateTime, constants, proto
 from open_gopro.models.constants import (
     ActionId,

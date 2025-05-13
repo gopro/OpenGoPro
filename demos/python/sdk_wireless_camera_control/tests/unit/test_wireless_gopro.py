@@ -16,7 +16,7 @@ import requests_mock
 from open_gopro.domain.communicator_interface import HttpMessage
 from open_gopro.domain.exceptions import GoProNotOpened, ResponseTimeout
 from open_gopro.domain.parser_interface import GlobalParsers
-from open_gopro.domain.types import UpdateType
+from open_gopro.models.types import UpdateType
 from open_gopro.gopro_wireless import WirelessGoPro
 from open_gopro.models import GoProResp
 from open_gopro.models.constants import (

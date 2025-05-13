@@ -12,7 +12,7 @@ from typing import Any, Coroutine, Generic, Self, TypeVar
 from open_gopro.domain.communicator_interface import BaseGoProCommunicator
 from open_gopro.domain.exceptions import GoProError
 from open_gopro.domain.observable import Observable
-from open_gopro.domain.types import UpdateType
+from open_gopro.models.types import UpdateType
 from open_gopro.models.response import GoProResp
 
 T = TypeVar("T")

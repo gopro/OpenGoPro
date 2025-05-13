@@ -2,11 +2,10 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from typing import TypeAlias, TypeVar
+from typing import TypeAlias
 
 from returns.result import ResultE
 
-from open_gopro.api import WirelessApi
 from open_gopro.features.streaming.base_stream import StreamController, StreamType
 from open_gopro.domain.exceptions import GoProError
 from open_gopro.features.base_feature import BaseFeature
@@ -71,8 +70,6 @@ class StreamFeature(BaseFeature):
         stream_type: StreamType,
         options: StreamOptions,
     ) -> ResultE[None]:
-        # TODO validate readiness / existence
-
         if self.is_streaming:
             return ResultE.from_failure(GoProError("A stream is already active"))
 
@@ -85,10 +82,23 @@ class StreamFeature(BaseFeature):
             case StreamType.PREVIEW:
                 controller = PreviewStreamController(self._gopro)
 
-        if not controller.is_available():
+        if not controller.is_available:
             return ResultE.from_failure(GoProError(f"{stream_type} is not available"))
 
-        return ResultE.from_value(None)
+        match stream_type:
+            case StreamType.WEBCAM:
+                if not isinstance(options, WebcamStreamOptions):
+                    return ResultE.from_failure(GoProError("Invalid options for webcam stream"))
+            case StreamType.LIVE:
+                if not isinstance(options, LivestreamOptions):
+                    return ResultE.from_failure(GoProError("Invalid options for livestream"))
+            case StreamType.PREVIEW:
+                if not isinstance(options, PreviewStreamOptions):
+                    return ResultE.from_failure(GoProError("Invalid options for preview stream"))
+
+        self._current = controller
+        logger.info(f"Starting {stream_type.name.title()} stream")
+        return await self._current.start(options)  # type: ignore
 
     async def stop_active_stream(self) -> ResultE[None]:
         """Stop the currently active stream.

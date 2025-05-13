@@ -22,7 +22,7 @@ from open_gopro.domain.communicator_interface import (
     MessageRules,
 )
 from open_gopro.domain.parser_interface import Parser
-from open_gopro.domain.types import CameraState, JsonDict
+from open_gopro.models.types import CameraState, JsonDict
 from open_gopro.models import (
     CameraInfo,
     GoProResp,

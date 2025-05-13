@@ -10,7 +10,7 @@ from abc import ABC, abstractmethod
 from collections import defaultdict
 from typing import Any, Callable, ClassVar, Generic, Protocol, TypeVar, cast
 
-from open_gopro.domain.types import JsonDict, ResponseType
+from open_gopro.models.types import JsonDict, ResponseType
 from open_gopro.models.constants import ActionId, FeatureId
 
 logger = logging.getLogger(__name__)

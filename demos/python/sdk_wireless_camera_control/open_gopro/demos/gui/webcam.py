@@ -81,8 +81,8 @@ def parse_arguments() -> argparse.Namespace:
         "--protocol",
         type=str,
         choices=["RTSP", "TS"],
-        default=None,
-        help="Streaming protocol to use. If not configured, default camera option will be used (normally RTSP)",
+        default="TS",
+        help="Streaming protocol to use. Defaults to TS. RTSP is not supported on all GoPro models.",
     )
     # group.add_argument(
     #     "--cohn",
@@ -96,8 +96,6 @@ def parse_arguments() -> argparse.Namespace:
             args.protocol = WebcamProtocol.RTSP
         case "TS":
             args.protocol = WebcamProtocol.TS
-        case None:
-            pass
     return args
 
 

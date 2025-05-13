@@ -27,6 +27,7 @@ class PreviewStreamController(StreamController[PreviewStreamOptions]):
         super().__init__(gopro)
         self._status = StreamController.StreamStatus.NOT_READY
 
+    @property
     def is_available(self) -> bool:  # noqa: D102
         raise NotImplementedError
 
