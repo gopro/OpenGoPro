@@ -1,12 +1,17 @@
 from __future__ import annotations
-
+import asyncio
 import logging
 
 from returns.result import ResultE
 
+from open_gopro.domain.exceptions import GoProError
+from open_gopro.domain.gopro_observable import GoProObservable
+from open_gopro.domain.observable import Observable
 from open_gopro.features.streaming.base_stream import StreamController, StreamType
 from open_gopro.gopro_base import GoProBase
 from open_gopro.models.streaming import LivestreamOptions
+from open_gopro.models.proto import NotifyLiveStreamStatus, EnumRegisterLiveStreamStatus, EnumLiveStreamStatus
+from open_gopro.models.constants import ActionId, Toggle
 
 logger = logging.getLogger(__name__)
 
@@ -14,21 +19,103 @@ logger = logging.getLogger(__name__)
 class LiveStreamController(StreamController[LivestreamOptions]):
     def __init__(self, gopro: GoProBase) -> None:
         super().__init__(gopro)
-        self._status = StreamController.StreamStatus.NOT_READY
+        self.status_observable = Observable[StreamController.StreamStatus](
+            debug_id="livestream controller status tracker"
+        )
+        self.current_options: LivestreamOptions | None = None
+        # TODO when to close this? Maybe each controller needs a close to be called from the streaming feature
+        self._status_task = asyncio.create_task(self._track_status())
+
+    async def _track_status(self) -> None:
+        async for status in (await self.get_livestream_status_observable()).observe(
+            debug_id="Livestream Status Tracker"
+        ):
+            logger.debug(f"Livestream controller received status: {status}")
+            match status.live_stream_status:
+                case (
+                    EnumLiveStreamStatus.LIVE_STREAM_STATE_IDLE
+                    | EnumLiveStreamStatus.LIVE_STREAM_STATE_FAILED_STAY_ON
+                    | EnumLiveStreamStatus.LIVE_STREAM_STATE_UNAVAILABLE
+                ):
+                    await self.status_observable.emit(StreamController.StreamStatus.STOPPED)
+                case EnumLiveStreamStatus.LIVE_STREAM_STATE_READY | EnumLiveStreamStatus.LIVE_STREAM_STATE_RECONNECTING:
+                    await self.status_observable.emit(StreamController.StreamStatus.STARTING)
+                case (
+                    EnumLiveStreamStatus.LIVE_STREAM_STATE_STREAMING
+                    | EnumLiveStreamStatus.LIVE_STREAM_STATE_COMPLETE_STAY_ON
+                ):
+                    await self.status_observable.emit(StreamController.StreamStatus.STARTED)
+
+    async def get_livestream_status_observable(
+        self,
+    ) -> GoProObservable[NotifyLiveStreamStatus]:
+        return await GoProObservable[NotifyLiveStreamStatus](
+            gopro=self.gopro,
+            register_command=self.gopro.ble_command.register_livestream_status(
+                register=[EnumRegisterLiveStreamStatus.REGISTER_LIVE_STREAM_STATUS_STATUS]
+            ),
+            unregister_command=self.gopro.ble_command.register_livestream_status(
+                unregister=[EnumRegisterLiveStreamStatus.REGISTER_LIVE_STREAM_STATUS_STATUS]
+            ),
+            update=ActionId.LIVESTREAM_STATUS_NOTIF,
+        ).start()
 
     @property
     def is_available(self) -> bool:  # noqa: D102
-        raise NotImplementedError
+        # TODO can we check if the camera is connected to an access point? We probably need to update the AP feature.
+        return True if self.gopro.is_ble_connected else False
 
     async def start(self, options: LivestreamOptions) -> ResultE[None]:  # noqa: D102
-        raise NotImplementedError
+        if not self.is_available:
+            logger.error("Livestream is not available")
+            return ResultE.from_failure(GoProError("Livestream is not available"))
+        if self.status in (StreamController.StreamStatus.STARTED, StreamController.StreamStatus.STARTING):
+            logger.warning("Livestream is already started / starting")
+            return ResultE.from_failure(GoProError("Livestream is already started / starting"))
+
+        logger.info("Starting livestream")
+        self.current_options = options
+        # Disable shutter before starting livestream
+        # TODO error handling
+        await self.gopro.ble_command.set_shutter(shutter=Toggle.DISABLE)
+        assert (
+            await self.gopro.ble_command.set_livestream_mode(
+                url=self.current_options.url,
+                window_size=self.current_options.resolution,
+                minimum_bitrate=self.current_options.minimum_bitrate,
+                maximum_bitrate=self.current_options.maximum_bitrate,
+                starting_bitrate=self.current_options.starting_bitrate,
+                encode=self.current_options.encode,
+                lens=self.current_options.fov,
+            )
+        ).ok
+        logger.critical("Waiting for livestream to begin starting...")
+        await self.status_observable.observe(debug_id="Livestream Controller Wait For Ready").first(
+            lambda s: s == StreamController.StreamStatus.STARTING
+        )
+        # TODO Is this still needed?
+        await asyncio.sleep(2)
+        logger.critical("Setting shutter to start livestream")
+        await self.gopro.ble_command.set_shutter(shutter=Toggle.ENABLE)
+        return ResultE.from_value(None)
 
     async def stop(self) -> ResultE[None]:  # noqa: D102
-        raise NotImplementedError
+        if not self.is_available:
+            logger.error("Livestream is not available")
+            return ResultE.from_failure(GoProError("Livestream is not available"))
+        if self.status == StreamController.StreamStatus.STOPPED:
+            logger.warning("Livestream is already stopped")
+            return ResultE.from_failure(GoProError("Livestream is already stopped"))
+
+        logger.info("Stopping livestream")
+        # TODO error handling
+        await self.gopro.ble_command.set_shutter(shutter=Toggle.DISABLE)
+        # TODO how do we get out of livestream mode?
+        return ResultE.from_value(None)
 
     @property
     def status(self) -> StreamController.StreamStatus:  # noqa: D102
-        return self._status
+        return self.status_observable.current or StreamController.StreamStatus.STOPPED
 
     @property
     def stream_type(self) -> StreamType:  # noqa: D102
@@ -36,4 +123,9 @@ class LiveStreamController(StreamController[LivestreamOptions]):
 
     @property
     def url(self) -> str:  # noqa: D102
-        raise NotImplementedError
+        if self.current_options is None:
+            raise GoProError("Livestream is not started")
+        return self.current_options.url
+
+    def _cleanup(self) -> None:
+        self.current_options = None

@@ -77,12 +77,13 @@ class WebcamResponse(CustomBaseModel):
 
 @dataclass
 class LivestreamOptions:
-    minimum_bitrate: int | None = None
-    maximum_bitrate: int | None = None
-    starting_bitrate: int | None = None
+    url: str
+    minimum_bitrate: int = 1000
+    maximum_bitrate: int = 1000
+    starting_bitrate: int = 1000
     encode: bool = True
-    window_size: EnumWindowSize.ValueType | None = None
-    lens: EnumLens.ValueType | None = None
+    resolution: EnumWindowSize | None = None
+    fov: EnumLens | None = None
     certs: list[Path] | None = None
 
 
