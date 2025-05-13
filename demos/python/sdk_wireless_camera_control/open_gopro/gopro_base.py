@@ -298,6 +298,18 @@ class GoProBase(GoProHttp, Generic[ApiType]):
 
     @property
     @abstractmethod
+    def ip_address(self) -> str:
+        """The IP address of the GoPro device
+
+        Raises:
+            GoProNotOpened: The GoPro IP address is not yet available
+
+        Returns:
+            str: IP address
+        """
+
+    @property
+    @abstractmethod
     def _base_url(self) -> str:
         """Build the base endpoint for USB commands
 

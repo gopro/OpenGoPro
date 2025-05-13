@@ -885,15 +885,18 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             await self._wifi.close()
 
     @property
+    def ip_address(self) -> str:  # noqa: D102
+        return (
+            self.cohn.credentials.ip_address if self._should_enable_cohn and self.cohn.credentials else "10.5.5.9:8080"
+        )
+
+    @property
     def _base_url(self) -> str:
-        try:
-            return (
-                f"https://{self.cohn.credentials.ip_address}/"
-                if self._should_enable_cohn and self.cohn.credentials
-                else "http://10.5.5.9:8080/"
-            )
-        except GoProNotOpened:
-            return "http://10.5.5.9:8080/"
+        return (
+            f"https://{self.ip_address}/"
+            if self._should_enable_cohn and self.cohn.credentials
+            else f"http://{self.ip_address}/"
+        )
 
     @property
     def _requests_session(self) -> requests.Session:

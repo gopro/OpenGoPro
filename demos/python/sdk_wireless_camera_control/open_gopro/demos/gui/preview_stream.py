@@ -9,7 +9,7 @@ import asyncio
 from rich.console import Console
 
 from open_gopro import WirelessGoPro
-from open_gopro.demos.gui.util import display_video_blocking
+from open_gopro.demos.gui.video_display import BufferlessVideoCapture
 from open_gopro.models import constants
 from open_gopro.util import add_cli_args_and_parse
 from open_gopro.util.logger import setup_logging
@@ -26,7 +26,11 @@ async def main(args: argparse.Namespace) -> None:
         assert (await gopro.http_command.set_preview_stream(mode=constants.Toggle.ENABLE, port=args.port)).ok
 
         console.print("Displaying the preview stream...")
-        display_video_blocking(f"udp://127.0.0.1:{args.port}", printer=console.print)
+        BufferlessVideoCapture(
+            source=f"udp://127.0.0.1:{args.port}",
+            protocol=BufferlessVideoCapture.Protocol.TS,
+            printer=console.print,
+        ).display_blocking()
 
         await gopro.http_command.set_preview_stream(mode=constants.Toggle.DISABLE)
 

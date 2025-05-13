@@ -347,6 +347,12 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         return self._wired_api
 
     @property
+    def ip_address(self) -> str:  # noqa: D102
+        if not self._serial:
+            raise GoProNotOpened("Serial / IP has not yet been discovered")
+        return WiredGoPro._BASE_IP.format(*self._serial[-3:])
+
+    @property
     def _base_url(self) -> str:
         """Build the base endpoint for USB commands
 
@@ -358,7 +364,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         """
         if not self._serial:
             raise GoProNotOpened("Serial / IP has not yet been discovered")
-        return WiredGoPro._BASE_ENDPOINT.format(ip=WiredGoPro._BASE_IP.format(*self._serial[-3:]))
+        return WiredGoPro._BASE_ENDPOINT.format(ip=self.ip_address)
 
     @property
     def _requests_session(self) -> requests.Session:
