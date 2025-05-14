@@ -70,7 +70,7 @@ class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):
         """Nightlapse Rate
 
         How frequently to take a video or photo when performing a Nightlapse.
-
+		
 		This controls the Video or Photo Nightlapse rate if Setting 128 is set to 21 or 26 respectively.
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#nightlapse-rate-32)"""
@@ -232,10 +232,10 @@ class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):
         """Scheduled Capture
 
         Configure or disable the scheduled capture functionality to start encoding at a future time.
-
+		
 		This is a bit-masked value with the following bitwise definitions,
 		numbered from least significant bit, with the example showing parsed fields from a sample of `0x00000c8b`.
-
+		
 		| Bit(s) | Definition                    | Example |
 		| ------ | ----------------------------- | ------- |
 		| 0      | Is Scheduled Capture Enabled? | 1       |
@@ -243,7 +243,7 @@ class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):
 		| 2-8    | Minute                        | 34      |
 		| 9-13   | Hour                          | 12      |
 		| 14-63  | Reserved                      | 0       |
-
+		
 		Note that when the scheduled capture time occurs, encoding will be started and continue indefinitely.  One
 		of the duration settings (156, 157, 172) can be used to set the encoding duration depending on the camera mode.
 

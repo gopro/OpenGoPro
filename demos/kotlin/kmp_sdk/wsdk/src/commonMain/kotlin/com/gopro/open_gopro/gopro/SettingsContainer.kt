@@ -9,6 +9,7 @@ package com.gopro.open_gopro.gopro
  * WARNING!!! This file is auto-generated. Do not modify it manually
  */
 import com.gopro.open_gopro.domain.api.IOperationMarshaller
+import com.gopro.open_gopro.entity.queries.ComplexQueryEntity
 import com.gopro.open_gopro.operations.*
 
 /**
