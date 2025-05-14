@@ -307,7 +307,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             GoProNotOpened: Feature is not yet available because GoPro has not yet been opened
 
         Returns:
-            open_gopro.StreamFeature: Streaming Feature
+            open_gopro.features.StreamFeature: Streaming Feature
         """
         try:
             return self._streaming

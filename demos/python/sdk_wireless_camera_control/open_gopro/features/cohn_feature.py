@@ -31,7 +31,7 @@ class CohnFeature(BaseFeature):
 
     Args:
         cohn_db (TinyDB): TinyDB database to use for COHN credentials
-        gopro (GoProBase[WirelessApi]): camera to operate on
+        gopro (GoProBase[Any]): camera to operate on
         loop (asyncio.AbstractEventLoop): asyncio loop to use for this feature
         cohn_credentials (CohnInfo | None): COHN credentials to use for this camera. Defaults to None in
             which case they will be retrieved from DB / connected camera.

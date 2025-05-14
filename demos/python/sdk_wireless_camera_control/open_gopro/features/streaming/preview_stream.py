@@ -1,3 +1,5 @@
+"""Preview stream controller implementation."""
+
 from __future__ import annotations
 
 import logging
@@ -7,22 +9,28 @@ from returns.result import ResultE
 from open_gopro.domain.exceptions import GoProError
 from open_gopro.features.streaming.base_stream import StreamController, StreamType
 from open_gopro.gopro_base import GoProBase
-from open_gopro.models.streaming import PreviewStreamOptions
 from open_gopro.models.constants import Toggle
+from open_gopro.models.streaming import PreviewStreamOptions
 
 logger = logging.getLogger(__name__)
 
 
 # TODO is there a status we can track?
 class PreviewStreamController(StreamController[PreviewStreamOptions]):
+    """Preview stream controller
+
+    Args:
+        gopro (GoProBase): GoPro device to operate on
+    """
+
     def __init__(self, gopro: GoProBase) -> None:
         super().__init__(gopro)
         self._status = StreamController.StreamStatus.STOPPED
         self._current_options: PreviewStreamOptions | None = None
 
     @property
-    def is_available(self) -> bool:
-        return True if self.gopro.is_http_connected else False
+    def is_available(self) -> bool:  # noqa: D102
+        return self.gopro.is_http_connected
 
     async def start(self, options: PreviewStreamOptions) -> ResultE[None]:  # noqa: D102
         if not self.is_available:
@@ -43,11 +51,10 @@ class PreviewStreamController(StreamController[PreviewStreamOptions]):
         if response.ok:
             self._status = StreamController.StreamStatus.STARTED
             return ResultE.from_value(None)
-        else:
-            logger.error(f"Failed to start preview stream: {response.status}")
-            self._status = StreamController.StreamStatus.STOPPED
-            self._cleanup()
-            return ResultE.from_failure(GoProError(f"Failed to start preview stream : {response.status}"))
+        logger.error(f"Failed to start preview stream: {response.status}")
+        self._status = StreamController.StreamStatus.STOPPED
+        self._cleanup()
+        return ResultE.from_failure(GoProError(f"Failed to start preview stream : {response.status}"))
 
     async def stop(self) -> ResultE[None]:  # noqa: D102
         if not self.is_available:
@@ -64,15 +71,11 @@ class PreviewStreamController(StreamController[PreviewStreamOptions]):
         if response.ok:
             self._status = StreamController.StreamStatus.STOPPED
             return ResultE.from_value(None)
-        else:
-            logger.error(f"Failed to stop preview stream: {response.status}")
-            return ResultE.from_failure(GoProError(f"Failed to stop preview stream : {response.status}"))
+        logger.error(f"Failed to stop preview stream: {response.status}")
+        return ResultE.from_failure(GoProError(f"Failed to stop preview stream : {response.status}"))
 
     def _cleanup(self) -> None:
-        """Cleanup the stream controller.
-
-        This is called when the stream is stopped or fails to start.
-        """
+        """Cleanup after a stream has stopped or failed to start."""
         self._current_options = None
 
     @property

@@ -1,8 +1,9 @@
+"""Combined stream functionality for all type of video streams."""
+
 from __future__ import annotations
 
 import asyncio
 import logging
-from typing import TypeAlias
 
 from returns.result import ResultE
 
@@ -22,11 +23,9 @@ from open_gopro.features.streaming.webcam_stream import (
     WebcamStreamOptions,
 )
 from open_gopro.gopro_base import GoProBase
+from open_gopro.models.types import StreamOptions
 
 logger = logging.getLogger(__name__)
-
-
-StreamOptions: TypeAlias = WebcamStreamOptions | LivestreamOptions | PreviewStreamOptions
 
 
 class StreamFeature(BaseFeature):
@@ -45,6 +44,11 @@ class StreamFeature(BaseFeature):
 
     @property
     def current_stream(self) -> StreamType | None:
+        """Get the current stream type.
+
+        Returns:
+            StreamType | None: stream type if a stream is active, None otherwise.
+        """
         return self._current.stream_type if self._current else None
 
     @property
@@ -70,6 +74,15 @@ class StreamFeature(BaseFeature):
         stream_type: StreamType,
         options: StreamOptions,
     ) -> ResultE[None]:
+        """Start a stream of the specified type.
+
+        Args:
+            stream_type (StreamType): stream type to start
+            options (StreamOptions): stream-specific options
+
+        Returns:
+            ResultE[None]: Result of the operation including failure reason if any.
+        """
         if self.is_streaming:
             return ResultE.from_failure(GoProError(f"Stream {self.current_stream} is already active"))
 
@@ -117,7 +130,7 @@ class StreamFeature(BaseFeature):
         # Always ready. We'll track stream status when they are requested to be opened
         return True
 
-    async def wait_for_ready(self, timeout: float = 60) -> None:  # noqa: D102
+    async def wait_for_ready(self, _: float = 60) -> None:  # noqa: D102
         return
 
     async def close(self) -> None:  # noqa: D102

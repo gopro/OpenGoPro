@@ -1,4 +1,7 @@
+"""Livestream stream controller implementation."""
+
 from __future__ import annotations
+
 import asyncio
 import logging
 
@@ -9,14 +12,24 @@ from open_gopro.domain.gopro_observable import GoProObservable
 from open_gopro.domain.observable import Observable
 from open_gopro.features.streaming.base_stream import StreamController, StreamType
 from open_gopro.gopro_base import GoProBase
-from open_gopro.models.streaming import LivestreamOptions
-from open_gopro.models.proto import NotifyLiveStreamStatus, EnumRegisterLiveStreamStatus, EnumLiveStreamStatus
 from open_gopro.models.constants import ActionId, Toggle
+from open_gopro.models.proto import (
+    EnumLiveStreamStatus,
+    EnumRegisterLiveStreamStatus,
+    NotifyLiveStreamStatus,
+)
+from open_gopro.models.streaming import LivestreamOptions
 
 logger = logging.getLogger(__name__)
 
 
 class LiveStreamController(StreamController[LivestreamOptions]):
+    """Livestream stream controller
+
+    Args:
+        gopro (GoProBase): GoPro device to operate on
+    """
+
     def __init__(self, gopro: GoProBase) -> None:
         super().__init__(gopro)
         self.status_observable = Observable[StreamController.StreamStatus](
@@ -27,6 +40,7 @@ class LiveStreamController(StreamController[LivestreamOptions]):
         self._status_task = asyncio.create_task(self._track_status())
 
     async def _track_status(self) -> None:
+        """Track the status of the livestream status observable, converting it to a stream status observable."""
         async for status in (await self.get_livestream_status_observable()).observe(
             debug_id="Livestream Status Tracker"
         ):
@@ -49,6 +63,11 @@ class LiveStreamController(StreamController[LivestreamOptions]):
     async def get_livestream_status_observable(
         self,
     ) -> GoProObservable[NotifyLiveStreamStatus]:
+        """Get an API-level observable for the livestream status protobuf operation.
+
+        Returns:
+            GoProObservable[NotifyLiveStreamStatus]: live stream status observable
+        """
         return await GoProObservable[NotifyLiveStreamStatus](
             gopro=self.gopro,
             register_command=self.gopro.ble_command.register_livestream_status(
@@ -63,7 +82,7 @@ class LiveStreamController(StreamController[LivestreamOptions]):
     @property
     def is_available(self) -> bool:  # noqa: D102
         # TODO can we check if the camera is connected to an access point? We probably need to update the AP feature.
-        return True if self.gopro.is_ble_connected else False
+        return self.gopro.is_ble_connected
 
     async def start(self, options: LivestreamOptions) -> ResultE[None]:  # noqa: D102
         if not self.is_available:
@@ -93,8 +112,7 @@ class LiveStreamController(StreamController[LivestreamOptions]):
         await self.status_observable.observe(debug_id="Livestream Controller Wait For Ready").first(
             lambda s: s == StreamController.StreamStatus.STARTING
         )
-        # TODO Is this still needed?
-        await asyncio.sleep(2)
+        await asyncio.sleep(2)  # TODO Is this still needed?
         logger.critical("Setting shutter to start livestream")
         await self.gopro.ble_command.set_shutter(shutter=Toggle.ENABLE)
         return ResultE.from_value(None)
@@ -110,7 +128,6 @@ class LiveStreamController(StreamController[LivestreamOptions]):
         logger.info("Stopping livestream")
         # TODO error handling
         await self.gopro.ble_command.set_shutter(shutter=Toggle.DISABLE)
-        # TODO how do we get out of livestream mode?
         return ResultE.from_value(None)
 
     @property
@@ -128,4 +145,5 @@ class LiveStreamController(StreamController[LivestreamOptions]):
         return self.current_options.url
 
     def _cleanup(self) -> None:
+        """Cleanup after a stream has stopped or failed to start."""
         self.current_options = None

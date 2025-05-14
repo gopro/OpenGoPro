@@ -1,3 +1,5 @@
+"""Base class for all stream controllers."""
+
 from __future__ import annotations
 
 import enum
@@ -16,6 +18,8 @@ T = TypeVar("T")
 
 
 class StreamController(ABC, Generic[T]):
+    """Interface for stream controllers."""
+
     class StreamStatus(enum.Enum):
         """Enum for the different types of stream status."""
 
@@ -69,6 +73,9 @@ class StreamController(ABC, Generic[T]):
 
         Args:
             options (T): The options to use for the stream.
+
+        Returns:
+            ResultE[None]: Result container with failure if it exists.
         """
 
     @abstractmethod

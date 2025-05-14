@@ -1,3 +1,5 @@
+"""Streaming models and entities."""
+
 import enum
 from dataclasses import dataclass
 from pathlib import Path
@@ -77,23 +79,29 @@ class WebcamResponse(CustomBaseModel):
 
 @dataclass
 class LivestreamOptions:
+    """Livestream-specific stream setup options"""
+
     url: str
     minimum_bitrate: int = 1000
     maximum_bitrate: int = 1000
     starting_bitrate: int = 1000
     encode: bool = True
-    resolution: EnumWindowSize | None = None
-    fov: EnumLens | None = None
+    resolution: EnumWindowSize.ValueType | None = None
+    fov: EnumLens.ValueType | None = None
     certs: list[Path] | None = None
 
 
 @dataclass
 class PreviewStreamOptions:
+    """Preview stream-specific stream setup options"""
+
     port: int | None = None
 
 
 @dataclass
 class WebcamStreamOptions:
+    """Webcam stream-specific stream setup options"""
+
     resolution: WebcamResolution | None = None
     protocol: WebcamProtocol | None = None
     fov: WebcamFOV | None = None

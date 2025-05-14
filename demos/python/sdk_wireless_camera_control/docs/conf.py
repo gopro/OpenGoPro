@@ -85,13 +85,14 @@ version = importlib_metadata.version("open_gopro")
 nitpicky = True
 
 TYPE_ALIASES = {
-    "CameraState": "open_gopro.domain.types.CameraState",
-    "UpdateCb": "open_gopro.domain.types.UpdateCb",
-    "UpdateType": "open_gopro.domain.types.UpdateType",
+    "CameraState": "open_gopro.models.types.CameraState",
+    "UpdateCb": "open_gopro.models.types.UpdateCb",
+    "UpdateType": "open_gopro.models.types.UpdateType",
     "JsonDict": "open_gopro.JsonDict",
-    "ResponseType": "open_gopro.domain.types.ResponseType",
-    "Protobuf": "open_gopro.domain.types.Protobuf",
-    "IdType": "open_gopro.domain.types.IdType",
+    "ResponseType": "open_gopro.models.types.ResponseType",
+    "Protobuf": "open_gopro.models.types.Protobuf",
+    "IdType": "open_gopro.models.types.IdType",
+    "StreamOptions": "open_gopro.models.types.StreamOptions",
     "SyncAction": "open_gopro.observable.SyncAction",
     "AsyncAction": "open_gopro.observable.AsyncAction",
     "SyncFilter": "open_gopro.observable.SyncFilter",

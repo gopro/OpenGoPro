@@ -5,7 +5,6 @@
 
 import argparse
 import asyncio
-from typing import Any
 
 from rich.console import Console
 
@@ -36,8 +35,8 @@ async def main(args: argparse.Namespace) -> None:
                 minimum_bitrate=args.min_bit,
                 maximum_bitrate=args.max_bit,
                 starting_bitrate=args.start_bit,
-                resolution=proto.EnumWindowSize(args.resolution) if args.resolution else None,
-                fov=proto.EnumLens(args.fov) if args.fov else None,
+                resolution=args.resolution if args.resolution else None,
+                fov=args.fov if args.fov else None,
                 encode=args.encode,
             ),
         )

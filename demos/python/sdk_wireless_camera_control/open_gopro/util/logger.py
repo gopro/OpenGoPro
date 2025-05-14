@@ -24,7 +24,7 @@ class Logger:
     Args:
         logger (logging.Logger): input logger that will be modified and then returned
         output (Path | None): Path of log file for file stream handler. If not set, will not log to file.
-        modules (list[str] | None): Optional override of modules / levels. Will be merged into default modules.
+        modules (dict[str, int] | None): Optional override of modules / levels. Will be merged into default modules.
     """
 
     _instances: dict[type[Logger], Logger] = {}
@@ -222,7 +222,7 @@ class Logger:
 def setup_logging(
     base: logging.Logger | str,
     output: Path | None = None,
-    modules: list[str] | None = None,
+    modules: dict[str, int] | None = None,
 ) -> logging.Logger:
     """Configure the GoPro modules for logging and get a logger that can be used by the application
 
@@ -231,7 +231,7 @@ def setup_logging(
     Args:
         base (logging.Logger | str): Name of application (i.e. __name__) or preconfigured logger to use as base
         output (Path | None): Path of log file for file stream handler. If not set, will not log to file.
-        modules (list[str] | None): Optional override of modules / levels. Will be merged into default modules.
+        modules (dict[str, int] | None): Optional override of modules / levels. Will be merged into default modules.
 
     Raises:
         TypeError: Base logger is not of correct type

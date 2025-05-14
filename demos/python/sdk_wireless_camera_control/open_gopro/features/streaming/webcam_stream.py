@@ -1,3 +1,5 @@
+"""Webcam stream controller implementation."""
+
 from __future__ import annotations
 
 import asyncio
@@ -21,6 +23,12 @@ logger = logging.getLogger(__name__)
 
 
 class WebcamStreamController(StreamController[WebcamStreamOptions]):
+    """Livestream stream controller
+
+    Args:
+        gopro (GoProBase): GoPro device to operate on
+    """
+
     def __init__(self, gopro: GoProBase) -> None:
         super().__init__(gopro)
         self.status_observable = Observable[StreamController.StreamStatus](
@@ -30,6 +38,7 @@ class WebcamStreamController(StreamController[WebcamStreamOptions]):
         self._status_task: asyncio.Task | None = None
 
     async def _track_status(self) -> None:
+        """Track the webcam, converting it to a stream status observable"""
         # Poll until status is received
         # TODO cleanup?
         while True:
@@ -52,9 +61,9 @@ class WebcamStreamController(StreamController[WebcamStreamOptions]):
 
     @property
     def is_available(self) -> bool:  # noqa: D102
-        return True if self.gopro.is_http_connected else False
+        return self.gopro.is_http_connected
 
-    async def start(self, options: WebcamStreamOptions) -> ResultE[None]:
+    async def start(self, options: WebcamStreamOptions) -> ResultE[None]:  # noqa: D102
         if not self.is_available:
             logger.error("Webcam is not available")
             return ResultE.from_failure(GoProError("Webcam is not available"))
@@ -85,7 +94,7 @@ class WebcamStreamController(StreamController[WebcamStreamOptions]):
         await self.status_observable.observe().first(lambda s: s == StreamController.StreamStatus.STARTED)
         return ResultE.from_value(None)
 
-    async def stop(self) -> ResultE[None]:
+    async def stop(self) -> ResultE[None]:  # noqa: D102
         if not self.is_available:
             logger.error("Webcam is not available")
             return ResultE.from_failure(GoProError("Webcam is not available"))
@@ -104,21 +113,22 @@ class WebcamStreamController(StreamController[WebcamStreamOptions]):
         return ResultE.from_value(None)
 
     def _cleanup(self) -> None:
+        """Cleanup after a stream has stopped or failed to start."""
         if self._status_task:
             self._status_task.cancel()
             self._status_task = None
         self.current_options = None
 
     @property
-    def status(self) -> StreamController.StreamStatus:
+    def status(self) -> StreamController.StreamStatus:  # noqa: D102
         return self.status_observable.current or StreamController.StreamStatus.STOPPED
 
     @property
-    def stream_type(self) -> StreamType:
+    def stream_type(self) -> StreamType:  # noqa: D102
         return StreamType.WEBCAM
 
     @property
-    def url(self) -> str:
+    def url(self) -> str:  # noqa: D102
         assert self.current_options is not None, "Stream options not set"
         match self.current_options.protocol:
             case WebcamProtocol.RTSP:

@@ -11,10 +11,12 @@ import construct
 from google.protobuf.message import Message
 
 from open_gopro.models.constants import ActionId, CmdId, QueryCmdId, SettingId, StatusId
+from open_gopro.models.streaming import (
+    LivestreamOptions,
+    PreviewStreamOptions,
+    WebcamStreamOptions,
+)
 from open_gopro.network.ble.services import BleUUID
-
-# Note! We need to use Union here for Python 3.9 support
-
 Protobuf: TypeAlias = Message
 
 ProducerType: TypeAlias = tuple[QueryCmdId, SettingId | StatusId]
@@ -40,3 +42,6 @@ UpdateCb: TypeAlias = Callable[[UpdateType, Any], Coroutine[Any, Any, None]]
 
 IdType: TypeAlias = SettingId | StatusId | ActionId | CmdId | BleUUID | str
 """Message Identifier Type"""
+
+StreamOptions: TypeAlias = WebcamStreamOptions | LivestreamOptions | PreviewStreamOptions
+"""Union of all stream option types"""
