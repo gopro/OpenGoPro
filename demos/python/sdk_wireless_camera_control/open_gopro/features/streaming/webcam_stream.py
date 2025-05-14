@@ -135,3 +135,8 @@ class WebcamStreamController(StreamController[WebcamStreamOptions]):
                 return f"rtsp://{self.gopro.ip_address}:554/live"
             case WebcamProtocol.TS | None:
                 return r"udp://0.0.0.0:8554"
+
+    async def close(self) -> ResultE[None]:  # noqa: D102
+        if self._status_task:
+            self._status_task.cancel()
+        return ResultE.from_value(None)

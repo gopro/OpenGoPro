@@ -71,7 +71,7 @@ class Observer(AsyncGenerator[T, None]):
             logger.trace(f"Observer ({self._debug_id}) received value: {value}")  # type: ignore
             return value
         except Exception as e:
-            logger.error(f"Error in observer {self._debug_id}: {e}")
+            logger.error(f"Error in observer {self._debug_id}: {repr(e)}")
             await self._cleanup()
             raise e
 

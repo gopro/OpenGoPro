@@ -90,3 +90,7 @@ class PreviewStreamController(StreamController[PreviewStreamOptions]):
     def url(self) -> str:  # noqa: D102
         assert self._current_options is not None, "Preview stream options not set"
         return f"udp://127.0.0.1:{self._current_options.port}"
+
+    async def close(self) -> ResultE[None]:  # noqa: D102
+        # Nothing to do
+        return ResultE.from_value(None)

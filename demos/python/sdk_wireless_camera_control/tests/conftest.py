@@ -3,6 +3,7 @@
 
 # pylint: disable=redefined-outer-name
 
+import asyncio
 import logging
 import re
 from pathlib import Path
@@ -28,7 +29,7 @@ from tests import versions
 from tests.mocks import (
     MockBleCommunicator,
     MockBleController,
-    MockFeatures,
+    MockFeature,
     MockGoProMaintainBle,
     MockWifiCommunicator,
     MockWifiController,
@@ -66,18 +67,27 @@ def test_log(request):
     logging.debug("################################################################################")
 
 
+# TODO. I think this is a bug in pytest-cov.
+@pytest.fixture(scope="function", autouse=True)
+def ignore_coroutine_never_awaited_warning():
+    import warnings
+
+    warnings.filterwarnings("ignore", message="coroutine 'enforce_message_rules' was never awaited")
+    yield
+
+
 ##############################################################################################################
 #                                             Bleak Unit Testing
 ##############################################################################################################
 
 
-@pytest_asyncio.fixture(scope="module")
+@pytest_asyncio.fixture(scope="function")
 async def mock_bleak_wrapper():
     ble = BleakWrapperController()
     yield ble
 
 
-@pytest_asyncio.fixture(scope="module")
+@pytest_asyncio.fixture(scope="function")
 async def mock_bleak_client():
     def disconnected_cb(_) -> None:
         print("Entered test disconnect callback")
@@ -135,13 +145,13 @@ def notification_handler(handle: int, data: bytearray) -> None:
     print("Entered test notification callback")
 
 
-@pytest_asyncio.fixture(scope="module")
+@pytest_asyncio.fixture(scope="function")
 async def mock_ble_client():
     test_client = BleClient(
         controller=MockBleController(),
         disconnected_cb=disconnection_handler,
         notification_cb=notification_handler,  # type: ignore
-        target=(re.compile(".*device"), []),
+        target=("device", []),
     )
     yield test_client
 
@@ -157,13 +167,13 @@ async def mock_ble_communicator(request):
 ##############################################################################################################
 
 
-@pytest_asyncio.fixture(scope="module")
+@pytest_asyncio.fixture(scope="function")
 async def mock_wifi_client():
     test_client = WifiClient(controller=MockWifiController())
     yield test_client
 
 
-@pytest_asyncio.fixture(scope="module")
+@pytest_asyncio.fixture(scope="function")
 async def mock_wifi_communicator(request):
     test_client = MockWifiCommunicator("2.0")
     yield test_client
@@ -181,21 +191,29 @@ async def mock_wired_gopro():
 
 
 def mock_features(monkeypatch):
-    monkeypatch.setattr("open_gopro.features.access_point_feature", MockFeatures)
-    monkeypatch.setattr("open_gopro.features.cohn_feature", MockFeatures)
+    monkeypatch.setattr("open_gopro.features.AccessPointFeature", MockFeature)
+    monkeypatch.setattr("open_gopro.features.CohnFeature", MockFeature)
+    monkeypatch.setattr("open_gopro.features.StreamFeature", MockFeature)
 
 
 @pytest_asyncio.fixture(scope="function")
-async def mock_wireless_gopro_basic(request, monkeypatch):
+async def mock_wireless_gopro_basic(monkeypatch):
     mock_features(monkeypatch)
     test_client = MockWirelessGoPro("2.0")
     GoProBase.HTTP_GET_RETRIES = 1  # type: ignore
-    yield test_client
-    test_client.close()
+    try:
+        yield test_client
+        await test_client.close()
+    except Exception as e:
+        logger.error(f"PYTEST Error closing GoPro: {e}")
 
 
 @pytest_asyncio.fixture(scope="function")
 async def mock_wireless_gopro(monkeypatch):
     mock_features(monkeypatch)
     test_client = MockGoProMaintainBle()
-    yield test_client
+    try:
+        yield test_client
+        await test_client.close()
+    except Exception as e:
+        logger.error(f"PYTEST Error closing GoPro: {e}")

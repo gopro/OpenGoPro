@@ -17,6 +17,7 @@ from open_gopro.models.streaming import (
     WebcamStreamOptions,
 )
 from open_gopro.network.ble.services import BleUUID
+
 Protobuf: TypeAlias = Message
 
 ProducerType: TypeAlias = tuple[QueryCmdId, SettingId | StatusId]

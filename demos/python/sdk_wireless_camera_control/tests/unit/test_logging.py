@@ -35,7 +35,6 @@ def assert_kwargs(message: dict):
     assert message.pop("second") == 2
 
 
-@pytest.mark.asyncio
 async def test_ble_read_command():
     message = BleReadCommand(uuid=GoProUUID.ACC_APPEARANCE, parser=None)
     d = message._as_dict(**dummy_kwargs)
@@ -46,7 +45,6 @@ async def test_ble_read_command():
     assert not d
 
 
-@pytest.mark.asyncio
 async def test_ble_write_command():
     message = BleWriteCommand(uuid=GoProUUID.ACC_APPEARANCE, cmd=CmdId.GET_CAMERA_CAPABILITIES)
     d = message._as_dict(**dummy_kwargs)
@@ -57,7 +55,6 @@ async def test_ble_write_command():
     assert not d
 
 
-@pytest.mark.asyncio
 async def test_ble_proto_command():
     message = BleProtoCommand(
         uuid=GoProUUID.ACC_APPEARANCE,
@@ -99,7 +96,6 @@ class MockCommunicator(Generic[T]):
     def unregister_update(self, *args, **kwargs): ...
 
 
-@pytest.mark.asyncio
 async def test_ble_setting():
     class Communicator(MockCommunicator[BleSettingFacade.BleSettingMessageBase]): ...
 
@@ -137,7 +133,6 @@ async def test_ble_setting():
     assert not d
 
 
-@pytest.mark.asyncio
 async def test_ble_status():
     class Communicator(MockCommunicator[BleStatusFacade.BleStatusMessageBase]): ...
 
@@ -157,7 +152,6 @@ async def test_ble_status():
     assert not d
 
 
-@pytest.mark.asyncio
 async def test_http_command():
     message = HttpMessage("endpoint", identifier=None)
     d = message._as_dict(**dummy_kwargs)
@@ -168,7 +162,6 @@ async def test_http_command():
     assert not d
 
 
-@pytest.mark.asyncio
 async def test_http_setting():
     class Communicator(MockCommunicator[HttpMessage]): ...
 

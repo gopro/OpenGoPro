@@ -490,9 +490,16 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         """
         await self._close_wifi()
         await self._close_ble()
-        if self._should_maintain_state:
-            for task in [*self._status_tasks, *self._state_acquire_lock_tasks]:
-                task.cancel()
+        try:
+            for feature in [self.cohn, self.access_point, self.streaming]:
+                try:
+                    await feature.close()
+                # TODO this should be a specific exception...or removed.
+                except Exception as e:  # pylint: disable=broad-exception-caught
+                    logger.error(f"Error while closing {feature}: {repr(e)}")
+        except AttributeError:
+            # This is possible if the GoPro was never opened
+            pass
         self._open = False
 
     def register_update(self, callback: UpdateCb, update: UpdateType) -> None:
@@ -772,6 +779,8 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         """Terminate BLE connection if it is connected"""
         if self._should_maintain_state:
             self._keep_alive_task.cancel()
+            for task in [*self._status_tasks, *self._state_acquire_lock_tasks]:
+                task.cancel()
         if self.is_ble_connected and self._ble is not None:
             await self._ble.close()
             await self._ble_disconnect_event.wait()

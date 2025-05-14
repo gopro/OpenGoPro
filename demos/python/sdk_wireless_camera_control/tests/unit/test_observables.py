@@ -17,7 +17,6 @@ from open_gopro.models.constants.statuses import StatusId
 from tests.mocks import MockWirelessGoPro
 
 
-@pytest.mark.asyncio
 async def test_base_observable():
     # GIVEN
     complete = asyncio.Event()
@@ -42,7 +41,6 @@ async def test_base_observable():
     await asyncio.wait_for(complete.wait(), 2)
 
 
-@pytest.mark.asyncio
 async def test_observable_with_default_replay():
     # GIVEN
     observable = Observable[int]()
@@ -56,7 +54,6 @@ async def test_observable_with_default_replay():
     assert result == 1
 
 
-@pytest.mark.asyncio
 async def test_observable_with_max_replay():
     # GIVEN
     observable = Observable[int]()
@@ -75,7 +72,6 @@ async def test_observable_with_max_replay():
     assert results == [0, 1, 2]
 
 
-@pytest.mark.asyncio
 async def test_observable_with_no_replay_times_out():
     # GIVEN
     observable = Observable[int]()
@@ -92,7 +88,6 @@ async def test_observable_with_no_replay_times_out():
         await asyncio.wait_for(anext(observer), timeout=0.5)
 
 
-@pytest.mark.asyncio
 async def test_observable_on_start_sync_action():
     # GIVEN
     on_start = asyncio.Event()
@@ -116,7 +111,6 @@ async def test_observable_on_start_sync_action():
     assert observable.current == 0
 
 
-@pytest.mark.asyncio
 async def test_observable_on_start_async_action():
     # GIVEN
     on_start = asyncio.Event()
@@ -143,7 +137,6 @@ async def test_observable_on_start_async_action():
     assert observable.current == 0
 
 
-@pytest.mark.asyncio
 async def test_observable_take_while():
     # GIVEN
     started = asyncio.Event()
@@ -172,7 +165,6 @@ async def test_observable_take_while():
     assert received[1] == 1
 
 
-@pytest.mark.asyncio
 async def test_observable_drop_while():
     # GIVEN
     started = asyncio.Event()
@@ -204,7 +196,6 @@ async def test_observable_drop_while():
     assert received[1] == 3
 
 
-@pytest.mark.asyncio
 async def test_observable_first_matching():
     # GIVEN
     started = asyncio.Event()
@@ -225,7 +216,6 @@ async def test_observable_first_matching():
     assert matched.result() == 1
 
 
-@pytest.mark.asyncio
 async def test_observable_slice():
     # GIVEN
     started = asyncio.Event()
@@ -254,7 +244,6 @@ async def test_observable_slice():
     assert collected == [1, 2]
 
 
-@pytest.mark.asyncio
 async def test_observable_map():
     # GIVEN
     started = asyncio.Event()
@@ -282,7 +271,6 @@ async def test_observable_map():
     assert collected == ["0", "1"]
 
 
-@pytest.mark.asyncio
 async def test_observable_filter():
     # GIVEN
     started = asyncio.Event()
@@ -314,7 +302,6 @@ async def test_observable_filter():
     assert collected == [0, 2, 4]
 
 
-@pytest.mark.asyncio
 async def test_observable_filter_then_take_2():
     # GIVEN
     started = asyncio.Event()
@@ -344,7 +331,6 @@ async def test_observable_filter_then_take_2():
     assert collected == [0, 2]
 
 
-@pytest.mark.asyncio
 async def test_observable_map_then_filter():
     # GIVEN
     started = asyncio.Event()
@@ -372,7 +358,6 @@ async def test_observable_map_then_filter():
     assert collected == [2, 4]
 
 
-@pytest.mark.asyncio
 async def test_observable_filter_then_map():
     # GIVEN
     started = asyncio.Event()
@@ -400,7 +385,6 @@ async def test_observable_filter_then_map():
     assert collected == [200, 300]
 
 
-@pytest.mark.asyncio
 async def test_take_then_take_only_takes_second():
     # GIVEN
     started = asyncio.Event()
@@ -428,7 +412,6 @@ async def test_take_then_take_only_takes_second():
     assert collected == [0, 1]
 
 
-@pytest.mark.asyncio
 async def test_simultaneous_collect():
     # GIVEN
     started = asyncio.Event()
@@ -465,7 +448,6 @@ async def test_simultaneous_collect():
     assert collected2 == [0, 1, 2, 3, 4]
 
 
-@pytest.mark.asyncio
 async def test_status_observable_basic(mock_wireless_gopro_basic: MockWirelessGoPro):
     # GIVEN
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
@@ -508,7 +490,6 @@ async def test_status_observable_basic(mock_wireless_gopro_basic: MockWirelessGo
     assert values == [True, False, True, False]
 
 
-@pytest.mark.asyncio
 async def test_status_observable_different_initial_response(mock_wireless_gopro_basic: MockWirelessGoPro):
     # GIVEN
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()

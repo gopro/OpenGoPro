@@ -60,7 +60,7 @@ class MockBleController(BLEController, Generic[BleHandle, BleDevice]):
         self.gatt_db = MockGattTable()
 
     async def scan(self, token: Pattern, timeout: int, service_uuids: list[BleUUID] = None) -> str:
-        if token == re.compile(".*device") or token == "device":
+        if token == re.compile(".*device") or token == re.compile("device"):
             return "scanned_device"
         raise FailedToFindDevice
 
@@ -283,16 +283,19 @@ class MockFeature(BaseFeature):
     def is_ready(self) -> bool:
         return True
 
-    def close(self) -> None:
+    async def close(self) -> None:
         return
 
 
-class MockFeatures:
-    CohnFeature = MockFeature
-    AccessPointFeature = MockFeature
-
-
 T = TypeVar("T")
+
+
+class MockEvent:
+    async def wait(self) -> None:
+        return
+
+    def set(self) -> None:
+        return
 
 
 class MockWirelessGoPro(WirelessGoPro):
@@ -314,10 +317,22 @@ class MockWirelessGoPro(WirelessGoPro):
         self.http_command.set_third_party_client_info = self._mock_empty_return
         self._ble.write = self._mock_write
         self._ble._gatt_table = MockGattTable()
-        self._ble._controller.disconnect = self._disconnect_handler
         self._test_response_uuid = GoProUUID.CQ_COMMAND
         self._test_response_data = bytearray()
         self.ble_status.ap_mode.get_value = self._mock_wifi_check
+        self._ble_disconnect_event = MockEvent()
+
+    @property
+    def cohn(self) -> BaseFeature:
+        return MockFeature()
+
+    @property
+    def access_point(self) -> BaseFeature:
+        return MockFeature()
+
+    @property
+    def streaming(self) -> BaseFeature:
+        return MockFeature()
 
     def set_requests_session(self, session: requests.Session) -> None:
         self._mock_requests_session = session
@@ -333,6 +348,10 @@ class MockWirelessGoPro(WirelessGoPro):
         self._api.ble_command.get_wifi_password = self._mock_password
         self._api.ble_command.get_wifi_ssid = self._mock_ssid
         await super()._open_wifi(timeout, retries)
+
+    async def _close_ble(self) -> None:
+        self._ble_disconnect_event.set()
+        await super()._close_ble()
 
     async def _open_ble(self, timeout: int, retries: int) -> None:
         await super()._open_ble(timeout=timeout, retries=retries)
@@ -400,9 +419,6 @@ class MockWirelessGoPro(WirelessGoPro):
     @property
     def is_http_connected(self) -> bool:
         return True
-
-    def close(self) -> None:
-        pass
 
 
 _test_response_id = CmdId.SET_SHUTTER

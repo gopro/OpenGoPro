@@ -81,3 +81,11 @@ class StreamController(ABC, Generic[T]):
     @abstractmethod
     async def stop(self) -> ResultE[None]:
         """Stop the stream."""
+
+    @abstractmethod
+    async def close(self) -> ResultE[None]:
+        """Close the stream controller, gracefully cancelling tasks and releasing resources.
+
+        Returns:
+            ResultE[None]: Result container with failure if it exists.
+        """

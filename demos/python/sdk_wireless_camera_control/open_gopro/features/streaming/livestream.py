@@ -36,7 +36,6 @@ class LiveStreamController(StreamController[LivestreamOptions]):
             debug_id="livestream controller status tracker"
         )
         self.current_options: LivestreamOptions | None = None
-        # TODO when to close this? Maybe each controller needs a close to be called from the streaming feature
         self._status_task = asyncio.create_task(self._track_status())
 
     async def _track_status(self) -> None:
@@ -147,3 +146,7 @@ class LiveStreamController(StreamController[LivestreamOptions]):
     def _cleanup(self) -> None:
         """Cleanup after a stream has stopped or failed to start."""
         self.current_options = None
+
+    async def close(self) -> ResultE[None]:  # noqa: D102
+        self._status_task.cancel()
+        return ResultE.from_value(None)
