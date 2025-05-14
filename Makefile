@@ -5,7 +5,7 @@ VERSION:=2.0
 
 PROTO_BUILD_DIR=.build/protobuf
 PYTHON_TUTORIAL_PROTO_DIR=demos/python/tutorial/tutorial_modules/tutorial_5_ble_protobuf/proto
-PYTHON_SDK_PROTO_DIR=demos/python/sdk_wireless_camera_control/open_gopro/proto
+PYTHON_SDK_PROTO_DIR=demos/python/sdk_wireless_camera_control/open_gopro/models/proto
 KOTLIN_SDK_PROTO_DIR=demos/kotlin/kmp_sdk/wsdk/src/commonMain/kotlin/com/gopro/open_gopro/entity/operation/proto
 
 .PHONY: help
