@@ -407,25 +407,26 @@ and downloading files.</p>
 <div class="accordion-container anchored">
     <button class="accordion">How many devices can connect to the camera?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
-<p>Simultaneously, only one device can connect at a time. However, the camera stores BLE security keys and
-other connection information so it is possible to connect multiple devices sequentially.</p>
+<p>Simultaneously, only one device can connect via WiFI at a time. There can be up to 4 simultaneous BLE connection.</p>
 </div>
 </div>
 
 <div class="accordion-container anchored">
-    <button class="accordion">Is there currently a way to connect multiple cameras on the same Wifi network?<i class="fa fa-chevron-down"></i></button>
+    <button class="accordion">Is there a way to connect multiple cameras on the same Wifi network?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
-<p>No. Cameras can only be connected through Wi-Fi by becoming an access point itself (generating its own Wi-Fi
-network), not as a peripheral.</p>
+<p>Yes, see <a href="https://gopro.github.io/OpenGoPro/ble/features/cohn.html">Camera on the Home Network (COHN)</a></p>
 </div>
 </div>
 
 <div class="accordion-container anchored">
     <button class="accordion">What is the time offset between multiple cameras executing the same command?<i class="fa fa-chevron-down"></i></button>
     <div class="panel">
-<p>In cases when camera sync is important, we recommend using the USB connection, which minimizes the variance
-among devices. The time drift among cameras connected by USB cable to the same host will be up to ~35ms.
-Using BLE for that purpose will further increase it.</p>
+<p>This is not deterministic due to camera processing and network propagation variance. Best case synchronization accuracy
+can vary from 20 - 500 ms. There is an example script in the
+<a href="https://github.com/gopro/OpenGoPro/blob/main/demos/python/sdk_wireless_camera_control/open_gopro/demos/multi_camera_sync.py">Python SDK</a>
+to test this out with multiple cameras on various network types.
+In general, this is not a good solution for synchronization if you require more than 1 second accuracy.
+It is better to do this in post processing as described in the following section.</p>
 </div>
 </div>
 
@@ -437,7 +438,8 @@ this can be hindered by typical limitations of GPS signals. Additionally, there 
 that require GoPro Labs firmware installed on the camera. The best bet is
 <a href="https://gopro.github.io/labs/control/gpssync/">multi-cam GPS sync</a>. Another option is
 <a href="https://gopro.github.io/labs/control/precisiontime/">precise time calibration</a> via a dynamic QR scan from a
-smartphone or PC.</p>
+smartphone or PC. Once synchronized, timing can then be abstracted and manipulated in post processing from the
+<a href="https://github.com/gopro/gpmf-parser">GPMF data</a>.</p>
 </div>
 </div>
 
