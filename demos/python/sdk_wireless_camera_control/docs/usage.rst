@@ -13,7 +13,7 @@ Overview
 There are two top-level interfaces to communicate with a GoPro camera:
 
     - :class:`~open_gopro.gopro_wired.WiredGoPro` to communicate with the GoPro via USB HTTP
-    - :class:`~open_gopro.gopro_wireless.WirelessGoPro` to communicate with the GoPro via BLE and optionally WiFi HTTP
+    - :class:`~open_gopro.gopro_wireless.WirelessGoPro` to communicate with the GoPro via BLE and optionally HTTP (WiFi / Camera on the Home Network)
 
 An individual instance of one of the above classes corresponds to a (potentially not yet) connected GoPro
 camera resource. The general procedure to communicate with the GoPro is:
@@ -72,19 +72,35 @@ The Wireless GoPro client can be opened either with the context manager:
     print("Yay! I'm connected via BLE, Wifi, opened, and ready to send / get data now!")
     # Send some messages now
 
-In either case, the following will have occurred before the camera is ready to communicate:
+If, as above,  an identifier is not passed to the `WirelessGoPro`, a network scan will occur and the first discovered
+GoPro will be used.
 
-#. scan for camera
-#. connect to camera via BLE
-#. enable notifications
-#. pair (if needed)
-#. discover characteristics
-#. initialize (register for internal status notifications)
-#. discover Open GoPro version
-#. connect via WiFi (unless specified not to via argument)
+See the API Reference for :class:`~open_gopro.gopro_wireless.WirelessGoPro` for all the arguments that can be passed.
+The most common argument to configure is the `interface` argument which specifies the type of wireless connections to use.
 
-.. note:: While a BLE connection is always needed, the WiFi connection is optional. To configure this (and other
-    instance arguments) see the API Reference for :class:`~open_gopro.gopro_wireless.WirelessGoPro`
+The most common combinations are:
+
+- :attr:`~open_gopro.gopro_wireless.WirelessGoPro.Interface.BLE`: The GoPro will only be connected via BLE. The following will be performed:
+
+    #. scan BLE advertisements for camera
+    #. connect to camera via BLE
+    #. enable notifications
+    #. pair (if needed)
+    #. discover characteristics
+    #. initialize (register for internal state notifications)
+    #. discover Open GoPro version
+    #. set the camera's datetime to match the host computer's datetime
+
+- :attr:`~open_gopro.gopro_wireless.WirelessGoPro.Interface.BLE` and :attr:`~open_gopro.gopro_wireless.WirelessGoPro.Interface.WIFI_AP`: The GoPro will first connect via BLE (performing the above steps) and then connect via WiFi. The following will be performed:
+
+    #. discover camera's WiFi SSID and password
+    #. connect via WiFi
+
+- :attr:`~open_gopro.gopro_wireless.WirelessGoPro.Interface.COHN`: Communicate only via COHN to a previously provisioned GoPro. The following will be performed:
+
+    #. mDNS scan for camera
+    #. attempt to retrieve camera's COHN credentials from COHN database
+    #. use COHN credentials when communicating via HTTP
 
 Wired Opening
 -------------
@@ -119,8 +135,8 @@ Common Opening
 The GoPro's state can be checked via several properties.
 
 -  :meth:`~open_gopro.gopro_base.GoProBase.is_ble_connected`
--  :meth:`~open_gopro.gopro_base.GoProBase.is_http_connected`
--  :meth:`~open_gopro.gopro_base.GoProBase.is_open`
+-  :meth:`~open_gopro.gopro_base.GoProBase.is_http_connected`: Do we have a WiFi AP or COHN communication channel?
+-  :meth:`~open_gopro.gopro_base.GoProBase.is_open`: Is the camera ready for the client to use it for communication?
 
 API Version
 ^^^^^^^^^^^
@@ -160,33 +176,39 @@ messages to the camera (provided that the camera is :ref:`ready<camera readiness
 by transport protocol where the superset of message groups are:
 
 .. list-table::
-   :widths: 50 50 50 50
+   :widths: 50 50 50 50 50
    :header-rows: 1
 
    * - Message Group
      - WiredGoPro
-     - WirelessGoPro (WiFi Enabled)
-     - WirelessGoPro (WiFi Disabled)
+     - WirelessGoPro (HTTP and BLE available)
+     - WirelessGoPro (only BLE available)
+     - WirelessGoPro (only HTTP available)
    * - :meth:`~open_gopro.gopro_base.GoProBase.http_command`
      - ✔️
      - ✔️
      - ❌
+     - ✔️
    * - :meth:`~open_gopro.gopro_base.GoProBase.http_setting`
      - ✔️
      - ✔️
      - ❌
+     - ✔️
    * - :meth:`~open_gopro.gopro_base.GoProBase.ble_command`
      - ❌
      - ✔️
      - ✔️
+     - ❌
    * - :meth:`~open_gopro.gopro_base.GoProBase.ble_setting`
      - ❌
      - ✔️
      - ✔️
+     - ❌
    * - :meth:`~open_gopro.gopro_base.GoProBase.ble_status`
      - ❌
      - ✔️
      - ✔️
+     - ❌
 
 In the case where a given group of messages is not supported, a `NotImplementedError` will be returned when
 the relevant property is accessed.
@@ -194,31 +216,12 @@ the relevant property is accessed.
 All messages are communicated via one of two strategies:
 
 - Performing synchronous :ref:`data operations<Synchronous Data Operations>` to send a message and receive a GoPro Response
-- Registering for :ref:`asynchronous push notifications<Asynchronous Push Notifications>` and getting these after they are enqueued
+- Registering for :ref:`asynchronous push notifications<Asynchronous Push Notifications>` to retrieve an observable stream.
 
 .. note:: For the remainder of this document, the term (a)synchronous is in the context of communication with the camera.
     Do not confuse this with `asyncio`: all operations from the user's perspective are awaitable.
 
 Both of these patterns will be expanded upon below. But first, a note on selecting parameters for use with messages...
-
-Selecting Parameters
---------------------
-
-Whenever a parameter is required for a message, it will be type-hinted in the method definition as either a standard Python type
-or an Enum from the :ref:`constants<constants>` module.
-
-Here is a full example for clarity:
-
-.. code-block:: python
-
-    from open_gopro import WirelessGoPro, Params
-
-    async with WirelessGoPro() as gopro:
-        await gopro.ble_command.set_shutter(shutter=constants.Toggle.ENABLE)
-
-.. tip:: The message signature can also be found from the API Reference. For example, here is the documentation
-    of the above message: :meth:`~open_gopro.api.ble_commands.BleCommands.set_shutter`
-
 
 Synchronous Data Operations
 ---------------------------
@@ -317,59 +320,55 @@ Asynchronous Push Notifications
 
 This section describes how to register for and handle asynchronous push notifications. This is only relevant for BLE.
 
+These operations will send commands to the camera to register for update notifications and then return an
+:class:`~open_gopro.domain.gopro_observable.GoProObservable` object which can be used to retrieve
+create :class:`~open_gopro.domain.observable.Observer` objects to asynchronously retrieve the updates.
+
+.. note::
+    It is recommended to use the :class:`~open_gopro.domain.gopro_observable.GoProObservable` as a context manager to ensure that
+    notifications are properly unregistered for when finished.
+
 It is possible to enable push notifications for any of the following:
 
-- setting values via :meth:`~open_gopro.api.builders.BleSettingFacade.register_value_update`
-- setting capabilities via :meth:`~open_gopro.api.builders.BleSettingFacade.register_capability_update`
-- status values via :meth:`~open_gopro.api.builders.BleStatusFacade.register_value_update`
+- setting values via :meth:`~open_gopro.api.builders.BleSettingFacade.get_value_observable`
+- setting capabilities via :meth:`~open_gopro.api.builders.BleSettingFacade.get_capabilities_observable`
+- status values via :meth:`~open_gopro.api.builders.BleStatusFacade.get_value_observable`
 
-Firstly, the desired settings / ID must be registered for and given a callback to handle received notifications.
+Once executed, the camera will send a push notification when the relevant setting / status changes.
 
-:meth:`~open_gopro.communicator_interface.BaseGoProCommunicator.register_update`.
+.. note::
+    All of these methods return the `Observable` wrapped in a `Result <https://returns.readthedocs.io/en/latest/pages/result.html>`_
+    object for failure handling. The `Result` object can be unwrapped using the `unwrap` method.
 
-Once registered, the camera will send a push notification when the relevant setting / status changes. These
-responses will then be sent to the registered callback for handling.
-
-It is possible to stop receiving notifications by issuing the relevant unregister command, i.e.:
-
-- setting values via :meth:`~open_gopro.api.builders.BleSettingFacade.unregister_value_update`
-- setting capabilities via :meth:`~open_gopro.api.builders.BleSettingFacade.unregister_capability_update`
-- status values via :meth:`~open_gopro.api.builders.BleStatusFacade.unregister_value_update`
-
-Here is an example of registering for and receiving FOV updates:
+Here is an example of registering for and receiving FPS updates:
 
 .. code-block:: python
 
-    async def process_battery_notifications(update: types.UpdateType, value: int) -> None:
-        if update == constants.StatusId.INTERNAL_BATTERY_PERCENTAGE:
-            ...
-        elif update == constants.StatusId.INTERNAL_BATTERY_BARS:
-            ...
-
     async with WirelessGoPro() as gopro:
-        await gopro.ble_status.internal_battery_percentage.register_value_update(process_battery_notifications)
-        await gopro.ble_status.internal_battery_bars.register_value_update(process_battery_notifications)
+        # Send a command to register for FPS value notifications and unwrap the result to get the observable
+        async with (await gopro.ble_setting.frames_per_second.get_value_observable()).unwrap() as fps_observable:
+            # Start observing to print each update
+            async for fps in fps_observable.observe():
+                console.print(f"FPS: {fps}")
+                # break at some point...
+                break
+        # FPS value updates are registered when exiting the context manager
 
-.. note:: The `register_XXX_update` methods also return the current value / capabilities.
-
-.. warning:: The coupling of command ID to command is not obvious. This is a temporary solution and will be improved upon
-    in a future release.
+The observer can be mapped, filtered, etc by functions from the `asyncstdlib <https://asyncstdlib.readthedocs.io/en/stable/>`_
+as well as helper methods from the base :class:`~open_gopro.domain.observable.Observer`.
 
 It is also possible to register / unregister for **all** settings, statuses, and / or capabilities
 via one API call using the following commands:
 
-- register for all setting notifications via :meth:`~open_gopro.api.ble_commands.BleCommands.register_for_all_settings`
-- register for all status notifications via :meth:`~open_gopro.api.ble_commands.BleCommands.register_for_all_statuses`
-- register for all capability notifications via :meth:`~open_gopro.api.ble_commands.BleCommands.register_for_all_capabilities`
-- unregister for all setting notifications via :meth:`~open_gopro.api.ble_commands.BleCommands.unregister_for_all_settings`
-- unregister for all status notifications via :meth:`~open_gopro.api.ble_commands.BleCommands.unregister_for_all_statuses`
-- unregister for all capability notifications via :meth:`~open_gopro.api.ble_commands.BleCommands.unregister_for_all_capabilities`
+- register for all setting notifications via :meth:`~open_gopro.api.ble_commands.BleCommands.get_observable_for_all_settings`
+- register for all status notifications via :meth:`~open_gopro.api.ble_commands.BleCommands.get_observable_for_all_statuses`
+- register for all capability notifications via :meth:`~open_gopro.api.ble_commands.BleCommands.get_observable_for_all_capabilities`
 
 Handling Responses
 ==================
 
 Unless otherwise stated, all commands, settings, and status operations return a `GoProResp`
-(:class:`~open_gopro.models.response.GoProResp`) which is a container around a JSON serializable dict with some helper
+(:class:`~open_gopro.models.response.GoProResp`) which is a container around the `data` payload with some helper
 functions.
 
 Response Structure

@@ -1,32 +1,10 @@
-
 # TODO
 
-## General
+## Rearchitecture
 
--   [ ] Generate BLE and HTTP API from specs (OpenAPI, protobuf, etc.)
--   [ ] Better handle kwargs that match base dict args in command as_dict methods
--   [ ] More test coverage
--   [ ] Clean up artifacts after testing. Or use temp directory.
--   [ ] Make scalable for multiple simultaneous cameras
--   [ ] Allow encoding = False for Set Livestream Mode. Requires tracking livestream state to not pend on encoding started after sending Set Shutter On
--   [ ] Add textual TUI
-
-## Documentation
-
--   [ ] Figure out autodoc type alias in `conf.py`
--   [ ] Make graphviz requirement optional for local builds
-
-## BLE
-
--   [ ] Add services view to GattDB
--   [ ] Make bleak wrapper write with / without response configurable
--   [ ] Add option to read values during service discovery
-
-## WiFi
-
--   [ ] Investigate MacOS delay after connecting WiFi
--   [ ] More Linux testing
--   [ ] Use descriptors for main driver access to OS-driver implementation
--   [ ] Move to program language (C?) instead of EN-US
-
-
+- One GoPro object; not wired and wireless
+- Connections can be added / removed at any time; not just configured at instantiation
+- all constants, protos, settings, etc. should come from one import
+- create per-endpoint, etc operations that mux between BLE and HTTP
+  - same for settings. HTTP should be able to get an individual setting.
+- Inject database interface to remove TinyDB dependency

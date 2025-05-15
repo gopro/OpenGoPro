@@ -15,8 +15,8 @@ from open_gopro.api.builders import (
     BleWriteCommand,
     HttpSetting,
 )
-from open_gopro.communicator_interface import HttpMessage, Message
-from open_gopro.constants import (
+from open_gopro.domain.communicator_interface import HttpMessage, Message
+from open_gopro.models.constants import (
     ActionId,
     CmdId,
     ErrorCode,
@@ -35,7 +35,6 @@ def assert_kwargs(message: dict):
     assert message.pop("second") == 2
 
 
-@pytest.mark.asyncio
 async def test_ble_read_command():
     message = BleReadCommand(uuid=GoProUUID.ACC_APPEARANCE, parser=None)
     d = message._as_dict(**dummy_kwargs)
@@ -46,7 +45,6 @@ async def test_ble_read_command():
     assert not d
 
 
-@pytest.mark.asyncio
 async def test_ble_write_command():
     message = BleWriteCommand(uuid=GoProUUID.ACC_APPEARANCE, cmd=CmdId.GET_CAMERA_CAPABILITIES)
     d = message._as_dict(**dummy_kwargs)
@@ -57,7 +55,6 @@ async def test_ble_write_command():
     assert not d
 
 
-@pytest.mark.asyncio
 async def test_ble_proto_command():
     message = BleProtoCommand(
         uuid=GoProUUID.ACC_APPEARANCE,
@@ -99,7 +96,6 @@ class MockCommunicator(Generic[T]):
     def unregister_update(self, *args, **kwargs): ...
 
 
-@pytest.mark.asyncio
 async def test_ble_setting():
     class Communicator(MockCommunicator[BleSettingFacade.BleSettingMessageBase]): ...
 
@@ -136,48 +132,7 @@ async def test_ble_setting():
     assert_kwargs(d)
     assert not d
 
-    # Register value updates
-    await message.register_value_update(None)
-    d = communicator.message._as_dict(**dummy_kwargs)
-    assert d.pop("id") == QueryCmdId.REG_SETTING_VAL_UPDATE
-    assert d.pop("setting_id") == SettingId.MAX_LENS
-    assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUID.CQ_QUERY
-    assert_kwargs(d)
-    assert not d
 
-    # Unregister value updates
-    await message.unregister_value_update(None)
-    d = communicator.message._as_dict(**dummy_kwargs)
-    assert d.pop("id") == QueryCmdId.UNREG_SETTING_VAL_UPDATE
-    assert d.pop("setting_id") == SettingId.MAX_LENS
-    assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUID.CQ_QUERY
-    assert_kwargs(d)
-    assert not d
-
-    # Register capability updates
-    await message.register_capability_update(None)
-    d = communicator.message._as_dict(**dummy_kwargs)
-    assert d.pop("id") == QueryCmdId.REG_CAPABILITIES_UPDATE
-    assert d.pop("setting_id") == SettingId.MAX_LENS
-    assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUID.CQ_QUERY
-    assert_kwargs(d)
-    assert not d
-
-    # Unregister capability updates
-    await message.unregister_capability_update(None)
-    d = communicator.message._as_dict(**dummy_kwargs)
-    assert d.pop("id") == QueryCmdId.UNREG_CAPABILITIES_UPDATE
-    assert d.pop("setting_id") == SettingId.MAX_LENS
-    assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUID.CQ_QUERY
-    assert_kwargs(d)
-    assert not d
-
-
-@pytest.mark.asyncio
 async def test_ble_status():
     class Communicator(MockCommunicator[BleStatusFacade.BleStatusMessageBase]): ...
 
@@ -196,28 +151,7 @@ async def test_ble_status():
     assert_kwargs(d)
     assert not d
 
-    # Register value updates
-    await message.register_value_update(None)
-    d = communicator.message._as_dict(**dummy_kwargs)
-    assert d.pop("id") == QueryCmdId.REG_STATUS_VAL_UPDATE
-    assert d.pop("status_id") == StatusId.MICROPHONE_ACCESSORY
-    assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUID.CQ_QUERY
-    assert_kwargs(d)
-    assert not d
 
-    # Unregister value updates
-    await message.unregister_value_update(None)
-    d = communicator.message._as_dict(**dummy_kwargs)
-    assert d.pop("id") == QueryCmdId.UNREG_STATUS_VAL_UPDATE
-    assert d.pop("status_id") == StatusId.MICROPHONE_ACCESSORY
-    assert d.pop("protocol") == GoProResp.Protocol.BLE
-    assert d.pop("uuid") == GoProUUID.CQ_QUERY
-    assert_kwargs(d)
-    assert not d
-
-
-@pytest.mark.asyncio
 async def test_http_command():
     message = HttpMessage("endpoint", identifier=None)
     d = message._as_dict(**dummy_kwargs)
@@ -228,7 +162,6 @@ async def test_http_command():
     assert not d
 
 
-@pytest.mark.asyncio
 async def test_http_setting():
     class Communicator(MockCommunicator[HttpMessage]): ...
 

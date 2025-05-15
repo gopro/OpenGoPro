@@ -7,14 +7,16 @@ from __future__ import annotations
 
 import datetime
 import json
+import tempfile
 from base64 import b64encode
 from dataclasses import asdict, dataclass
+from functools import cached_property
 from pathlib import Path
 
-from pydantic import ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field
 
-from open_gopro.constants import SettingId, WebcamError, WebcamStatus
 from open_gopro.models.bases import CustomBaseModel
+from open_gopro.models.constants import SettingId
 
 
 class CameraInfo(CustomBaseModel):
@@ -44,15 +46,6 @@ class SupportedOption(CustomBaseModel):
     id: int
 
 
-class WebcamResponse(CustomBaseModel):
-    """Common Response from Webcam Commands"""
-
-    status: WebcamStatus | None = Field(default=None)
-    error: WebcamError
-    setting_id: str | None = Field(default=None)
-    supported_options: list[SupportedOption] | None = Field(default=None)
-
-
 class HttpInvalidSettingResponse(CustomBaseModel):
     """Invalid settings response with optional supported options"""
 
@@ -62,21 +55,53 @@ class HttpInvalidSettingResponse(CustomBaseModel):
     supported_options: list[SupportedOption] | None = Field(default=None)
 
 
-@dataclass
-class CohnInfo:
+class CohnInfo(BaseModel):
     """Data model to store Camera on the Home Network connection info"""
 
     ip_address: str
     username: str
     password: str
     certificate: str
-    cert_path: Path = Path("cohn.crt")
 
-    def __post_init__(self) -> None:
+    @cached_property
+    def auth_token(self) -> str:
+        """Get the auth token from the username and password
+
+        Returns:
+            str: _description_
+        """
         token = b64encode(f"{self.username}:{self.password}".encode("utf-8")).decode("ascii")
-        self.auth_token = f"Basic {token}"
-        with open(self.cert_path, "w") as fp:
-            fp.write(self.certificate)
+        return f"Basic {token}"
+
+    @cached_property
+    def certificate_as_path(self) -> Path:
+        """Write the certificate to a tempfile and return the tempfile
+
+        This is needed because requests will not take an in-memory certificate string
+
+        Returns:
+            Path: Path of temp certificate file
+        """
+        with tempfile.NamedTemporaryFile(delete=False) as cert_file:
+            cert_file.write(self.certificate.encode("utf-8"))
+        return Path(cert_file.name)
+
+    def __add__(self, other: CohnInfo) -> CohnInfo:
+        return CohnInfo(
+            ip_address=other.ip_address or self.ip_address,
+            username=other.username or self.username,
+            password=other.password or self.password,
+            certificate=other.certificate or self.certificate,
+        )
+
+    @property
+    def is_complete(self) -> bool:
+        """Are all of the fields non-empty?
+
+        Returns:
+            bool: True if complete, False otherwise
+        """
+        return bool(self.ip_address) and bool(self.username) and bool(self.password) and bool(self.certificate)
 
 
 @dataclass(frozen=True)

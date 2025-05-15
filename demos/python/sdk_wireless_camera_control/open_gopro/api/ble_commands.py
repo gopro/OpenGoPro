@@ -24,18 +24,24 @@ from construct import (
     Struct,
     this,
 )
+from returns.result import ResultE
 
-from open_gopro import constants, proto
 from open_gopro.api.builders import (
     BleAsyncResponse,
-    RegisterUnregisterAll,
     ble_proto_command,
     ble_read_command,
     ble_register_command,
     ble_write_command,
 )
-from open_gopro.communicator_interface import BleMessage, BleMessages, MessageRules
-from open_gopro.constants import (
+from open_gopro.domain.communicator_interface import (
+    BleMessage,
+    BleMessages,
+    MessageRules,
+)
+from open_gopro.domain.gopro_observable import GoProObservable
+from open_gopro.domain.parser_interface import GlobalParsers, Parser
+from open_gopro.models import CameraInfo, GoProResp, TzDstDateTime, constants, proto
+from open_gopro.models.constants import (
     ActionId,
     CmdId,
     FeatureId,
@@ -43,8 +49,7 @@ from open_gopro.constants import (
     SettingId,
     StatusId,
 )
-from open_gopro.models import CameraInfo, GoProResp, TzDstDateTime
-from open_gopro.parser_interface import GlobalParsers, Parser
+from open_gopro.models.types import CameraState
 from open_gopro.parsers.bytes import (
     ConstructByteParserBuilder,
     DateTimeByteParserBuilder,
@@ -55,7 +60,6 @@ from open_gopro.parsers.json import (
     LambdaJsonParser,
     PydanticAdapterJsonParser,
 )
-from open_gopro.types import CameraState, UpdateCb
 
 logger = logging.getLogger(__name__)
 
@@ -349,100 +353,31 @@ class BleCommands(BleMessages[BleMessage]):
     #                          REGISTER / UNREGISTER ALL COMMANDS
     ######################################################################################################
 
-    @ble_register_command(
-        GoProUUID.CQ_QUERY,
-        CmdId.REGISTER_ALL_STATUSES,
-        update_set=StatusId,
-        action=RegisterUnregisterAll.Action.REGISTER,
-    )
-    async def register_for_all_statuses(self, callback: UpdateCb) -> GoProResp[None]:
+    @ble_register_command(GoProUUID.CQ_QUERY, CmdId.REGISTER_ALL_STATUSES, update_set=StatusId)
+    async def get_observable_for_all_statuses(self) -> ResultE[GoProObservable[dict[StatusId, Any]]]:
         """Register push notifications for all statuses
 
-        Args:
-            callback (UpdateCb): callback to be notified with
-
         Returns:
-            GoProResp[None]: command status and current value of all statuses
+            ResultE[GoProObservable[dict[StatusId, Any]]]: command status and current value of all statuses
+                indexed by StatusId
         """
 
-    @ble_register_command(
-        GoProUUID.CQ_QUERY,
-        CmdId.UNREGISTER_ALL_STATUSES,
-        update_set=StatusId,
-        action=RegisterUnregisterAll.Action.UNREGISTER,
-    )
-    async def unregister_for_all_statuses(self, callback: UpdateCb) -> GoProResp[None]:
-        """Unregister push notifications for all statuses
-
-        Args:
-            callback (UpdateCb): callback to be notified with
-
-        Returns:
-            GoProResp[None]: command status
-        """
-
-    @ble_register_command(
-        GoProUUID.CQ_QUERY,
-        CmdId.REGISTER_ALL_SETTINGS,
-        update_set=SettingId,
-        action=RegisterUnregisterAll.Action.REGISTER,
-    )
-    async def register_for_all_settings(self, callback: UpdateCb) -> GoProResp[None]:
+    @ble_register_command(GoProUUID.CQ_QUERY, CmdId.REGISTER_ALL_SETTINGS, update_set=SettingId)
+    async def get_observable_for_all_settings(self) -> ResultE[GoProObservable[dict[SettingId, Any]]]:
         """Register push notifications for all settings
 
-        Args:
-            callback (UpdateCb): callback to be notified with
-
         Returns:
-            GoProResp[None]: command status and current value of all settings
+            ResultE[GoProObservable[dict[SettingId, Any]]]: command status and current value of all settings
+                indexed by SettingId
         """
 
-    @ble_register_command(
-        GoProUUID.CQ_QUERY,
-        CmdId.UNREGISTER_ALL_SETTINGS,
-        update_set=SettingId,
-        action=RegisterUnregisterAll.Action.UNREGISTER,
-    )
-    async def unregister_for_all_settings(self, callback: UpdateCb) -> GoProResp[None]:
-        """Unregister push notifications for all settings
-
-        Args:
-            callback (UpdateCb): callback to be notified with
-
-        Returns:
-            GoProResp[None]: command status
-        """
-
-    @ble_register_command(
-        GoProUUID.CQ_QUERY,
-        CmdId.REGISTER_ALL_CAPABILITIES,
-        update_set=SettingId,
-        action=RegisterUnregisterAll.Action.REGISTER,
-    )
-    async def register_for_all_capabilities(self, callback: UpdateCb) -> GoProResp[None]:
+    @ble_register_command(GoProUUID.CQ_QUERY, CmdId.REGISTER_ALL_CAPABILITIES, update_set=SettingId)
+    async def get_observable_for_all_capabilities(self) -> ResultE[GoProObservable[dict[SettingId, list[Any]]]]:
         """Register push notifications for all capabilities
 
-        Args:
-            callback (UpdateCb): callback to be notified with
-
         Returns:
-            GoProResp[None]: command status and current value of all capabilities
-        """
-
-    @ble_register_command(
-        GoProUUID.CQ_QUERY,
-        CmdId.UNREGISTER_ALL_CAPABILITIES,
-        update_set=SettingId,
-        action=RegisterUnregisterAll.Action.UNREGISTER,
-    )
-    async def unregister_for_all_capabilities(self, callback: UpdateCb) -> GoProResp[None]:
-        """Unregister push notifications for all capabilities
-
-        Args:
-            callback (UpdateCb): callback to be notified with
-
-        Returns:
-            GoProResp[None]: command status
+            ResultE[GoProObservable[dict[SettingId, list[Any]]]]: command status and current value of all capabilities
+                indexed by SettingId
         """
 
     ######################################################################################################
@@ -506,7 +441,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Get information about what Preset Groups and Presets the camera supports in its current state
 
         Also optionally (un)register for preset / group preset modified notifications which  will be
-        sent asynchronously as :py:attr:`open_gopro.constants.constants.ActionId.PRESET_MODIFIED_NOTIFICATION`
+        sent asynchronously as :py:attr:`open_gopro.models.constants.constants.ActionId.PRESET_MODIFIED_NOTIFICATION`
 
         Args:
             register (list[proto.EnumRegisterPresetStatus.ValueType] | None): Types of preset modified
@@ -629,7 +564,7 @@ class BleCommands(BleMessages[BleMessage]):
     async def request_wifi_connect(self, *, ssid: str) -> GoProResp[proto.ResponseConnect]:
         """Request the camera to connect to a WiFi network that is already provisioned.
 
-        Updates will be sent as :py:attr:`open_gopro.constants.constants.ActionId.NOTIF_PROVIS_STATE`
+        Updates will be sent as :py:attr:`open_gopro.models.constants.constants.ActionId.NOTIF_PROVIS_STATE`
 
         Args:
             ssid (str): SSID to connect to
@@ -650,7 +585,7 @@ class BleCommands(BleMessages[BleMessage]):
     async def request_wifi_connect_new(self, *, ssid: str, password: str) -> GoProResp[proto.ResponseConnectNew]:
         """Request the camera to connect to a WiFi network that is not already provisioned.
 
-        Updates will be sent as :py:attr:`open_gopro.constants.constants.ActionId.NOTIF_PROVIS_STATE`
+        Updates will be sent as :py:attr:`open_gopro.models.constants.constants.ActionId.NOTIF_PROVIS_STATE`
 
         Args:
             ssid (str): SSID to connect to

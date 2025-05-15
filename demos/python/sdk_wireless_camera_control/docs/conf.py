@@ -3,11 +3,20 @@
 
 from __future__ import annotations
 from datetime import date
+import sys
 
+import sphinx
 from open_gopro import WirelessGoPro
 
-from sphinx.ext.intersphinx import missing_reference
-from open_gopro.wifi.controller import SsidState, WifiController
+from open_gopro.network.wifi.controller import SsidState, WifiController
+
+# Workaround for https://github.com/sphinx-doc/sphinx/issues/13178 in Python 3.13
+if sys.version_info[:2] >= (3, 13) and sphinx.version_info[:2] < (8, 2):
+    import pathlib
+
+    from sphinx.util.typing import _INVALID_BUILTIN_CLASSES
+
+    _INVALID_BUILTIN_CLASSES[pathlib.Path] = "pathlib.Path"  # type: ignore
 
 
 class MockWifiController(WifiController):
@@ -68,10 +77,6 @@ intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
 }
 
-# The version info for the project you're documenting, acts as replacement
-# for |version| and |release|, also used in various other places throughout
-# the built documents.
-
 # Extract version set from pyproject.toml
 import importlib.metadata as importlib_metadata
 
@@ -80,40 +85,58 @@ version = importlib_metadata.version("open_gopro")
 nitpicky = True
 
 TYPE_ALIASES = {
-    "CameraState": "open_gopro.types.CameraState",
-    "UpdateCb": "open_gopro.types.UpdateCb",
-    "UpdateType": "open_gopro.types.UpdateType",
+    "CameraState": "open_gopro.models.types.CameraState",
+    "UpdateCb": "open_gopro.models.types.UpdateCb",
+    "UpdateType": "open_gopro.models.types.UpdateType",
     "JsonDict": "open_gopro.JsonDict",
-    "ResponseType": "open_gopro.types.ResponseType",
-    "Protobuf": "open_gopro.types.Protobuf",
-    "IdType": "open_gopro.types.IdType",
+    "ResponseType": "open_gopro.models.types.ResponseType",
+    "Protobuf": "open_gopro.models.types.Protobuf",
+    "IdType": "open_gopro.models.types.IdType",
+    "StreamOptions": "open_gopro.models.types.StreamOptions",
+    "SyncAction": "open_gopro.observable.SyncAction",
+    "AsyncAction": "open_gopro.observable.AsyncAction",
+    "SyncFilter": "open_gopro.observable.SyncFilter",
+    "AsyncFilter": "open_gopro.observable.AsyncFilter",
 }
-
-# This is very broken.
-# https://github.com/sphinx-doc/sphinx/issues/10455
-# https://github.com/sphinx-doc/sphinx/issues/10785
-# autodoc_type_aliases = {
-# "CameraState": "open_gopro.types.CameraState",
-# "Path": "pathlib.Path",
-# }
 
 nitpick_ignore = [
     ("py:class", "T"),
+    ("py:class", "O"),
+    ("py:class", "T_I"),
+    ("py:class", "I"),
     ("py:class", "T_co"),
     ("py:class", "ExceptionHandler"),
     ("py:class", "abc.ABC"),
     ("py:class", "InitVar"),
-    # TODO need to fix these
+    ("py:class", "Result"),
+    ("py:class", "ResultE"),
+    ("py:class", "returns.result.Result"),
+    ("py:class", "TracebackType"),
+    ("py:class", "UUID"),
     ("py:class", "Path"),
     ("py:class", "JsonDict"),
+    ("py:class", "SyncAction"),
+    ("py:class", "AsyncAction"),
+    ("py:class", "SyncFilter"),
+    ("py:class", "AsyncFilter"),
     ("py:class", "ValueType"),
 ]
 nitpick_ignore_regex = [
     (r"py:class", r".*proto\..+"),
     (r"py:class", r".*_pb2\..+"),
     (r".*", r".*construct.*"),
+    (r"py:class", r".*TinyDB.*"),
+    (r"py:class", r".*asyncio.*"),
+    (r"py:class", r".*WirelessApi*"),
     # Generic Types that are pointless to document
     (r"py:class", r".*\.T"),
+    (r"py:class", r".*\.T_I"),
+    (r"py:class", r".*\.O"),
+    (r"py:class", r".*\.I"),
+    (r"py:obj", r".*\.T_I"),
+    (r"py:obj", r".*\.O"),
+    (r"py:obj", r".*\.I"),
+    (r"py:obj", r".*\.T"),
     (r"py:class", r".*\.T_co"),
     (r"py:class", r".*BleHandle"),
     (r"py:class", r".*BleDevice"),
@@ -125,6 +148,7 @@ nitpick_ignore_regex = [
     (r"py:class", r".*ValueType"),
     (r"py:obj", r".*communicator_interface.MessageType"),
     (r"py:class", r".*dataclasses.*"),
+    (r"py:class", r".*BaseGoProCommunicator._CompositeRegisterType.*"),
 ]
 
 

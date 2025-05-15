@@ -42,7 +42,7 @@ Complete documentation can be  found on [Open GoPro](https://gopro.github.io/Ope
 
 ## Installation
 
-> Note! This package requires Python >= 3.10 and < 3.13 and only supports GoPros that
+> Note! This package requires Python >= 3.11 and < 3.14 and only supports GoPros that
 > [implement the OGP API](https://gopro.github.io/OpenGoPro/ble/#supported-cameras)
 
 The minimal install to use the Open GoPro library and the CLI demos is:

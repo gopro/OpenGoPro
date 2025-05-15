@@ -11,8 +11,8 @@ from typing import Optional
 from rich.console import Console
 
 from open_gopro import WirelessGoPro
-from open_gopro.logger import set_stream_logging_level, setup_logging
 from open_gopro.util import add_cli_args_and_parse, ainput
+from open_gopro.util.logger import set_stream_logging_level, setup_logging
 
 console = Console()
 
@@ -26,7 +26,9 @@ async def main(args: argparse.Namespace) -> None:
     setup_logging(__name__, args.log)
     gopro: Optional[WirelessGoPro] = None
 
-    async with WirelessGoPro(args.identifier, wifi_interface=args.wifi_interface, sudo_password=args.password) as gopro:
+    async with WirelessGoPro(
+        args.identifier, host_wifi_interface=args.wifi_interface, host_sudo_password=args.password
+    ) as gopro:
         # Now we only want errors
         set_stream_logging_level(logging.ERROR)
 

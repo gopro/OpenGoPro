@@ -9,18 +9,17 @@ from dataclasses import dataclass, field
 
 import pytest
 
-from open_gopro.ble import BleUUID
-from open_gopro.ble.adapters.bleak_wrapper import BleakWrapperController
-from open_gopro.constants import GoProUUID
-from open_gopro.exceptions import ConnectFailed, FailedToFindDevice
+from open_gopro.domain.exceptions import ConnectFailed, FailedToFindDevice
+from open_gopro.models.constants import GoProUUID
+from open_gopro.network.ble import BleUUID
+from open_gopro.network.ble.adapters.bleak_wrapper import BleakWrapperController
 
 
-def test_singleton(mock_bleak_wrapper: BleakWrapperController):
+async def test_singleton(mock_bleak_wrapper: BleakWrapperController):
     new_bleak_wrapper = BleakWrapperController()
     assert mock_bleak_wrapper is new_bleak_wrapper
 
 
-@pytest.mark.asyncio
 async def test_scan_success(mock_bleak_wrapper: BleakWrapperController, monkeypatch):
     callback = asyncio.Queue()
 
@@ -60,7 +59,6 @@ async def test_scan_success(mock_bleak_wrapper: BleakWrapperController, monkeypa
     assert results[0].address == "address"
 
 
-@pytest.mark.asyncio
 async def test_scan_wrong_devices_found(mock_bleak_wrapper: BleakWrapperController, monkeypatch):
     callback = asyncio.Queue()
 
@@ -100,7 +98,6 @@ async def test_scan_wrong_devices_found(mock_bleak_wrapper: BleakWrapperControll
         )
 
 
-@pytest.mark.asyncio
 async def test_scan_timeout(mock_bleak_wrapper: BleakWrapperController, monkeypatch):
     class MockBleakScanner:
         def __init__(self, *args, **kwargs) -> None: ...
@@ -122,7 +119,6 @@ async def test_scan_timeout(mock_bleak_wrapper: BleakWrapperController, monkeypa
         )
 
 
-@pytest.mark.asyncio
 async def test_connect_success(mock_bleak_wrapper: BleakWrapperController, monkeypatch):
     class MockBleakClient:
         def __init__(self, *args, **kwargs) -> None:
@@ -140,7 +136,6 @@ async def test_connect_success(mock_bleak_wrapper: BleakWrapperController, monke
     assert client.is_connected
 
 
-@pytest.mark.asyncio
 async def test_connect_timeout(mock_bleak_wrapper: BleakWrapperController, monkeypatch):
     class MockBleakClient:
         def __init__(self, *args, **kwargs) -> None:
@@ -158,7 +153,6 @@ async def test_connect_timeout(mock_bleak_wrapper: BleakWrapperController, monke
         await mock_bleak_wrapper.connect(lambda *args: None, MockDevice())
 
 
-@pytest.mark.asyncio
 async def test_connect_fail_during_establishment(mock_bleak_wrapper: BleakWrapperController, monkeypatch):
     callback = asyncio.Queue()
 
@@ -186,7 +180,6 @@ async def test_connect_fail_during_establishment(mock_bleak_wrapper: BleakWrappe
         )
 
 
-@pytest.mark.asyncio
 async def test_discovery(mock_bleak_wrapper: BleakWrapperController):
     @dataclass
     class MockDescriptor:

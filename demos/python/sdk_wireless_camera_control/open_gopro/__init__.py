@@ -9,12 +9,12 @@ import sys
 
 # Validate python version
 # This is to make it painfully clear so that people hopefully stop trying invalid versions
-if sys.version_info.major != 3 or not 10 <= sys.version_info.minor < 13:
-    raise RuntimeError("Python >= 3.10 and < 3.13 must be used")
+if sys.version_info.major != 3 or not 11 <= sys.version_info.minor < 14:
+    raise RuntimeError("Python >= 3.11 and < 3.14 must be used")
 
 import logging
 
-from open_gopro.logger import Logger
+from open_gopro.util.logger import Logger
 
 Logger.addLoggingLevel("TRACE", logging.DEBUG - 5)
 

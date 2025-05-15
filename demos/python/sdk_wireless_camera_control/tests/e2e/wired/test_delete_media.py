@@ -6,15 +6,14 @@ from typing import AsyncGenerator
 
 import pytest
 
-from open_gopro import constants, proto
 from open_gopro.gopro_wired import WiredGoPro
-from open_gopro.models import MediaPath
+from open_gopro.models import MediaPath, constants, proto
 
 
 @pytest.fixture(scope="function")
 async def gopro() -> AsyncGenerator[WiredGoPro, None]:
     async with WiredGoPro() as gopro:
-        assert (await gopro.http_setting.controls.set(constants.settings.Controls.PRO)).ok
+        assert (await gopro.http_setting.control_mode.set(constants.settings.ControlMode.PRO)).ok
         assert (await gopro.http_command.delete_all()).ok
         yield gopro
 
@@ -76,7 +75,7 @@ async def create_timelapse_photo(gopro: WiredGoPro) -> MediaPath:
 
 @pytest.mark.timeout(60)
 class TestMediaDeletion:
-    @pytest.mark.asyncio
+
     async def test_delete_file_deletes_single_file(self, gopro: WiredGoPro):
         # GIVEN
         photo = await create_single_photo(gopro)
@@ -88,7 +87,6 @@ class TestMediaDeletion:
         media_list = (await gopro.http_command.get_media_list()).data.files
         assert not media_list  # Media list should be empty
 
-    @pytest.mark.asyncio
     async def test_delete_file_partially_deletes_burst_group(self, gopro: WiredGoPro):
         # GIVEN
         burst_group = await create_burst_photo(gopro)
@@ -101,7 +99,6 @@ class TestMediaDeletion:
         assert media_list
         assert burst_group not in media_list
 
-    @pytest.mark.asyncio
     async def test_delete_file_partially_deletes_timelapse_group(self, gopro: WiredGoPro):
         # GIVEN
         timelapse_group = await create_timelapse_photo(gopro)
@@ -114,7 +111,6 @@ class TestMediaDeletion:
         assert media_list
         assert timelapse_group not in media_list
 
-    @pytest.mark.asyncio
     async def test_delete_group_deletes_burst_group(self, gopro: WiredGoPro):
         # GIVEN
         burst_group = await create_burst_photo(gopro)
@@ -126,7 +122,6 @@ class TestMediaDeletion:
         media_list = (await gopro.http_command.get_media_list()).data.files
         assert not media_list
 
-    @pytest.mark.asyncio
     async def test_delete_group_deletes_timelapse_group(self, gopro: WiredGoPro):
         # GIVEN
         timelapse_group = await create_timelapse_photo(gopro)

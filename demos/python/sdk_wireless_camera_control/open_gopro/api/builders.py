@@ -14,9 +14,9 @@ from typing import Any, Callable, Final, Generic, Protocol, TypeVar, Union
 
 import construct
 import wrapt
+from returns.result import ResultE
 
-from open_gopro.ble import BleUUID
-from open_gopro.communicator_interface import (
+from open_gopro.domain.communicator_interface import (
     BleMessage,
     BleMessages,
     GoProBle,
@@ -25,7 +25,17 @@ from open_gopro.communicator_interface import (
     HttpMessages,
     MessageRules,
 )
-from open_gopro.constants import (
+from open_gopro.domain.enum import GoProIntEnum
+from open_gopro.domain.exceptions import GoProError
+from open_gopro.domain.gopro_observable import GoProCompositeObservable, GoProObservable
+from open_gopro.domain.parser_interface import (
+    BytesBuilder,
+    BytesParserBuilder,
+    GlobalParsers,
+    Parser,
+)
+from open_gopro.models import GoProResp
+from open_gopro.models.constants import (
     ActionId,
     CmdId,
     FeatureId,
@@ -34,25 +44,16 @@ from open_gopro.constants import (
     SettingId,
     StatusId,
 )
-from open_gopro.enum import GoProIntEnum
-from open_gopro.logger import Logger
-from open_gopro.models import GoProResp
-from open_gopro.parser_interface import (
-    BytesBuilder,
-    BytesParserBuilder,
-    GlobalParsers,
-    Parser,
-)
+from open_gopro.models.types import CameraState, JsonDict, Protobuf
+from open_gopro.network.ble import BleUUID
 from open_gopro.parsers.bytes import (
     ConstructByteParserBuilder,
     GoProEnumByteParserBuilder,
     ProtobufByteParser,
 )
-from open_gopro.types import CameraState, JsonDict, Protobuf, UpdateCb
+from open_gopro.util.logger import Logger
 
 logger = logging.getLogger(__name__)
-
-ValueType = TypeVar("ValueType")
 
 QueryParserType = Union[construct.Construct, type[GoProIntEnum], BytesParserBuilder]
 
@@ -98,8 +99,8 @@ class BleWriteCommand(BleMessage):
     Args:
         uuid (BleUUID): UUID to write to
         cmd (CmdId): command identifier
-        param_builder (BytesBuilder | None, optional): builds bytes from params. Defaults to None.
-        parser (Parser | None, optional): response parser to parse received bytes. Defaults to None.
+        param_builder (BytesBuilder | None): builds bytes from params. Defaults to None.
+        parser (Parser | None): response parser to parse received bytes. Defaults to None.
         rules (MessageRules): rules this Message must obey. Defaults to MessageRules().
     """
 
@@ -273,8 +274,8 @@ def ble_write_command(
     Args:
         uuid (BleUUID): UUID to write to
         cmd (CmdId): command identifier
-        param_builder (BytesBuilder | None, optional): builds bytes from params. Defaults to None.
-        parser (Parser | None, optional): response parser to parse received bytes. Defaults to None.
+        param_builder (BytesBuilder | None): builds bytes from params. Defaults to None.
+        parser (Parser | None): response parser to parse received bytes. Defaults to None.
         rules (MessageRules): rules this Message must obey. Defaults to MessageRules().
 
     Returns:
@@ -312,7 +313,6 @@ def ble_register_command(
     uuid: BleUUID,
     cmd: CmdId,
     update_set: type[SettingId] | type[StatusId],
-    action: RegisterUnregisterAll.Action,
     parser: Parser | None = None,
 ) -> Callable:
     """Decorator to build a RegisterUnregisterAll command and wrapper to execute it
@@ -321,28 +321,39 @@ def ble_register_command(
         uuid (BleUUID): UUID to write to
         cmd (CmdId): Command ID that is being sent
         update_set (type[SettingId] | type[StatusId]): set of ID's being registered for
-        action (RegisterUnregisterAll.Action): whether to register or unregister
         parser (Parser | None): Optional response parser. Defaults to None.
 
     Returns:
         Callable: Generated method to perform command
     """
-    message = RegisterUnregisterAll(uuid, cmd, update_set, action, parser)
+    register_message = RegisterUnregisterAll(uuid, cmd, update_set, RegisterUnregisterAll.Action.REGISTER, parser)
+    unregister_message = RegisterUnregisterAll(uuid, cmd, update_set, RegisterUnregisterAll.Action.UNREGISTER, parser)
 
     @wrapt.decorator
-    async def wrapper(wrapped: Callable, instance: BleMessages, _: Any, kwargs: Any) -> GoProResp:
-        response = await instance._communicator._send_ble_message(message, **(await wrapped(**kwargs) or kwargs))
-        if response.ok:
-            internal_update_type = (
-                GoProBle._CompositeRegisterType.ALL_STATUSES
-                if update_set == StatusId
-                else GoProBle._CompositeRegisterType.ALL_SETTINGS
+    async def wrapper(
+        wrapped: Callable, instance: BleMessages, _: Any, kwargs: Any
+    ) -> ResultE[GoProCompositeObservable]:
+        internal_update_type = (
+            GoProBle._CompositeRegisterType.ALL_STATUSES
+            if update_set == StatusId
+            else GoProBle._CompositeRegisterType.ALL_SETTINGS
+        )
+        try:
+            return ResultE.from_value(
+                await GoProCompositeObservable(
+                    gopro=instance._communicator,
+                    update=internal_update_type,
+                    register_command=instance._communicator._send_ble_message(
+                        register_message, **(await wrapped(**kwargs) or kwargs)
+                    ),
+                    unregister_command=instance._communicator._send_ble_message(
+                        unregister_message, **(await wrapped(**kwargs) or kwargs)
+                    ),
+                ).start()
             )
-            if action is RegisterUnregisterAll.Action.REGISTER:
-                instance._communicator._register_update(kwargs["callback"], internal_update_type)
-            else:
-                instance._communicator._unregister_update(kwargs["callback"], internal_update_type)
-        return response
+        except GoProError as e:
+            logger.error(f"Failed to register for {update_set} ==> {e}")
+            return ResultE.from_failure(e)
 
     return wrapper
 
@@ -416,7 +427,7 @@ class BuilderProtocol(Protocol):
         ...
 
 
-class BleSettingFacade(Generic[ValueType]):
+class BleSettingFacade(Generic[T]):
     """Wrapper around BleSetting since a BleSetting's message definition changes based on how it is being operated on.
 
     Raises:
@@ -491,11 +502,11 @@ class BleSettingFacade(Generic[ValueType]):
         """
         return bytearray([cmd.value, int(self._identifier)])
 
-    async def set(self, value: ValueType) -> GoProResp[None]:
+    async def set(self, value: T) -> GoProResp[None]:
         """Set the value of the setting.
 
         Args:
-            value (ValueType): The argument to use to set the setting value.
+            value (T): The argument to use to set the setting value.
 
         Returns:
             GoProResp[None]: Status of set
@@ -519,11 +530,11 @@ class BleSettingFacade(Generic[ValueType]):
         )
         return await self._communicator._send_ble_message(message)
 
-    async def get_value(self) -> GoProResp[ValueType]:
+    async def get_value(self) -> GoProResp[T]:
         """Get the settings value.
 
         Returns:
-            GoProResp[ValueType]: settings value
+            GoProResp[T]: settings value
         """
         message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
@@ -544,11 +555,11 @@ class BleSettingFacade(Generic[ValueType]):
         """
         raise NotImplementedError("Not implemented on camera!")
 
-    async def get_capabilities_values(self) -> GoProResp[list[ValueType]]:
+    async def get_capabilities_values(self) -> GoProResp[list[T]]:
         """Get currently supported settings capabilities values.
 
         Returns:
-            GoProResp[list[ValueType]]: settings capabilities values
+            GoProResp[list[T]]: settings capabilities values
         """
         message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
@@ -569,87 +580,65 @@ class BleSettingFacade(Generic[ValueType]):
         """
         raise NotImplementedError("Not implemented on camera!")
 
-    async def register_value_update(self, callback: UpdateCb) -> GoProResp[None]:
-        """Register for asynchronous notifications when a given setting ID's value updates.
-
-        Args:
-            callback (UpdateCb): callback to be notified with
+    async def get_value_observable(self) -> ResultE[GoProObservable[T]]:
+        """Receive an observable of asynchronously notified setting values.
 
         Returns:
-            GoProResp[None]: Current value of respective setting ID
+            ResultE[GoProObservable[T]]: data observable if successful otherwise an error
         """
-        message = BleSettingFacade.BleSettingMessageBase(
+        register_message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
             QueryCmdId.REG_SETTING_VAL_UPDATE,
             self._identifier,
             lambda **_: self._build_cmd(QueryCmdId.REG_SETTING_VAL_UPDATE),
         )
-        if (response := await self._communicator._send_ble_message(message)).ok:
-            self._communicator.register_update(callback, self._identifier)
-        return response
-
-    async def unregister_value_update(self, callback: UpdateCb) -> GoProResp[None]:
-        """Stop receiving notifications when a given setting ID's value updates.
-
-        Args:
-            callback (UpdateCb): callback to be notified with
-
-        Returns:
-            GoProResp[None]: Status of unregister
-        """
-        message = BleSettingFacade.BleSettingMessageBase(
+        unregister_message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
             QueryCmdId.UNREG_SETTING_VAL_UPDATE,
             self._identifier,
             lambda **_: self._build_cmd(QueryCmdId.UNREG_SETTING_VAL_UPDATE),
         )
-        if (response := await self._communicator._send_ble_message(message)).ok:
-            self._communicator.unregister_update(callback, self._identifier)
-        return response
+        return ResultE.from_value(
+            await GoProObservable[T](
+                gopro=self._communicator,
+                update=self._identifier,
+                register_command=self._communicator._send_ble_message(register_message),
+                unregister_command=self._communicator._send_ble_message(unregister_message),
+            ).start()
+        )
 
-    async def register_capability_update(self, callback: UpdateCb) -> GoProResp[None]:
-        """Register for asynchronous notifications when a given setting ID's capabilities update.
-
-        Args:
-            callback (UpdateCb): callback to be notified with
+    async def get_capabilities_observable(self) -> ResultE[GoProObservable[list[T]]]:
+        """Receive an observable of asynchronously notified lists of setting value capabilities.
 
         Returns:
-            GoProResp[None]: Current capabilities of respective setting ID
+            ResultE[GoProObservable[list[T]]]: data observable if successful otherwise an error
         """
-        message = BleSettingFacade.BleSettingMessageBase(
+        register_message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
             QueryCmdId.REG_CAPABILITIES_UPDATE,
             self._identifier,
             lambda **_: self._build_cmd(QueryCmdId.REG_CAPABILITIES_UPDATE),
         )
-        if (response := await self._communicator._send_ble_message(message)).ok:
-            self._communicator.unregister_update(callback, self._identifier)
-        return response
-
-    async def unregister_capability_update(self, callback: UpdateCb) -> GoProResp[None]:
-        """Stop receiving notifications when a given setting ID's capabilities change.
-
-        Args:
-            callback (UpdateCb): callback to be notified with
-
-        Returns:
-            GoProResp[None]: Status of unregister
-        """
-        message = BleSettingFacade.BleSettingMessageBase(
+        unregister_message = BleSettingFacade.BleSettingMessageBase(
             BleSettingFacade.READER_UUID,
             QueryCmdId.UNREG_CAPABILITIES_UPDATE,
             self._identifier,
             lambda **_: self._build_cmd(QueryCmdId.UNREG_CAPABILITIES_UPDATE),
         )
-        if (response := await self._communicator._send_ble_message(message)).ok:
-            self._communicator.unregister_update(callback, self._identifier)
-        return response
+        return ResultE.from_value(
+            await GoProObservable[list[T]](
+                gopro=self._communicator,
+                update=self._identifier,
+                register_command=self._communicator._send_ble_message(register_message),
+                unregister_command=self._communicator._send_ble_message(unregister_message),
+            ).start()
+        )
 
     def __str__(self) -> str:
         return str(self._identifier).lower().replace("_", " ").title()
 
 
-class BleStatusFacade(Generic[ValueType]):
+class BleStatusFacade(Generic[T]):
     """Wrapper around BleStatus since a BleStatus's message definition changes based on how it is being operated on.
 
     Attributes:
@@ -713,11 +702,11 @@ class BleStatusFacade(Generic[ValueType]):
     def __str__(self) -> str:
         return str(self._identifier).lower().replace("_", " ").title()
 
-    async def get_value(self) -> GoProResp[ValueType]:
+    async def get_value(self) -> GoProResp[T]:
         """Get the current value of a status.
 
         Returns:
-            GoProResp[ValueType]: current status value
+            GoProResp[T]: current status value
         """
         message = BleStatusFacade.BleStatusMessageBase(
             BleStatusFacade.UUID,
@@ -727,43 +716,33 @@ class BleStatusFacade(Generic[ValueType]):
         )
         return await self._communicator._send_ble_message(message)
 
-    async def register_value_update(self, callback: UpdateCb) -> GoProResp[ValueType]:
+    async def get_value_observable(self) -> ResultE[GoProObservable[T]]:
         """Register for asynchronous notifications when a status changes.
 
-        Args:
-            callback (UpdateCb): callback to be notified with
-
         Returns:
-            GoProResp[ValueType]: current status value
+            ResultE[GoProObservable[T]]: current status value
         """
-        message = BleStatusFacade.BleStatusMessageBase(
+        register_message = BleStatusFacade.BleStatusMessageBase(
             BleStatusFacade.UUID,
             QueryCmdId.REG_STATUS_VAL_UPDATE,
             self._identifier,
             lambda *args: self._build_cmd(QueryCmdId.REG_STATUS_VAL_UPDATE),
         )
-        if (response := await self._communicator._send_ble_message(message)).ok:
-            self._communicator.register_update(callback, self._identifier)
-        return response
-
-    async def unregister_value_update(self, callback: UpdateCb) -> GoProResp[None]:
-        """Stop receiving notifications when status changes.
-
-        Args:
-            callback (UpdateCb): callback to be notified with
-
-        Returns:
-            GoProResp[None]: Status of unregister
-        """
-        message = BleStatusFacade.BleStatusMessageBase(
+        unregister_message = BleStatusFacade.BleStatusMessageBase(
             BleStatusFacade.UUID,
             QueryCmdId.UNREG_STATUS_VAL_UPDATE,
             self._identifier,
             lambda *args: self._build_cmd(QueryCmdId.UNREG_STATUS_VAL_UPDATE),
         )
-        if (response := await self._communicator._send_ble_message(message)).ok:
-            self._communicator.register_update(callback, self._identifier)
-        return response
+
+        return ResultE.from_value(
+            await GoProObservable[T](
+                gopro=self._communicator,
+                update=self._identifier,
+                register_command=self._communicator._send_ble_message(register_message),
+                unregister_command=self._communicator._send_ble_message(unregister_message),
+            ).start()
+        )
 
     def _build_cmd(self, cmd: QueryCmdId) -> bytearray:
         """Build the data for a given status command.
@@ -864,7 +843,7 @@ def http_put_json_command(
         endpoint (str): base endpoint
         components (list[str] | None): Additional path components (i.e. endpoint/{COMPONENT}). Defaults to None.
         arguments (list[str] | None): Any arguments to be appended after endpoint (i.e. endpoint?{ARGUMENT}). Defaults to None.
-        body_args (list[str] | None, optional): Arguments to be added to the body JSON. Defaults to None.
+        body_args (list[str] | None): Arguments to be added to the body JSON. Defaults to None.
         parser (Parser | None): Parser to handle received JSON. Defaults to None.
         identifier (str | None): explicit message identifier. If None, will be generated from endpoint.
         rules (MessageRules): rules this Message must obey. Defaults to MessageRules().
@@ -888,7 +867,7 @@ def http_put_json_command(
     return wrapper
 
 
-class HttpSetting(HttpMessage, Generic[ValueType]):
+class HttpSetting(HttpMessage, Generic[T]):
     """An individual camera setting that is interacted with via Wifi."""
 
     def __init__(self, communicator: GoProHttp, identifier: SettingId) -> None:
@@ -911,11 +890,11 @@ class HttpSetting(HttpMessage, Generic[ValueType]):
         """
         return self._endpoint.format(setting=int(self._identifier), option=int(kwargs["value"]))
 
-    async def set(self, value: ValueType) -> GoProResp:
+    async def set(self, value: T) -> GoProResp:
         """Set the value of the setting.
 
         Args:
-            value (ValueType): value to set setting
+            value (T): value to set setting
 
         Returns:
             GoProResp: Status of set

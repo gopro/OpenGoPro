@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from typing import Final
 
-from open_gopro.communicator_interface import GoProHttp, GoProWirelessInterface
+from open_gopro.domain.communicator_interface import GoProHttp, GoProWirelessInterface
 
 from .ble_commands import BleAsyncResponses, BleCommands
 from .ble_settings import BleSettings

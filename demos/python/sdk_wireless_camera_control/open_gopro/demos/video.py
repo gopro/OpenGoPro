@@ -9,9 +9,10 @@ from pathlib import Path
 
 from rich.console import Console
 
-from open_gopro import WiredGoPro, WirelessGoPro, constants, proto
-from open_gopro.logger import setup_logging
+from open_gopro import WiredGoPro, WirelessGoPro
+from open_gopro.models import constants, proto
 from open_gopro.util import add_cli_args_and_parse
+from open_gopro.util.logger import setup_logging
 
 console = Console()
 
@@ -24,12 +25,12 @@ async def main(args: argparse.Namespace) -> None:
         async with (
             WiredGoPro(args.identifier)
             if args.wired
-            else WirelessGoPro(args.identifier, wifi_interface=args.wifi_interface)
+            else WirelessGoPro(args.identifier, host_wifi_interface=args.wifi_interface)
         ) as gopro:
             assert gopro
             assert (await gopro.http_command.load_preset_group(group=proto.EnumPresetGroup.PRESET_GROUP_ID_VIDEO)).ok
 
-            # Get the media list before
+            # Get the media set before
             media_set_before = set((await gopro.http_command.get_media_list()).data.files)
             # Take a video
             console.print("Capturing a video...")
@@ -37,14 +38,19 @@ async def main(args: argparse.Namespace) -> None:
             await asyncio.sleep(args.record_time)
             assert (await gopro.http_command.set_shutter(shutter=constants.Toggle.DISABLE)).ok
 
-            # Get the media list after
+            # Get the media set after
             media_set_after = set((await gopro.http_command.get_media_list()).data.files)
             # The video (is most likely) the difference between the two sets
             video = media_set_after.difference(media_set_before).pop()
 
-            # Download the video
+            # Download the video and GPMF
             console.print(f"Downloading {video.filename}...")
-            await gopro.http_command.download_file(camera_file=video.filename, local_file=args.output)
+            await gopro.http_command.download_file(
+                camera_file=video.filename, local_file=args.output.with_suffix(".mp4")
+            )
+            await gopro.http_command.get_gpmf_data(
+                camera_file=video.filename, local_file=args.output.with_suffix(".gpmf")
+            )
             console.print(f"Success!! :smiley: File has been downloaded to {args.output}")
     except Exception as e:  # pylint: disable = broad-except
         logger.error(repr(e))
@@ -61,8 +67,8 @@ def parse_arguments() -> argparse.Namespace:
         "-o",
         "--output",
         type=Path,
-        help="Where to write the video to. If not set, write to 'video.mp4'",
-        default=Path("video.mp4"),
+        help="Where to write the video to (not including file type). If not set, write to 'video'",
+        default=Path("video"),
     )
     parser.add_argument(
         "--wired",

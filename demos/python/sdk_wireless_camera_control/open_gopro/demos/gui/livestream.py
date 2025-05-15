@@ -5,13 +5,13 @@
 
 import argparse
 import asyncio
-from typing import Any
 
 from rich.console import Console
 
-from open_gopro import WirelessGoPro, constants, proto
-from open_gopro.logger import setup_logging
+from open_gopro import WirelessGoPro
+from open_gopro.models import proto, streaming
 from open_gopro.util import add_cli_args_and_parse, ainput
+from open_gopro.util.logger import setup_logging
 
 console = Console()  # rich consoler printer
 
@@ -19,48 +19,36 @@ console = Console()  # rich consoler printer
 async def main(args: argparse.Namespace) -> None:
     setup_logging(__name__, args.log)
 
-    async with WirelessGoPro(args.identifier, enable_wifi=False) as gopro:
-        await gopro.ble_command.set_shutter(shutter=constants.Toggle.DISABLE)
-        await gopro.ble_command.register_livestream_status(
-            register=[proto.EnumRegisterLiveStreamStatus.REGISTER_LIVE_STREAM_STATUS_STATUS]
-        )
-
+    async with WirelessGoPro(
+        args.identifier,
+        enable_wifi=False,
+        interfaces={WirelessGoPro.Interface.BLE},
+    ) as gopro:
         console.print(f"[yellow]Connecting to {args.ssid}...")
-        await gopro.connect_to_access_point(args.ssid, args.password)
+        await gopro.access_point.connect(args.ssid, args.password)
 
-        # Start livestream
-        livestream_is_ready = asyncio.Event()
-
-        async def wait_for_livestream_start(_: Any, update: proto.NotifyLiveStreamStatus) -> None:
-            if update.live_stream_status == proto.EnumLiveStreamStatus.LIVE_STREAM_STATE_READY:
-                livestream_is_ready.set()
-
-        console.print("[yellow]Configuring livestream...")
-        gopro.register_update(wait_for_livestream_start, constants.ActionId.LIVESTREAM_STATUS_NOTIF)
-        await gopro.ble_command.set_livestream_mode(
-            url=args.url,
-            window_size=args.resolution,
-            minimum_bitrate=args.min_bit,
-            maximum_bitrate=args.max_bit,
-            starting_bitrate=args.start_bit,
-            encode=args.encode,
-            lens=args.fov,
+        console.print(f"[yellow]Starting livestream to {args.url}...")
+        await gopro.streaming.start_stream(
+            streaming.StreamType.LIVE,
+            streaming.LivestreamOptions(
+                url=args.url,
+                minimum_bitrate=args.min_bit,
+                maximum_bitrate=args.max_bit,
+                starting_bitrate=args.start_bit,
+                resolution=args.resolution if args.resolution else None,
+                fov=args.fov if args.fov else None,
+                encode=args.encode,
+            ),
         )
-
-        # Wait to receive livestream started status
-        console.print("[yellow]Waiting for livestream to be ready...\n")
-        await livestream_is_ready.wait()
-
-        # TODO Is this still needed?
-        await asyncio.sleep(2)
-
-        console.print("[yellow]Starting livestream")
-        assert (await gopro.ble_command.set_shutter(shutter=constants.Toggle.ENABLE)).ok
-
-        console.print("[yellow]Livestream is now streaming and should be available for viewing.")
+        assert gopro.streaming.url
+        console.print(
+            f"[yellow]Livestream to {gopro.streaming.url} is now streaming and should be available for viewing at."
+        )
         await ainput("Press enter to stop livestreaming...\n")
 
-        await gopro.ble_command.set_shutter(shutter=constants.Toggle.DISABLE)
+        await gopro.streaming.stop_active_stream()
+
+        # TODO merge this into access point feature
         await gopro.ble_command.release_network()
 
 

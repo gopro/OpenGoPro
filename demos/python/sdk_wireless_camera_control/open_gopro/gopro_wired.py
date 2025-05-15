@@ -9,8 +9,10 @@ import asyncio
 import logging
 from typing import Any, Callable, Final
 
-import open_gopro.wifi.mdns_scanner  # Imported this way for pytest monkeypatching
-from open_gopro import constants
+import requests
+
+import open_gopro.features
+import open_gopro.network.wifi.mdns_scanner  # Imported this way for pytest monkeypatching
 from open_gopro.api import (
     BleCommands,
     BleSettings,
@@ -19,16 +21,21 @@ from open_gopro.api import (
     HttpSettings,
     WiredApi,
 )
-from open_gopro.communicator_interface import GoProWiredInterface, Message, MessageRules
-from open_gopro.constants import StatusId
-from open_gopro.exceptions import (
+from open_gopro.domain.communicator_interface import (
+    BaseGoProCommunicator,
+    GoProWiredInterface,
+    Message,
+    MessageRules,
+)
+from open_gopro.domain.exceptions import (
     FailedToFindDevice,
     GoProNotOpened,
     InvalidOpenGoProVersion,
 )
 from open_gopro.gopro_base import GoProBase
-from open_gopro.models import GoProResp
-from open_gopro.types import CameraState, UpdateCb, UpdateType
+from open_gopro.models import GoProResp, constants
+from open_gopro.models.constants import StatusId
+from open_gopro.models.types import CameraState, UpdateCb, UpdateType
 
 logger = logging.getLogger(__name__)
 
@@ -78,6 +85,23 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         self._poll_period = kwargs.get("poll_period", 2)
         self._encoding = False
         self._busy = False
+        self._streaming: open_gopro.features.StreamFeature
+        self._loop: asyncio.AbstractEventLoop
+
+    @property
+    def streaming(self) -> open_gopro.features.StreamFeature:
+        """The Streaming feature abstraction
+
+        Raises:
+            GoProNotOpened: Feature is not yet available because GoPro has not yet been opened
+
+        Returns:
+            open_gopro.features.StreamFeature: Streaming Feature
+        """
+        try:
+            return self._streaming
+        except AttributeError as e:
+            raise GoProNotOpened("") from e
 
     async def open(self, timeout: int = 10, retries: int = 1) -> None:
         """Connect to the Wired GoPro Client and prepare it for communication
@@ -90,10 +114,11 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
             InvalidOpenGoProVersion: the GoPro camera does not support the correct Open GoPro API version
             FailedToFindDevice: could not auto-discover GoPro via mDNS
         """
+        self._loop = asyncio.get_event_loop()
         if not self._serial:
             for retry in range(1, retries + 1):
                 try:
-                    response = await open_gopro.wifi.mdns_scanner.find_first_ip_addr(
+                    response = await open_gopro.network.wifi.mdns_scanner.find_first_ip_addr(
                         WiredGoPro._MDNS_SERVICE_NAME, timeout
                     )
                     self._serial = response.name.split(".")[0]
@@ -109,6 +134,8 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         if (version := (await self.http_command.get_open_gopro_api_version()).data) != self.version:
             raise InvalidOpenGoProVersion(version)
         logger.info(f"Using Open GoPro API version {version}")
+
+        self._streaming = open_gopro.features.StreamFeature(self, self._loop)
 
         # Wait for initial ready state
         await self._wait_for_state({StatusId.ENCODING: False, StatusId.BUSY: False})
@@ -227,6 +254,16 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         """
         return self.is_open
 
+    def _register_update(
+        self, callback: UpdateCb, update: BaseGoProCommunicator._CompositeRegisterType | UpdateType
+    ) -> None:
+        raise NotImplementedError
+
+    def _unregister_update(
+        self, callback: UpdateCb, update: BaseGoProCommunicator._CompositeRegisterType | UpdateType | None = None
+    ) -> None:
+        raise NotImplementedError
+
     def register_update(self, callback: UpdateCb, update: UpdateType) -> None:
         """Register for callbacks when an update occurs
 
@@ -331,6 +368,12 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         return self._wired_api
 
     @property
+    def ip_address(self) -> str:  # noqa: D102
+        if not self._serial:
+            raise GoProNotOpened("Serial / IP has not yet been discovered")
+        return WiredGoPro._BASE_IP.format(*self._serial[-3:])
+
+    @property
     def _base_url(self) -> str:
         """Build the base endpoint for USB commands
 
@@ -342,4 +385,8 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         """
         if not self._serial:
             raise GoProNotOpened("Serial / IP has not yet been discovered")
-        return WiredGoPro._BASE_ENDPOINT.format(ip=WiredGoPro._BASE_IP.format(*self._serial[-3:]))
+        return WiredGoPro._BASE_ENDPOINT.format(ip=self.ip_address)
+
+    @property
+    def _requests_session(self) -> requests.Session:
+        return requests.Session()

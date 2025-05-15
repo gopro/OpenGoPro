@@ -9,10 +9,11 @@ from pathlib import Path
 
 from rich.console import Console
 
-from open_gopro import WiredGoPro, WirelessGoPro, constants, proto
+from open_gopro import WiredGoPro, WirelessGoPro
 from open_gopro.gopro_base import GoProBase
-from open_gopro.logger import setup_logging
+from open_gopro.models import constants, proto
 from open_gopro.util import add_cli_args_and_parse
+from open_gopro.util.logger import setup_logging
 
 console = Console()
 
@@ -26,7 +27,7 @@ async def main(args: argparse.Namespace) -> None:
         async with (
             WiredGoPro(args.identifier)
             if args.wired
-            else WirelessGoPro(args.identifier, wifi_interface=args.wifi_interface)
+            else WirelessGoPro(args.identifier, host_wifi_interface=args.wifi_interface)
         ) as gopro:
             assert gopro
             assert (await gopro.http_command.load_preset_group(group=proto.EnumPresetGroup.PRESET_GROUP_ID_PHOTO)).ok

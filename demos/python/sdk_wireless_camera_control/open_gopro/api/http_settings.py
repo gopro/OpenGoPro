@@ -11,8 +11,8 @@
 
 from open_gopro import models
 from open_gopro.api.builders import HttpSetting
-from open_gopro.communicator_interface import GoProHttp, HttpMessages
-from open_gopro.constants import SettingId, settings
+from open_gopro.domain.communicator_interface import GoProHttp, HttpMessages
+from open_gopro.models.constants import SettingId, settings
 
 
 class HttpSettings(HttpMessages[HttpSetting]):

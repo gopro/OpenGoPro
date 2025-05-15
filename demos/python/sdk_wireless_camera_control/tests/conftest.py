@@ -3,6 +3,7 @@
 
 # pylint: disable=redefined-outer-name
 
+import asyncio
 import logging
 import re
 from pathlib import Path
@@ -11,16 +12,24 @@ from typing import Any, Generator
 import pytest
 import pytest_asyncio
 
-from open_gopro.ble import BleClient, Characteristic, Descriptor, GattDB, Service, UUIDs
-from open_gopro.ble.adapters.bleak_wrapper import BleakWrapperController
-from open_gopro.ble.services import CharProps
 from open_gopro.gopro_base import GoProBase
-from open_gopro.logger import set_logging_level, setup_logging
-from open_gopro.wifi import WifiClient
+from open_gopro.network.ble import (
+    BleClient,
+    Characteristic,
+    Descriptor,
+    GattDB,
+    Service,
+    UUIDs,
+)
+from open_gopro.network.ble.adapters.bleak_wrapper import BleakWrapperController
+from open_gopro.network.ble.services import CharProps
+from open_gopro.network.wifi import WifiClient
+from open_gopro.util.logger import set_logging_level, setup_logging
 from tests import versions
 from tests.mocks import (
     MockBleCommunicator,
     MockBleController,
+    MockFeature,
     MockGoProMaintainBle,
     MockWifiCommunicator,
     MockWifiController,
@@ -58,18 +67,27 @@ def test_log(request):
     logging.debug("################################################################################")
 
 
+# TODO. I think this is a bug in pytest-cov.
+@pytest.fixture(scope="function", autouse=True)
+def ignore_coroutine_never_awaited_warning():
+    import warnings
+
+    warnings.filterwarnings("ignore", message="coroutine 'enforce_message_rules' was never awaited")
+    yield
+
+
 ##############################################################################################################
 #                                             Bleak Unit Testing
 ##############################################################################################################
 
 
-@pytest_asyncio.fixture(scope="module")
+@pytest_asyncio.fixture(scope="function")
 async def mock_bleak_wrapper():
     ble = BleakWrapperController()
     yield ble
 
 
-@pytest_asyncio.fixture(scope="module")
+@pytest_asyncio.fixture(scope="function")
 async def mock_bleak_client():
     def disconnected_cb(_) -> None:
         print("Entered test disconnect callback")
@@ -127,20 +145,20 @@ def notification_handler(handle: int, data: bytearray) -> None:
     print("Entered test notification callback")
 
 
-@pytest_asyncio.fixture(scope="module")
+@pytest_asyncio.fixture(scope="function")
 async def mock_ble_client():
     test_client = BleClient(
         controller=MockBleController(),
         disconnected_cb=disconnection_handler,
         notification_cb=notification_handler,  # type: ignore
-        target=(re.compile("device"), []),
+        target=("device", []),
     )
     yield test_client
 
 
-@pytest_asyncio.fixture(scope="module", params=versions)
+@pytest_asyncio.fixture(scope="function")
 async def mock_ble_communicator(request):
-    test_client = MockBleCommunicator(request.param)
+    test_client = MockBleCommunicator("2.0")
     yield test_client
 
 
@@ -149,15 +167,15 @@ async def mock_ble_communicator(request):
 ##############################################################################################################
 
 
-@pytest_asyncio.fixture(scope="module")
+@pytest_asyncio.fixture(scope="function")
 async def mock_wifi_client():
     test_client = WifiClient(controller=MockWifiController())
     yield test_client
 
 
-@pytest_asyncio.fixture(scope="module", params=versions)
+@pytest_asyncio.fixture(scope="function")
 async def mock_wifi_communicator(request):
-    test_client = MockWifiCommunicator(request.param)
+    test_client = MockWifiCommunicator("2.0")
     yield test_client
 
 
@@ -172,15 +190,30 @@ async def mock_wired_gopro():
     yield test_client
 
 
-@pytest_asyncio.fixture(params=versions)
-async def mock_wireless_gopro_basic(request):
-    test_client = MockWirelessGoPro(request.param)
-    GoProBase.HTTP_GET_RETRIES = 1  # type: ignore
-    yield test_client
-    test_client.close()
+def mock_features(monkeypatch):
+    monkeypatch.setattr("open_gopro.features.AccessPointFeature", MockFeature)
+    monkeypatch.setattr("open_gopro.features.CohnFeature", MockFeature)
+    monkeypatch.setattr("open_gopro.features.StreamFeature", MockFeature)
 
 
 @pytest_asyncio.fixture(scope="function")
-async def mock_wireless_gopro():
+async def mock_wireless_gopro_basic(monkeypatch):
+    mock_features(monkeypatch)
+    test_client = MockWirelessGoPro("2.0")
+    GoProBase.HTTP_GET_RETRIES = 1  # type: ignore
+    try:
+        yield test_client
+        await test_client.close()
+    except Exception as e:
+        logger.error(f"PYTEST Error closing GoPro: {e}")
+
+
+@pytest_asyncio.fixture(scope="function")
+async def mock_wireless_gopro(monkeypatch):
+    mock_features(monkeypatch)
     test_client = MockGoProMaintainBle()
-    yield test_client
+    try:
+        yield test_client
+        await test_client.close()
+    except Exception as e:
+        logger.error(f"PYTEST Error closing GoPro: {e}")

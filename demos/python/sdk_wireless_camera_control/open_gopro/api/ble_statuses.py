@@ -12,9 +12,9 @@
 from construct import Flag, GreedyString, Int8ub, Int32ub, Int64ub
 
 from open_gopro.api.builders import BleStatusFacade as BleStatus
-from open_gopro.communicator_interface import BleMessages, GoProBle
-from open_gopro.constants import StatusId
-from open_gopro.constants.statuses import *  # pylint: disable = wildcard-import, unused-wildcard-import
+from open_gopro.domain.communicator_interface import BleMessages, GoProBle
+from open_gopro.models.constants import StatusId
+from open_gopro.models.constants.statuses import *  # pylint: disable = wildcard-import, unused-wildcard-import
 
 
 class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):

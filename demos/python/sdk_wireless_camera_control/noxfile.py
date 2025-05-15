@@ -10,9 +10,9 @@ from nox_poetry import session
 nox.options.sessions = "format", "lint", "tests", "docstrings", "docs"
 
 SUPPORTED_VERSIONS = [
-    "3.10",
     "3.11",
     "3.12",
+    "3.13",
 ]
 
 
