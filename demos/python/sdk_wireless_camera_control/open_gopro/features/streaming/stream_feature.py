@@ -1,3 +1,6 @@
+# stream_feature.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Thu May 15 16:57:27 UTC 2025
+
 """Combined stream functionality for all type of video streams."""
 
 from __future__ import annotations
