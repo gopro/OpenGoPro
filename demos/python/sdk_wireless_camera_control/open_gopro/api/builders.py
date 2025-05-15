@@ -34,7 +34,6 @@ from open_gopro.domain.parser_interface import (
     GlobalParsers,
     Parser,
 )
-from open_gopro.domain.types import CameraState, JsonDict, Protobuf
 from open_gopro.models import GoProResp
 from open_gopro.models.constants import (
     ActionId,
@@ -45,6 +44,7 @@ from open_gopro.models.constants import (
     SettingId,
     StatusId,
 )
+from open_gopro.models.types import CameraState, JsonDict, Protobuf
 from open_gopro.network.ble import BleUUID
 from open_gopro.parsers.bytes import (
     ConstructByteParserBuilder,

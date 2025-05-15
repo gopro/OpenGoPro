@@ -52,6 +52,7 @@ class BleClient(Generic[BleHandle, BleDevice]):
     ) -> None:
         if target is None:
             raise ValueError("Target can not be None!")
+        self._target: Pattern
         if isinstance(target[0], str):
             self._target = re.compile(target[0])
         else:
@@ -63,7 +64,7 @@ class BleClient(Generic[BleHandle, BleDevice]):
         self._gatt_table: Optional[GattDB] = None
         self._device: Optional[BleDevice] = None
         self._handle: Optional[BleHandle] = None
-        self._identifier: Optional[str] = None if isinstance(self._target, Pattern) else str(self._target)
+        self._identifier: Optional[str] = self._target.pattern
         self.uuids = uuids
 
     async def _find_device(self, timeout: int = 5, retries: int = 30) -> None:

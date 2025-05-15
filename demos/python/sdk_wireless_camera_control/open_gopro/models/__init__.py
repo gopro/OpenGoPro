@@ -9,7 +9,6 @@ from .general import (
     HttpInvalidSettingResponse,
     ScheduledCapture,
     TzDstDateTime,
-    WebcamResponse,
 )
 from .media_list import (
     GroupedMediaItem,

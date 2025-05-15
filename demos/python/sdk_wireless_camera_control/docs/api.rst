@@ -76,14 +76,17 @@ These should not be imported directly and instead should be accessed using the r
 Abstracted Features
 -------------------
 
-.. automodule:: open_gopro.features.cohn_feature
+.. autoclass:: open_gopro.features.CohnFeature
 
-.. automodule:: open_gopro.features.access_point_feature
+.. autoclass:: open_gopro.features.AccessPointFeature
+
+.. autoclass:: open_gopro.features.StreamFeature
 
 Base Types
 ----------
 
-.. automodule:: open_gopro.domain.types
+.. automodule:: open_gopro.models.types
+   :undoc-members:
 
 GoPro Enum
 ^^^^^^^^^^
@@ -183,36 +186,14 @@ These are the various models that are returned in responses, used in commands, e
 
    from open_gopro import models
 
-.. autopydantic_model:: open_gopro.models.media_list.MediaPath
+.. automodule:: open_gopro.models.media_list
+   :undoc-members:
 
-.. autopydantic_model:: open_gopro.models.media_list.MediaMetadata
+.. automodule:: open_gopro.models.streaming
+   :undoc-members:
 
-.. autopydantic_model:: open_gopro.models.media_list.PhotoMetadata
-   :show-inheritance:
-
-.. autopydantic_model:: open_gopro.models.media_list.VideoMetadata
-   :show-inheritance:
-
-.. autopydantic_model:: open_gopro.models.media_list.MediaItem
-
-.. autopydantic_model:: open_gopro.models.media_list.GroupedMediaItem
-   :show-inheritance:
-
-.. autopydantic_model:: open_gopro.models.media_list.MediaFileSystem
-
-.. autopydantic_model:: open_gopro.models.media_list.MediaList
-
-.. autopydantic_model:: open_gopro.models.general.TzDstDateTime
-
-.. autopydantic_model:: open_gopro.models.general.CameraInfo
-
-.. autopydantic_model:: open_gopro.models.general.WebcamResponse
-
-.. autopydantic_model:: open_gopro.models.general.SupportedOption
-
-.. autopydantic_model:: open_gopro.models.general.CohnInfo
-
-.. autoclass:: open_gopro.models.general.ScheduledCapture
+.. automodule:: open_gopro.models.general
+   :undoc-members:
 
 Constants
 =========

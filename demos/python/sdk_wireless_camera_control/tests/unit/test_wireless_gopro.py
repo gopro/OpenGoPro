@@ -16,7 +16,6 @@ import requests_mock
 from open_gopro.domain.communicator_interface import HttpMessage
 from open_gopro.domain.exceptions import GoProNotOpened, ResponseTimeout
 from open_gopro.domain.parser_interface import GlobalParsers
-from open_gopro.domain.types import UpdateType
 from open_gopro.gopro_wireless import WirelessGoPro
 from open_gopro.models import GoProResp
 from open_gopro.models.constants import (
@@ -27,12 +26,12 @@ from open_gopro.models.constants import (
     settings,
 )
 from open_gopro.models.constants.statuses import InternalBatteryBars
+from open_gopro.models.types import UpdateType
 from tests import mock_good_response
 from tests.mocks import MockGoProMaintainBle, MockWirelessGoPro
 
 
 @pytest.mark.timeout(30)
-@pytest.mark.asyncio
 async def test_lifecycle(mock_wireless_gopro: MockGoProMaintainBle):
     async def set_disconnect_event():
         mock_wireless_gopro._disconnect_handler(None)
@@ -68,11 +67,10 @@ async def test_lifecycle(mock_wireless_gopro: MockGoProMaintainBle):
     assert (await mock_wireless_gopro.generic_spy.get())[0] == 66
 
     # Mock closing
-    asyncio.gather(mock_wireless_gopro.close(), set_disconnect_event())
+    await asyncio.gather(mock_wireless_gopro.close(), set_disconnect_event())
     assert mock_wireless_gopro._keep_alive_task.cancelled
 
 
-@pytest.mark.asyncio
 async def test_gopro_open(mock_wireless_gopro_basic: WirelessGoPro):
     await mock_wireless_gopro_basic.open()
     assert mock_wireless_gopro_basic.is_ble_connected
@@ -80,7 +78,6 @@ async def test_gopro_open(mock_wireless_gopro_basic: WirelessGoPro):
     assert mock_wireless_gopro_basic.identifier == "vice"
 
 
-@pytest.mark.asyncio
 async def test_http_get(mock_wireless_gopro_basic: MockWirelessGoPro):
     message = HttpMessage("gopro/camera/stream/start", None)
     session = requests.Session()
@@ -92,7 +89,6 @@ async def test_http_get(mock_wireless_gopro_basic: MockWirelessGoPro):
     assert response.ok
 
 
-@pytest.mark.asyncio
 async def test_http_file(mock_wireless_gopro_basic: MockWirelessGoPro):
     message = HttpMessage("videos/DCIM/100GOPRO/dummy.MP4", None)
     out_file = Path("test.mp4")
@@ -105,7 +101,6 @@ async def test_http_file(mock_wireless_gopro_basic: MockWirelessGoPro):
     assert out_file.exists()
 
 
-@pytest.mark.asyncio
 async def test_http_response_timeout(mock_wireless_gopro_basic: MockWirelessGoPro):
     with pytest.raises(ResponseTimeout):
         message = HttpMessage("gopro/camera/stream/start", None)
@@ -119,7 +114,6 @@ async def test_http_response_timeout(mock_wireless_gopro_basic: MockWirelessGoPr
         await mock_wireless_gopro_basic._get_json(message, timeout=1)
 
 
-@pytest.mark.asyncio
 async def test_http_response_error(mock_wireless_gopro_basic: MockWirelessGoPro):
     message = HttpMessage("gopro/camera/stream/start", None)
     session = requests.Session()
@@ -137,7 +131,6 @@ async def test_http_response_error(mock_wireless_gopro_basic: MockWirelessGoPro)
     assert not response.ok
 
 
-@pytest.mark.asyncio
 async def test_get_update(mock_wireless_gopro_basic: WirelessGoPro):
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
     event = asyncio.Event()
@@ -159,7 +152,6 @@ async def test_get_update(mock_wireless_gopro_basic: WirelessGoPro):
         await asyncio.wait_for(event.wait(), 1)
 
 
-@pytest.mark.asyncio
 async def test_route_all_data(mock_wireless_gopro_basic: WirelessGoPro):
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
 
@@ -184,7 +176,6 @@ async def test_route_all_data(mock_wireless_gopro_basic: WirelessGoPro):
     assert routed_response.data == mock_data
 
 
-@pytest.mark.asyncio
 async def test_route_individual_data(mock_wireless_gopro_basic: WirelessGoPro):
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
 
@@ -209,7 +200,6 @@ async def test_route_individual_data(mock_wireless_gopro_basic: WirelessGoPro):
     assert routed_response.data == 1
 
 
-@pytest.mark.asyncio
 async def test_get_update_unregister(mock_wireless_gopro_basic: WirelessGoPro):
     event = asyncio.Event()
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()

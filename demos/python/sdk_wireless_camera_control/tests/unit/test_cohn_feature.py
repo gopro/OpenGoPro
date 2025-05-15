@@ -39,10 +39,9 @@ async def cohn_feature(mock_wireless_gopro_basic: WirelessGoPro):
         cohn_credentials=cohn_credentials,
     )
     yield cohn
-    cohn.close()
+    await cohn.close()
 
 
-@pytest.mark.asyncio
 async def test_cohn_feature_starts_successfully(cohn_feature: CohnFeature):
     # WHEN
     async def send_cohn_status():
@@ -56,7 +55,6 @@ async def test_cohn_feature_starts_successfully(cohn_feature: CohnFeature):
     assert cohn_feature.is_ready
 
 
-@pytest.mark.asyncio
 async def test_cohn_feature_is_configured(cohn_feature: CohnFeature):
     # WHEN
     async def send_cohn_status():
@@ -71,7 +69,6 @@ async def test_cohn_feature_is_configured(cohn_feature: CohnFeature):
     assert await cohn_feature.is_configured
 
 
-@pytest.mark.asyncio
 async def test_cohn_feature_configure_without_provisioning(cohn_feature: CohnFeature):
     # WHEN
     async def send_cohn_status():
@@ -89,7 +86,6 @@ async def test_cohn_feature_configure_without_provisioning(cohn_feature: CohnFea
     assert result.unwrap() == cohn_credentials
 
 
-@pytest.mark.asyncio
 async def test_cohn_feature_provision(cohn_feature: CohnFeature):
     # WHEN
     async def send_cohn_unprovisioned():

@@ -23,7 +23,6 @@ def test_gopro_ble_client_instantiation(mock_ble_client: BleClient):
     assert not mock_ble_client.is_connected
 
 
-@pytest.mark.asyncio
 async def test_gopro_ble_client_failed_to_find_device(mock_ble_client: BleClient):
     mock_ble_client._target = re.compile("invalid_device")
     with pytest.raises(FailedToFindDevice):
@@ -32,7 +31,6 @@ async def test_gopro_ble_client_failed_to_find_device(mock_ble_client: BleClient
     assert not mock_ble_client.is_connected
 
 
-@pytest.mark.asyncio
 async def test_gopro_ble_client_failed_to_connect(mock_ble_client: BleClient):
     mock_ble_client._target = re.compile(".*device")
     mock_ble_client._disconnected_cb = None
@@ -42,7 +40,6 @@ async def test_gopro_ble_client_failed_to_connect(mock_ble_client: BleClient):
     assert not mock_ble_client.is_connected
 
 
-@pytest.mark.asyncio
 async def test_gopro_ble_client_open(mock_ble_client: BleClient):
     mock_ble_client._disconnected_cb = disconnection_handler
     await mock_ble_client.open()
@@ -50,23 +47,19 @@ async def test_gopro_ble_client_open(mock_ble_client: BleClient):
     assert mock_ble_client.is_connected
 
 
-@pytest.mark.asyncio
 async def test_gopro_ble_client_identifier(mock_ble_client: BleClient):
-    assert mock_ble_client.identifier == "scanned_device"
+    assert mock_ble_client.identifier == re.compile("device").pattern
 
 
-@pytest.mark.asyncio
 async def test_gopro_ble_client_read(mock_ble_client: BleClient):
     assert await mock_ble_client.read("uuid") == bytearray()
 
 
-@pytest.mark.asyncio
 async def test_gopro_ble_client_write(mock_ble_client: BleClient):
     await mock_ble_client.write("uuid", bytearray())
     assert True
 
 
-@pytest.mark.asyncio
 async def test_gopro_ble_client_close(mock_ble_client: BleClient):
     await mock_ble_client.close()
     assert not mock_ble_client.is_connected

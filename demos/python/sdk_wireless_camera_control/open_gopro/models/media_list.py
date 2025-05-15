@@ -10,8 +10,8 @@ from typing import Any
 
 from pydantic import Field, PrivateAttr, field_validator
 
-from open_gopro.domain.types import JsonDict
 from open_gopro.models.bases import CustomBaseModel
+from open_gopro.models.types import JsonDict
 
 ##############################################################################################################
 # Generic

@@ -7,7 +7,7 @@
 
 from __future__ import annotations
 
-from open_gopro.domain.enum import GoProEnum, GoProIntEnum
+from open_gopro.domain.enum import GoProIntEnum
 
 
 class ErrorCode(GoProIntEnum):
@@ -123,29 +123,6 @@ class QueryCmdId(GoProIntEnum):
     PROTOBUF_QUERY = 0xF5
 
 
-class WebcamStatus(GoProIntEnum):
-    """Webcam Statuses / states"""
-
-    OFF = 0
-    IDLE = 1
-    HIGH_POWER_PREVIEW = 2
-    LOW_POWER_PREVIEW = 3
-
-
-class WebcamError(GoProIntEnum):
-    """Errors common among Webcam commands"""
-
-    SUCCESS = 0
-    SET_PRESET = 1
-    SET_WINDOW_SIZE = 2
-    EXEC_STREAM = 3
-    SHUTTER = 4
-    COM_TIMEOUT = 5
-    INVALID_PARAM = 6
-    UNAVAILABLE = 7
-    EXIT = 8
-
-
 class Toggle(GoProIntEnum):
     """A booleanesque enum"""
 
@@ -165,28 +142,3 @@ class CameraControl(GoProIntEnum):
     IDLE = 0
     CAMERA = 1
     EXTERNAL = 2
-
-
-class WebcamResolution(GoProIntEnum):
-    """Possible Webcam Resolutions"""
-
-    NOT_APPLICABLE = 0
-    RES_480 = 4
-    RES_720 = 7
-    RES_1080 = 12
-
-
-class WebcamFOV(GoProIntEnum):
-    """Possible Webcam FOVs"""
-
-    WIDE = 0
-    NARROW = 2
-    SUPERVIEW = 3
-    LINEAR = 4
-
-
-class WebcamProtocol(GoProEnum):
-    """Possible Webcam Protocols"""
-
-    TS = "TS"
-    RTSP = "RTSP"

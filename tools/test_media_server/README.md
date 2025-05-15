@@ -20,7 +20,7 @@ This is a test server that can used for isolated testing of the following stream
 Start server with:
 
 ```
-SSL_DOMAIN="{IP_ADDRESS}" docker-compose up
+SSL_DOMAIN="{IP_ADDRESS}" docker compose up
 ```
 
 where `IP_ADDRESS` is the IP Address of the device the server is running on.

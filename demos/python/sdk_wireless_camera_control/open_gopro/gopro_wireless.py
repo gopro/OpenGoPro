@@ -19,8 +19,7 @@ from typing import Any, Callable, Final
 import requests
 from tinydb import TinyDB
 
-import open_gopro.features.access_point_feature
-import open_gopro.features.cohn_feature
+import open_gopro.features
 from open_gopro.api import (
     BleCommands,
     BleSettings,
@@ -48,7 +47,6 @@ from open_gopro.domain.exceptions import (
 
 # These are imported this way for monkeypatching in pytest
 from open_gopro.domain.gopro_observable import GoProObservable
-from open_gopro.domain.types import ResponseType, UpdateCb, UpdateType
 from open_gopro.gopro_base import (
     GoProBase,
     GoProMessageInterface,
@@ -57,6 +55,7 @@ from open_gopro.gopro_base import (
 from open_gopro.models import GoProResp
 from open_gopro.models.constants import ActionId, GoProUUID, StatusId
 from open_gopro.models.constants.settings import SettingId
+from open_gopro.models.types import ResponseType, UpdateCb, UpdateType
 from open_gopro.network.ble import BleakWrapperController, BleUUID
 from open_gopro.network.ble.controller import BLEController
 from open_gopro.network.wifi import WifiCli
@@ -241,8 +240,9 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             raise e
 
         # Feature delegates
-        self._cohn: open_gopro.features.cohn_feature.CohnFeature
-        self._access_point: open_gopro.features.access_point_feature.AccessPointFeature
+        self._cohn: open_gopro.features.CohnFeature
+        self._access_point: open_gopro.features.AccessPointFeature
+        self._streaming: open_gopro.features.StreamFeature
 
         # Builders for currently accumulating synchronous responses, indexed by GoProUUID. This assumes there
         # can only be one active response per BleUUID
@@ -270,14 +270,14 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             self._encoding_started: asyncio.Event
 
     @property
-    def cohn(self) -> open_gopro.features.cohn_feature.CohnFeature:
+    def cohn(self) -> open_gopro.features.CohnFeature:
         """The COHN feature abstraction
 
         Raises:
             GoProNotOpened: Feature is not yet available because GoPro has not yet been opened
 
         Returns:
-            open_gopro.features.cohn_feature.CohnFeature: COHN Feature
+            open_gopro.features.CohnFeature: COHN Feature
         """
         try:
             return self._cohn
@@ -285,17 +285,32 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             raise GoProNotOpened("") from e
 
     @property
-    def access_point(self) -> open_gopro.features.access_point_feature.AccessPointFeature:
+    def access_point(self) -> open_gopro.features.AccessPointFeature:
         """The Access Point (AP) feature abstraction
 
         Raises:
             GoProNotOpened: Feature is not yet available because GoPro has not yet been opened
 
         Returns:
-            open_gopro.features.access_point_feature.AccessPointFeature: AP Feature
+            open_gopro.features.AccessPointFeature: AP Feature
         """
         try:
             return self._access_point
+        except AttributeError as e:
+            raise GoProNotOpened("") from e
+
+    @property
+    def streaming(self) -> open_gopro.features.StreamFeature:
+        """The Streaming feature abstraction
+
+        Raises:
+            GoProNotOpened: Feature is not yet available because GoPro has not yet been opened
+
+        Returns:
+            open_gopro.features.StreamFeature: Streaming Feature
+        """
+        try:
+            return self._streaming
         except AttributeError as e:
             raise GoProNotOpened("") from e
 
@@ -402,13 +417,14 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         # Set up concurrency
         self._loop = asyncio.get_running_loop()
         self._ble_disconnect_event = asyncio.Event()
-        self._cohn = open_gopro.features.cohn_feature.CohnFeature(
+        self._cohn = open_gopro.features.CohnFeature(
             cohn_db=TinyDB(self._cohn_db_path, indent=4),
             gopro=self,
             loop=self._loop,
             cohn_credentials=self._cohn_credentials,
         )
-        self._access_point = open_gopro.features.access_point_feature.AccessPointFeature(self, self._loop)
+        self._access_point = open_gopro.features.AccessPointFeature(self, self._loop)
+        self._streaming = open_gopro.features.StreamFeature(self, self._loop)
 
         # If we are to perform BLE housekeeping
         if self._should_maintain_state:
@@ -474,9 +490,16 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         """
         await self._close_wifi()
         await self._close_ble()
-        if self._should_maintain_state:
-            for task in [*self._status_tasks, *self._state_acquire_lock_tasks]:
-                task.cancel()
+        try:
+            for feature in [self.cohn, self.access_point, self.streaming]:
+                try:
+                    await feature.close()
+                # TODO this should be a specific exception...or removed.
+                except Exception as e:  # pylint: disable=broad-exception-caught
+                    logger.error(f"Error while closing {feature}: {repr(e)}")
+        except AttributeError:
+            # This is possible if the GoPro was never opened
+            pass
         self._open = False
 
     def register_update(self, callback: UpdateCb, update: UpdateType) -> None:
@@ -756,6 +779,8 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         """Terminate BLE connection if it is connected"""
         if self._should_maintain_state:
             self._keep_alive_task.cancel()
+            for task in [*self._status_tasks, *self._state_acquire_lock_tasks]:
+                task.cancel()
         if self.is_ble_connected and self._ble is not None:
             await self._ble.close()
             await self._ble_disconnect_event.wait()
@@ -885,15 +910,16 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             await self._wifi.close()
 
     @property
+    def ip_address(self) -> str:  # noqa: D102
+        return self.cohn.credentials.ip_address if self._should_enable_cohn and self.cohn.credentials else "10.5.5.9"
+
+    @property
     def _base_url(self) -> str:
-        try:
-            return (
-                f"https://{self.cohn.credentials.ip_address}/"
-                if self._should_enable_cohn and self.cohn.credentials
-                else "http://10.5.5.9:8080/"
-            )
-        except GoProNotOpened:
-            return "http://10.5.5.9:8080/"
+        return (
+            f"https://{self.ip_address}:8080/"
+            if self._should_enable_cohn and self.cohn.credentials
+            else f"http://{self.ip_address}/"
+        )
 
     @property
     def _requests_session(self) -> requests.Session:

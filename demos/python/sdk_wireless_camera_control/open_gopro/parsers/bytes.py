@@ -21,7 +21,7 @@ from open_gopro.domain.parser_interface import (
     BytesParser,
     BytesParserBuilder,
 )
-from open_gopro.domain.types import Protobuf
+from open_gopro.models.types import Protobuf
 from open_gopro.util import is_dataclass_instance, pretty_print, to_dict
 
 logger = logging.getLogger(__name__)

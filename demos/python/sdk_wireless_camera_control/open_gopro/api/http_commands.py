@@ -22,17 +22,18 @@ from open_gopro.domain.communicator_interface import (
     MessageRules,
 )
 from open_gopro.domain.parser_interface import Parser
-from open_gopro.domain.types import CameraState, JsonDict
 from open_gopro.models import (
     CameraInfo,
     GoProResp,
     MediaList,
     MediaMetadata,
     MediaPath,
-    WebcamResponse,
     constants,
     proto,
+    streaming,
 )
+from open_gopro.models.streaming import WebcamResponse
+from open_gopro.models.types import CameraState, JsonDict
 from open_gopro.parsers.json import (
     CameraStateJsonParser,
     LambdaJsonParser,
@@ -424,18 +425,18 @@ class HttpCommands(HttpMessages[HttpMessage]):
     async def webcam_start(
         self,
         *,
-        resolution: constants.WebcamResolution | None = None,
-        fov: constants.WebcamFOV | None = None,
+        resolution: streaming.WebcamResolution | None = None,
+        fov: streaming.WebcamFOV | None = None,
         port: int | None = None,
-        protocol: constants.WebcamProtocol | None = None,
+        protocol: streaming.WebcamProtocol | None = None,
     ) -> GoProResp[WebcamResponse]:
         """Start the webcam.
 
         Args:
-            resolution (constants.WebcamResolution | None): resolution to use. If not set, camera default will be used.
-            fov (constants.WebcamFOV | None): field of view to use. If not set, camera default will be used.
+            resolution (streaming.WebcamResolution | None): resolution to use. If not set, camera default will be used.
+            fov (streaming.WebcamFOV | None): field of view to use. If not set, camera default will be used.
             port (int | None): port to use for streaming. If not set, camera default of 8554 will be used.
-            protocol (constants.WebcamProtocol | None): streaming protocol to use. If not set, camera default of TS will
+            protocol (streaming.WebcamProtocol | None): streaming protocol to use. If not set, camera default of TS will
                 be used.
 
         Returns:

@@ -24,7 +24,7 @@ class Logger:
     Args:
         logger (logging.Logger): input logger that will be modified and then returned
         output (Path | None): Path of log file for file stream handler. If not set, will not log to file.
-        modules (list[str] | None): Optional override of modules / levels. Will be merged into default modules.
+        modules (dict[str, int] | None): Optional override of modules / levels. Will be merged into default modules.
     """
 
     _instances: dict[type[Logger], Logger] = {}
@@ -42,35 +42,40 @@ class Logger:
         self,
         logger: logging.Logger,
         output: Path | None = None,
-        modules: list[str] | None = None,
+        modules: dict[str, int] | None = None,
     ) -> None:
-        self.modules = [
-            "open_gopro.gopro_base",
-            "open_gopro.gopro_wired",
-            "open_gopro.gopro_wireless",
-            "open_gopro.api.builders",
-            "open_gopro.api.http_commands",
-            "open_gopro.api.ble_commands",
-            "open_gopro.domain.communicator_interface",
-            "open_gopro.network.ble.adapters.bleak_wrapper",
-            "open_gopro.network.ble.client",
-            "open_gopro.parsers.bytes",
-            "open_gopro.parsers.json",
-            "open_gopro.parsers.general",
-            "open_gopro.network.wifi.adapters.wireless",
-            "open_gopro.network.wifi.mdns_scanner",
-            "open_gopro.domain.observable",
-            "open_gopro.domain.gopro_observable",
-            "open_gopro.models.response",
-            "open_gopro.models.network_scan_response",
-            "open_gopro.features.cohn_feature",
-            "open_gopro.features.access_point_feature",
-            "open_gopro.util.util",
-            "open_gopro.database.db",
-            "bleak",
-            "urllib3",
-            "http.client",
-        ]
+        self.modules: dict[str, int] = {
+            "open_gopro.gopro_base": logging.DEBUG,
+            "open_gopro.gopro_wired": logging.DEBUG,
+            "open_gopro.gopro_wireless": logging.DEBUG,
+            "open_gopro.api.builders": logging.DEBUG,
+            "open_gopro.api.http_commands": logging.DEBUG,
+            "open_gopro.api.ble_commands": logging.DEBUG,
+            "open_gopro.domain.communicator_interface": logging.DEBUG,
+            "open_gopro.network.ble.adapters.bleak_wrapper": logging.DEBUG,
+            "open_gopro.network.ble.client": logging.DEBUG,
+            "open_gopro.parsers.bytes": logging.DEBUG,
+            "open_gopro.parsers.json": logging.DEBUG,
+            "open_gopro.parsers.general": logging.DEBUG,
+            "open_gopro.network.wifi.adapters.wireless": logging.DEBUG,
+            "open_gopro.network.wifi.mdns_scanner": logging.DEBUG,
+            "open_gopro.domain.observable": logging.DEBUG,
+            "open_gopro.domain.gopro_observable": logging.DEBUG,
+            "open_gopro.models.response": logging.DEBUG,
+            "open_gopro.models.network_scan_response": logging.DEBUG,
+            "open_gopro.features.cohn_feature": logging.DEBUG,
+            "open_gopro.features.access_point_feature": logging.DEBUG,
+            "open_gopro.features.streaming.stream_feature": logging.DEBUG,
+            "open_gopro.features.streaming.webcam_stream": logging.DEBUG,
+            "open_gopro.features.streaming.livestream": logging.DEBUG,
+            "open_gopro.features.streaming.preview_stream": logging.DEBUG,
+            "open_gopro.util.util": logging.DEBUG,
+            "open_gopro.demos.gui.video_display": logging.DEBUG,
+            "open_gopro.database.db": logging.DEBUG,
+            "bleak": logging.DEBUG,
+            "urllib3": logging.DEBUG,
+            "http.client": logging.DEBUG,
+        }
 
         self.logger = logger
         self.modules = modules or self.modules
@@ -90,8 +95,7 @@ class Logger:
                 datefmt="%H:%M:%S",
             )
             self.file_handler.setFormatter(file_formatter)
-            # Set to TRACE for concurrency debugging
-            self.file_handler.setLevel(logging.DEBUG)
+            self.file_handler.setLevel(logging.TRACE)  # type: ignore
             logger.addHandler(self.file_handler)
             self.addLoggingHandler(self.file_handler)
         else:
@@ -134,9 +138,9 @@ class Logger:
         self.handlers.append(handler)
 
         # Enable / disable logging in modules
-        for module in self.modules:
+        for module, level in self.modules.items():
             l = logging.getLogger(module)
-            l.setLevel(logging.TRACE)  # type: ignore
+            l.setLevel(level)
             l.addHandler(handler)
 
     # From https://stackoverflow.com/questions/2183233/how-to-add-a-custom-loglevel-to-pythons-logging-facility/35804945#35804945
@@ -218,7 +222,7 @@ class Logger:
 def setup_logging(
     base: logging.Logger | str,
     output: Path | None = None,
-    modules: list[str] | None = None,
+    modules: dict[str, int] | None = None,
 ) -> logging.Logger:
     """Configure the GoPro modules for logging and get a logger that can be used by the application
 
@@ -227,7 +231,7 @@ def setup_logging(
     Args:
         base (logging.Logger | str): Name of application (i.e. __name__) or preconfigured logger to use as base
         output (Path | None): Path of log file for file stream handler. If not set, will not log to file.
-        modules (list[str] | None): Optional override of modules / levels. Will be merged into default modules.
+        modules (dict[str, int] | None): Optional override of modules / levels. Will be merged into default modules.
 
     Raises:
         TypeError: Base logger is not of correct type

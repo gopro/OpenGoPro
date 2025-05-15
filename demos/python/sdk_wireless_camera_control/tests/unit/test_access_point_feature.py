@@ -38,10 +38,9 @@ cohn_credentials = CohnInfo(ip_address="ip", username="user", password="password
 async def ap_feature(mock_wireless_gopro_basic: WirelessGoPro):
     feature = AccessPointFeature(mock_wireless_gopro_basic, asyncio.get_running_loop())
     yield feature
-    feature.close()
+    await feature.close()
 
 
-@pytest.mark.asyncio
 async def test_ap_feature_starts_successfully(ap_feature: AccessPointFeature):
     await ap_feature.wait_for_ready()
     assert ap_feature.is_ready

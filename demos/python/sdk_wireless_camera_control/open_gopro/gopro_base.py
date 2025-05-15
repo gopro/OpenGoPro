@@ -33,9 +33,9 @@ from open_gopro.domain.communicator_interface import (
     MessageRules,
 )
 from open_gopro.domain.exceptions import GoProNotOpened, ResponseTimeout
-from open_gopro.domain.types import JsonDict
 from open_gopro.models import GoProResp
 from open_gopro.models.constants import ErrorCode
+from open_gopro.models.types import JsonDict
 from open_gopro.parsers.response import RequestsHttpRespBuilderDirector
 from open_gopro.util import pretty_print
 from open_gopro.util.logger import Logger
@@ -295,6 +295,18 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         READY = 0
         ENCODING = 1 << 0
         SYSTEM_BUSY = 1 << 1
+
+    @property
+    @abstractmethod
+    def ip_address(self) -> str:
+        """The IP address of the GoPro device
+
+        Raises:
+            GoProNotOpened: The GoPro IP address is not yet available
+
+        Returns:
+            str: IP address
+        """
 
     @property
     @abstractmethod

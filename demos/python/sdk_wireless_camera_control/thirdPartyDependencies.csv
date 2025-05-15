@@ -3,13 +3,13 @@ annotated-types,0.7.0,36468,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,annotated-types-0
 asyncstdlib,3.13.1,142529,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,asyncstdlib-3.13.1
 bleak,0.22.3,490324,https://github.com/hbldh/bleak,Henrik Blidh,MIT LICENSE,True,0,bleak-0.22.3
 certifi,2025.4.26,292107,https://github.com/certifi/python-certifi,Kenneth Reitz,MOZILLA PUBLIC LICENSE 2.0 _MPL 2.0_,True,0,certifi-2025.4.26
-charset-normalizer,3.4.2,421747,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,charset-normalizer-3.4.2
+charset-normalizer,3.4.2,421739,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,charset-normalizer-3.4.2
 construct,2.10.68,289208,http://construct.readthedocs.org,"Arkadiusz Bulski, Tomer Filiba, Corbin Simpson",MIT LICENSE,True,0,construct-2.10.68
 idna,3.10,349151,UNKNOWN,UNKNOWN,BSD LICENSE,True,0,idna-3.10
 ifaddr,0.2.0,25179,https://github.com/pydron/ifaddr,Stefan C. Mueller,MIT LICENSE,True,0,ifaddr-0.2.0
-markdown-it-py,3.0.0,326419,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,markdown-it-py-3.0.0
+markdown-it-py,3.0.0,326411,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,markdown-it-py-3.0.0
 mdurl,0.1.2,22532,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,mdurl-0.1.2
-mypy,1.15.0,28075966,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,mypy-1.15.0
+mypy,1.15.0,28075926,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,mypy-1.15.0
 mypy-extensions,1.1.0,10152,UNKNOWN,UNKNOWN,,False,0,mypy-extensions-1.1.0
 packaging,24.2,233256,UNKNOWN,UNKNOWN,APACHE SOFTWARE LICENSE;; BSD LICENSE,True,0,packaging-24.2
 pexpect,4.9.0,189532,https://pexpect.readthedocs.io/,Noah Spurrier; Thomas Kluyver; Jeff Quast,ISC LICENSE _ISCL_,True,0,pexpect-4.9.0
@@ -17,7 +17,7 @@ protobuf,6.30.2,1607350,https://developers.google.com/protocol-buffers/,protobuf
 ptyprocess,0.7.0,39299,https://github.com/pexpect/ptyprocess,Thomas Kluyver,ISC LICENSE _ISCL_,True,0,ptyprocess-0.7.0
 pydantic,2.11.4,1756910,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,pydantic-2.11.4
 pydantic-core,2.33.2,5520457,https://github.com/pydantic/pydantic-core,UNKNOWN,MIT LICENSE,True,0,pydantic-core-2.33.2
-pygments,2.19.1,4570753,UNKNOWN,UNKNOWN,BSD LICENSE,True,0,pygments-2.19.1
+pygments,2.19.1,4570745,UNKNOWN,UNKNOWN,BSD LICENSE,True,0,pygments-2.19.1
 pytz,2025.2,957593,http://pythonhosted.org/pytz,Stuart Bishop,MIT LICENSE,True,0,pytz-2025.2
 requests,2.32.3,203327,https://requests.readthedocs.io,Kenneth Reitz,APACHE SOFTWARE LICENSE,True,0,requests-2.32.3
 returns,0.25.0,545295,https://returns.readthedocs.io,sobolevn,BSD LICENSE,True,0,returns-0.25.0

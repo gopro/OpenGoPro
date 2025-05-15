@@ -30,7 +30,7 @@ async def main(args: argparse.Namespace) -> None:
             assert gopro
             assert (await gopro.http_command.load_preset_group(group=proto.EnumPresetGroup.PRESET_GROUP_ID_VIDEO)).ok
 
-            # Get the media list before
+            # Get the media set before
             media_set_before = set((await gopro.http_command.get_media_list()).data.files)
             # Take a video
             console.print("Capturing a video...")
@@ -38,7 +38,7 @@ async def main(args: argparse.Namespace) -> None:
             await asyncio.sleep(args.record_time)
             assert (await gopro.http_command.set_shutter(shutter=constants.Toggle.DISABLE)).ok
 
-            # Get the media list after
+            # Get the media set after
             media_set_after = set((await gopro.http_command.get_media_list()).data.files)
             # The video (is most likely) the difference between the two sets
             video = media_set_after.difference(media_set_before).pop()

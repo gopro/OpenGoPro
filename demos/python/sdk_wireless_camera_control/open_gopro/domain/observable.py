@@ -66,12 +66,12 @@ class Observer(AsyncGenerator[T, None]):
             await self._observable._add_observer(self._uuid, replay=self._replay)
 
         try:
-            logger.trace(f"Observer {self._debug_id} waiting for next value")  # type: ignore
+            logger.trace(f"Observer ({self._debug_id}) waiting for next value")  # type: ignore
             value = await self._observable._get_next(self._uuid)
-            logger.trace(f"Observer {self._debug_id} received value: {value}")  # type: ignore
+            logger.trace(f"Observer ({self._debug_id}) received value: {value}")  # type: ignore
             return value
         except Exception as e:
-            logger.error(f"Error in observer {self._debug_id}: {e}")
+            logger.error(f"Error in observer {self._debug_id}: {repr(e)}")
             await self._cleanup()
             raise e
 
@@ -304,7 +304,7 @@ class Observable(Generic[T]):
         Returns:
             Observer[T]: async generator to yield values from the observable
         """
-        # Create the enhanced generator with a unique ID
+        # Create the async generator with a unique ID
         return Observer(self, uuid1(), replay, debug_id=debug_id)
 
     async def _get_next(self, uuid: UUID) -> T:

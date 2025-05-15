@@ -20,7 +20,6 @@ async def wireless_gopro_ble():
 
 
 @pytest.mark.timeout(60)
-@pytest.mark.asyncio
 async def test_ble_settings_value_observable_change_resolution(wireless_gopro_ble: WirelessGoPro):
     async with (await wireless_gopro_ble.ble_setting.video_resolution.get_value_observable()).unwrap() as observable:
         assert (
@@ -43,7 +42,6 @@ async def test_ble_settings_value_observable_change_resolution(wireless_gopro_bl
 
 
 @pytest.mark.timeout(180)
-@pytest.mark.asyncio
 async def test_scheduled_capture(wireless_gopro_ble: WirelessGoPro):
     await wireless_gopro_ble.ble_setting.control_mode.set(settings.ControlMode.PRO)
 

@@ -18,7 +18,6 @@ from open_gopro.models.constants import statuses
 from open_gopro.network.wifi.mdns_scanner import ZeroconfListener, find_first_ip_addr
 
 
-@pytest.mark.asyncio
 async def test_mdns_scan(monkeypatch):
     # GIVEN
     ip_addr = "172.20.123.51"
@@ -68,7 +67,6 @@ async def test_mdns_scan(monkeypatch):
     assert (await find_first_ip_addr("service")).ip_addr == ip_addr
 
 
-@pytest.mark.asyncio
 async def test_wired_lifecycle(mock_wired_gopro: WiredGoPro, monkeypatch):
     # GIVEN
     ip_addr = "172.27.111.51"

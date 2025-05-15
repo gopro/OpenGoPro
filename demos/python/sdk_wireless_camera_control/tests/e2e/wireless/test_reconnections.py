@@ -7,7 +7,6 @@ from open_gopro import WirelessGoPro
 
 
 @pytest.mark.timeout(60)
-@pytest.mark.asyncio
 async def test_ble_reconnects_5_times_in_one_minute():
     connections = 0
 
@@ -28,7 +27,6 @@ async def test_ble_reconnects_5_times_in_one_minute():
 
 
 @pytest.mark.timeout(120)
-@pytest.mark.asyncio
 async def test_ble_reconnects_5_times_in_two_minutes_after_sleeping():
     connections = 0
 

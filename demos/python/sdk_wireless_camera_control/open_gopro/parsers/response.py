@@ -13,7 +13,6 @@ import requests
 
 from open_gopro.domain.exceptions import ResponseParseError
 from open_gopro.domain.parser_interface import GlobalParsers, Parser
-from open_gopro.domain.types import CameraState, JsonDict, ResponseType
 from open_gopro.models import GoProBlePacketHeader, GoProResp
 from open_gopro.models.constants import (
     ActionId,
@@ -26,6 +25,7 @@ from open_gopro.models.constants import (
     StatusId,
 )
 from open_gopro.models.proto import EnumResultGeneric
+from open_gopro.models.types import CameraState, JsonDict, ResponseType
 from open_gopro.network.ble import BleUUID
 from open_gopro.parsers.json import LambdaJsonParser
 

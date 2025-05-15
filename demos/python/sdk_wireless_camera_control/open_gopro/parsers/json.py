@@ -13,8 +13,8 @@ from pydantic import BaseModel
 
 from open_gopro.domain.communicator_interface import GlobalParsers
 from open_gopro.domain.parser_interface import JsonParser, JsonTransformer
-from open_gopro.domain.types import CameraState, JsonDict, ResponseType
 from open_gopro.models.constants import SettingId, StatusId
+from open_gopro.models.types import CameraState, JsonDict, ResponseType
 from open_gopro.util import map_keys
 
 T = TypeVar("T")
