@@ -70,7 +70,7 @@ class Logger:
             "open_gopro.features.streaming.livestream": logging.DEBUG,
             "open_gopro.features.streaming.preview_stream": logging.DEBUG,
             "open_gopro.util.util": logging.DEBUG,
-            "open_gopro.demos.gui.util": logging.DEBUG,
+            "open_gopro.demos.gui.video_display": logging.DEBUG,
             "open_gopro.database.db": logging.DEBUG,
             "bleak": logging.DEBUG,
             "urllib3": logging.DEBUG,

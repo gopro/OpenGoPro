@@ -25,10 +25,7 @@ async def main(args: argparse.Namespace) -> int:
 
     try:
         wireless_interfaces: set[WirelessGoPro.Interface] = set()
-        # if args.cohn:
-        #     wireless_interfaces = wireless_interfaces.union({WirelessGoPro.Interface.BLE, WirelessGoPro.Interface.COHN})
-        # elif args.wifi:
-        if args.wifi:
+        if args.wireless:
             wireless_interfaces = wireless_interfaces.union(
                 {WirelessGoPro.Interface.BLE, WirelessGoPro.Interface.WIFI_AP}
             )
@@ -66,16 +63,11 @@ async def main(args: argparse.Namespace) -> int:
 
 
 def parse_arguments() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Setup and view a GoPro webcam using TS protocol.")
-    protocol = parser.add_argument_group(
-        "protocol",
-        "Mutually exclusive Protocol option if not default wired USB.",
-    )
-    group = protocol.add_mutually_exclusive_group()
-    group.add_argument(
-        "--wifi",
+    parser = argparse.ArgumentParser(description="Setup and view a GoPro webcam stream.")
+    parser.add_argument(
+        "--wireless",
         action="store_true",
-        help="Set to use wireless (BLE / WIFI AP) instead of wired (USB)) interface",
+        help="Set to use wireless (BLE / WIFI AP) instead of wired (USB) interface",
     )
     parser.add_argument(
         "--protocol",
@@ -84,17 +76,12 @@ def parse_arguments() -> argparse.Namespace:
         default="TS",
         help="Streaming protocol to use. Defaults to TS. RTSP is not supported on all GoPro models.",
     )
-    # group.add_argument(
-    #     "--cohn",
-    #     action="store_true",
-    #     help="Communicate via COHN. Assumes COHN is already provisioned",
-    # )
     args = add_cli_args_and_parse(parser)
     # Convert protocol string to enum if it is set
-    match args.protocol:
-        case "RTSP":
+    match args.protocol.lower():
+        case "rtsp":
             args.protocol = WebcamProtocol.RTSP
-        case "TS":
+        case "ts":
             args.protocol = WebcamProtocol.TS
     return args
 

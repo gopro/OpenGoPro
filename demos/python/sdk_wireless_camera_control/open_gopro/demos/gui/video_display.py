@@ -117,6 +117,7 @@ class BufferlessVideoCapture:
         )
         self.printer = printer
         self.printer(f"Starting viewer at {source}...")
+        logger.debug(f"Starting viewer at {source}...")
         self._q: queue.Queue[Any] = queue.Queue()
         self._reader = TsStreamReader(source) if protocol == self.Protocol.TS else RtspStreamReader(source)
         # Start reading thread
@@ -145,7 +146,7 @@ class BufferlessVideoCapture:
             try:
                 ret, frame = self._reader.read()
                 if not ret:
-                    self.printer("Received empty frame.")
+                    # logger.debug("Received empty frame.")
                     continue
                 if not self._q.empty():
                     self._q.get_nowait()  # discard previous (unprocessed) frame

@@ -911,14 +911,12 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
     @property
     def ip_address(self) -> str:  # noqa: D102
-        return (
-            self.cohn.credentials.ip_address if self._should_enable_cohn and self.cohn.credentials else "10.5.5.9:8080"
-        )
+        return self.cohn.credentials.ip_address if self._should_enable_cohn and self.cohn.credentials else "10.5.5.9"
 
     @property
     def _base_url(self) -> str:
         return (
-            f"https://{self.ip_address}/"
+            f"https://{self.ip_address}:8080/"
             if self._should_enable_cohn and self.cohn.credentials
             else f"http://{self.ip_address}/"
         )
