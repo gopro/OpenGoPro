@@ -666,7 +666,7 @@ class BleCommands(BleMessages[BleMessage]):
         response_action_id=ActionId.LIVESTREAM_STATUS_RSP,
         request_proto=proto.RequestGetLiveStreamStatus,
         response_proto=proto.NotifyLiveStreamStatus,
-        additional_matching_ids={ProtobufId(FeatureId.COMMAND, ActionId.LIVESTREAM_STATUS_NOTIF)},
+        additional_matching_ids={ProtobufId(FeatureId.QUERY, ActionId.LIVESTREAM_STATUS_NOTIF)},
     )
     async def register_livestream_status(
         self,

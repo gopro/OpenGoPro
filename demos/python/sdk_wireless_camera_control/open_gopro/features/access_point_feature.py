@@ -37,6 +37,11 @@ class AccessPointFeature(BaseFeature):
         # It's ready upon initialization
         return True
 
+    @property
+    def is_supported(self) -> bool:  # noqa: D102
+        # All Open GoPro cameras support access point
+        return True
+
     async def wait_for_ready(self) -> None:  # noqa: D102
         return
 

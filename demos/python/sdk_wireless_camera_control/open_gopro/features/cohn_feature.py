@@ -14,9 +14,9 @@ from returns.result import Result
 from tinydb import TinyDB
 
 from open_gopro.database.cohn_db import CohnDb
-from open_gopro.domain.exceptions import GoProNotOpened
+from open_gopro.domain.exceptions import GoProError, GoProNotOpened
 from open_gopro.domain.gopro_observable import GoProObservable
-from open_gopro.features.base_feature import BaseFeature
+from open_gopro.features.base_feature import BaseFeature, require_supported
 from open_gopro.gopro_base import GoProBase
 from open_gopro.models import proto
 from open_gopro.models.constants import ActionId
@@ -56,10 +56,17 @@ class CohnFeature(BaseFeature):
             register_command=self._gopro.ble_command.cohn_get_status(register=True),
         ).on_start(lambda _: self._ready_event.set())
         self._status_task: asyncio.Task = asyncio.create_task(self._track_status())
+        self._supported: bool | None = None
 
     @property
     def is_ready(self) -> bool:  # noqa: D102
         return self._ready_event.is_set()
+
+    @property
+    def is_supported(self) -> bool:  # noqa: D102
+        if self._supported is None:
+            raise RuntimeError("COHN feature is not yet ready")
+        return self._supported
 
     async def wait_for_ready(self, timeout: float = 60) -> None:  # noqa: D102
         logger.debug("Waiting for COHN to be ready")
@@ -73,9 +80,15 @@ class CohnFeature(BaseFeature):
         """Task to continuously monitor COHN status"""
         while True:
             if self._gopro.is_ble_connected:
-                async with self._status_observable as observable:
-                    async for status in observable.observe(debug_id="Cohn Feature"):
-                        logger.debug(f"Feature Received COHN status: {status}")
+                try:
+                    async with self._status_observable as observable:
+                        self._supported = True
+                        async for status in observable.observe(debug_id="Cohn Feature"):
+                            logger.debug(f"Feature Received COHN status: {status}")
+                except GoProError as exc:
+                    logger.warning(f"Failed to start COHN feature: {str(exc)}")
+                    self._supported = False
+                    self._ready_event.set()
             else:
                 await asyncio.sleep(1)
 
@@ -93,6 +106,7 @@ class CohnFeature(BaseFeature):
         self._db.insert_or_update_credentials(self._gopro.identifier, new_credentials)
 
     @property
+    @require_supported
     def status(self) -> proto.NotifyCOHNStatus:
         """The current COHN status
 
@@ -118,6 +132,7 @@ class CohnFeature(BaseFeature):
         return bool(self.credentials and self.credentials.is_complete)
 
     @property
+    @require_supported
     def is_connected(self) -> bool:
         """Is COHN connected to an Access Point?
 
@@ -127,6 +142,7 @@ class CohnFeature(BaseFeature):
         return self.status.state == EnumCOHNNetworkState.COHN_STATE_NetworkConnected
 
     @property
+    @require_supported
     def _is_provisioned(self) -> bool:
         """Is COHN provisioned?
 
@@ -135,6 +151,7 @@ class CohnFeature(BaseFeature):
         """
         return self.status.status == EnumCOHNStatus.COHN_PROVISIONED
 
+    @require_supported
     async def _provision_cohn(self, timeout: int = 60) -> Result[CohnInfo, TimeoutError]:
         """Provision the camera, clearing any current certificate and forcing reprovision
 
@@ -180,6 +197,7 @@ class CohnFeature(BaseFeature):
         except TimeoutError as exc:
             return Result.from_failure(exc)
 
+    @require_supported
     async def configure(
         self,
         force_reprovision: bool = False,

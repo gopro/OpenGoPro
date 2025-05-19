@@ -30,6 +30,9 @@ class ProtobufId:
     feature_id: FeatureId
     action_id: ActionId | None
 
+    def __str__(self) -> str:
+        return f"{self.feature_id}::{self.action_id}" if self.action_id else str(self.feature_id)
+
 
 ProducerType: TypeAlias = tuple[QueryCmdId, SettingId | StatusId]
 """Types that can be registered for."""

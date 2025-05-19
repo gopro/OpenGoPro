@@ -46,6 +46,11 @@ class StreamFeature(BaseFeature):
         self._current: StreamController | None = None
 
     @property
+    def is_supported(self) -> bool:  # noqa: D102
+        # Streaming is always supported
+        return True
+
+    @property
     def current_stream(self) -> StreamType | None:
         """Get the current stream type.
 

@@ -6,6 +6,7 @@ import asyncio
 import re
 from csv import Error
 from dataclasses import dataclass, field
+from operator import is_
 from pathlib import Path
 from typing import Any, Generic, Optional, Pattern, TypeVar
 
@@ -285,6 +286,10 @@ class MockFeature(BaseFeature):
 
     @property
     def is_ready(self) -> bool:
+        return True
+
+    @property
+    def is_supported(self) -> bool:
         return True
 
     async def close(self) -> None:
