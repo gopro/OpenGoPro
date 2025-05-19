@@ -70,7 +70,7 @@ license = '0.9.8'
 # https://github.com/streem/pbandk/releases/tag/v0.16.0
 pbandk = "0.16.0"
 # https://github.com/vanniktech/gradle-maven-publish-plugin/releases/tag/0.30.0
-publish =  "0.31.0"
+publish =  "0.32.0"
 # https://github.com/cortinico/ktfmt-gradle/releases/
 format = "0.22.0"
 # Our SDK version
