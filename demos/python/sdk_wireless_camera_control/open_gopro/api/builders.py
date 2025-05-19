@@ -44,7 +44,7 @@ from open_gopro.models.constants import (
     SettingId,
     StatusId,
 )
-from open_gopro.models.types import CameraState, JsonDict, Protobuf
+from open_gopro.models.types import CameraState, JsonDict, Protobuf, ProtobufId
 from open_gopro.network.ble import BleUUID
 from open_gopro.parsers.bytes import (
     ConstructByteParserBuilder,
@@ -193,7 +193,7 @@ class BleProtoCommand(BleMessage):
         request_proto (type[Protobuf]): the action ID that will be in the response
         response_proto (type[Protobuf]): protobuf used to parse received bytestream
         parser (Parser | None): Optional response parser. Defaults to None.
-        additional_matching_ids (set[ActionId | CmdId] | None): Other action ID's to share this parser. This is used, for
+        additional_matching_ids (set[ProtobufId | CmdId] | None): Other action ID's to share this parser. This is used, for
             example, if a notification shares the same ID as the synchronous response. Defaults to None. Defaults to None.
     """
 
@@ -206,19 +206,19 @@ class BleProtoCommand(BleMessage):
         request_proto: type[Protobuf],
         response_proto: type[Protobuf],
         parser: Parser | None,
-        additional_matching_ids: set[ActionId | CmdId] | None = None,
+        additional_matching_ids: set[ProtobufId | CmdId] | None = None,
     ) -> None:
         p = parser or Parser()
         p.byte_json_adapter = ProtobufByteParser(response_proto)
-        super().__init__(uuid=uuid, parser=p, identifier=response_action_id)
+        super().__init__(uuid=uuid, parser=p, identifier=ProtobufId(feature_id, response_action_id))
         self.feature_id = feature_id
         self.action_id = action_id
         self.response_action_id = response_action_id
         self.request_proto = request_proto
         self.response_proto = response_proto
-        self.additional_matching_ids: set[ActionId | CmdId] = additional_matching_ids or set()
+        self.additional_matching_ids: set[ProtobufId | CmdId] = additional_matching_ids or set()
         assert self._parser
-        for matching_id in [*self.additional_matching_ids, response_action_id]:
+        for matching_id in [*self.additional_matching_ids, ProtobufId(feature_id, response_action_id)]:
             GlobalParsers.add(matching_id, self._parser)
         GlobalParsers.add_feature_action_id_mapping(self.feature_id, self.response_action_id)
 
@@ -366,7 +366,7 @@ def ble_proto_command(
     request_proto: type[Protobuf],
     response_proto: type[Protobuf],
     parser: Parser | None = None,
-    additional_matching_ids: set[ActionId | CmdId] | None = None,
+    additional_matching_ids: set[ProtobufId | CmdId] | None = None,
 ) -> Callable:
     """Decorator to build a BLE Protobuf command and wrapper to execute it
 
@@ -378,7 +378,7 @@ def ble_proto_command(
         request_proto (type[Protobuf]): the action ID that will be in the response
         response_proto (type[Protobuf]): protobuf used to parse received bytestream
         parser (Parser | None): Response parser to transform received Protobuf bytes. Defaults to None.
-        additional_matching_ids (set[ActionId | CmdId] | None): Other action ID's to share this parser. This is used,
+        additional_matching_ids (set[ProtobufId | CmdId] | None): Other action ID's to share this parser. This is used,
             for example, if a notification shares the same ID as the synchronous response. Defaults to None.
 
     Returns:
@@ -888,6 +888,7 @@ class HttpSetting(HttpMessage, Generic[T]):
         Returns:
             str: built URL
         """
+        assert not isinstance(self._identifier, ProtobufId)  # needed to satisfy typing
         return self._endpoint.format(setting=int(self._identifier), option=int(kwargs["value"]))
 
     async def set(self, value: T) -> GoProResp:

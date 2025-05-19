@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import re
+from csv import Error
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Generic, Optional, Pattern, TypeVar
@@ -31,8 +32,9 @@ from open_gopro.features.base_feature import BaseFeature
 from open_gopro.gopro_base import GoProBase
 from open_gopro.models import GoProResp
 from open_gopro.models.constants import CmdId, GoProUUID, StatusId
+from open_gopro.models.constants.constants import ErrorCode
 from open_gopro.models.proto.cohn_pb2 import EnumCOHNStatus, NotifyCOHNStatus
-from open_gopro.models.types import CameraState, UpdateCb, UpdateType
+from open_gopro.models.types import CameraState, ResponseType, UpdateCb, UpdateType
 from open_gopro.network.ble import (
     BLEController,
     BleDevice,
@@ -237,9 +239,11 @@ class MockWifiCommunicator(GoProWifi):
         return self._api.http_setting
 
 
+@dataclass
 class MockGoproResp:
-    def __init__(self, value: Any) -> None:
-        self.value = value
+    value: Any | None = None
+    status: ErrorCode | None = None
+    identifier: ResponseType | None = None
 
     @property
     def data(self) -> Any:
@@ -247,7 +251,7 @@ class MockGoproResp:
 
     @property
     def ok(self) -> bool:
-        return True
+        return self.status is ErrorCode.SUCCESS if self.status else True
 
 
 class MockWiredGoPro(WiredGoPro):
@@ -315,6 +319,8 @@ class MockWirelessGoPro(WirelessGoPro):
         self._api.ble_command.get_ap_entries = self._mock_get_ap_entries
         self._api.ble_command.cohn_get_status = self._mock_get_cohn_status
         self.http_command.set_third_party_client_info = self._mock_empty_return
+        self.ble_command.set_third_party_client_info = self._mock_empty_return
+        self.ble_command.set_date_time_tz_dst = self._mock_empty_return
         self._ble.write = self._mock_write
         self._ble._gatt_table = MockGattTable()
         self._test_response_uuid = GoProUUID.CQ_COMMAND
@@ -347,6 +353,7 @@ class MockWirelessGoPro(WirelessGoPro):
     async def _open_wifi(self, timeout: int = 15, retries: int = 5) -> None:
         self._api.ble_command.get_wifi_password = self._mock_password
         self._api.ble_command.get_wifi_ssid = self._mock_ssid
+        self._api.ble_command.enable_wifi_ap = self._mock_empty_return
         await super()._open_wifi(timeout, retries)
 
     async def _close_ble(self) -> None:
@@ -356,19 +363,6 @@ class MockWirelessGoPro(WirelessGoPro):
     async def _open_ble(self, timeout: int, retries: int) -> None:
         await super()._open_ble(timeout=timeout, retries=retries)
         self._ble._gatt_table.handle2uuid = self._mock_uuid
-
-    async def _send_ble_message(
-        self, message: BleMessage, rules: MessageRules = MessageRules(), **kwargs: Any
-    ) -> GoProResp:
-        if response_data := kwargs.get("response_data"):
-            self._test_response_data = response_data
-            self._test_response_uuid = message._uuid
-            global _test_response_id
-            _test_response_id = message._identifier
-            self._ble.write = self._mock_write
-            return await super()._send_ble_message(message, **kwargs)
-        else:
-            return mock_good_response
 
     async def _read_ble_characteristic(
         self, message: BleMessage, rules: MessageRules = MessageRules(), **kwargs: Any
@@ -390,8 +384,8 @@ class MockWirelessGoPro(WirelessGoPro):
     async def _mock_ssid(self) -> MockGoproResp:
         return MockGoproResp("ssid")
 
-    async def _mock_empty_return(self, *args, **kwargs) -> None:
-        return None
+    async def _mock_empty_return(self, *args, **kwargs) -> MockGoproResp:
+        return MockGoproResp()
 
     def _mock_uuid(self, _) -> BleUUID:
         return self._test_response_uuid

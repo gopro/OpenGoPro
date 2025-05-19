@@ -25,7 +25,7 @@ from open_gopro.models.constants import (
     StatusId,
 )
 from open_gopro.models.proto import EnumResultGeneric
-from open_gopro.models.types import CameraState, JsonDict, ResponseType
+from open_gopro.models.types import CameraState, JsonDict, ProtobufId, ResponseType
 from open_gopro.network.ble import BleUUID
 from open_gopro.parsers.json import LambdaJsonParser
 
@@ -37,6 +37,28 @@ EXT_13_BYTE0_MASK: Final = 0b00011111
 logger = logging.getLogger(__name__)
 
 T = TypeVar("T")
+
+validResponseProtobufIds: Final[list[tuple[FeatureId, ActionId]]] = [
+    (FeatureId.COMMAND, ActionId.SET_CAMERA_CONTROL_RSP),
+    (FeatureId.COMMAND, ActionId.SET_LIVESTREAM_MODE_RSP),
+    (FeatureId.COMMAND, ActionId.RESPONSE_PRESET_UPDATE_CUSTOM),
+    (FeatureId.COMMAND, ActionId.RESPONSE_CLEAR_COHN_CERT),
+    (FeatureId.COMMAND, ActionId.RESPONSE_CREATE_COHN_CERT),
+    (FeatureId.COMMAND, ActionId.RESPONSE_COHN_SETTING),
+    (FeatureId.NETWORK_MANAGEMENT, ActionId.SCAN_WIFI_NETWORKS_RSP),
+    (FeatureId.NETWORK_MANAGEMENT, ActionId.NOTIF_START_SCAN),
+    (FeatureId.NETWORK_MANAGEMENT, ActionId.GET_AP_ENTRIES_RSP),
+    (FeatureId.NETWORK_MANAGEMENT, ActionId.REQUEST_WIFI_CONNECT_NEW_RSP),
+    (FeatureId.NETWORK_MANAGEMENT, ActionId.REQUEST_WIFI_CONNECT_RSP),
+    (FeatureId.NETWORK_MANAGEMENT, ActionId.NOTIF_PROVIS_STATE),
+    (FeatureId.QUERY, ActionId.LIVESTREAM_STATUS_RSP),
+    (FeatureId.QUERY, ActionId.LIVESTREAM_STATUS_NOTIF),
+    (FeatureId.QUERY, ActionId.GET_PRESET_STATUS_RSP),
+    (FeatureId.QUERY, ActionId.PRESET_MODIFIED_NOTIFICATION),
+    (FeatureId.QUERY, ActionId.RESPONSE_GET_COHN_STATUS),
+    (FeatureId.QUERY, ActionId.RESPONSE_GET_COHN_CERT),
+    (FeatureId.QUERY, ActionId.INTERNAL_FF),
+]
 
 
 class RespBuilder(Generic[T], ABC):
@@ -177,7 +199,7 @@ class BleRespBuilder(RespBuilder[bytearray]):
         return isinstance(self._identifier, (ActionId, FeatureId))
 
     @classmethod
-    def get_response_identifier(cls, uuid: BleUUID, packet: bytearray) -> ResponseType:
+    def identify_response(cls, uuid: BleUUID, packet: bytearray) -> ResponseType:
         """Get the identifier based on what is currently known about the packet
 
         Args:
@@ -187,13 +209,12 @@ class BleRespBuilder(RespBuilder[bytearray]):
         Returns:
             ResponseType: identifier of this response
         """
-        # If it's a protobuf command
-        identifier = packet[0]
         try:
-            FeatureId(identifier)
-            return ActionId(packet[1])
-        # Otherwise it's a TLV command
-        except ValueError:
+            # If it's a protobuf command
+            if (packet[0], packet[1]) in validResponseProtobufIds:
+                return ProtobufId(FeatureId(packet[0]), ActionId(packet[1]))
+            identifier = packet[0]
+            # Otherwise it's a TLV command
             if uuid is GoProUUID.CQ_SETTINGS_RESP:
                 return SettingId(identifier)
             if uuid is GoProUUID.CQ_QUERY_RESP:
@@ -201,6 +222,10 @@ class BleRespBuilder(RespBuilder[bytearray]):
             if uuid in [GoProUUID.CQ_COMMAND_RESP, GoProUUID.CN_NET_MGMT_RESP]:
                 return CmdId(identifier)
             return uuid
+        except ValueError:
+            # There is a special case where an unsupported protobuf message was sent. In this case, the only identifier
+            # we have is the feature ID.
+            return ProtobufId(FeatureId(packet[0]), None)
 
     def set_parser(self, parser: Parser) -> None:
         """Store a parser. This is optional.
@@ -288,7 +313,7 @@ class BleRespBuilder(RespBuilder[bytearray]):
         Returns:
             bool: Yes if true, No otherwise
         """
-        return isinstance(self._identifier, (ActionId, FeatureId))
+        return isinstance(self._identifier, ProtobufId)
 
     @property
     def _is_direct_read(self) -> bool:
@@ -310,12 +335,20 @@ class BleRespBuilder(RespBuilder[bytearray]):
             GoProResp: built response
         """
         try:
-            self._identifier = self.get_response_identifier(self._uuid, self._packet)
+            self._identifier = self.identify_response(self._uuid, self._packet)
             buf = self._packet
 
             if not self._is_direct_read:  # length byte
                 buf.pop(0)
             if self._is_protobuf:  # feature ID byte
+                # This is a special case where we have a protobuf error response. It does not contain the Action ID.
+                if self._identifier.action_id is None:  # type: ignore
+                    return GoProResp(
+                        protocol=GoProResp.Protocol.BLE,
+                        status=ErrorCode(buf[0]),
+                        data=None,
+                        identifier=self._identifier,
+                    )
                 buf.pop(0)
 
             parsed: Any = None

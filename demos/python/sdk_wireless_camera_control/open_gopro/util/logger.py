@@ -56,6 +56,7 @@ class Logger:
             "open_gopro.network.ble.client": logging.DEBUG,
             "open_gopro.parsers.bytes": logging.DEBUG,
             "open_gopro.parsers.json": logging.DEBUG,
+            "open_gopro.parsers.response": logging.DEBUG,
             "open_gopro.parsers.general": logging.DEBUG,
             "open_gopro.network.wifi.adapters.wireless": logging.DEBUG,
             "open_gopro.network.wifi.mdns_scanner": logging.DEBUG,

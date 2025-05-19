@@ -55,7 +55,7 @@ from open_gopro.gopro_base import (
 from open_gopro.models import GoProResp
 from open_gopro.models.constants import ActionId, GoProUUID, StatusId
 from open_gopro.models.constants.settings import SettingId
-from open_gopro.models.types import ResponseType, UpdateCb, UpdateType
+from open_gopro.models.types import ProtobufId, ResponseType, UpdateCb, UpdateType
 from open_gopro.network.ble import BleakWrapperController, BleUUID
 from open_gopro.network.ble.controller import BLEController
 from open_gopro.network.wifi import WifiCli
@@ -734,11 +734,19 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             response.data = list(response.data.values())[0]
 
         # Check if this is the awaited synchronous response (id matches). Note! these have to come in order.
-        if await self._sync_resp_wait_q.peek_front() == response.identifier:
+        if ((head := await self._sync_resp_wait_q.peek_front()) == response.identifier) or (
+            # There is a special case for an unsupported protobuf error response. It does not contain the feature ID so we
+            # have to match it by Feature ID / UUID. Feature ID's are not used across UUID's so we will only check for
+            # matching Feature ID(s)
+            isinstance(head, ProtobufId)
+            and ProtobufId(head.feature_id, None)
+            == response.identifier  # Feature IDs match and response identifier does not contain Action ID
+        ):
             logger.info(Logger.build_log_rx_str(original_response, asynchronous=False))
             # Dequeue it and put this on the ready queue
             await self._sync_resp_wait_q.get()
             await self._sync_resp_ready_q.put(response)
+
         # If this wasn't the awaited synchronous response...
         else:
             logger.info(Logger.build_log_rx_str(original_response, asynchronous=True))
