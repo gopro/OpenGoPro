@@ -34,7 +34,7 @@ class CohnFeature(BaseFeature):
 
     def __init__(self, cohn_db: TinyDB) -> None:
         super().__init__()
-        self._gopro: GoProBase[Any] | None = None
+        self._gopro: GoProBase[Any] | None = None  # type: ignore # TODO fix this.
         self._db = CohnDb(cohn_db)
         self._ready_event: asyncio.Event
         self._status_observable: GoProObservable[NotifyCOHNStatus]
@@ -71,6 +71,7 @@ class CohnFeature(BaseFeature):
         logger.debug("COHN opened")
 
     async def wait_until_ready(self) -> None:
+        """Wait until COHN is ready (the first status is received)"""
         logger.debug("Waiting for COHN to be ready")
         await asyncio.wait_for(self._ready_event.wait(), 30)
 

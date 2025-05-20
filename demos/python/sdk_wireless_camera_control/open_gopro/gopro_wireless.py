@@ -9,7 +9,6 @@ import asyncio
 import enum
 import logging
 import queue
-from tkinter import E
 import traceback
 from collections import defaultdict
 from copy import deepcopy

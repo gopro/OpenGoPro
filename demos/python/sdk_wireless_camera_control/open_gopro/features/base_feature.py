@@ -47,12 +47,7 @@ def require_supported(wrapped: Callable, instance: BaseFeature, args: Any, kwarg
 
 
 class BaseFeature(ABC):
-    """Base Feature definition / interface
-
-    Args:
-        gopro (GoProBase[WirelessApi]): camera to operate on
-        loop (asyncio.AbstractEventLoop): asyncio loop to use for this feature
-    """
+    """Base Feature definition / interface"""
 
     def __init__(self) -> None:
         self._loop: asyncio.AbstractEventLoop

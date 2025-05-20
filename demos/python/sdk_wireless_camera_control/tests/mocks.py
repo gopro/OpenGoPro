@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import asyncio
 import re
-from csv import Error
 from dataclasses import dataclass, field
 from operator import is_
 from pathlib import Path
@@ -48,6 +47,9 @@ from open_gopro.network.wifi import SsidState, WifiController
 from tests import mock_good_response, versions
 
 api_versions = {"2.0": WirelessApi}
+
+T = TypeVar("T")
+T2 = TypeVar("T2")
 
 
 @dataclass
@@ -255,6 +257,31 @@ class MockGoproResp:
         return self.status is ErrorCode.SUCCESS if self.status else True
 
 
+# Create a context manager class to mock GoproObserverDistinctInitial
+class MockObserver(Generic[T, T2]):
+    initial_response: Any = None
+    first_response: Any = None
+
+    def __init__(self, *args, **kwargs) -> None:
+        return
+
+    async def __aenter__(self) -> Any:
+        return self
+
+    async def __aexit__(self, *args: Any) -> None:
+        pass
+
+    def observe(self) -> Any:
+        class ObservableMock:
+            def __init__(self, first_response: Any) -> None:
+                self.first_response = first_response
+
+            async def first(self, *args: Any, **kwargs: Any) -> Any:
+                return self.first_response
+
+        return ObservableMock(self.first_response)
+
+
 class MockWiredGoPro(WiredGoPro):
     def __init__(self, test_version: str) -> None:
         super().__init__(serial=None, poll_period=0.5)
@@ -279,9 +306,9 @@ class MockWiredGoPro(WiredGoPro):
 
 class MockFeature(BaseFeature):
     def __init__(self, *args, **kwargs) -> None:
-        super().__init__(None, None)
+        return
 
-    async def wait_for_ready(self) -> None:
+    async def wait_until_ready(self) -> None:
         return
 
     @property
@@ -294,9 +321,6 @@ class MockFeature(BaseFeature):
 
     async def close(self) -> None:
         return
-
-
-T = TypeVar("T")
 
 
 class MockEvent:
@@ -332,18 +356,6 @@ class MockWirelessGoPro(WirelessGoPro):
         self._test_response_data = bytearray()
         self.ble_status.ap_mode.get_value = self._mock_wifi_check
         self._ble_disconnect_event = MockEvent()
-
-    @property
-    def cohn(self) -> BaseFeature:
-        return MockFeature()
-
-    @property
-    def access_point(self) -> BaseFeature:
-        return MockFeature()
-
-    @property
-    def streaming(self) -> BaseFeature:
-        return MockFeature()
 
     def set_requests_session(self, session: requests.Session) -> None:
         self._mock_requests_session = session
@@ -418,9 +430,6 @@ class MockWirelessGoPro(WirelessGoPro):
     @property
     def is_http_connected(self) -> bool:
         return True
-
-
-_test_response_id = CmdId.SET_SHUTTER
 
 
 class MockGoProMaintainBle(WirelessGoPro):

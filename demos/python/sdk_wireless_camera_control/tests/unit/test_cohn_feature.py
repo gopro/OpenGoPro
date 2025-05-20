@@ -32,52 +32,36 @@ cohn_credentials = CohnInfo(ip_address="ip", username="user", password="password
 
 @pytest_asyncio.fixture(loop_scope="function")
 async def cohn_feature(mock_wireless_gopro_basic: WirelessGoPro):
-    cohn = CohnFeature(
-        cohn_db=TinyDB(storage=MemoryStorage),
+    cohn = CohnFeature(cohn_db=TinyDB(storage=MemoryStorage))
+    await cohn.open(
         gopro=mock_wireless_gopro_basic,
         loop=asyncio.get_running_loop(),
         cohn_credentials=cohn_credentials,
     )
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(cohn.wait_until_ready())
+        tg.create_task(cohn._status_observable.emit(NotifyCOHNStatus()))
     yield cohn
     await cohn.close()
 
 
 async def test_cohn_feature_starts_successfully(cohn_feature: CohnFeature):
-    # WHEN
-    async def send_cohn_status():
-        await cohn_feature._status_observable.emit(NotifyCOHNStatus())
-
-    async with asyncio.TaskGroup() as task_group:
-        task_group.create_task(send_cohn_status())
-        task_group.create_task(cohn_feature.wait_for_ready())
-
     # THEN
-    assert cohn_feature.is_ready
+    assert cohn_feature.is_supported
 
 
 async def test_cohn_feature_is_configured(cohn_feature: CohnFeature):
     # WHEN
-    async def send_cohn_status():
-        await cohn_feature._status_observable.emit(provisioned_status)
-
-    async with asyncio.TaskGroup() as tg:
-        tg.create_task(send_cohn_status())
-        tg.create_task(cohn_feature.wait_for_ready())
+    await cohn_feature._status_observable.emit(provisioned_status)
 
     # THEN
-    assert cohn_feature.is_ready
     assert await cohn_feature.is_configured
 
 
 async def test_cohn_feature_configure_without_provisioning(cohn_feature: CohnFeature):
     # WHEN
-    async def send_cohn_status():
-        await cohn_feature._status_observable.emit(provisioned_status)
-        await cohn_feature._status_observable.emit(connected_status)
-
-    async with asyncio.TaskGroup() as task_group:
-        task_group.create_task(send_cohn_status())
-        task_group.create_task(cohn_feature.wait_for_ready())
+    await cohn_feature._status_observable.emit(provisioned_status)
+    await cohn_feature._status_observable.emit(connected_status)
 
     result = await cohn_feature.configure()
 
@@ -88,12 +72,7 @@ async def test_cohn_feature_configure_without_provisioning(cohn_feature: CohnFea
 
 async def test_cohn_feature_provision(cohn_feature: CohnFeature):
     # WHEN
-    async def send_cohn_unprovisioned():
-        await cohn_feature._status_observable.emit(unprovisioned_status)
-
-    async with asyncio.TaskGroup() as task_group:
-        task_group.create_task(send_cohn_unprovisioned())
-        task_group.create_task(cohn_feature.wait_for_ready())
+    await cohn_feature._status_observable.emit(unprovisioned_status)
 
     async def send_cohn_provisioned():
         await cohn_feature._status_observable.emit(connected_status)

@@ -33,6 +33,7 @@ logger = logging.getLogger(__name__)
 
 class AccessPointFeature(BaseFeature):
     """Access Point (AP) feature abstraction"""
+
     @property
     def is_supported(self) -> bool:  # noqa: D102
         # All Open GoPro cameras support access point
