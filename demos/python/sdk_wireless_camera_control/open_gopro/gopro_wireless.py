@@ -9,6 +9,7 @@ import asyncio
 import enum
 import logging
 import queue
+from tkinter import E
 import traceback
 from collections import defaultdict
 from copy import deepcopy
@@ -205,7 +206,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         self._should_enable_wifi = WirelessGoPro.Interface.WIFI_AP in interfaces
         self._should_enable_ble = WirelessGoPro.Interface.BLE in interfaces
         self._should_enable_cohn = WirelessGoPro.Interface.COHN in interfaces
-        self._cohn_db_path = cohn_db
         self._cohn_credentials = kwargs.get("cohn_credentials")
         self._is_cohn_configured = False
 
@@ -240,9 +240,9 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             raise e
 
         # Feature delegates
-        self._cohn: open_gopro.features.CohnFeature
-        self._access_point: open_gopro.features.AccessPointFeature
-        self._streaming: open_gopro.features.StreamFeature
+        self.cohn = open_gopro.features.CohnFeature(TinyDB(cohn_db, indent=4))
+        self.access_point = open_gopro.features.AccessPointFeature()
+        self.streaming = open_gopro.features.StreamFeature()
 
         # Builders for currently accumulating synchronous responses, indexed by GoProUUID. This assumes there
         # can only be one active response per BleUUID
@@ -268,51 +268,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             self._encoding: bool
             self._busy: bool
             self._encoding_started: asyncio.Event
-
-    @property
-    def cohn(self) -> open_gopro.features.CohnFeature:
-        """The COHN feature abstraction
-
-        Raises:
-            GoProNotOpened: Feature is not yet available because GoPro has not yet been opened
-
-        Returns:
-            open_gopro.features.CohnFeature: COHN Feature
-        """
-        try:
-            return self._cohn
-        except AttributeError as e:
-            raise GoProNotOpened("") from e
-
-    @property
-    def access_point(self) -> open_gopro.features.AccessPointFeature:
-        """The Access Point (AP) feature abstraction
-
-        Raises:
-            GoProNotOpened: Feature is not yet available because GoPro has not yet been opened
-
-        Returns:
-            open_gopro.features.AccessPointFeature: AP Feature
-        """
-        try:
-            return self._access_point
-        except AttributeError as e:
-            raise GoProNotOpened("") from e
-
-    @property
-    def streaming(self) -> open_gopro.features.StreamFeature:
-        """The Streaming feature abstraction
-
-        Raises:
-            GoProNotOpened: Feature is not yet available because GoPro has not yet been opened
-
-        Returns:
-            open_gopro.features.StreamFeature: Streaming Feature
-        """
-        try:
-            return self._streaming
-        except AttributeError as e:
-            raise GoProNotOpened("") from e
 
     @property
     def identifier(self) -> str:
@@ -417,14 +372,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         # Set up concurrency
         self._loop = asyncio.get_running_loop()
         self._ble_disconnect_event = asyncio.Event()
-        self._cohn = open_gopro.features.CohnFeature(
-            cohn_db=TinyDB(self._cohn_db_path, indent=4),
-            gopro=self,
-            loop=self._loop,
-            cohn_credentials=self._cohn_credentials,
-        )
-        self._access_point = open_gopro.features.AccessPointFeature(self, self._loop)
-        self._streaming = open_gopro.features.StreamFeature(self, self._loop)
 
         # If we are to perform BLE housekeeping
         if self._should_maintain_state:
@@ -433,6 +380,10 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             self._encoding = True
             self._busy = True
             self._encoding_started = asyncio.Event()
+
+        await self.cohn.open(gopro=self, loop=self._loop, cohn_credentials=self._cohn_credentials)
+        await self.access_point.open(self._loop, self)
+        await self.streaming.open(self._loop, self)
 
         RETRIES = 5
         for retry in range(RETRIES):
@@ -452,7 +403,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                         raise InvalidOpenGoProVersion(version)
                     logger.info(f"Using Open GoPro API version {version}")
 
-                    await self.cohn.wait_for_ready()
+                    await self.cohn.wait_until_ready()
 
                 # Establish Wifi / COHN connection if desired
                 if self._should_enable_wifi:
@@ -488,18 +439,16 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         If not using the context manager, it is mandatory to call this before exiting the program in order to
         prevent reconnection issues because the OS has never disconnected from the previous session.
         """
-        await self._close_wifi()
-        await self._close_ble()
         try:
+            await self._close_wifi()
+            await self._close_ble()
             for feature in [self.cohn, self.access_point, self.streaming]:
-                try:
-                    await feature.close()
-                # TODO this should be a specific exception...or removed.
-                except Exception as e:  # pylint: disable=broad-exception-caught
-                    logger.error(f"Error while closing {feature}: {repr(e)}")
+                await feature.close()
         except AttributeError:
             # This is possible if the GoPro was never opened
             pass
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.warning(f"Error while closing features: {repr(e)}")
         self._open = False
 
     def register_update(self, callback: UpdateCb, update: UpdateType) -> None:
@@ -786,9 +735,12 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     async def _close_ble(self) -> None:
         """Terminate BLE connection if it is connected"""
         if self._should_maintain_state:
-            self._keep_alive_task.cancel()
-            for task in [*self._status_tasks, *self._state_acquire_lock_tasks]:
+            for task in [*self._status_tasks, *self._state_acquire_lock_tasks, self._keep_alive_task]:
                 task.cancel()
+                try:
+                    await task
+                except asyncio.CancelledError:
+                    pass  # This exception is expected when cancelling a task
         if self.is_ble_connected and self._ble is not None:
             await self._ble.close()
             await self._ble_disconnect_event.wait()

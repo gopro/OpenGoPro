@@ -10,7 +10,6 @@ from typing import Any, Callable
 
 import wrapt
 
-from open_gopro.api.api import WirelessApi
 from open_gopro.gopro_base import GoProBase
 
 
@@ -55,24 +54,9 @@ class BaseFeature(ABC):
         loop (asyncio.AbstractEventLoop): asyncio loop to use for this feature
     """
 
-    def __init__(
-        self,
-        gopro: GoProBase[WirelessApi],
-        loop: asyncio.AbstractEventLoop,
-    ) -> None:
-        self._gopro = gopro
-        self._loop = loop
-
-    @property
-    @abstractmethod
-    def is_ready(self) -> bool:
-        """Is the feature ready to use?
-
-        No other methods (besides wait_for_ready) should be used until the feature is ready
-
-        Returns:
-            bool: True if ready, False otherwise
-        """
+    def __init__(self) -> None:
+        self._loop: asyncio.AbstractEventLoop
+        self._gopro: GoProBase[Any]
 
     @property
     @abstractmethod
@@ -83,9 +67,26 @@ class BaseFeature(ABC):
             bool: True if ready, False otherwise
         """
 
-    @abstractmethod
-    async def wait_for_ready(self) -> None:
-        """Wait until the feature is ready to use"""
+    async def open(  # pylint: disable=unused-argument
+        self,
+        loop: asyncio.AbstractEventLoop,
+        gopro: GoProBase[Any],
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
+        """Open the feature for use.
+
+        This should be called before using any other methods in the feature. It must be called for each
+        GoProBase instance that is used with the feature.
+
+        Args:
+            loop (asyncio.AbstractEventLoop): asyncio loop to use for this feature
+            gopro (GoProBase[Any]): camera to operate on
+            *args (Any): additional arguments for subclasses
+            **kwargs (Any): additional keyword arguments for subclasses
+        """
+        self._loop = loop
+        self._gopro = gopro
 
     @abstractmethod
     async def close(self) -> None:
