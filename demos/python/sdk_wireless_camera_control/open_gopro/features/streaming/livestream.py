@@ -16,12 +16,14 @@ from open_gopro.domain.observable import Observable
 from open_gopro.features.streaming.base_stream import StreamController, StreamType
 from open_gopro.gopro_base import GoProBase
 from open_gopro.models.constants import ActionId, Toggle
+from open_gopro.models.constants.constants import FeatureId
 from open_gopro.models.proto import (
     EnumLiveStreamStatus,
     EnumRegisterLiveStreamStatus,
     NotifyLiveStreamStatus,
 )
 from open_gopro.models.streaming import LivestreamOptions
+from open_gopro.models.types import ProtobufId
 
 logger = logging.getLogger(__name__)
 
@@ -78,7 +80,7 @@ class LiveStreamController(StreamController[LivestreamOptions]):
             unregister_command=self.gopro.ble_command.register_livestream_status(
                 unregister=[EnumRegisterLiveStreamStatus.REGISTER_LIVE_STREAM_STATUS_STATUS]
             ),
-            update=ActionId.LIVESTREAM_STATUS_NOTIF,
+            update=ProtobufId(FeatureId.QUERY, ActionId.LIVESTREAM_STATUS_NOTIF),
         ).start()
 
     @property

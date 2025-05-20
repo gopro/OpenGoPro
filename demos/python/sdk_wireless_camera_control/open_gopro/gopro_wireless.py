@@ -53,7 +53,7 @@ from open_gopro.gopro_base import (
     enforce_message_rules,
 )
 from open_gopro.models import GoProResp
-from open_gopro.models.constants import ActionId, GoProUUID, StatusId
+from open_gopro.models.constants import GoProUUID, StatusId
 from open_gopro.models.constants.settings import SettingId
 from open_gopro.models.types import ProtobufId, ResponseType, UpdateCb, UpdateType
 from open_gopro.network.ble import BleakWrapperController, BleUUID
@@ -753,7 +753,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         if response._is_push:
             for update_id, value in response.data.items():
                 await self._notify_listeners(update_id, value)
-        elif isinstance(response.identifier, ActionId):
+        elif isinstance(response.identifier, ProtobufId):
             await self._notify_listeners(response.identifier, response.data)
 
     def _notification_handler(self, handle: int, data: bytearray) -> None:
@@ -924,9 +924,9 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     @property
     def _base_url(self) -> str:
         return (
-            f"https://{self.ip_address}:8080/"
+            f"https://{self.ip_address}/"
             if self._should_enable_cohn and self.cohn.credentials
-            else f"http://{self.ip_address}/"
+            else f"http://{self.ip_address}:8080/"
         )
 
     @property

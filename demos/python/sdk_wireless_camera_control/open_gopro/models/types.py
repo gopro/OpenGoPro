@@ -49,7 +49,7 @@ CameraState: TypeAlias = dict[SettingId | StatusId, Any]
 JsonDict: TypeAlias = dict[str, Any]
 """Generic JSON dictionary"""
 
-UpdateType: TypeAlias = SettingId | StatusId | ActionId
+UpdateType: TypeAlias = SettingId | StatusId | ProtobufId
 """Identifier Type of an asynchronous update"""
 
 UpdateCb: TypeAlias = Callable[[UpdateType, Any], Coroutine[Any, Any, None]]

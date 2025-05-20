@@ -20,8 +20,10 @@ from open_gopro.features.base_feature import BaseFeature, require_supported
 from open_gopro.gopro_base import GoProBase
 from open_gopro.models import proto
 from open_gopro.models.constants import ActionId
+from open_gopro.models.constants.constants import FeatureId
 from open_gopro.models.general import CohnInfo
 from open_gopro.models.proto import EnumCOHNNetworkState, EnumCOHNStatus
+from open_gopro.models.types import ProtobufId
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +54,7 @@ class CohnFeature(BaseFeature):
         # TODO close this
         self._status_observable = GoProObservable(
             gopro=self._gopro,
-            update=ActionId.RESPONSE_GET_COHN_STATUS,
+            update=ProtobufId(FeatureId.QUERY, ActionId.RESPONSE_GET_COHN_STATUS),
             register_command=self._gopro.ble_command.cohn_get_status(register=True),
         ).on_start(lambda _: self._ready_event.set())
         self._status_task: asyncio.Task = asyncio.create_task(self._track_status())

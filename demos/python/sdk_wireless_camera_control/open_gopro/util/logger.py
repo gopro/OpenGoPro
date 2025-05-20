@@ -47,7 +47,7 @@ class Logger:
         self.modules: dict[str, int] = {
             "open_gopro.gopro_base": logging.DEBUG,
             "open_gopro.gopro_wired": logging.DEBUG,
-            "open_gopro.gopro_wireless": logging.DEBUG,
+            "open_gopro.gopro_wireless": logging.DEBUG,  # TRACE for concurrency debugging
             "open_gopro.api.builders": logging.DEBUG,
             "open_gopro.api.http_commands": logging.DEBUG,
             "open_gopro.api.ble_commands": logging.DEBUG,
@@ -60,8 +60,8 @@ class Logger:
             "open_gopro.parsers.general": logging.DEBUG,
             "open_gopro.network.wifi.adapters.wireless": logging.DEBUG,
             "open_gopro.network.wifi.mdns_scanner": logging.DEBUG,
-            "open_gopro.domain.observable": logging.DEBUG,
-            "open_gopro.domain.gopro_observable": logging.DEBUG,
+            "open_gopro.domain.observable": logging.DEBUG,  # TRACE for concurrency debugging
+            "open_gopro.domain.gopro_observable": logging.DEBUG,  # TRACE for observable debugging
             "open_gopro.models.response": logging.DEBUG,
             "open_gopro.models.network_scan_response": logging.DEBUG,
             "open_gopro.features.cohn_feature": logging.DEBUG,
