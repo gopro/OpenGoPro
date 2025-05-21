@@ -85,23 +85,8 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
         self._poll_period = kwargs.get("poll_period", 2)
         self._encoding = False
         self._busy = False
-        self._streaming: open_gopro.features.StreamFeature
+        self.streaming = open_gopro.features.StreamFeature()
         self._loop: asyncio.AbstractEventLoop
-
-    @property
-    def streaming(self) -> open_gopro.features.StreamFeature:
-        """The Streaming feature abstraction
-
-        Raises:
-            GoProNotOpened: Feature is not yet available because GoPro has not yet been opened
-
-        Returns:
-            open_gopro.features.StreamFeature: Streaming Feature
-        """
-        try:
-            return self._streaming
-        except AttributeError as e:
-            raise GoProNotOpened("") from e
 
     async def open(self, timeout: int = 10, retries: int = 1) -> None:
         """Connect to the Wired GoPro Client and prepare it for communication
@@ -135,7 +120,7 @@ class WiredGoPro(GoProBase[WiredApi], GoProWiredInterface):
             raise InvalidOpenGoProVersion(version)
         logger.info(f"Using Open GoPro API version {version}")
 
-        self._streaming = open_gopro.features.StreamFeature(self, self._loop)
+        await self.streaming.open(self._loop, self)
 
         # Wait for initial ready state
         await self._wait_for_state({StatusId.ENCODING: False, StatusId.BUSY: False})

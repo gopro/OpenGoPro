@@ -18,11 +18,44 @@ from open_gopro.models.constants import (
     SettingId,
     StatusId,
 )
+from open_gopro.models.constants.constants import FeatureId
+from open_gopro.models.types import ProtobufId
 from open_gopro.parsers.json import CameraStateJsonParser
 from open_gopro.parsers.response import (
     BleRespBuilder,
     RequestsHttpRespBuilderDirector,
 )
+
+
+def test_identify_unsupported_protobuf_response():
+    # GIVEN
+    # COHN error when not supported
+    response = bytearray([0xF5, 0x02])
+
+    # WHEN
+    identifier = BleRespBuilder.identify_response(GoProUUID.CQ_QUERY_RESP, response)
+
+    # THEN
+    assert identifier == ProtobufId(FeatureId.QUERY, None)
+
+
+def test_parse_unsupported_protobuf_response():
+    # GIVEN
+    # COHN error when not supported
+    response = bytearray([0x02, 0xF5, 0x02])
+
+    # WHEN
+    builder = BleRespBuilder()
+    builder.set_uuid(GoProUUID.CQ_QUERY_RESP)
+    builder.accumulate(response)
+    r = builder.build()
+
+    # THEN
+    assert builder.is_finished_accumulating
+    assert r.status == ErrorCode.INVALID_PARAM
+    assert r.data is None
+    assert r.identifier == ProtobufId(FeatureId.QUERY, None)
+
 
 # Resolution capability response with no valid capabilities
 test_push_receive_no_parameter = bytearray([0x08, 0xA2, 0x00, 0x02, 0x00, 0x03, 0x00, 0x79, 0x00])
@@ -680,14 +713,17 @@ def test_http_response_with_extra_parsing():
         assert len(str(r)) > 0
 
 
-receive_proto = bytes([0x0D, 0xF5, 0xFF, 0x28, 0x07, 0x30, 0x01, 0x38, 0x03, 0x40, 0x00, 0x80, 0x01, 0x01])
-
-
 def test_proto():
+    # GIVEN
+    receive_proto = bytes([0x0D, 0xF5, 0xFF, 0x28, 0x07, 0x30, 0x01, 0x38, 0x03, 0x40, 0x00, 0x80, 0x01, 0x01])
+
+    # WHEN
     builder = BleRespBuilder()
     builder.set_uuid(GoProUUID.CQ_QUERY_RESP)
     builder.accumulate(receive_proto)
-    assert builder.is_finished_accumulating
     r = builder.build()
-    assert r.identifier is ActionId.INTERNAL_FF
+
+    # THEN
+    assert builder.is_finished_accumulating
+    assert r.identifier == ProtobufId(FeatureId.QUERY, ActionId.INTERNAL_FF)
     assert r.ok

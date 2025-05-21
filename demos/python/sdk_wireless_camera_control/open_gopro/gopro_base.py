@@ -398,7 +398,7 @@ class GoProBase(GoProHttp, Generic[ApiType]):
                 # Back off before retrying. TODO This appears to be needed on MacOS
                 await asyncio.sleep(2)
             except Exception as e:  # pylint: disable=broad-exception-caught
-                logger.critical(f"Unexpected error: {repr(e)}")
+                logger.error(f"Unexpected error: {repr(e)}")
             logger.warning(f"Retrying #{retry} to send the command...")
         else:
             raise ResponseTimeout(GoProBase.HTTP_GET_RETRIES)
@@ -463,7 +463,7 @@ class GoProBase(GoProHttp, Generic[ApiType]):
                 # Back off before retrying. TODO This appears to be needed on MacOS
                 await asyncio.sleep(2)
             except Exception as e:  # pylint: disable=broad-exception-caught
-                logger.critical(f"Unexpected error: {repr(e)}")
+                logger.error(f"Unexpected error: {repr(e)}")
             logger.warning(f"Retrying #{retry} to send the command...")
         else:
             raise ResponseTimeout(GoProBase.HTTP_GET_RETRIES)

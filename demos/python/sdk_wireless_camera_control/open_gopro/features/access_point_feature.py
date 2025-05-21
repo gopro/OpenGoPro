@@ -14,6 +14,7 @@ from open_gopro.domain.gopro_observable import GoproObserverDistinctInitial
 from open_gopro.features.base_feature import BaseFeature
 from open_gopro.models import proto
 from open_gopro.models.constants import ActionId
+from open_gopro.models.constants.constants import FeatureId
 from open_gopro.models.proto import (
     EnumProvisioning,
     EnumResultGeneric,
@@ -25,6 +26,7 @@ from open_gopro.models.proto import (
     ResponseConnectNew,
     ResponseStartScanning,
 )
+from open_gopro.models.types import ProtobufId
 
 logger = logging.getLogger(__name__)
 
@@ -33,12 +35,9 @@ class AccessPointFeature(BaseFeature):
     """Access Point (AP) feature abstraction"""
 
     @property
-    def is_ready(self) -> bool:  # noqa: D102
-        # It's ready upon initialization
+    def is_supported(self) -> bool:  # noqa: D102
+        # All Open GoPro cameras support access point
         return True
-
-    async def wait_for_ready(self) -> None:  # noqa: D102
-        return
 
     async def close(self) -> None:  # noqa: D102
         return
@@ -54,18 +53,20 @@ class AccessPointFeature(BaseFeature):
             Result[proto.ResponseGetApEntries, GoProError]: Discovered AP entries on success or error
         """
         # Wait to receive scanning success
-        logger.info("Scanning for Wifi networks")
+        logger.info("Scanning for Wifi networks...")
 
         async with GoproObserverDistinctInitial[ResponseStartScanning, NotifStartScanning](
             gopro=self._gopro,
-            update=ActionId.NOTIF_START_SCAN,
+            update=ProtobufId(FeatureId.NETWORK_MANAGEMENT, ActionId.NOTIF_START_SCAN),
             register_command=self._gopro.ble_command.scan_wifi_networks(),
         ) as observable, asyncio.timeout(timeout):
             if observable.initial_response.result != EnumResultGeneric.RESULT_SUCCESS:
                 return Result.from_failure(GoProError("Failed to start scanning."))
 
+            logger.info("Waiting for scanning to complete...")
             result = await observable.observe().first(lambda s: s.scanning_state == EnumScanning.SCANNING_SUCCESS)
             entries = await self._gopro.ble_command.get_ap_entries(scan_id=result.scan_id)
+            logger.info(f"Scan complete. Found {len(entries.data.entries)} networks.")
             return Result.from_value(entries.data)
 
     async def connect(
@@ -99,7 +100,7 @@ class AccessPointFeature(BaseFeature):
                         NotifProvisioningState,
                     ](
                         gopro=self._gopro,
-                        update=ActionId.NOTIF_PROVIS_STATE,
+                        update=ProtobufId(FeatureId.NETWORK_MANAGEMENT, ActionId.NOTIF_PROVIS_STATE),
                         register_command=command,
                     ) as observable:
                         if observable.initial_response.result != EnumResultGeneric.RESULT_SUCCESS:

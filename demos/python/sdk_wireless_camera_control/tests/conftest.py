@@ -3,7 +3,6 @@
 
 # pylint: disable=redefined-outer-name
 
-import asyncio
 import logging
 import re
 from pathlib import Path
@@ -25,7 +24,6 @@ from open_gopro.network.ble.adapters.bleak_wrapper import BleakWrapperController
 from open_gopro.network.ble.services import CharProps
 from open_gopro.network.wifi import WifiClient
 from open_gopro.util.logger import set_logging_level, setup_logging
-from tests import versions
 from tests.mocks import (
     MockBleCommunicator,
     MockBleController,

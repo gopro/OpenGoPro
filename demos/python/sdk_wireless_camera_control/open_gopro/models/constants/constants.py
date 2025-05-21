@@ -120,7 +120,6 @@ class QueryCmdId(GoProIntEnum):
     SETTING_VAL_PUSH = 0x92
     STATUS_VAL_PUSH = 0x93
     SETTING_CAPABILITY_PUSH = 0xA2
-    PROTOBUF_QUERY = 0xF5
 
 
 class Toggle(GoProIntEnum):
