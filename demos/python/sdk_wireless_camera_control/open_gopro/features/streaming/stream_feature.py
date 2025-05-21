@@ -60,7 +60,7 @@ class StreamFeature(BaseFeature):
         Returns:
             bool: True if a stream is active, False otherwise.
         """
-        return self._current is not None
+        return self._current is not None and self._current.status == StreamController.StreamStatus.STARTED
 
     @property
     def url(self) -> str | None:

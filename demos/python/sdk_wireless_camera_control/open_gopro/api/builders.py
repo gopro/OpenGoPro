@@ -367,6 +367,7 @@ def ble_proto_command(
     response_proto: type[Protobuf],
     parser: Parser | None = None,
     additional_matching_ids: set[ProtobufId | CmdId] | None = None,
+    rules: MessageRules = MessageRules(),
 ) -> Callable:
     """Decorator to build a BLE Protobuf command and wrapper to execute it
 
@@ -380,6 +381,7 @@ def ble_proto_command(
         parser (Parser | None): Response parser to transform received Protobuf bytes. Defaults to None.
         additional_matching_ids (set[ProtobufId | CmdId] | None): Other action ID's to share this parser. This is used,
             for example, if a notification shares the same ID as the synchronous response. Defaults to None.
+        rules (MessageRules): rules that describe sending / receiving the message. Defaults to MessageRules() (no rules).
 
     Returns:
         Callable: Generated method to perform command
@@ -397,7 +399,7 @@ def ble_proto_command(
 
     @wrapt.decorator
     async def wrapper(wrapped: Callable, instance: BleMessages, _: Any, kwargs: Any) -> GoProResp:
-        return await instance._communicator._send_ble_message(message, **(await wrapped(**kwargs) or kwargs))
+        return await instance._communicator._send_ble_message(message, rules, **(await wrapped(**kwargs) or kwargs))
 
     return wrapper
 

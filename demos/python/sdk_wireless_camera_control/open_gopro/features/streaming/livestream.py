@@ -55,14 +55,19 @@ class LiveStreamController(StreamController[LivestreamOptions]):
                     | EnumLiveStreamStatus.LIVE_STREAM_STATE_FAILED_STAY_ON
                     | EnumLiveStreamStatus.LIVE_STREAM_STATE_UNAVAILABLE
                 ):
+                    logger.debug(f"Livestream controller emitting state {StreamController.StreamStatus.STOPPED}")
                     await self.status_observable.emit(StreamController.StreamStatus.STOPPED)
                 case EnumLiveStreamStatus.LIVE_STREAM_STATE_READY | EnumLiveStreamStatus.LIVE_STREAM_STATE_RECONNECTING:
+                    logger.debug(f"Livestream controller emitting state {StreamController.StreamStatus.STARTING}")
                     await self.status_observable.emit(StreamController.StreamStatus.STARTING)
                 case (
                     EnumLiveStreamStatus.LIVE_STREAM_STATE_STREAMING
                     | EnumLiveStreamStatus.LIVE_STREAM_STATE_COMPLETE_STAY_ON
                 ):
+                    logger.debug(f"Livestream controller emitting state {StreamController.StreamStatus.STARTED}")
                     await self.status_observable.emit(StreamController.StreamStatus.STARTED)
+                case _:
+                    logger.warning(f"Livestream controller received unknown status: {status}")
 
     async def get_livestream_status_observable(
         self,
@@ -112,12 +117,12 @@ class LiveStreamController(StreamController[LivestreamOptions]):
                 lens=self.current_options.fov,
             )
         ).ok
-        logger.critical("Waiting for livestream to begin starting...")
+        logger.info("Waiting for livestream to begin starting...")
         await self.status_observable.observe(debug_id="Livestream Controller Wait For Ready").first(
             lambda s: s == StreamController.StreamStatus.STARTING
         )
         await asyncio.sleep(2)  # TODO Is this still needed?
-        logger.critical("Setting shutter to start livestream")
+        logger.info("Setting shutter to start livestream")
         await self.gopro.ble_command.set_shutter(shutter=Toggle.ENABLE)
         return ResultE.from_value(None)
 

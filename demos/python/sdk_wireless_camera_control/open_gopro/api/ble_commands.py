@@ -306,9 +306,7 @@ class BleCommands(BleMessages[BleMessage]):
     @ble_write_command(
         uuid=GoProUUID.CQ_COMMAND,
         cmd=CmdId.REBOOT,
-        rules=MessageRules(
-            fastpass_analyzer=lambda **_: True,
-        ),
+        rules=MessageRules(fastpass_analyzer=lambda **_: True),
     )
     async def reboot(self) -> GoProResp[None]:
         """Reboot the camera (approximating a battery pull)
@@ -694,6 +692,7 @@ class BleCommands(BleMessages[BleMessage]):
         response_action_id=ActionId.RELEASE_NETWORK_RSP,
         request_proto=proto.RequestReleaseNetwork,
         response_proto=proto.ResponseGeneric,
+        rules=MessageRules(fastpass_analyzer=lambda **_: True),
     )
     async def release_network(self) -> GoProResp[None]:
         """Disconnect the camera Wifi network in STA mode so that it returns to AP mode.

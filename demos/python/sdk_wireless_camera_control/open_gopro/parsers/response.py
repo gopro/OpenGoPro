@@ -45,6 +45,7 @@ validResponseProtobufIds: Final[list[tuple[FeatureId, ActionId]]] = [
     (FeatureId.COMMAND, ActionId.RESPONSE_CLEAR_COHN_CERT),
     (FeatureId.COMMAND, ActionId.RESPONSE_CREATE_COHN_CERT),
     (FeatureId.COMMAND, ActionId.RESPONSE_COHN_SETTING),
+    (FeatureId.COMMAND, ActionId.RELEASE_NETWORK_RSP),
     (FeatureId.NETWORK_MANAGEMENT, ActionId.SCAN_WIFI_NETWORKS_RSP),
     (FeatureId.NETWORK_MANAGEMENT, ActionId.NOTIF_START_SCAN),
     (FeatureId.NETWORK_MANAGEMENT, ActionId.GET_AP_ENTRIES_RSP),
