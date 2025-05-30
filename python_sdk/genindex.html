@@ -119,8 +119,6 @@
         <li><a href="api.html#open_gopro.models.constants.statuses.WifiScanState.ABORTED">(WifiScanState attribute)</a>
 </li>
       </ul></li>
-      <li><a href="api.html#open_gopro.gopro_wireless.WirelessGoPro.access_point">access_point (WirelessGoPro property)</a>
-</li>
       <li><a href="api.html#open_gopro.api.ble_statuses.BleStatuses.access_point_ssid">access_point_ssid (BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.models.constants.statuses.StatusId.ACCESS_POINT_SSID">ACCESS_POINT_SSID (StatusId attribute)</a>
@@ -134,6 +132,8 @@
       <li><a href="api.html#open_gopro.features.AccessPointFeature">AccessPointFeature (class in open_gopro.features)</a>
 </li>
       <li><a href="api.html#open_gopro.domain.observable.Observer.aclose">aclose() (Observer method)</a>
+</li>
+      <li><a href="api.html#open_gopro.models.types.ProtobufId.action_id">action_id (ProtobufId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.models.constants.constants.ActionId">ActionId (class in open_gopro.models.constants.constants)</a>
 </li>
@@ -427,8 +427,6 @@
 </li>
       <li><a href="api.html#open_gopro.models.types.CmdType">CmdType (in module open_gopro.models.types)</a>
 </li>
-      <li><a href="api.html#open_gopro.gopro_wireless.WirelessGoPro.cohn">cohn (WirelessGoPro property)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.gopro_wireless.WirelessGoPro.Interface.COHN">COHN (WirelessGoPro.Interface attribute)</a>
@@ -682,6 +680,8 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.domain.exceptions.FailedToFindDevice">FailedToFindDevice</a>
+</li>
+      <li><a href="api.html#open_gopro.models.types.ProtobufId.feature_id">feature_id (ProtobufId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.models.constants.constants.FeatureId">FeatureId (class in open_gopro.models.constants.constants)</a>
 </li>
@@ -1203,15 +1203,9 @@
       </ul></li>
       <li><a href="api.html#open_gopro.network.ble.services.Characteristic.is_readable">is_readable (Characteristic property)</a>
 </li>
-      <li><a href="api.html#open_gopro.features.AccessPointFeature.is_ready">is_ready (AccessPointFeature property)</a>
+      <li><a href="api.html#open_gopro.gopro_base.GoProBase.is_ready">is_ready (GoProBase property)</a>
 
       <ul>
-        <li><a href="api.html#open_gopro.features.CohnFeature.is_ready">(CohnFeature property)</a>
-</li>
-        <li><a href="api.html#open_gopro.gopro_base.GoProBase.is_ready">(GoProBase property)</a>
-</li>
-        <li><a href="api.html#open_gopro.features.StreamFeature.is_ready">(StreamFeature property)</a>
-</li>
         <li><a href="api.html#open_gopro.gopro_wired.WiredGoPro.is_ready">(WiredGoPro property)</a>
 </li>
         <li><a href="api.html#open_gopro.gopro_wireless.WirelessGoPro.is_ready">(WirelessGoPro property)</a>
@@ -1219,6 +1213,14 @@
       </ul></li>
       <li><a href="api.html#open_gopro.features.StreamFeature.is_streaming">is_streaming (StreamFeature property)</a>
 </li>
+      <li><a href="api.html#open_gopro.features.AccessPointFeature.is_supported">is_supported (AccessPointFeature property)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.features.CohnFeature.is_supported">(CohnFeature property)</a>
+</li>
+        <li><a href="api.html#open_gopro.features.StreamFeature.is_supported">(StreamFeature property)</a>
+</li>
+      </ul></li>
       <li><a href="api.html#open_gopro.network.ble.services.Characteristic.is_writeable">is_writeable (Characteristic property)</a>
 </li>
       <li><a href="api.html#open_gopro.network.ble.services.Characteristic.is_writeable_with_response">is_writeable_with_response (Characteristic property)</a>
@@ -2455,6 +2457,8 @@
       <li><a href="api.html#open_gopro.network.ble.client.BleClient.open">open() (BleClient method)</a>
 
       <ul>
+        <li><a href="api.html#open_gopro.features.CohnFeature.open">(CohnFeature method)</a>
+</li>
         <li><a href="api.html#open_gopro.gopro_base.GoProBase.open">(GoProBase method)</a>
 </li>
         <li><a href="api.html#open_gopro.network.wifi.client.WifiClient.open">(WifiClient method)</a>
@@ -2471,6 +2475,8 @@
         <li><a href="api.html#module-open_gopro.domain.exceptions">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     open_gopro.domain.observable
 
@@ -2478,8 +2484,6 @@
         <li><a href="api.html#module-open_gopro.domain.observable">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     open_gopro.domain.parser_interface
 
@@ -2786,7 +2790,7 @@
 </li>
       <li><a href="api.html#open_gopro.network.ble.services.Characteristic.props">props (Characteristic attribute)</a>
 </li>
-      <li><a href="api.html#open_gopro.models.constants.constants.QueryCmdId.PROTOBUF_QUERY">PROTOBUF_QUERY (QueryCmdId attribute)</a>
+      <li><a href="api.html#open_gopro.models.types.ProtobufId">ProtobufId (class in open_gopro.models.types)</a>
 </li>
       <li><a href="api.html#open_gopro.models.response.GoProResp.protocol">protocol (GoProResp attribute)</a>
 
@@ -3136,10 +3140,10 @@
       </ul></li>
       <li><a href="api.html#open_gopro.models.constants.constants.QueryCmdId.SETTING_VAL_PUSH">SETTING_VAL_PUSH (QueryCmdId attribute)</a>
 </li>
-      <li><a href="api.html#open_gopro.models.constants.settings.SettingId">SettingId (class in open_gopro.models.constants.settings)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.models.constants.settings.SettingId">SettingId (class in open_gopro.models.constants.settings)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_settings.BleSettings.setup_language">setup_language (BleSettings attribute)</a>
 
       <ul>
@@ -3258,12 +3262,6 @@
 </li>
       <li><a href="api.html#open_gopro.features.StreamFeature">StreamFeature (class in open_gopro.features)</a>
 </li>
-      <li><a href="api.html#open_gopro.gopro_wired.WiredGoPro.streaming">streaming (WiredGoPro property)</a>
-
-      <ul>
-        <li><a href="api.html#open_gopro.gopro_wireless.WirelessGoPro.streaming">(WirelessGoPro property)</a>
-</li>
-      </ul></li>
       <li><a href="api.html#open_gopro.models.types.StreamOptions">StreamOptions (in module open_gopro.models.types)</a>
 </li>
       <li><a href="api.html#open_gopro.models.streaming.StreamType">StreamType (class in open_gopro.models.streaming)</a>
@@ -3622,14 +3620,8 @@
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#open_gopro.features.AccessPointFeature.wait_for_ready">wait_for_ready() (AccessPointFeature method)</a>
-
-      <ul>
-        <li><a href="api.html#open_gopro.features.CohnFeature.wait_for_ready">(CohnFeature method)</a>
+      <li><a href="api.html#open_gopro.features.CohnFeature.wait_until_ready">wait_until_ready() (CohnFeature method)</a>
 </li>
-        <li><a href="api.html#open_gopro.features.StreamFeature.wait_for_ready">(StreamFeature method)</a>
-</li>
-      </ul></li>
       <li><a href="api.html#open_gopro.models.streaming.StreamType.WEBCAM">WEBCAM (StreamType attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_settings.BleSettings.webcam_digital_lenses">webcam_digital_lenses (BleSettings attribute)</a>
@@ -3688,10 +3680,10 @@
       </ul></li>
       <li><a href="api.html#open_gopro.models.media_list.PhotoMetadata.wide_dynamic_range">wide_dynamic_range (PhotoMetadata attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.models.constants.settings.Framing.WIDESCREEN">WIDESCREEN (Framing attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.models.constants.settings.Framing.WIDESCREEN_16_9_V2">WIDESCREEN_16_9_V2 (Framing attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.models.media_list.MediaMetadata.width">width (MediaMetadata attribute)</a>
