@@ -5,7 +5,6 @@
 
 from __future__ import annotations
 
-import asyncio
 import logging
 
 from returns.result import ResultE
@@ -25,7 +24,6 @@ from open_gopro.features.streaming.webcam_stream import (
     WebcamStreamController,
     WebcamStreamOptions,
 )
-from open_gopro.gopro_base import GoProBase
 from open_gopro.models.types import StreamOptions
 
 logger = logging.getLogger(__name__)
@@ -37,13 +35,14 @@ class StreamFeature(BaseFeature):
     There can only ever be one stream open at a time.
     """
 
-    def __init__(
-        self,
-        gopro: GoProBase,
-        loop: asyncio.AbstractEventLoop,
-    ) -> None:
-        super().__init__(gopro, loop)
+    def __init__(self) -> None:
+        super().__init__()
         self._current: StreamController | None = None
+
+    @property
+    def is_supported(self) -> bool:  # noqa: D102
+        # Streaming is always supported
+        return True
 
     @property
     def current_stream(self) -> StreamType | None:
@@ -61,7 +60,7 @@ class StreamFeature(BaseFeature):
         Returns:
             bool: True if a stream is active, False otherwise.
         """
-        return self._current is not None
+        return self._current is not None and self._current.status == StreamController.StreamStatus.STARTED
 
     @property
     def url(self) -> str | None:
@@ -127,14 +126,6 @@ class StreamFeature(BaseFeature):
             await self._current.stop()
 
         return ResultE.from_value(None)
-
-    @property
-    def is_ready(self) -> bool:  # noqa: D102
-        # Always ready. We'll track stream status when they are requested to be opened
-        return True
-
-    async def wait_for_ready(self, _: float = 60) -> None:  # noqa: D102
-        return
 
     async def close(self) -> None:  # noqa: D102
         await self.stop_active_stream()

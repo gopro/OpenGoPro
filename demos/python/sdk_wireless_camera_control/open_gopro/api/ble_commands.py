@@ -49,7 +49,7 @@ from open_gopro.models.constants import (
     SettingId,
     StatusId,
 )
-from open_gopro.models.types import CameraState
+from open_gopro.models.types import CameraState, ProtobufId
 from open_gopro.parsers.bytes import (
     ConstructByteParserBuilder,
     DateTimeByteParserBuilder,
@@ -306,9 +306,7 @@ class BleCommands(BleMessages[BleMessage]):
     @ble_write_command(
         uuid=GoProUUID.CQ_COMMAND,
         cmd=CmdId.REBOOT,
-        rules=MessageRules(
-            fastpass_analyzer=lambda **_: True,
-        ),
+        rules=MessageRules(fastpass_analyzer=lambda **_: True),
     )
     async def reboot(self) -> GoProResp[None]:
         """Reboot the camera (approximating a battery pull)
@@ -430,7 +428,7 @@ class BleCommands(BleMessages[BleMessage]):
         response_action_id=ActionId.GET_PRESET_STATUS_RSP,
         request_proto=proto.RequestGetPresetStatus,
         response_proto=proto.NotifyPresetStatus,
-        additional_matching_ids={ActionId.PRESET_MODIFIED_NOTIFICATION},
+        additional_matching_ids={ProtobufId(FeatureId.QUERY, ActionId.PRESET_MODIFIED_NOTIFICATION)},
     )
     async def get_preset_status(
         self,
@@ -559,7 +557,7 @@ class BleCommands(BleMessages[BleMessage]):
         response_action_id=ActionId.REQUEST_WIFI_CONNECT_RSP,
         request_proto=proto.RequestConnect,
         response_proto=proto.ResponseConnect,
-        additional_matching_ids={ActionId.REQUEST_WIFI_CONNECT_RSP},
+        additional_matching_ids={ProtobufId(FeatureId.NETWORK_MANAGEMENT, ActionId.REQUEST_WIFI_CONNECT_RSP)},
     )
     async def request_wifi_connect(self, *, ssid: str) -> GoProResp[proto.ResponseConnect]:
         """Request the camera to connect to a WiFi network that is already provisioned.
@@ -580,7 +578,7 @@ class BleCommands(BleMessages[BleMessage]):
         response_action_id=ActionId.REQUEST_WIFI_CONNECT_NEW_RSP,
         request_proto=proto.RequestConnectNew,
         response_proto=proto.ResponseConnectNew,
-        additional_matching_ids={ActionId.REQUEST_WIFI_CONNECT_NEW_RSP},
+        additional_matching_ids={ProtobufId(FeatureId.NETWORK_MANAGEMENT, ActionId.REQUEST_WIFI_CONNECT_NEW_RSP)},
     )
     async def request_wifi_connect_new(self, *, ssid: str, password: str) -> GoProResp[proto.ResponseConnectNew]:
         """Request the camera to connect to a WiFi network that is not already provisioned.
@@ -666,7 +664,7 @@ class BleCommands(BleMessages[BleMessage]):
         response_action_id=ActionId.LIVESTREAM_STATUS_RSP,
         request_proto=proto.RequestGetLiveStreamStatus,
         response_proto=proto.NotifyLiveStreamStatus,
-        additional_matching_ids={ActionId.LIVESTREAM_STATUS_NOTIF},
+        additional_matching_ids={ProtobufId(FeatureId.QUERY, ActionId.LIVESTREAM_STATUS_NOTIF)},
     )
     async def register_livestream_status(
         self,
@@ -694,6 +692,7 @@ class BleCommands(BleMessages[BleMessage]):
         response_action_id=ActionId.RELEASE_NETWORK_RSP,
         request_proto=proto.RequestReleaseNetwork,
         response_proto=proto.ResponseGeneric,
+        rules=MessageRules(fastpass_analyzer=lambda **_: True),
     )
     async def release_network(self) -> GoProResp[None]:
         """Disconnect the camera Wifi network in STA mode so that it returns to AP mode.
@@ -819,5 +818,5 @@ class BleAsyncResponses:
     def add_parsers(cls) -> None:
         """Add all of the defined asynchronous responses to the global parser map"""
         for response in cls.responses:
-            GlobalParsers.add(response.action_id, response.parser)
+            GlobalParsers.add(ProtobufId(response.feature_id, response.action_id), response.parser)
             GlobalParsers.add_feature_action_id_mapping(response.feature_id, response.action_id)

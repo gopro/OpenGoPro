@@ -7,6 +7,7 @@
 """Unit testing of GoPro Client"""
 
 import asyncio
+import test
 from pathlib import Path
 
 import pytest
@@ -25,10 +26,17 @@ from open_gopro.models.constants import (
     StatusId,
     settings,
 )
+from open_gopro.models.constants.constants import FeatureId
 from open_gopro.models.constants.statuses import InternalBatteryBars
-from open_gopro.models.types import UpdateType
+from open_gopro.models.proto.cohn_pb2 import NotifyCOHNStatus, ResponseCOHNCert
+from open_gopro.models.types import ProtobufId, UpdateType
 from tests import mock_good_response
-from tests.mocks import MockGoProMaintainBle, MockWirelessGoPro
+from tests.mocks import (
+    MockBleCommunicator,
+    MockGoProMaintainBle,
+    MockGoproResp,
+    MockWirelessGoPro,
+)
 
 
 @pytest.mark.timeout(30)
@@ -150,6 +158,37 @@ async def test_get_update(mock_wireless_gopro_basic: WirelessGoPro):
     mock_wireless_gopro_basic._notification_handler(0xFF, not_encoding)
     with pytest.raises(asyncio.TimeoutError):
         await asyncio.wait_for(event.wait(), 1)
+
+
+async def test_unsupported_protobuf_operation(mock_wireless_gopro_basic: WirelessGoPro):
+    # GIVEN
+    test_ready = asyncio.Event()
+    mock_response = GoProResp(
+        protocol=GoProResp.Protocol.BLE,
+        status=ErrorCode.INVALID_PARAM,
+        identifier=ProtobufId(FeatureId.COMMAND, None),
+        data=None,
+    )
+    mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
+
+    # WHEN
+    async def get_cohn_status() -> GoProResp[None]:
+        test_ready.set()
+        return await mock_wireless_gopro_basic.ble_command.cohn_clear_certificate()
+
+    async def route_response():
+        await test_ready.wait()
+        await asyncio.sleep(1)  # TODO remove this
+        await mock_wireless_gopro_basic._route_response(mock_response)
+
+    async with asyncio.TaskGroup() as tg:
+        cohn_task = tg.create_task(get_cohn_status())
+        tg.create_task(route_response())
+    response = cohn_task.result()
+
+    # THEN
+    assert cohn_task.done()
+    assert response.status == ErrorCode.INVALID_PARAM
 
 
 async def test_route_all_data(mock_wireless_gopro_basic: WirelessGoPro):

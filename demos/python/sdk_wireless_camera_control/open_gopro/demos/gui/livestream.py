@@ -42,14 +42,18 @@ async def main(args: argparse.Namespace) -> None:
         )
         assert gopro.streaming.url
         console.print(
-            f"[yellow]Livestream to {gopro.streaming.url} is now streaming and should be available for viewing at."
+            f"[yellow]Livestream to {gopro.streaming.url} is now streaming and should be available for viewing."
         )
         await ainput("Press enter to stop livestreaming...\n")
 
+        console.print("[yellow]Stopping livestream...")
         await gopro.streaming.stop_active_stream()
 
         # TODO merge this into access point feature
+        console.print("[yellow]Disconnecting GoPro from network...")
         await gopro.ble_command.release_network()
+
+        console.print(" [yellow]Exiting...")
 
 
 def parse_arguments() -> argparse.Namespace:
