@@ -59,6 +59,7 @@ validResponseProtobufIds: Final[list[tuple[FeatureId, ActionId]]] = [
     (FeatureId.QUERY, ActionId.RESPONSE_GET_COHN_STATUS),
     (FeatureId.QUERY, ActionId.RESPONSE_GET_COHN_CERT),
     (FeatureId.QUERY, ActionId.INTERNAL_FF),
+    (FeatureId.WIRELESS_MANAGEMENT, ActionId.SET_PAIRING_STATE_RSP)
 ]
 
 

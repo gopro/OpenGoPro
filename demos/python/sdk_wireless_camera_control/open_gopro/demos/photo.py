@@ -29,7 +29,7 @@ async def main(args: argparse.Namespace) -> None:
             if args.wired
             else WirelessGoPro(args.identifier, host_wifi_interface=args.wifi_interface)
         ) as gopro:
-            assert gopro
+            await gopro.ble_command.set_pairing_complete()
             assert (await gopro.http_command.load_preset_group(group=proto.EnumPresetGroup.PRESET_GROUP_ID_PHOTO)).ok
 
             # Get the media list before

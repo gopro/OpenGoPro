@@ -190,3 +190,23 @@ message ResponseStartScanning {
     required EnumResultGeneric result         = 1; // Generic pass/fail/error info
     required EnumScanning      scanning_state = 2; // Scanning state
 }
+
+/**
+ * Set Wireless 2.0 Pairing State
+ *
+ * This is often colloquially referred to as "sending pairing complete"
+ *
+ * Response: @ref ResponseGeneric
+ */
+message RequestPairingFinish {
+    required EnumPairingFinishState result    = 1; // Pairing state to set
+    /**
+     * This must be a non empty string but it does not actually affect anything.
+     */
+    required string                 phoneName = 2;
+}
+
+enum EnumPairingFinishState {
+    SUCCESS = 0;
+    FAILED  = 1;
+}
