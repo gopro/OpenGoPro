@@ -98,6 +98,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.set_date_time"><code class="docutils literal notranslate"><span class="pre">BleCommands.set_date_time()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.set_date_time_tz_dst"><code class="docutils literal notranslate"><span class="pre">BleCommands.set_date_time_tz_dst()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.set_livestream_mode"><code class="docutils literal notranslate"><span class="pre">BleCommands.set_livestream_mode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.set_pairing_complete"><code class="docutils literal notranslate"><span class="pre">BleCommands.set_pairing_complete()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.set_shutter"><code class="docutils literal notranslate"><span class="pre">BleCommands.set_shutter()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.set_third_party_client_info"><code class="docutils literal notranslate"><span class="pre">BleCommands.set_third_party_client_info()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.api.ble_commands.BleCommands.set_turbo_mode"><code class="docutils literal notranslate"><span class="pre">BleCommands.set_turbo_mode()</span></code></a></li>
@@ -439,6 +440,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.models.constants.constants.ActionId.SET_CAMERA_CONTROL_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.SET_CAMERA_CONTROL_RSP</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.models.constants.constants.ActionId.SET_LIVESTREAM_MODE"><code class="docutils literal notranslate"><span class="pre">ActionId.SET_LIVESTREAM_MODE</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.models.constants.constants.ActionId.SET_LIVESTREAM_MODE_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.SET_LIVESTREAM_MODE_RSP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.models.constants.constants.ActionId.SET_PAIRING_STATE"><code class="docutils literal notranslate"><span class="pre">ActionId.SET_PAIRING_STATE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.models.constants.constants.ActionId.SET_PAIRING_STATE_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.SET_PAIRING_STATE_RSP</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.models.constants.constants.ActionId.SET_TURBO_MODE"><code class="docutils literal notranslate"><span class="pre">ActionId.SET_TURBO_MODE</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.models.constants.constants.ActionId.SET_TURBO_MODE_RSP"><code class="docutils literal notranslate"><span class="pre">ActionId.SET_TURBO_MODE_RSP</span></code></a></li>
 </ul>
@@ -490,6 +493,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.models.constants.constants.FeatureId.NETWORK_MANAGEMENT"><code class="docutils literal notranslate"><span class="pre">FeatureId.NETWORK_MANAGEMENT</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.models.constants.constants.FeatureId.QUERY"><code class="docutils literal notranslate"><span class="pre">FeatureId.QUERY</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#open_gopro.models.constants.constants.FeatureId.SETTING"><code class="docutils literal notranslate"><span class="pre">FeatureId.SETTING</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#open_gopro.models.constants.constants.FeatureId.WIRELESS_MANAGEMENT"><code class="docutils literal notranslate"><span class="pre">FeatureId.WIRELESS_MANAGEMENT</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#open_gopro.models.constants.constants.LED_SPECIAL"><code class="docutils literal notranslate"><span class="pre">LED_SPECIAL</span></code></a><ul>
@@ -2865,6 +2869,20 @@ unregister for. Defaults to None (don’t unregister for any).</p></li>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a>[None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="open_gopro.api.ble_commands.BleCommands.set_pairing_complete">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_pairing_complete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp"><span class="pre">GoProResp</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.api.ble_commands.BleCommands.set_pairing_complete" title="Link to this definition"></a></dt>
+<dd><p>Notify the camera that pairing is complete and it should clear the pairing UI.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>command status of request</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#open_gopro.models.response.GoProResp" title="open_gopro.models.response.GoProResp">GoProResp</a>[None]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -7674,6 +7692,16 @@ from a receiver.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.models.constants.constants.ActionId.SET_PAIRING_STATE">
+<span class="sig-name descname"><span class="pre">SET_PAIRING_STATE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#open_gopro.models.constants.constants.ActionId.SET_PAIRING_STATE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.models.constants.constants.ActionId.SET_PAIRING_STATE_RSP">
+<span class="sig-name descname"><span class="pre">SET_PAIRING_STATE_RSP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">129</span></em><a class="headerlink" href="#open_gopro.models.constants.constants.ActionId.SET_PAIRING_STATE_RSP" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.models.constants.constants.ActionId.SET_TURBO_MODE">
 <span class="sig-name descname"><span class="pre">SET_TURBO_MODE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">107</span></em><a class="headerlink" href="#open_gopro.models.constants.constants.ActionId.SET_TURBO_MODE" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -7886,6 +7914,11 @@ from a receiver.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="open_gopro.models.constants.constants.FeatureId.SETTING">
 <span class="sig-name descname"><span class="pre">SETTING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">243</span></em><a class="headerlink" href="#open_gopro.models.constants.constants.FeatureId.SETTING" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="open_gopro.models.constants.constants.FeatureId.WIRELESS_MANAGEMENT">
+<span class="sig-name descname"><span class="pre">WIRELESS_MANAGEMENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#open_gopro.models.constants.constants.FeatureId.WIRELESS_MANAGEMENT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
