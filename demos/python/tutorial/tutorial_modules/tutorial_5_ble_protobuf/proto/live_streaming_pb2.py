@@ -1,3 +1,6 @@
+# live_streaming_pb2.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Fri Jun  6 17:50:56 UTC 2025
+
 """Generated protocol buffer code."""
 
 from google.protobuf.internal import builder as _builder
