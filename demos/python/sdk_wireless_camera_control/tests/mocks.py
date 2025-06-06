@@ -350,6 +350,7 @@ class MockWirelessGoPro(WirelessGoPro):
         self.http_command.set_third_party_client_info = self._mock_empty_return
         self.ble_command.set_third_party_client_info = self._mock_empty_return
         self.ble_command.set_date_time_tz_dst = self._mock_empty_return
+        self.ble_command.set_pairing_complete = self._mock_empty_return
         self._ble.write = self._mock_write
         self._ble._gatt_table = MockGattTable()
         self._test_response_uuid = GoProUUID.CQ_COMMAND
@@ -448,6 +449,7 @@ class MockGoProMaintainBle(WirelessGoPro):
         self.ble_status.busy.register_value_update = self._mock_register_busy
         self.ble_setting.led.set = self._mock_led_set
         self._open_wifi = self._mock_open_wifi
+        self.ble_command.set_pairing_complete = self._mock_pairing_complete
         self._sync_resp_ready_q.get = self._mock_q_get
         self.generic_spy: asyncio.Queue[Any] = asyncio.Queue()
 
@@ -460,6 +462,9 @@ class MockGoProMaintainBle(WirelessGoPro):
 
     async def _mock_open_wifi(self, *args):
         return None
+
+    async def _mock_pairing_complete(self) -> MockGoproResp:
+        return MockGoproResp()
 
     async def _mock_register_encoding(self, *args):
         return MockGoproResp({StatusId.ENCODING: 1})

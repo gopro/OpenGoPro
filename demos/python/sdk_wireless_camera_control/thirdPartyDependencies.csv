@@ -11,9 +11,9 @@ markdown-it-py,3.0.0,326419,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,markdown-it-py-3.
 mdurl,0.1.2,22532,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,mdurl-0.1.2
 mypy,1.15.0,28075966,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,mypy-1.15.0
 mypy-extensions,1.1.0,10152,UNKNOWN,UNKNOWN,,False,0,mypy-extensions-1.1.0
-packaging,24.2,233256,UNKNOWN,UNKNOWN,APACHE SOFTWARE LICENSE;; BSD LICENSE,True,0,packaging-24.2
+packaging,25.0,236496,UNKNOWN,UNKNOWN,APACHE SOFTWARE LICENSE;; BSD LICENSE,True,0,packaging-25.0
 pexpect,4.9.0,189532,https://pexpect.readthedocs.io/,Noah Spurrier; Thomas Kluyver; Jeff Quast,ISC LICENSE _ISCL_,True,0,pexpect-4.9.0
-protobuf,6.30.2,1607350,https://developers.google.com/protocol-buffers/,protobuf@googlegroups.com,3-CLAUSE BSD LICENSE,True,0,protobuf-6.30.2
+protobuf,6.31.0,1633246,https://developers.google.com/protocol-buffers/,protobuf@googlegroups.com,3-CLAUSE BSD LICENSE,True,0,protobuf-6.31.0
 ptyprocess,0.7.0,39299,https://github.com/pexpect/ptyprocess,Thomas Kluyver,ISC LICENSE _ISCL_,True,0,ptyprocess-0.7.0
 pydantic,2.11.4,1756910,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,pydantic-2.11.4
 pydantic-core,2.33.2,5520457,https://github.com/pydantic/pydantic-core,UNKNOWN,MIT LICENSE,True,0,pydantic-core-2.33.2
