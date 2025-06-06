@@ -49,6 +49,7 @@ from open_gopro.models.constants import (
     SettingId,
     StatusId,
 )
+from open_gopro.models.proto.network_management_pb2 import EnumPairingFinishState
 from open_gopro.models.types import CameraState, ProtobufId
 from open_gopro.parsers.bytes import (
     ConstructByteParserBuilder,
@@ -420,6 +421,22 @@ class BleCommands(BleMessages[BleMessage]):
             GoProResp[None]: command status of request
         """
         return {"active": mode}  # type: ignore
+
+    @ble_proto_command(
+        uuid=GoProUUID.CM_NET_MGMT_COMM,
+        feature_id=FeatureId.WIRELESS_MANAGEMENT,
+        action_id=ActionId.SET_PAIRING_STATE,
+        response_action_id=ActionId.SET_PAIRING_STATE_RSP,
+        request_proto=proto.RequestPairingFinish,
+        response_proto=proto.ResponseGeneric,
+    )
+    async def set_pairing_complete(self) -> GoProResp[None]:
+        """Notify the camera that pairing is complete and it should clear the pairing UI.
+
+        Returns:
+            GoProResp[None]: command status of request
+        """
+        return {"result": EnumPairingFinishState.SUCCESS, "phoneName": "phoneName"}  # type: ignore
 
     @ble_proto_command(
         uuid=GoProUUID.CQ_QUERY,

@@ -205,6 +205,7 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
     if (!isInitialized) {
       initializeStateManagement(communicator)
       setDateTime()
+      commands.clearPairingScreen()
       commands.setThirdParty()
       isInitialized = true
     }

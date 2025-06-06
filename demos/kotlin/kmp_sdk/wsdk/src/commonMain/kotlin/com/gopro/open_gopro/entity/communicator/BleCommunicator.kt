@@ -45,6 +45,7 @@ internal enum class QueryId(val value: UByte) {
 }
 
 internal enum class ActionId(val value: UByte) {
+  REQUEST_PAIRING_STATE(0x01U),
   SCAN_WIFI_NETWORKS(0x02U),
   GET_AP_ENTRIES(0x03U),
   REQUEST_WIFI_CONNECT(0x04U),
@@ -58,6 +59,7 @@ internal enum class ActionId(val value: UByte) {
   GET_LIVESTREAM_STATUS(0x74U),
   RELEASE_NETWORK(0x78U),
   SET_LIVESTREAM_MODE(0x79U),
+  REQUEST_PAIRING_STATE_RSP(0x81U),
   SCAN_WIFI_NETWORKS_RSP(0x82U),
   GET_AP_ENTRIES_RSP(0x83U),
   REQUEST_WIFI_CONNECT_RSP(0x84U),
@@ -92,6 +94,7 @@ internal enum class ActionId(val value: UByte) {
 
 internal enum class FeatureId(val value: UByte) {
   NETWORK_MANAGEMENT(0x02U),
+  WIRELESS_MANAGEMENT(0x03U),
   COMMAND(0xF1U),
   SETTING(0xF3U),
   QUERY(0xF5U);
@@ -116,6 +119,7 @@ internal val responseProtobufIds: Set<Pair<FeatureId, ActionId>> =
         FeatureId.NETWORK_MANAGEMENT to ActionId.REQUEST_WIFI_CONNECT_NEW_RSP,
         FeatureId.NETWORK_MANAGEMENT to ActionId.REQUEST_WIFI_CONNECT_RSP,
         FeatureId.NETWORK_MANAGEMENT to ActionId.NOTIF_PROVIS_STATE,
+        FeatureId.WIRELESS_MANAGEMENT to ActionId.REQUEST_PAIRING_STATE_RSP,
         FeatureId.QUERY to ActionId.LIVESTREAM_STATUS_RSP,
         FeatureId.QUERY to ActionId.LIVESTREAM_STATUS_NOTIF,
         FeatureId.QUERY to ActionId.GET_PRESET_STATUS_RSP,

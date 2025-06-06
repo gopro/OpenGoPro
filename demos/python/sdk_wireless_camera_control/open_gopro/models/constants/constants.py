@@ -53,6 +53,7 @@ class CmdId(GoProIntEnum):
 class ActionId(GoProIntEnum):
     """Action ID's that identify a protobuf command."""
 
+    SET_PAIRING_STATE = 0x01
     SCAN_WIFI_NETWORKS = 0x02
     GET_AP_ENTRIES = 0x03
     REQUEST_WIFI_CONNECT = 0x04
@@ -66,6 +67,7 @@ class ActionId(GoProIntEnum):
     GET_LIVESTREAM_STATUS = 0x74
     RELEASE_NETWORK = 0x78
     SET_LIVESTREAM_MODE = 0x79
+    SET_PAIRING_STATE_RSP = 0x81
     SCAN_WIFI_NETWORKS_RSP = 0x82
     GET_AP_ENTRIES_RSP = 0x83
     REQUEST_WIFI_CONNECT_RSP = 0x84
@@ -98,6 +100,7 @@ class FeatureId(GoProIntEnum):
     """ID's that group protobuf commands"""
 
     NETWORK_MANAGEMENT = 0x02
+    WIRELESS_MANAGEMENT = 0x03
     COMMAND = 0xF1
     SETTING = 0xF3
     QUERY = 0xF5

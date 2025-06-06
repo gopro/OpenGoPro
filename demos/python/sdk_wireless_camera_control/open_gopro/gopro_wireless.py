@@ -604,6 +604,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         # Establish connection, pair, etc.
         await self._ble.open(timeout, retries)
         self._is_ble_connected = True
+        await self.ble_command.set_pairing_complete()
         if not self._ble.identifier:
             raise InterfaceConfigFailure("Failed to get identifier from BLE client")
         self._identifier = self._ble.identifier[-4:]

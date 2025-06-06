@@ -38,6 +38,7 @@ from .network_management_pb2 import (
     RequestConnect,
     RequestConnectNew,
     RequestGetApEntries,
+    RequestPairingFinish,
     RequestReleaseNetwork,
     RequestStartScan,
     ResponseConnect,

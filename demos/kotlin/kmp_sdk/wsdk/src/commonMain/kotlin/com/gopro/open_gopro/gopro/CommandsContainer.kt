@@ -57,6 +57,7 @@ import com.gopro.open_gopro.operations.commands.Reboot
 import com.gopro.open_gopro.operations.commands.SetApMode
 import com.gopro.open_gopro.operations.commands.SetCameraControl
 import com.gopro.open_gopro.operations.commands.SetDigitalZoom
+import com.gopro.open_gopro.operations.commands.SetPairingComplete
 import com.gopro.open_gopro.operations.commands.SetShutter
 import com.gopro.open_gopro.operations.commands.SetThirdParty
 import com.gopro.open_gopro.operations.commands.Sleep
@@ -427,6 +428,8 @@ class CommandsContainer internal constructor(private val marshaller: IOperationM
   internal suspend fun getCohnCertificate() = marshaller.marshal(CohnGetCert())
 
   internal suspend fun clearCohnCertificate() = marshaller.marshal(CohnClearCert())
+
+  internal suspend fun clearPairingScreen() = marshaller.marshal(SetPairingComplete())
 
   /**
    * Reboot the camera (approximating a battery pull)
