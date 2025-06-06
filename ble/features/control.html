@@ -246,6 +246,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumlens">EnumLens</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumlivestreamerror">EnumLiveStreamError</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumlivestreamstatus">EnumLiveStreamStatus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumpairingfinishstate">EnumPairingFinishState</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumpresetgroup">EnumPresetGroup</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumpresetgroupicon">EnumPresetGroupIcon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../protocol/protobuf.html#enumpreseticon">EnumPresetIcon</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetlastcapturedmedia">RequestGetLastCapturedMedia</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetlivestreamstatus">RequestGetLiveStreamStatus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetpresetstatus">RequestGetPresetStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestpairingfinish">RequestPairingFinish</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestreleasenetwork">RequestReleaseNetwork</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetcohnsetting">RequestSetCOHNSetting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetcameracontrolstatus">RequestSetCameraControlStatus</a></li>
@@ -310,6 +312,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#set-camera-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Control</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-local-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-pairing-state"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Pairing</span> <span class="pre">State</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-shutter"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Shutter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-turbo-transfer"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Turbo</span> <span class="pre">Transfer</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sleep"><code class="docutils literal notranslate"><span class="pre">Sleep</span></code></a></li>
@@ -1047,6 +1050,84 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 </dd>
 </dl>
 
+<dl class="operation protobuf">
+<dt class="sig sig-object operation" id="set-pairing-state">
+<span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Pairing</span> <span class="pre">State</span></span><a class="headerlink" href="#set-pairing-state" title="Link to this definition"></a>
+</dt>
+<dd>
+<img alt="https://img.shields.io/badge/HERO13 Black-4363d8" src="https://img.shields.io/badge/HERO13%20Black-4363d8">
+<img alt="https://img.shields.io/badge/HERO12 Black-911eb4" src="https://img.shields.io/badge/HERO12%20Black-911eb4">
+<img alt="https://img.shields.io/badge/HERO11 Black Mini-46f0f0" src="https://img.shields.io/badge/HERO11%20Black%20Mini-46f0f0">
+<img alt="https://img.shields.io/badge/HERO11 Black-f032e6" src="https://img.shields.io/badge/HERO11%20Black-f032e6">
+<img alt="https://img.shields.io/badge/HERO10 Black-bcf60c" src="https://img.shields.io/badge/HERO10%20Black-bcf60c">
+<img alt="https://img.shields.io/badge/HERO9 Black-fabebe" src="https://img.shields.io/badge/HERO9%20Black-fabebe">
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
+</dd>
+</dl>
+<p>This should be used to finish the initial pairing process in order to clear the pairing screen on the camera UI.</p>
+<dl class="operation protobuf-message" id="protobuf-message-2">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Request</span></span>
+</dt>
+<dd>
+<p>Set Wireless 2.0 Pairing State</p>
+<p>This is often colloquially referred to as “sending pairing complete”</p>
+<p>Response: <a class="reference internal" href="../protocol/protobuf.html#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a></p>
+</dd>
+</dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Network Management Command</em></a></p>
+</dd>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
+<dd class="field-even">0x03</dd>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">0x01</dd>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>RequestPairingFinish (<a class="reference external" href="../protocol/protobuf.html#requestpairingfinish"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto"><em>source</em></a>)</p>
+</dd>
+</dl>
+<dl class="operation protobuf-message" id="protobuf-message-3">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Response</span></span>
+</dt>
+<dd>
+<p>Generic Response used across many response / notification messages</p>
+</dd>
+</dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Network Management Response</em></a></p>
+</dd>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
+<dd class="field-even">0x03</dd>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">0x81</dd>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>ResponseGeneric (<a class="reference external" href="../protocol/protobuf.html#responsegeneric"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/response_generic.proto"><em>source</em></a>)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+
 <dl class="operation tlv-command" id="GPCAMERA_SHUTTER">
 <dt class="sig sig-object operation" id="set-shutter">
 <span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Shutter</span></span><a class="headerlink" href="#set-shutter" title="Link to this definition"></a>
@@ -1126,7 +1207,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
 </dd>
 </dl>
-<dl class="operation protobuf-message" id="protobuf-message-2">
+<dl class="operation protobuf-message" id="protobuf-message-4">
 <dt class="sig sig-object operation">
 <span class="sig-name descname"><span class="pre">Request</span></span>
 </dt>
@@ -1154,7 +1235,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <p>RequestSetTurboActive (<a class="reference external" href="../protocol/protobuf.html#requestsetturboactive"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/turbo_transfer.proto"><em>source</em></a>)</p>
 </dd>
 </dl>
-<dl class="operation protobuf-message" id="protobuf-message-3">
+<dl class="operation protobuf-message" id="protobuf-message-5">
 <dt class="sig sig-object operation">
 <span class="sig-name descname"><span class="pre">Response</span></span>
 </dt>

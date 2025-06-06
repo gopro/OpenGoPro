@@ -171,6 +171,9 @@ Operations
 
 .. operation:protobuf:: Set Pairing State
     :operation-id: GPCAMERA_WIRELESS_PAIRING_COMPLETE
+    :external:
+
+    This should be used to finish the initial pairing process in order to clear the pairing screen on the camera UI.
 
     .. operation:protobuf-message:: request
         :feature-id: 0x03

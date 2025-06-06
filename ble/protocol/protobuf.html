@@ -246,6 +246,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#enumlens">EnumLens</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#enumlivestreamerror">EnumLiveStreamError</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#enumlivestreamstatus">EnumLiveStreamStatus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#enumpairingfinishstate">EnumPairingFinishState</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#enumpresetgroup">EnumPresetGroup</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#enumpresetgroupicon">EnumPresetGroupIcon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#enumpreseticon">EnumPresetIcon</a></li>
@@ -279,6 +280,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#requestgetlastcapturedmedia">RequestGetLastCapturedMedia</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#requestgetlivestreamstatus">RequestGetLiveStreamStatus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#requestgetpresetstatus">RequestGetPresetStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#requestpairingfinish">RequestPairingFinish</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#requestreleasenetwork">RequestReleaseNetwork</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#requestsetcohnsetting">RequestSetCOHNSetting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#requestsetcameracontrolstatus">RequestSetCameraControlStatus</a></li>
@@ -310,6 +312,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-camera-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Control</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-local-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-pairing-state"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Pairing</span> <span class="pre">State</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-shutter"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Shutter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-turbo-transfer"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Turbo</span> <span class="pre">Transfer</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#sleep"><code class="docutils literal notranslate"><span class="pre">Sleep</span></code></a></li>
@@ -1098,6 +1101,42 @@
 <td>LIVE_STREAM_STATE_UNAVAILABLE</td>
 <td>7</td>
 <td>Live stream setup is unavailable due to camera lens configuration</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="enumpairingfinishstate">
+<span id="proto-enumpairingfinishstate"></span><h3>EnumPairingFinishState<a class="headerlink" href="#enumpairingfinishstate" title="Link to this heading"></a>
+</h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto">Source Protobuf File</a></p>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16.7%">
+<col style="width: 16.7%">
+<col style="width: 66.7%">
+</colgroup>
+<thead>
+<tr class="row-odd">
+<th class="head">name</th>
+<th class="head">value</th>
+<th class="head">summary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even">
+<td>SUCCESS</td>
+<td>0</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>FAILED</td>
+<td>1</td>
+<td>
+</td>
 </tr>
 </tbody>
 </table>
@@ -3668,6 +3707,51 @@ changes.</p>
 <div class="line">When False, Setting IDs are tied to their camera UI string representation and may vary between cameras.</div>
 <div class="line"><br></div>
 <div class="line">When True, Setting IDs are tied to their functional representation and are consistent across cameras.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="requestpairingfinish">
+<span id="proto-requestpairingfinish"></span><h2>RequestPairingFinish<a class="headerlink" href="#requestpairingfinish" title="Link to this heading"></a>
+</h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto">Source Protobuf File</a></p>
+</div>
+<p>Set Wireless 2.0 Pairing State</p>
+<p>This is often colloquially referred to as “sending pairing complete”</p>
+<p>Response: <a class="reference internal" href="#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
+</colgroup>
+<thead>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even">
+<td>result</td>
+<td><a class="reference internal" href="#proto-enumpairingfinishstate"><span class="std std-ref">EnumPairingFinishState</span></a></td>
+<td>1</td>
+<td>Pairing state to set</td>
+</tr>
+<tr class="row-odd">
+<td>phoneName</td>
+<td>string</td>
+<td>2</td>
+<td>
+<div class="line-block">
+<div class="line">This must be a non empty string but it does not actually affect anything.</div>
 </div>
 </td>
 </tr>

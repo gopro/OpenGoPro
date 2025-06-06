@@ -249,6 +249,7 @@
 <li class="toctree-l4"><a class="reference internal" href="protocol/protobuf.html#enumlens">EnumLens</a></li>
 <li class="toctree-l4"><a class="reference internal" href="protocol/protobuf.html#enumlivestreamerror">EnumLiveStreamError</a></li>
 <li class="toctree-l4"><a class="reference internal" href="protocol/protobuf.html#enumlivestreamstatus">EnumLiveStreamStatus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="protocol/protobuf.html#enumpairingfinishstate">EnumPairingFinishState</a></li>
 <li class="toctree-l4"><a class="reference internal" href="protocol/protobuf.html#enumpresetgroup">EnumPresetGroup</a></li>
 <li class="toctree-l4"><a class="reference internal" href="protocol/protobuf.html#enumpresetgroupicon">EnumPresetGroupIcon</a></li>
 <li class="toctree-l4"><a class="reference internal" href="protocol/protobuf.html#enumpreseticon">EnumPresetIcon</a></li>
@@ -282,6 +283,7 @@
 <li class="toctree-l3"><a class="reference internal" href="protocol/protobuf.html#requestgetlastcapturedmedia">RequestGetLastCapturedMedia</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/protobuf.html#requestgetlivestreamstatus">RequestGetLiveStreamStatus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/protobuf.html#requestgetpresetstatus">RequestGetPresetStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="protocol/protobuf.html#requestpairingfinish">RequestPairingFinish</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/protobuf.html#requestreleasenetwork">RequestReleaseNetwork</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/protobuf.html#requestsetcohnsetting">RequestSetCOHNSetting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/protobuf.html#requestsetcameracontrolstatus">RequestSetCameraControlStatus</a></li>
@@ -313,6 +315,7 @@
 <li class="toctree-l3"><a class="reference internal" href="features/control.html#set-camera-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Control</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/control.html#set-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/control.html#set-local-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="features/control.html#set-pairing-state"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Pairing</span> <span class="pre">State</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/control.html#set-shutter"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Shutter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/control.html#set-turbo-transfer"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Turbo</span> <span class="pre">Transfer</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/control.html#sleep"><code class="docutils literal notranslate"><span class="pre">Sleep</span></code></a></li>
@@ -678,55 +681,7 @@
        <td>
 </td>
        <td>
-<a href="protocol/protobuf.html#enumprovisioning"><code class="xref">EnumProvisioning</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
-<a href="protocol/protobuf.html#enumscanning"><code class="xref">EnumScanning</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
-<a href="protocol/protobuf.html#enumscanentryflags"><code class="xref">EnumScanEntryFlags</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
-<a href="protocol/protobuf.html#enumregisterpresetstatus"><code class="xref">EnumRegisterPresetStatus</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
 <a href="protocol/protobuf.html#enumresultgeneric"><code class="xref">EnumResultGeneric</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
-<a href="protocol/protobuf.html#enumcohnstatus"><code class="xref">EnumCOHNStatus</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
-<a href="protocol/protobuf.html#enumcohnnetworkstate"><code class="xref">EnumCOHNNetworkState</code></a> <em>(protocol/protobuf)</em>
 </td>
 <td><em>Proto</em></td>
 </tr>
@@ -767,6 +722,62 @@
 </td>
        <td>
 <a href="protocol/protobuf.html#enumpresettitle"><code class="xref">EnumPresetTitle</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumregisterpresetstatus"><code class="xref">EnumRegisterPresetStatus</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumprovisioning"><code class="xref">EnumProvisioning</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumscanning"><code class="xref">EnumScanning</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumscanentryflags"><code class="xref">EnumScanEntryFlags</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumpairingfinishstate"><code class="xref">EnumPairingFinishState</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumcohnstatus"><code class="xref">EnumCOHNStatus</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumcohnnetworkstate"><code class="xref">EnumCOHNNetworkState</code></a> <em>(protocol/protobuf)</em>
 </td>
 <td><em>Proto</em></td>
 </tr>
@@ -1042,6 +1053,14 @@
        <td>
 </td>
        <td>
+<a href="protocol/protobuf.html#notifypresetstatus"><code class="xref">NotifyPresetStatus</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
 <a href="protocol/protobuf.html#notifprovisioningstate"><code class="xref">NotifProvisioningState</code></a> <em>(protocol/protobuf)</em>
 </td>
 <td><em>Proto</em></td>
@@ -1059,14 +1078,6 @@
 </td>
        <td>
 <a href="protocol/protobuf.html#notifycohnstatus"><code class="xref">NotifyCOHNStatus</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
-<a href="protocol/protobuf.html#notifypresetstatus"><code class="xref">NotifyPresetStatus</code></a> <em>(protocol/protobuf)</em>
 </td>
 <td><em>Proto</em></td>
 </tr>
@@ -1174,6 +1185,30 @@
        <td>
 </td>
        <td>
+<a href="protocol/protobuf.html#responsegeneric"><code class="xref">ResponseGeneric</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#requestcustompresetupdate"><code class="xref">RequestCustomPresetUpdate</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#requestgetpresetstatus"><code class="xref">RequestGetPresetStatus</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
 <a href="protocol/protobuf.html#requestconnect"><code class="xref">RequestConnect</code></a> <em>(protocol/protobuf)</em>
 </td>
 <td><em>Proto</em></td>
@@ -1246,39 +1281,7 @@
        <td>
 </td>
        <td>
-<a href="protocol/protobuf.html#requestgetpresetstatus"><code class="xref">RequestGetPresetStatus</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
-<a href="protocol/protobuf.html#requestsetturboactive"><code class="xref">RequestSetTurboActive</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
-<a href="protocol/protobuf.html#requestgetlastcapturedmedia"><code class="xref">RequestGetLastCapturedMedia</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
-<a href="protocol/protobuf.html#responselastcapturedmedia"><code class="xref">ResponseLastCapturedMedia</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
-<a href="protocol/protobuf.html#responsegeneric"><code class="xref">ResponseGeneric</code></a> <em>(protocol/protobuf)</em>
+<a href="protocol/protobuf.html#requestpairingfinish"><code class="xref">RequestPairingFinish</code></a> <em>(protocol/protobuf)</em>
 </td>
 <td><em>Proto</em></td>
 </tr>
@@ -1334,7 +1337,23 @@
        <td>
 </td>
        <td>
-<a href="protocol/protobuf.html#requestcustompresetupdate"><code class="xref">RequestCustomPresetUpdate</code></a> <em>(protocol/protobuf)</em>
+<a href="protocol/protobuf.html#requestsetturboactive"><code class="xref">RequestSetTurboActive</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#requestgetlastcapturedmedia"><code class="xref">RequestGetLastCapturedMedia</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#responselastcapturedmedia"><code class="xref">ResponseLastCapturedMedia</code></a> <em>(protocol/protobuf)</em>
 </td>
 <td><em>Proto</em></td>
 </tr>
@@ -2490,6 +2509,14 @@ often than this
 </td>
        <td>
 <a href="features/control.html#set-local-date-time"><code class="xref">set local date time</code></a> <em>(features/control)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="features/control.html#set-pairing-state"><code class="xref">set pairing state</code></a> <em>(features/control)</em>
 </td>
 <td><em>Operation</em></td>
 </tr>

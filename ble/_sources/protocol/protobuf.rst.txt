@@ -466,6 +466,38 @@ EnumLiveStreamStatus
 
 
 
+.. _proto-enumpairingfinishstate:
+
+EnumPairingFinishState
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto>`__
+
+
+.. list-table::
+   :widths: 10 10 40
+   :header-rows: 1
+
+   * - name
+     - value
+     - summary
+   * - SUCCESS
+     - 0
+
+     - 
+
+   * - FAILED
+     - 1
+
+     - 
+
+
+
+
+
 .. _proto-enumpresetgroup:
 
 EnumPresetGroup
@@ -1964,6 +1996,12 @@ EnumWindowSize
 
 
 
+
+
+
+
+
+
 .. _proto-media:
 
 Media
@@ -2973,6 +3011,49 @@ The preset status changes when:
        | When False, Setting IDs are tied to their camera UI string representation and may vary between cameras.
        | 
        | When True, Setting IDs are tied to their functional representation and are consistent across cameras.
+
+
+
+
+
+
+.. _proto-requestpairingfinish:
+
+RequestPairingFinish
+--------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto>`__
+
+
+Set Wireless 2.0 Pairing State
+
+This is often colloquially referred to as "sending pairing complete"
+
+Response: :ref:`proto-responsegeneric`
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - result
+
+     - :ref:`proto-enumpairingfinishstate`
+     - 1
+
+     - Pairing state to set
+
+   * - phoneName
+     - string
+     - 2
+
+     - | This must be a non empty string but it does not actually affect anything.
 
 
 
