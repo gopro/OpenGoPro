@@ -1,6 +1,3 @@
-/* network_management.kt/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Wed May 14 19:24:59 UTC 2025 */
-
 @file:OptIn(pbandk.PublicForGeneratedCode::class)
 
 package com.gopro.open_gopro.operations
@@ -164,6 +161,39 @@ internal sealed class EnumScanEntryFlags(
     override fun fromName(name: String): com.gopro.open_gopro.operations.EnumScanEntryFlags =
         values.firstOrNull { it.name == name }
             ?: throw IllegalArgumentException("No EnumScanEntryFlags with name: $name")
+  }
+}
+
+@pbandk.Export
+internal sealed class EnumPairingFinishState(
+    override val value: Int,
+    override val name: String? = null
+) : pbandk.Message.Enum {
+  override fun equals(other: kotlin.Any?): Boolean =
+      other is com.gopro.open_gopro.operations.EnumPairingFinishState && other.value == value
+
+  override fun hashCode(): Int = value.hashCode()
+
+  override fun toString(): String = "EnumPairingFinishState.${name ?: "UNRECOGNIZED"}(value=$value)"
+
+  internal object SUCCESS : EnumPairingFinishState(0, "SUCCESS")
+
+  internal object FAILED : EnumPairingFinishState(1, "FAILED")
+
+  internal class UNRECOGNIZED(value: Int) : EnumPairingFinishState(value)
+
+  internal companion object :
+      pbandk.Message.Enum.Companion<com.gopro.open_gopro.operations.EnumPairingFinishState> {
+    internal val values: List<com.gopro.open_gopro.operations.EnumPairingFinishState> by lazy {
+      listOf(SUCCESS, FAILED)
+    }
+
+    override fun fromValue(value: Int): com.gopro.open_gopro.operations.EnumPairingFinishState =
+        values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
+
+    override fun fromName(name: String): com.gopro.open_gopro.operations.EnumPairingFinishState =
+        values.firstOrNull { it.name == name }
+            ?: throw IllegalArgumentException("No EnumPairingFinishState with name: $name")
   }
 }
 
@@ -915,6 +945,62 @@ internal data class ResponseStartScanning(
   }
 }
 
+@pbandk.Export
+internal data class RequestPairingFinish(
+    val result: com.gopro.open_gopro.operations.EnumPairingFinishState,
+    val phoneName: String,
+    override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
+) : pbandk.Message {
+  override operator fun plus(
+      other: pbandk.Message?
+  ): com.gopro.open_gopro.operations.RequestPairingFinish = protoMergeImpl(other)
+
+  override val descriptor:
+      pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestPairingFinish>
+    get() = Companion.descriptor
+
+  override val protoSize: Int by lazy { super.protoSize }
+
+  internal companion object :
+      pbandk.Message.Companion<com.gopro.open_gopro.operations.RequestPairingFinish> {
+    override fun decodeWith(
+        u: pbandk.MessageDecoder
+    ): com.gopro.open_gopro.operations.RequestPairingFinish =
+        com.gopro.open_gopro.operations.RequestPairingFinish.decodeWithImpl(u)
+
+    override val descriptor:
+        pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestPairingFinish> =
+        pbandk.MessageDescriptor(
+            fullName = "open_gopro.RequestPairingFinish",
+            messageClass = com.gopro.open_gopro.operations.RequestPairingFinish::class,
+            messageCompanion = this,
+            fields =
+                buildList(2) {
+                  add(
+                      pbandk.FieldDescriptor(
+                          messageDescriptor = this@Companion::descriptor,
+                          name = "result",
+                          number = 1,
+                          type =
+                              pbandk.FieldDescriptor.Type.Enum(
+                                  enumCompanion =
+                                      com.gopro.open_gopro.operations.EnumPairingFinishState
+                                          .Companion,
+                                  hasPresence = true),
+                          jsonName = "result",
+                          value = com.gopro.open_gopro.operations.RequestPairingFinish::result))
+                  add(
+                      pbandk.FieldDescriptor(
+                          messageDescriptor = this@Companion::descriptor,
+                          name = "phoneName",
+                          number = 2,
+                          type = pbandk.FieldDescriptor.Type.Primitive.String(hasPresence = true),
+                          jsonName = "phoneName",
+                          value = com.gopro.open_gopro.operations.RequestPairingFinish::phoneName))
+                })
+  }
+}
+
 private fun NotifProvisioningState.protoMergeImpl(plus: pbandk.Message?): NotifProvisioningState =
     (plus as? NotifProvisioningState)?.let {
       it.copy(unknownFields = unknownFields + plus.unknownFields)
@@ -1302,4 +1388,33 @@ private fun ResponseStartScanning.Companion.decodeWithImpl(
     throw pbandk.InvalidProtocolBufferException.missingRequiredField("scanning_state")
   }
   return ResponseStartScanning(result!!, scanningState!!, unknownFields)
+}
+
+private fun RequestPairingFinish.protoMergeImpl(plus: pbandk.Message?): RequestPairingFinish =
+    (plus as? RequestPairingFinish)?.let {
+      it.copy(unknownFields = unknownFields + plus.unknownFields)
+    } ?: this
+
+@Suppress("UNCHECKED_CAST")
+private fun RequestPairingFinish.Companion.decodeWithImpl(
+    u: pbandk.MessageDecoder
+): RequestPairingFinish {
+  var result: com.gopro.open_gopro.operations.EnumPairingFinishState? = null
+  var phoneName: String? = null
+
+  val unknownFields =
+      u.readMessage(this) { _fieldNumber, _fieldValue ->
+        when (_fieldNumber) {
+          1 -> result = _fieldValue as com.gopro.open_gopro.operations.EnumPairingFinishState
+          2 -> phoneName = _fieldValue as String
+        }
+      }
+
+  if (result == null) {
+    throw pbandk.InvalidProtocolBufferException.missingRequiredField("result")
+  }
+  if (phoneName == null) {
+    throw pbandk.InvalidProtocolBufferException.missingRequiredField("phoneName")
+  }
+  return RequestPairingFinish(result!!, phoneName!!, unknownFields)
 }

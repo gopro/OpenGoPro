@@ -116,6 +116,23 @@ SCAN_FLAG_ASSOCIATED: EnumScanEntryFlags.ValueType
 SCAN_FLAG_UNSUPPORTED_TYPE: EnumScanEntryFlags.ValueType
 global___EnumScanEntryFlags = EnumScanEntryFlags
 
+class _EnumPairingFinishState:
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: typing_extensions.TypeAlias = ValueType
+
+class _EnumPairingFinishStateEnumTypeWrapper(
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_EnumPairingFinishState.ValueType], builtins.type
+):
+    DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+    SUCCESS: _EnumPairingFinishState.ValueType
+    FAILED: _EnumPairingFinishState.ValueType
+
+class EnumPairingFinishState(_EnumPairingFinishState, metaclass=_EnumPairingFinishStateEnumTypeWrapper): ...
+
+SUCCESS: EnumPairingFinishState.ValueType
+FAILED: EnumPairingFinishState.ValueType
+global___EnumPairingFinishState = EnumPairingFinishState
+
 @typing_extensions.final
 class NotifProvisioningState(google.protobuf.message.Message):
     """
@@ -600,3 +617,33 @@ class ResponseStartScanning(google.protobuf.message.Message):
     ) -> None: ...
 
 global___ResponseStartScanning = ResponseStartScanning
+
+@typing_extensions.final
+class RequestPairingFinish(google.protobuf.message.Message):
+    """*
+    Set Wireless 2.0 Pairing State
+
+    This is often colloquially referred to as "sending pairing complete"
+
+    Response: @ref ResponseGeneric
+    """
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    RESULT_FIELD_NUMBER: builtins.int
+    PHONENAME_FIELD_NUMBER: builtins.int
+    result: global___EnumPairingFinishState.ValueType
+    "Pairing state to set"
+    phoneName: builtins.str
+    "*\n    This must be a non empty string but it does not actually affect anything.\n    "
+
+    def __init__(
+        self, *, result: global___EnumPairingFinishState.ValueType | None = ..., phoneName: builtins.str | None = ...
+    ) -> None: ...
+    def HasField(
+        self, field_name: typing_extensions.Literal["phoneName", b"phoneName", "result", b"result"]
+    ) -> builtins.bool: ...
+    def ClearField(
+        self, field_name: typing_extensions.Literal["phoneName", b"phoneName", "result", b"result"]
+    ) -> None: ...
+
+global___RequestPairingFinish = RequestPairingFinish
