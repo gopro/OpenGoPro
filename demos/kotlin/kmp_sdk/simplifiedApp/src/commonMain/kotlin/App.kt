@@ -6,7 +6,6 @@ import com.gopro.open_gopro.OgpSdk
 import com.gopro.open_gopro.OgpSdkAppContext
 import com.gopro.open_gopro.gopro.GoPro
 import com.gopro.open_gopro.operations.VideoResolution
-import com.gopro.open_gopro.operations.isFinished
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
