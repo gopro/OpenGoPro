@@ -12,7 +12,12 @@ import com.gopro.open_gopro.operations.EnumCOHNStatus
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 
 private val logger = Logger.withTag("CohnFeature")
 
@@ -29,8 +34,20 @@ class CohnFeature internal constructor(private val context: IFeatureContext) : K
     private var ipAddress: String? = null
     private var certificate: String? = null
 
+    private val _state: MutableStateFlow<CohnState> = MutableStateFlow(CohnState.Unprovisioned)
+    val state: StateFlow<CohnState>
+        get() = _state
+
     private val cameraRepo: ICameraRepository = OgpSdkIsolatedKoinContext.getOgpSdkKoinApp().get()
 
+    init {
+        context.scope.launch {
+            while (!context.gopro.isBleAvailable) {
+                delay(500) // Wait for BLE to be available
+            }
+            getState().collect { _state.update { it } }
+        }
+    }
 
     /**
      * Get the continuous COHN State
@@ -39,7 +56,7 @@ class CohnFeature internal constructor(private val context: IFeatureContext) : K
      * @see
      *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/cohn.html#get-cohn-status)
      */
-    suspend fun getStatus(): Flow<CohnState> =
+    private suspend fun getState(): Flow<CohnState> =
         context.gopro.commands.getCohnStatus().getOrThrow().transform { update ->
             update.password?.let { password = it }
             update.ssid?.let { ssid = it }
@@ -90,8 +107,7 @@ class CohnFeature internal constructor(private val context: IFeatureContext) : K
         // Wait for provisioning to be complete and results to accumulate
         // TODO timeout here?
         logger.i("Waiting for COHN provisioning to complete...")
-        val provisionedState =
-            getStatus().first { it is CohnState.Provisioned } as CohnState.Provisioned
+        val provisionedState = state.first { it is CohnState.Provisioned } as CohnState.Provisioned
         logger.i("Storing COHN credentials to disk")
         cameraRepo.addHttpsCredentials(context.gopro.id, provisionedState)
         return Result.success(provisionedState)

@@ -38,50 +38,55 @@ fun AccessPointScreen(
     viewModel: AccessPointViewModel,
     modifier: Modifier = Modifier,
 ) {
-  val state by viewModel.state.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
-  var ssid by remember { mutableStateOf("") }
-  var password: String? by remember { mutableStateOf(null) }
+    var ssid by remember { mutableStateOf("") }
+    var password: String? by remember { mutableStateOf(null) }
 
-  CommonTopBar(
-      navController = navController,
-      title = Screen.AccessPoint.route,
-  ) { paddingValues ->
-    DisposableEffect(viewModel) {
-      viewModel.start()
-      onDispose { viewModel.stop() }
-    }
-    Column(modifier.padding(paddingValues)) {
-      Text("State: ${state.name}")
-      when (val s = state) {
-        ApUiState.Idle,
-        ApUiState.Scanning,
-        is ApUiState.Connected ->
-            ScanScreen(
-                isScanning = (s is ApUiState.Scanning),
-                onScanStart = { viewModel.scanForSsids() },
-                onSsidSelect = { ssid = it },
-                selectedSsid = ssid)
-
-        is ApUiState.WaitingConnect -> {
-          ScanScreen(
-              isScanning = false,
-              onScanStart = { viewModel.scanForSsids() },
-              onSsidSelect = { ssid = it },
-              ssids = s.ssids,
-              selectedSsid = ssid)
-          ConnectScreen(
-              password = password,
-              onConnectSsid = {
-                password?.let { viewModel.connectToSsid(ssid, it) } ?: viewModel.connectToSsid(ssid)
-              },
-              onPasswordChange = { password = it })
+    CommonTopBar(
+        navController = navController,
+        title = Screen.AccessPoint.route,
+    ) { paddingValues ->
+        DisposableEffect(viewModel) {
+            viewModel.start()
+            onDispose { viewModel.stop() }
         }
+        Column(modifier.padding(paddingValues)) {
+            Text("State: ${state.name}")
+            when (val s = state) {
+                ApUiState.Idle,
+                ApUiState.Scanning,
+                is ApUiState.Connected ->
+                    ScanScreen(
+                        isScanning = (s is ApUiState.Scanning),
+                        onScanStart = { viewModel.scanForSsids() },
+                        onSsidSelect = { ssid = it },
+                        selectedSsid = ssid,
+                        onDisconnect = { viewModel.disconnect() }
+                    )
 
-        is ApUiState.Connecting -> ConnectingScreen(s.ssid)
-      }
+                is ApUiState.WaitingConnect -> {
+                    ScanScreen(
+                        isScanning = false,
+                        onScanStart = { viewModel.scanForSsids() },
+                        onSsidSelect = { ssid = it },
+                        ssids = s.ssids,
+                        selectedSsid = ssid,
+                        onDisconnect = { viewModel.disconnect() }
+                    )
+                    ConnectScreen(
+                        password = password,
+                        onConnectSsid = {
+                            password?.let { viewModel.connectToSsid(ssid, it) }
+                                ?: viewModel.connectToSsid(ssid)
+                        },
+                        onPasswordChange = { password = it })
+                }
+
+                is ApUiState.Connecting -> ConnectingScreen(s.ssid)
+            }
+        }
     }
-  }
 }
 
 @Composable
@@ -91,27 +96,29 @@ fun ScanScreen(
     onScanStart: (() -> Unit),
     onSsidSelect: ((String) -> Unit),
     selectedSsid: String,
+    onDisconnect: (() -> Unit)
 ) {
-  Column {
-    Button(onScanStart) { Text("Start Scanning for SSIDS") }
-    if (isScanning) {
-      IndeterminateCircularProgressIndicator()
-    }
-    LazyColumn {
-      items(ssids) { ssid ->
-        val modifier = Modifier.clickable(onClick = { onSsidSelect(ssid) })
-        if (ssid == selectedSsid) {
-          modifier.border(BorderStroke(3.dp, Color.Green))
+    Column {
+        Button(onScanStart) { Text("Start Scanning for SSIDS") }
+        Button(onDisconnect) { Text("Disconnect") }
+        if (isScanning) {
+            IndeterminateCircularProgressIndicator()
         }
-        Row(modifier) {
-          Column {
-            Text(ssid)
-            HorizontalDivider()
-          }
+        LazyColumn {
+            items(ssids) { ssid ->
+                val modifier = Modifier.clickable(onClick = { onSsidSelect(ssid) })
+                if (ssid == selectedSsid) {
+                    modifier.border(BorderStroke(3.dp, Color.Green))
+                }
+                Row(modifier) {
+                    Column {
+                        Text(ssid)
+                        HorizontalDivider()
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }
 
 @Composable
@@ -120,17 +127,17 @@ fun ConnectScreen(
     onConnectSsid: () -> Unit,
     onPasswordChange: ((String) -> Unit)
 ) {
-  TextField(
-      value = password ?: "",
-      onValueChange = { onPasswordChange(it) },
-      label = { Text("Password") })
-  Button(onConnectSsid) { Text("Connect") }
+    TextField(
+        value = password ?: "",
+        onValueChange = { onPasswordChange(it) },
+        label = { Text("Password") })
+    Button(onConnectSsid) { Text("Connect") }
 }
 
 @Composable
 fun ConnectingScreen(ssid: String) {
-  Column {
-    Text("Connecting to $ssid")
-    IndeterminateCircularProgressIndicator()
-  }
+    Column {
+        Text("Connecting to $ssid")
+        IndeterminateCircularProgressIndicator()
+    }
 }
