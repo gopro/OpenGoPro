@@ -45,7 +45,10 @@ class CohnFeature internal constructor(private val context: IFeatureContext) : K
       while (!context.gopro.isBleAvailable) {
         delay(500) // Wait for BLE to be available
       }
-      getState().collect { _state.update { it } }
+      getState().collect { cohnState ->
+        logger.d("COHN Feature updating state: $cohnState")
+        _state.update { cohnState }
+      }
     }
   }
 
@@ -58,22 +61,28 @@ class CohnFeature internal constructor(private val context: IFeatureContext) : K
    */
   private suspend fun getState(): Flow<CohnState> =
       context.gopro.commands.getCohnStatus().getOrThrow().transform { update ->
-        update.password?.let { password = it }
-        update.ssid?.let { ssid = it }
-        update.ipAddress?.let { ipAddress = it }
-        update.username?.let { username = it }
         logger.i("Received COHN status: $update")
-        if ((update.state == EnumCOHNNetworkState.COHN_STATE_NETWORK_CONNECTED) &&
-            (update.status == EnumCOHNStatus.COHN_PROVISIONED)) {
-          logger.i("COHN provisioned. Getting certificate.")
-          certificate = context.gopro.commands.getCohnCertificate().getOrThrow()
+
+        val isProvisionedStatus =
+            ((update.state == EnumCOHNNetworkState.COHN_STATE_NETWORK_CONNECTED) &&
+                (update.status == EnumCOHNStatus.COHN_PROVISIONED))
+
+        if ((_state.value == CohnState.Unprovisioned) && isProvisionedStatus) {
+          update.password?.let { password = it }
+          update.ssid?.let { ssid = it }
+          update.ipAddress?.let { ipAddress = it }
+          update.username?.let { username = it }
+          logger.i("COHN provisioned. Getting certificate")
+          context.gopro.commands
+              .getCohnCertificate()
+              .onFailure { logger.e("Failed to get COHN certificate") }
+              .onSuccess { certificate = it }
           emit(
               CohnState.Provisioned(
                   username = username!!,
                   password = password!!,
                   ipAddress = ipAddress!!,
-                  certificates = listOf(certificate!!) // TODO how to handle multiple?
-                  ))
+                  certificates = listOf(certificate!!)))
         } // TODO remove from DB on unprovision
         else {
           emit(CohnState.Unprovisioned)
