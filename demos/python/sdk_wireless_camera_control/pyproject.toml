@@ -53,9 +53,9 @@ opencv-python = { version = "^4", optional = true }
 Pillow = {version= "^11", optional = true}
 pytz = "*"
 tzlocal = "*"
-tinydb = "^4.8.2"
-returns = {extras = ["compatible-mypy"], version = "^0.25.0"}
-asyncstdlib = "^3.13.1"
+tinydb = "^4"
+returns = {extras = ["compatible-mypy"], version = "^0"}
+asyncstdlib = "^3"
 
 [tool.poetry.extras]
 gui = ["opencv-python", "pillow"]
