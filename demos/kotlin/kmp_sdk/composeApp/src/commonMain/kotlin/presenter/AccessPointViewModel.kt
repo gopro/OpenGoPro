@@ -9,19 +9,16 @@ import com.gopro.open_gopro.operations.AccessPointState
 import data.IAppPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 sealed class ApUiState(val name: String) {
     data object Idle : ApUiState("idle")
-
     data object Scanning : ApUiState("scanning")
-
     data class WaitingConnect(val ssids: List<String>) : ApUiState("waiting to connect")
-
     data class Connecting(val ssid: String) : ApUiState("connecting to $ssid")
-
     data class Connected(val ssid: String) : ApUiState("connected to $ssid")
 }
 
@@ -32,44 +29,57 @@ class AccessPointViewModel(
     private var _state = MutableStateFlow<ApUiState>(ApUiState.Idle)
     val state = _state.asStateFlow()
 
+    private var _errorMessage = MutableStateFlow<String?>(null)
+    val errorMessage: StateFlow<String?> = _errorMessage.asStateFlow()
+
+    private fun setErrorMessage(message: String) {
+        logger.e(message)
+        _errorMessage.update { message }
+    }
+
+    private fun setState(newState: ApUiState) {
+        logger.d("Setting state to: ${newState.name}")
+        _state.update { newState }
+    }
+
     fun scanForSsids() {
         if (_state.value == ApUiState.Idle) {
             viewModelScope.launch {
-                _state.update { ApUiState.Scanning }
+                setState(ApUiState.Scanning)
                 gopro.features.accessPoint
                     .scanForAccessPoints()
                     .getOrThrow()
                     .map { it.ssid }
-                    .let { ssids -> _state.update { ApUiState.WaitingConnect(ssids) } }
+                    .let { ssids -> setState(ApUiState.WaitingConnect(ssids)) }
             }
         } else {
-            logger.w("Can only scan from idle state")
+            setErrorMessage("Can only scan from idle state")
         }
     }
 
     fun connectToSsid(ssid: String) {
         if (_state.value is ApUiState.WaitingConnect) {
             viewModelScope.launch {
-                _state.update { ApUiState.Connecting(ssid) }
+                setState(ApUiState.Connecting(ssid))
                 gopro.features.accessPoint.connectAccessPoint(ssid)
-                    .onSuccess { _state.update { ApUiState.Connected(ssid) } }
-                    .onFailure { _state.update { ApUiState.Idle } }
+                    .onSuccess { setState(ApUiState.Connected(ssid)) }
+                    .onFailure { setState(ApUiState.Idle) }
             }
         } else {
-            logger.w("Can only connect after scanning.")
+            setErrorMessage("Can only connect after scanning.")
         }
     }
 
     fun connectToSsid(ssid: String, password: String) {
         if (_state.value is ApUiState.WaitingConnect) {
             viewModelScope.launch {
-                _state.update { ApUiState.Connecting(ssid) }
+                setState(ApUiState.Connecting(ssid))
                 gopro.features.accessPoint.connectAccessPoint(ssid, password)
-                    .onSuccess { _state.update { ApUiState.Connected(ssid) } }
-                    .onFailure { _state.update { ApUiState.Idle } }
+                    .onSuccess { setState(ApUiState.Connected(ssid)) }
+                    .onFailure { setState(ApUiState.Idle) }
             }
         } else {
-            logger.w("Can only connect after scanning.")
+            setErrorMessage("Can only connect after scanning.")
         }
     }
 
@@ -77,11 +87,21 @@ class AccessPointViewModel(
         if (_state.value is ApUiState.Connected) {
             viewModelScope.launch {
                 gopro.features.accessPoint.disconnectAccessPoint()
-                    .onSuccess { _state.update { ApUiState.Idle } }
-                    .onFailure { logger.e("Failed to disconnect from access point") }
+                    .onSuccess { setState(ApUiState.Idle) }
+                    .onFailure { setErrorMessage("Failed to disconnect from access point") }
             }
         } else {
-            logger.w("Can only disconnect when connected.")
+            setErrorMessage("Can only disconnect when connected.")
+        }
+    }
+
+    override fun onStart() {
+        when (val featureState = gopro.accessPointState.value) {
+            AccessPointState.Disconnected -> ApUiState.Idle
+            is AccessPointState.InProgress -> ApUiState.Connecting(featureState.ssid)
+            is AccessPointState.Connected -> ApUiState.Connected(featureState.ssid)
+        }.let {
+            setState(it)
         }
     }
 }

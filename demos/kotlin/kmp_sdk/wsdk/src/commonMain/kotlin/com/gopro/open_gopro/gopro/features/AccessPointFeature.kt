@@ -34,6 +34,11 @@ class AccessPointFeature internal constructor(private val context: IFeatureConte
     val state: StateFlow<AccessPointState>
         get() = _state
 
+    private fun setState(newState: AccessPointState) {
+        logger.d { "Setting access point state to $newState" }
+        _state.update { newState }
+    }
+
     /**
      * Scan for available Access Points
      *
@@ -76,10 +81,7 @@ class AccessPointFeature internal constructor(private val context: IFeatureConte
         result.fold(
             onSuccess = { flow ->
                 flow
-                    .onEach {
-                        logger.d { "Access Point Feature received state: $it" }
-                        _state.update { it }
-                    }
+                    .onEach { setState(it) }
                     .first { it.isFinished() }
                     .let { finalState ->
                         when (finalState) {
@@ -163,7 +165,7 @@ class AccessPointFeature internal constructor(private val context: IFeatureConte
     suspend fun disconnectAccessPoint(): Result<Unit> {
         logger.i("Disconnecting from access point")
         return context.gopro.commands.setApMode(true).onSuccess {
-            _state.update { AccessPointState.Disconnected }
+            setState(AccessPointState.Disconnected)
             logger.i("Disconnected from access point")
         }.onFailure {
             logger.e("Failed to disconnect from access point", it)

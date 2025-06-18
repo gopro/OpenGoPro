@@ -31,6 +31,7 @@ import presenter.ApUiState
 import ui.common.Screen
 import ui.components.CommonTopBar
 import ui.components.IndeterminateCircularProgressIndicator
+import ui.components.SnackbarMessageHandler
 
 @Composable
 fun AccessPointScreen(
@@ -39,9 +40,12 @@ fun AccessPointScreen(
     modifier: Modifier = Modifier,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val errorMessage by viewModel.errorMessage.collectAsStateWithLifecycle()
 
     var ssid by remember { mutableStateOf("") }
     var password: String? by remember { mutableStateOf(null) }
+
+    errorMessage?.let { SnackbarMessageHandler(it) }
 
     CommonTopBar(
         navController = navController,
