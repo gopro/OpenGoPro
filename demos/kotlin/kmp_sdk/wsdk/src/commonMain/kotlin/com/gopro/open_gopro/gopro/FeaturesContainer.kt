@@ -8,14 +8,12 @@ import com.gopro.open_gopro.domain.gopro.IGoProFactory
 
 internal interface IFeatureContext {
   val gopro: GoPro
-  val gpDescriptorManager: GpDescriptorManager
   val connector: ICameraConnector
   val facadeFactory: IGoProFactory
 }
 
 internal data class FeatureContext(
     override val gopro: GoPro,
-    override val gpDescriptorManager: GpDescriptorManager,
     override val connector: ICameraConnector,
     override val facadeFactory: IGoProFactory
 ) : IFeatureContext

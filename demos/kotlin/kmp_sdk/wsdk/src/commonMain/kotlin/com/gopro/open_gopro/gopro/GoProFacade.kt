@@ -62,15 +62,15 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
 
   private val scope = CoroutineScope(dispatcher + coroutineExceptionHandler)
 
-  private val gpDescriptorManager =
-      object : GpDescriptorManager {
-        override fun getDescriptor(): IGpDescriptor = this@GoPro
-
-        override fun setAccessPointState(state: AccessPointState) =
-            _accessPointState.update { state }
-
-        override fun setCohnState(state: CohnState) = _cohnState.update { state }
-      }
+//  private val gpDescriptorManager =
+//      object : GpDescriptorManager {
+//        override fun getDescriptor(): IGpDescriptor = this@GoPro
+//
+//        override fun setAccessPointState(state: AccessPointState) =
+//            _accessPointState.update { state }
+//
+//        override fun setCohnState(state: CohnState) = _cohnState.update { state }
+//      }
 
   override val communicators: List<CommunicationType>
     get() = operationMarshaller.communicators
@@ -85,9 +85,7 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
   val statuses = StatusesContainer(operationMarshaller)
 
   /** Container delegate to access all camera features */
-  val features =
-      FeaturesContainer(
-          FeatureContext(this, this.gpDescriptorManager, cameraConnector, facadeFactory))
+  val features = FeaturesContainer(FeatureContext(this, cameraConnector, facadeFactory))
 
   private var _ipAddress: String? = null
   override val ipAddress: String?
@@ -105,10 +103,7 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
   override val isReady: StateFlow<Boolean>
     get() = _isReady
 
-  private val _accessPointState: MutableStateFlow<AccessPointState> =
-      MutableStateFlow(AccessPointState.Disconnected)
-  override val accessPointState: StateFlow<AccessPointState>
-    get() = _accessPointState
+  override val accessPointState: StateFlow<AccessPointState> = features.accessPoint.state
 
   private val _cohnState: MutableStateFlow<CohnState> = MutableStateFlow(CohnState.Unprovisioned)
   override val cohnState: StateFlow<CohnState>
@@ -174,11 +169,6 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
             commands.sendKeepAlive().onFailure { logger.w("Failed to send keep alive.") }
           }
         }
-        //                // Register for COHN status updates
-        //                scope.launch {
-        //                    features.cohn.getCohnStatus().collect {
-        // gpDescriptorManager.setCohnState(it) }
-        //                }
       }
 
       is HttpCommunicator -> {

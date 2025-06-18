@@ -7,8 +7,11 @@ import co.touchlab.kermit.Logger
 import com.gopro.open_gopro.operations.AccessPointState
 import com.gopro.open_gopro.operations.ApScanEntry
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 
 private val logger = Logger.withTag("AccessPointFeature")
 
@@ -21,6 +24,9 @@ private val logger = Logger.withTag("AccessPointFeature")
  * @see [STA mode](https://gopro.github.io/OpenGoPro/tutorials/connect-wifi#station-sta-mode)
  */
 class AccessPointFeature internal constructor(private val context: IFeatureContext) {
+    private val _state: MutableStateFlow<AccessPointState> = MutableStateFlow(AccessPointState.Disconnected)
+    val state: StateFlow<AccessPointState>
+        get() = _state
 
     /**
      * Scan for available Access Points
@@ -68,7 +74,7 @@ class AccessPointFeature internal constructor(private val context: IFeatureConte
     suspend fun connectAccessPoint(ssid: String): Result<Flow<AccessPointState>> {
         logger.i("Connecting to $ssid")
         return context.gopro.commands.connectAccessPoint(ssid).map { flow ->
-            flow.onEach { context.gpDescriptorManager.setAccessPointState(it) }
+            flow.onEach { _state.update { it } }
         }
     }
 
@@ -82,7 +88,7 @@ class AccessPointFeature internal constructor(private val context: IFeatureConte
     suspend fun connectAccessPoint(ssid: String, password: String): Result<Flow<AccessPointState>> {
         logger.i("Connecting to $ssid with password ${"*".repeat(password.length)}")
         return context.gopro.commands.connectAccessPoint(ssid, password).map { flow ->
-            flow.onEach { context.gpDescriptorManager.setAccessPointState(it) }
+            flow.onEach { _state.update { it } }
         }
     }
 }
