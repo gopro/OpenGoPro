@@ -31,6 +31,7 @@ import presenter.ApUiState
 import ui.common.Screen
 import ui.components.CommonTopBar
 import ui.components.IndeterminateCircularProgressIndicator
+import ui.components.SnackbarMessageHandler
 
 @Composable
 fun AccessPointScreen(
@@ -39,9 +40,12 @@ fun AccessPointScreen(
     modifier: Modifier = Modifier,
 ) {
   val state by viewModel.state.collectAsStateWithLifecycle()
+  val errorMessage by viewModel.errorMessage.collectAsStateWithLifecycle()
 
   var ssid by remember { mutableStateOf("") }
   var password: String? by remember { mutableStateOf(null) }
+
+  errorMessage?.let { SnackbarMessageHandler(it) }
 
   CommonTopBar(
       navController = navController,
@@ -59,17 +63,21 @@ fun AccessPointScreen(
         is ApUiState.Connected ->
             ScanScreen(
                 isScanning = (s is ApUiState.Scanning),
+                isConnected = (s is ApUiState.Connected),
                 onScanStart = { viewModel.scanForSsids() },
                 onSsidSelect = { ssid = it },
-                selectedSsid = ssid)
+                selectedSsid = ssid,
+                onDisconnect = { viewModel.disconnect() })
 
         is ApUiState.WaitingConnect -> {
           ScanScreen(
               isScanning = false,
+              isConnected = false,
               onScanStart = { viewModel.scanForSsids() },
               onSsidSelect = { ssid = it },
               ssids = s.ssids,
-              selectedSsid = ssid)
+              selectedSsid = ssid,
+              onDisconnect = { viewModel.disconnect() })
           ConnectScreen(
               password = password,
               onConnectSsid = {
@@ -87,13 +95,18 @@ fun AccessPointScreen(
 @Composable
 fun ScanScreen(
     isScanning: Boolean,
+    isConnected: Boolean,
     ssids: List<String> = listOf(),
     onScanStart: (() -> Unit),
     onSsidSelect: ((String) -> Unit),
     selectedSsid: String,
+    onDisconnect: (() -> Unit)
 ) {
   Column {
     Button(onScanStart) { Text("Start Scanning for SSIDS") }
+    if (isConnected) {
+      Button(onDisconnect) { Text("Disconnect") }
+    }
     if (isScanning) {
       IndeterminateCircularProgressIndicator()
     }

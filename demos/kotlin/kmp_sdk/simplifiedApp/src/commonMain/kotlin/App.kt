@@ -6,7 +6,6 @@ import com.gopro.open_gopro.OgpSdk
 import com.gopro.open_gopro.OgpSdkAppContext
 import com.gopro.open_gopro.gopro.GoPro
 import com.gopro.open_gopro.operations.VideoResolution
-import com.gopro.open_gopro.operations.isFinished
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -77,13 +76,10 @@ private suspend fun examples(gopro: GoPro) {
 
   // Use access point feature
   with(gopro.features.accessPoint) {
-    // Get all available access opints and filter to find our target.
+    // Get all available access points and filter to find our target.
     val entry = scanForAccessPoints().getOrThrow().first { it.ssid == "TARGET_SSID" }
     // Start connecting to the access point..
-    connectAccessPoint(entry.ssid, "password").onSuccess {
-      // Wait to collect a finished element from the flow
-      it.first { state -> state.isFinished() }
-    }
+    connectAccessPoint(entry.ssid, "password")
   }
 
   // Monitor disconnects
