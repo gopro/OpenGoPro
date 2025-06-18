@@ -11,7 +11,7 @@ androidx-lifecycle = "2.8.4"
 androidx-material = "1.12.0"
 # https://plugins.gradle.org/plugin/org.jetbrains.compose
 compose-plugin = "1.7.3"
-uiToolingPreview = "1.9.0+dev2451"
+uiToolingPreview = "1.9.0-alpha02"
 junit = "4.13.2"
 # https://central.sonatype.com/artifact/io.insert-koin/koin-test-junit4/versions
 koinTestJunit4 = "4.0.0"
@@ -33,7 +33,7 @@ uuid = "0.8.4"
 # https://ktor.io/changelog/
 ktor = "3.1.1"
 # https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-navigation-routing.html
-navigationCompose = "2.9.10-alpha01"
+navigationCompose = "2.9.0-beta03"
 lifecycleViewModel = "2.8.7"
 # https://insert-koin.io/docs/setup/koin/
 koin = "4.1.0-Beta5"
