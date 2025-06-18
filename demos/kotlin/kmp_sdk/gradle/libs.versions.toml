@@ -1,5 +1,5 @@
 [versions]
-agp = "8.9.0"
+agp = "8.10.1"
 activityKtx = "1.10.1"
 android-compileSdk = "35"
 android-minSdk = "34"
@@ -7,14 +7,14 @@ android-targetSdk = "34"
 androidx-activityCompose = "1.10.1"
 androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.2.1"
-androidx-lifecycle = "2.8.4"
+androidx-lifecycle = "2.9.1"
 androidx-material = "1.12.0"
 # https://plugins.gradle.org/plugin/org.jetbrains.compose
 compose-plugin = "1.7.3"
 uiToolingPreview = "1.9.0-alpha02"
 junit = "4.13.2"
 # https://central.sonatype.com/artifact/io.insert-koin/koin-test-junit4/versions
-koinTestJunit4 = "4.0.0"
+koinTestJunit4 = "4.1.0"
 kotlin = "2.1.20"
 # https://touchlab.co/understanding-and-configuring-your-kmm-test-suite
 androidx-core-ktx = "1.15.0"
@@ -31,7 +31,7 @@ kotlinCoroutines = "1.10.1"
 # https://github.com/benasher44/uuid/releases/tag/0.8.4
 uuid = "0.8.4"
 # https://ktor.io/changelog/
-ktor = "3.1.1"
+ktor = "3.2.0"
 # https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-navigation-routing.html
 navigationCompose = "2.9.0-beta03"
 lifecycleViewModel = "2.8.7"
@@ -64,13 +64,13 @@ vlc = "3.6.1"
 # https://github.com/Kotlin/dokka/releases/tag/v1.9.20
 dokka = "2.0.0"
 # https://central.sonatype.com/artifact/org.mockito/mockito-core
-mockito = "5.17.0"
+mockito = "5.18.0"
 # https://github.com/jaredsburrows/gradle-license-plugin/releases/tag/0.9.8
 license = '0.9.8'
 # https://github.com/streem/pbandk/releases/tag/v0.16.0
 pbandk = "0.16.0"
 # https://github.com/vanniktech/gradle-maven-publish-plugin/releases/tag/0.30.0
-publish =  "0.31.0"
+publish =  "0.32.0"
 # https://github.com/cortinico/ktfmt-gradle/releases/
 format = "0.22.0"
 # Our SDK version
