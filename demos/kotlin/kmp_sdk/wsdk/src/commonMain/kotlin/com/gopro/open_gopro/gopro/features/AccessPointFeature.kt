@@ -18,7 +18,7 @@ import kotlinx.coroutines.withTimeout
 
 private val logger = Logger.withTag("AccessPointFeature")
 
-private const val CONNECT_TIMEOUT_SEC = 30000L
+private const val CONNECT_TIMEOUT_MS = 30000L
 
 /**
  * Scan and connect the camera to an Access Point
@@ -101,7 +101,14 @@ class AccessPointFeature internal constructor(private val context: IFeatureConte
 
   private suspend fun robustlyConnect(action: suspend () -> Result<Unit>): Result<Unit> {
     for (retry in 1..3) {
-      runCatching { withTimeout(CONNECT_TIMEOUT_SEC) { action() } }
+      runCatching {
+            withTimeout(CONNECT_TIMEOUT_MS) {
+              action().onFailure {
+                // Re-raise for runCatching otherwise Failure would be swallowed
+                throw Exception(it)
+              }
+            }
+          }
           .onSuccess {
             return Result.success(Unit)
           }

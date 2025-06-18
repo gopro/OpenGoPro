@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 
@@ -44,6 +45,9 @@ class CohnFeature internal constructor(private val context: IFeatureContext) : K
     context.scope.launch {
       while (!context.gopro.isBleAvailable) {
         delay(500) // Wait for BLE to be available
+        if (!isActive) {
+          return@launch
+        }
       }
       getState().collect { cohnState ->
         logger.d("COHN Feature updating state: $cohnState")

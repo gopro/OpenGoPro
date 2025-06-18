@@ -63,6 +63,7 @@ fun AccessPointScreen(
         is ApUiState.Connected ->
             ScanScreen(
                 isScanning = (s is ApUiState.Scanning),
+                isConnected = (s is ApUiState.Connected),
                 onScanStart = { viewModel.scanForSsids() },
                 onSsidSelect = { ssid = it },
                 selectedSsid = ssid,
@@ -71,6 +72,7 @@ fun AccessPointScreen(
         is ApUiState.WaitingConnect -> {
           ScanScreen(
               isScanning = false,
+              isConnected = false,
               onScanStart = { viewModel.scanForSsids() },
               onSsidSelect = { ssid = it },
               ssids = s.ssids,
@@ -93,6 +95,7 @@ fun AccessPointScreen(
 @Composable
 fun ScanScreen(
     isScanning: Boolean,
+    isConnected: Boolean,
     ssids: List<String> = listOf(),
     onScanStart: (() -> Unit),
     onSsidSelect: ((String) -> Unit),
@@ -101,7 +104,9 @@ fun ScanScreen(
 ) {
   Column {
     Button(onScanStart) { Text("Start Scanning for SSIDS") }
-    Button(onDisconnect) { Text("Disconnect") }
+    if (isConnected) {
+      Button(onDisconnect) { Text("Disconnect") }
+    }
     if (isScanning) {
       IndeterminateCircularProgressIndicator()
     }
