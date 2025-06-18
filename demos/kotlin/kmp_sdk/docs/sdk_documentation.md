@@ -211,13 +211,10 @@ Here is a (naive) example of using the [AccessPointFeature] to connect the GoPro
 
 ```kotlin
 with(gopro.features.accessPoint) {
-    // Get all available access opints and filter to find our target.
+    // Get all available access points and filter to find our target.
     val entry = scanForAccessPoints().getOrThrow().first { it.ssid == "TARGET_SSID" }
     // Start connecting to the access point..
-    connectAccessPoint(entry.ssid, "password").onSuccess {
-        // Wait to collect a finished element from the flow
-        it.first { state -> state.isFinished() }
-    }
+    connectAccessPoint(entry.ssid, "password")
 }
 ```
 
