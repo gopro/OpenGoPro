@@ -4,14 +4,16 @@ $dokka.location:com.gopro.open_gopro.gopro////PointingToDeclaration/-open -go-p
 $dokka.location:com.gopro.open_gopro.gopro/AccessPointFeature///PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-access-point-feature/index.html
 $dokka.location:com.gopro.open_gopro.gopro/AccessPointFeature/connectAccessPoint/#kotlin.String#kotlin.String/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-access-point-feature/connect-access-point.html
 $dokka.location:com.gopro.open_gopro.gopro/AccessPointFeature/connectAccessPoint/#kotlin.String/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-access-point-feature/connect-access-point.html
+$dokka.location:com.gopro.open_gopro.gopro/AccessPointFeature/disconnectAccessPoint/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-access-point-feature/disconnect-access-point.html
 $dokka.location:com.gopro.open_gopro.gopro/AccessPointFeature/scanForAccessPoints/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-access-point-feature/scan-for-access-points.html
+$dokka.location:com.gopro.open_gopro.gopro/AccessPointFeature/state/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-access-point-feature/state.html
 $dokka.location:com.gopro.open_gopro.gopro/CameraInternalError///PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-camera-internal-error/index.html
 $dokka.location:com.gopro.open_gopro.gopro/CameraInternalError/CameraInternalError/#kotlin.String/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-camera-internal-error/-camera-internal-error.html
 $dokka.location:com.gopro.open_gopro.gopro/CohnFeature///PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-cohn-feature/index.html
 $dokka.location:com.gopro.open_gopro.gopro/CohnFeature/disable/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-cohn-feature/disable.html
 $dokka.location:com.gopro.open_gopro.gopro/CohnFeature/enable/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-cohn-feature/enable.html
-$dokka.location:com.gopro.open_gopro.gopro/CohnFeature/getStatus/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-cohn-feature/get-status.html
 $dokka.location:com.gopro.open_gopro.gopro/CohnFeature/provision/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-cohn-feature/provision.html
+$dokka.location:com.gopro.open_gopro.gopro/CohnFeature/state/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-cohn-feature/state.html
 $dokka.location:com.gopro.open_gopro.gopro/CohnFeature/unprovision/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-cohn-feature/unprovision.html
 $dokka.location:com.gopro.open_gopro.gopro/CommandsContainer///PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-commands-container/index.html
 $dokka.location:com.gopro.open_gopro.gopro/CommandsContainer/deleteAllMedia/#/PointingToDeclaration/-open -go-pro -s-d-k/com.gopro.open_gopro.gopro/-commands-container/delete-all-media.html
