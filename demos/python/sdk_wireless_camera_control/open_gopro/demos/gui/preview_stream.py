@@ -7,6 +7,7 @@ import argparse
 import asyncio
 import logging
 
+from returns.pipeline import is_successful
 from rich.console import Console
 
 from open_gopro import WirelessGoPro
@@ -26,13 +27,19 @@ async def main(args: argparse.Namespace) -> None:
         set_stream_logging_level(logging.WARNING)
 
         with console.status("Starting preview stream..."):
-            await gopro.streaming.start_stream(
-                streaming.StreamType.PREVIEW,
-                streaming.PreviewStreamOptions(port=args.port),
-            )
+            if not is_successful(
+                result := (
+                    await gopro.streaming.start_stream(
+                        stream_type=streaming.StreamType.PREVIEW,
+                        options=streaming.PreviewStreamOptions(port=args.port),
+                    )
+                )
+            ):
+                console.print(f"[red]Failed to start preview stream: {result.failure()}")
+                return
             assert gopro.streaming.url, "Preview stream URL should not be empty after starting the stream"
 
-        console.print(f"Preview stream started. It can be viewed in VLC at [yellow]udp://@:8554")
+        console.print("Preview stream started. It can be viewed in VLC at [yellow]udp://@:8554")
         console.print(
             "Press Enter to view the preview stream using Python CV2. Once started, it won't be viewable in VLC."
         )
