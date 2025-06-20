@@ -119,7 +119,7 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
     scope.launch { _disconnects.emit(communicator.communicationType) }
   }
 
-  private fun initializeStateManagement(communicator: ICommunicator<*>) {
+  private suspend fun initializeStateManagement(communicator: ICommunicator<*>) {
     logger.d("Setting up GoPro state management.")
     when (communicator) {
       is BleCommunicator -> {
@@ -157,6 +157,7 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
             commands.sendKeepAlive().onFailure { logger.w("Failed to send keep alive.") }
           }
         }
+        commands.clearPairingScreen()
       }
 
       is HttpCommunicator -> {
@@ -183,7 +184,6 @@ class GoPro internal constructor(override val id: GoProId) : IGpDescriptor {
     if (!isInitialized) {
       initializeStateManagement(communicator)
       setDateTime()
-      commands.clearPairingScreen()
       commands.setThirdParty()
       isInitialized = true
     }
