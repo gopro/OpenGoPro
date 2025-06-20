@@ -185,11 +185,11 @@ class WifiCli(WifiController):
         """
 
     @pass_through_to_driver
-    def current(self) -> tuple[Optional[str], SsidState]:  # type: ignore
+    def current(self) -> tuple[str | None, SsidState]:  # type: ignore
         """Return the SSID and state of the current network.
 
         Returns:
-            tuple[Optional[str], SsidState]: Tuple of SSID str and state. If SSID is None,
+            tuple[str | None, SsidState]: Tuple of SSID str and state. If SSID is None,
             there is no current connection.
         """
 
@@ -222,13 +222,13 @@ class WifiCli(WifiController):
         return self._driver.interface
 
     @interface.setter
-    def interface(self, interface: Optional[str]) -> None:
+    def interface(self, interface: str | None) -> None:
         """Set the Wifi interface.
 
         If None is passed, interface will attempt to be auto-detected
 
         Args:
-            interface (Optional[str]): interface (or None)
+            interface (str | None): interface (or None)
         """
         self._driver.interface = interface  # type: ignore
 
@@ -245,7 +245,7 @@ class WifiCli(WifiController):
 class NmcliWireless(WifiController):
     """Linux nmcli Driver < 0.9.9.0."""
 
-    def __init__(self, password: str | None, interface: Optional[str] = None) -> None:
+    def __init__(self, password: str | None, interface: str | None = None) -> None:
         WifiController.__init__(self, interface=interface, password=password)
 
     def _clean(self, partial: str) -> None:
@@ -350,11 +350,11 @@ class NmcliWireless(WifiController):
         """
         return False
 
-    def current(self) -> tuple[Optional[str], SsidState]:
+    def current(self) -> tuple[str | None, SsidState]:
         """[summary].
 
         Returns:
-            tuple[Optional[str], SsidState]: [description]
+            tuple[str | None, SsidState]: [description]
         """
         # list active connections for all interfaces
         response = cmd(f'{self.sudo} nmcli con status | grep "{self.interface}"')
@@ -415,7 +415,7 @@ class NmcliWireless(WifiController):
 class Nmcli0990Wireless(WifiController):
     """Linux nmcli Driver >= 0.9.9.0."""
 
-    def __init__(self, password: str | None, interface: Optional[str] = None) -> None:
+    def __init__(self, password: str | None, interface: str | None = None) -> None:
         WifiController.__init__(self, interface=interface, password=password)
 
     def _clean(self, partial: str) -> None:
@@ -516,11 +516,11 @@ class Nmcli0990Wireless(WifiController):
         """
         return False
 
-    def current(self) -> tuple[Optional[str], SsidState]:
+    def current(self) -> tuple[str | None, SsidState]:
         """[summary].
 
         Returns:
-            tuple[Optional[str], SsidState]: [description]
+            tuple[str | None, SsidState]: [description]
         """
         # list active connections for all interfaces
         response = cmd(f'{self.sudo} nmcli con | grep "{self.interface}"')
@@ -583,7 +583,7 @@ class WpasupplicantWireless(WifiController):
 
     _file = "/tmp/wpa_supplicant.conf"
 
-    def __init__(self, password: str | None, interface: Optional[str] = None) -> None:
+    def __init__(self, password: str | None, interface: str | None = None) -> None:
         WifiController.__init__(self, interface=interface, password=password)
 
     async def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
@@ -641,11 +641,11 @@ class WpasupplicantWireless(WifiController):
         """
         return False
 
-    def current(self) -> tuple[Optional[str], SsidState]:
+    def current(self) -> tuple[str | None, SsidState]:
         """[summary].
 
         Returns:
-            tuple[Optional[str], SsidState]: [description]
+            tuple[str | None, SsidState]: [description]
         """
         # get interface status
         response = cmd(f'{self.sudo} iwconfig "{self.interface}"')
@@ -705,7 +705,7 @@ class WpasupplicantWireless(WifiController):
 class NetworksetupWireless(WifiController):
     """OS X networksetup Driver."""
 
-    def __init__(self, interface: Optional[str] = None) -> None:
+    def __init__(self, interface: str | None = None) -> None:
         WifiController.__init__(self, interface)
 
     async def connect(self, ssid: str, password: str, timeout: float = 15) -> bool:
@@ -779,20 +779,26 @@ class NetworksetupWireless(WifiController):
         """
         return False
 
-    def current(self) -> tuple[Optional[str], SsidState]:
-        """[summary].
+    def current(self) -> tuple[str | None, SsidState]:
+        """Get the currently connected SSID if there is one.
 
         Returns:
-            tuple[Optional[str], SsidState]: [description]
+            tuple[str | None, SsidState]: (SSID or None if not connected, SSID state)
         """
         # attempt to get current network
-        response = cmd(f"networksetup -getairportnetwork '{self.interface}'")
+        ssid: str | None = None
+        # On MacOS <= 14...
+        if int(platform.mac_ver()[0].split(".")[0]) <= 14:
+            try:
+                if "Current Wi-Fi Network: " in (output := cmd(f"networksetup -getairportnetwork {self.interface}")):
+                    ssid = output.replace("Current Wi-Fi Network: ", "").strip()
+            except Exception as e:
+                pass
+        # For current MacOs versions or if above failed
+        if match := re.search(r"\n\s+SSID : ([\x20-\x7E]{1,32})", cmd(f"ipconfig getsummary {self.interface}")):
+            ssid = match.group(1)
 
-        # parse response
-        phrase = "Current Wi-Fi Network: "
-        if phrase in response:
-            return (response.replace("Current Wi-Fi Network: ", "").strip(), SsidState.CONNECTED)
-        return (None, SsidState.DISCONNECTED)
+        return (ssid, SsidState.CONNECTED) if ssid else (None, SsidState.DISCONNECTED)
 
     def available_interfaces(self) -> list[str]:
         """Return a list of available Wifi Interface strings
@@ -875,9 +881,9 @@ class NetshWireless(WifiController):
     </MacRandomization>
 </WLANProfile>"""
 
-    def __init__(self, interface: Optional[str] = None) -> None:
+    def __init__(self, interface: str | None = None) -> None:
         WifiController.__init__(self, interface)
-        self.ssid: Optional[str] = None
+        self.ssid: str | None = None
 
     def __del__(self) -> None:
         self._clean(self.ssid)
@@ -957,7 +963,7 @@ class NetshWireless(WifiController):
 
         return bool("completed successfully" in response.lower())
 
-    def current(self) -> tuple[Optional[str], SsidState]:
+    def current(self) -> tuple[str | None, SsidState]:
         """Get the current network SSID and state.
 
         # Here is an example of what we are parsing (i.e. to find FunHouse SSID):
@@ -969,7 +975,7 @@ class NetshWireless(WifiController):
         # SSID                   : FunHouse
 
         Returns:
-            tuple[Optional[str], SsidState]: Tuple of (ssid, network_state)
+            tuple[str | None, SsidState]: Tuple of (ssid, network_state)
         """
 
         class ParseState(Enum):
@@ -981,8 +987,8 @@ class NetshWireless(WifiController):
 
         response = cmd("netsh wlan show interfaces")
         parse_state = ParseState.PARSE_INTERFACE
-        ssid: Optional[str] = None
-        network_state: Optional[str] = None
+        ssid: str | None = None
+        network_state: str | None = None
         for field in response.split("\r\n"):
             if parse_state is ParseState.PARSE_INTERFACE:
                 if "Name" in field and self.interface in field:
@@ -1053,11 +1059,11 @@ class NetshWireless(WifiController):
         return "not exist" not in response
 
     @staticmethod
-    def _clean(ssid: Optional[str]) -> None:
+    def _clean(ssid: str | None) -> None:
         """Disconnect and delete SSID profile.
 
         Args:
-            ssid (Optional[str]): name of SSID
+            ssid (str | None): name of SSID
         """
         cmd("netsh wlan disconnect")
         if ssid is not None:
