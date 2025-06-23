@@ -65,7 +65,7 @@ pydoclint = "^0"
 pydocstyle = { extras = ["toml"], version = "^6" }
 pytest = "^8"
 pytest-cov = "^6"
-pytest-asyncio = "^0"
+pytest-asyncio = "^1"
 pytest-html = "^4"
 coverage = { extras = ["toml"], version = "^7" }
 requests-mock = "^1"
