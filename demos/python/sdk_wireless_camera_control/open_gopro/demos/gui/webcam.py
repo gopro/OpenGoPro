@@ -5,6 +5,7 @@
 
 import argparse
 import asyncio
+import logging
 import sys
 
 from returns.pipeline import is_successful
@@ -15,7 +16,7 @@ from open_gopro.demos.gui.video_display import BufferlessVideoCapture
 from open_gopro.gopro_base import GoProBase
 from open_gopro.models.streaming import StreamType, WebcamProtocol, WebcamStreamOptions
 from open_gopro.util import add_cli_args_and_parse
-from open_gopro.util.logger import setup_logging
+from open_gopro.util.logger import set_stream_logging_level, setup_logging
 from open_gopro.util.util import ainput
 
 console = Console()
@@ -40,6 +41,7 @@ async def main(args: argparse.Namespace) -> int:
             if wireless_interfaces
             else WiredGoPro(args.identifier)
         ) as gopro:
+            set_stream_logging_level(logging.WARNING)
             with console.status(f"Starting webcam stream with protocol {args.protocol}..."):
                 if not is_successful(
                     result := (
@@ -52,23 +54,23 @@ async def main(args: argparse.Namespace) -> int:
                     console.print(f"[red]Failed to start webcam stream: {result.failure()}")
                     return 1
 
-        url = gopro.streaming.url if args.protocol == WebcamProtocol.RTSP else "udp://@:8554"
-        console.print(f"Preview stream started. It can be viewed in VLC at [yellow]{url}")
-        console.print(
-            "Press Enter to view the preview stream using Python CV2. Once started, it won't be viewable in VLC."
-        )
-        await ainput("")
+            url = gopro.streaming.url if args.protocol == WebcamProtocol.RTSP else "udp://@:8554"
+            console.print(f"Preview stream started. It can be viewed in VLC at [yellow]{url}")
+            console.print(
+                "Press Enter to view the preview stream using Python CV2. Once started, it won't be viewable in VLC."
+            )
+            await ainput("")
 
-        with console.status("Displaying the preview stream..."):
-            assert gopro.streaming.url
-            BufferlessVideoCapture(
-                source=gopro.streaming.url,
-                protocol=BufferlessVideoCapture.Protocol(args.protocol.name),
-                printer=console.print,
-            ).display_blocking()
+            with console.status("Displaying the preview stream..."):
+                assert gopro.streaming.url
+                BufferlessVideoCapture(
+                    source=gopro.streaming.url,
+                    protocol=BufferlessVideoCapture.Protocol(args.protocol.name),
+                    printer=console.print,
+                ).display_blocking()
 
-        with console.status("Stopping preview stream..."):
-            await gopro.streaming.stop_active_stream()
+            with console.status("Stopping preview stream..."):
+                await gopro.streaming.stop_active_stream()
         return 0
 
     except Exception as e:  # pylint: disable = broad-except

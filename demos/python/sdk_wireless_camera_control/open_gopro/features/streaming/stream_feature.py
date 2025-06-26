@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import logging
 
-from returns.result import ResultE
+from returns.result import Failure, ResultE, Success
 
 from open_gopro.domain.exceptions import GoProError
 from open_gopro.features.base_feature import BaseFeature
@@ -113,7 +113,12 @@ class StreamFeature(BaseFeature):
 
         self._current = controller
         logger.info(f"Starting {stream_type.name.title()} stream")
-        return await self._current.start(options)
+        match (result := await self._current.start(options)):
+            case Success():
+                logger.info("Stream started successfully.")
+            case Failure():
+                logger.error(f"Stream failed to start: {result.failure()}")
+        return result
 
     async def stop_active_stream(self) -> ResultE[None]:
         """Stop the currently active stream.
