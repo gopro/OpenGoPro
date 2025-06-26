@@ -6,6 +6,7 @@
 import argparse
 import asyncio
 import logging
+import sys
 
 from returns.pipeline import is_successful
 from rich.console import Console
@@ -20,7 +21,7 @@ from open_gopro.util.util import ainput
 console = Console()
 
 
-async def main(args: argparse.Namespace) -> None:
+async def main(args: argparse.Namespace) -> int:
     setup_logging(__name__, args.log)
 
     async with WirelessGoPro(args.identifier) as gopro:
@@ -36,7 +37,7 @@ async def main(args: argparse.Namespace) -> None:
                 )
             ):
                 console.print(f"[red]Failed to start preview stream: {result.failure()}")
-                return
+                return 1
             assert gopro.streaming.url, "Preview stream URL should not be empty after starting the stream"
 
         console.print("Preview stream started. It can be viewed in VLC at [yellow]udp://@:8554")
@@ -54,6 +55,7 @@ async def main(args: argparse.Namespace) -> None:
 
         with console.status("Stopping preview stream..."):
             await gopro.streaming.stop_active_stream()
+        return 0
 
 
 def parse_arguments() -> argparse.Namespace:
@@ -67,7 +69,7 @@ def parse_arguments() -> argparse.Namespace:
 
 
 def entrypoint() -> None:
-    asyncio.run(main(parse_arguments()))
+    sys.exit(asyncio.run(main(parse_arguments())))
 
 
 if __name__ == "__main__":
