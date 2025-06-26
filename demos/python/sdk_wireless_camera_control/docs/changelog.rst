@@ -9,7 +9,11 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
-0.21.0 (June-35-2025)
+0.21.1 (June-26-2025)
+---------------------
+* Add user streaming guidance to webcam demo
+
+0.21.0 (June-25-2025)
 ---------------------
 * Support WiFi connecting on MacOS >= 15
 * Clean up streaming demos
