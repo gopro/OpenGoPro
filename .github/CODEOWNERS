@@ -1,0 +1,7 @@
+# CODEOWNERS for OpenGoPro Repository
+
+# This file defines who is responsible for reviewing changes to specific parts of the codebase.
+# For more information about CODEOWNERS, see: https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners
+
+# Global owners - these users will be requested for review on all changes
+* @tcamise-gpsw
