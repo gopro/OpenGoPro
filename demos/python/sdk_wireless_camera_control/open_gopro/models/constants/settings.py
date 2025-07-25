@@ -59,13 +59,16 @@ class SettingId(GoProIntEnum):
     EASY_NIGHT_PHOTO = 191
     MULTI_SHOT_ASPECT_RATIO = 192
     FRAMING = 193
-    CAMERA_VOLUME = 216
+    CAMERA_MODE = 194
+    NUM_360_PHOTO_FILES_EXTENSION = 196
+    BEEP_VOLUME = 216
     SETUP_SCREEN_SAVER = 219
     SETUP_LANGUAGE = 223
     PHOTO_MODE = 227
     VIDEO_FRAMING = 232
     MULTI_SHOT_FRAMING = 233
     FRAME_RATE = 234
+    AUTOMATIC_WI_FI_ACCESS_POINT = 236
 
 
 class VideoResolution(GoProIntEnum):
@@ -78,15 +81,18 @@ class VideoResolution(GoProIntEnum):
     NUM_1080 = 9
     NUM_720 = 12
     NUM_4K_4_3 = 18
+    NUM_5_6K = 21
     NUM_5K = 24
     NUM_5K_4_3 = 25
     NUM_5_3K_8_7 = 26
     NUM_5_3K_4_3 = 27
     NUM_4K_8_7 = 28
+    NUM_8K = 31
     NUM_5_3K_21_9 = 35
     NUM_4K_21_9 = 36
     NUM_4K_1_1 = 37
     NUM_900 = 38
+    NUM_4K_SPH = 39
     NUM_5_3K = 100
     NUM_5_3K_8_7_V2 = 107
     NUM_4K_8_7_V2 = 108
@@ -103,6 +109,7 @@ class FramesPerSecond(GoProIntEnum):
     NUM_240_0 = 0
     NUM_120_0 = 1
     NUM_100_0 = 2
+    NUM_90_0 = 3
     NUM_60_0 = 5
     NUM_50_0 = 6
     NUM_30_0 = 8
@@ -238,11 +245,13 @@ class PhotoLens(GoProIntEnum):
 
     WIDE_12_MP = 0
     LINEAR_12_MP = 10
+    NUM_9MP_WIDE = 15
     NARROW = 19
     WIDE_23_MP = 27
     LINEAR_23_MP = 28
     WIDE_27_MP = 31
     LINEAR_27_MP = 32
+    NUM_9MP_LINEAR = 37
     NUM_13MP_LINEAR = 38
     NUM_13MP_WIDE = 39
     NUM_13MP_ULTRA_WIDE = 40
@@ -335,6 +344,7 @@ class VideoDuration(GoProIntEnum):
 class MultiShotDuration(GoProIntEnum):
     """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-duration-157)"""
 
+    OFF = 0
     NUM_15_SECONDS = 1
     NUM_30_SECONDS = 2
     NUM_1_MINUTE = 3
@@ -635,8 +645,22 @@ class Framing(GoProIntEnum):
     FULL_FRAME_1_1_V2 = 106
 
 
-class CameraVolume(GoProIntEnum):
-    """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-volume-216)"""
+class CameraMode(GoProIntEnum):
+    """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-mode-194)"""
+
+    SINGLE_LENS = 0
+    NUM_360_ = 1
+
+
+class NUM360PhotoFilesExtension(GoProIntEnum):
+    """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#360-photo-files-extension-196)"""
+
+    NUM_JPG = 0
+    NUM_36P = 1
+
+
+class BeepVolume(GoProIntEnum):
+    """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#beep-volume-216)"""
 
     LOW = 70
     MEDIUM = 85
@@ -646,6 +670,7 @@ class CameraVolume(GoProIntEnum):
 class SetupScreenSaver(GoProIntEnum):
     """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-screen-saver-219)"""
 
+    NEVER = 0
     NUM_1_MIN = 1
     NUM_2_MIN = 2
     NUM_3_MIN = 3
@@ -706,6 +731,7 @@ class FrameRate(GoProIntEnum):
     NUM_240_0 = 0
     NUM_120_0 = 1
     NUM_100_0 = 2
+    NUM_90_0 = 3
     NUM_60_0 = 5
     NUM_50_0 = 6
     NUM_30_0 = 8
@@ -715,3 +741,10 @@ class FrameRate(GoProIntEnum):
     NUM_400_0 = 15
     NUM_360_0 = 16
     NUM_300_0 = 17
+
+
+class AutomaticWi_FiAccessPoint(GoProIntEnum):
+    """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#automatic-wi-fi-access-point-236)"""
+
+    OFF = 0
+    ON = 1

@@ -408,12 +408,29 @@ class SettingsContainer internal constructor(marshaller: IOperationMarshaller) {
   val framing = Setting(SettingId.FRAMING, Framing, marshaller)
 
   /**
-   * Camera Volume
+   * Camera Mode
    *
    * @see
-   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-volume-216)
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-mode-194)
    */
-  val cameraVolume = Setting(SettingId.CAMERA_VOLUME, CameraVolume, marshaller)
+  val cameraMode = Setting(SettingId.CAMERA_MODE, CameraMode, marshaller)
+
+  /**
+   * 360 Photo Files Extension
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#360-photo-files-extension-196)
+   */
+  val nUM360PhotoFilesExtension =
+      Setting(SettingId.NUM_360_PHOTO_FILES_EXTENSION, NUM360PhotoFilesExtension, marshaller)
+
+  /**
+   * Beep Volume
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#beep-volume-216)
+   */
+  val beepVolume = Setting(SettingId.BEEP_VOLUME, BeepVolume, marshaller)
 
   /**
    * Setup Screen Saver
@@ -462,4 +479,15 @@ class SettingsContainer internal constructor(marshaller: IOperationMarshaller) {
    *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#frame-rate-234)
    */
   val frameRate = Setting(SettingId.FRAME_RATE, FrameRate, marshaller)
+
+  /**
+   * Automatic Wi-Fi Access Point
+   *
+   * Configure the camera's wifi access point to automatically start on boot of the camera
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#automatic-wi-fi-access-point-236)
+   */
+  val automaticWi_FiAccessPoint =
+      Setting(SettingId.AUTOMATIC_WI_FI_ACCESS_POINT, AutomaticWi_FiAccessPoint, marshaller)
 }

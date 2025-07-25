@@ -5,6 +5,32 @@ isort:skip_file
 Commands related to controlling the camera's operation
 """
 
+import builtins
 import google.protobuf.descriptor
+import google.protobuf.message
+import sys
 
+if sys.version_info >= (3, 8):
+    import typing as typing_extensions
+else:
+    import typing_extensions
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
+
+@typing_extensions.final
+class RequestSetCameraName(google.protobuf.message.Message):
+    """*
+    Set the camera name
+
+    Response: @ref ResponseGeneric
+    """
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    NAME_FIELD_NUMBER: builtins.int
+    name: builtins.str
+    "(TODO define encoding) string to identify the camera"
+
+    def __init__(self, *, name: builtins.str | None = ...) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["name", b"name"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["name", b"name"]) -> None: ...
+
+global___RequestSetCameraName = RequestSetCameraName

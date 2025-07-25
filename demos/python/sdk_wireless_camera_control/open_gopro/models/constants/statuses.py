@@ -95,6 +95,9 @@ class StatusId(GoProIntEnum):
     USB_CONTROLLED = 116
     SD_CARD_CAPACITY = 117
     PHOTO_INTERVAL_CAPTURE_COUNT = 118
+    POV_PRESET = 120
+    SELFIE_PRESET = 121
+    CAMERA_NAME = 122
 
 
 class InternalBatteryBars(GoProIntEnum):

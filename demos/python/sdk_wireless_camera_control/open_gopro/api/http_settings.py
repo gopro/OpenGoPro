@@ -391,13 +391,29 @@ class HttpSettings(HttpMessages[HttpSetting]):
 
         @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#framing-193)"""
 
-        self.camera_volume: HttpSetting[settings.CameraVolume] = HttpSetting[settings.CameraVolume](
-            communicator, SettingId.CAMERA_VOLUME
+        self.camera_mode: HttpSetting[settings.CameraMode] = HttpSetting[settings.CameraMode](
+            communicator, SettingId.CAMERA_MODE
         )
 
-        """Camera Volume
+        """Camera Mode
 
-        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-volume-216)"""
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-mode-194)"""
+
+        self.num_360_photo_files_extension: HttpSetting[settings.NUM360PhotoFilesExtension] = HttpSetting[
+            settings.NUM360PhotoFilesExtension
+        ](communicator, SettingId.NUM_360_PHOTO_FILES_EXTENSION)
+
+        """360 Photo Files Extension
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#360-photo-files-extension-196)"""
+
+        self.beep_volume: HttpSetting[settings.BeepVolume] = HttpSetting[settings.BeepVolume](
+            communicator, SettingId.BEEP_VOLUME
+        )
+
+        """Beep Volume
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#beep-volume-216)"""
 
         self.setup_screen_saver: HttpSetting[settings.SetupScreenSaver] = HttpSetting[settings.SetupScreenSaver](
             communicator, SettingId.SETUP_SCREEN_SAVER
@@ -446,5 +462,15 @@ class HttpSettings(HttpMessages[HttpSetting]):
         """Frame Rate
 
         @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#frame-rate-234)"""
+
+        self.automatic_wi_fi_access_point: HttpSetting[settings.AutomaticWi_FiAccessPoint] = HttpSetting[
+            settings.AutomaticWi_FiAccessPoint
+        ](communicator, SettingId.AUTOMATIC_WI_FI_ACCESS_POINT)
+
+        """Automatic Wi-Fi Access Point
+
+        Configure the camera's wifi access point to automatically start on boot of the camera
+
+        @see [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#automatic-wi-fi-access-point-236)"""
 
         super().__init__(communicator)

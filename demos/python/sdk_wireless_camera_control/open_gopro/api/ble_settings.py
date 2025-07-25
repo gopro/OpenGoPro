@@ -401,13 +401,29 @@ class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#framing-193)"""
 
-        self.camera_volume: BleSetting[settings.CameraVolume] = BleSetting[settings.CameraVolume](
-            communicator, SettingId.CAMERA_VOLUME, settings.CameraVolume
+        self.camera_mode: BleSetting[settings.CameraMode] = BleSetting[settings.CameraMode](
+            communicator, SettingId.CAMERA_MODE, settings.CameraMode
         )
 
-        """Camera Volume
+        """Camera Mode
 
-        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-volume-216)"""
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-mode-194)"""
+
+        self.num_360_photo_files_extension: BleSetting[settings.NUM360PhotoFilesExtension] = BleSetting[
+            settings.NUM360PhotoFilesExtension
+        ](communicator, SettingId.NUM_360_PHOTO_FILES_EXTENSION, settings.NUM360PhotoFilesExtension)
+
+        """360 Photo Files Extension
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#360-photo-files-extension-196)"""
+
+        self.beep_volume: BleSetting[settings.BeepVolume] = BleSetting[settings.BeepVolume](
+            communicator, SettingId.BEEP_VOLUME, settings.BeepVolume
+        )
+
+        """Beep Volume
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#beep-volume-216)"""
 
         self.setup_screen_saver: BleSetting[settings.SetupScreenSaver] = BleSetting[settings.SetupScreenSaver](
             communicator, SettingId.SETUP_SCREEN_SAVER, settings.SetupScreenSaver
@@ -456,5 +472,15 @@ class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):
         """Frame Rate
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#frame-rate-234)"""
+
+        self.automatic_wi_fi_access_point: BleSetting[settings.AutomaticWi_FiAccessPoint] = BleSetting[
+            settings.AutomaticWi_FiAccessPoint
+        ](communicator, SettingId.AUTOMATIC_WI_FI_ACCESS_POINT, settings.AutomaticWi_FiAccessPoint)
+
+        """Automatic Wi-Fi Access Point
+
+        Configure the camera's wifi access point to automatically start on boot of the camera
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#automatic-wi-fi-access-point-236)"""
 
         super().__init__(communicator)

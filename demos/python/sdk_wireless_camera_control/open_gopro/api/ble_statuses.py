@@ -641,4 +641,25 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#photo-interval-capture-count-118)"""
 
+        self.pov_preset: BleStatus[int] = BleStatus(communicator, StatusId.POV_PRESET, Int32ub)
+        """POV Preset
+
+        Current POV group active Preset ID
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#pov-preset-120)"""
+
+        self.selfie_preset: BleStatus[int] = BleStatus(communicator, StatusId.SELFIE_PRESET, Int32ub)
+        """Selfie Preset
+
+        Current selfie group active Preset ID
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#selfie-preset-121)"""
+
+        self.camera_name: BleStatus[str] = BleStatus(communicator, StatusId.CAMERA_NAME, GreedyString(encoding="utf-8"))
+        """Camera Name
+
+        Custom camera name set by the user
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#camera-name-122)"""
+
         super().__init__(communicator)
