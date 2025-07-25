@@ -5,6 +5,8 @@
 **/*.gpmf
 **/temp
 
+**/objects.inv
+
 # Docs output
 docs/build
 
