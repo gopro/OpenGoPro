@@ -782,6 +782,9 @@ class NetworksetupWireless(WifiController):
     def current(self) -> tuple[str | None, SsidState]:
         """Get the currently connected SSID if there is one.
 
+        Raises:
+            RuntimeError: the current Wi-Fi network is redacted
+
         Returns:
             tuple[str | None, SsidState]: (SSID or None if not connected, SSID state)
         """
