@@ -782,6 +782,9 @@ class NetworksetupWireless(WifiController):
     def current(self) -> tuple[str | None, SsidState]:
         """Get the currently connected SSID if there is one.
 
+        Raises:
+            RuntimeError: the current Wi-Fi network is redacted
+
         Returns:
             tuple[str | None, SsidState]: (SSID or None if not connected, SSID state)
         """
@@ -794,9 +797,12 @@ class NetworksetupWireless(WifiController):
                     ssid = output.replace("Current Wi-Fi Network: ", "").strip()
             except Exception as e:
                 pass
-        # For current MacOs versions or if above failed
-        if match := re.search(r"\n\s+SSID : ([\x20-\x7E]{1,32})", cmd(f"ipconfig getsummary {self.interface}")):
-            ssid = match.group(1)
+        if ssid is None:
+            # For current MacOs versions or if above failed
+            if match := re.search(r"\n\s+SSID : ([\x20-\x7E]{1,32})", cmd(f"ipconfig getsummary {self.interface}")):
+                ssid = match.group(1)
+        if ssid == "<redacted>":
+            raise RuntimeError("current Wi-Fi network is redacted")
 
         return (ssid, SsidState.CONNECTED) if ssid else (None, SsidState.DISCONNECTED)
 
