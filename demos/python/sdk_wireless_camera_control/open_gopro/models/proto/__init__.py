@@ -5,6 +5,7 @@
 
 They are imported here so they can be imported from
 """
+from .camera_control_pb2 import RequestSetCameraName
 from .cohn_pb2 import (
     EnumCOHNNetworkState,
     EnumCOHNStatus,

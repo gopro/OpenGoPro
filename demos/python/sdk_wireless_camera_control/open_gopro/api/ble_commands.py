@@ -406,6 +406,24 @@ class BleCommands(BleMessages[BleMessage]):
     @ble_proto_command(
         uuid=GoProUUID.CQ_COMMAND,
         feature_id=FeatureId.COMMAND,
+        action_id=ActionId.REQUEST_SET_CAMERA_NAME,
+        response_action_id=ActionId.RESPONSE_SET_CAMERA_NAME,
+        request_proto=proto.RequestSetCameraName,
+        response_proto=proto.ResponseGeneric,
+    )
+    async def set_camera_name(self, *, name: str) -> GoProResp[None]:
+        """Set the camera name.
+
+        Args:
+            name (str): Desired camera name.
+
+        Returns:
+            GoProResp[None]: command status of request
+        """
+
+    @ble_proto_command(
+        uuid=GoProUUID.CQ_COMMAND,
+        feature_id=FeatureId.COMMAND,
         action_id=ActionId.SET_TURBO_MODE,
         response_action_id=ActionId.SET_TURBO_MODE_RSP,
         request_proto=proto.RequestSetTurboActive,

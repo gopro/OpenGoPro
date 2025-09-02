@@ -240,6 +240,18 @@ async def wireless_gopro_ble():
         yield gopro
 
 
+@pytest_asyncio.fixture(loop_scope="function")
+async def wireless_gopro():
+    set_logging_level(logging.DEBUG)
+
+    os.environ["LANG"] = "en_US"
+    async with WirelessGoPro() as gopro:
+        logger.critical("==================================================================")
+        logger.critical("Yielding gopro under test.")
+        logger.critical("==================================================================")
+        yield gopro
+
+
 @pytest.fixture(scope="function")
 async def wired_gopro() -> AsyncGenerator[WiredGoPro, None]:
     async with WiredGoPro() as gopro:
