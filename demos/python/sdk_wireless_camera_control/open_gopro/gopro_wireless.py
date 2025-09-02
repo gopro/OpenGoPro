@@ -369,7 +369,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             retries (int): How many connection attempts before considering connection failed. Defaults to 5.
         """
         # Set up concurrency
-        logger.info("")
+        logger.info("Opening the camera connection...")
         self._loop = asyncio.get_running_loop()
         self._ble_disconnect_event = asyncio.Event()
 

@@ -7,13 +7,14 @@ import logging
 import os
 import re
 from pathlib import Path
-from typing import Any, Generator
+from typing import Any, AsyncGenerator, Generator
 
 import pytest
 import pytest_asyncio
 
 from open_gopro import WirelessGoPro
 from open_gopro.gopro_base import GoProBase
+from open_gopro.gopro_wired import WiredGoPro
 from open_gopro.models.constants import settings
 from open_gopro.network.ble import (
     BleClient,
@@ -233,8 +234,16 @@ async def wireless_gopro_ble():
 
     os.environ["LANG"] = "en_US"
     async with WirelessGoPro(interfaces={WirelessGoPro.Interface.BLE}) as gopro:
-        # await gopro.ble_setting.control_mode.set(settings.ControlMode.PRO)
-        print("==================================================================")
-        print("Yielding gopro under test.")
-        print("==================================================================")
+        logger.critical("==================================================================")
+        logger.critical("Yielding gopro under test.")
+        logger.critical("==================================================================")
+        yield gopro
+
+
+@pytest.fixture(scope="function")
+async def wired_gopro() -> AsyncGenerator[WiredGoPro, None]:
+    async with WiredGoPro() as gopro:
+        logger.critical("==================================================================")
+        logger.critical("Yielding gopro under test.")
+        logger.critical("==================================================================")
         yield gopro

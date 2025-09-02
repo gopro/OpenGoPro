@@ -351,6 +351,29 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """
 
     @http_get_json_command(
+        endpoint="gopro/camera/name",
+        parser=Parser(json_parser=LambdaJsonParser(lambda data: data["value"])),
+    )
+    async def get_camera_name(self) -> GoProResp[str]:
+        """Get the camera name
+
+        Returns:
+            GoProResp[str]: camera name
+        """
+
+    @http_put_json_command(endpoint="gopro/camera/name", body_args=["value"])
+    async def set_camera_name(self, name: str) -> GoProResp[None]:
+        """Set the camera name
+
+        Args:
+            name (str): camera name to set
+
+        Returns:
+            GoProResp[None]: command status
+        """
+        return {"value": name}  # type: ignore
+
+    @http_get_json_command(
         endpoint="gopro/media/hilight/file",
         arguments=["path", "ms"],
     )
