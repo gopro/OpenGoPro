@@ -218,6 +218,7 @@ def test_media_list():
     assert media_list.files[0].filename == "100GOPRO/GX010001.MP4"
     assert media_list.files[-1].raw == "1"
 
+
 def test_media_list_360():
     media_list = MediaList(**MEDIA_LIST_360)
     assert media_list
@@ -225,6 +226,7 @@ def test_media_list_360():
     assert len(items) == 17
     assert len([item for item in items if isinstance(item, GroupedMediaItem)]) == 4
     assert media_list.files[0].filename == "100GOPRO/GS010001.36P"
+
 
 VIDEO_METADATA: Final = {
     "cre": "1656927817",

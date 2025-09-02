@@ -841,26 +841,6 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
       Status(StatusId.PHOTO_INTERVAL_CAPTURE_COUNT, marshaller, ::toInt8)
 
   /**
-   * POV Preset
-   *
-   * Current POV group active Preset ID
-   *
-   * @see
-   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#pov-preset-120)
-   */
-  val povPreset = Status(StatusId.POV_PRESET, marshaller, ::toInt8)
-
-  /**
-   * Selfie Preset
-   *
-   * Current selfie group active Preset ID
-   *
-   * @see
-   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#selfie-preset-121)
-   */
-  val selfiePreset = Status(StatusId.SELFIE_PRESET, marshaller, ::toInt8)
-
-  /**
    * Camera Name
    *
    * Custom camera name set by the user

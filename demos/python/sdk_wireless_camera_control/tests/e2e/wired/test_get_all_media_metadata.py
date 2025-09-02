@@ -1,12 +1,11 @@
-from typing import AsyncGenerator
 import logging
 from pathlib import Path
+from typing import AsyncGenerator
 
 import pytest
 
 from open_gopro import WiredGoPro
 from open_gopro.util.logger import set_logging_level, setup_logging
-
 
 logger = logging.getLogger(__name__)
 

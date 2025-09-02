@@ -92,8 +92,6 @@ enum class StatusId(override val value: UByte) : IValuedEnum<UByte> {
   USB_CONTROLLED(116U),
   SD_CARD_CAPACITY(117U),
   PHOTO_INTERVAL_CAPTURE_COUNT(118U),
-  POV_PRESET(120U),
-  SELFIE_PRESET(121U),
   CAMERA_NAME(122U);
 
   @ExperimentalUnsignedTypes
