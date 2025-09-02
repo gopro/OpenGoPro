@@ -369,6 +369,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             retries (int): How many connection attempts before considering connection failed. Defaults to 5.
         """
         # Set up concurrency
+        logger.info("")
         self._loop = asyncio.get_running_loop()
         self._ble_disconnect_event = asyncio.Event()
 
@@ -380,16 +381,21 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             self._busy = True
             self._encoding_started = asyncio.Event()
 
+        logger.info("Initializing camera features...")
         await self.cohn.open(gopro=self, loop=self._loop, cohn_credentials=self._cohn_credentials)
         await self.access_point.open(self._loop, self)
         await self.streaming.open(self._loop, self)
+        logger.info("Camera features initialized")
 
         RETRIES = 5
         for retry in range(RETRIES):
             try:
                 if self._should_enable_ble:
+                    logger.info("Opening BLE connection...")
                     await self._open_ble(timeout, retries)
+                    logger.info("BLE connection opened.")
 
+                    logger.info("Performing initial camera configuration...")
                     # TODO need to handle sending these if BLE does not exist
                     await self.ble_command.set_third_party_client_info()
                     # Set current dst-aware time. Don't assert on success since some old cameras don't support this command.
@@ -403,14 +409,19 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                     logger.info(f"Using Open GoPro API version {version}")
 
                     await self.cohn.wait_until_ready()
+                    logger.info("Camera configured.")
 
                 # Establish Wifi / COHN connection if desired
                 if self._should_enable_wifi:
+                    logger.info("Opening Wifi connection...")
                     await self._open_wifi(timeout, retries)
+                    logger.info("Wifi connection opened.")
                 elif self._should_enable_cohn:
                     # TODO DNS scan?
+                    logger.info("Checking COHN...")
                     if await self.cohn.is_configured:
                         self._is_cohn_configured = True
+                        logger.info("COHN is configured.")
                     else:
                         logger.warning("COHN needs to be configured.")
 
@@ -850,7 +861,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                 assert (await self.ble_command.enable_wifi_ap(enable=True)).ok
 
                 async def _wait_for_camera_wifi_ready() -> None:
-                    logger.debug("Waiting for camera wifi ready status")
+                    logger.info("Waiting for camera wifi ready status")
                     while not (await self.ble_status.ap_mode.get_value()).data:
                         await asyncio.sleep(0.200)
 
