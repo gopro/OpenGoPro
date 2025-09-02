@@ -163,7 +163,6 @@ class GoProAdvData(Jsonable):
     def __hash__(self) -> int:
         return hash(self.serial_number)
 
-
     # TODO. We're currently just using this data model to pass all schemas (2 and 3 as of now). Really we should
     # have per-schema data models and mux the parsing based on the schema version.
     #
