@@ -232,6 +232,10 @@ enum EnumPresetTitle {
     PRESET_TITLE_4_3_VIDEO                = 125;
     PRESET_TITLE_16_9_VIDEO               = 126;
     PRESET_TITLE_16_9_SLOMO               = 127;
+    PRESET_TITLE_TIME_LAPSE_VIDEO         = 131;
+    PRESET_TITLE_TIME_LAPSE_PHOTO         = 132;
+    PRESET_TITLE_NIGHT_LAPSE_VIDEO        = 133;
+    PRESET_TITLE_NIGHT_LAPSE_PHOTO        = 134;
 }
 
 /**

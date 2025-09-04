@@ -692,6 +692,18 @@ public sealed class EnumPresetTitle(override val value: Int, override val name: 
 
   internal object PRESET_TITLE_16_9_SLOMO : EnumPresetTitle(127, "PRESET_TITLE_16_9_SLOMO")
 
+  internal object PRESET_TITLE_TIME_LAPSE_VIDEO :
+      EnumPresetTitle(131, "PRESET_TITLE_TIME_LAPSE_VIDEO")
+
+  internal object PRESET_TITLE_TIME_LAPSE_PHOTO :
+      EnumPresetTitle(132, "PRESET_TITLE_TIME_LAPSE_PHOTO")
+
+  internal object PRESET_TITLE_NIGHT_LAPSE_VIDEO :
+      EnumPresetTitle(133, "PRESET_TITLE_NIGHT_LAPSE_VIDEO")
+
+  internal object PRESET_TITLE_NIGHT_LAPSE_PHOTO :
+      EnumPresetTitle(134, "PRESET_TITLE_NIGHT_LAPSE_PHOTO")
+
   internal class UNRECOGNIZED(value: Int) : EnumPresetTitle(value)
 
   internal companion object :
@@ -777,7 +789,11 @@ public sealed class EnumPresetTitle(override val value: Int, override val name: 
           PRESET_TITLE_BURST_SLOMO,
           PRESET_TITLE_4_3_VIDEO,
           PRESET_TITLE_16_9_VIDEO,
-          PRESET_TITLE_16_9_SLOMO)
+          PRESET_TITLE_16_9_SLOMO,
+          PRESET_TITLE_TIME_LAPSE_VIDEO,
+          PRESET_TITLE_TIME_LAPSE_PHOTO,
+          PRESET_TITLE_NIGHT_LAPSE_VIDEO,
+          PRESET_TITLE_NIGHT_LAPSE_PHOTO)
     }
 
     override fun fromValue(value: Int): com.gopro.open_gopro.operations.EnumPresetTitle =

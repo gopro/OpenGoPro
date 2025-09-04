@@ -406,6 +406,10 @@ class _EnumPresetTitleEnumTypeWrapper(
     PRESET_TITLE_4_3_VIDEO: _EnumPresetTitle.ValueType
     PRESET_TITLE_16_9_VIDEO: _EnumPresetTitle.ValueType
     PRESET_TITLE_16_9_SLOMO: _EnumPresetTitle.ValueType
+    PRESET_TITLE_TIME_LAPSE_VIDEO: _EnumPresetTitle.ValueType
+    PRESET_TITLE_TIME_LAPSE_PHOTO: _EnumPresetTitle.ValueType
+    PRESET_TITLE_NIGHT_LAPSE_VIDEO: _EnumPresetTitle.ValueType
+    PRESET_TITLE_NIGHT_LAPSE_PHOTO: _EnumPresetTitle.ValueType
 
 class EnumPresetTitle(_EnumPresetTitle, metaclass=_EnumPresetTitleEnumTypeWrapper): ...
 
@@ -489,6 +493,10 @@ PRESET_TITLE_BURST_SLOMO: EnumPresetTitle.ValueType
 PRESET_TITLE_4_3_VIDEO: EnumPresetTitle.ValueType
 PRESET_TITLE_16_9_VIDEO: EnumPresetTitle.ValueType
 PRESET_TITLE_16_9_SLOMO: EnumPresetTitle.ValueType
+PRESET_TITLE_TIME_LAPSE_VIDEO: EnumPresetTitle.ValueType
+PRESET_TITLE_TIME_LAPSE_PHOTO: EnumPresetTitle.ValueType
+PRESET_TITLE_NIGHT_LAPSE_VIDEO: EnumPresetTitle.ValueType
+PRESET_TITLE_NIGHT_LAPSE_PHOTO: EnumPresetTitle.ValueType
 global___EnumPresetTitle = EnumPresetTitle
 
 @typing_extensions.final
