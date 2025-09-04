@@ -470,6 +470,7 @@ class BleCommands(BleMessages[BleMessage]):
         *,
         register: list[proto.EnumRegisterPresetStatus.ValueType] | None = None,
         unregister: list[proto.EnumRegisterPresetStatus.ValueType] | None = None,
+        include_hidden: bool = True,
     ) -> GoProResp[proto.NotifyPresetStatus]:
         """Get information about what Preset Groups and Presets the camera supports in its current state
 
@@ -481,6 +482,7 @@ class BleCommands(BleMessages[BleMessage]):
                 updates to register for. Defaults to None.
             unregister (list[proto.EnumRegisterPresetStatus.ValueType] | None): Types of preset modified
                 updates to unregister for. Defaults to None.
+            include_hidden (bool): Whether to include presets that are not visible in the camera UI. Defaults to True.
 
         Returns:
             GoProResp[proto.NotifyPresetStatus]: JSON data describing all currently available presets
@@ -489,6 +491,7 @@ class BleCommands(BleMessages[BleMessage]):
             "register_preset_status": register or [],
             "unregister_preset_status": unregister or [],
             "use_constant_setting_ids": True,
+            "include_hidden": int(include_hidden),
         }
 
     @ble_proto_command(
@@ -499,7 +502,7 @@ class BleCommands(BleMessages[BleMessage]):
         request_proto=proto.RequestCustomPresetUpdate,
         response_proto=proto.ResponseGeneric,
     )
-    async def custom_preset_update(
+    async def update_custom_preset(
         self,
         icon_id: proto.EnumPresetIcon.ValueType | None = None,
         title: str | proto.EnumPresetTitle.ValueType | None = None,
@@ -531,6 +534,30 @@ class BleCommands(BleMessages[BleMessage]):
             else:
                 raise TypeError("Title must be either int or str")
         return d  # type: ignore
+
+    @ble_proto_command(
+        uuid=GoProUUID.CQ_COMMAND,
+        feature_id=FeatureId.COMMAND,
+        action_id=ActionId.REQUEST_SET_PRESET_VISIBILITY,
+        response_action_id=ActionId.RESPONSE_SET_PRESET_VISIBILITY,
+        request_proto=proto.RequestPresetSetVisibility,
+        response_proto=proto.ResponseGeneric,
+    )
+    async def set_preset_visibility(
+        self,
+        preset_id: int,
+        is_visible: bool,
+    ) -> GoProResp[None]:
+        """Set the visibility of a preset
+
+        Args:
+            preset_id (int): ID of the preset to modify
+            is_visible (bool): Whether the preset should be visible
+
+        Returns:
+            GoProResp[None]: Status of the request
+        """
+        return {"id": preset_id, "visible": is_visible}  # type: ignore
 
     @ble_proto_command(
         uuid=GoProUUID.CQ_QUERY,

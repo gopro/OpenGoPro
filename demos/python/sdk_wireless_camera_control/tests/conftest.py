@@ -230,7 +230,7 @@ async def mock_wireless_gopro(monkeypatch):
 
 @pytest_asyncio.fixture(loop_scope="function")
 async def wireless_gopro_ble():
-    set_logging_level(logging.DEBUG)
+    set_logging_level(logging.INFO)
 
     os.environ["LANG"] = "en_US"
     async with WirelessGoPro(interfaces={WirelessGoPro.Interface.BLE}) as gopro:
@@ -242,7 +242,7 @@ async def wireless_gopro_ble():
 
 @pytest_asyncio.fixture(loop_scope="function")
 async def wireless_gopro():
-    set_logging_level(logging.DEBUG)
+    set_logging_level(logging.INFO)
 
     os.environ["LANG"] = "en_US"
     async with WirelessGoPro() as gopro:
@@ -254,6 +254,8 @@ async def wireless_gopro():
 
 @pytest.fixture(scope="function")
 async def wired_gopro() -> AsyncGenerator[WiredGoPro, None]:
+    set_logging_level(logging.INFO)
+
     async with WiredGoPro() as gopro:
         logger.critical("==================================================================")
         logger.critical("Yielding gopro under test.")

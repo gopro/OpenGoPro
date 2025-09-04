@@ -56,6 +56,7 @@ from .preset_status_pb2 import (
     PresetGroup,
     PresetSetting,
     RequestCustomPresetUpdate,
+    RequestPresetSetVisibility,
 )
 from .request_get_preset_status_pb2 import (
     EnumRegisterPresetStatus,

@@ -52,6 +52,7 @@ validResponseProtobufIds: Final[list[tuple[FeatureId, ActionId]]] = [
     (FeatureId.COMMAND, ActionId.RESPONSE_COHN_SETTING),
     (FeatureId.COMMAND, ActionId.RELEASE_NETWORK_RSP),
     (FeatureId.COMMAND, ActionId.RESPONSE_SET_CAMERA_NAME),
+    (FeatureId.COMMAND, ActionId.RESPONSE_SET_PRESET_VISIBILITY),
     (FeatureId.NETWORK_MANAGEMENT, ActionId.SCAN_WIFI_NETWORKS_RSP),
     (FeatureId.NETWORK_MANAGEMENT, ActionId.NOTIF_START_SCAN),
     (FeatureId.NETWORK_MANAGEMENT, ActionId.GET_AP_ENTRIES_RSP),
