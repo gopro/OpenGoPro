@@ -97,9 +97,9 @@ async def test_http_get(mock_wireless_gopro_basic: MockWirelessGoPro):
     assert response.ok
 
 
-async def test_http_file(mock_wireless_gopro_basic: MockWirelessGoPro):
+async def test_http_file(mock_wireless_gopro_basic: MockWirelessGoPro, tmp_path: Path):
     message = HttpMessage("videos/DCIM/100GOPRO/dummy.MP4", None)
-    out_file = Path("test.mp4")
+    out_file = tmp_path / "test.mp4"
     session = requests.Session()
     adapter = requests_mock.Adapter()
     session.mount(mock_wireless_gopro_basic._base_url + message._endpoint, adapter)

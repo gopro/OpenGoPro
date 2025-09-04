@@ -50,7 +50,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
     """
 
     @http_get_json_command(endpoint="/gp/gpControl/command/storage/delete/all")
-    async def delete_all(self) -> GoProResp[None]:
+    async def delete_all_media(self) -> GoProResp[None]:
         """Delete all files on the SD card.
 
         Returns:
@@ -206,7 +206,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
 
     # TODO make pydantic model of preset status
     @http_get_json_command(endpoint="gopro/camera/presets/get", arguments=["include-hidden"])
-    async def get_preset_status(self, include_hidden: bool = False) -> GoProResp[JsonDict]:
+    async def get_preset_status(self, *, include_hidden: bool = False) -> GoProResp[JsonDict]:
         """Get status of current presets
 
         Args:
@@ -381,7 +381,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """
 
     @http_put_json_command(endpoint="gopro/camera/name", body_args=["value"])
-    async def set_camera_name(self, name: str) -> GoProResp[None]:
+    async def set_camera_name(self, *, name: str) -> GoProResp[None]:
         """Set the camera name
 
         Args:

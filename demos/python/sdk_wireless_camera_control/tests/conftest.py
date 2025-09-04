@@ -229,35 +229,35 @@ async def mock_wireless_gopro(monkeypatch):
 
 
 @pytest_asyncio.fixture(loop_scope="function")
-async def wireless_gopro_ble():
+async def wireless_gopro_ble(tmp_path: Path):
     set_logging_level(logging.INFO)
 
     os.environ["LANG"] = "en_US"
     async with WirelessGoPro(interfaces={WirelessGoPro.Interface.BLE}) as gopro:
-        logger.critical("==================================================================")
-        logger.critical("Yielding gopro under test.")
-        logger.critical("==================================================================")
+        logger.info("==================================================================")
+        logger.info("Yielding gopro under test.")
+        logger.info("==================================================================")
         yield gopro
 
 
 @pytest_asyncio.fixture(loop_scope="function")
-async def wireless_gopro():
+async def wireless_gopro(tmp_path: Path):
     set_logging_level(logging.INFO)
 
     os.environ["LANG"] = "en_US"
     async with WirelessGoPro() as gopro:
-        logger.critical("==================================================================")
-        logger.critical("Yielding gopro under test.")
-        logger.critical("==================================================================")
+        logger.info("==================================================================")
+        logger.info("Yielding gopro under test.")
+        logger.info("==================================================================")
         yield gopro
 
 
 @pytest.fixture(scope="function")
-async def wired_gopro() -> AsyncGenerator[WiredGoPro, None]:
+async def wired_gopro(tmp_path: Path) -> AsyncGenerator[WiredGoPro, None]:
     set_logging_level(logging.INFO)
 
     async with WiredGoPro() as gopro:
-        logger.critical("==================================================================")
-        logger.critical("Yielding gopro under test.")
-        logger.critical("==================================================================")
+        logger.info("==================================================================")
+        logger.info("Yielding gopro under test.")
+        logger.info("==================================================================")
         yield gopro

@@ -13,7 +13,7 @@ from open_gopro.models import MediaPath, constants, proto
 @pytest.fixture(scope="function")
 async def gut(wired_gopro: WiredGoPro) -> AsyncGenerator[WiredGoPro, None]:
     assert (await wired_gopro.http_setting.control_mode.set(constants.settings.ControlMode.PRO)).ok
-    assert (await wired_gopro.http_command.delete_all()).ok
+    assert (await wired_gopro.http_command.delete_all_media()).ok
     yield wired_gopro
 
 
