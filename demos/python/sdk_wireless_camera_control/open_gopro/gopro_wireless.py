@@ -614,6 +614,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         """
         # Establish connection, pair, etc.
         await self._ble.open(timeout, retries)
+        logger.info("BLE connection is ready.")
         self._is_ble_connected = True
         await self.ble_command.set_pairing_complete()
         if not self._ble.identifier:
@@ -622,9 +623,9 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
         # Start state maintenance
         if self._should_maintain_state:
-            logger.trace("State manager initially acquiring lock")  # type: ignore
+            logger.info("Waiting for camera to be ready for communication")
             await self._ready_lock.acquire(_ReadyLock._LockOwner.STATE_MANAGER)
-            logger.trace("State manager initially acquired lock")  # type: ignore
+            logger.info("Camera is ready for communication")
 
             self._ble_disconnect_event.clear()
 
@@ -636,6 +637,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                 async for busy_status in observable.observe(debug_id=StatusId.BUSY.name):
                     asyncio.create_task(self._update_internal_state(StatusId.BUSY, busy_status))
 
+            logger.info("Starting status tasks")
             self._status_tasks.append(
                 asyncio.create_task(_handle_encoding((await self.ble_status.encoding.get_value_observable()).unwrap()))
             )
@@ -693,23 +695,37 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         if response._is_query and not response._is_push and len(response.data) == 1:
             response.data = list(response.data.values())[0]
 
-        # Check if this is the awaited synchronous response (id matches). Note! these have to come in order.
-        if ((head := await self._sync_resp_wait_q.peek_front()) == response.identifier) or (
-            # There is a special case for an unsupported protobuf error response. It does not contain the feature ID so we
-            # have to match it by Feature ID / UUID. Feature ID's are not used across UUID's so we will only check for
-            # matching Feature ID(s)
-            isinstance(head, ProtobufId)
-            and ProtobufId(head.feature_id, None)
-            == response.identifier  # Feature IDs match and response identifier does not contain Action ID
-        ):
-            logger.info(Logger.build_log_rx_str(original_response, asynchronous=False))
-            # Dequeue it and put this on the ready queue
-            await self._sync_resp_wait_q.get()
-            await self._sync_resp_ready_q.put(response)
+        logger.debug(f"Route response {response.identifier} Waiting for sync resp wait q")
+        async with self._sync_resp_wait_q:
+            logger.debug(f"Route response {response.identifier} Acquired sync resp wait q")
+            head = await self._sync_resp_wait_q.peek_front()
+            logger.debug(f"Route response {response.identifier} peeked head: {head} (type: {type(head)})")
+            logger.debug(
+                f"Route response {response.identifier} comparing: {head} == {response.identifier} -> {head == response.identifier}"
+            )
+            logger.debug(f"Queue size: {self._sync_resp_wait_q.qsize()}")
+            # Check if this is the awaited synchronous response (id matches). Note! these have to come in order.
+            if (head == response.identifier) or (
+                # There is a special case for an unsupported protobuf error response. It does not contain the feature ID so we
+                # have to match it by Feature ID / UUID. Feature ID's are not used across UUID's so we will only check for
+                # matching Feature ID(s)
+                isinstance(head, ProtobufId)
+                and ProtobufId(head.feature_id, None)
+                == response.identifier  # Feature IDs match and response identifier does not contain Action ID
+            ):
+                logger.info(Logger.build_log_rx_str(original_response, asynchronous=False))
+                # Dequeue it and put the response on the ready queue
+                logger.debug(f"Route response {response.identifier} read from sync resp wait q")
+                ephemeral_response = await self._sync_resp_wait_q.get()
+                logger.debug(f"Dequeued response {ephemeral_response}")
 
-        # If this wasn't the awaited synchronous response...
-        else:
-            logger.info(Logger.build_log_rx_str(original_response, asynchronous=True))
+                logger.debug(f"Route response putting {response.identifier} on ready q")
+                await self._sync_resp_ready_q.put(response)
+
+            # If this wasn't the awaited synchronous response...
+            else:
+                logger.info(Logger.build_log_rx_str(original_response, asynchronous=True))
+        logger.debug(f"Route response {response.identifier} released sync resp wait q")
         if response._is_push:
             for update_id, value in response.data.items():
                 await self._notify_listeners(update_id, value)
@@ -773,6 +789,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         self, message: BleMessage, rules: MessageRules = MessageRules(), **kwargs: Any
     ) -> GoProResp:
         # Store information on the response we are expecting
+        logger.debug(f"send {message._identifier} putting on sync wait q")
         await self._sync_resp_wait_q.put(message._identifier)
         logger.info(Logger.build_log_tx_str(pretty_print(message._as_dict(**kwargs))))
 
@@ -783,7 +800,12 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
         # Wait to be notified that response was received
         try:
+            logger.debug(f"send {message._identifier} Waiting to receive sync response from ready q")
             response = await asyncio.wait_for(self._sync_resp_ready_q.get(), WirelessGoPro.WRITE_TIMEOUT)
+            logger.debug(f"{message._identifier} received  response {response.identifier}")
+            if response.identifier != message._identifier:
+                logger.error("This was was not the correct response")
+                raise RuntimeError("wrong response")
         except asyncio.TimeoutError as e:
             logger.error(
                 f"Response timeout of {WirelessGoPro.WRITE_TIMEOUT} seconds when sending {message._identifier}!"

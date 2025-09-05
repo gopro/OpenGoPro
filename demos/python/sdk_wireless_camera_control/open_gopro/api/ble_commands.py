@@ -209,7 +209,7 @@ class BleCommands(BleMessages[BleMessage]):
         """Get Open GoPro API Version
 
         Returns:
-            GoProResp[str]: response as JSON
+            GoProResp[str]: response containing version number as string
         """
 
     @ble_write_command(

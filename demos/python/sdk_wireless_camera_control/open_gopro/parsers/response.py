@@ -345,6 +345,7 @@ class BleRespBuilder(RespBuilder[bytearray]):
         """
         try:
             self._identifier = self.identify_response(self._uuid, self._packet)
+            logger.debug(f"BleRespBuilder identified response: {self._identifier}")
             buf = self._packet
 
             if not self._is_direct_read:  # length byte
