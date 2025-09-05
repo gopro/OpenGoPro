@@ -695,15 +695,10 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         if response._is_query and not response._is_push and len(response.data) == 1:
             response.data = list(response.data.values())[0]
 
-        logger.debug(f"Route response {response.identifier} Waiting for sync resp wait q")
+        logger.trace(f"Route response {response.identifier} Waiting for sync resp wait q")  # type: ignore
         async with self._sync_resp_wait_q:
-            logger.debug(f"Route response {response.identifier} Acquired sync resp wait q")
+            logger.trace(f"Route response {response.identifier} Acquired sync resp wait q")  # type: ignore
             head = await self._sync_resp_wait_q.peek_front()
-            logger.debug(f"Route response {response.identifier} peeked head: {head} (type: {type(head)})")
-            logger.debug(
-                f"Route response {response.identifier} comparing: {head} == {response.identifier} -> {head == response.identifier}"
-            )
-            logger.debug(f"Queue size: {self._sync_resp_wait_q.qsize()}")
             # Check if this is the awaited synchronous response (id matches). Note! these have to come in order.
             if (head == response.identifier) or (
                 # There is a special case for an unsupported protobuf error response. It does not contain the feature ID so we
@@ -715,17 +710,17 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             ):
                 logger.info(Logger.build_log_rx_str(original_response, asynchronous=False))
                 # Dequeue it and put the response on the ready queue
-                logger.debug(f"Route response {response.identifier} read from sync resp wait q")
+                logger.trace(f"Route response {response.identifier} read from sync resp wait q")  # type: ignore
                 ephemeral_response = await self._sync_resp_wait_q.get()
-                logger.debug(f"Dequeued response {ephemeral_response}")
+                logger.trace(f"Dequeued response {ephemeral_response}")  # type: ignore
 
-                logger.debug(f"Route response putting {response.identifier} on ready q")
+                logger.trace(f"Route response putting {response.identifier} on ready q")  # type: ignore
                 await self._sync_resp_ready_q.put(response)
 
             # If this wasn't the awaited synchronous response...
             else:
                 logger.info(Logger.build_log_rx_str(original_response, asynchronous=True))
-        logger.debug(f"Route response {response.identifier} released sync resp wait q")
+        logger.trace(f"Route response {response.identifier} released sync resp wait q")  # type: ignore
         if response._is_push:
             for update_id, value in response.data.items():
                 await self._notify_listeners(update_id, value)
@@ -789,7 +784,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         self, message: BleMessage, rules: MessageRules = MessageRules(), **kwargs: Any
     ) -> GoProResp:
         # Store information on the response we are expecting
-        logger.debug(f"send {message._identifier} putting on sync wait q")
+        logger.trace(f"send {message._identifier} putting on sync wait q")  # type: ignore
         await self._sync_resp_wait_q.put(message._identifier)
         logger.info(Logger.build_log_tx_str(pretty_print(message._as_dict(**kwargs))))
 
@@ -800,9 +795,9 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
         # Wait to be notified that response was received
         try:
-            logger.debug(f"send {message._identifier} Waiting to receive sync response from ready q")
+            logger.trace(f"send {message._identifier} Waiting to receive sync response from ready q")  # type: ignore
             response = await asyncio.wait_for(self._sync_resp_ready_q.get(), WirelessGoPro.WRITE_TIMEOUT)
-            logger.debug(f"{message._identifier} received  response {response.identifier}")
+            logger.trace(f"{message._identifier} received  response {response.identifier}")  # type: ignore
             if response.identifier != message._identifier:
                 logger.error("This was was not the correct response")
                 raise RuntimeError("wrong response")
