@@ -5,7 +5,6 @@ from __future__ import annotations
 import asyncio
 import re
 from dataclasses import dataclass, field
-from operator import is_
 from pathlib import Path
 from typing import Any, Generic, Optional, Pattern, TypeVar
 
@@ -454,7 +453,13 @@ class MockGoProMaintainBle(WirelessGoPro):
         self.generic_spy: asyncio.Queue[Any] = asyncio.Queue()
 
     async def _mock_q_get(self, *args, **kwargs):
-        return mock_good_response
+        current = await self._sync_resp_wait_q.get()
+        return GoProResp(
+            protocol=GoProResp.Protocol.BLE,
+            status=ErrorCode.SUCCESS,
+            identifier=current,
+            data=True,
+        )
 
     async def _mock_led_set(self, *args):
         await self.generic_spy.put(args)

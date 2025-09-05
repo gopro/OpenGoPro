@@ -799,8 +799,9 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             response = await asyncio.wait_for(self._sync_resp_ready_q.get(), WirelessGoPro.WRITE_TIMEOUT)
             logger.trace(f"{message._identifier} received  response {response.identifier}")  # type: ignore
             if response.identifier != message._identifier:
-                logger.error("This was was not the correct response")
-                raise RuntimeError("wrong response")
+                error_message = f"[{message._identifier}] received incorrect response: [{response.identifier}]"
+                logger.error(error_message)
+                raise RuntimeError(error_message)
         except asyncio.TimeoutError as e:
             logger.error(
                 f"Response timeout of {WirelessGoPro.WRITE_TIMEOUT} seconds when sending {message._identifier}!"

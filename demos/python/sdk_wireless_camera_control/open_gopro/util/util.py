@@ -246,11 +246,11 @@ class SnapshotQueue(asyncio.Queue, Generic[T]):
         """
         return None if self.empty() else self._queue[0]  # type: ignore
 
-    async def __aenter__(self) -> "SnapshotQueue[T]":
+    async def __aenter__(self) -> SnapshotQueue[T]:
         await self._lock.__aenter__()
         return self
 
-    async def __aexit__(self, exc_type, exc, tb) -> None:
+    async def __aexit__(self, exc_type: Any, exc: Any, tb: Any) -> None:
         return await self._lock.__aexit__(exc_type, exc, tb)
 
 

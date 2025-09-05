@@ -7,7 +7,6 @@
 """Unit testing of GoPro Client"""
 
 import asyncio
-import test
 from pathlib import Path
 
 import pytest
@@ -26,7 +25,7 @@ from open_gopro.models.constants import (
     StatusId,
     settings,
 )
-from open_gopro.models.constants.constants import FeatureId
+from open_gopro.models.constants.constants import ActionId, FeatureId
 from open_gopro.models.constants.statuses import InternalBatteryBars
 from open_gopro.models.proto.cohn_pb2 import NotifyCOHNStatus, ResponseCOHNCert
 from open_gopro.models.types import ProtobufId, UpdateType
@@ -37,46 +36,6 @@ from tests.mocks import (
     MockGoproResp,
     MockWirelessGoPro,
 )
-
-
-@pytest.mark.timeout(30)
-async def test_lifecycle(mock_wireless_gopro: MockGoProMaintainBle):
-    async def set_disconnect_event():
-        mock_wireless_gopro._disconnect_handler(None)
-
-    # We're not yet open so can't send commands
-    assert not mock_wireless_gopro.is_open
-    with pytest.raises(GoProNotOpened):
-        await mock_wireless_gopro.ble_command.enable_wifi_ap(enable=False)
-
-    # Mock ble / wifi open
-    await mock_wireless_gopro.open()
-    assert mock_wireless_gopro.is_open
-
-    # Ensure we can't send commands because not ready
-    assert not await mock_wireless_gopro.is_ready
-    with pytest.raises(asyncio.TimeoutError):
-        await asyncio.wait_for(mock_wireless_gopro.ble_command.enable_wifi_ap(enable=False), 1)
-
-    # Mock receiving initial not-encoding and not-busy statuses
-    await mock_wireless_gopro._update_internal_state(update=StatusId.ENCODING, value=False)
-    await mock_wireless_gopro._update_internal_state(update=StatusId.BUSY, value=False)
-    assert await mock_wireless_gopro.is_ready
-
-    results = await asyncio.gather(
-        mock_wireless_gopro.ble_command.enable_wifi_ap(enable=False),
-        mock_wireless_gopro._sync_resp_ready_q.put(mock_good_response),
-    )
-
-    assert results[0].ok
-    assert await mock_wireless_gopro.ble_command.get_open_gopro_api_version()
-
-    # Ensure keep alive was received and is correct
-    assert (await mock_wireless_gopro.generic_spy.get())[0] == 66
-
-    # Mock closing
-    await asyncio.gather(mock_wireless_gopro.close(), set_disconnect_event())
-    assert mock_wireless_gopro._keep_alive_task.cancelled
 
 
 async def test_gopro_open(mock_wireless_gopro_basic: WirelessGoPro):
@@ -166,7 +125,7 @@ async def test_unsupported_protobuf_operation(mock_wireless_gopro_basic: Wireles
     mock_response = GoProResp(
         protocol=GoProResp.Protocol.BLE,
         status=ErrorCode.INVALID_PARAM,
-        identifier=ProtobufId(FeatureId.COMMAND, None),
+        identifier=ProtobufId(FeatureId.COMMAND, ActionId.RESPONSE_CLEAR_COHN_CERT),
         data=None,
     )
     mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
@@ -263,3 +222,43 @@ async def test_get_update_unregister(mock_wireless_gopro_basic: WirelessGoPro):
 def test_get_param_values_by_id():
     vector = list(settings.VideoResolution)[0]
     assert GlobalParsers.get_query_container(SettingId.VIDEO_RESOLUTION)(vector.value) == vector
+
+
+@pytest.mark.timeout(30)
+async def test_lifecycle(mock_wireless_gopro: MockGoProMaintainBle):
+    async def set_disconnect_event():
+        mock_wireless_gopro._disconnect_handler(None)
+
+    # We're not yet open so can't send commands
+    assert not mock_wireless_gopro.is_open
+    with pytest.raises(GoProNotOpened):
+        await mock_wireless_gopro.ble_command.enable_wifi_ap(enable=False)
+
+    # Mock ble / wifi open
+    await mock_wireless_gopro.open()
+    assert mock_wireless_gopro.is_open
+
+    # Ensure we can't send commands because not ready
+    assert not await mock_wireless_gopro.is_ready
+    with pytest.raises(asyncio.TimeoutError):
+        await asyncio.wait_for(mock_wireless_gopro.ble_command.enable_wifi_ap(enable=False), 1)
+
+    # Mock receiving initial not-encoding and not-busy statuses
+    await mock_wireless_gopro._update_internal_state(update=StatusId.ENCODING, value=False)
+    await mock_wireless_gopro._update_internal_state(update=StatusId.BUSY, value=False)
+    assert await mock_wireless_gopro.is_ready
+
+    results = await asyncio.gather(
+        mock_wireless_gopro.ble_command.enable_wifi_ap(enable=False),
+        mock_wireless_gopro._sync_resp_ready_q.put(mock_good_response),
+    )
+
+    assert results[0].ok
+    assert await mock_wireless_gopro.ble_command.get_open_gopro_api_version()
+
+    # Ensure keep alive was received and is correct
+    assert (await mock_wireless_gopro.generic_spy.get())[0] == 66
+
+    # Mock closing
+    await asyncio.gather(mock_wireless_gopro.close(), set_disconnect_event())
+    assert mock_wireless_gopro._keep_alive_task.cancelled
