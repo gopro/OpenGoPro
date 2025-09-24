@@ -183,12 +183,7 @@
 <li class="toctree-l2">
 <a class="reference internal" href="../protocol/ble_setup.html">BLE Setup</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#pairing-mode">Pairing Mode</a></li>
-<li class="toctree-l3">
-<a class="reference internal" href="../protocol/ble_setup.html#advertisements">Advertisements</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#advertising-data">Advertising Data</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#scan-response-data">Scan Response Data</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#advertisements">Advertisements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#finish-pairing">Finish Pairing</a></li>
 <li class="toctree-l3">
 <a class="reference internal" href="../protocol/ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
@@ -281,9 +276,11 @@
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetlivestreamstatus">RequestGetLiveStreamStatus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetpresetstatus">RequestGetPresetStatus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestpairingfinish">RequestPairingFinish</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestpresetsetvisibility">RequestPresetSetVisibility</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestreleasenetwork">RequestReleaseNetwork</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetcohnsetting">RequestSetCOHNSetting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetcameracontrolstatus">RequestSetCameraControlStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetcameraname">RequestSetCameraName</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetlivestreammode">RequestSetLiveStreamMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetturboactive">RequestSetTurboActive</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requeststartscan">RequestStartScan</a></li>
@@ -310,6 +307,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#set-analytics"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Analytics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-ap-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-camera-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Control</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-camera-name"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Name</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-local-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-pairing-state"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Pairing</span> <span class="pre">State</span></code></a></li>
@@ -344,6 +342,7 @@
 </li>
 <li class="toctree-l1">
 <a class="reference internal" href="access_points.html">Access Point</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="access_points.html#internet-access">Internet Access</a></li>
 <li class="toctree-l2">
 <a class="reference internal" href="access_points.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="access_points.html#scan-for-access-points"><code class="docutils literal notranslate"><span class="pre">Scan</span> <span class="pre">for</span> <span class="pre">Access</span> <span class="pre">Points</span></code></a></li>
@@ -404,6 +403,7 @@
 <li class="toctree-l3"><a class="reference internal" href="presets.html#get-available-presets"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#load-preset"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#load-preset-group"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span> <span class="pre">Group</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="presets.html#set-preset-visibility"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Preset</span> <span class="pre">Visibility</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#update-custom-preset"><code class="docutils literal notranslate"><span class="pre">Update</span> <span class="pre">Custom</span> <span class="pre">Preset</span></code></a></li>
 </ul>
 </li>
@@ -462,13 +462,16 @@
 <li class="toctree-l3"><a class="reference internal" href="settings.html#easy-night-photo-191">Easy Night Photo (191)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#multi-shot-aspect-ratio-192">Multi Shot Aspect Ratio (192)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#framing-193">Framing (193)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="settings.html#camera-volume-216">Camera Volume (216)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#camera-mode-194">Camera Mode (194)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#photo-files-extension-196">360 Photo Files Extension (196)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#beep-volume-216">Beep Volume (216)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#setup-screen-saver-219">Setup Screen Saver (219)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#setup-language-223">Setup Language (223)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#photo-mode-227">Photo Mode (227)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#video-framing-232">Video Framing (232)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#multi-shot-framing-233">Multi Shot Framing (233)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#frame-rate-234">Frame Rate (234)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#automatic-wi-fi-access-point-236">Automatic Wi-Fi Access Point (236)</a></li>
 </ul>
 </li>
 </ul>
@@ -558,6 +561,7 @@
 <li class="toctree-l3"><a class="reference internal" href="statuses.html#usb-controlled-116">USB Controlled (116)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="statuses.html#sd-card-capacity-117">SD Card Capacity (117)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="statuses.html#photo-interval-capture-count-118">Photo Interval Capture Count (118)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="statuses.html#camera-name-122">Camera Name (122)</a></li>
 </ul>
 </li>
 </ul>
@@ -599,6 +603,7 @@
 <span class="sig-name descname"><span class="pre">Keep</span> <span class="pre">Alive</span></span><a class="headerlink" href="#keep-alive" title="Link to this definition"></a>
 </dt>
 <dd>
+<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
@@ -668,6 +673,7 @@ messages every 3.0 seconds after a connection is established.</p>
 <span class="sig-name descname"><span class="pre">Reboot</span> <span class="pre">the</span> <span class="pre">Camera</span></span><a class="headerlink" href="#reboot-the-camera" title="Link to this definition"></a>
 </dt>
 <dd>
+<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
 <dl class="field-list simple">
@@ -717,6 +723,7 @@ messages every 3.0 seconds after a connection is established.</p>
 <span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Analytics</span></span><a class="headerlink" href="#set-analytics" title="Link to this definition"></a>
 </dt>
 <dd>
+<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
@@ -770,6 +777,7 @@ messages every 3.0 seconds after a connection is established.</p>
 <span class="sig-name descname"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></span><a class="headerlink" href="#set-ap-control" title="Link to this definition"></a>
 </dt>
 <dd>
+<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
@@ -831,6 +839,7 @@ messages every 3.0 seconds after a connection is established.</p>
 <span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Control</span></span><a class="headerlink" href="#set-camera-control" title="Link to this definition"></a>
 </dt>
 <dd>
+<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
@@ -908,11 +917,83 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 </dd>
 </dl>
 
+<dl class="operation protobuf">
+<dt class="sig sig-object operation" id="set-camera-name">
+<span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Name</span></span><a class="headerlink" href="#set-camera-name" title="Link to this definition"></a>
+</dt>
+<dd>
+<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
+</dd>
+</dl>
+<dl class="operation protobuf-message" id="protobuf-message-2">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Request</span></span>
+</dt>
+<dd>
+<p>Set the camera name</p>
+<p>Response: <a class="reference internal" href="../protocol/protobuf.html#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a></p>
+</dd>
+</dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
+</dd>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
+<dd class="field-even">0xF1</dd>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">0x62</dd>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>RequestSetCameraName (<a class="reference external" href="../protocol/protobuf.html#requestsetcameraname"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/camera_control.proto"><em>source</em></a>)</p>
+</dd>
+</dl>
+<dl class="operation protobuf-message" id="protobuf-message-3">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Response</span></span>
+</dt>
+<dd>
+<p>Generic Response used across many response / notification messages</p>
+</dd>
+</dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command Response</em></a></p>
+</dd>
+<dt class="field-even">Feature ID<span class="colon">:</span>
+</dt>
+<dd class="field-even">0xF1</dd>
+<dt class="field-odd">Action ID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">0xE2</dd>
+<dt class="field-even">Message<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<p>ResponseGeneric (<a class="reference external" href="../protocol/protobuf.html#responsegeneric"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/response_generic.proto"><em>source</em></a>)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+
 <dl class="operation tlv-command" id="GPCAMERA_SET_DATE_AND_TIME_ID">
 <dt class="sig sig-object operation" id="set-date-time">
 <span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Date</span> <span class="pre">Time</span></span><a class="headerlink" href="#set-date-time" title="Link to this definition"></a>
 </dt>
 <dd>
+<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
@@ -984,6 +1065,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></span><a class="headerlink" href="#set-local-date-time" title="Link to this definition"></a>
 </dt>
 <dd>
+<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
@@ -1055,6 +1137,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Pairing</span> <span class="pre">State</span></span><a class="headerlink" href="#set-pairing-state" title="Link to this definition"></a>
 </dt>
 <dd>
+<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
@@ -1069,7 +1152,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 </dd>
 </dl>
 <p>This should be used to finish the initial pairing process in order to clear the pairing screen on the camera UI.</p>
-<dl class="operation protobuf-message" id="protobuf-message-2">
+<dl class="operation protobuf-message" id="protobuf-message-4">
 <dt class="sig sig-object operation">
 <span class="sig-name descname"><span class="pre">Request</span></span>
 </dt>
@@ -1098,7 +1181,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <p>RequestPairingFinish (<a class="reference external" href="../protocol/protobuf.html#requestpairingfinish"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/network_management.proto"><em>source</em></a>)</p>
 </dd>
 </dl>
-<dl class="operation protobuf-message" id="protobuf-message-3">
+<dl class="operation protobuf-message" id="protobuf-message-5">
 <dt class="sig sig-object operation">
 <span class="sig-name descname"><span class="pre">Response</span></span>
 </dt>
@@ -1133,6 +1216,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Shutter</span></span><a class="headerlink" href="#set-shutter" title="Link to this definition"></a>
 </dt>
 <dd>
+<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
@@ -1194,6 +1278,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Turbo</span> <span class="pre">Transfer</span></span><a class="headerlink" href="#set-turbo-transfer" title="Link to this definition"></a>
 </dt>
 <dd>
+<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
@@ -1207,7 +1292,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <p><a class="reference external" href="../protocol/data_protocol.html#protobuf"><em>Protobuf</em></a></p>
 </dd>
 </dl>
-<dl class="operation protobuf-message" id="protobuf-message-4">
+<dl class="operation protobuf-message" id="protobuf-message-6">
 <dt class="sig sig-object operation">
 <span class="sig-name descname"><span class="pre">Request</span></span>
 </dt>
@@ -1235,7 +1320,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <p>RequestSetTurboActive (<a class="reference external" href="../protocol/protobuf.html#requestsetturboactive"><em>docs</em></a>) (<a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/turbo_transfer.proto"><em>source</em></a>)</p>
 </dd>
 </dl>
-<dl class="operation protobuf-message" id="protobuf-message-5">
+<dl class="operation protobuf-message" id="protobuf-message-7">
 <dt class="sig sig-object operation">
 <span class="sig-name descname"><span class="pre">Response</span></span>
 </dt>
@@ -1270,6 +1355,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <span class="sig-name descname"><span class="pre">Sleep</span></span><a class="headerlink" href="#sleep" title="Link to this definition"></a>
 </dt>
 <dd>
+<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">

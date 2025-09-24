@@ -182,12 +182,7 @@
 <li class="toctree-l2">
 <a class="reference internal" href="../protocol/ble_setup.html">BLE Setup</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#pairing-mode">Pairing Mode</a></li>
-<li class="toctree-l3">
-<a class="reference internal" href="../protocol/ble_setup.html#advertisements">Advertisements</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#advertising-data">Advertising Data</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#scan-response-data">Scan Response Data</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#advertisements">Advertisements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#finish-pairing">Finish Pairing</a></li>
 <li class="toctree-l3">
 <a class="reference internal" href="../protocol/ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
@@ -280,9 +275,11 @@
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetlivestreamstatus">RequestGetLiveStreamStatus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetpresetstatus">RequestGetPresetStatus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestpairingfinish">RequestPairingFinish</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestpresetsetvisibility">RequestPresetSetVisibility</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestreleasenetwork">RequestReleaseNetwork</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetcohnsetting">RequestSetCOHNSetting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetcameracontrolstatus">RequestSetCameraControlStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetcameraname">RequestSetCameraName</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetlivestreammode">RequestSetLiveStreamMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetturboactive">RequestSetTurboActive</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requeststartscan">RequestStartScan</a></li>
@@ -309,6 +306,7 @@
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-analytics"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Analytics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-ap-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-camera-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Control</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#set-camera-name"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Name</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-local-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-pairing-state"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Pairing</span> <span class="pre">State</span></code></a></li>
@@ -343,6 +341,7 @@
 </li>
 <li class="toctree-l1">
 <a class="reference internal" href="access_points.html">Access Point</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="access_points.html#internet-access">Internet Access</a></li>
 <li class="toctree-l2">
 <a class="reference internal" href="access_points.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="access_points.html#scan-for-access-points"><code class="docutils literal notranslate"><span class="pre">Scan</span> <span class="pre">for</span> <span class="pre">Access</span> <span class="pre">Points</span></code></a></li>
@@ -403,6 +402,7 @@
 <li class="toctree-l3"><a class="reference internal" href="presets.html#get-available-presets"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#load-preset"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#load-preset-group"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span> <span class="pre">Group</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="presets.html#set-preset-visibility"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Preset</span> <span class="pre">Visibility</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#update-custom-preset"><code class="docutils literal notranslate"><span class="pre">Update</span> <span class="pre">Custom</span> <span class="pre">Preset</span></code></a></li>
 </ul>
 </li>
@@ -461,13 +461,16 @@
 <li class="toctree-l3"><a class="reference internal" href="settings.html#easy-night-photo-191">Easy Night Photo (191)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#multi-shot-aspect-ratio-192">Multi Shot Aspect Ratio (192)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#framing-193">Framing (193)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="settings.html#camera-volume-216">Camera Volume (216)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#camera-mode-194">Camera Mode (194)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#photo-files-extension-196">360 Photo Files Extension (196)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#beep-volume-216">Beep Volume (216)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#setup-screen-saver-219">Setup Screen Saver (219)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#setup-language-223">Setup Language (223)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#photo-mode-227">Photo Mode (227)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#video-framing-232">Video Framing (232)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#multi-shot-framing-233">Multi Shot Framing (233)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#frame-rate-234">Frame Rate (234)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#automatic-wi-fi-access-point-236">Automatic Wi-Fi Access Point (236)</a></li>
 </ul>
 </li>
 </ul>
@@ -557,6 +560,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#usb-controlled-116">USB Controlled (116)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sd-card-capacity-117">SD Card Capacity (117)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#photo-interval-capture-count-118">Photo Interval Capture Count (118)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#camera-name-122">Camera Name (122)</a></li>
 </ul>
 </li>
 </ul>
@@ -597,6 +601,7 @@ status values.</p>
 <section id="battery-present-1">
 <span id="status-1"></span><h3>Battery Present (1)<a class="headerlink" href="#battery-present-1" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -626,6 +631,7 @@ status values.</p>
 <section id="internal-battery-bars-2">
 <span id="status-2"></span><h3>Internal Battery Bars (2)<a class="headerlink" href="#internal-battery-bars-2" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -667,6 +673,7 @@ status values.</p>
 <section id="overheating-6">
 <span id="status-6"></span><h3>Overheating (6)<a class="headerlink" href="#overheating-6" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -696,6 +703,7 @@ status values.</p>
 <section id="busy-8">
 <span id="status-8"></span><h3>Busy (8)<a class="headerlink" href="#busy-8" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -725,6 +733,7 @@ status values.</p>
 <section id="quick-capture-9">
 <span id="status-9"></span><h3>Quick Capture (9)<a class="headerlink" href="#quick-capture-9" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -754,6 +763,7 @@ status values.</p>
 <section id="encoding-10">
 <span id="status-10"></span><h3>Encoding (10)<a class="headerlink" href="#encoding-10" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -783,6 +793,7 @@ status values.</p>
 <section id="lcd-lock-11">
 <span id="status-11"></span><h3>LCD Lock (11)<a class="headerlink" href="#lcd-lock-11" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -812,6 +823,7 @@ status values.</p>
 <section id="video-encoding-duration-13">
 <span id="status-13"></span><h3>Video Encoding Duration (13)<a class="headerlink" href="#video-encoding-duration-13" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -825,6 +837,7 @@ status values.</p>
 <section id="wireless-connections-enabled-17">
 <span id="status-17"></span><h3>Wireless Connections Enabled (17)<a class="headerlink" href="#wireless-connections-enabled-17" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -854,6 +867,7 @@ status values.</p>
 <section id="pairing-state-19">
 <span id="status-19"></span><h3>Pairing State (19)<a class="headerlink" href="#pairing-state-19" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -894,6 +908,7 @@ status values.</p>
 <section id="last-pairing-type-20">
 <span id="status-20"></span><h3>Last Pairing Type (20)<a class="headerlink" href="#last-pairing-type-20" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -942,6 +957,7 @@ action</p>
 <section id="wifi-scan-state-22">
 <span id="status-22"></span><h3>Wifi Scan State (22)<a class="headerlink" href="#wifi-scan-state-22" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -983,6 +999,7 @@ action</p>
 <section id="last-wifi-scan-success-23">
 <span id="status-23"></span><h3>Last Wifi Scan Success (23)<a class="headerlink" href="#last-wifi-scan-success-23" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -995,6 +1012,7 @@ action</p>
 <section id="wifi-provisioning-state-24">
 <span id="status-24"></span><h3>Wifi Provisioning State (24)<a class="headerlink" href="#wifi-provisioning-state-24" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1046,6 +1064,7 @@ action</p>
 <section id="remote-connected-27">
 <span id="status-27"></span><h3>Remote Connected (27)<a class="headerlink" href="#remote-connected-27" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1086,6 +1105,7 @@ WirelessPairingStateFlags)</p>
 <section id="connected-wifi-ssid-29">
 <span id="status-29"></span><h3>Connected WiFi SSID (29)<a class="headerlink" href="#connected-wifi-ssid-29" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1100,6 +1120,7 @@ the camera is acting as a client/station.</p>
 <section id="access-point-ssid-30">
 <span id="status-30"></span><h3>Access Point SSID (30)<a class="headerlink" href="#access-point-ssid-30" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1114,6 +1135,7 @@ devices to connect to.</p>
 <section id="connected-devices-31">
 <span id="status-31"></span><h3>Connected Devices (31)<a class="headerlink" href="#connected-devices-31" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1154,6 +1176,7 @@ devices to connect to.</p>
 <section id="primary-storage-33">
 <span id="status-33"></span><h3>Primary Storage (33)<a class="headerlink" href="#primary-storage-33" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1202,6 +1225,7 @@ devices to connect to.</p>
 <section id="remaining-photos-34">
 <span id="status-34"></span><h3>Remaining Photos (34)<a class="headerlink" href="#remaining-photos-34" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1221,6 +1245,7 @@ Nightlapse Photo</p></li>
 <section id="remaining-video-time-35">
 <span id="status-35"></span><h3>Remaining Video Time (35)<a class="headerlink" href="#remaining-video-time-35" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1241,6 +1266,7 @@ Nightlapse Video</p></li>
 <section id="photos-38">
 <span id="status-38"></span><h3>Photos (38)<a class="headerlink" href="#photos-38" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1253,6 +1279,7 @@ Nightlapse Video</p></li>
 <section id="videos-39">
 <span id="status-39"></span><h3>Videos (39)<a class="headerlink" href="#videos-39" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1265,6 +1292,7 @@ Nightlapse Video</p></li>
 <section id="ota-41">
 <span id="status-41"></span><h3>OTA (41)<a class="headerlink" href="#ota-41" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1330,6 +1358,7 @@ Nightlapse Video</p></li>
 <section id="pending-fw-update-cancel-42">
 <span id="status-42"></span><h3>Pending FW Update Cancel (42)<a class="headerlink" href="#pending-fw-update-cancel-42" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1359,6 +1388,7 @@ Nightlapse Video</p></li>
 <section id="locate-45">
 <span id="status-45"></span><h3>Locate (45)<a class="headerlink" href="#locate-45" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1388,6 +1418,7 @@ Nightlapse Video</p></li>
 <section id="timelapse-interval-countdown-49">
 <span id="status-49"></span><h3>Timelapse Interval Countdown (49)<a class="headerlink" href="#timelapse-interval-countdown-49" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1400,6 +1431,7 @@ Nightlapse Video</p></li>
 <section id="sd-card-remaining-54">
 <span id="status-54"></span><h3>SD Card Remaining (54)<a class="headerlink" href="#sd-card-remaining-54" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1412,6 +1444,7 @@ Nightlapse Video</p></li>
 <section id="preview-stream-available-55">
 <span id="status-55"></span><h3>Preview Stream Available (55)<a class="headerlink" href="#preview-stream-available-55" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1441,6 +1474,7 @@ Nightlapse Video</p></li>
 <section id="wifi-bars-56">
 <span id="status-56"></span><h3>Wifi Bars (56)<a class="headerlink" href="#wifi-bars-56" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1453,6 +1487,7 @@ Nightlapse Video</p></li>
 <section id="active-hilights-58">
 <span id="status-58"></span><h3>Active Hilights (58)<a class="headerlink" href="#active-hilights-58" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1466,6 +1501,7 @@ when encoding stops)</p>
 <section id="time-since-last-hilight-59">
 <span id="status-59"></span><h3>Time Since Last Hilight (59)<a class="headerlink" href="#time-since-last-hilight-59" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1479,6 +1515,7 @@ when encoding stops)</p>
 <section id="minimum-status-poll-period-60">
 <span id="status-60"></span><h3>Minimum Status Poll Period (60)<a class="headerlink" href="#minimum-status-poll-period-60" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1492,6 +1529,7 @@ practice is to not poll for status more often than this</p>
 <section id="liveview-exposure-select-mode-65">
 <span id="status-65"></span><h3>Liveview Exposure Select Mode (65)<a class="headerlink" href="#liveview-exposure-select-mode-65" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1527,6 +1565,7 @@ practice is to not poll for status more often than this</p>
 <section id="liveview-y-66">
 <span id="status-66"></span><h3>Liveview Y (66)<a class="headerlink" href="#liveview-y-66" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1538,6 +1577,7 @@ practice is to not poll for status more often than this</p>
 <section id="liveview-x-67">
 <span id="status-67"></span><h3>Liveview X (67)<a class="headerlink" href="#liveview-x-67" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1549,6 +1589,7 @@ practice is to not poll for status more often than this</p>
 <section id="gps-lock-68">
 <span id="status-68"></span><h3>GPS Lock (68)<a class="headerlink" href="#gps-lock-68" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1578,6 +1619,7 @@ practice is to not poll for status more often than this</p>
 <section id="ap-mode-69">
 <span id="status-69"></span><h3>AP Mode (69)<a class="headerlink" href="#ap-mode-69" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1607,6 +1649,7 @@ practice is to not poll for status more often than this</p>
 <section id="internal-battery-percentage-70">
 <span id="status-70"></span><h3>Internal Battery Percentage (70)<a class="headerlink" href="#internal-battery-percentage-70" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1619,6 +1662,7 @@ practice is to not poll for status more often than this</p>
 <section id="microphone-accessory-74">
 <span id="status-74"></span><h3>Microphone Accessory (74)<a class="headerlink" href="#microphone-accessory-74" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1663,6 +1707,7 @@ practice is to not poll for status more often than this</p>
 <section id="wireless-band-76">
 <span id="status-76"></span><h3>Wireless Band (76)<a class="headerlink" href="#wireless-band-76" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1774,6 +1819,7 @@ compression and frame rate)</p>
 <section id="ghz-available-81">
 <span id="status-81"></span><h3>5GHZ Available (81)<a class="headerlink" href="#ghz-available-81" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1803,6 +1849,7 @@ compression and frame rate)</p>
 <section id="ready-82">
 <span id="status-82"></span><h3>Ready (82)<a class="headerlink" href="#ready-82" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1832,6 +1879,7 @@ compression and frame rate)</p>
 <section id="ota-charged-83">
 <span id="status-83"></span><h3>OTA Charged (83)<a class="headerlink" href="#ota-charged-83" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1862,6 +1910,7 @@ update?</p>
 <section id="cold-85">
 <span id="status-85"></span><h3>Cold (85)<a class="headerlink" href="#cold-85" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1891,6 +1940,7 @@ update?</p>
 <section id="rotation-86">
 <span id="status-86"></span><h3>Rotation (86)<a class="headerlink" href="#rotation-86" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1957,6 +2007,7 @@ update?</p>
 <section id="flatmode-89">
 <span id="status-89"></span><h3>Flatmode (89)<a class="headerlink" href="#flatmode-89" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1969,6 +2020,7 @@ update?</p>
 <section id="video-preset-93">
 <span id="status-93"></span><h3>Video Preset (93)<a class="headerlink" href="#video-preset-93" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1981,6 +2033,7 @@ update?</p>
 <section id="photo-preset-94">
 <span id="status-94"></span><h3>Photo Preset (94)<a class="headerlink" href="#photo-preset-94" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1992,6 +2045,7 @@ update?</p>
 <section id="timelapse-preset-95">
 <span id="status-95"></span><h3>Timelapse Preset (95)<a class="headerlink" href="#timelapse-preset-95" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -2004,6 +2058,7 @@ update?</p>
 <section id="preset-group-96">
 <span id="status-96"></span><h3>Preset Group (96)<a class="headerlink" href="#preset-group-96" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -2017,6 +2072,7 @@ settings.json)</p>
 <section id="preset-97">
 <span id="status-97"></span><h3>Preset (97)<a class="headerlink" href="#preset-97" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -2029,6 +2085,7 @@ settings.json)</p>
 <section id="preset-modified-98">
 <span id="status-98"></span><h3>Preset Modified (98)<a class="headerlink" href="#preset-modified-98" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -2070,6 +2127,7 @@ sdcard is full</p>
 <section id="capture-delay-active-101">
 <span id="status-101"></span><h3>Capture Delay Active (101)<a class="headerlink" href="#capture-delay-active-101" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -2099,6 +2157,7 @@ sdcard is full</p>
 <section id="media-mod-state-102">
 <span id="status-102"></span><h3>Media Mod State (102)<a class="headerlink" href="#media-mod-state-102" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -2289,6 +2348,7 @@ sdcard is full</p>
 <section id="hindsight-106">
 <span id="status-106"></span><h3>Hindsight (106)<a class="headerlink" href="#hindsight-106" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2317,6 +2377,7 @@ sdcard is full</p>
 <section id="scheduled-capture-preset-id-107">
 <span id="status-107"></span><h3>Scheduled Capture Preset ID (107)<a class="headerlink" href="#scheduled-capture-preset-id-107" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2327,6 +2388,7 @@ sdcard is full</p>
 <section id="scheduled-capture-108">
 <span id="status-108"></span><h3>Scheduled Capture (108)<a class="headerlink" href="#scheduled-capture-108" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2355,6 +2417,7 @@ sdcard is full</p>
 <section id="display-mod-status-110">
 <span id="status-110"></span><h3>Display Mod Status (110)<a class="headerlink" href="#display-mod-status-110" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2407,6 +2470,7 @@ sdcard is full</p>
 <section id="sd-card-write-speed-error-111">
 <span id="status-111"></span><h3>SD Card Write Speed Error (111)<a class="headerlink" href="#sd-card-write-speed-error-111" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -2435,6 +2499,7 @@ sdcard is full</p>
 <section id="sd-card-errors-112">
 <span id="status-112"></span><h3>SD Card Errors (112)<a class="headerlink" href="#sd-card-errors-112" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -2446,6 +2511,7 @@ sdcard is full</p>
 <section id="turbo-transfer-113">
 <span id="status-113"></span><h3>Turbo Transfer (113)<a class="headerlink" href="#turbo-transfer-113" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -2475,6 +2541,7 @@ sdcard is full</p>
 <section id="camera-control-id-114">
 <span id="status-114"></span><h3>Camera Control ID (114)<a class="headerlink" href="#camera-control-id-114" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -2507,6 +2574,7 @@ sdcard is full</p>
 <section id="usb-connected-115">
 <span id="status-115"></span><h3>USB Connected (115)<a class="headerlink" href="#usb-connected-115" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -2535,6 +2603,7 @@ sdcard is full</p>
 <section id="usb-controlled-116">
 <span id="status-116"></span><h3>USB Controlled (116)<a class="headerlink" href="#usb-controlled-116" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -2563,6 +2632,7 @@ sdcard is full</p>
 <section id="sd-card-capacity-117">
 <span id="status-117"></span><h3>SD Card Capacity (117)<a class="headerlink" href="#sd-card-capacity-117" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -2573,9 +2643,17 @@ sdcard is full</p>
 <section id="photo-interval-capture-count-118">
 <span id="status-118"></span><h3>Photo Interval Capture Count (118)<a class="headerlink" href="#photo-interval-capture-count-118" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <p>This is a integer value formatted as unspecified.</p>
+</section>
+<section id="camera-name-122">
+<span id="status-122"></span><h3>Camera Name (122)<a class="headerlink" href="#camera-name-122" title="Link to this heading"></a>
+</h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<p>This is a string value.</p>
+<p>Custom camera name set by the user</p>
 </section>
 </section>
 </section>

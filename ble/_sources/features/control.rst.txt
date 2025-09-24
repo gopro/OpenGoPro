@@ -104,6 +104,7 @@ Operations
 
 .. operation:protobuf:: Set Camera Name
     :operation-id: GPCAMERA_SET_CAMERA_NAME
+    :external:
 
     .. operation:protobuf-message:: request
         :feature-id: 0xF1

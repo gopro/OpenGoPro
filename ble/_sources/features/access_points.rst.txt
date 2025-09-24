@@ -5,6 +5,13 @@ The camera supports connecting to access points in `Station Mode (STA) <https://
 This is necessary for features such as  :doc:`Live Streaming <live_streaming>` where the camera needs an
 Internet connection. While in this mode, HTTP command and control of the camera is not available on some cameras.
 
+Internet Access
+---------------
+
+Before Hero 13 Black, the camera could only connect to access points that did not require internet access.  From
+:ref:`Hero 13 Black onwards<index:supported cameras>`, it is possible to connect to a local network by setting the
+**bypass_eula_check** flag in the :operation:ref:`Connect to a New Access Point` protobuf request.
+
 Operations
 ----------
 

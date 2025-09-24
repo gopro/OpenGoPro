@@ -1,150 +1,6 @@
 
 let extraStore = [
     {
-        "title": "Clear Cohn Certificate (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#clear-cohn-certificate",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Create Cohn Certificate (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#create-cohn-certificate",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Get Cohn Certificate (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#get-cohn-certificate",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Get Cohn Status (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#get-cohn-status",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Cohn Setting (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#set-cohn-setting",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Livestream Mode (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#set-livestream-mode",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Get Livestream Status (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#get-livestream-status",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Keep Alive (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#keep-alive",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Reboot The Camera (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#reboot-the-camera",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Analytics (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-analytics",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Ap Control (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-ap-control",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Camera Control (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-camera-control",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Date Time (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-date-time",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Local Date Time (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-local-date-time",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Pairing State (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-pairing-state",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Shutter (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-shutter",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Set Turbo Transfer (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-turbo-transfer",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
-        "title": "Sleep (BLE Operation)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#sleep",
-        "tags": [
-            "bleOperation"
-        ]
-    },
-    {
         "title": "Scan For Access Points (BLE Operation)",
         "excerpt": "",
         "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#scan-for-access-points",
@@ -177,9 +33,57 @@ let extraStore = [
         ]
     },
     {
+        "title": "Set Setting (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#set-setting",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
         "title": "Hilight Moment (BLE Operation)",
         "excerpt": "",
         "url": "https://gopro.github.io/OpenGoPro/ble/features/hilights.html#hilight-moment",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Get Available Presets (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#get-available-presets",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Load Preset (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#load-preset",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Load Preset Group (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#load-preset-group",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Preset Visibility (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#set-preset-visibility",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Update Custom Preset (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#update-custom-preset",
         "tags": [
             "bleOperation"
         ]
@@ -297,44 +201,354 @@ let extraStore = [
         ]
     },
     {
-        "title": "Set Setting (BLE Operation)",
+        "title": "Set Livestream Mode (BLE Operation)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#set-setting",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#set-livestream-mode",
         "tags": [
             "bleOperation"
         ]
     },
     {
-        "title": "Get Available Presets (BLE Operation)",
+        "title": "Get Livestream Status (BLE Operation)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#get-available-presets",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#get-livestream-status",
         "tags": [
             "bleOperation"
         ]
     },
     {
-        "title": "Load Preset (BLE Operation)",
+        "title": "Keep Alive (BLE Operation)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#load-preset",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#keep-alive",
         "tags": [
             "bleOperation"
         ]
     },
     {
-        "title": "Load Preset Group (BLE Operation)",
+        "title": "Reboot The Camera (BLE Operation)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#load-preset-group",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#reboot-the-camera",
         "tags": [
             "bleOperation"
         ]
     },
     {
-        "title": "Update Custom Preset (BLE Operation)",
+        "title": "Set Analytics (BLE Operation)",
         "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#update-custom-preset",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-analytics",
         "tags": [
             "bleOperation"
         ]
+    },
+    {
+        "title": "Set Ap Control (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-ap-control",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Camera Control (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-camera-control",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Camera Name (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-camera-name",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Date Time (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-date-time",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Local Date Time (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-local-date-time",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Pairing State (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-pairing-state",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Shutter (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-shutter",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Turbo Transfer (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#set-turbo-transfer",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Sleep (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#sleep",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Clear Cohn Certificate (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#clear-cohn-certificate",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Create Cohn Certificate (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#create-cohn-certificate",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Get Cohn Certificate (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#get-cohn-certificate",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Get Cohn Status (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#get-cohn-status",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "Set Cohn Setting (BLE Operation)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#set-cohn-setting",
+        "tags": [
+            "bleOperation"
+        ]
+    },
+    {
+        "title": "State Management (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/state_management.html#state-management",
+        "tags": []
+    },
+    {
+        "title": "Camera Readiness (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/state_management.html#camera-readiness",
+        "tags": []
+    },
+    {
+        "title": "Keep Alive (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/state_management.html#keep-alive",
+        "tags": []
+    },
+    {
+        "title": "Camera Control (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/state_management.html#camera-control",
+        "tags": []
+    },
+    {
+        "title": "Ble Setup (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#ble-setup",
+        "tags": []
+    },
+    {
+        "title": "Pairing Mode (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#pairing-mode",
+        "tags": []
+    },
+    {
+        "title": "Advertisements (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#advertisements",
+        "tags": []
+    },
+    {
+        "title": "Finish Pairing (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#finish-pairing",
+        "tags": []
+    },
+    {
+        "title": "Configure Gatt Characteristics (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#configure-gatt-characteristics",
+        "tags": []
+    },
+    {
+        "title": "Ble Characteristics (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#ble-characteristics",
+        "tags": []
+    },
+    {
+        "title": "Send Messages (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#send-messages",
+        "tags": []
+    },
+    {
+        "title": "Gopro Setup (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#gopro-setup",
+        "tags": []
+    },
+    {
+        "title": "Wait For Camera Ble Readiness (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#wait-for-camera-ble-readiness",
+        "tags": []
+    },
+    {
+        "title": "Id Tables (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/id_tables.html#id-tables",
+        "tags": []
+    },
+    {
+        "title": "Command Ids (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/id_tables.html#command-ids",
+        "tags": []
+    },
+    {
+        "title": "Query Ids (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/id_tables.html#query-ids",
+        "tags": []
+    },
+    {
+        "title": "Protobuf Ids (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/id_tables.html#protobuf-ids",
+        "tags": []
+    },
+    {
+        "title": "Setting Ids (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/id_tables.html#setting-ids",
+        "tags": []
+    },
+    {
+        "title": "Status Ids (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/id_tables.html#status-ids",
+        "tags": []
+    },
+    {
+        "title": "Data Protocol (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#data-protocol",
+        "tags": []
+    },
+    {
+        "title": "Packetization (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#packetization",
+        "tags": []
+    },
+    {
+        "title": "Packet Headers (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#packet-headers",
+        "tags": []
+    },
+    {
+        "title": "General 5 Bit Packets (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#general-5-bit-packets",
+        "tags": []
+    },
+    {
+        "title": "Extended 13 Bit Packets (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#extended-13-bit-packets",
+        "tags": []
+    },
+    {
+        "title": "Extended 16 Bit Packets (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#extended-16-bit-packets",
+        "tags": []
+    },
+    {
+        "title": "Continuation Packets (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#continuation-packets",
+        "tags": []
+    },
+    {
+        "title": "Decipher Message Payload Type (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#decipher-message-payload-type",
+        "tags": []
+    },
+    {
+        "title": "Message Payload (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#message-payload",
+        "tags": []
+    },
+    {
+        "title": "Type Length Value (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#type-length-value",
+        "tags": []
+    },
+    {
+        "title": "Commands (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#commands",
+        "tags": []
+    },
+    {
+        "title": "Queries (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#queries",
+        "tags": []
+    },
+    {
+        "title": "Protobuf (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#protobuf",
+        "tags": []
+    },
+    {
+        "title": "Backwards Compatibility (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#backwards-compatibility",
+        "tags": []
     },
     {
         "title": "Protobuf Documentation (BLE Spec)",
@@ -589,6 +803,12 @@ let extraStore = [
         "tags": []
     },
     {
+        "title": "Requestpresetsetvisibility (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/protobuf.html#requestpresetsetvisibility",
+        "tags": []
+    },
+    {
         "title": "Requestreleasenetwork (BLE Spec)",
         "excerpt": "",
         "url": "https://gopro.github.io/OpenGoPro/ble/protocol/protobuf.html#requestreleasenetwork",
@@ -604,6 +824,12 @@ let extraStore = [
         "title": "Requestsetcameracontrolstatus (BLE Spec)",
         "excerpt": "",
         "url": "https://gopro.github.io/OpenGoPro/ble/protocol/protobuf.html#requestsetcameracontrolstatus",
+        "tags": []
+    },
+    {
+        "title": "Requestsetcameraname (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/protobuf.html#requestsetcameraname",
         "tags": []
     },
     {
@@ -673,285 +899,15 @@ let extraStore = [
         "tags": []
     },
     {
-        "title": "Ble Setup (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#ble-setup",
-        "tags": []
-    },
-    {
-        "title": "Pairing Mode (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#pairing-mode",
-        "tags": []
-    },
-    {
-        "title": "Advertisements (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#advertisements",
-        "tags": []
-    },
-    {
-        "title": "Advertising Data (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#advertising-data",
-        "tags": []
-    },
-    {
-        "title": "Scan Response Data (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#scan-response-data",
-        "tags": []
-    },
-    {
-        "title": "Finish Pairing (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#finish-pairing",
-        "tags": []
-    },
-    {
-        "title": "Configure Gatt Characteristics (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#configure-gatt-characteristics",
-        "tags": []
-    },
-    {
-        "title": "Ble Characteristics (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#ble-characteristics",
-        "tags": []
-    },
-    {
-        "title": "Send Messages (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#send-messages",
-        "tags": []
-    },
-    {
-        "title": "Gopro Setup (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#gopro-setup",
-        "tags": []
-    },
-    {
-        "title": "Wait For Camera Ble Readiness (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/ble_setup.html#wait-for-camera-ble-readiness",
-        "tags": []
-    },
-    {
-        "title": "Data Protocol (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#data-protocol",
-        "tags": []
-    },
-    {
-        "title": "Packetization (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#packetization",
-        "tags": []
-    },
-    {
-        "title": "Packet Headers (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#packet-headers",
-        "tags": []
-    },
-    {
-        "title": "General 5 Bit Packets (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#general-5-bit-packets",
-        "tags": []
-    },
-    {
-        "title": "Extended 13 Bit Packets (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#extended-13-bit-packets",
-        "tags": []
-    },
-    {
-        "title": "Extended 16 Bit Packets (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#extended-16-bit-packets",
-        "tags": []
-    },
-    {
-        "title": "Continuation Packets (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#continuation-packets",
-        "tags": []
-    },
-    {
-        "title": "Decipher Message Payload Type (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#decipher-message-payload-type",
-        "tags": []
-    },
-    {
-        "title": "Message Payload (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#message-payload",
-        "tags": []
-    },
-    {
-        "title": "Type Length Value (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#type-length-value",
-        "tags": []
-    },
-    {
-        "title": "Commands (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#commands",
-        "tags": []
-    },
-    {
-        "title": "Queries (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#queries",
-        "tags": []
-    },
-    {
-        "title": "Protobuf (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#protobuf",
-        "tags": []
-    },
-    {
-        "title": "Backwards Compatibility (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#backwards-compatibility",
-        "tags": []
-    },
-    {
-        "title": "Id Tables (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/id_tables.html#id-tables",
-        "tags": []
-    },
-    {
-        "title": "Command Ids (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/id_tables.html#command-ids",
-        "tags": []
-    },
-    {
-        "title": "Query Ids (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/id_tables.html#query-ids",
-        "tags": []
-    },
-    {
-        "title": "Protobuf Ids (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/id_tables.html#protobuf-ids",
-        "tags": []
-    },
-    {
-        "title": "Setting Ids (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/id_tables.html#setting-ids",
-        "tags": []
-    },
-    {
-        "title": "Status Ids (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/id_tables.html#status-ids",
-        "tags": []
-    },
-    {
-        "title": "State Management (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/state_management.html#state-management",
-        "tags": []
-    },
-    {
-        "title": "Camera Readiness (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/state_management.html#camera-readiness",
-        "tags": []
-    },
-    {
-        "title": "Keep Alive (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/state_management.html#keep-alive",
-        "tags": []
-    },
-    {
-        "title": "Camera Control (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/protocol/state_management.html#camera-control",
-        "tags": []
-    },
-    {
-        "title": "Camera On The Home Network (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#camera-on-the-home-network",
-        "tags": []
-    },
-    {
-        "title": "Certificates (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#certificates",
-        "tags": []
-    },
-    {
-        "title": "Verifying Certificate (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#verifying-certificate",
-        "tags": []
-    },
-    {
-        "title": "View Certificate Details (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#view-certificate-details",
-        "tags": []
-    },
-    {
-        "title": "Provisioning Procedure (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#provisioning-procedure",
-        "tags": []
-    },
-    {
-        "title": "Operations (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#operations",
-        "tags": []
-    },
-    {
-        "title": "Live Streaming (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#live-streaming",
-        "tags": []
-    },
-    {
-        "title": "Metadata (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#metadata",
-        "tags": []
-    },
-    {
-        "title": "Operations (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#operations",
-        "tags": []
-    },
-    {
-        "title": "Control (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#control",
-        "tags": []
-    },
-    {
-        "title": "Operations (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#operations",
-        "tags": []
-    },
-    {
         "title": "Access Point (BLE Spec)",
         "excerpt": "",
         "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#access-point",
+        "tags": []
+    },
+    {
+        "title": "Internet Access (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#internet-access",
         "tags": []
     },
     {
@@ -964,378 +920,6 @@ let extraStore = [
         "title": "Disconnect From Access Point (BLE Spec)",
         "excerpt": "",
         "url": "https://gopro.github.io/OpenGoPro/ble/features/access_points.html#disconnect-from-access-point",
-        "tags": []
-    },
-    {
-        "title": "Hilights (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/hilights.html#hilights",
-        "tags": []
-    },
-    {
-        "title": "Operations (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/hilights.html#operations",
-        "tags": []
-    },
-    {
-        "title": "Query (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/query.html#query",
-        "tags": []
-    },
-    {
-        "title": "Operations (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/query.html#operations",
-        "tags": []
-    },
-    {
-        "title": "Settings (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#settings",
-        "tags": []
-    },
-    {
-        "title": "Operations (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#operations",
-        "tags": []
-    },
-    {
-        "title": "Setting Ids (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#setting-ids",
-        "tags": []
-    },
-    {
-        "title": "Video Resolution 2 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-resolution-2",
-        "tags": []
-    },
-    {
-        "title": "Frames Per Second 3 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#frames-per-second-3",
-        "tags": []
-    },
-    {
-        "title": "Video Timelapse Rate 5 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-timelapse-rate-5",
-        "tags": []
-    },
-    {
-        "title": "Photo Timelapse Rate 30 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-timelapse-rate-30",
-        "tags": []
-    },
-    {
-        "title": "Nightlapse Rate 32 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#nightlapse-rate-32",
-        "tags": []
-    },
-    {
-        "title": "Webcam Digital Lenses 43 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#webcam-digital-lenses-43",
-        "tags": []
-    },
-    {
-        "title": "Auto Power Down 59 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#auto-power-down-59",
-        "tags": []
-    },
-    {
-        "title": "Gps 83 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#gps-83",
-        "tags": []
-    },
-    {
-        "title": "Lcd Brightness 88 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#lcd-brightness-88",
-        "tags": []
-    },
-    {
-        "title": "Led 91 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#led-91",
-        "tags": []
-    },
-    {
-        "title": "Video Aspect Ratio 108 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-aspect-ratio-108",
-        "tags": []
-    },
-    {
-        "title": "Video Lens 121 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-lens-121",
-        "tags": []
-    },
-    {
-        "title": "Photo Lens 122 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-lens-122",
-        "tags": []
-    },
-    {
-        "title": "Time Lapse Digital Lenses 123 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#time-lapse-digital-lenses-123",
-        "tags": []
-    },
-    {
-        "title": "Photo Output 125 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-output-125",
-        "tags": []
-    },
-    {
-        "title": "Media Format 128 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#media-format-128",
-        "tags": []
-    },
-    {
-        "title": "Anti Flicker 134 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#anti-flicker-134",
-        "tags": []
-    },
-    {
-        "title": "Hypersmooth 135 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#hypersmooth-135",
-        "tags": []
-    },
-    {
-        "title": "Video Horizon Leveling 150 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-horizon-leveling-150",
-        "tags": []
-    },
-    {
-        "title": "Photo Horizon Leveling 151 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-horizon-leveling-151",
-        "tags": []
-    },
-    {
-        "title": "Video Duration 156 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-duration-156",
-        "tags": []
-    },
-    {
-        "title": "Multi Shot Duration 157 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-duration-157",
-        "tags": []
-    },
-    {
-        "title": "Max Lens 162 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-162",
-        "tags": []
-    },
-    {
-        "title": "Hindsight 167 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#hindsight-167",
-        "tags": []
-    },
-    {
-        "title": "Scheduled Capture 168 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168",
-        "tags": []
-    },
-    {
-        "title": "Photo Single Interval 171 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-single-interval-171",
-        "tags": []
-    },
-    {
-        "title": "Photo Interval Duration 172 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-interval-duration-172",
-        "tags": []
-    },
-    {
-        "title": "Video Performance Mode 173 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-performance-mode-173",
-        "tags": []
-    },
-    {
-        "title": "Control Mode 175 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#control-mode-175",
-        "tags": []
-    },
-    {
-        "title": "Easy Mode Speed 176 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-mode-speed-176",
-        "tags": []
-    },
-    {
-        "title": "Enable Night Photo 177 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#enable-night-photo-177",
-        "tags": []
-    },
-    {
-        "title": "Wireless Band 178 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#wireless-band-178",
-        "tags": []
-    },
-    {
-        "title": "Star Trails Length 179 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#star-trails-length-179",
-        "tags": []
-    },
-    {
-        "title": "System Video Mode 180 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#system-video-mode-180",
-        "tags": []
-    },
-    {
-        "title": "Video Bit Rate 182 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-bit-rate-182",
-        "tags": []
-    },
-    {
-        "title": "Bit Depth 183 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#bit-depth-183",
-        "tags": []
-    },
-    {
-        "title": "Profiles 184 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#profiles-184",
-        "tags": []
-    },
-    {
-        "title": "Video Easy Mode 186 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-easy-mode-186",
-        "tags": []
-    },
-    {
-        "title": "Lapse Mode 187 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#lapse-mode-187",
-        "tags": []
-    },
-    {
-        "title": "Max Lens Mod 189 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-189",
-        "tags": []
-    },
-    {
-        "title": "Max Lens Mod Enable 190 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-enable-190",
-        "tags": []
-    },
-    {
-        "title": "Easy Night Photo 191 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-night-photo-191",
-        "tags": []
-    },
-    {
-        "title": "Multi Shot Aspect Ratio 192 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-aspect-ratio-192",
-        "tags": []
-    },
-    {
-        "title": "Framing 193 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#framing-193",
-        "tags": []
-    },
-    {
-        "title": "Camera Volume 216 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-volume-216",
-        "tags": []
-    },
-    {
-        "title": "Setup Screen Saver 219 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-screen-saver-219",
-        "tags": []
-    },
-    {
-        "title": "Setup Language 223 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-language-223",
-        "tags": []
-    },
-    {
-        "title": "Photo Mode 227 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-mode-227",
-        "tags": []
-    },
-    {
-        "title": "Video Framing 232 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-framing-232",
-        "tags": []
-    },
-    {
-        "title": "Multi Shot Framing 233 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-framing-233",
-        "tags": []
-    },
-    {
-        "title": "Frame Rate 234 (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#frame-rate-234",
-        "tags": []
-    },
-    {
-        "title": "Presets (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#presets",
-        "tags": []
-    },
-    {
-        "title": "Recommended Usage (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#recommended-usage",
-        "tags": []
-    },
-    {
-        "title": "Preset Modified Status (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#preset-modified-status",
-        "tags": []
-    },
-    {
-        "title": "Operations (BLE Spec)",
-        "excerpt": "",
-        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#operations",
         "tags": []
     },
     {
@@ -1837,6 +1421,468 @@ let extraStore = [
         "tags": []
     },
     {
+        "title": "Camera Name 122 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/statuses.html#camera-name-122",
+        "tags": []
+    },
+    {
+        "title": "Settings (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#settings",
+        "tags": []
+    },
+    {
+        "title": "Operations (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#operations",
+        "tags": []
+    },
+    {
+        "title": "Setting Ids (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#setting-ids",
+        "tags": []
+    },
+    {
+        "title": "Video Resolution 2 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-resolution-2",
+        "tags": []
+    },
+    {
+        "title": "Frames Per Second 3 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#frames-per-second-3",
+        "tags": []
+    },
+    {
+        "title": "Video Timelapse Rate 5 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-timelapse-rate-5",
+        "tags": []
+    },
+    {
+        "title": "Photo Timelapse Rate 30 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-timelapse-rate-30",
+        "tags": []
+    },
+    {
+        "title": "Nightlapse Rate 32 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#nightlapse-rate-32",
+        "tags": []
+    },
+    {
+        "title": "Webcam Digital Lenses 43 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#webcam-digital-lenses-43",
+        "tags": []
+    },
+    {
+        "title": "Auto Power Down 59 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#auto-power-down-59",
+        "tags": []
+    },
+    {
+        "title": "Gps 83 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#gps-83",
+        "tags": []
+    },
+    {
+        "title": "Lcd Brightness 88 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#lcd-brightness-88",
+        "tags": []
+    },
+    {
+        "title": "Led 91 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#led-91",
+        "tags": []
+    },
+    {
+        "title": "Video Aspect Ratio 108 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-aspect-ratio-108",
+        "tags": []
+    },
+    {
+        "title": "Video Lens 121 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-lens-121",
+        "tags": []
+    },
+    {
+        "title": "Photo Lens 122 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-lens-122",
+        "tags": []
+    },
+    {
+        "title": "Time Lapse Digital Lenses 123 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#time-lapse-digital-lenses-123",
+        "tags": []
+    },
+    {
+        "title": "Photo Output 125 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-output-125",
+        "tags": []
+    },
+    {
+        "title": "Media Format 128 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#media-format-128",
+        "tags": []
+    },
+    {
+        "title": "Anti Flicker 134 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#anti-flicker-134",
+        "tags": []
+    },
+    {
+        "title": "Hypersmooth 135 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#hypersmooth-135",
+        "tags": []
+    },
+    {
+        "title": "Video Horizon Leveling 150 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-horizon-leveling-150",
+        "tags": []
+    },
+    {
+        "title": "Photo Horizon Leveling 151 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-horizon-leveling-151",
+        "tags": []
+    },
+    {
+        "title": "Video Duration 156 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-duration-156",
+        "tags": []
+    },
+    {
+        "title": "Multi Shot Duration 157 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-duration-157",
+        "tags": []
+    },
+    {
+        "title": "Max Lens 162 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-162",
+        "tags": []
+    },
+    {
+        "title": "Hindsight 167 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#hindsight-167",
+        "tags": []
+    },
+    {
+        "title": "Scheduled Capture 168 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#scheduled-capture-168",
+        "tags": []
+    },
+    {
+        "title": "Photo Single Interval 171 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-single-interval-171",
+        "tags": []
+    },
+    {
+        "title": "Photo Interval Duration 172 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-interval-duration-172",
+        "tags": []
+    },
+    {
+        "title": "Video Performance Mode 173 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-performance-mode-173",
+        "tags": []
+    },
+    {
+        "title": "Control Mode 175 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#control-mode-175",
+        "tags": []
+    },
+    {
+        "title": "Easy Mode Speed 176 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-mode-speed-176",
+        "tags": []
+    },
+    {
+        "title": "Enable Night Photo 177 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#enable-night-photo-177",
+        "tags": []
+    },
+    {
+        "title": "Wireless Band 178 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#wireless-band-178",
+        "tags": []
+    },
+    {
+        "title": "Star Trails Length 179 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#star-trails-length-179",
+        "tags": []
+    },
+    {
+        "title": "System Video Mode 180 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#system-video-mode-180",
+        "tags": []
+    },
+    {
+        "title": "Video Bit Rate 182 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-bit-rate-182",
+        "tags": []
+    },
+    {
+        "title": "Bit Depth 183 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#bit-depth-183",
+        "tags": []
+    },
+    {
+        "title": "Profiles 184 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#profiles-184",
+        "tags": []
+    },
+    {
+        "title": "Video Easy Mode 186 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-easy-mode-186",
+        "tags": []
+    },
+    {
+        "title": "Lapse Mode 187 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#lapse-mode-187",
+        "tags": []
+    },
+    {
+        "title": "Max Lens Mod 189 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-189",
+        "tags": []
+    },
+    {
+        "title": "Max Lens Mod Enable 190 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#max-lens-mod-enable-190",
+        "tags": []
+    },
+    {
+        "title": "Easy Night Photo 191 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#easy-night-photo-191",
+        "tags": []
+    },
+    {
+        "title": "Multi Shot Aspect Ratio 192 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-aspect-ratio-192",
+        "tags": []
+    },
+    {
+        "title": "Framing 193 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#framing-193",
+        "tags": []
+    },
+    {
+        "title": "Camera Mode 194 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-mode-194",
+        "tags": []
+    },
+    {
+        "title": "360 Photo Files Extension 196 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#360-photo-files-extension-196",
+        "tags": []
+    },
+    {
+        "title": "Beep Volume 216 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#beep-volume-216",
+        "tags": []
+    },
+    {
+        "title": "Setup Screen Saver 219 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-screen-saver-219",
+        "tags": []
+    },
+    {
+        "title": "Setup Language 223 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-language-223",
+        "tags": []
+    },
+    {
+        "title": "Photo Mode 227 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#photo-mode-227",
+        "tags": []
+    },
+    {
+        "title": "Video Framing 232 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#video-framing-232",
+        "tags": []
+    },
+    {
+        "title": "Multi Shot Framing 233 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-framing-233",
+        "tags": []
+    },
+    {
+        "title": "Frame Rate 234 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#frame-rate-234",
+        "tags": []
+    },
+    {
+        "title": "Automatic Wi Fi Access Point 236 (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/settings.html#automatic-wi-fi-access-point-236",
+        "tags": []
+    },
+    {
+        "title": "Hilights (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/hilights.html#hilights",
+        "tags": []
+    },
+    {
+        "title": "Operations (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/hilights.html#operations",
+        "tags": []
+    },
+    {
+        "title": "Presets (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#presets",
+        "tags": []
+    },
+    {
+        "title": "Recommended Usage (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#recommended-usage",
+        "tags": []
+    },
+    {
+        "title": "Preset Modified Status (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#preset-modified-status",
+        "tags": []
+    },
+    {
+        "title": "Operations (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/presets.html#operations",
+        "tags": []
+    },
+    {
+        "title": "Query (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/query.html#query",
+        "tags": []
+    },
+    {
+        "title": "Operations (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/query.html#operations",
+        "tags": []
+    },
+    {
+        "title": "Live Streaming (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#live-streaming",
+        "tags": []
+    },
+    {
+        "title": "Metadata (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#metadata",
+        "tags": []
+    },
+    {
+        "title": "Operations (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/live_streaming.html#operations",
+        "tags": []
+    },
+    {
+        "title": "Control (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#control",
+        "tags": []
+    },
+    {
+        "title": "Operations (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/control.html#operations",
+        "tags": []
+    },
+    {
+        "title": "Camera On The Home Network (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#camera-on-the-home-network",
+        "tags": []
+    },
+    {
+        "title": "Certificates (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#certificates",
+        "tags": []
+    },
+    {
+        "title": "Verifying Certificate (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#verifying-certificate",
+        "tags": []
+    },
+    {
+        "title": "View Certificate Details (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#view-certificate-details",
+        "tags": []
+    },
+    {
+        "title": "Provisioning Procedure (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#provisioning-procedure",
+        "tags": []
+    },
+    {
+        "title": "Operations (BLE Spec)",
+        "excerpt": "",
+        "url": "https://gopro.github.io/OpenGoPro/ble/features/cohn.html#operations",
+        "tags": []
+    },
+    {
         "title": "Control (HTTP Section)",
         "excerpt": "Command and control of the camera",
         "url": "https://gopro.github.io/OpenGoPro/http#tag/Control",
@@ -1854,7 +1900,7 @@ let extraStore = [
     },
     {
         "title": "Media (HTTP Section)",
-        "excerpt": "This section describes the operations to query basic details about media captured on the sdcard.\n\n## Chapters\n\nAll GoPro cameras break longer videos into chapters.\nGoPro cameras currently limit file sizes on sdcards to 4GB for both FAT32 and exFAT file systems.\nThis limitation is most commonly seen when recording longer (10+ minute) videos.\nIn practice, the camera will split video media into chapters named Gqccmmmm.MP4 (and ones for THM/LRV) such that:\n\n-   q: Quality Level (X: Extreme, H: High, M: Medium, L: Low)\n-   cc: Chapter Number (01-99)\n-   mmmm: Media ID (0001-9999)\n\nWhen media becomes chaptered, the camera increments subsequent Chapter Numbers while leaving the Media ID unchanged.\nFor example, if the user records a long High-quality video that results in 4 chapters, the files on the sdcard may\nlook like the following:\n\n```\n-rwxrwxrwx@ 1 gopro  123456789  4006413091 Jan  1 00:00 GH010078.MP4\n-rwxrwxrwx@ 1 gopro  123456789       17663 Jan  1 00:00 GH010078.THM\n-rwxrwxrwx@ 1 gopro  123456789  4006001541 Jan  1 00:00 GH020078.MP4\n-rwxrwxrwx@ 1 gopro  123456789       17357 Jan  1 00:00 GH020078.THM\n-rwxrwxrwx@ 1 gopro  123456789  4006041985 Jan  1 00:00 GH030078.MP4\n-rwxrwxrwx@ 1 gopro  123456789       17204 Jan  1 00:00 GH030078.THM\n-rwxrwxrwx@ 1 gopro  123456789   756706872 Jan  1 00:00 GH040078.MP4\n-rwxrwxrwx@ 1 gopro  123456789       17420 Jan  1 00:00 GH040078.THM\n-rwxrwxrwx@ 1 gopro  123456789   184526939 Jan  1 00:00 GL010078.LRV\n-rwxrwxrwx@ 1 gopro  123456789   184519787 Jan  1 00:00 GL020078.LRV\n-rwxrwxrwx@ 1 gopro  123456789   184517614 Jan  1 00:00 GL030078.LRV\n-rwxrwxrwx@ 1 gopro  123456789    34877660 Jan  1 00:00 GL040078.LRV\n```",
+        "excerpt": "This section describes the operations to query basic details about media captured on the sdcard.\n\n## Chapters\n\nAll GoPro cameras break longer videos into chapters.\nGoPro cameras currently limit file sizes on sdcards to 4GB for both FAT32 and exFAT file systems.\nThis limitation is most commonly seen when recording longer (10+ minute) videos.\nIn practice, the camera will split video media into chapters named `G<quality><chapter><id>.<extension>` where:\n\n-   `quality`: Quality Level where the options are:\n    -   `X`: Extreme\n    -   `H`: High\n    -   `M`: Medium\n    -   `L`: Low\n-   `chapter`: Chapter Number (01-99)\n-   `id`: Media ID (0001-9999)\n-   `extension`: file extension where the options are:\n    -   `LRV`: Low-resolution proxy videos (typically sharing the same filename prefix as the full-resolution source\n        video), stored in the ISO Base Media file format.\n    -   `THM`: Video thumbnails, stored in the EXIF file format\n    -   `MP4`: video files stored in the ISO Base Media file format ([ISO 14496-12](https://www.iso.org/standard/68960.html))\n    -   `36P` / `360`: multi-track EAC lens projection spherical video stored in the ISO Base Media file format\n        -   This file type can be configured via the [360 File Extension](#operation/GPCAMERA_CHANGE_SETTING::196) setting\n\nWhen media becomes chaptered, the camera increments subsequent Chapter Numbers while leaving the Media ID unchanged.\nFor example, if the user records a long High-quality video that results in 4 chapters, the files on the sdcard may\nlook like the following:\n\n```\n-rwxrwxrwx@ 1 gopro  123456789  4006413091 Jan  1 00:00 GH010078.MP4\n-rwxrwxrwx@ 1 gopro  123456789       17663 Jan  1 00:00 GH010078.THM\n-rwxrwxrwx@ 1 gopro  123456789  4006001541 Jan  1 00:00 GH020078.MP4\n-rwxrwxrwx@ 1 gopro  123456789       17357 Jan  1 00:00 GH020078.THM\n-rwxrwxrwx@ 1 gopro  123456789  4006041985 Jan  1 00:00 GH030078.MP4\n-rwxrwxrwx@ 1 gopro  123456789       17204 Jan  1 00:00 GH030078.THM\n-rwxrwxrwx@ 1 gopro  123456789   756706872 Jan  1 00:00 GH040078.MP4\n-rwxrwxrwx@ 1 gopro  123456789       17420 Jan  1 00:00 GH040078.THM\n-rwxrwxrwx@ 1 gopro  123456789   184526939 Jan  1 00:00 GL010078.LRV\n-rwxrwxrwx@ 1 gopro  123456789   184519787 Jan  1 00:00 GL020078.LRV\n-rwxrwxrwx@ 1 gopro  123456789   184517614 Jan  1 00:00 GL030078.LRV\n-rwxrwxrwx@ 1 gopro  123456789    34877660 Jan  1 00:00 GL040078.LRV\n```\n",
         "url": "https://gopro.github.io/OpenGoPro/http#tag/Media",
         "tags": [
             "httpOperation"
@@ -2062,7 +2108,7 @@ let extraStore = [
     },
     {
         "title": "Enumpresettitle (HTTP Schema)",
-        "excerpt": "\n\n| ID | Name | Summary |\n| -- | ---- | ------- |\n| 0 | PRESET_TITLE_ACTIVITY |  |\n| 1 | PRESET_TITLE_STANDARD |  |\n| 2 | PRESET_TITLE_CINEMATIC |  |\n| 3 | PRESET_TITLE_PHOTO |  |\n| 4 | PRESET_TITLE_LIVE_BURST |  |\n| 5 | PRESET_TITLE_BURST |  |\n| 6 | PRESET_TITLE_NIGHT |  |\n| 7 | PRESET_TITLE_TIME_WARP |  |\n| 8 | PRESET_TITLE_TIME_LAPSE |  |\n| 9 | PRESET_TITLE_NIGHT_LAPSE |  |\n| 10 | PRESET_TITLE_VIDEO |  |\n| 11 | PRESET_TITLE_SLOMO |  |\n| 13 | PRESET_TITLE_PHOTO_2 |  |\n| 14 | PRESET_TITLE_PANORAMA |  |\n| 16 | PRESET_TITLE_TIME_WARP_2 |  |\n| 18 | PRESET_TITLE_CUSTOM |  |\n| 19 | PRESET_TITLE_AIR |  |\n| 20 | PRESET_TITLE_BIKE |  |\n| 21 | PRESET_TITLE_EPIC |  |\n| 22 | PRESET_TITLE_INDOOR |  |\n| 23 | PRESET_TITLE_MOTOR |  |\n| 24 | PRESET_TITLE_MOUNTED |  |\n| 25 | PRESET_TITLE_OUTDOOR |  |\n| 26 | PRESET_TITLE_POV |  |\n| 27 | PRESET_TITLE_SELFIE |  |\n| 28 | PRESET_TITLE_SKATE |  |\n| 29 | PRESET_TITLE_SNOW |  |\n| 30 | PRESET_TITLE_TRAIL |  |\n| 31 | PRESET_TITLE_TRAVEL |  |\n| 32 | PRESET_TITLE_WATER |  |\n| 33 | PRESET_TITLE_LOOPING |  |\n| 34 | PRESET_TITLE_STARS |  |\n| 35 | PRESET_TITLE_ACTION |  |\n| 36 | PRESET_TITLE_FOLLOW_CAM |  |\n| 37 | PRESET_TITLE_SURF |  |\n| 38 | PRESET_TITLE_CITY |  |\n| 39 | PRESET_TITLE_SHAKY |  |\n| 40 | PRESET_TITLE_CHESTY |  |\n| 41 | PRESET_TITLE_HELMET |  |\n| 42 | PRESET_TITLE_BITE |  |\n| 43 | PRESET_TITLE_CUSTOM_CINEMATIC |  |\n| 44 | PRESET_TITLE_VLOG |  |\n| 45 | PRESET_TITLE_FPV |  |\n| 46 | PRESET_TITLE_HDR |  |\n| 47 | PRESET_TITLE_LANDSCAPE |  |\n| 48 | PRESET_TITLE_LOG |  |\n| 49 | PRESET_TITLE_CUSTOM_SLOMO |  |\n| 50 | PRESET_TITLE_TRIPOD |  |\n| 58 | PRESET_TITLE_BASIC |  |\n| 59 | PRESET_TITLE_ULTRA_SLO_MO |  |\n| 60 | PRESET_TITLE_STANDARD_ENDURANCE |  |\n| 61 | PRESET_TITLE_ACTIVITY_ENDURANCE |  |\n| 62 | PRESET_TITLE_CINEMATIC_ENDURANCE |  |\n| 63 | PRESET_TITLE_SLOMO_ENDURANCE |  |\n| 64 | PRESET_TITLE_STATIONARY_1 |  |\n| 65 | PRESET_TITLE_STATIONARY_2 |  |\n| 66 | PRESET_TITLE_STATIONARY_3 |  |\n| 67 | PRESET_TITLE_STATIONARY_4 |  |\n| 68 | PRESET_TITLE_SIMPLE_VIDEO |  |\n| 69 | PRESET_TITLE_SIMPLE_TIME_WARP |  |\n| 70 | PRESET_TITLE_SIMPLE_SUPER_PHOTO |  |\n| 71 | PRESET_TITLE_SIMPLE_NIGHT_PHOTO |  |\n| 72 | PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE |  |\n| 73 | PRESET_TITLE_HIGHEST_QUALITY |  |\n| 74 | PRESET_TITLE_EXTENDED_BATTERY |  |\n| 75 | PRESET_TITLE_LONGEST_BATTERY |  |\n| 76 | PRESET_TITLE_STAR_TRAIL |  |\n| 77 | PRESET_TITLE_LIGHT_PAINTING |  |\n| 78 | PRESET_TITLE_LIGHT_TRAIL |  |\n| 79 | PRESET_TITLE_FULL_FRAME |  |\n| 82 | PRESET_TITLE_STANDARD_QUALITY_VIDEO |  |\n| 83 | PRESET_TITLE_BASIC_QUALITY_VIDEO |  |\n| 93 | PRESET_TITLE_HIGHEST_QUALITY_VIDEO |  |\n| 94 | PRESET_TITLE_USER_DEFINED_CUSTOM_NAME |  |\n| 99 | PRESET_TITLE_EASY_STANDARD_PROFILE |  |\n| 100 | PRESET_TITLE_EASY_HDR_PROFILE |  |\n| 106 | PRESET_TITLE_BURST_SLOMO |  |\n| 125 | PRESET_TITLE_4_3_VIDEO |  |\n| 126 | PRESET_TITLE_16_9_VIDEO |  |\n| 127 | PRESET_TITLE_16_9_SLOMO |  |\n",
+        "excerpt": "\n\n| ID | Name | Summary |\n| -- | ---- | ------- |\n| 0 | PRESET_TITLE_ACTIVITY |  |\n| 1 | PRESET_TITLE_STANDARD |  |\n| 2 | PRESET_TITLE_CINEMATIC |  |\n| 3 | PRESET_TITLE_PHOTO |  |\n| 4 | PRESET_TITLE_LIVE_BURST |  |\n| 5 | PRESET_TITLE_BURST |  |\n| 6 | PRESET_TITLE_NIGHT |  |\n| 7 | PRESET_TITLE_TIME_WARP |  |\n| 8 | PRESET_TITLE_TIME_LAPSE |  |\n| 9 | PRESET_TITLE_NIGHT_LAPSE |  |\n| 10 | PRESET_TITLE_VIDEO |  |\n| 11 | PRESET_TITLE_SLOMO |  |\n| 13 | PRESET_TITLE_PHOTO_2 |  |\n| 14 | PRESET_TITLE_PANORAMA |  |\n| 16 | PRESET_TITLE_TIME_WARP_2 |  |\n| 18 | PRESET_TITLE_CUSTOM |  |\n| 19 | PRESET_TITLE_AIR |  |\n| 20 | PRESET_TITLE_BIKE |  |\n| 21 | PRESET_TITLE_EPIC |  |\n| 22 | PRESET_TITLE_INDOOR |  |\n| 23 | PRESET_TITLE_MOTOR |  |\n| 24 | PRESET_TITLE_MOUNTED |  |\n| 25 | PRESET_TITLE_OUTDOOR |  |\n| 26 | PRESET_TITLE_POV |  |\n| 27 | PRESET_TITLE_SELFIE |  |\n| 28 | PRESET_TITLE_SKATE |  |\n| 29 | PRESET_TITLE_SNOW |  |\n| 30 | PRESET_TITLE_TRAIL |  |\n| 31 | PRESET_TITLE_TRAVEL |  |\n| 32 | PRESET_TITLE_WATER |  |\n| 33 | PRESET_TITLE_LOOPING |  |\n| 34 | PRESET_TITLE_STARS |  |\n| 35 | PRESET_TITLE_ACTION |  |\n| 36 | PRESET_TITLE_FOLLOW_CAM |  |\n| 37 | PRESET_TITLE_SURF |  |\n| 38 | PRESET_TITLE_CITY |  |\n| 39 | PRESET_TITLE_SHAKY |  |\n| 40 | PRESET_TITLE_CHESTY |  |\n| 41 | PRESET_TITLE_HELMET |  |\n| 42 | PRESET_TITLE_BITE |  |\n| 43 | PRESET_TITLE_CUSTOM_CINEMATIC |  |\n| 44 | PRESET_TITLE_VLOG |  |\n| 45 | PRESET_TITLE_FPV |  |\n| 46 | PRESET_TITLE_HDR |  |\n| 47 | PRESET_TITLE_LANDSCAPE |  |\n| 48 | PRESET_TITLE_LOG |  |\n| 49 | PRESET_TITLE_CUSTOM_SLOMO |  |\n| 50 | PRESET_TITLE_TRIPOD |  |\n| 58 | PRESET_TITLE_BASIC |  |\n| 59 | PRESET_TITLE_ULTRA_SLO_MO |  |\n| 60 | PRESET_TITLE_STANDARD_ENDURANCE |  |\n| 61 | PRESET_TITLE_ACTIVITY_ENDURANCE |  |\n| 62 | PRESET_TITLE_CINEMATIC_ENDURANCE |  |\n| 63 | PRESET_TITLE_SLOMO_ENDURANCE |  |\n| 64 | PRESET_TITLE_STATIONARY_1 |  |\n| 65 | PRESET_TITLE_STATIONARY_2 |  |\n| 66 | PRESET_TITLE_STATIONARY_3 |  |\n| 67 | PRESET_TITLE_STATIONARY_4 |  |\n| 68 | PRESET_TITLE_SIMPLE_VIDEO |  |\n| 69 | PRESET_TITLE_SIMPLE_TIME_WARP |  |\n| 70 | PRESET_TITLE_SIMPLE_SUPER_PHOTO |  |\n| 71 | PRESET_TITLE_SIMPLE_NIGHT_PHOTO |  |\n| 72 | PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE |  |\n| 73 | PRESET_TITLE_HIGHEST_QUALITY |  |\n| 74 | PRESET_TITLE_EXTENDED_BATTERY |  |\n| 75 | PRESET_TITLE_LONGEST_BATTERY |  |\n| 76 | PRESET_TITLE_STAR_TRAIL |  |\n| 77 | PRESET_TITLE_LIGHT_PAINTING |  |\n| 78 | PRESET_TITLE_LIGHT_TRAIL |  |\n| 79 | PRESET_TITLE_FULL_FRAME |  |\n| 82 | PRESET_TITLE_STANDARD_QUALITY_VIDEO |  |\n| 83 | PRESET_TITLE_BASIC_QUALITY_VIDEO |  |\n| 93 | PRESET_TITLE_HIGHEST_QUALITY_VIDEO |  |\n| 94 | PRESET_TITLE_USER_DEFINED_CUSTOM_NAME |  |\n| 99 | PRESET_TITLE_EASY_STANDARD_PROFILE |  |\n| 100 | PRESET_TITLE_EASY_HDR_PROFILE |  |\n| 106 | PRESET_TITLE_BURST_SLOMO |  |\n| 125 | PRESET_TITLE_4_3_VIDEO |  |\n| 126 | PRESET_TITLE_16_9_VIDEO |  |\n| 127 | PRESET_TITLE_16_9_SLOMO |  |\n| 131 | PRESET_TITLE_TIME_LAPSE_VIDEO |  |\n| 132 | PRESET_TITLE_TIME_LAPSE_PHOTO |  |\n| 133 | PRESET_TITLE_NIGHT_LAPSE_VIDEO |  |\n| 134 | PRESET_TITLE_NIGHT_LAPSE_PHOTO |  |\n",
         "url": "https://gopro.github.io/OpenGoPro/http#schema/EnumPresetTitle",
         "tags": [
             "httpOperation"
@@ -2086,7 +2132,7 @@ let extraStore = [
     },
     {
         "title": "Get Cohn Certificate (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_GET_HOME_NETWORK_CERT",
         "tags": [
             "httpOperation"
@@ -2094,7 +2140,7 @@ let extraStore = [
     },
     {
         "title": "Set Client As Third Party (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_SET_ANALYTICS",
         "tags": [
             "httpOperation"
@@ -2102,7 +2148,7 @@ let extraStore = [
     },
     {
         "title": "Set Camera Control Status (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nThis command is used to tell the camera that a client (i.e. External Control) wishes to claim control of the camera.\nThis causes the camera to immediately exit most contextual menus and return to the idle screen. Any interaction with the\ncamera's physical buttons will cause the camera to reclaim control and update control status accordingly. If the user\nreturns the camera UI to the idle screen, the camera updates control status to Idle.\n\nNote:\n\n- The entity currently claiming control of the camera is advertised in camera status 114\n- Information about whether the camera is in a contextual menu or not is advertised in camera status 63.\n\nSee the below diagram for a state diagram of Camera Control:\n\n![global behaviors state diagram](assets/images/global_behaviors.png)\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nThis command is used to tell the camera that a client (i.e. External Control) wishes to claim control of the camera.\nThis causes the camera to immediately exit most contextual menus and return to the idle screen. Any interaction with the\ncamera's physical buttons will cause the camera to reclaim control and update control status accordingly. If the user\nreturns the camera UI to the idle screen, the camera updates control status to Idle.\n\nNote:\n\n- The entity currently claiming control of the camera is advertised in camera status 114\n- Information about whether the camera is in a contextual menu or not is advertised in camera status 63.\n\nSee the below diagram for a state diagram of Camera Control:\n\n![global behaviors state diagram](assets/images/global_behaviors.png)\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_SET_CAMERA_CONTROL_STATUS",
         "tags": [
             "httpOperation"
@@ -2110,7 +2156,7 @@ let extraStore = [
     },
     {
         "title": "Enable Wired Camera Control Over Usb (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_SET_WIRED_USB_CONTROL",
         "tags": [
             "httpOperation"
@@ -2118,7 +2164,7 @@ let extraStore = [
     },
     {
         "title": "Set Digital Zoom (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_DIGITAL_ZOOM_SET",
         "tags": [
             "httpOperation"
@@ -2126,7 +2172,7 @@ let extraStore = [
     },
     {
         "title": "Get Date / Time (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_GET_DATE_AND_TIME_DST",
         "tags": [
             "httpOperation"
@@ -2134,7 +2180,7 @@ let extraStore = [
     },
     {
         "title": "Get Hardware Info (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_CAMERA_INFO",
         "tags": [
             "httpOperation"
@@ -2142,7 +2188,7 @@ let extraStore = [
     },
     {
         "title": "Keep Alive (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nIn order to maximize battery life, GoPro cameras automatically go to sleep after some time.\nThis logic is handled by a combination of the **Auto Power Down** setting which most (but not all) cameras support\nand a **Keep Alive** message that the user can regularly send to the camera.\n\nThe camera will automatically go to sleep if both timers reach zero.\n\nThe Auto Power Down timer is reset when the user taps the LCD screen, presses a button on the camera,\nprogrammatically (un)sets the shutter, sets a setting, or loads a Preset.\n\nThe Keep Alive timer is reset when the user sends a keep alive message.\n\nThe best practice to prevent the camera from inadvertently going to sleep is to start sending Keep Alive messages\nevery **3.0** seconds after a connection is established.\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nIn order to maximize battery life, GoPro cameras automatically go to sleep after some time.\nThis logic is handled by a combination of the **Auto Power Down** setting which most (but not all) cameras support\nand a **Keep Alive** message that the user can regularly send to the camera.\n\nThe camera will automatically go to sleep if both timers reach zero.\n\nThe Auto Power Down timer is reset when the user taps the LCD screen, presses a button on the camera,\nprogrammatically (un)sets the shutter, sets a setting, or loads a Preset.\n\nThe Keep Alive timer is reset when the user sends a keep alive message.\n\nThe best practice to prevent the camera from inadvertently going to sleep is to start sending Keep Alive messages\nevery **3.0** seconds after a connection is established.\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_KEEP_ALIVE",
         "tags": [
             "httpOperation"
@@ -2150,15 +2196,23 @@ let extraStore = [
     },
     {
         "title": "Get The Camera Name (HTTP Operation)",
-        "excerpt": "",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_GET_CAMERA_NAME",
         "tags": [
             "httpOperation"
         ]
     },
     {
+        "title": "Set The Camera Name (HTTP Operation)",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nTODO define naming rules",
+        "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_SET_CAMERA_NAME",
+        "tags": [
+            "httpOperation"
+        ]
+    },
+    {
         "title": "Get Available Presets (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nGet the currently available Preset Groups and Presets, the set of which\n[depends](#tag/Presets/Presets) on the current camera settings.\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nGet the currently available Preset Groups and Presets, the set of which\n[depends](#tag/Presets/Presets) on the current camera settings.\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_PRESETS_GET",
         "tags": [
             "httpOperation"
@@ -2166,7 +2220,7 @@ let extraStore = [
     },
     {
         "title": "Load Preset By Id (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nA preset can only be loaded if it is currently available where available preset IDs can be found\nfrom  [Get Preset Status](#operation/OGP_PRESETS_GET)\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nA preset can only be loaded if it is currently available where available preset IDs can be found\nfrom  [Get Preset Status](#operation/OGP_PRESETS_GET)\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_PRESET_LOAD",
         "tags": [
             "httpOperation"
@@ -2174,15 +2228,23 @@ let extraStore = [
     },
     {
         "title": "Load Preset Group By Id (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_PRESET_SET_GROUP",
         "tags": [
             "httpOperation"
         ]
     },
     {
+        "title": "Set Preset Ui Visibility (HTTP Operation)",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nShows or hides a Preset in the camera UI.\n\nNote that a Preset's visibility determines how it is returned as part of the\n[Get Available Presets](#tag/Presets/operation/OGP_PRESETS_GET) response.\n",
+        "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_SET_PRESET_VISIBILITY",
+        "tags": [
+            "httpOperation"
+        ]
+    },
+    {
         "title": "Update Custom Preset (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nThis only operates on the currently active Preset and will fail if the current\nPreset is not custom.\n\nThe use cases are:\n\n1. Update the Custom Preset Icon\n\n    - `icon_id` is always optional and can always be passed\n\nand / or\n\n2. Update the Custom Preset Title to a...\n\n    - **Factory Preset Title**: Set `title_id` to a non-`PRESET_TITLE_USER_DEFINED_CUSTOM_NAME` (94) value\n    - **Custom Preset Name**: Set `title_id` to `PRESET_TITLE_USER_DEFINED_CUSTOM_NAME` (94) and\n      specify a `custom_name`\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nThis only operates on the currently active Preset and will fail if the current\nPreset is not custom.\n\nThe use cases are:\n\n1. Update the Custom Preset Icon\n\n    - `icon_id` is always optional and can always be passed\n\nand / or\n\n2. Update the Custom Preset Title to a...\n\n    - **Factory Preset Title**: Set `title_id` to a non-`PRESET_TITLE_USER_DEFINED_CUSTOM_NAME` (94) value\n    - **Custom Preset Name**: Set `title_id` to `PRESET_TITLE_USER_DEFINED_CUSTOM_NAME` (94) and\n      specify a `custom_name`\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CUSTOM_PRESET_UPDATE",
         "tags": [
             "httpOperation"
@@ -2190,7 +2252,7 @@ let extraStore = [
     },
     {
         "title": "Set Date / Time (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_SET_DATE_AND_TIME_DST",
         "tags": [
             "httpOperation"
@@ -2198,7 +2260,7 @@ let extraStore = [
     },
     {
         "title": "Video Aspect Ratio (108) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::108",
         "tags": [
             "httpOperation"
@@ -2206,7 +2268,7 @@ let extraStore = [
     },
     {
         "title": "Video Lens (121) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::121",
         "tags": [
             "httpOperation"
@@ -2214,7 +2276,7 @@ let extraStore = [
     },
     {
         "title": "Photo Lens (122) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::122",
         "tags": [
             "httpOperation"
@@ -2230,7 +2292,7 @@ let extraStore = [
     },
     {
         "title": "Photo Output (125) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::125",
         "tags": [
             "httpOperation"
@@ -2238,7 +2300,7 @@ let extraStore = [
     },
     {
         "title": "Media Format (128) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::128",
         "tags": [
             "httpOperation"
@@ -2254,7 +2316,7 @@ let extraStore = [
     },
     {
         "title": "Hypersmooth (135) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::135",
         "tags": [
             "httpOperation"
@@ -2278,7 +2340,7 @@ let extraStore = [
     },
     {
         "title": "Video Duration (156) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::156",
         "tags": [
             "httpOperation"
@@ -2286,7 +2348,7 @@ let extraStore = [
     },
     {
         "title": "Multi Shot Duration (157) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::157",
         "tags": [
             "httpOperation"
@@ -2310,7 +2372,7 @@ let extraStore = [
     },
     {
         "title": "Scheduled Capture (168) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\nConfigure or disable the scheduled capture functionality to start encoding at a future time.\n\nThis is a bit-masked value with the following bitwise definitions,\nnumbered from least significant bit, with the example showing parsed fields from a sample of `0x00000c8b`.\n\n| Bit(s) | Definition                    | Example |\n| ------ | ----------------------------- | ------- |\n| 0      | Is Scheduled Capture Enabled? | 1       |\n| 1      | Is 24 hour format?            | 1       |\n| 2-8    | Minute                        | 34      |\n| 9-13   | Hour                          | 12      |\n| 14-63  | Reserved                      | 0       |\n\nNote that when the scheduled capture time occurs, encoding will be started and continue indefinitely.  One\nof the duration settings (156, 157, 172) can be used to set the encoding duration depending on the camera mode.\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\nConfigure or disable the scheduled capture functionality to start encoding at a future time.\n\nThis is a bit-masked value with the following bitwise definitions,\nnumbered from least significant bit, with the example showing parsed fields from a sample of `0x00000c8b`.\n\n| Bit(s) | Definition                    | Example |\n| ------ | ----------------------------- | ------- |\n| 0      | Is Scheduled Capture Enabled? | 1       |\n| 1      | Is 24 hour format?            | 1       |\n| 2-8    | Minute                        | 34      |\n| 9-13   | Hour                          | 12      |\n| 14-63  | Reserved                      | 0       |\n\nNote that when the scheduled capture time occurs, encoding will be started and continue indefinitely.  One\nof the duration settings (156, 157, 172) can be used to set the encoding duration depending on the camera mode.\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::168",
         "tags": [
             "httpOperation"
@@ -2318,7 +2380,7 @@ let extraStore = [
     },
     {
         "title": "Photo Single Interval (171) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::171",
         "tags": [
             "httpOperation"
@@ -2326,7 +2388,7 @@ let extraStore = [
     },
     {
         "title": "Photo Interval Duration (172) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::172",
         "tags": [
             "httpOperation"
@@ -2366,7 +2428,7 @@ let extraStore = [
     },
     {
         "title": "Wireless Band (178) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::178",
         "tags": [
             "httpOperation"
@@ -2374,7 +2436,7 @@ let extraStore = [
     },
     {
         "title": "Star Trails Length (179) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::179",
         "tags": [
             "httpOperation"
@@ -2390,7 +2452,7 @@ let extraStore = [
     },
     {
         "title": "Video Bit Rate (182) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::182",
         "tags": [
             "httpOperation"
@@ -2398,7 +2460,7 @@ let extraStore = [
     },
     {
         "title": "Bit Depth (183) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::183",
         "tags": [
             "httpOperation"
@@ -2406,7 +2468,7 @@ let extraStore = [
     },
     {
         "title": "Profiles (184) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::184",
         "tags": [
             "httpOperation"
@@ -2469,16 +2531,32 @@ let extraStore = [
         ]
     },
     {
+        "title": "Camera Mode (194) (HTTP Operation)",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n\n",
+        "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::194",
+        "tags": [
+            "httpOperation"
+        ]
+    },
+    {
+        "title": "360 Photo Files Extension (196) (HTTP Operation)",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n\n",
+        "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::196",
+        "tags": [
+            "httpOperation"
+        ]
+    },
+    {
         "title": "Video Resolution (2) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::2",
         "tags": [
             "httpOperation"
         ]
     },
     {
-        "title": "Camera Volume (216) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n\n",
+        "title": "Beep Volume (216) (HTTP Operation)",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::216",
         "tags": [
             "httpOperation"
@@ -2486,7 +2564,7 @@ let extraStore = [
     },
     {
         "title": "Setup Screen Saver (219) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::219",
         "tags": [
             "httpOperation"
@@ -2494,7 +2572,7 @@ let extraStore = [
     },
     {
         "title": "Setup Language (223) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::223",
         "tags": [
             "httpOperation"
@@ -2526,15 +2604,23 @@ let extraStore = [
     },
     {
         "title": "Frame Rate (234) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::234",
         "tags": [
             "httpOperation"
         ]
     },
     {
+        "title": "Automatic Wi Fi Access Point (236) (HTTP Operation)",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n\nConfigure the camera's wifi access point to automatically start on boot of the camera",
+        "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::236",
+        "tags": [
+            "httpOperation"
+        ]
+    },
+    {
         "title": "Frames Per Second (3) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::3",
         "tags": [
             "httpOperation"
@@ -2542,7 +2628,7 @@ let extraStore = [
     },
     {
         "title": "Photo Timelapse Rate (30) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\nHow frequently to take a photo when performing a Photo Timelapse.",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\nHow frequently to take a photo when performing a Photo Timelapse.",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::30",
         "tags": [
             "httpOperation"
@@ -2550,7 +2636,7 @@ let extraStore = [
     },
     {
         "title": "Nightlapse Rate (32) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\nHow frequently to take a video or photo when performing a Nightlapse.\n\nThis controls the Video or Photo Nightlapse rate if Setting 128 is set to 21 or 26 respectively.\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\nHow frequently to take a video or photo when performing a Nightlapse.\n\nThis controls the Video or Photo Nightlapse rate if Setting 128 is set to 21 or 26 respectively.\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::32",
         "tags": [
             "httpOperation"
@@ -2558,7 +2644,7 @@ let extraStore = [
     },
     {
         "title": "Webcam Digital Lenses (43) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::43",
         "tags": [
             "httpOperation"
@@ -2566,7 +2652,7 @@ let extraStore = [
     },
     {
         "title": "Video Timelapse Rate (5) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\nHow frequently to take a video when performing a Video Timelapse",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\nHow frequently to take a video when performing a Video Timelapse",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::5",
         "tags": [
             "httpOperation"
@@ -2574,7 +2660,7 @@ let extraStore = [
     },
     {
         "title": "Auto Power Down (59) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::59",
         "tags": [
             "httpOperation"
@@ -2582,7 +2668,7 @@ let extraStore = [
     },
     {
         "title": "Gps (83) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::83",
         "tags": [
             "httpOperation"
@@ -2590,7 +2676,7 @@ let extraStore = [
     },
     {
         "title": "Lcd Brightness (88) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\nThe LCD brightness as a percentage value from 10-100",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\nThe LCD brightness as a percentage value from 10-100",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::88",
         "tags": [
             "httpOperation"
@@ -2598,7 +2684,7 @@ let extraStore = [
     },
     {
         "title": "Led (91) (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CHANGE_SETTING::91",
         "tags": [
             "httpOperation"
@@ -2606,7 +2692,7 @@ let extraStore = [
     },
     {
         "title": "Set Shutter (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_SHUTTER",
         "tags": [
             "httpOperation"
@@ -2614,7 +2700,7 @@ let extraStore = [
     },
     {
         "title": "Get Camera State (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nGet all camera settings and statuses.",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nGet all camera settings and statuses.",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_GET_STATE",
         "tags": [
             "httpOperation"
@@ -2622,7 +2708,7 @@ let extraStore = [
     },
     {
         "title": "Start Preview Stream (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_PREVIEW_STREAM_START",
         "tags": [
             "httpOperation"
@@ -2630,7 +2716,7 @@ let extraStore = [
     },
     {
         "title": "Stop Preview Stream (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_PREVIEW_STREAM_STOP",
         "tags": [
             "httpOperation"
@@ -2638,7 +2724,7 @@ let extraStore = [
     },
     {
         "title": "Delete Cohn Certificates (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CLEAR_HOME_NETWORK_CERT",
         "tags": [
             "httpOperation"
@@ -2646,7 +2732,7 @@ let extraStore = [
     },
     {
         "title": "Create The Cohn Ssl/Tls Certificates (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nThis creates the Camera On the Home Network SSL/TLS certs certs.\nThe created certificate(s) can be obtained via [Get COHN Certificate](#operation/GPCAMERA_GET_HOME_NETWORK_CERT) and\nused for SSL/TLS communications\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nThis creates the Camera On the Home Network SSL/TLS certs certs.\nThe created certificate(s) can be obtained via [Get COHN Certificate](#operation/GPCAMERA_GET_HOME_NETWORK_CERT) and\nused for SSL/TLS communications\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_CREATE_HOME_NETWORK_CERT",
         "tags": [
             "httpOperation"
@@ -2654,7 +2740,7 @@ let extraStore = [
     },
     {
         "title": "Configure Cohn Settings (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_SET_HOME_NETWORK_SETTING",
         "tags": [
             "httpOperation"
@@ -2662,7 +2748,7 @@ let extraStore = [
     },
     {
         "title": "Get Cohn Status (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_GET_HOME_NETWORK_STATUS",
         "tags": [
             "httpOperation"
@@ -2670,7 +2756,7 @@ let extraStore = [
     },
     {
         "title": "Delete Single Media File (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nWhen operating on a file that is part of a group, only the individual file will be deleted. To delete\nthe entire group, use [Delete Grouped Media Item](#tag/Media/operation/GPCAMERA_DELETE_FILE_GROUP)\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nWhen operating on a file that is part of a group, only the individual file will be deleted. To delete\nthe entire group, use [Delete Grouped Media Item](#tag/Media/operation/GPCAMERA_DELETE_FILE_GROUP)\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_DELETE_SINGLE_FILE",
         "tags": [
             "httpOperation"
@@ -2678,7 +2764,7 @@ let extraStore = [
     },
     {
         "title": "Get Media File Gpmf (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nNone",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nNone",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_MEDIA_GPMF",
         "tags": [
             "httpOperation"
@@ -2686,7 +2772,7 @@ let extraStore = [
     },
     {
         "title": "Hilight A Media File (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nAdd a hilight / tag to an existing photo or media file.",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nAdd a hilight / tag to an existing photo or media file.",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_ADD_HILIGHT",
         "tags": [
             "httpOperation"
@@ -2694,7 +2780,7 @@ let extraStore = [
     },
     {
         "title": "Hilight While Recording (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nAdd hilight at current time while recording video\n\nThis can only be used during recording.\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nAdd hilight at current time while recording video\n\nThis can only be used during recording.\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_TAG_MOMENT",
         "tags": [
             "httpOperation"
@@ -2702,7 +2788,7 @@ let extraStore = [
     },
     {
         "title": "Remove Hilight (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nRemove an existing hilight from a photo or video file.",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nRemove an existing hilight from a photo or video file.",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_REMOVE_HILIGHT",
         "tags": [
             "httpOperation"
@@ -2710,7 +2796,7 @@ let extraStore = [
     },
     {
         "title": "Get Media File Info (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_MEDIA_INFO",
         "tags": [
             "httpOperation"
@@ -2718,7 +2804,7 @@ let extraStore = [
     },
     {
         "title": "Get Last Captured Media (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nThis will return the complete path of the last captured media. Depending on the type of media captured, it will return:\n\n- single photo / video: The single media path\n- any grouped media: The path to the first captured media in the group\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nThis will return the complete path of the last captured media. Depending on the type of media captured, it will return:\n\n- single photo / video: The single media path\n- any grouped media: The path to the first captured media in the group\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_GET_LAST_MEDIA",
         "tags": [
             "httpOperation"
@@ -2726,7 +2812,7 @@ let extraStore = [
     },
     {
         "title": "Get Media List (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nTo minimize the size of the JSON transmitted by the camera, grouped media items such as Burst Photos,\nTime Lapse Photos, Night Lapse Photos, etc are represented with a single item in the media list with additional keys\nthat allow the user to extrapolate individual filenames for each member of the group.\n\nFilenames for group media items have the form \"GXXXYYYY.ZZZ\"\nwhere XXX is the group ID, YYY is the group member ID and ZZZ is the file extension.\n\nFor example, take the media list below, which contains a Time Lapse Photo group media item:\n\n```json\n{\n    \"id\": \"2530266050123724003\",\n    \"media\": [\n        {\n            \"d\": \"100GOPRO\",\n            \"fs\": [\n                {\n                    \"b\": \"8\",\n                    \"cre\": \"1613669353\",\n                    \"g\": \"1\",\n                    \"l\": \"396\",\n                    \"m\": [\"75\", \"139\"],\n                    \"mod\": \"1613669353\",\n                    \"n\": \"G0010008.JPG\",\n                    \"s\": \"773977407\",\n                    \"t\": \"t\"\n                }\n            ]\n        }\n    ]\n}\n```\n\nThe first filename in the group is `G0010008.JP` (key: `n`).\n\nThe ID of the first group member in this case is `008` (key: `b`).\n\nThe ID of the last group member in this case is `396` (key: `l`).\n\nThe IDs of deleted members in this case are `75` and `139` (key: `m`)\n\nGiven this information, the user can extrapolate that the group currently contains\n\n```\nG0010008.JPG, G0010009.JPG, G0010010.JPG,\n...,\nG0010074.JPG, G0010076.JPG,\n...,\nG0010138.JPG, G0010140.JPG,\n...,\nG0010394.JPG, G0010395.JPG. G0010396.JPG\n```\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nTo minimize the size of the JSON transmitted by the camera, grouped media items such as Burst Photos,\nTime Lapse Photos, Night Lapse Photos, etc are represented with a single item in the media list with additional keys\nthat allow the user to extrapolate individual filenames for each member of the group.\n\nFilenames for group media items have the form \"GXXXYYYY.ZZZ\"\nwhere XXX is the group ID, YYY is the group member ID and ZZZ is the file extension.\n\nFor example, take the media list below, which contains a Time Lapse Photo group media item:\n\n```json\n{\n    \"id\": \"2530266050123724003\",\n    \"media\": [\n        {\n            \"d\": \"100GOPRO\",\n            \"fs\": [\n                {\n                    \"b\": \"8\",\n                    \"cre\": \"1613669353\",\n                    \"g\": \"1\",\n                    \"l\": \"396\",\n                    \"m\": [\"75\", \"139\"],\n                    \"mod\": \"1613669353\",\n                    \"n\": \"G0010008.JPG\",\n                    \"s\": \"773977407\",\n                    \"t\": \"t\"\n                }\n            ]\n        }\n    ]\n}\n```\n\nThe first filename in the group is `G0010008.JP` (key: `n`).\n\nThe ID of the first group member in this case is `008` (key: `b`).\n\nThe ID of the last group member in this case is `396` (key: `l`).\n\nThe IDs of deleted members in this case are `75` and `139` (key: `m`)\n\nGiven this information, the user can extrapolate that the group currently contains\n\n```\nG0010008.JPG, G0010009.JPG, G0010010.JPG,\n...,\nG0010074.JPG, G0010076.JPG,\n...,\nG0010138.JPG, G0010140.JPG,\n...,\nG0010394.JPG, G0010395.JPG. G0010396.JPG\n```\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_MEDIA_LIST",
         "tags": [
             "httpOperation"
@@ -2734,7 +2820,7 @@ let extraStore = [
     },
     {
         "title": "Get Media File Screennail (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nA screennail is a low-res preview image that is higher resolution than a thumbnail.\n\nNote that screenails are only available for photos.\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nA screennail is a low-res preview image that is higher resolution than a thumbnail.\n\nNote that screenails are only available for photos.\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_MEDIA_SCREENNAIL",
         "tags": [
             "httpOperation"
@@ -2742,7 +2828,7 @@ let extraStore = [
     },
     {
         "title": "Get Media File Telemetry (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nGet Media File Telemetry track data",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nGet Media File Telemetry track data",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_MEDIA_TELEMETRY",
         "tags": [
             "httpOperation"
@@ -2750,7 +2836,7 @@ let extraStore = [
     },
     {
         "title": "Get Media File Thumbnail (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_MEDIA_THUMBNAIL",
         "tags": [
             "httpOperation"
@@ -2758,7 +2844,7 @@ let extraStore = [
     },
     {
         "title": "Configure Turbo Transfer (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nSome cameras support Turbo Transfer mode, which allows media to be downloaded over WiFi more rapidly.\n\nThis special mode should only be used during media offload.\n\nIt is recommended that the user check for and, if necessary, disable Turbo Transfer on connection.\n\nNote that Disabling / enabling turbo mode will also enable / disable the transferring media camera UI.\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nSome cameras support Turbo Transfer mode, which allows media to be downloaded over WiFi more rapidly.\n\nThis special mode should only be used during media offload.\n\nIt is recommended that the user check for and, if necessary, disable Turbo Transfer on connection.\n\nNote that Disabling / enabling turbo mode will also enable / disable the transferring media camera UI.\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_TURBO_MODE_ENABLE",
         "tags": [
             "httpOperation"
@@ -2766,7 +2852,7 @@ let extraStore = [
     },
     {
         "title": "Get Open Gopro Version (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_OPENGOPRO_VERSION",
         "tags": [
             "httpOperation"
@@ -2774,7 +2860,7 @@ let extraStore = [
     },
     {
         "title": "Exit Webcam Mode (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nNot supported on **WiFi** for:\n\n- Hero 11 Black Mini\n- Hero 11 Black\n- Hero 10 Black\n- Hero 9 Black\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nNot supported on **WiFi** for:\n\n- Hero 11 Black Mini\n- Hero 11 Black\n- Hero 10 Black\n- Hero 9 Black\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_WEBCAM_EXIT_OGP",
         "tags": [
             "httpOperation"
@@ -2782,7 +2868,7 @@ let extraStore = [
     },
     {
         "title": "Enter Webcam Preview (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nNot supported on **WiFi** for:\n\n- Hero 11 Black Mini\n- Hero 11 Black\n- Hero 10 Black\n- Hero 9 Black\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nNot supported on **WiFi** for:\n\n- Hero 11 Black Mini\n- Hero 11 Black\n- Hero 10 Black\n- Hero 9 Black\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_WEBCAM_PREVIEW_OGP",
         "tags": [
             "httpOperation"
@@ -2790,7 +2876,7 @@ let extraStore = [
     },
     {
         "title": "Start Webcam (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nNot supported on **WiFi** for:\n\n- Hero 11 Black Mini\n- Hero 11 Black\n- Hero 10 Black\n- Hero 9 Black\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nNot supported on **WiFi** for:\n\n- Hero 11 Black Mini\n- Hero 11 Black\n- Hero 10 Black\n- Hero 9 Black\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_WEBCAM_START_OGP",
         "tags": [
             "httpOperation"
@@ -2798,7 +2884,7 @@ let extraStore = [
     },
     {
         "title": "Get Webcam Status (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_WEBCAM_STATUS_OGP",
         "tags": [
             "httpOperation"
@@ -2806,7 +2892,7 @@ let extraStore = [
     },
     {
         "title": "Stop Webcam (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nNot supported on **WiFi** for:\n\n- Hero 11 Black Mini\n- Hero 11 Black\n- Hero 10 Black\n- Hero 9 Black\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nNot supported on **WiFi** for:\n\n- Hero 11 Black Mini\n- Hero 11 Black\n- Hero 10 Black\n- Hero 9 Black\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_WEBCAM_STOP_OGP",
         "tags": [
             "httpOperation"
@@ -2814,7 +2900,7 @@ let extraStore = [
     },
     {
         "title": "Get Webcam Version (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_WEBCAM_VERSION_OGP",
         "tags": [
             "httpOperation"
@@ -2822,7 +2908,7 @@ let extraStore = [
     },
     {
         "title": "Delete All Files (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_DELETE_ALL_FILES_ID",
         "tags": [
             "httpOperation"
@@ -2830,7 +2916,7 @@ let extraStore = [
     },
     {
         "title": "Delete Grouped Media Item (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nDelete an entire group of media files such as in a burst, timelapse, or chaptered video. This API should\nnot be used to delete single files. Instead use [Delete Single File](#tag/Media/operation/OGP_DELETE_SINGLE_FILE)\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nDelete an entire group of media files such as in a burst, timelapse, or chaptered video. This API should\nnot be used to delete single files. Instead use [Delete Single File](#tag/Media/operation/OGP_DELETE_SINGLE_FILE)\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_DELETE_FILE_GROUP",
         "tags": [
             "httpOperation"
@@ -2838,7 +2924,7 @@ let extraStore = [
     },
     {
         "title": "Reboot The Camera (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nDoes a full reboot of the camera (equivalent to battery pull)",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nDoes a full reboot of the camera (equivalent to battery pull)",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_SYSTEM_RESET",
         "tags": [
             "httpOperation"
@@ -2846,7 +2932,7 @@ let extraStore = [
     },
     {
         "title": "Resumable Ota Update (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nPerform Resumable OTA Update\n\nTo send a portion of the OTA image as per the requestBody specification, do not use the `request` parameter.\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nPerform Resumable OTA Update\n\nTo send a portion of the OTA image as per the requestBody specification, do not use the `request` parameter.\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_FIRMWARE_UPDATE_V2",
         "tags": [
             "httpOperation"
@@ -2854,7 +2940,7 @@ let extraStore = [
     },
     {
         "title": "Simple Ota Update (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/GPCAMERA_FWUPDATE_DOWNLOAD_FILE",
         "tags": [
             "httpOperation"
@@ -2862,7 +2948,7 @@ let extraStore = [
     },
     {
         "title": "Download A Media File (HTTP Operation)",
-        "excerpt": "\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nNote that this is the same endpoint for all media (photos, video, etc.).\n",
+        "excerpt": "\n![MAX 2](https://img.shields.io/badge/MAX%202-dd3a4d)\n![HERO13 Black](https://img.shields.io/badge/HERO13%20Black-4cbee0)\n![HERO12 Black](https://img.shields.io/badge/HERO12%20Black-566bb7)\n![HERO11 Black Mini](https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a)\n![HERO11 Black](https://img.shields.io/badge/HERO11%20Black-7a4ea5)\n![HERO10 Black](https://img.shields.io/badge/HERO10%20Black-9bb859)\n![HERO9 Black](https://img.shields.io/badge/HERO9%20Black-a93b85)\n\n\nSupported Protocols:\n\n\n- usb\n- wifi\n\n---\nNote that this is the same endpoint for all media (photos, video, etc.).\n\nNote that 360 photos are downloaded as an equirectangular projection (ERP) image.\n",
         "url": "https://gopro.github.io/OpenGoPro/http#operation/OGP_DOWNLOAD_MEDIA",
         "tags": [
             "httpOperation"

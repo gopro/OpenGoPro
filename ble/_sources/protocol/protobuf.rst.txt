@@ -1482,6 +1482,26 @@ EnumPresetTitle
 
      - 
 
+   * - PRESET_TITLE_TIME_LAPSE_VIDEO
+     - 131
+
+     - 
+
+   * - PRESET_TITLE_TIME_LAPSE_PHOTO
+     - 132
+
+     - 
+
+   * - PRESET_TITLE_NIGHT_LAPSE_VIDEO
+     - 133
+
+     - 
+
+   * - PRESET_TITLE_NIGHT_LAPSE_PHOTO
+     - 134
+
+     - 
+
 
 
 
@@ -1835,6 +1855,12 @@ EnumWindowSize
      - 12
 
      - 
+
+
+
+
+
+
 
 
 
@@ -2434,6 +2460,14 @@ An individual preset.
 
      - Custom string name given to this preset via :ref:`proto-requestcustompresetupdate`
 
+   * - is_visible
+     - bool
+     - 11
+
+     - | Is the preset currently visible in the camera UI?
+       | 
+       | Note that a Preset's UI visibility can be set with :ref:`proto-requestpresetsetvisibility`
+
 
 
 
@@ -3012,6 +3046,19 @@ The preset status changes when:
        | 
        | When True, Setting IDs are tied to their functional representation and are consistent across cameras.
 
+   * - include_hidden
+     - bool
+     - 4
+
+     - | Whether to include hidden presets
+       | 
+       | When True, all currently available presets will be included in the response, even those hidden by the
+       | camera UI
+       | 
+       | When False, only currently available presets that are displayed in the camera UI are included in the response.
+       | 
+       | Note that a Preset's visibility can be configured by :ref:`proto-requestpresetsetvisibility`.
+
 
 
 
@@ -3054,6 +3101,50 @@ Response: :ref:`proto-responsegeneric`
      - 2
 
      - | This must be a non empty string but it does not actually affect anything.
+
+
+
+
+
+
+.. _proto-requestpresetsetvisibility:
+
+RequestPresetSetVisibility
+--------------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto>`__
+
+
+Set Preset UI Visibility
+
+Shows or hides a Preset in the camera UI.
+
+Note that a Preset's visibility determines how it is returned as part of the :ref:`proto-requestgetpresetstatus` response
+
+Returns a :ref:`proto-responsegeneric` with the status of the preset update request.
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - id
+     - int32
+     - 1
+
+     - preset ID to operate on
+
+   * - visible
+     - bool
+     - 2
+
+     - True to set the preset visible, False to hide the preset.
 
 
 
@@ -3154,6 +3245,40 @@ Response: :ref:`proto-responsegeneric`
      - 1
 
      - Declare who is taking control of the camera
+
+
+
+
+
+
+.. _proto-requestsetcameraname:
+
+RequestSetCameraName
+--------------------
+
+
+.. seealso::
+
+   `Source Protobuf File <https://github.com/gopro/OpenGoPro/tree/main/protobuf/camera_control.proto>`__
+
+
+Set the camera name
+
+Response: :ref:`proto-responsegeneric`
+
+.. list-table::
+   :widths: 10 10 15 40
+   :header-rows: 1
+
+   * - field
+     - typespec
+     - value
+     - summary
+   * - name
+     - string
+     - 1
+
+     - (TODO define encoding) string to identify the camera
 
 
 

@@ -183,12 +183,7 @@
 <li class="toctree-l2">
 <a class="reference internal" href="ble_setup.html">BLE Setup</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="ble_setup.html#pairing-mode">Pairing Mode</a></li>
-<li class="toctree-l3">
-<a class="reference internal" href="ble_setup.html#advertisements">Advertisements</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="ble_setup.html#advertising-data">Advertising Data</a></li>
-<li class="toctree-l4"><a class="reference internal" href="ble_setup.html#scan-response-data">Scan Response Data</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="ble_setup.html#advertisements">Advertisements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ble_setup.html#finish-pairing">Finish Pairing</a></li>
 <li class="toctree-l3">
 <a class="reference internal" href="ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
@@ -281,9 +276,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#requestgetlivestreamstatus">RequestGetLiveStreamStatus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#requestgetpresetstatus">RequestGetPresetStatus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#requestpairingfinish">RequestPairingFinish</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#requestpresetsetvisibility">RequestPresetSetVisibility</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#requestreleasenetwork">RequestReleaseNetwork</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#requestsetcohnsetting">RequestSetCOHNSetting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#requestsetcameracontrolstatus">RequestSetCameraControlStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#requestsetcameraname">RequestSetCameraName</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#requestsetlivestreammode">RequestSetLiveStreamMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#requestsetturboactive">RequestSetTurboActive</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#requeststartscan">RequestStartScan</a></li>
@@ -310,6 +307,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-analytics"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Analytics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-ap-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-camera-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Control</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-camera-name"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Name</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-local-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-pairing-state"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Pairing</span> <span class="pre">State</span></code></a></li>
@@ -344,6 +342,7 @@
 </li>
 <li class="toctree-l1">
 <a class="reference internal" href="../features/access_points.html">Access Point</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../features/access_points.html#internet-access">Internet Access</a></li>
 <li class="toctree-l2">
 <a class="reference internal" href="../features/access_points.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/access_points.html#scan-for-access-points"><code class="docutils literal notranslate"><span class="pre">Scan</span> <span class="pre">for</span> <span class="pre">Access</span> <span class="pre">Points</span></code></a></li>
@@ -404,6 +403,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../features/presets.html#get-available-presets"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/presets.html#load-preset"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/presets.html#load-preset-group"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span> <span class="pre">Group</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/presets.html#set-preset-visibility"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Preset</span> <span class="pre">Visibility</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/presets.html#update-custom-preset"><code class="docutils literal notranslate"><span class="pre">Update</span> <span class="pre">Custom</span> <span class="pre">Preset</span></code></a></li>
 </ul>
 </li>
@@ -462,13 +462,16 @@
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#easy-night-photo-191">Easy Night Photo (191)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#multi-shot-aspect-ratio-192">Multi Shot Aspect Ratio (192)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#framing-193">Framing (193)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#camera-volume-216">Camera Volume (216)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#camera-mode-194">Camera Mode (194)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#photo-files-extension-196">360 Photo Files Extension (196)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#beep-volume-216">Beep Volume (216)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#setup-screen-saver-219">Setup Screen Saver (219)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#setup-language-223">Setup Language (223)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#photo-mode-227">Photo Mode (227)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#video-framing-232">Video Framing (232)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#multi-shot-framing-233">Multi Shot Framing (233)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#frame-rate-234">Frame Rate (234)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#automatic-wi-fi-access-point-236">Automatic Wi-Fi Access Point (236)</a></li>
 </ul>
 </li>
 </ul>
@@ -558,6 +561,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#usb-controlled-116">USB Controlled (116)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#sd-card-capacity-117">SD Card Capacity (117)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#photo-interval-capture-count-118">Photo Interval Capture Count (118)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#camera-name-122">Camera Name (122)</a></li>
 </ul>
 </li>
 </ul>
@@ -2314,6 +2318,30 @@
 <td>
 </td>
 </tr>
+<tr class="row-even">
+<td>PRESET_TITLE_TIME_LAPSE_VIDEO</td>
+<td>131</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_TIME_LAPSE_PHOTO</td>
+<td>132</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>PRESET_TITLE_NIGHT_LAPSE_VIDEO</td>
+<td>133</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>PRESET_TITLE_NIGHT_LAPSE_PHOTO</td>
+<td>134</td>
+<td>
+</td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -3151,6 +3179,19 @@
 <td>Custom string name given to this preset via <a class="reference internal" href="#proto-requestcustompresetupdate"><span class="std std-ref">RequestCustomPresetUpdate</span></a>
 </td>
 </tr>
+<tr class="row-even">
+<td>is_visible</td>
+<td>bool</td>
+<td>11</td>
+<td>
+<div class="line-block">
+<div class="line">Is the preset currently visible in the camera UI?</div>
+<div class="line"><br></div>
+<div class="line">Note that a Preset’s UI visibility can be set with <a class="reference internal" href="#proto-requestpresetsetvisibility"><span class="std std-ref">RequestPresetSetVisibility</span></a>
+</div>
+</div>
+</td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -3710,6 +3751,23 @@ changes.</p>
 </div>
 </td>
 </tr>
+<tr class="row-odd">
+<td>include_hidden</td>
+<td>bool</td>
+<td>4</td>
+<td>
+<div class="line-block">
+<div class="line">Whether to include hidden presets</div>
+<div class="line"><br></div>
+<div class="line">When True, all currently available presets will be included in the response, even those hidden by the</div>
+<div class="line">camera UI</div>
+<div class="line"><br></div>
+<div class="line">When False, only currently available presets that are displayed in the camera UI are included in the response.</div>
+<div class="line"><br></div>
+<div class="line">Note that a Preset’s visibility can be configured by <a class="reference internal" href="#proto-requestpresetsetvisibility"><span class="std std-ref">RequestPresetSetVisibility</span></a>.</div>
+</div>
+</td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -3754,6 +3812,48 @@ changes.</p>
 <div class="line">This must be a non empty string but it does not actually affect anything.</div>
 </div>
 </td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="requestpresetsetvisibility">
+<span id="proto-requestpresetsetvisibility"></span><h2>RequestPresetSetVisibility<a class="headerlink" href="#requestpresetsetvisibility" title="Link to this heading"></a>
+</h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/preset_status.proto">Source Protobuf File</a></p>
+</div>
+<p>Set Preset UI Visibility</p>
+<p>Shows or hides a Preset in the camera UI.</p>
+<p>Note that a Preset’s visibility determines how it is returned as part of the <a class="reference internal" href="#proto-requestgetpresetstatus"><span class="std std-ref">RequestGetPresetStatus</span></a> response</p>
+<p>Returns a <a class="reference internal" href="#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a> with the status of the preset update request.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
+</colgroup>
+<thead>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even">
+<td>id</td>
+<td>int32</td>
+<td>1</td>
+<td>preset ID to operate on</td>
+</tr>
+<tr class="row-odd">
+<td>visible</td>
+<td>bool</td>
+<td>2</td>
+<td>True to set the preset visible, False to hide the preset.</td>
 </tr>
 </tbody>
 </table>
@@ -3845,6 +3945,40 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <td><a class="reference internal" href="#proto-enumcameracontrolstatus"><span class="std std-ref">EnumCameraControlStatus</span></a></td>
 <td>1</td>
 <td>Declare who is taking control of the camera</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="requestsetcameraname">
+<span id="proto-requestsetcameraname"></span><h2>RequestSetCameraName<a class="headerlink" href="#requestsetcameraname" title="Link to this heading"></a>
+</h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://github.com/gopro/OpenGoPro/tree/main/protobuf/camera_control.proto">Source Protobuf File</a></p>
+</div>
+<p>Set the camera name</p>
+<p>Response: <a class="reference internal" href="#proto-responsegeneric"><span class="std std-ref">ResponseGeneric</span></a></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13.3%">
+<col style="width: 13.3%">
+<col style="width: 20.0%">
+<col style="width: 53.3%">
+</colgroup>
+<thead>
+<tr class="row-odd">
+<th class="head">field</th>
+<th class="head">typespec</th>
+<th class="head">value</th>
+<th class="head">summary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even">
+<td>name</td>
+<td>string</td>
+<td>1</td>
+<td>(TODO define encoding) string to identify the camera</td>
 </tr>
 </tbody>
 </table>

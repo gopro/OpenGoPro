@@ -138,6 +138,7 @@
   <title>BLE Setup — GoPro BLE API 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3">
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094">
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=a5c4661c">
       <link rel="stylesheet" type="text/css" href="../_static/style.css?v=8b4707e3">
 
   
@@ -150,6 +151,7 @@
         <script src="../_static/documentation_options.js?v=d45e8c67"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/tabs.js?v=3030b3cb"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html">
     <link rel="search" title="Search" href="../search.html">
@@ -183,12 +185,7 @@
 <li class="toctree-l2 current">
 <a class="current reference internal" href="#">BLE Setup</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#pairing-mode">Pairing Mode</a></li>
-<li class="toctree-l3">
-<a class="reference internal" href="#advertisements">Advertisements</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#advertising-data">Advertising Data</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#scan-response-data">Scan Response Data</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="#advertisements">Advertisements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#finish-pairing">Finish Pairing</a></li>
 <li class="toctree-l3">
 <a class="reference internal" href="#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
@@ -281,9 +278,11 @@
 <li class="toctree-l3"><a class="reference internal" href="protobuf.html#requestgetlivestreamstatus">RequestGetLiveStreamStatus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protobuf.html#requestgetpresetstatus">RequestGetPresetStatus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protobuf.html#requestpairingfinish">RequestPairingFinish</a></li>
+<li class="toctree-l3"><a class="reference internal" href="protobuf.html#requestpresetsetvisibility">RequestPresetSetVisibility</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protobuf.html#requestreleasenetwork">RequestReleaseNetwork</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protobuf.html#requestsetcohnsetting">RequestSetCOHNSetting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protobuf.html#requestsetcameracontrolstatus">RequestSetCameraControlStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="protobuf.html#requestsetcameraname">RequestSetCameraName</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protobuf.html#requestsetlivestreammode">RequestSetLiveStreamMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protobuf.html#requestsetturboactive">RequestSetTurboActive</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protobuf.html#requeststartscan">RequestStartScan</a></li>
@@ -310,6 +309,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-analytics"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Analytics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-ap-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-camera-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Control</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-camera-name"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Name</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-local-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/control.html#set-pairing-state"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Pairing</span> <span class="pre">State</span></code></a></li>
@@ -344,6 +344,7 @@
 </li>
 <li class="toctree-l1">
 <a class="reference internal" href="../features/access_points.html">Access Point</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../features/access_points.html#internet-access">Internet Access</a></li>
 <li class="toctree-l2">
 <a class="reference internal" href="../features/access_points.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../features/access_points.html#scan-for-access-points"><code class="docutils literal notranslate"><span class="pre">Scan</span> <span class="pre">for</span> <span class="pre">Access</span> <span class="pre">Points</span></code></a></li>
@@ -404,6 +405,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../features/presets.html#get-available-presets"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/presets.html#load-preset"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/presets.html#load-preset-group"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span> <span class="pre">Group</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/presets.html#set-preset-visibility"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Preset</span> <span class="pre">Visibility</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/presets.html#update-custom-preset"><code class="docutils literal notranslate"><span class="pre">Update</span> <span class="pre">Custom</span> <span class="pre">Preset</span></code></a></li>
 </ul>
 </li>
@@ -462,13 +464,16 @@
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#easy-night-photo-191">Easy Night Photo (191)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#multi-shot-aspect-ratio-192">Multi Shot Aspect Ratio (192)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#framing-193">Framing (193)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#camera-volume-216">Camera Volume (216)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#camera-mode-194">Camera Mode (194)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#photo-files-extension-196">360 Photo Files Extension (196)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#beep-volume-216">Beep Volume (216)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#setup-screen-saver-219">Setup Screen Saver (219)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#setup-language-223">Setup Language (223)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#photo-mode-227">Photo Mode (227)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#video-framing-232">Video Framing (232)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#multi-shot-framing-233">Multi Shot Framing (233)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/settings.html#frame-rate-234">Frame Rate (234)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/settings.html#automatic-wi-fi-access-point-236">Automatic Wi-Fi Access Point (236)</a></li>
 </ul>
 </li>
 </ul>
@@ -558,6 +563,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#usb-controlled-116">USB Controlled (116)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#sd-card-capacity-117">SD Card Capacity (117)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#photo-interval-capture-count-118">Photo Interval Capture Count (118)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../features/statuses.html#camera-name-122">Camera Name (122)</a></li>
 </ul>
 </li>
 </ul>
@@ -621,9 +627,14 @@ connecting to it will cause the camera to wake and boot up.</p>
 Type-Length-Value fields such as <cite>Manufacturer Specific Data</cite> and <cite>Service Data</cite>. These fields are identified via
 the “AD Type” column where the integer value is specified in
 Section 2.3 of the <a class="reference external" href="https://www.bluetooth.com/wp-content/uploads/Files/Specification/HTML/Assigned_Numbers/out/en/Assigned_Numbers.pdf">Bluetooth Assigned Numbers</a>.</p>
-<section id="advertising-data">
-<h3>Advertising Data<a class="headerlink" href="#advertising-data" title="Link to this heading"></a>
-</h3>
+<p>The data is parsed differently depending on the schema version of the advertisement which is specified in the
+Manufacturer Data field as shown below.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist">
+<button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Schema Version 2</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Schema Version 3</button>
+</div>
+<div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0">
+<p><strong>Advertising Data</strong></p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd">
@@ -708,7 +719,7 @@ Data (16)</td>
 </tr>
 <tr class="row-odd">
 <td>11</td>
-<td>Schema ID</td>
+<td>Schema Version</td>
 <td>
 </td>
 <td>Always 2</td>
@@ -829,10 +840,7 @@ Data (16)</td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="scan-response-data">
-<h3>Scan Response Data<a class="headerlink" href="#scan-response-data" title="Link to this heading"></a>
-</h3>
+<p><strong>Scan Response Data</strong></p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd">
@@ -889,7 +897,295 @@ Data (22)</td>
 </tr>
 </tbody>
 </table>
-</section>
+</div>
+<div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0">
+<p>The major modification in this schema version are:</p>
+<ul class="simple">
+<li><p>the ability to access more serial number characters.  Now all characters are retrievable except for the first 4.</p></li>
+<li><p>a variant field to denote camera hardware variants such as colors.</p></li>
+</ul>
+<p><strong>Advertising Data</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd">
+<th class="head">AD Type</th>
+<th class="head">Byte(s)</th>
+<th class="head">Description</th>
+<th class="head">Bit Documentation</th>
+<th class="head">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even">
+<td rowspan="3">Flags (1)</td>
+<td>0</td>
+<td>Flags Length</td>
+<td>
+</td>
+<td>Always 2</td>
+</tr>
+<tr class="row-odd">
+<td>1</td>
+<td>Flags AD Type</td>
+<td>
+</td>
+<td>Always 1</td>
+</tr>
+<tr class="row-even">
+<td>2</td>
+<td>Flags</td>
+<td>
+</td>
+<td>See section 1.3 of the <a class="reference external" href="https://www.bluetooth.com/specifications/specs/core-specification-supplement-10/">BLE Spec Core Supplement</a>
+</td>
+</tr>
+<tr class="row-odd">
+<td rowspan="3">Incomplete
+16-bit
+Service
+UUIDs (2)</td>
+<td>3</td>
+<td>UUIDs length</td>
+<td>
+</td>
+<td>Always 3</td>
+</tr>
+<tr class="row-even">
+<td>4</td>
+<td>UUIDs AD type</td>
+<td>
+</td>
+<td>Always 2</td>
+</tr>
+<tr class="row-odd">
+<td>5-6</td>
+<td>UUIDS</td>
+<td>
+</td>
+<td>Little Endian. Always 0xFEA6. This can be used to filter for GoPros</td>
+</tr>
+<tr class="row-even">
+<td rowspan="29">Manufacturer
+Data (16)</td>
+<td>7</td>
+<td>Manufacturer Data Length</td>
+<td>
+</td>
+<td>Always 15</td>
+</tr>
+<tr class="row-odd">
+<td>8</td>
+<td>Manufacturer Data AD Type</td>
+<td>
+</td>
+<td>Always 0xFF</td>
+</tr>
+<tr class="row-even">
+<td>9-10</td>
+<td>Company ID</td>
+<td>
+</td>
+<td>Always 0xF202</td>
+</tr>
+<tr class="row-odd">
+<td>11</td>
+<td>Schema Version</td>
+<td>
+</td>
+<td>Always 3</td>
+</tr>
+<tr class="row-even">
+<td rowspan="6">12</td>
+<td rowspan="6">Camera Status</td>
+<td>Bit 0: Processor State</td>
+<td>0 == low power, 1 == awake</td>
+</tr>
+<tr class="row-odd">
+<td>Bit 1: WiFi AP State</td>
+<td>0 == off, 1 == on</td>
+</tr>
+<tr class="row-even">
+<td>Bit 2: Peripheral Pairing State</td>
+<td>0 == not pairing, 1 == pairing</td>
+</tr>
+<tr class="row-odd">
+<td>Bit 3: Is Central Role Enabled?</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>Bit 4: Is New Media Available?</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>Bits 5-7: Reserved</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>13</td>
+<td>Model  ID</td>
+<td>
+</td>
+<td>See <a class="reference internal" href="../index.html#supported-cameras"><span class="std std-ref">Supported Cameras</span></a> table</td>
+</tr>
+<tr class="row-odd">
+<td rowspan="8">14</td>
+<td rowspan="8">Camera Capabilities</td>
+<td>Bit 0: Command and Control</td>
+<td>Supports  Command, Settings, and Query characteristics</td>
+</tr>
+<tr class="row-even">
+<td>Bit 1: BLE Metadata</td>
+<td>LE Sensor Data GATT Characteristics</td>
+</tr>
+<tr class="row-odd">
+<td>Bit 2: Wideband Audio</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>Bit 3: Concurrent Master Slave</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>Bit 4: Onboarding</td>
+<td>Supports Onboarding 2.0</td>
+</tr>
+<tr class="row-even">
+<td>Bit 5: New Media Available</td>
+<td>Supports status bit for New Media Available</td>
+</tr>
+<tr class="row-odd">
+<td>Bit 6: Is SSID Fixed</td>
+<td>Always 1 indicating that the WiFi SSID is immutable</td>
+</tr>
+<tr class="row-even">
+<td>Bit 7: Contains variant data</td>
+<td>Always 1 indicating that the Product Variant Bytes are available</td>
+</tr>
+<tr class="row-odd">
+<td>15</td>
+<td>Reserved</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>16-19</td>
+<td>Variant</td>
+<td>
+</td>
+<td>Bytes to denote camera hardware variants (not yet defined)</td>
+</tr>
+<tr class="row-odd">
+<td>20-21</td>
+<td>Serial Number 4-5</td>
+<td>
+</td>
+<td>4th and 5th characters of the serial number as ASCII</td>
+</tr>
+<tr class="row-even">
+<td rowspan="7">22</td>
+<td rowspan="7">Media Offload Status</td>
+<td>Bit 0: Available</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>Bit 1: New Media Available</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>Bit 2: Battery OK</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>Bit 3: SD Card OK</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>Bit 4: Busy</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>Bit 5: Paused</td>
+<td>
+</td>
+</tr>
+<tr class="row-even">
+<td>Bits 6-7: Reserved</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Scan Response Data</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd">
+<th class="head">AD Type</th>
+<th class="head">Byte(s)</th>
+<th class="head">Description</th>
+<th class="head">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even">
+<td rowspan="3">Local Name (9)</td>
+<td>0</td>
+<td>Local Name Length</td>
+<td>Always 11</td>
+</tr>
+<tr class="row-odd">
+<td>1</td>
+<td>Local Name AD Type</td>
+<td>Always 9</td>
+</tr>
+<tr class="row-even">
+<td>2-11</td>
+<td>Local Name</td>
+<td>ASCII Camera Name, i.e. “GoPro 1234”</td>
+</tr>
+<tr class="row-odd">
+<td rowspan="5">Service
+Data (22)</td>
+<td>12</td>
+<td>Service Data Length</td>
+<td>Always 16</td>
+</tr>
+<tr class="row-even">
+<td>13</td>
+<td>Service Data AD Type</td>
+<td>Always 22</td>
+</tr>
+<tr class="row-odd">
+<td>14-15</td>
+<td>Service Data UUID</td>
+<td>Always 0xFEA6</td>
+</tr>
+<tr class="row-even">
+<td>16-19</td>
+<td>AP MAC Address</td>
+<td>
+</td>
+</tr>
+<tr class="row-odd">
+<td>20-27</td>
+<td>Serial Number 6-13</td>
+<td>Last 8 characters of the serial number as ASCII</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </section>
 <section id="finish-pairing">
 <h2>Finish Pairing<a class="headerlink" href="#finish-pairing" title="Link to this heading"></a>
@@ -932,12 +1228,12 @@ re-subscribed for upon each connection.</p>
 <td rowspan="4">GoPro Wifi Access Point</td>
 <td>GP-0002</td>
 <td>WiFi AP SSID</td>
-<td>Read / Write</td>
+<td>Read</td>
 </tr>
 <tr class="row-odd">
 <td>GP-0003</td>
 <td>WiFi AP Password</td>
-<td>Read / Write</td>
+<td>Read</td>
 </tr>
 <tr class="row-even">
 <td>GP-0004</td>

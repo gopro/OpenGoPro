@@ -186,12 +186,7 @@
 <li class="toctree-l2">
 <a class="reference internal" href="protocol/ble_setup.html">BLE Setup</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="protocol/ble_setup.html#pairing-mode">Pairing Mode</a></li>
-<li class="toctree-l3">
-<a class="reference internal" href="protocol/ble_setup.html#advertisements">Advertisements</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="protocol/ble_setup.html#advertising-data">Advertising Data</a></li>
-<li class="toctree-l4"><a class="reference internal" href="protocol/ble_setup.html#scan-response-data">Scan Response Data</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="protocol/ble_setup.html#advertisements">Advertisements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/ble_setup.html#finish-pairing">Finish Pairing</a></li>
 <li class="toctree-l3">
 <a class="reference internal" href="protocol/ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
@@ -284,9 +279,11 @@
 <li class="toctree-l3"><a class="reference internal" href="protocol/protobuf.html#requestgetlivestreamstatus">RequestGetLiveStreamStatus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/protobuf.html#requestgetpresetstatus">RequestGetPresetStatus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/protobuf.html#requestpairingfinish">RequestPairingFinish</a></li>
+<li class="toctree-l3"><a class="reference internal" href="protocol/protobuf.html#requestpresetsetvisibility">RequestPresetSetVisibility</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/protobuf.html#requestreleasenetwork">RequestReleaseNetwork</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/protobuf.html#requestsetcohnsetting">RequestSetCOHNSetting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/protobuf.html#requestsetcameracontrolstatus">RequestSetCameraControlStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="protocol/protobuf.html#requestsetcameraname">RequestSetCameraName</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/protobuf.html#requestsetlivestreammode">RequestSetLiveStreamMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/protobuf.html#requestsetturboactive">RequestSetTurboActive</a></li>
 <li class="toctree-l3"><a class="reference internal" href="protocol/protobuf.html#requeststartscan">RequestStartScan</a></li>
@@ -313,6 +310,7 @@
 <li class="toctree-l3"><a class="reference internal" href="features/control.html#set-analytics"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Analytics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/control.html#set-ap-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/control.html#set-camera-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Control</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="features/control.html#set-camera-name"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Name</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/control.html#set-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/control.html#set-local-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/control.html#set-pairing-state"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Pairing</span> <span class="pre">State</span></code></a></li>
@@ -347,6 +345,7 @@
 </li>
 <li class="toctree-l1">
 <a class="reference internal" href="features/access_points.html">Access Point</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="features/access_points.html#internet-access">Internet Access</a></li>
 <li class="toctree-l2">
 <a class="reference internal" href="features/access_points.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="features/access_points.html#scan-for-access-points"><code class="docutils literal notranslate"><span class="pre">Scan</span> <span class="pre">for</span> <span class="pre">Access</span> <span class="pre">Points</span></code></a></li>
@@ -407,6 +406,7 @@
 <li class="toctree-l3"><a class="reference internal" href="features/presets.html#get-available-presets"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/presets.html#load-preset"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/presets.html#load-preset-group"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span> <span class="pre">Group</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="features/presets.html#set-preset-visibility"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Preset</span> <span class="pre">Visibility</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/presets.html#update-custom-preset"><code class="docutils literal notranslate"><span class="pre">Update</span> <span class="pre">Custom</span> <span class="pre">Preset</span></code></a></li>
 </ul>
 </li>
@@ -465,13 +465,16 @@
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#easy-night-photo-191">Easy Night Photo (191)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#multi-shot-aspect-ratio-192">Multi Shot Aspect Ratio (192)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#framing-193">Framing (193)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="features/settings.html#camera-volume-216">Camera Volume (216)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="features/settings.html#camera-mode-194">Camera Mode (194)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="features/settings.html#photo-files-extension-196">360 Photo Files Extension (196)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="features/settings.html#beep-volume-216">Beep Volume (216)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#setup-screen-saver-219">Setup Screen Saver (219)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#setup-language-223">Setup Language (223)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#photo-mode-227">Photo Mode (227)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#video-framing-232">Video Framing (232)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#multi-shot-framing-233">Multi Shot Framing (233)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/settings.html#frame-rate-234">Frame Rate (234)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="features/settings.html#automatic-wi-fi-access-point-236">Automatic Wi-Fi Access Point (236)</a></li>
 </ul>
 </li>
 </ul>
@@ -561,6 +564,7 @@
 <li class="toctree-l3"><a class="reference internal" href="features/statuses.html#usb-controlled-116">USB Controlled (116)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/statuses.html#sd-card-capacity-117">SD Card Capacity (117)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="features/statuses.html#photo-interval-capture-count-118">Photo Interval Capture Count (118)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="features/statuses.html#camera-name-122">Camera Name (122)</a></li>
 </ul>
 </li>
 </ul>
@@ -713,6 +717,70 @@
        <td>
 </td>
        <td>
+<a href="protocol/protobuf.html#enumregisterpresetstatus"><code class="xref">EnumRegisterPresetStatus</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumcohnstatus"><code class="xref">EnumCOHNStatus</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumcohnnetworkstate"><code class="xref">EnumCOHNNetworkState</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumprovisioning"><code class="xref">EnumProvisioning</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumscanning"><code class="xref">EnumScanning</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumscanentryflags"><code class="xref">EnumScanEntryFlags</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumpairingfinishstate"><code class="xref">EnumPairingFinishState</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#enumresultgeneric"><code class="xref">EnumResultGeneric</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
 <a href="protocol/protobuf.html#enumlens"><code class="xref">EnumLens</code></a> <em>(protocol/protobuf)</em>
 </td>
 <td><em>Proto</em></td>
@@ -753,71 +821,7 @@
        <td>
 </td>
        <td>
-<a href="protocol/protobuf.html#enumcohnstatus"><code class="xref">EnumCOHNStatus</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
-<a href="protocol/protobuf.html#enumcohnnetworkstate"><code class="xref">EnumCOHNNetworkState</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
 <a href="protocol/protobuf.html#enumcameracontrolstatus"><code class="xref">EnumCameraControlStatus</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
-<a href="protocol/protobuf.html#enumprovisioning"><code class="xref">EnumProvisioning</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
-<a href="protocol/protobuf.html#enumscanning"><code class="xref">EnumScanning</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
-<a href="protocol/protobuf.html#enumscanentryflags"><code class="xref">EnumScanEntryFlags</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
-<a href="protocol/protobuf.html#enumpairingfinishstate"><code class="xref">EnumPairingFinishState</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
-<a href="protocol/protobuf.html#enumregisterpresetstatus"><code class="xref">EnumRegisterPresetStatus</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
-<a href="protocol/protobuf.html#enumresultgeneric"><code class="xref">EnumResultGeneric</code></a> <em>(protocol/protobuf)</em>
 </td>
 <td><em>Proto</em></td>
 </tr>
@@ -1061,14 +1065,6 @@
        <td>
 </td>
        <td>
-<a href="protocol/protobuf.html#notifylivestreamstatus"><code class="xref">NotifyLiveStreamStatus</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
 <a href="protocol/protobuf.html#notifycohnstatus"><code class="xref">NotifyCOHNStatus</code></a> <em>(protocol/protobuf)</em>
 </td>
 <td><em>Proto</em></td>
@@ -1086,6 +1082,14 @@
 </td>
        <td>
 <a href="protocol/protobuf.html#notifstartscanning"><code class="xref">NotifStartScanning</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#notifylivestreamstatus"><code class="xref">NotifyLiveStreamStatus</code></a> <em>(protocol/protobuf)</em>
 </td>
 <td><em>Proto</em></td>
 </tr>
@@ -1185,7 +1189,7 @@
        <td>
 </td>
        <td>
-<a href="protocol/protobuf.html#requestgetlivestreamstatus"><code class="xref">RequestGetLiveStreamStatus</code></a> <em>(protocol/protobuf)</em>
+<a href="protocol/protobuf.html#requestpresetsetvisibility"><code class="xref">RequestPresetSetVisibility</code></a> <em>(protocol/protobuf)</em>
 </td>
 <td><em>Proto</em></td>
 </tr>
@@ -1193,7 +1197,7 @@
        <td>
 </td>
        <td>
-<a href="protocol/protobuf.html#requestsetlivestreammode"><code class="xref">RequestSetLiveStreamMode</code></a> <em>(protocol/protobuf)</em>
+<a href="protocol/protobuf.html#requestgetpresetstatus"><code class="xref">RequestGetPresetStatus</code></a> <em>(protocol/protobuf)</em>
 </td>
 <td><em>Proto</em></td>
 </tr>
@@ -1249,22 +1253,6 @@
        <td>
 </td>
        <td>
-<a href="protocol/protobuf.html#requestsetcameracontrolstatus"><code class="xref">RequestSetCameraControlStatus</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
-<a href="protocol/protobuf.html#requestsetturboactive"><code class="xref">RequestSetTurboActive</code></a> <em>(protocol/protobuf)</em>
-</td>
-<td><em>Proto</em></td>
-</tr>
-     <tr>
-       <td>
-</td>
-       <td>
 <a href="protocol/protobuf.html#requestgetlastcapturedmedia"><code class="xref">RequestGetLastCapturedMedia</code></a> <em>(protocol/protobuf)</em>
 </td>
 <td><em>Proto</em></td>
@@ -1274,6 +1262,14 @@
 </td>
        <td>
 <a href="protocol/protobuf.html#responselastcapturedmedia"><code class="xref">ResponseLastCapturedMedia</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#requestsetturboactive"><code class="xref">RequestSetTurboActive</code></a> <em>(protocol/protobuf)</em>
 </td>
 <td><em>Proto</em></td>
 </tr>
@@ -1361,7 +1357,7 @@
        <td>
 </td>
        <td>
-<a href="protocol/protobuf.html#requestgetpresetstatus"><code class="xref">RequestGetPresetStatus</code></a> <em>(protocol/protobuf)</em>
+<a href="protocol/protobuf.html#requestsetcameraname"><code class="xref">RequestSetCameraName</code></a> <em>(protocol/protobuf)</em>
 </td>
 <td><em>Proto</em></td>
 </tr>
@@ -1370,6 +1366,30 @@
 </td>
        <td>
 <a href="protocol/protobuf.html#responsegeneric"><code class="xref">ResponseGeneric</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#requestgetlivestreamstatus"><code class="xref">RequestGetLiveStreamStatus</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#requestsetlivestreammode"><code class="xref">RequestSetLiveStreamMode</code></a> <em>(protocol/protobuf)</em>
+</td>
+<td><em>Proto</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="protocol/protobuf.html#requestsetcameracontrolstatus"><code class="xref">RequestSetCameraControlStatus</code></a> <em>(protocol/protobuf)</em>
 </td>
 <td><em>Proto</em></td>
 </tr>
@@ -1679,6 +1699,22 @@
        <td>
 </td>
        <td>
+<a href="features/settings.html#setting-194"><code class="xref">Setting 194 (Camera Mode)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="features/settings.html#setting-196"><code class="xref">Setting 196 (360 Photo Files Extension)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
 <a href="features/settings.html#setting-83"><code class="xref">Setting 83 (GPS)</code></a> <em>(features/settings)</em>
 </td>
 <td><em>Setting</em></td>
@@ -1695,7 +1731,7 @@
        <td>
 </td>
        <td>
-<a href="features/settings.html#setting-216"><code class="xref">Setting 216 (Camera Volume)</code></a> <em>(features/settings)</em>
+<a href="features/settings.html#setting-216"><code class="xref">Setting 216 (Beep Volume)</code></a> <em>(features/settings)</em>
 </td>
 <td><em>Setting</em></td>
 </tr>
@@ -1760,6 +1796,14 @@
 </td>
        <td>
 <a href="features/settings.html#setting-108"><code class="xref">Setting 108 (Video Aspect Ratio)</code></a> <em>(features/settings)</em>
+</td>
+<td><em>Setting</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="features/settings.html#setting-236"><code class="xref">Setting 236 (Automatic Wi-Fi Access Point)</code></a> <em>(features/settings)</em>
 </td>
 <td><em>Setting</em></td>
 </tr>
@@ -2460,6 +2504,14 @@ often than this
        <td>
 </td>
        <td>
+<a href="features/statuses.html#status-122"><code class="xref">Status 122 (Custom camera name set by the user)</code></a> <em>(features/statuses)</em>
+</td>
+<td><em>Status</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
 <a href="features/access_points.html#scan-for-access-points"><code class="xref">scan for access points</code></a> <em>(features/access_points)</em>
 </td>
 <td><em>Operation</em></td>
@@ -2493,6 +2545,14 @@ often than this
 </td>
        <td>
 <a href="features/control.html#set-camera-control"><code class="xref">set camera control</code></a> <em>(features/control)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="features/control.html#set-camera-name"><code class="xref">set camera name</code></a> <em>(features/control)</em>
 </td>
 <td><em>Operation</em></td>
 </tr>
@@ -2549,6 +2609,14 @@ often than this
 </td>
        <td>
 <a href="features/live_streaming.html#set-livestream-mode"><code class="xref">set livestream mode</code></a> <em>(features/live_streaming)</em>
+</td>
+<td><em>Operation</em></td>
+</tr>
+     <tr>
+       <td>
+</td>
+       <td>
+<a href="features/presets.html#set-preset-visibility"><code class="xref">set preset visibility</code></a> <em>(features/presets)</em>
 </td>
 <td><em>Operation</em></td>
 </tr>

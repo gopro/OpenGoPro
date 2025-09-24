@@ -183,12 +183,7 @@
 <li class="toctree-l2">
 <a class="reference internal" href="../protocol/ble_setup.html">BLE Setup</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#pairing-mode">Pairing Mode</a></li>
-<li class="toctree-l3">
-<a class="reference internal" href="../protocol/ble_setup.html#advertisements">Advertisements</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#advertising-data">Advertising Data</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#scan-response-data">Scan Response Data</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#advertisements">Advertisements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#finish-pairing">Finish Pairing</a></li>
 <li class="toctree-l3">
 <a class="reference internal" href="../protocol/ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
@@ -281,9 +276,11 @@
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetlivestreamstatus">RequestGetLiveStreamStatus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetpresetstatus">RequestGetPresetStatus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestpairingfinish">RequestPairingFinish</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestpresetsetvisibility">RequestPresetSetVisibility</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestreleasenetwork">RequestReleaseNetwork</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetcohnsetting">RequestSetCOHNSetting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetcameracontrolstatus">RequestSetCameraControlStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetcameraname">RequestSetCameraName</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetlivestreammode">RequestSetLiveStreamMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetturboactive">RequestSetTurboActive</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requeststartscan">RequestStartScan</a></li>
@@ -310,6 +307,7 @@
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-analytics"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Analytics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-ap-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-camera-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Control</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#set-camera-name"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Name</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-local-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-pairing-state"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Pairing</span> <span class="pre">State</span></code></a></li>
@@ -344,6 +342,7 @@
 </li>
 <li class="toctree-l1">
 <a class="reference internal" href="access_points.html">Access Point</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="access_points.html#internet-access">Internet Access</a></li>
 <li class="toctree-l2">
 <a class="reference internal" href="access_points.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="access_points.html#scan-for-access-points"><code class="docutils literal notranslate"><span class="pre">Scan</span> <span class="pre">for</span> <span class="pre">Access</span> <span class="pre">Points</span></code></a></li>
@@ -404,6 +403,7 @@
 <li class="toctree-l3"><a class="reference internal" href="presets.html#get-available-presets"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#load-preset"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#load-preset-group"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span> <span class="pre">Group</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="presets.html#set-preset-visibility"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Preset</span> <span class="pre">Visibility</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#update-custom-preset"><code class="docutils literal notranslate"><span class="pre">Update</span> <span class="pre">Custom</span> <span class="pre">Preset</span></code></a></li>
 </ul>
 </li>
@@ -462,13 +462,16 @@
 <li class="toctree-l3"><a class="reference internal" href="#easy-night-photo-191">Easy Night Photo (191)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#multi-shot-aspect-ratio-192">Multi Shot Aspect Ratio (192)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#framing-193">Framing (193)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#camera-volume-216">Camera Volume (216)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#camera-mode-194">Camera Mode (194)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#photo-files-extension-196">360 Photo Files Extension (196)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#beep-volume-216">Beep Volume (216)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#setup-screen-saver-219">Setup Screen Saver (219)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#setup-language-223">Setup Language (223)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#photo-mode-227">Photo Mode (227)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#video-framing-232">Video Framing (232)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#multi-shot-framing-233">Multi Shot Framing (233)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#frame-rate-234">Frame Rate (234)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#automatic-wi-fi-access-point-236">Automatic Wi-Fi Access Point (236)</a></li>
 </ul>
 </li>
 </ul>
@@ -558,6 +561,7 @@
 <li class="toctree-l3"><a class="reference internal" href="statuses.html#usb-controlled-116">USB Controlled (116)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="statuses.html#sd-card-capacity-117">SD Card Capacity (117)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="statuses.html#photo-interval-capture-count-118">Photo Interval Capture Count (118)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="statuses.html#camera-name-122">Camera Name (122)</a></li>
 </ul>
 </li>
 </ul>
@@ -605,6 +609,7 @@ on camera state, current Preset, etc, there is no mechanism to set a desired set
 <span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Setting</span></span><a class="headerlink" href="#set-setting" title="Link to this definition"></a>
 </dt>
 <dd>
+<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
@@ -672,6 +677,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <section id="video-resolution-2">
 <span id="setting-2"></span><h3>Video Resolution (2)<a class="headerlink" href="#video-resolution-2" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -691,6 +697,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>1</td>
 <td>4K</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -730,6 +737,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>9</td>
 <td>1080</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -755,16 +763,21 @@ the currently supported setting values can be dynamically queried via <a class="
 </td>
 </tr>
 <tr class="row-odd">
+<td>21</td>
+<td>5.6K</td>
+<td><img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d"></td>
+</tr>
+<tr class="row-even">
 <td>24</td>
 <td>5K</td>
 <td><img alt="https://img.shields.io/badge/HERO9Black-a93b85" src="https://img.shields.io/badge/HERO9Black-a93b85"></td>
 </tr>
-<tr class="row-even">
+<tr class="row-odd">
 <td>25</td>
 <td>5K 4:3</td>
 <td><img alt="https://img.shields.io/badge/HERO10Black-9bb859" src="https://img.shields.io/badge/HERO10Black-9bb859"></td>
 </tr>
-<tr class="row-odd">
+<tr class="row-even">
 <td>26</td>
 <td>5.3K 8:7</td>
 <td>
@@ -772,7 +785,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
 </td>
 </tr>
-<tr class="row-even">
+<tr class="row-odd">
 <td>27</td>
 <td>5.3K 4:3</td>
 <td>
@@ -780,13 +793,18 @@ the currently supported setting values can be dynamically queried via <a class="
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
 </td>
 </tr>
-<tr class="row-odd">
+<tr class="row-even">
 <td>28</td>
 <td>4K 8:7</td>
 <td>
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
 </td>
+</tr>
+<tr class="row-odd">
+<td>31</td>
+<td>8K</td>
+<td><img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d"></td>
 </tr>
 <tr class="row-even">
 <td>35</td>
@@ -809,6 +827,11 @@ the currently supported setting values can be dynamically queried via <a class="
 <td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
 </tr>
 <tr class="row-even">
+<td>39</td>
+<td>4K SPH</td>
+<td><img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d"></td>
+</tr>
+<tr class="row-odd">
 <td>100</td>
 <td>5.3K</td>
 <td>
@@ -819,7 +842,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <img alt="https://img.shields.io/badge/HERO10Black-9bb859" src="https://img.shields.io/badge/HERO10Black-9bb859">
 </td>
 </tr>
-<tr class="row-odd">
+<tr class="row-even">
 <td>107</td>
 <td>5.3K 8:7 V2</td>
 <td>
@@ -827,7 +850,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
 </tr>
-<tr class="row-even">
+<tr class="row-odd">
 <td>108</td>
 <td>4K 8:7 V2</td>
 <td>
@@ -835,23 +858,25 @@ the currently supported setting values can be dynamically queried via <a class="
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
 </tr>
-<tr class="row-odd">
+<tr class="row-even">
 <td>109</td>
 <td>4K 9:16 V2</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+<img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
+</td>
+</tr>
+<tr class="row-odd">
+<td>110</td>
+<td>1080 9:16 V2</td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
 </tr>
 <tr class="row-even">
-<td>110</td>
-<td>1080 9:16 V2</td>
-<td>
-<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
-</td>
-</tr>
-<tr class="row-odd">
 <td>111</td>
 <td>2.7K 4:3 V2</td>
 <td>
@@ -859,12 +884,15 @@ the currently supported setting values can be dynamically queried via <a class="
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
 </tr>
-<tr class="row-even">
+<tr class="row-odd">
 <td>112</td>
 <td>4K 4:3 V2</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
-<tr class="row-odd">
+<tr class="row-even">
 <td>113</td>
 <td>5.3K 4:3 V2</td>
 <td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
@@ -876,6 +904,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <section id="frames-per-second-3">
 <span id="setting-3"></span><h3>Frames Per Second (3)<a class="headerlink" href="#frames-per-second-3" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -919,6 +948,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>2</td>
 <td>100.0</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -928,9 +958,15 @@ the currently supported setting values can be dynamically queried via <a class="
 </td>
 </tr>
 <tr class="row-odd">
+<td>3</td>
+<td>90.0</td>
+<td><img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d"></td>
+</tr>
+<tr class="row-even">
 <td>5</td>
 <td>60.0</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -939,10 +975,11 @@ the currently supported setting values can be dynamically queried via <a class="
 <img alt="https://img.shields.io/badge/HERO9Black-a93b85" src="https://img.shields.io/badge/HERO9Black-a93b85">
 </td>
 </tr>
-<tr class="row-even">
+<tr class="row-odd">
 <td>6</td>
 <td>50.0</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -951,22 +988,11 @@ the currently supported setting values can be dynamically queried via <a class="
 <img alt="https://img.shields.io/badge/HERO9Black-a93b85" src="https://img.shields.io/badge/HERO9Black-a93b85">
 </td>
 </tr>
-<tr class="row-odd">
+<tr class="row-even">
 <td>8</td>
 <td>30.0</td>
 <td>
-<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10Black-9bb859" src="https://img.shields.io/badge/HERO10Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9Black-a93b85" src="https://img.shields.io/badge/HERO9Black-a93b85">
-</td>
-</tr>
-<tr class="row-even">
-<td>9</td>
-<td>25.0</td>
-<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -976,9 +1002,10 @@ the currently supported setting values can be dynamically queried via <a class="
 </td>
 </tr>
 <tr class="row-odd">
-<td>10</td>
-<td>24.0</td>
+<td>9</td>
+<td>25.0</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -988,6 +1015,19 @@ the currently supported setting values can be dynamically queried via <a class="
 </td>
 </tr>
 <tr class="row-even">
+<td>10</td>
+<td>24.0</td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+<img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
+<img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
+<img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
+<img alt="https://img.shields.io/badge/HERO10Black-9bb859" src="https://img.shields.io/badge/HERO10Black-9bb859">
+<img alt="https://img.shields.io/badge/HERO9Black-a93b85" src="https://img.shields.io/badge/HERO9Black-a93b85">
+</td>
+</tr>
+<tr class="row-odd">
 <td>13</td>
 <td>200.0</td>
 <td>
@@ -999,17 +1039,17 @@ the currently supported setting values can be dynamically queried via <a class="
 <img alt="https://img.shields.io/badge/HERO9Black-a93b85" src="https://img.shields.io/badge/HERO9Black-a93b85">
 </td>
 </tr>
-<tr class="row-odd">
+<tr class="row-even">
 <td>15</td>
 <td>400.0</td>
 <td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
 </tr>
-<tr class="row-even">
+<tr class="row-odd">
 <td>16</td>
 <td>360.0</td>
 <td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
 </tr>
-<tr class="row-odd">
+<tr class="row-even">
 <td>17</td>
 <td>300.0</td>
 <td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
@@ -1021,6 +1061,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <section id="video-timelapse-rate-5">
 <span id="setting-5"></span><h3>Video Timelapse Rate (5)<a class="headerlink" href="#video-timelapse-rate-5" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1040,6 +1081,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>0</td>
 <td>0.5 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1052,6 +1094,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>1</td>
 <td>1 Second</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1064,6 +1107,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>2</td>
 <td>2 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1076,6 +1120,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>3</td>
 <td>5 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1088,6 +1133,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>4</td>
 <td>10 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1100,6 +1146,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>5</td>
 <td>30 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1112,6 +1159,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>6</td>
 <td>60 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1124,6 +1172,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>7</td>
 <td>2 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1136,6 +1185,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>8</td>
 <td>5 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1148,6 +1198,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>9</td>
 <td>30 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1160,6 +1211,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>10</td>
 <td>60 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1172,6 +1224,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>11</td>
 <td>3 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -1184,6 +1237,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <section id="photo-timelapse-rate-30">
 <span id="setting-30"></span><h3>Photo Timelapse Rate (30)<a class="headerlink" href="#photo-timelapse-rate-30" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1202,6 +1256,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>11</td>
 <td>3 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -1210,6 +1265,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>100</td>
 <td>60 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1221,6 +1277,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>101</td>
 <td>30 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1232,6 +1289,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>102</td>
 <td>5 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1243,6 +1301,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>103</td>
 <td>2 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1254,6 +1313,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>104</td>
 <td>60 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1265,6 +1325,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>105</td>
 <td>30 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1276,6 +1337,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>106</td>
 <td>10 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1287,6 +1349,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>107</td>
 <td>5 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1298,6 +1361,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>108</td>
 <td>2 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1335,6 +1399,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <section id="nightlapse-rate-32">
 <span id="setting-32"></span><h3>Nightlapse Rate (32)<a class="headerlink" href="#nightlapse-rate-32" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1354,6 +1419,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>4</td>
 <td>4 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1366,6 +1432,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>5</td>
 <td>5 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1378,6 +1445,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>10</td>
 <td>10 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1390,6 +1458,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>15</td>
 <td>15 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1402,6 +1471,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>20</td>
 <td>20 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1414,6 +1484,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>30</td>
 <td>30 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1426,6 +1497,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>100</td>
 <td>60 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1438,6 +1510,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>120</td>
 <td>2 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1450,6 +1523,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>300</td>
 <td>5 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1462,6 +1536,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>1800</td>
 <td>30 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1474,6 +1549,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>3600</td>
 <td>60 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1486,6 +1562,7 @@ the currently supported setting values can be dynamically queried via <a class="
 <td>3601</td>
 <td>Auto</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1504,6 +1581,7 @@ to 21 or 26 respectively.</p>
 <section id="webcam-digital-lenses-43">
 <span id="setting-43"></span><h3>Webcam Digital Lenses (43)<a class="headerlink" href="#webcam-digital-lenses-43" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1523,6 +1601,7 @@ to 21 or 26 respectively.</p>
 <td>0</td>
 <td>Wide</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1535,6 +1614,7 @@ to 21 or 26 respectively.</p>
 <td>2</td>
 <td>Narrow</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1547,6 +1627,7 @@ to 21 or 26 respectively.</p>
 <td>3</td>
 <td>Superview</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1559,6 +1640,7 @@ to 21 or 26 respectively.</p>
 <td>4</td>
 <td>Linear</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1574,6 +1656,7 @@ to 21 or 26 respectively.</p>
 <section id="auto-power-down-59">
 <span id="setting-59"></span><h3>Auto Power Down (59)<a class="headerlink" href="#auto-power-down-59" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1593,6 +1676,7 @@ to 21 or 26 respectively.</p>
 <td>0</td>
 <td>Never</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1605,6 +1689,7 @@ to 21 or 26 respectively.</p>
 <td>1</td>
 <td>1 Min</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1615,6 +1700,7 @@ to 21 or 26 respectively.</p>
 <td>4</td>
 <td>5 Min</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1627,6 +1713,7 @@ to 21 or 26 respectively.</p>
 <td>6</td>
 <td>15 Min</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1638,6 +1725,7 @@ to 21 or 26 respectively.</p>
 <td>7</td>
 <td>30 Min</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1662,6 +1750,7 @@ to 21 or 26 respectively.</p>
 <section id="gps-83">
 <span id="setting-83"></span><h3>GPS (83)<a class="headerlink" href="#gps-83" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
 <img alt="https://img.shields.io/badge/HERO10Black-9bb859" src="https://img.shields.io/badge/HERO10Black-9bb859">
@@ -1679,6 +1768,7 @@ to 21 or 26 respectively.</p>
 <td>0</td>
 <td>Off</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
 <img alt="https://img.shields.io/badge/HERO10Black-9bb859" src="https://img.shields.io/badge/HERO10Black-9bb859">
@@ -1689,6 +1779,7 @@ to 21 or 26 respectively.</p>
 <td>1</td>
 <td>On</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
 <img alt="https://img.shields.io/badge/HERO10Black-9bb859" src="https://img.shields.io/badge/HERO10Black-9bb859">
@@ -1702,6 +1793,7 @@ to 21 or 26 respectively.</p>
 <section id="lcd-brightness-88">
 <span id="setting-88"></span><h3>LCD Brightness (88)<a class="headerlink" href="#lcd-brightness-88" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1713,6 +1805,7 @@ to 21 or 26 respectively.</p>
 <section id="led-91">
 <span id="setting-91"></span><h3>LED (91)<a class="headerlink" href="#led-91" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1742,6 +1835,7 @@ to 21 or 26 respectively.</p>
 <td>3</td>
 <td>All On</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1753,6 +1847,7 @@ to 21 or 26 respectively.</p>
 <td>4</td>
 <td>All Off</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
 <img alt="https://img.shields.io/badge/HERO10Black-9bb859" src="https://img.shields.io/badge/HERO10Black-9bb859">
@@ -1763,6 +1858,7 @@ to 21 or 26 respectively.</p>
 <td>5</td>
 <td>Front Off Only</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
 <img alt="https://img.shields.io/badge/HERO10Black-9bb859" src="https://img.shields.io/badge/HERO10Black-9bb859">
@@ -1781,6 +1877,7 @@ to 21 or 26 respectively.</p>
 <section id="video-aspect-ratio-108">
 <span id="setting-108"></span><h3>Video Aspect Ratio (108)<a class="headerlink" href="#video-aspect-ratio-108" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <table class="docutils align-default">
@@ -1796,6 +1893,7 @@ to 21 or 26 respectively.</p>
 <td>0</td>
 <td>4:3</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -1804,6 +1902,7 @@ to 21 or 26 respectively.</p>
 <td>1</td>
 <td>16:9</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -1820,6 +1919,7 @@ to 21 or 26 respectively.</p>
 <td>4</td>
 <td>9:16</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -1841,6 +1941,7 @@ to 21 or 26 respectively.</p>
 <section id="video-lens-121">
 <span id="setting-121"></span><h3>Video Lens (121)<a class="headerlink" href="#video-lens-121" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1860,6 +1961,7 @@ to 21 or 26 respectively.</p>
 <td>0</td>
 <td>Wide</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1893,6 +1995,7 @@ to 21 or 26 respectively.</p>
 <td>4</td>
 <td>Linear</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -1905,6 +2008,7 @@ to 21 or 26 respectively.</p>
 <td>7</td>
 <td>Max SuperView</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -1947,7 +2051,10 @@ to 21 or 26 respectively.</p>
 <tr class="row-even">
 <td>11</td>
 <td>Max HyperView</td>
-<td><img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
+</td>
 </tr>
 <tr class="row-odd">
 <td>12</td>
@@ -1957,7 +2064,10 @@ to 21 or 26 respectively.</p>
 <tr class="row-even">
 <td>13</td>
 <td>Ultra Wide</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-odd">
 <td>14</td>
@@ -1976,6 +2086,7 @@ to 21 or 26 respectively.</p>
 <section id="photo-lens-122">
 <span id="setting-122"></span><h3>Photo Lens (122)<a class="headerlink" href="#photo-lens-122" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2001,6 +2112,11 @@ to 21 or 26 respectively.</p>
 <td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
 </tr>
 <tr class="row-even">
+<td>15</td>
+<td>9MP Wide</td>
+<td><img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d"></td>
+</tr>
+<tr class="row-odd">
 <td>19</td>
 <td>Narrow</td>
 <td>
@@ -2008,25 +2124,30 @@ to 21 or 26 respectively.</p>
 <img alt="https://img.shields.io/badge/HERO9Black-a93b85" src="https://img.shields.io/badge/HERO9Black-a93b85">
 </td>
 </tr>
-<tr class="row-odd">
+<tr class="row-even">
 <td>27</td>
 <td>Wide 23 MP</td>
 <td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
 </tr>
-<tr class="row-even">
+<tr class="row-odd">
 <td>28</td>
 <td>Linear 23 MP</td>
 <td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
 </tr>
-<tr class="row-odd">
+<tr class="row-even">
 <td>31</td>
 <td>Wide 27 MP</td>
 <td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
 </tr>
-<tr class="row-even">
+<tr class="row-odd">
 <td>32</td>
 <td>Linear 27 MP</td>
 <td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+</tr>
+<tr class="row-even">
+<td>37</td>
+<td>9MP Linear</td>
+<td><img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d"></td>
 </tr>
 <tr class="row-odd">
 <td>38</td>
@@ -2046,7 +2167,10 @@ to 21 or 26 respectively.</p>
 <tr class="row-even">
 <td>41</td>
 <td>Ultra Wide 12 MP</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-odd">
 <td>44</td>
@@ -2154,6 +2278,7 @@ to 21 or 26 respectively.</p>
 <section id="photo-output-125">
 <span id="setting-125"></span><h3>Photo Output (125)<a class="headerlink" href="#photo-output-125" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2172,6 +2297,7 @@ to 21 or 26 respectively.</p>
 <td>0</td>
 <td>Standard</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2183,6 +2309,7 @@ to 21 or 26 respectively.</p>
 <td>1</td>
 <td>Raw</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2219,6 +2346,7 @@ to 21 or 26 respectively.</p>
 <section id="media-format-128">
 <span id="setting-128"></span><h3>Media Format (128)<a class="headerlink" href="#media-format-128" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2237,6 +2365,7 @@ to 21 or 26 respectively.</p>
 <td>13</td>
 <td>Time Lapse Video</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2248,6 +2377,7 @@ to 21 or 26 respectively.</p>
 <td>20</td>
 <td>Time Lapse Photo</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2259,6 +2389,7 @@ to 21 or 26 respectively.</p>
 <td>21</td>
 <td>Night Lapse Photo</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2270,6 +2401,7 @@ to 21 or 26 respectively.</p>
 <td>26</td>
 <td>Night Lapse Video</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2338,6 +2470,7 @@ to 21 or 26 respectively.</p>
 <section id="hypersmooth-135">
 <span id="setting-135"></span><h3>Hypersmooth (135)<a class="headerlink" href="#hypersmooth-135" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -2357,6 +2490,7 @@ to 21 or 26 respectively.</p>
 <td>0</td>
 <td>Off</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -2369,6 +2503,7 @@ to 21 or 26 respectively.</p>
 <td>1</td>
 <td>Low</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -2398,6 +2533,7 @@ to 21 or 26 respectively.</p>
 <td>4</td>
 <td>Auto Boost</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -2470,6 +2606,7 @@ to 21 or 26 respectively.</p>
 <section id="video-duration-156">
 <span id="setting-156"></span><h3>Video Duration (156)<a class="headerlink" href="#video-duration-156" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2488,6 +2625,7 @@ to 21 or 26 respectively.</p>
 <td>1</td>
 <td>15 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2499,6 +2637,7 @@ to 21 or 26 respectively.</p>
 <td>2</td>
 <td>30 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2510,6 +2649,7 @@ to 21 or 26 respectively.</p>
 <td>3</td>
 <td>1 Minute</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2521,6 +2661,7 @@ to 21 or 26 respectively.</p>
 <td>4</td>
 <td>5 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2532,6 +2673,7 @@ to 21 or 26 respectively.</p>
 <td>5</td>
 <td>15 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2543,6 +2685,7 @@ to 21 or 26 respectively.</p>
 <td>6</td>
 <td>30 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2554,6 +2697,7 @@ to 21 or 26 respectively.</p>
 <td>7</td>
 <td>1 Hour</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2565,6 +2709,7 @@ to 21 or 26 respectively.</p>
 <td>8</td>
 <td>2 Hours</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2576,6 +2721,7 @@ to 21 or 26 respectively.</p>
 <td>9</td>
 <td>3 Hours</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2592,6 +2738,7 @@ to 21 or 26 respectively.</p>
 <td>100</td>
 <td>No Limit</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2606,6 +2753,7 @@ to 21 or 26 respectively.</p>
 <section id="multi-shot-duration-157">
 <span id="setting-157"></span><h3>Multi Shot Duration (157)<a class="headerlink" href="#multi-shot-duration-157" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2621,9 +2769,15 @@ to 21 or 26 respectively.</p>
 </thead>
 <tbody>
 <tr class="row-even">
+<td>0</td>
+<td>Off</td>
+<td><img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d"></td>
+</tr>
+<tr class="row-odd">
 <td>1</td>
 <td>15 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2631,10 +2785,11 @@ to 21 or 26 respectively.</p>
 <img alt="https://img.shields.io/badge/HERO9Black-a93b85" src="https://img.shields.io/badge/HERO9Black-a93b85">
 </td>
 </tr>
-<tr class="row-odd">
+<tr class="row-even">
 <td>2</td>
 <td>30 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2642,10 +2797,11 @@ to 21 or 26 respectively.</p>
 <img alt="https://img.shields.io/badge/HERO9Black-a93b85" src="https://img.shields.io/badge/HERO9Black-a93b85">
 </td>
 </tr>
-<tr class="row-even">
+<tr class="row-odd">
 <td>3</td>
 <td>1 Minute</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2653,10 +2809,11 @@ to 21 or 26 respectively.</p>
 <img alt="https://img.shields.io/badge/HERO9Black-a93b85" src="https://img.shields.io/badge/HERO9Black-a93b85">
 </td>
 </tr>
-<tr class="row-odd">
+<tr class="row-even">
 <td>4</td>
 <td>5 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2664,10 +2821,11 @@ to 21 or 26 respectively.</p>
 <img alt="https://img.shields.io/badge/HERO9Black-a93b85" src="https://img.shields.io/badge/HERO9Black-a93b85">
 </td>
 </tr>
-<tr class="row-even">
+<tr class="row-odd">
 <td>5</td>
 <td>15 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2675,10 +2833,11 @@ to 21 or 26 respectively.</p>
 <img alt="https://img.shields.io/badge/HERO9Black-a93b85" src="https://img.shields.io/badge/HERO9Black-a93b85">
 </td>
 </tr>
-<tr class="row-odd">
+<tr class="row-even">
 <td>6</td>
 <td>30 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2686,21 +2845,11 @@ to 21 or 26 respectively.</p>
 <img alt="https://img.shields.io/badge/HERO9Black-a93b85" src="https://img.shields.io/badge/HERO9Black-a93b85">
 </td>
 </tr>
-<tr class="row-even">
+<tr class="row-odd">
 <td>7</td>
 <td>1 Hour</td>
 <td>
-<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10Black-9bb859" src="https://img.shields.io/badge/HERO10Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9Black-a93b85" src="https://img.shields.io/badge/HERO9Black-a93b85">
-</td>
-</tr>
-<tr class="row-odd">
-<td>8</td>
-<td>2 Hours</td>
-<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2709,9 +2858,10 @@ to 21 or 26 respectively.</p>
 </td>
 </tr>
 <tr class="row-even">
-<td>9</td>
-<td>3 Hours</td>
+<td>8</td>
+<td>2 Hours</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2720,6 +2870,18 @@ to 21 or 26 respectively.</p>
 </td>
 </tr>
 <tr class="row-odd">
+<td>9</td>
+<td>3 Hours</td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+<img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
+<img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
+<img alt="https://img.shields.io/badge/HERO10Black-9bb859" src="https://img.shields.io/badge/HERO10Black-9bb859">
+<img alt="https://img.shields.io/badge/HERO9Black-a93b85" src="https://img.shields.io/badge/HERO9Black-a93b85">
+</td>
+</tr>
+<tr class="row-even">
 <td>100</td>
 <td>No Limit</td>
 <td>
@@ -2828,6 +2990,7 @@ to 21 or 26 respectively.</p>
 <section id="scheduled-capture-168">
 <span id="setting-168"></span><h3>Scheduled Capture (168)<a class="headerlink" href="#scheduled-capture-168" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11Black-7a4ea5" src="https://img.shields.io/badge/HERO11Black-7a4ea5">
@@ -2883,6 +3046,7 @@ camera mode.</p>
 <section id="photo-single-interval-171">
 <span id="setting-171"></span><h3>Photo Single Interval (171)<a class="headerlink" href="#photo-single-interval-171" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <table class="docutils align-default">
@@ -2898,6 +3062,7 @@ camera mode.</p>
 <td>0</td>
 <td>Off</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -2906,6 +3071,7 @@ camera mode.</p>
 <td>2</td>
 <td>0.5s</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -2914,6 +3080,7 @@ camera mode.</p>
 <td>3</td>
 <td>1s</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -2922,6 +3089,7 @@ camera mode.</p>
 <td>4</td>
 <td>2s</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -2930,6 +3098,7 @@ camera mode.</p>
 <td>5</td>
 <td>5s</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -2938,6 +3107,7 @@ camera mode.</p>
 <td>6</td>
 <td>10s</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -2946,6 +3116,7 @@ camera mode.</p>
 <td>7</td>
 <td>30s</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -2954,6 +3125,7 @@ camera mode.</p>
 <td>8</td>
 <td>60s</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -2962,6 +3134,7 @@ camera mode.</p>
 <td>9</td>
 <td>120s</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -2970,6 +3143,7 @@ camera mode.</p>
 <td>10</td>
 <td>3s</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -2981,6 +3155,7 @@ camera mode.</p>
 <section id="photo-interval-duration-172">
 <span id="setting-172"></span><h3>Photo Interval Duration (172)<a class="headerlink" href="#photo-interval-duration-172" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <table class="docutils align-default">
@@ -2996,6 +3171,7 @@ camera mode.</p>
 <td>0</td>
 <td>Off</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -3004,6 +3180,7 @@ camera mode.</p>
 <td>1</td>
 <td>15 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -3012,6 +3189,7 @@ camera mode.</p>
 <td>2</td>
 <td>30 Seconds</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -3020,6 +3198,7 @@ camera mode.</p>
 <td>3</td>
 <td>1 Minute</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -3028,6 +3207,7 @@ camera mode.</p>
 <td>4</td>
 <td>5 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -3036,6 +3216,7 @@ camera mode.</p>
 <td>5</td>
 <td>15 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -3044,6 +3225,7 @@ camera mode.</p>
 <td>6</td>
 <td>30 Minutes</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -3052,6 +3234,7 @@ camera mode.</p>
 <td>7</td>
 <td>1 Hour</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -3060,6 +3243,7 @@ camera mode.</p>
 <td>8</td>
 <td>2 Hours</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -3068,6 +3252,7 @@ camera mode.</p>
 <td>9</td>
 <td>3 Hours</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -3736,6 +3921,7 @@ camera mode.</p>
 <section id="wireless-band-178">
 <span id="setting-178"></span><h3>Wireless Band (178)<a class="headerlink" href="#wireless-band-178" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -3753,6 +3939,7 @@ camera mode.</p>
 <td>0</td>
 <td>2.4GHz</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -3763,6 +3950,7 @@ camera mode.</p>
 <td>1</td>
 <td>5GHz</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -3776,6 +3964,7 @@ camera mode.</p>
 <section id="star-trails-length-179">
 <span id="setting-179"></span><h3>Star Trails Length (179)<a class="headerlink" href="#star-trails-length-179" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -3793,6 +3982,7 @@ camera mode.</p>
 <td>1</td>
 <td>Short</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -3803,6 +3993,7 @@ camera mode.</p>
 <td>2</td>
 <td>Long</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -3813,6 +4004,7 @@ camera mode.</p>
 <td>3</td>
 <td>Max</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11BlackMini-e0952a" src="https://img.shields.io/badge/HERO11BlackMini-e0952a">
@@ -3872,6 +4064,7 @@ camera mode.</p>
 <section id="video-bit-rate-182">
 <span id="setting-182"></span><h3>Video Bit Rate (182)<a class="headerlink" href="#video-bit-rate-182" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <table class="docutils align-default">
@@ -3887,6 +4080,7 @@ camera mode.</p>
 <td>0</td>
 <td>Standard</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -3895,6 +4089,7 @@ camera mode.</p>
 <td>1</td>
 <td>High</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -3906,6 +4101,7 @@ camera mode.</p>
 <section id="bit-depth-183">
 <span id="setting-183"></span><h3>Bit Depth (183)<a class="headerlink" href="#bit-depth-183" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <table class="docutils align-default">
@@ -3921,6 +4117,7 @@ camera mode.</p>
 <td>0</td>
 <td>8-Bit</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -3929,6 +4126,7 @@ camera mode.</p>
 <td>2</td>
 <td>10-Bit</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -3940,6 +4138,7 @@ camera mode.</p>
 <section id="profiles-184">
 <span id="setting-184"></span><h3>Profiles (184)<a class="headerlink" href="#profiles-184" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 <table class="docutils align-default">
@@ -3955,6 +4154,7 @@ camera mode.</p>
 <td>0</td>
 <td>Standard</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -3971,6 +4171,7 @@ camera mode.</p>
 <td>2</td>
 <td>Log</td>
 <td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12Black-566bb7" src="https://img.shields.io/badge/HERO12Black-566bb7">
 </td>
@@ -4364,9 +4565,64 @@ camera mode.</p>
 </table>
 <p>This is a integer value formatted as 8-bit unsigned big-endian.</p>
 </section>
-<section id="camera-volume-216">
-<span id="setting-216"></span><h3>Camera Volume (216)<a class="headerlink" href="#camera-volume-216" title="Link to this heading"></a>
+<section id="camera-mode-194">
+<span id="setting-194"></span><h3>Camera Mode (194)<a class="headerlink" href="#camera-mode-194" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Option Name</th>
+<th class="head">Supported Cameras</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even">
+<td>0</td>
+<td>Single Lens</td>
+<td><img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d"></td>
+</tr>
+<tr class="row-odd">
+<td>1</td>
+<td>360°</td>
+<td><img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d"></td>
+</tr>
+</tbody>
+</table>
+<p>This is a integer value formatted as 8-bit unsigned big-endian.</p>
+</section>
+<section id="photo-files-extension-196">
+<span id="setting-196"></span><h3>360 Photo Files Extension (196)<a class="headerlink" href="#photo-files-extension-196" title="Link to this heading"></a>
+</h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Option Name</th>
+<th class="head">Supported Cameras</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even">
+<td>0</td>
+<td>.JPG</td>
+<td><img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d"></td>
+</tr>
+<tr class="row-odd">
+<td>1</td>
+<td>.36P</td>
+<td><img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d"></td>
+</tr>
+</tbody>
+</table>
+<p>This is a integer value formatted as 8-bit unsigned big-endian.</p>
+</section>
+<section id="beep-volume-216">
+<span id="setting-216"></span><h3>Beep Volume (216)<a class="headerlink" href="#beep-volume-216" title="Link to this heading"></a>
+</h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <table class="docutils align-default">
 <thead>
@@ -4380,17 +4636,26 @@ camera mode.</p>
 <tr class="row-even">
 <td>70</td>
 <td>Low</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-odd">
 <td>85</td>
 <td>Medium</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-even">
 <td>100</td>
 <td>High</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 </tbody>
 </table>
@@ -4399,6 +4664,7 @@ camera mode.</p>
 <section id="setup-screen-saver-219">
 <span id="setting-219"></span><h3>Setup Screen Saver (219)<a class="headerlink" href="#setup-screen-saver-219" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <table class="docutils align-default">
 <thead>
@@ -4410,24 +4676,41 @@ camera mode.</p>
 </thead>
 <tbody>
 <tr class="row-even">
+<td>0</td>
+<td>Never</td>
+<td><img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d"></td>
+</tr>
+<tr class="row-odd">
 <td>1</td>
 <td>1 Min</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
-</tr>
-<tr class="row-odd">
-<td>2</td>
-<td>2 Min</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-even">
-<td>3</td>
-<td>3 Min</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>2</td>
+<td>2 Min</td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-odd">
+<td>3</td>
+<td>3 Min</td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
+</tr>
+<tr class="row-even">
 <td>4</td>
 <td>5 Min</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 </tbody>
 </table>
@@ -4436,6 +4719,7 @@ camera mode.</p>
 <section id="setup-language-223">
 <span id="setting-223"></span><h3>Setup Language (223)<a class="headerlink" href="#setup-language-223" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <table class="docutils align-default">
 <thead>
@@ -4449,77 +4733,122 @@ camera mode.</p>
 <tr class="row-even">
 <td>0</td>
 <td>English - US</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-odd">
 <td>1</td>
 <td>English - UK</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-even">
 <td>2</td>
 <td>English - AUS</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-odd">
 <td>3</td>
 <td>German</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-even">
 <td>4</td>
 <td>French</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-odd">
 <td>5</td>
 <td>Italian</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-even">
 <td>6</td>
 <td>Spanish</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-odd">
 <td>7</td>
 <td>Spanish - NA</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-even">
 <td>8</td>
 <td>Chinese</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-odd">
 <td>9</td>
 <td>Japanese</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-even">
 <td>10</td>
 <td>Korean</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-odd">
 <td>11</td>
 <td>Portuguese</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-even">
 <td>12</td>
 <td>Russian</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-odd">
 <td>13</td>
 <td>English - IND</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-even">
 <td>14</td>
 <td>Swedish</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 </tbody>
 </table>
@@ -4644,6 +4973,7 @@ camera mode.</p>
 <section id="frame-rate-234">
 <span id="setting-234"></span><h3>Frame Rate (234)<a class="headerlink" href="#frame-rate-234" title="Link to this heading"></a>
 </h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
 <table class="docutils align-default">
 <thead>
@@ -4667,49 +4997,72 @@ camera mode.</p>
 <tr class="row-even">
 <td>2</td>
 <td>100.0</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-odd">
+<td>3</td>
+<td>90.0</td>
+<td><img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d"></td>
+</tr>
+<tr class="row-even">
 <td>5</td>
 <td>60.0</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
-<tr class="row-even">
+<tr class="row-odd">
 <td>6</td>
 <td>50.0</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
-<tr class="row-odd">
+<tr class="row-even">
 <td>8</td>
 <td>30.0</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
-</tr>
-<tr class="row-even">
-<td>9</td>
-<td>25.0</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-odd">
-<td>10</td>
-<td>24.0</td>
-<td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
+<td>9</td>
+<td>25.0</td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
 </tr>
 <tr class="row-even">
+<td>10</td>
+<td>24.0</td>
+<td>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0">
+</td>
+</tr>
+<tr class="row-odd">
 <td>13</td>
 <td>200.0</td>
 <td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
 </tr>
-<tr class="row-odd">
+<tr class="row-even">
 <td>15</td>
 <td>400.0</td>
 <td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
 </tr>
-<tr class="row-even">
+<tr class="row-odd">
 <td>16</td>
 <td>360.0</td>
 <td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
 </tr>
-<tr class="row-odd">
+<tr class="row-even">
 <td>17</td>
 <td>300.0</td>
 <td><img alt="https://img.shields.io/badge/HERO13Black-4cbee0" src="https://img.shields.io/badge/HERO13Black-4cbee0"></td>
@@ -4717,6 +5070,35 @@ camera mode.</p>
 </tbody>
 </table>
 <p>This is a integer value formatted as 8-bit unsigned big-endian.</p>
+</section>
+<section id="automatic-wi-fi-access-point-236">
+<span id="setting-236"></span><h3>Automatic Wi-Fi Access Point (236)<a class="headerlink" href="#automatic-wi-fi-access-point-236" title="Link to this heading"></a>
+</h3>
+<img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd">
+<th class="head">ID</th>
+<th class="head">Option Name</th>
+<th class="head">Supported Cameras</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even">
+<td>0</td>
+<td>Off</td>
+<td><img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d"></td>
+</tr>
+<tr class="row-odd">
+<td>1</td>
+<td>On</td>
+<td><img alt="https://img.shields.io/badge/MAX2-dd3a4d" src="https://img.shields.io/badge/MAX2-dd3a4d"></td>
+</tr>
+</tbody>
+</table>
+<p>This is a integer value formatted as 8-bit unsigned big-endian.</p>
+<p>Configure the camera’s wifi access point to automatically start on boot
+of the camera</p>
 </section>
 </section>
 </section>

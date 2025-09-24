@@ -183,12 +183,7 @@
 <li class="toctree-l2">
 <a class="reference internal" href="../protocol/ble_setup.html">BLE Setup</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#pairing-mode">Pairing Mode</a></li>
-<li class="toctree-l3">
-<a class="reference internal" href="../protocol/ble_setup.html#advertisements">Advertisements</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#advertising-data">Advertising Data</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../protocol/ble_setup.html#scan-response-data">Scan Response Data</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#advertisements">Advertisements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/ble_setup.html#finish-pairing">Finish Pairing</a></li>
 <li class="toctree-l3">
 <a class="reference internal" href="../protocol/ble_setup.html#configure-gatt-characteristics">Configure GATT Characteristics</a><ul>
@@ -281,9 +276,11 @@
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetlivestreamstatus">RequestGetLiveStreamStatus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestgetpresetstatus">RequestGetPresetStatus</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestpairingfinish">RequestPairingFinish</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestpresetsetvisibility">RequestPresetSetVisibility</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestreleasenetwork">RequestReleaseNetwork</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetcohnsetting">RequestSetCOHNSetting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetcameracontrolstatus">RequestSetCameraControlStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetcameraname">RequestSetCameraName</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetlivestreammode">RequestSetLiveStreamMode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requestsetturboactive">RequestSetTurboActive</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../protocol/protobuf.html#requeststartscan">RequestStartScan</a></li>
@@ -310,6 +307,7 @@
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-analytics"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Analytics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-ap-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-camera-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Control</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#set-camera-name"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Name</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-local-date-time"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-pairing-state"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Pairing</span> <span class="pre">State</span></code></a></li>
@@ -344,6 +342,7 @@
 </li>
 <li class="toctree-l1 current">
 <a class="current reference internal" href="#">Access Point</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#internet-access">Internet Access</a></li>
 <li class="toctree-l2">
 <a class="reference internal" href="#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#scan-for-access-points"><code class="docutils literal notranslate"><span class="pre">Scan</span> <span class="pre">for</span> <span class="pre">Access</span> <span class="pre">Points</span></code></a></li>
@@ -404,6 +403,7 @@
 <li class="toctree-l3"><a class="reference internal" href="presets.html#get-available-presets"><code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Available</span> <span class="pre">Presets</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#load-preset"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#load-preset-group"><code class="docutils literal notranslate"><span class="pre">Load</span> <span class="pre">Preset</span> <span class="pre">Group</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="presets.html#set-preset-visibility"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Preset</span> <span class="pre">Visibility</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="presets.html#update-custom-preset"><code class="docutils literal notranslate"><span class="pre">Update</span> <span class="pre">Custom</span> <span class="pre">Preset</span></code></a></li>
 </ul>
 </li>
@@ -462,13 +462,16 @@
 <li class="toctree-l3"><a class="reference internal" href="settings.html#easy-night-photo-191">Easy Night Photo (191)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#multi-shot-aspect-ratio-192">Multi Shot Aspect Ratio (192)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#framing-193">Framing (193)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="settings.html#camera-volume-216">Camera Volume (216)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#camera-mode-194">Camera Mode (194)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#photo-files-extension-196">360 Photo Files Extension (196)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#beep-volume-216">Beep Volume (216)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#setup-screen-saver-219">Setup Screen Saver (219)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#setup-language-223">Setup Language (223)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#photo-mode-227">Photo Mode (227)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#video-framing-232">Video Framing (232)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#multi-shot-framing-233">Multi Shot Framing (233)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#frame-rate-234">Frame Rate (234)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#automatic-wi-fi-access-point-236">Automatic Wi-Fi Access Point (236)</a></li>
 </ul>
 </li>
 </ul>
@@ -558,6 +561,7 @@
 <li class="toctree-l3"><a class="reference internal" href="statuses.html#usb-controlled-116">USB Controlled (116)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="statuses.html#sd-card-capacity-117">SD Card Capacity (117)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="statuses.html#photo-interval-capture-count-118">Photo Interval Capture Count (118)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="statuses.html#camera-name-122">Camera Name (122)</a></li>
 </ul>
 </li>
 </ul>
@@ -593,6 +597,13 @@
 <p>The camera supports connecting to access points in <a class="reference external" href="https://en.wikipedia.org/wiki/Station_(networking)">Station Mode (STA)</a>.
 This is necessary for features such as  <a class="reference internal" href="live_streaming.html"><span class="doc">Live Streaming</span></a> where the camera needs an
 Internet connection. While in this mode, HTTP command and control of the camera is not available on some cameras.</p>
+<section id="internet-access">
+<h2>Internet Access<a class="headerlink" href="#internet-access" title="Link to this heading"></a>
+</h2>
+<p>Before Hero 13 Black, the camera could only connect to access points that did not require internet access.  From
+<a class="reference internal" href="../index.html#supported-cameras"><span class="std std-ref">Hero 13 Black onwards</span></a>, it is possible to connect to a local network by setting the
+<strong>bypass_eula_check</strong> flag in the <a class="reference internal" href="#connect-to-a-new-access-point" title="connect to a new access point"><code class="xref operation operation-ref docutils literal notranslate"><span class="pre">Connect</span> <span class="pre">to</span> <span class="pre">a</span> <span class="pre">New</span> <span class="pre">Access</span> <span class="pre">Point</span></code></a> protobuf request.</p>
+</section>
 <section id="operations">
 <h2>Operations<a class="headerlink" href="#operations" title="Link to this heading"></a>
 </h2>
@@ -601,6 +612,7 @@ Internet connection. While in this mode, HTTP command and control of the camera 
 <span class="sig-name descname"><span class="pre">Scan</span> <span class="pre">for</span> <span class="pre">Access</span> <span class="pre">Points</span></span><a class="headerlink" href="#scan-for-access-points" title="Link to this definition"></a>
 </dt>
 <dd>
+<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
@@ -712,6 +724,7 @@ Internet connection. While in this mode, HTTP command and control of the camera 
 <span class="sig-name descname"><span class="pre">Get</span> <span class="pre">AP</span> <span class="pre">Scan</span> <span class="pre">Results</span></span><a class="headerlink" href="#get-ap-scan-results" title="Link to this definition"></a>
 </dt>
 <dd>
+<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
@@ -789,6 +802,7 @@ Internet connection. While in this mode, HTTP command and control of the camera 
 <span class="sig-name descname"><span class="pre">Connect</span> <span class="pre">to</span> <span class="pre">Provisioned</span> <span class="pre">Access</span> <span class="pre">Point</span></span><a class="headerlink" href="#connect-to-provisioned-access-point" title="Link to this definition"></a>
 </dt>
 <dd>
+<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
@@ -904,6 +918,7 @@ that the relevant <a class="reference internal" href="../protocol/protobuf.html#
 <span class="sig-name descname"><span class="pre">Connect</span> <span class="pre">to</span> <span class="pre">a</span> <span class="pre">New</span> <span class="pre">Access</span> <span class="pre">Point</span></span><a class="headerlink" href="#connect-to-a-new-access-point" title="Link to this definition"></a>
 </dt>
 <dd>
+<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
 <img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
 <img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
 <img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">

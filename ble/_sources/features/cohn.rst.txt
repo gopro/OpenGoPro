@@ -50,10 +50,10 @@ Provisioning Procedure
 In order to use the COHN capability, the camera must first be provisioned for COHN. At a high level, the provisioning process
 is as follows:
 
-1. Instruct the GoPro to :operation:ref:`Create COHN Certificate`
-2. Use :operation:ref:`Get COHN Certificate` to get the created COHN certificate
-3. Use :operation:ref:`Get COHN Status` to get the Basic auth credentials
-4. Connect the camera to an :doc:`access point<access_points>`
+1. Connect the camera to an :doc:`access point<access_points>`
+2. Instruct the GoPro to :operation:ref:`Create COHN Certificate`
+3. Use :operation:ref:`Get COHN Certificate` to get the created COHN certificate
+4. Use :operation:ref:`Get COHN Status` to get the Basic auth credentials
 
 .. tip:: Depending on the use case, some of these steps can be performed via `HTTP <../../http#tag/COHN>`_
 
