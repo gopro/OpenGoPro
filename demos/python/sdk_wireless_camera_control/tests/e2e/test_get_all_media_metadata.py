@@ -1,3 +1,6 @@
+# test_get_all_media_metadata.py/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro).
+# This copyright was auto-generated on Wed Sep 24 20:06:46 UTC 2025
+
 import logging
 from pathlib import Path
 from typing import AsyncGenerator
