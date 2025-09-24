@@ -9,6 +9,10 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
+0.22.0 (September-23-2025)
+--------------------------
+* Add Support for Max 2
+
 0.21.2 (June-26-2025)
 ---------------------
 * Fix wireless webcam demo
