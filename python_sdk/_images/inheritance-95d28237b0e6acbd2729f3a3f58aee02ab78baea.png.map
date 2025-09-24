@@ -1,4 +1,4 @@
 <map id="inheritancee72a61fe19" name="inheritancee72a61fe19">
 <area shape="rect" id="node1" href="#open_gopro.api.builders.BleStatusFacade" target="_top" title="Wrapper around BleStatus since a BleStatus&#39;s message definition changes based on how it is being operated on." alt="" coords="5,5,135,31"/>
-<area shape="rect" id="node2" href="https://docs.python.org/3/library/typing.html#typing.Generic" target="_top" title="Abstract base class for generic types." alt="" coords="34,79,106,104"/>
+<area shape="rect" id="node2" href="library/typing.html#typing.Generic" target="_top" title="Abstract base class for generic types." alt="" coords="34,79,106,104"/>
 </map>
