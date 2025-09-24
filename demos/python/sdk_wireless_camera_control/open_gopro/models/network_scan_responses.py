@@ -163,6 +163,10 @@ class GoProAdvData(Jsonable):
     def __hash__(self) -> int:
         return hash(self.serial_number)
 
+    # TODO. We're currently just using this data model to pass all schemas (2 and 3 as of now). Really we should
+    # have per-schema data models and mux the parsing based on the schema version.
+    #
+    # There is no motivation to do this right now since the SDK doesn't (yet) use any of this advertising information.
     @property
     def serial_number(self) -> str:
         """Get the serial number as accurately as possible

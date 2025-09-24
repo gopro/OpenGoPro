@@ -107,6 +107,10 @@ class Logger:
         stream_formatter = logging.Formatter("%(asctime)s.%(msecs)03d %(message)s", datefmt="%H:%M:%S")
         self.stream_handler.setFormatter(stream_formatter)
         self.stream_handler.setLevel(logging.INFO)
+
+        # Don't show keep alive's in stream logging
+        self.stream_handler.addFilter(lambda record: "SettingId.LED" not in record.getMessage())
+
         logger.addHandler(self.stream_handler)
         self.addLoggingHandler(self.stream_handler)
 

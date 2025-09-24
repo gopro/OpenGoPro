@@ -369,6 +369,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             retries (int): How many connection attempts before considering connection failed. Defaults to 5.
         """
         # Set up concurrency
+        logger.info("Opening the camera connection...")
         self._loop = asyncio.get_running_loop()
         self._ble_disconnect_event = asyncio.Event()
 
@@ -380,16 +381,21 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             self._busy = True
             self._encoding_started = asyncio.Event()
 
+        logger.info("Initializing camera features...")
         await self.cohn.open(gopro=self, loop=self._loop, cohn_credentials=self._cohn_credentials)
         await self.access_point.open(self._loop, self)
         await self.streaming.open(self._loop, self)
+        logger.info("Camera features initialized")
 
         RETRIES = 5
         for retry in range(RETRIES):
             try:
                 if self._should_enable_ble:
+                    logger.info("Opening BLE connection...")
                     await self._open_ble(timeout, retries)
+                    logger.info("BLE connection opened.")
 
+                    logger.info("Performing initial camera configuration...")
                     # TODO need to handle sending these if BLE does not exist
                     await self.ble_command.set_third_party_client_info()
                     # Set current dst-aware time. Don't assert on success since some old cameras don't support this command.
@@ -403,14 +409,19 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                     logger.info(f"Using Open GoPro API version {version}")
 
                     await self.cohn.wait_until_ready()
+                    logger.info("Camera configured.")
 
                 # Establish Wifi / COHN connection if desired
                 if self._should_enable_wifi:
+                    logger.info("Opening Wifi connection...")
                     await self._open_wifi(timeout, retries)
+                    logger.info("Wifi connection opened.")
                 elif self._should_enable_cohn:
                     # TODO DNS scan?
+                    logger.info("Checking COHN...")
                     if await self.cohn.is_configured:
                         self._is_cohn_configured = True
+                        logger.info("COHN is configured.")
                     else:
                         logger.warning("COHN needs to be configured.")
 
@@ -603,6 +614,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         """
         # Establish connection, pair, etc.
         await self._ble.open(timeout, retries)
+        logger.info("BLE connection is ready.")
         self._is_ble_connected = True
         await self.ble_command.set_pairing_complete()
         if not self._ble.identifier:
@@ -611,9 +623,9 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
         # Start state maintenance
         if self._should_maintain_state:
-            logger.trace("State manager initially acquiring lock")  # type: ignore
+            logger.info("Waiting for camera to be ready for communication")
             await self._ready_lock.acquire(_ReadyLock._LockOwner.STATE_MANAGER)
-            logger.trace("State manager initially acquired lock")  # type: ignore
+            logger.info("Camera is ready for communication")
 
             self._ble_disconnect_event.clear()
 
@@ -625,6 +637,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                 async for busy_status in observable.observe(debug_id=StatusId.BUSY.name):
                     asyncio.create_task(self._update_internal_state(StatusId.BUSY, busy_status))
 
+            logger.info("Starting status tasks")
             self._status_tasks.append(
                 asyncio.create_task(_handle_encoding((await self.ble_status.encoding.get_value_observable()).unwrap()))
             )
@@ -682,23 +695,32 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         if response._is_query and not response._is_push and len(response.data) == 1:
             response.data = list(response.data.values())[0]
 
-        # Check if this is the awaited synchronous response (id matches). Note! these have to come in order.
-        if ((head := await self._sync_resp_wait_q.peek_front()) == response.identifier) or (
-            # There is a special case for an unsupported protobuf error response. It does not contain the feature ID so we
-            # have to match it by Feature ID / UUID. Feature ID's are not used across UUID's so we will only check for
-            # matching Feature ID(s)
-            isinstance(head, ProtobufId)
-            and ProtobufId(head.feature_id, None)
-            == response.identifier  # Feature IDs match and response identifier does not contain Action ID
-        ):
-            logger.info(Logger.build_log_rx_str(original_response, asynchronous=False))
-            # Dequeue it and put this on the ready queue
-            await self._sync_resp_wait_q.get()
-            await self._sync_resp_ready_q.put(response)
+        logger.trace(f"Route response {response.identifier} Waiting for sync resp wait q")  # type: ignore
+        async with self._sync_resp_wait_q:
+            logger.trace(f"Route response {response.identifier} Acquired sync resp wait q")  # type: ignore
+            head = await self._sync_resp_wait_q.peek_front()
+            # Check if this is the awaited synchronous response (id matches). Note! these have to come in order.
+            if (head == response.identifier) or (
+                # There is a special case for an unsupported protobuf error response. It does not contain the feature ID so we
+                # have to match it by Feature ID / UUID. Feature ID's are not used across UUID's so we will only check for
+                # matching Feature ID(s)
+                isinstance(head, ProtobufId)
+                and ProtobufId(head.feature_id, None)
+                == response.identifier  # Feature IDs match and response identifier does not contain Action ID
+            ):
+                logger.info(Logger.build_log_rx_str(original_response, asynchronous=False))
+                # Dequeue it and put the response on the ready queue
+                logger.trace(f"Route response {response.identifier} read from sync resp wait q")  # type: ignore
+                ephemeral_response = await self._sync_resp_wait_q.get()
+                logger.trace(f"Dequeued response {ephemeral_response}")  # type: ignore
 
-        # If this wasn't the awaited synchronous response...
-        else:
-            logger.info(Logger.build_log_rx_str(original_response, asynchronous=True))
+                logger.trace(f"Route response putting {response.identifier} on ready q")  # type: ignore
+                await self._sync_resp_ready_q.put(response)
+
+            # If this wasn't the awaited synchronous response...
+            else:
+                logger.info(Logger.build_log_rx_str(original_response, asynchronous=True))
+        logger.trace(f"Route response {response.identifier} released sync resp wait q")  # type: ignore
         if response._is_push:
             for update_id, value in response.data.items():
                 await self._notify_listeners(update_id, value)
@@ -762,6 +784,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         self, message: BleMessage, rules: MessageRules = MessageRules(), **kwargs: Any
     ) -> GoProResp:
         # Store information on the response we are expecting
+        logger.trace(f"send {message._identifier} putting on sync wait q")  # type: ignore
         await self._sync_resp_wait_q.put(message._identifier)
         logger.info(Logger.build_log_tx_str(pretty_print(message._as_dict(**kwargs))))
 
@@ -772,7 +795,13 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
         # Wait to be notified that response was received
         try:
+            logger.trace(f"send {message._identifier} Waiting to receive sync response from ready q")  # type: ignore
             response = await asyncio.wait_for(self._sync_resp_ready_q.get(), WirelessGoPro.WRITE_TIMEOUT)
+            logger.trace(f"{message._identifier} received  response {response.identifier}")  # type: ignore
+            if response.identifier != message._identifier:
+                error_message = f"[{message._identifier}] received incorrect response: [{response.identifier}]"
+                logger.error(error_message)
+                raise RuntimeError(error_message)
         except asyncio.TimeoutError as e:
             logger.error(
                 f"Response timeout of {WirelessGoPro.WRITE_TIMEOUT} seconds when sending {message._identifier}!"
@@ -850,7 +879,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
                 assert (await self.ble_command.enable_wifi_ap(enable=True)).ok
 
                 async def _wait_for_camera_wifi_ready() -> None:
-                    logger.debug("Waiting for camera wifi ready status")
+                    logger.info("Waiting for camera wifi ready status")
                     while not (await self.ble_status.ap_mode.get_value()).data:
                         await asyncio.sleep(0.200)
 

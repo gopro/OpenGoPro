@@ -125,6 +125,81 @@ MEDIA_LIST: Final = {
     ],
 }
 
+MEDIA_LIST_360 = {
+    "id": "520435615311363",
+    "media": [
+        {
+            "d": "100GOPRO",
+            "fs": [
+                {"n": "GS010001.36P", "cre": "1748346433", "mod": "1748346433", "s": "3264094"},
+                {
+                    "n": "GX010002.MP4",
+                    "cre": "1748346556",
+                    "mod": "1748346556",
+                    "glrv": "323839",
+                    "ls": "-1",
+                    "s": "7475790",
+                },
+                {
+                    "n": "GSAA0003.36P",
+                    "g": "1001",
+                    "b": "3",
+                    "l": "11",
+                    "cre": "1750861268",
+                    "mod": "1750861268",
+                    "s": "48802268",
+                    "t": "b",
+                    "m": [],
+                },
+                {
+                    "n": "GSAB0013.36P",
+                    "g": "1002",
+                    "b": "13",
+                    "l": "22",
+                    "cre": "1750864146",
+                    "mod": "1750864146",
+                    "s": "54954054",
+                    "t": "b",
+                    "m": [],
+                },
+                {
+                    "n": "GSAC0023.36P",
+                    "g": "1003",
+                    "b": "23",
+                    "l": "32",
+                    "cre": "1750864697",
+                    "mod": "1750864697",
+                    "s": "55312493",
+                    "t": "b",
+                    "m": [],
+                },
+                {"n": "GS010033.36P", "cre": "1753794324", "mod": "1753794324", "s": "3921602"},
+                {"n": "GS010034.36P", "cre": "1753794372", "mod": "1753794372", "s": "4304293"},
+                {
+                    "n": "GSAD0035.36P",
+                    "g": "1004",
+                    "b": "35",
+                    "l": "44",
+                    "cre": "1753794383",
+                    "mod": "1753794383",
+                    "s": "54076311",
+                    "t": "b",
+                    "m": [],
+                },
+                {"n": "GS010045.36P", "cre": "1753794421", "mod": "1753794421", "s": "3784647"},
+                {"n": "GS010046.360", "cre": "1753794424", "mod": "1753794424", "ls": "2760241", "s": "23327661"},
+                {"n": "GS010047.360", "cre": "1753794433", "mod": "1753794433", "ls": "2517092", "s": "19105093"},
+                {"n": "GS010048.360", "cre": "1753794437", "mod": "1753794437", "ls": "3236115", "s": "29375060"},
+                {"n": "GS010049.360", "cre": "1753794442", "mod": "1753794442", "ls": "1524671", "s": "27109396"},
+                {"n": "GS010050.360", "cre": "1753794496", "mod": "1753794496", "ls": "38857", "s": "38770"},
+                {"n": "GS010051.360", "cre": "1753794508", "mod": "1753794508", "ls": "357824", "s": "3069973"},
+                {"n": "GS010052.360", "cre": "1753794557", "mod": "1753794557", "ls": "409778", "s": "5958262"},
+                {"n": "GS010053.36P", "cre": "1753794613", "mod": "1753794613", "s": "3501568"},
+            ],
+        }
+    ],
+}
+
 
 def test_single_media_item():
     assert MediaItem(**SINGLE_MEDIA_ITEM)
@@ -142,6 +217,15 @@ def test_media_list():
     assert len([item for item in items if isinstance(item, GroupedMediaItem)]) == 2
     assert media_list.files[0].filename == "100GOPRO/GX010001.MP4"
     assert media_list.files[-1].raw == "1"
+
+
+def test_media_list_360():
+    media_list = MediaList(**MEDIA_LIST_360)
+    assert media_list
+    items = media_list.files
+    assert len(items) == 17
+    assert len([item for item in items if isinstance(item, GroupedMediaItem)]) == 4
+    assert media_list.files[0].filename == "100GOPRO/GS010001.36P"
 
 
 VIDEO_METADATA: Final = {
@@ -252,7 +336,7 @@ def test_webcam_failure_response():
     assert "None" not in str(response)
 
 
-HTTP_INVALID_SETTING_RSP = {
+HTTP_INVALID_SETTING_RSP: Final = {
     "error": "4",
     "option_id": "100",
     "setting_id": "135",

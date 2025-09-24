@@ -13,3 +13,12 @@
 
 syntax = "proto2";
 package open_gopro;
+
+/**
+ * Set the camera name
+ *
+ * Response: @ref ResponseGeneric
+ */
+message RequestSetCameraName {
+    optional string name = 1; // (TODO define encoding) string to identify the camera
+}

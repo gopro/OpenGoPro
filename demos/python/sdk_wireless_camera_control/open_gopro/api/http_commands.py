@@ -50,7 +50,7 @@ class HttpCommands(HttpMessages[HttpMessage]):
     """
 
     @http_get_json_command(endpoint="/gp/gpControl/command/storage/delete/all")
-    async def delete_all(self) -> GoProResp[None]:
+    async def delete_all_media(self) -> GoProResp[None]:
         """Delete all files on the SD card.
 
         Returns:
@@ -205,13 +205,32 @@ class HttpCommands(HttpMessages[HttpMessage]):
         """
 
     # TODO make pydantic model of preset status
-    @http_get_json_command(endpoint="gopro/camera/presets/get")
-    async def get_preset_status(self) -> GoProResp[JsonDict]:
+    @http_get_json_command(endpoint="gopro/camera/presets/get", arguments=["include-hidden"])
+    async def get_preset_status(self, *, include_hidden: bool = False) -> GoProResp[JsonDict]:
         """Get status of current presets
+
+        Args:
+            include_hidden (bool): whether to include presets that are not visible in the camera UI
 
         Returns:
             GoProResp[JsonDict]: JSON describing currently available presets and preset groups
         """
+        return {"include-hidden": int(include_hidden)}  # type: ignore
+
+    @http_get_json_command(endpoint="gopro/camera/presets/set_visibility", arguments=["id", "visible"])
+    async def set_preset_visibility(self, *, preset_id: int, is_visible: bool) -> GoProResp[None]:
+        """Set the visibility of a preset
+
+        The preset ID can be found from :py:class:`open_gopro.api.http_commands.HttpCommands.get_preset_status`
+
+        Args:
+            preset_id (int): preset to modify
+            is_visible (bool): whether the preset should be visible
+
+        Returns:
+            GoProResp[None]: command status
+        """
+        return {"id": preset_id, "visible": int(is_visible)}  # type: ignore
 
     @http_get_json_command(endpoint="gopro/camera/presets/load", arguments=["id"])
     async def load_preset(self, *, preset: int) -> GoProResp[None]:
@@ -349,6 +368,29 @@ class HttpCommands(HttpMessages[HttpMessage]):
         Returns:
             GoProResp[str]: version
         """
+
+    @http_get_json_command(
+        endpoint="gopro/camera/name",
+        parser=Parser(json_parser=LambdaJsonParser(lambda data: data["value"])),
+    )
+    async def get_camera_name(self) -> GoProResp[str]:
+        """Get the camera name
+
+        Returns:
+            GoProResp[str]: camera name
+        """
+
+    @http_put_json_command(endpoint="gopro/camera/name", body_args=["value"])
+    async def set_camera_name(self, *, name: str) -> GoProResp[None]:
+        """Set the camera name
+
+        Args:
+            name (str): camera name to set
+
+        Returns:
+            GoProResp[None]: command status
+        """
+        return {"value": name}  # type: ignore
 
     @http_get_json_command(
         endpoint="gopro/media/hilight/file",

@@ -2,8 +2,12 @@
 **/*.crt
 **/*.jpg
 **/*.mp4
+**/*.360
+**/*.36P
 **/*.gpmf
 **/temp
+
+**/objects.inv
 
 # Docs output
 docs/build

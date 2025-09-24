@@ -641,4 +641,11 @@ class BleStatuses(BleMessages[BleStatus.BleStatusMessageBase]):
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#photo-interval-capture-count-118)"""
 
+        self.camera_name: BleStatus[str] = BleStatus(communicator, StatusId.CAMERA_NAME, GreedyString(encoding="utf-8"))
+        """Camera Name
+
+        Custom camera name set by the user
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#camera-name-122)"""
+
         super().__init__(communicator)

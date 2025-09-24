@@ -38,6 +38,11 @@ logger = logging.getLogger(__name__)
 
 T = TypeVar("T")
 
+# Note!!! This is a dangerous foot gun. Due to the complex nature of deciphering response types
+# (https://gopro.github.io/OpenGoPro/ble/protocol/data_protocol.html#decipher-message-payload-type), it is necessary
+# to maintain this table.
+#
+# It must be be updated any time a new Protobuf command is added.
 validResponseProtobufIds: Final[list[tuple[FeatureId, ActionId]]] = [
     (FeatureId.COMMAND, ActionId.SET_CAMERA_CONTROL_RSP),
     (FeatureId.COMMAND, ActionId.SET_LIVESTREAM_MODE_RSP),
@@ -46,6 +51,8 @@ validResponseProtobufIds: Final[list[tuple[FeatureId, ActionId]]] = [
     (FeatureId.COMMAND, ActionId.RESPONSE_CREATE_COHN_CERT),
     (FeatureId.COMMAND, ActionId.RESPONSE_COHN_SETTING),
     (FeatureId.COMMAND, ActionId.RELEASE_NETWORK_RSP),
+    (FeatureId.COMMAND, ActionId.RESPONSE_SET_CAMERA_NAME),
+    (FeatureId.COMMAND, ActionId.RESPONSE_SET_PRESET_VISIBILITY),
     (FeatureId.NETWORK_MANAGEMENT, ActionId.SCAN_WIFI_NETWORKS_RSP),
     (FeatureId.NETWORK_MANAGEMENT, ActionId.NOTIF_START_SCAN),
     (FeatureId.NETWORK_MANAGEMENT, ActionId.GET_AP_ENTRIES_RSP),
@@ -338,6 +345,7 @@ class BleRespBuilder(RespBuilder[bytearray]):
         """
         try:
             self._identifier = self.identify_response(self._uuid, self._packet)
+            logger.debug(f"BleRespBuilder identified response: {self._identifier}")
             buf = self._packet
 
             if not self._is_direct_read:  # length byte

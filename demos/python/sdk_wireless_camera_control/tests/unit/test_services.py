@@ -4,6 +4,7 @@
 # pylint: disable = redefined-outer-name
 
 import uuid
+from pathlib import Path
 
 import pytest
 
@@ -113,10 +114,10 @@ def test_characteristic_view(mock_gatt_db: GattDB):
     assert list([c.uuid for c in mock_gatt_db.characteristics.values()]) == [c.uuid for c in chars]
 
 
-def test_gatt_db(mock_gatt_db: GattDB):
+def test_gatt_db(mock_gatt_db: GattDB, tmp_path: Path):
     handles = set([c.handle for c in mock_gatt_db.characteristics])
     uuids = set([c.uuid for c in mock_gatt_db.characteristics])
     assert handles == set([mock_gatt_db.uuid2handle(uuid) for uuid in uuids])
     assert uuids == set([mock_gatt_db.handle2uuid(handle) for handle in handles])
 
-    mock_gatt_db.dump_to_csv()
+    mock_gatt_db.dump_to_csv(tmp_path / "attributes.csv")

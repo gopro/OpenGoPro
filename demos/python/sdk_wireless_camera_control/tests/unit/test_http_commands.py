@@ -50,12 +50,12 @@ async def test_get_binary(mock_wifi_communicator: GoProBase):
     assert file == Path("XXX.mp4")
 
 
-async def test_get_binary_with_component(mock_wifi_communicator: GoProBase):
+async def test_get_binary_with_component(mock_wifi_communicator: GoProBase, tmp_path):
     response, file = await mock_wifi_communicator.http_command.download_file(
-        camera_file=camera_file, local_file=Path("cheese.mp4")
+        camera_file=camera_file, local_file=tmp_path / "cheese.mp4"
     )
     assert response.url == f"videos/DCIM/{camera_file}"
-    assert file == Path("cheese.mp4")
+    assert file == tmp_path / "cheese.mp4"
 
 
 async def test_with_multiple_params(mock_wifi_communicator: GoProBase):
@@ -72,5 +72,5 @@ async def test_string_arg(mock_wifi_communicator: GoProBase):
 def test_ensure_no_positional_args(mock_wifi_communicator: GoProBase):
     for command in mock_wifi_communicator.http_command.values():
         if inspect.getfullargspec(command).args != ["self"]:
-            logging.error("All arguments to commands must be keyword-only")
-            assert True
+            logging.error(f"All arguments to commands must be keyword-only. See {command.__name__}")
+            assert False

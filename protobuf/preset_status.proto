@@ -232,6 +232,10 @@ enum EnumPresetTitle {
     PRESET_TITLE_4_3_VIDEO                = 125;
     PRESET_TITLE_16_9_VIDEO               = 126;
     PRESET_TITLE_16_9_SLOMO               = 127;
+    PRESET_TITLE_TIME_LAPSE_VIDEO         = 131;
+    PRESET_TITLE_TIME_LAPSE_PHOTO         = 132;
+    PRESET_TITLE_NIGHT_LAPSE_VIDEO        = 133;
+    PRESET_TITLE_NIGHT_LAPSE_PHOTO        = 134;
 }
 
 /**
@@ -260,6 +264,12 @@ message Preset {
     optional bool            is_modified   = 8;  // Has Preset been modified from factory defaults? (False for user-defined Presets)
     optional bool            is_fixed      = 9;  // Is this Preset mutable?
     optional string          custom_name   = 10; // Custom string name given to this preset via @ref RequestCustomPresetUpdate
+    /**
+     * Is the preset currently visible in the camera UI?
+     *
+     * Note that a Preset's UI visibility can be set with @ref RequestPresetSetVisibility
+     */
+    optional bool            is_visible    = 11;
 }
 
 /**
@@ -308,6 +318,20 @@ message RequestCustomPresetUpdate {
      * @ref RequestGetPresetStatus
      */
     optional EnumPresetIcon  icon_id     = 3;
+}
+
+/**
+ * Set Preset UI Visibility
+ *
+ * Shows or hides a Preset in the camera UI.
+ *
+ * Note that a Preset's visibility determines how it is returned as part of the @ref RequestGetPresetStatus response
+ *
+ * Returns a @ref ResponseGeneric with the status of the preset update request.
+ */
+message RequestPresetSetVisibility {
+    optional int32 id      = 1; // preset ID to operate on
+    optional bool  visible = 2; // True to set the preset visible, False to hide the preset.
 }
 
 /*

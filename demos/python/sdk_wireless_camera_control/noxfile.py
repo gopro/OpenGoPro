@@ -80,6 +80,9 @@ def docs(session) -> None:
         "autodoc-pydantic",
         "pydoclint",
     )
+    # Manually download the intersphinx inventory for Python standard library
+    session.run("wget", "http://docs.python.org/3/objects.inv", "-O", "docs/objects.inv")
+    # Build the sphinx docs
     session.run("sphinx-build", "-W", "docs", "docs/build")
     # Clean up for Jekyll consumption
     session.run("rm", "-rf", "docs/build/.doctrees", "/docs/build/_sources", "/docs/build/_static/fonts", external=True)

@@ -2,6 +2,7 @@
 # This copyright was auto-generated on Wed, Sep  1, 2021  5:05:41 PM
 
 from __future__ import annotations
+
 from datetime import date
 import sys
 
@@ -74,7 +75,7 @@ autodoc_default_options = {
 autodoc_pydantic_model_show_json = False
 autodoc_pydantic_settings_show_json = False
 intersphinx_mapping = {
-    "python": ("https://docs.python.org/3", None),
+    "python": (".", None),
 }
 
 # Extract version set from pyproject.toml

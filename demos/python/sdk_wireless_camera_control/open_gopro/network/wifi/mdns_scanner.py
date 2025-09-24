@@ -73,8 +73,10 @@ async def find_first_ip_addr(service: str, timeout: int = 5) -> DnsScanResponse:
         zeroconf.asyncio.AsyncServiceBrowser(zc, service, listener)
         try:
             name = await asyncio.wait_for(listener.urls.get(), timeout)
+            logger.info(f"Found MDNS service {name}")
             async with zeroconf.asyncio.AsyncZeroconf(unicast=True) as azc:
                 if info := await azc.async_get_service_info(service, name):
+                    logger.info(f"Found service info for {name}: {info}")
                     ip_addr = info.parsed_addresses()[0]
                     return DnsScanResponse(service=service, ip_addr=ip_addr, name=name)
                 raise FailedToFindDevice()

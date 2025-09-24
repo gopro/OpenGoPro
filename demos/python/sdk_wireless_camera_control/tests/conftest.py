@@ -4,14 +4,18 @@
 # pylint: disable=redefined-outer-name
 
 import logging
+import os
 import re
 from pathlib import Path
-from typing import Any, Generator
+from typing import Any, AsyncGenerator, Generator
 
 import pytest
 import pytest_asyncio
 
+from open_gopro import WirelessGoPro
 from open_gopro.gopro_base import GoProBase
+from open_gopro.gopro_wired import WiredGoPro
+from open_gopro.models.constants import settings
 from open_gopro.network.ble import (
     BleClient,
     Characteristic,
@@ -52,6 +56,8 @@ def configure_logging():
 @pytest.fixture(scope="module", autouse=True)
 def manage_logs(request):
     top_dir_stripped = Path(*Path(request.node.name).parts[1:])
+    if top_dir_stripped == Path("."):
+        top_dir_stripped = Path(request.node.name)
     extension_changed = Path(str(top_dir_stripped).strip(".py") + ".log")
     request.config.pluginmanager.get_plugin("logging-plugin").set_log_path(
         Path(".reports") / "logs" / extension_changed
@@ -215,3 +221,43 @@ async def mock_wireless_gopro(monkeypatch):
         await test_client.close()
     except Exception as e:
         logger.error(f"PYTEST Error closing GoPro: {e}")
+
+
+##############################################################################################################
+#                                             E2E fixtures
+##############################################################################################################
+
+
+@pytest_asyncio.fixture(loop_scope="function")
+async def wireless_gopro_ble(tmp_path: Path):
+    set_logging_level(logging.INFO)
+
+    os.environ["LANG"] = "en_US"
+    async with WirelessGoPro(interfaces={WirelessGoPro.Interface.BLE}) as gopro:
+        logger.info("==================================================================")
+        logger.info("Yielding gopro under test.")
+        logger.info("==================================================================")
+        yield gopro
+
+
+@pytest_asyncio.fixture(loop_scope="function")
+async def wireless_gopro(tmp_path: Path):
+    set_logging_level(logging.INFO)
+
+    os.environ["LANG"] = "en_US"
+    async with WirelessGoPro() as gopro:
+        logger.info("==================================================================")
+        logger.info("Yielding gopro under test.")
+        logger.info("==================================================================")
+        yield gopro
+
+
+@pytest.fixture(scope="function")
+async def wired_gopro(tmp_path: Path) -> AsyncGenerator[WiredGoPro, None]:
+    set_logging_level(logging.INFO)
+
+    async with WiredGoPro() as gopro:
+        logger.info("==================================================================")
+        logger.info("Yielding gopro under test.")
+        logger.info("==================================================================")
+        yield gopro

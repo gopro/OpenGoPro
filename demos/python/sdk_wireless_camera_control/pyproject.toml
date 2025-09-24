@@ -127,9 +127,16 @@ help = "validate docstrings"
 sequence = ["_pydocstyle", "_doclint"]
 help = "Analyze docstrings for consistency and errors"
 
-[tool.poe.tasks.sphinx]
+[tool.poe.tasks._intersphinx]
+cmd = "wget http://docs.python.org/3/objects.inv -O docs/objects.inv"
+help = "Download intersphinx file."
+
+[tool.poe.tasks._build_sphinx]
 cmd = "sphinx-build -W --keep-going -a -n -E -b html docs docs/build"
-help = "Build sphinx documentation."
+
+[tool.poe.tasks.sphinx]
+sequence = ["_intersphinx", "_build_sphinx"]
+help = "Build sphinx docs."
 
 [tool.poe.tasks._coverage]
 cmd = "coverage-badge -f -o docs/_static/coverage.svg"
@@ -144,7 +151,7 @@ cmd = "rm -rf .reports && rm -rf .pytest_cache"
 help = "Clean test reports"
 
 [tool.poe.tasks._clean_docs]
-cmd = "rm -f docs/modules.rst && rm -rf docs/build"
+cmd = "rm -rf docs/build && rm -f docs/modules.rst && rm -f docs/objects.inv"
 help = "Clean built docs output"
 
 [tool.poe.tasks._clean_build]
@@ -160,6 +167,10 @@ sequence = ["_clean_artifacts", "_clean_tests", "_clean_docs", "_clean_build"]
 help = "Clean everything"
 
 [tool.poe.tasks.all]
+sequence = ["format", "lint", "tests", "docs", "licenses"]
+help = "Format, check types, lint, check docstrings, run unit tests, and update license report."
+
+[tool.poe.tasks.all_local]
 sequence = ["format", "lint", "tests", "docs", "licenses"]
 help = "Format, check types, lint, check docstrings, run unit tests, and update license report."
 

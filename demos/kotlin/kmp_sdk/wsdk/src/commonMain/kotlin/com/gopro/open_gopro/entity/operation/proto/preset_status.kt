@@ -1,6 +1,3 @@
-/* preset_status.kt/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Fri Jun  6 17:50:51 UTC 2025 */
-
 @file:OptIn(pbandk.PublicForGeneratedCode::class)
 
 package com.gopro.open_gopro.operations
@@ -695,6 +692,18 @@ public sealed class EnumPresetTitle(override val value: Int, override val name: 
 
   internal object PRESET_TITLE_16_9_SLOMO : EnumPresetTitle(127, "PRESET_TITLE_16_9_SLOMO")
 
+  internal object PRESET_TITLE_TIME_LAPSE_VIDEO :
+      EnumPresetTitle(131, "PRESET_TITLE_TIME_LAPSE_VIDEO")
+
+  internal object PRESET_TITLE_TIME_LAPSE_PHOTO :
+      EnumPresetTitle(132, "PRESET_TITLE_TIME_LAPSE_PHOTO")
+
+  internal object PRESET_TITLE_NIGHT_LAPSE_VIDEO :
+      EnumPresetTitle(133, "PRESET_TITLE_NIGHT_LAPSE_VIDEO")
+
+  internal object PRESET_TITLE_NIGHT_LAPSE_PHOTO :
+      EnumPresetTitle(134, "PRESET_TITLE_NIGHT_LAPSE_PHOTO")
+
   internal class UNRECOGNIZED(value: Int) : EnumPresetTitle(value)
 
   internal companion object :
@@ -780,7 +789,11 @@ public sealed class EnumPresetTitle(override val value: Int, override val name: 
           PRESET_TITLE_BURST_SLOMO,
           PRESET_TITLE_4_3_VIDEO,
           PRESET_TITLE_16_9_VIDEO,
-          PRESET_TITLE_16_9_SLOMO)
+          PRESET_TITLE_16_9_SLOMO,
+          PRESET_TITLE_TIME_LAPSE_VIDEO,
+          PRESET_TITLE_TIME_LAPSE_PHOTO,
+          PRESET_TITLE_NIGHT_LAPSE_VIDEO,
+          PRESET_TITLE_NIGHT_LAPSE_PHOTO)
     }
 
     override fun fromValue(value: Int): com.gopro.open_gopro.operations.EnumPresetTitle =
@@ -858,6 +871,7 @@ public data class Preset(
     val isModified: Boolean? = null,
     val isFixed: Boolean? = null,
     val customName: String? = null,
+    val isVisible: Boolean? = null,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
   override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.Preset =
@@ -882,7 +896,7 @@ public data class Preset(
             messageClass = com.gopro.open_gopro.operations.Preset::class,
             messageCompanion = this,
             fields =
-                buildList(10) {
+                buildList(11) {
                   add(
                       pbandk.FieldDescriptor(
                           messageDescriptor = this@Companion::descriptor,
@@ -982,6 +996,14 @@ public data class Preset(
                           type = pbandk.FieldDescriptor.Type.Primitive.String(hasPresence = true),
                           jsonName = "customName",
                           value = com.gopro.open_gopro.operations.Preset::customName))
+                  add(
+                      pbandk.FieldDescriptor(
+                          messageDescriptor = this@Companion::descriptor,
+                          name = "is_visible",
+                          number = 11,
+                          type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
+                          jsonName = "isVisible",
+                          value = com.gopro.open_gopro.operations.Preset::isVisible))
                 })
   }
 }
@@ -1059,6 +1081,63 @@ internal data class RequestCustomPresetUpdate(
                           jsonName = "iconId",
                           value =
                               com.gopro.open_gopro.operations.RequestCustomPresetUpdate::iconId))
+                })
+  }
+}
+
+@pbandk.Export
+internal data class RequestPresetSetVisibility(
+    val id: Int? = null,
+    val visible: Boolean? = null,
+    override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
+) : pbandk.Message {
+  override operator fun plus(
+      other: pbandk.Message?
+  ): com.gopro.open_gopro.operations.RequestPresetSetVisibility = protoMergeImpl(other)
+
+  override val descriptor:
+      pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestPresetSetVisibility>
+    get() = Companion.descriptor
+
+  override val protoSize: Int by lazy { super.protoSize }
+
+  internal companion object :
+      pbandk.Message.Companion<com.gopro.open_gopro.operations.RequestPresetSetVisibility> {
+    internal val defaultInstance:
+        com.gopro.open_gopro.operations.RequestPresetSetVisibility by lazy {
+      com.gopro.open_gopro.operations.RequestPresetSetVisibility()
+    }
+
+    override fun decodeWith(
+        u: pbandk.MessageDecoder
+    ): com.gopro.open_gopro.operations.RequestPresetSetVisibility =
+        com.gopro.open_gopro.operations.RequestPresetSetVisibility.decodeWithImpl(u)
+
+    override val descriptor:
+        pbandk.MessageDescriptor<com.gopro.open_gopro.operations.RequestPresetSetVisibility> =
+        pbandk.MessageDescriptor(
+            fullName = "open_gopro.RequestPresetSetVisibility",
+            messageClass = com.gopro.open_gopro.operations.RequestPresetSetVisibility::class,
+            messageCompanion = this,
+            fields =
+                buildList(2) {
+                  add(
+                      pbandk.FieldDescriptor(
+                          messageDescriptor = this@Companion::descriptor,
+                          name = "id",
+                          number = 1,
+                          type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
+                          jsonName = "id",
+                          value = com.gopro.open_gopro.operations.RequestPresetSetVisibility::id))
+                  add(
+                      pbandk.FieldDescriptor(
+                          messageDescriptor = this@Companion::descriptor,
+                          name = "visible",
+                          number = 2,
+                          type = pbandk.FieldDescriptor.Type.Primitive.Bool(hasPresence = true),
+                          jsonName = "visible",
+                          value =
+                              com.gopro.open_gopro.operations.RequestPresetSetVisibility::visible))
                 })
   }
 }
@@ -1278,6 +1357,7 @@ private fun Preset.protoMergeImpl(plus: pbandk.Message?): Preset =
           isModified = plus.isModified ?: isModified,
           isFixed = plus.isFixed ?: isFixed,
           customName = plus.customName ?: customName,
+          isVisible = plus.isVisible ?: isVisible,
           unknownFields = unknownFields + plus.unknownFields)
     } ?: this
 
@@ -1294,6 +1374,7 @@ private fun Preset.Companion.decodeWithImpl(u: pbandk.MessageDecoder): Preset {
   var isModified: Boolean? = null
   var isFixed: Boolean? = null
   var customName: String? = null
+  var isVisible: Boolean? = null
 
   val unknownFields =
       u.readMessage(this) { _fieldNumber, _fieldValue ->
@@ -1315,6 +1396,7 @@ private fun Preset.Companion.decodeWithImpl(u: pbandk.MessageDecoder): Preset {
           8 -> isModified = _fieldValue as Boolean
           9 -> isFixed = _fieldValue as Boolean
           10 -> customName = _fieldValue as String
+          11 -> isVisible = _fieldValue as Boolean
         }
       }
 
@@ -1329,6 +1411,7 @@ private fun Preset.Companion.decodeWithImpl(u: pbandk.MessageDecoder): Preset {
       isModified,
       isFixed,
       customName,
+      isVisible,
       unknownFields)
 }
 
@@ -1367,6 +1450,40 @@ private fun RequestCustomPresetUpdate.Companion.decodeWithImpl(
       }
 
   return RequestCustomPresetUpdate(titleId, customName, iconId, unknownFields)
+}
+
+@pbandk.Export
+@pbandk.JsName("orDefaultForRequestPresetSetVisibility")
+internal fun RequestPresetSetVisibility?.orDefault():
+    com.gopro.open_gopro.operations.RequestPresetSetVisibility =
+    this ?: RequestPresetSetVisibility.defaultInstance
+
+private fun RequestPresetSetVisibility.protoMergeImpl(
+    plus: pbandk.Message?
+): RequestPresetSetVisibility =
+    (plus as? RequestPresetSetVisibility)?.let {
+      it.copy(
+          id = plus.id ?: id,
+          visible = plus.visible ?: visible,
+          unknownFields = unknownFields + plus.unknownFields)
+    } ?: this
+
+@Suppress("UNCHECKED_CAST")
+private fun RequestPresetSetVisibility.Companion.decodeWithImpl(
+    u: pbandk.MessageDecoder
+): RequestPresetSetVisibility {
+  var id: Int? = null
+  var visible: Boolean? = null
+
+  val unknownFields =
+      u.readMessage(this) { _fieldNumber, _fieldValue ->
+        when (_fieldNumber) {
+          1 -> id = _fieldValue as Int
+          2 -> visible = _fieldValue as Boolean
+        }
+      }
+
+  return RequestPresetSetVisibility(id, visible, unknownFields)
 }
 
 @pbandk.Export

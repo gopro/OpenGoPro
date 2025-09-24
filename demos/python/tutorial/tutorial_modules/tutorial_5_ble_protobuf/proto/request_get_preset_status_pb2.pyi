@@ -61,6 +61,7 @@ class RequestGetPresetStatus(google.protobuf.message.Message):
     REGISTER_PRESET_STATUS_FIELD_NUMBER: builtins.int
     UNREGISTER_PRESET_STATUS_FIELD_NUMBER: builtins.int
     USE_CONSTANT_SETTING_IDS_FIELD_NUMBER: builtins.int
+    INCLUDE_HIDDEN_FIELD_NUMBER: builtins.int
 
     @property
     def register_preset_status(
@@ -75,20 +76,28 @@ class RequestGetPresetStatus(google.protobuf.message.Message):
         """Array of Preset statuses to stop being notified about"""
     use_constant_setting_ids: builtins.bool
     "*\n    Configures the set of Setting IDs that are returned by @ref NotifyPresetStatus.\n\n    Defaults to False if not set\n\n    When False, Setting IDs are tied to their camera UI string representation and may vary between cameras.\n\n    When True, Setting IDs are tied to their functional representation and are consistent across cameras.\n    "
+    include_hidden: builtins.bool
+    "*\n    Whether to include hidden presets\n\n    When True, all currently available presets will be included in the response, even those hidden by the\n    camera UI\n\n    When False, only currently available presets that are displayed in the camera UI are included in the response.\n\n    Note that a Preset's visibility can be configured by @ref RequestPresetSetVisibility.\n    "
 
     def __init__(
         self,
         *,
         register_preset_status: collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType] | None = ...,
         unregister_preset_status: collections.abc.Iterable[global___EnumRegisterPresetStatus.ValueType] | None = ...,
-        use_constant_setting_ids: builtins.bool | None = ...
+        use_constant_setting_ids: builtins.bool | None = ...,
+        include_hidden: builtins.bool | None = ...
     ) -> None: ...
     def HasField(
-        self, field_name: typing_extensions.Literal["use_constant_setting_ids", b"use_constant_setting_ids"]
+        self,
+        field_name: typing_extensions.Literal[
+            "include_hidden", b"include_hidden", "use_constant_setting_ids", b"use_constant_setting_ids"
+        ],
     ) -> builtins.bool: ...
     def ClearField(
         self,
         field_name: typing_extensions.Literal[
+            "include_hidden",
+            b"include_hidden",
             "register_preset_status",
             b"register_preset_status",
             "unregister_preset_status",

@@ -2,40 +2,36 @@ name,version,size,homePage,author,license,licenseCompat,errorCode,namever
 annotated-types,0.7.0,36468,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,annotated-types-0.7.0
 asyncstdlib,3.13.1,142529,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,asyncstdlib-3.13.1
 bleak,0.22.3,490324,https://github.com/hbldh/bleak,Henrik Blidh,MIT LICENSE,True,0,bleak-0.22.3
-certifi,2025.4.26,292107,https://github.com/certifi/python-certifi,Kenneth Reitz,MOZILLA PUBLIC LICENSE 2.0 _MPL 2.0_,True,0,certifi-2025.4.26
-charset-normalizer,3.4.2,421747,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,charset-normalizer-3.4.2
-construct,2.10.68,289208,http://construct.readthedocs.org,"Arkadiusz Bulski, Tomer Filiba, Corbin Simpson",MIT LICENSE,True,0,construct-2.10.68
+certifi,2025.6.15,288479,https://github.com/certifi/python-certifi,Kenneth Reitz,MOZILLA PUBLIC LICENSE 2.0 _MPL 2.0_,True,0,certifi-2025.6.15
+charset-normalizer,3.4.2,774650,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,charset-normalizer-3.4.2
+construct,2.10.68,289368,http://construct.readthedocs.org,"Arkadiusz Bulski, Tomer Filiba, Corbin Simpson",MIT LICENSE,True,0,construct-2.10.68
 idna,3.10,349151,UNKNOWN,UNKNOWN,BSD LICENSE,True,0,idna-3.10
 ifaddr,0.2.0,25179,https://github.com/pydron/ifaddr,Stefan C. Mueller,MIT LICENSE,True,0,ifaddr-0.2.0
-markdown-it-py,3.0.0,326419,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,markdown-it-py-3.0.0
+markdown-it-py,3.0.0,223379,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,markdown-it-py-3.0.0
 mdurl,0.1.2,22532,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,mdurl-0.1.2
-mypy,1.15.0,28075966,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,mypy-1.15.0
+mypy,1.15.0,44240940,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,mypy-1.15.0
 mypy-extensions,1.1.0,10152,UNKNOWN,UNKNOWN,,False,0,mypy-extensions-1.1.0
 packaging,25.0,236496,UNKNOWN,UNKNOWN,APACHE SOFTWARE LICENSE;; BSD LICENSE,True,0,packaging-25.0
+pathspec,0.12.1,101741,UNKNOWN,UNKNOWN,MOZILLA PUBLIC LICENSE 2.0 _MPL 2.0_,True,0,pathspec-0.12.1
 pexpect,4.9.0,189532,https://pexpect.readthedocs.io/,Noah Spurrier; Thomas Kluyver; Jeff Quast,ISC LICENSE _ISCL_,True,0,pexpect-4.9.0
-protobuf,6.31.0,1633246,https://developers.google.com/protocol-buffers/,protobuf@googlegroups.com,3-CLAUSE BSD LICENSE,True,0,protobuf-6.31.0
+protobuf,6.31.1,1571826,https://developers.google.com/protocol-buffers/,protobuf@googlegroups.com,3-CLAUSE BSD LICENSE,True,0,protobuf-6.31.1
 ptyprocess,0.7.0,39299,https://github.com/pexpect/ptyprocess,Thomas Kluyver,ISC LICENSE _ISCL_,True,0,ptyprocess-0.7.0
-pydantic,2.11.4,1756910,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,pydantic-2.11.4
-pydantic-core,2.33.2,5520457,https://github.com/pydantic/pydantic-core,UNKNOWN,MIT LICENSE,True,0,pydantic-core-2.33.2
-pygments,2.19.1,4570753,UNKNOWN,UNKNOWN,BSD LICENSE,True,0,pygments-2.19.1
+pydantic,2.11.7,1762789,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,pydantic-2.11.7
+pydantic-core,2.33.2,4359018,https://github.com/pydantic/pydantic-core,UNKNOWN,MIT LICENSE,True,0,pydantic-core-2.33.2
+pygments,2.19.2,4467127,UNKNOWN,UNKNOWN,BSD LICENSE,True,0,pygments-2.19.2
+pyobjc-core,10.3.2,3281106,https://github.com/ronaldoussoren/pyobjc,"Ronald Oussoren, bbum, SteveM, LeleG, many others stretching back through the reaches of time...",MIT LICENSE,True,0,pyobjc-core-10.3.2
+pyobjc-framework-cocoa,10.3.2,2578329,https://github.com/ronaldoussoren/pyobjc,Ronald Oussoren,MIT LICENSE,True,0,pyobjc-framework-cocoa-10.3.2
+pyobjc-framework-corebluetooth,10.3.2,110085,https://github.com/ronaldoussoren/pyobjc,Ronald Oussoren,MIT LICENSE,True,0,pyobjc-framework-corebluetooth-10.3.2
+pyobjc-framework-libdispatch,10.3.2,186906,https://github.com/ronaldoussoren/pyobjc,Ronald Oussoren,MIT LICENSE,True,0,pyobjc-framework-libdispatch-10.3.2
 pytz,2025.2,957593,http://pythonhosted.org/pytz,Stuart Bishop,MIT LICENSE,True,0,pytz-2025.2
-requests,2.32.3,203327,https://requests.readthedocs.io,Kenneth Reitz,APACHE SOFTWARE LICENSE,True,0,requests-2.32.3
+requests,2.32.4,203661,https://requests.readthedocs.io,Kenneth Reitz,APACHE SOFTWARE LICENSE,True,0,requests-2.32.4
 returns,0.25.0,545295,https://returns.readthedocs.io,sobolevn,BSD LICENSE,True,0,returns-0.25.0
 rich,14.0.0,953606,https://github.com/Textualize/rich,Will McGugan,MIT LICENSE,True,0,rich-14.0.0
 tinydb,4.8.2,75569,https://github.com/msiemens/tinydb,Markus Siemens,MIT LICENSE,True,0,tinydb-4.8.2
-typing-extensions,4.13.2,189678,UNKNOWN,UNKNOWN,PSF-2.0,True,0,typing-extensions-4.13.2
-typing-inspection,0.4.0,50048,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,typing-inspection-0.4.0
-tzdata,2025.2,528269,https://github.com/python/tzdata,Python Software Foundation,APACHE SOFTWARE LICENSE,True,0,tzdata-2025.2
+typing-extensions,4.14.0,174168,UNKNOWN,UNKNOWN,PSF-2.0,True,0,typing-extensions-4.14.0
+typing-inspection,0.4.1,52366,UNKNOWN,UNKNOWN,MIT,True,0,typing-inspection-0.4.1
 tzlocal,5.3.1,61311,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,tzlocal-5.3.1
-urllib3,2.4.0,415593,UNKNOWN,UNKNOWN,MIT,True,0,urllib3-2.4.0
-winrt-runtime,2.3.0,639735,UNKNOWN,UNKNOWN,MIT,True,0,winrt-runtime-2.3.0
-winrt-windows-devices-bluetooth,2.3.0,355813,UNKNOWN,UNKNOWN,MIT,True,0,winrt-windows-devices-bluetooth-2.3.0
-winrt-windows-devices-bluetooth-advertisement,2.3.0,266638,UNKNOWN,UNKNOWN,MIT,True,0,winrt-windows-devices-bluetooth-advertisement-2.3.0
-winrt-windows-devices-bluetooth-genericattributeprofile,2.3.0,715588,UNKNOWN,UNKNOWN,MIT,True,0,winrt-windows-devices-bluetooth-genericattributeprofile-2.3.0
-winrt-windows-devices-enumeration,2.3.0,449386,UNKNOWN,UNKNOWN,MIT,True,0,winrt-windows-devices-enumeration-2.3.0
-winrt-windows-foundation,2.3.0,318974,UNKNOWN,UNKNOWN,MIT,True,0,winrt-windows-foundation-2.3.0
-winrt-windows-foundation-collections,2.3.0,179602,UNKNOWN,UNKNOWN,MIT,True,0,winrt-windows-foundation-collections-2.3.0
-winrt-windows-storage-streams,2.3.0,393489,UNKNOWN,UNKNOWN,MIT,True,0,winrt-windows-storage-streams-2.3.0
-wrapt,1.17.2,122383,https://github.com/GrahamDumpleton/wrapt,Graham Dumpleton,BSD LICENSE,True,0,wrapt-1.17.2
-zeroconf,0.147.0,3894024,UNKNOWN,Paul Scott-Murphy,LGPL-2.1-OR-LATER,True,0,zeroconf-0.147.0
+urllib3,2.5.0,421384,UNKNOWN,UNKNOWN,MIT,True,0,urllib3-2.5.0
+wrapt,1.17.2,168719,https://github.com/GrahamDumpleton/wrapt,Graham Dumpleton,BSD LICENSE,True,0,wrapt-1.17.2
+zeroconf,0.147.0,4818998,UNKNOWN,Paul Scott-Murphy,LGPL-2.1-OR-LATER,True,0,zeroconf-0.147.0
 

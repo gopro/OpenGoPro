@@ -745,6 +745,7 @@ class NetworksetupWireless(WifiController):
 
             # If we're already connected, return
             if self.current()[0] == ssid:
+                logger.info("Wifi already connected")
                 return True
 
             # Connect now that we found the ssid
@@ -752,6 +753,7 @@ class NetworksetupWireless(WifiController):
             response = cmd(f"networksetup -setairportnetwork '{self.interface}' '{ssid}' '{password}'")
 
             if "not find" in response.lower():
+                logger.warning("Network was not found.")
                 return False
             # Now wait for network to actually establish
             current = self.current()[0]
@@ -788,15 +790,23 @@ class NetworksetupWireless(WifiController):
         # attempt to get current network
         ssid: str | None = None
         # On MacOS <= 14...
-        if int(platform.mac_ver()[0].split(".")[0]) <= 14:
-            try:
+        version = Version(platform.mac_ver()[0])
+        try:
+            if version <= Version("14"):
                 if "Current Wi-Fi Network: " in (output := cmd(f"networksetup -getairportnetwork {self.interface}")):
                     ssid = output.replace("Current Wi-Fi Network: ", "").strip()
-            except Exception as e:
-                pass
-        # For current MacOs versions or if above failed
-        if match := re.search(r"\n\s+SSID : ([\x20-\x7E]{1,32})", cmd(f"ipconfig getsummary {self.interface}")):
-            ssid = match.group(1)
+            elif version < Version("15.6"):
+                if match := re.search(r"\n\s+SSID : ([\x20-\x7E]{1,32})", cmd(f"ipconfig getsummary {self.interface}")):
+                    ssid = match.group(1)
+        except:
+            pass
+        # For current MacOs versions or if above failed.
+        # TODO this should be parsed more generally but Apple is probably going to remove this functionality also...so
+        # I'm not going to bother. Assuming the current ID is only needed to prevent connecting  "better" solution is
+        # try to communicate with the camera using a raw HTTP endpoint to get the camera name
+        ssid = cmd(
+            r"system_profiler SPAirPortDataType | sed -n '/Current Network Information:/,/PHY Mode:/ p' | head -2 | tail -1 | sed 's/^[[:space:]]*//' | sed 's/:$//'"
+        ).strip()
 
         return (ssid, SsidState.CONNECTED) if ssid else (None, SsidState.DISCONNECTED)
 

@@ -406,6 +406,10 @@ class _EnumPresetTitleEnumTypeWrapper(
     PRESET_TITLE_4_3_VIDEO: _EnumPresetTitle.ValueType
     PRESET_TITLE_16_9_VIDEO: _EnumPresetTitle.ValueType
     PRESET_TITLE_16_9_SLOMO: _EnumPresetTitle.ValueType
+    PRESET_TITLE_TIME_LAPSE_VIDEO: _EnumPresetTitle.ValueType
+    PRESET_TITLE_TIME_LAPSE_PHOTO: _EnumPresetTitle.ValueType
+    PRESET_TITLE_NIGHT_LAPSE_VIDEO: _EnumPresetTitle.ValueType
+    PRESET_TITLE_NIGHT_LAPSE_PHOTO: _EnumPresetTitle.ValueType
 
 class EnumPresetTitle(_EnumPresetTitle, metaclass=_EnumPresetTitleEnumTypeWrapper): ...
 
@@ -489,6 +493,10 @@ PRESET_TITLE_BURST_SLOMO: EnumPresetTitle.ValueType
 PRESET_TITLE_4_3_VIDEO: EnumPresetTitle.ValueType
 PRESET_TITLE_16_9_VIDEO: EnumPresetTitle.ValueType
 PRESET_TITLE_16_9_SLOMO: EnumPresetTitle.ValueType
+PRESET_TITLE_TIME_LAPSE_VIDEO: EnumPresetTitle.ValueType
+PRESET_TITLE_TIME_LAPSE_PHOTO: EnumPresetTitle.ValueType
+PRESET_TITLE_NIGHT_LAPSE_VIDEO: EnumPresetTitle.ValueType
+PRESET_TITLE_NIGHT_LAPSE_PHOTO: EnumPresetTitle.ValueType
 global___EnumPresetTitle = EnumPresetTitle
 
 @typing_extensions.final
@@ -535,6 +543,7 @@ class Preset(google.protobuf.message.Message):
     IS_MODIFIED_FIELD_NUMBER: builtins.int
     IS_FIXED_FIELD_NUMBER: builtins.int
     CUSTOM_NAME_FIELD_NUMBER: builtins.int
+    IS_VISIBLE_FIELD_NUMBER: builtins.int
     id: builtins.int
     "Preset ID"
     mode: global___EnumFlatMode.ValueType
@@ -559,6 +568,8 @@ class Preset(google.protobuf.message.Message):
     "Is this Preset mutable?"
     custom_name: builtins.str
     "Custom string name given to this preset via @ref RequestCustomPresetUpdate"
+    is_visible: builtins.bool
+    "*\n    Is the preset currently visible in the camera UI?\n\n    Note that a Preset's UI visibility can be set with @ref RequestPresetSetVisibility\n    "
 
     def __init__(
         self,
@@ -572,7 +583,8 @@ class Preset(google.protobuf.message.Message):
         setting_array: collections.abc.Iterable[global___PresetSetting] | None = ...,
         is_modified: builtins.bool | None = ...,
         is_fixed: builtins.bool | None = ...,
-        custom_name: builtins.str | None = ...
+        custom_name: builtins.str | None = ...,
+        is_visible: builtins.bool | None = ...
     ) -> None: ...
     def HasField(
         self,
@@ -587,6 +599,8 @@ class Preset(google.protobuf.message.Message):
             b"is_fixed",
             "is_modified",
             b"is_modified",
+            "is_visible",
+            b"is_visible",
             "mode",
             b"mode",
             "title_id",
@@ -610,6 +624,8 @@ class Preset(google.protobuf.message.Message):
             b"is_fixed",
             "is_modified",
             b"is_modified",
+            "is_visible",
+            b"is_visible",
             "mode",
             b"mode",
             "setting_array",
@@ -681,6 +697,32 @@ class RequestCustomPresetUpdate(google.protobuf.message.Message):
     ) -> None: ...
 
 global___RequestCustomPresetUpdate = RequestCustomPresetUpdate
+
+@typing_extensions.final
+class RequestPresetSetVisibility(google.protobuf.message.Message):
+    """*
+    Set Preset UI Visibility
+
+    Shows or hides a Preset in the camera UI.
+
+    Note that a Preset's visibility determines how it is returned as part of the @ref RequestGetPresetStatus response
+
+    Returns a @ref ResponseGeneric with the status of the preset update request.
+    """
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    ID_FIELD_NUMBER: builtins.int
+    VISIBLE_FIELD_NUMBER: builtins.int
+    id: builtins.int
+    "preset ID to operate on"
+    visible: builtins.bool
+    "True to set the preset visible, False to hide the preset."
+
+    def __init__(self, *, id: builtins.int | None = ..., visible: builtins.bool | None = ...) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["id", b"id", "visible", b"visible"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["id", b"id", "visible", b"visible"]) -> None: ...
+
+global___RequestPresetSetVisibility = RequestPresetSetVisibility
 
 @typing_extensions.final
 class PresetGroup(google.protobuf.message.Message):

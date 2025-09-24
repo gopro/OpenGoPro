@@ -56,13 +56,16 @@ enum class SettingId(override val value: UByte) : IValuedEnum<UByte> {
   EASY_NIGHT_PHOTO(191U),
   MULTI_SHOT_ASPECT_RATIO(192U),
   FRAMING(193U),
-  CAMERA_VOLUME(216U),
+  CAMERA_MODE(194U),
+  NUM_360_PHOTO_FILES_EXTENSION(196U),
+  BEEP_VOLUME(216U),
   SETUP_SCREEN_SAVER(219U),
   SETUP_LANGUAGE(223U),
   PHOTO_MODE(227U),
   VIDEO_FRAMING(232U),
   MULTI_SHOT_FRAMING(233U),
-  FRAME_RATE(234U);
+  FRAME_RATE(234U),
+  AUTOMATIC_WI_FI_ACCESS_POINT(236U);
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<SettingId> {
@@ -87,15 +90,18 @@ enum class VideoResolution(override val value: UByte) : IValuedEnum<UByte> {
   NUM_1080(9U),
   NUM_720(12U),
   NUM_4K_4_3(18U),
+  NUM_5_6K(21U),
   NUM_5K(24U),
   NUM_5K_4_3(25U),
   NUM_5_3K_8_7(26U),
   NUM_5_3K_4_3(27U),
   NUM_4K_8_7(28U),
+  NUM_8K(31U),
   NUM_5_3K_21_9(35U),
   NUM_4K_21_9(36U),
   NUM_4K_1_1(37U),
   NUM_900(38U),
+  NUM_4K_SPH(39U),
   NUM_5_3K(100U),
   NUM_5_3K_8_7_V2(107U),
   NUM_4K_8_7_V2(108U),
@@ -125,6 +131,7 @@ enum class FramesPerSecond(override val value: UByte) : IValuedEnum<UByte> {
   NUM_240_0(0U),
   NUM_120_0(1U),
   NUM_100_0(2U),
+  NUM_90_0(3U),
   NUM_60_0(5U),
   NUM_50_0(6U),
   NUM_30_0(8U),
@@ -394,11 +401,13 @@ enum class VideoLens(override val value: UByte) : IValuedEnum<UByte> {
 enum class PhotoLens(override val value: UByte) : IValuedEnum<UByte> {
   WIDE_12_MP(0U),
   LINEAR_12_MP(10U),
+  NUM_9MP_WIDE(15U),
   NARROW(19U),
   WIDE_23_MP(27U),
   LINEAR_23_MP(28U),
   WIDE_27_MP(31U),
   LINEAR_27_MP(32U),
+  NUM_9MP_LINEAR(37U),
   NUM_13MP_LINEAR(38U),
   NUM_13MP_WIDE(39U),
   NUM_13MP_ULTRA_WIDE(40U),
@@ -608,6 +617,7 @@ enum class VideoDuration(override val value: UByte) : IValuedEnum<UByte> {
  *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#multi-shot-duration-157)
  */
 enum class MultiShotDuration(override val value: UByte) : IValuedEnum<UByte> {
+  OFF(0U),
   NUM_15_SECONDS(1U),
   NUM_30_SECONDS(2U),
   NUM_1_MINUTE(3U),
@@ -1187,23 +1197,63 @@ enum class Framing(override val value: UByte) : IValuedEnum<UByte> {
 }
 
 /**
- * Camera Volume
+ * Camera Mode
  *
  * @property value
  * @see
- *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-volume-216)
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#camera-mode-194)
  */
-enum class CameraVolume(override val value: UByte) : IValuedEnum<UByte> {
+enum class CameraMode(override val value: UByte) : IValuedEnum<UByte> {
+  SINGLE_LENS(0U),
+  NUM_360_(1U);
+
+  @ExperimentalUnsignedTypes
+  companion object : IUByteArrayCompanion<CameraMode> {
+    override fun fromUByteArray(value: UByteArray) =
+        CameraMode.entries.first { it.value == value.last() }
+
+    override fun toUByteArray(value: CameraMode) = value.value.toUByteArray()
+  }
+}
+
+/**
+ * 360 Photo Files Extension
+ *
+ * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#360-photo-files-extension-196)
+ */
+enum class NUM360PhotoFilesExtension(override val value: UByte) : IValuedEnum<UByte> {
+  NUM_JPG(0U),
+  NUM_36P(1U);
+
+  @ExperimentalUnsignedTypes
+  companion object : IUByteArrayCompanion<NUM360PhotoFilesExtension> {
+    override fun fromUByteArray(value: UByteArray) =
+        NUM360PhotoFilesExtension.entries.first { it.value == value.last() }
+
+    override fun toUByteArray(value: NUM360PhotoFilesExtension) = value.value.toUByteArray()
+  }
+}
+
+/**
+ * Beep Volume
+ *
+ * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#beep-volume-216)
+ */
+enum class BeepVolume(override val value: UByte) : IValuedEnum<UByte> {
   LOW(70U),
   MEDIUM(85U),
   HIGH(100U);
 
   @ExperimentalUnsignedTypes
-  companion object : IUByteArrayCompanion<CameraVolume> {
+  companion object : IUByteArrayCompanion<BeepVolume> {
     override fun fromUByteArray(value: UByteArray) =
-        CameraVolume.entries.first { it.value == value.last() }
+        BeepVolume.entries.first { it.value == value.last() }
 
-    override fun toUByteArray(value: CameraVolume) = value.value.toUByteArray()
+    override fun toUByteArray(value: BeepVolume) = value.value.toUByteArray()
   }
 }
 
@@ -1215,6 +1265,7 @@ enum class CameraVolume(override val value: UByte) : IValuedEnum<UByte> {
  *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#setup-screen-saver-219)
  */
 enum class SetupScreenSaver(override val value: UByte) : IValuedEnum<UByte> {
+  NEVER(0U),
   NUM_1_MIN(1U),
   NUM_2_MIN(2U),
   NUM_3_MIN(3U),
@@ -1340,6 +1391,7 @@ enum class FrameRate(override val value: UByte) : IValuedEnum<UByte> {
   NUM_240_0(0U),
   NUM_120_0(1U),
   NUM_100_0(2U),
+  NUM_90_0(3U),
   NUM_60_0(5U),
   NUM_50_0(6U),
   NUM_30_0(8U),
@@ -1356,5 +1408,27 @@ enum class FrameRate(override val value: UByte) : IValuedEnum<UByte> {
         FrameRate.entries.first { it.value == value.last() }
 
     override fun toUByteArray(value: FrameRate) = value.value.toUByteArray()
+  }
+}
+
+/**
+ * Automatic Wi-Fi Access Point
+ *
+ * Configure the camera's wifi access point to automatically start on boot of the camera
+ *
+ * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#automatic-wi-fi-access-point-236)
+ */
+enum class AutomaticWi_FiAccessPoint(override val value: UByte) : IValuedEnum<UByte> {
+  OFF(0U),
+  ON(1U);
+
+  @ExperimentalUnsignedTypes
+  companion object : IUByteArrayCompanion<AutomaticWi_FiAccessPoint> {
+    override fun fromUByteArray(value: UByteArray) =
+        AutomaticWi_FiAccessPoint.entries.first { it.value == value.last() }
+
+    override fun toUByteArray(value: AutomaticWi_FiAccessPoint) = value.value.toUByteArray()
   }
 }

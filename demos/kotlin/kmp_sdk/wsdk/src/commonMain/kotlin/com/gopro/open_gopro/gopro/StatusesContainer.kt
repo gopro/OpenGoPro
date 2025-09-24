@@ -839,4 +839,14 @@ class StatusesContainer internal constructor(marshaller: IOperationMarshaller) {
    */
   val photoIntervalCaptureCount =
       Status(StatusId.PHOTO_INTERVAL_CAPTURE_COUNT, marshaller, ::toInt8)
+
+  /**
+   * Camera Name
+   *
+   * Custom camera name set by the user
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/statuses.html#camera-name-122)
+   */
+  val cameraName = Status(StatusId.CAMERA_NAME, marshaller, ::toString)
 }

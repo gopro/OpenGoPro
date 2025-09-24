@@ -4,19 +4,11 @@
 from datetime import timedelta
 
 import pytest
-import pytest_asyncio
 
 from open_gopro import WirelessGoPro
 from open_gopro.models import general, proto
 from open_gopro.models.constants import settings
 from open_gopro.util import get_current_dst_aware_time
-
-
-@pytest_asyncio.fixture(loop_scope="function")
-async def wireless_gopro_ble():
-    async with WirelessGoPro(interfaces={WirelessGoPro.Interface.BLE}) as gopro:
-        assert (await gopro.ble_setting.control_mode.set(settings.ControlMode.PRO)).ok
-        yield gopro
 
 
 @pytest.mark.timeout(60)
