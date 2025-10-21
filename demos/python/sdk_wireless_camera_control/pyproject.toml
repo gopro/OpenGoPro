@@ -44,7 +44,7 @@ construct = "^2"
 wrapt = "^1"
 requests = "^2"
 protobuf = "^6"
-packaging = "25"
+packaging = ">=24"
 rich = "^14"
 pexpect = "^4"
 zeroconf = "^0"
@@ -303,3 +303,4 @@ should-declare-assert-error-if-assert-statement-exists = false
 using = "PEP631"
 format = 'csv'
 file = "thirdPartyDependencies.csv"
+
