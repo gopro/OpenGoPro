@@ -113,7 +113,8 @@ class StreamFeature(BaseFeature):
 
         self._current = controller
         logger.info(f"Starting {stream_type.name.title()} stream")
-        match (result := await self._current.start(options)):
+        # Type checker can't narrow the union type based on runtime isinstance checks
+        match (result := await self._current.start(options)):  # type: ignore[arg-type]
             case Success():
                 logger.info("Stream started successfully.")
             case Failure():

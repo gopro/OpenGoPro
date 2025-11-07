@@ -39,18 +39,18 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.14"
-bleak = "=0.22.3"
+bleak = "=1.1.1"
 construct = "^2"
-wrapt = "^1"
+wrapt = "^2"
 requests = "^2"
-protobuf = "^6"
+protobuf = ">=5"
 packaging = ">=24"
 rich = "^14"
 pexpect = "^4"
 zeroconf = "^0"
 pydantic = "^2"
 opencv-python = { version = "^4", optional = true }
-Pillow = {version= "^11", optional = true}
+Pillow = {version= ">=11", optional = true}
 pytz = "*"
 tzlocal = "*"
 tinydb = "^4"
@@ -240,6 +240,7 @@ accept-no-param-doc = "yes"
 accept-no-return-doc = "yes"
 default-docstring-type = "google"
 ignore = ["tests", "proto"]
+ignore-paths = ["^open_gopro/models/proto/.*$"]
 
 [tool.pylint.'MESSAGES CONTROL']
 disable = [

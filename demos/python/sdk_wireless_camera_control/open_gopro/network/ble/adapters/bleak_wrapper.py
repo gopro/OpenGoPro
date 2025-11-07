@@ -14,6 +14,7 @@ from typing import Any, Callable, Optional, Pattern
 
 import bleak
 import pexpect
+from bleak.assigned_numbers import CharacteristicPropertyName
 from bleak.backends.characteristic import BleakGATTCharacteristic
 from bleak.backends.device import BLEDevice as BleakDevice
 from bleak.backends.scanner import AdvertisementData
@@ -344,11 +345,11 @@ class BleakWrapperController(BLEController[BleakDevice, bleak.BleakClient], Sing
             GattDB: Gatt Database
         """
 
-        def bleak_props_adapter(bleak_props: list[str]) -> CharProps:
+        def bleak_props_adapter(bleak_props: list[CharacteristicPropertyName]) -> CharProps:
             """Convert a list of bleak string properties into a CharProps
 
             Args:
-                bleak_props (list[str]): bleak strings to convert
+                bleak_props (list[CharacteristicPropertyName]): bleak strings to convert
 
             Returns:
                 CharProps: converted Enum
