@@ -301,9 +301,6 @@ class GoProBase(GoProHttp, Generic[ApiType]):
     def ip_address(self) -> str:
         """The IP address of the GoPro device
 
-        Raises:
-            GoProNotOpened: The GoPro IP address is not yet available
-
         Returns:
             str: IP address
         """
@@ -369,7 +366,7 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         return request_args
 
     @enforce_message_rules
-    async def _get_json(
+    async def _get_json(  # type: ignore[override]
         self,
         message: HttpMessage,
         *,
@@ -407,7 +404,7 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         return response
 
     @enforce_message_rules
-    async def _get_stream(
+    async def _get_stream(  # type: ignore[override]
         self,
         message: HttpMessage,
         *,
@@ -433,7 +430,7 @@ class GoProBase(GoProHttp, Generic[ApiType]):
         return GoProResp(protocol=GoProResp.Protocol.HTTP, status=ErrorCode.SUCCESS, data=file, identifier=url)
 
     @enforce_message_rules
-    async def _put_json(
+    async def _put_json(  # type: ignore[override]
         self,
         message: HttpMessage,
         *,

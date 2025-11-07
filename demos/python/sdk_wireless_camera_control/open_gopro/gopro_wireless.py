@@ -848,17 +848,17 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         except GoProNotOpened:
             return message
 
-    async def _get_json(self, message: HttpMessage, *args: Any, **kwargs: Any) -> GoProResp:
+    async def _get_json(self, message: HttpMessage, *args: Any, **kwargs: Any) -> GoProResp:  # type: ignore[override]
         message = self._handle_cohn(message)
-        return await super()._get_json(*args, message=message, **kwargs)
+        return await super()._get_json(*args, message=message, **kwargs)  # type: ignore[call-arg]
 
-    async def _get_stream(self, message: HttpMessage, *args: Any, **kwargs: Any) -> GoProResp:
+    async def _get_stream(self, message: HttpMessage, *args: Any, **kwargs: Any) -> GoProResp:  # type: ignore[override]
         message = self._handle_cohn(message)
-        return await super()._get_stream(*args, message=message, **kwargs)
+        return await super()._get_stream(*args, message=message, **kwargs)  # type: ignore[call-arg]
 
-    async def _put_json(self, message: HttpMessage, *args: Any, **kwargs: Any) -> GoProResp:
+    async def _put_json(self, message: HttpMessage, *args: Any, **kwargs: Any) -> GoProResp:  # type: ignore[override]
         message = self._handle_cohn(message)
-        return await super()._put_json(*args, message=message, **kwargs)
+        return await super()._put_json(*args, message=message, **kwargs)  # type: ignore[call-arg]
 
     @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
     async def _open_wifi(self, timeout: int = 30, retries: int = 5) -> None:

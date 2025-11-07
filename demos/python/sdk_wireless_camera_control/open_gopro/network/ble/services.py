@@ -180,7 +180,7 @@ class Characteristic:
     def __post_init__(self, init_descriptors: Optional[list[Descriptor]]) -> None:
         self._descriptors: dict[BleUUID, Descriptor] = {}
         # Mypy should eventually support this: see https://github.com/python/mypy/issues/3004
-        self.descriptors = init_descriptors or []  # type: ignore
+        self.descriptors = init_descriptors or []
         if self.descriptor_handle is None:
             self.descriptor_handle = self.handle + 1
 
@@ -296,7 +296,7 @@ class Service:
     def __post_init__(self, init_characteristics: Optional[list[Characteristic]]) -> None:
         self._characteristics: dict[BleUUID, Characteristic] = {}
         # Mypy should eventually support this: see https://github.com/python/mypy/issues/3004
-        self.characteristics = init_characteristics or []  # type: ignore
+        self.characteristics = init_characteristics or []
 
     def __str__(self) -> str:
         return self.name
@@ -408,7 +408,7 @@ class GattDB:
     def __init__(self, init_services: list[Service]) -> None:
         self._services: dict[BleUUID, Service] = {}
         # Mypy should eventually support this: see https://github.com/python/mypy/issues/3004
-        self.services = init_services  # type: ignore
+        self.services = init_services
         self.characteristics = self.CharacteristicView(self)
 
     @property

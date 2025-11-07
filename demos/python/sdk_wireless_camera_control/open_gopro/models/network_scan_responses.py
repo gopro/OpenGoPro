@@ -35,10 +35,10 @@ logger = logging.getLogger(__name__)
 class Hexlify(Adapter):
     """Construct adapter for pretty hex representation"""
 
-    def _decode(self, obj: bytes, context: Any, path: Any) -> str:
+    def _decode(self, obj: bytes, context: Any, path: Any) -> str:  # pylint: disable=unused-argument
         return obj.hex(":")
 
-    def _encode(self, obj: str, context: Any, path: Any) -> list[int]:
+    def _encode(self, obj: str, context: Any, path: Any) -> list[int]:  # pylint: disable=unused-argument
         return list(map(int, obj.split(":")))
 
 

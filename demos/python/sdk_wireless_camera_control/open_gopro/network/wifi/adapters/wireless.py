@@ -89,7 +89,7 @@ class WifiCli(WifiController):
         self._driver = self._detect_driver()
 
         # Attempt to set interface (will raise an exception if not able to auto-detect)
-        self.interface = interface  # type: ignore
+        self.interface = interface
 
         logger.debug(f"Wifi setup. Using {self}")
 
@@ -230,7 +230,7 @@ class WifiCli(WifiController):
         Args:
             interface (str | None): interface (or None)
         """
-        self._driver.interface = interface  # type: ignore
+        self._driver.interface = interface
 
     @property
     def is_on(self) -> bool:
