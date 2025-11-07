@@ -61,8 +61,14 @@ class WifiClient:
     def is_connected(self) -> bool:
         """Is the WiFi connection currently established?
 
+        Note:
+            On macOS 15+, the SSID name is redacted for privacy, so this method
+            only checks the connection state, not the SSID name.
+
         Returns:
             bool: True if yes, False if no
         """
         (ssid, state) = self._controller.current()
-        return ssid is not None and state is SsidState.CONNECTED
+        # On modern macOS (15+), SSID may be None even when connected due to privacy redaction
+        # So we primarily check the connection state
+        return state is SsidState.CONNECTED

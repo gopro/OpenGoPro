@@ -727,26 +727,36 @@ class NetworksetupWireless(WifiController):
             # Escape single quotes
             ssid = ssid.replace(r"'", '''"'"''')
 
-            logger.info(f"Scanning for {ssid}...")
-            start = time.time()
-            discovered = False
-            while not discovered and (time.time() - start) <= timeout:
-                # Scan for network
-                response = cmd(r"/usr/sbin/system_profiler SPAirPortDataType")
-                regex = re.compile(
-                    r"\n\s+([\x20-\x7E]{1,32}):\n\s+PHY Mode:"
-                )  # 0x20...0x7E --> ASCII for printable characters
-                if ssid in sorted(regex.findall(response)):
-                    break
-                time.sleep(1)
+            # On macOS 15+, system_profiler redacts SSID names, so we skip explicit scanning
+            # and rely on networksetup's internal scanning when attempting to connect
+            version = Version(platform.mac_ver()[0])
+            if version < Version("15"):
+                logger.info(f"Scanning for {ssid}...")
+                start = time.time()
+                discovered = False
+                while not discovered and (time.time() - start) <= timeout:
+                    # Scan for network
+                    response = cmd(r"/usr/sbin/system_profiler SPAirPortDataType")
+                    regex = re.compile(
+                        r"\n\s+([\x20-\x7E]{1,32}):\n\s+PHY Mode:"
+                    )  # 0x20...0x7E --> ASCII for printable characters
+                    if ssid in sorted(regex.findall(response)):
+                        break
+                    time.sleep(1)
+                else:
+                    logger.warning("Wifi Scan timed out")
+                    return False
             else:
-                logger.warning("Wifi Scan timed out")
-                return False
+                # On macOS 15+, we can't pre-scan due to SSID redaction, so we'll attempt
+                # connection directly. networksetup will scan internally and return error if not found.
+                logger.info(f"Attempting to connect to {ssid} without explicitly scanning first...")
+            # Check version once for use in connection logic
 
-            # If we're already connected, return
-            if self.current()[0] == ssid:
-                logger.info("Wifi already connected")
-                return True
+            # If we're already connected, return (skip on macOS 15+ where current() can hang)
+            if version < Version("15"):
+                if self.current()[0] == ssid:
+                    logger.info("Wifi already connected")
+                    return True
 
             # Connect now that we found the ssid
             logger.info(f"Connecting to {ssid}...")
@@ -755,6 +765,24 @@ class NetworksetupWireless(WifiController):
             if "not find" in response.lower():
                 logger.warning("Network was not found.")
                 return False
+
+            # Check if we're on macOS 15+ where SSID verification doesn't work
+            if version >= Version("15"):
+                # On macOS 15+, we can't verify the SSID due to redaction, so we just
+                # check that we're connected to *some* network after a brief wait
+                logger.debug("macOS 15+: Skipping SSID verification, checking for any connection...")
+                time.sleep(2)  # Give connection time to establish
+                current, state = self.current()
+                if state == SsidState.CONNECTED:
+                    logger.info("Connected to network (SSID redacted by macOS)")
+                    # Additional delay for network to be ready
+                    time.sleep(3)
+                    return True
+                else:
+                    logger.warning("No connection established after networksetup command")
+                    return False
+
+            # For macOS < 15, we can verify the actual SSID
             # Now wait for network to actually establish
             current = self.current()[0]
             logger.debug(f"current wifi: {current}")
@@ -784,31 +812,51 @@ class NetworksetupWireless(WifiController):
     def current(self) -> tuple[str | None, SsidState]:
         """Get the currently connected SSID if there is one.
 
+        Note:
+            On macOS 15+, the SSID is redacted for privacy. In this case, this method
+            will return (None, SsidState.CONNECTED) when connected to a network, even
+            though the actual SSID cannot be determined.
+
         Returns:
-            tuple[str | None, SsidState]: (SSID or None if not connected, SSID state)
+            tuple[str | None, SsidState]: (SSID or None if not connected/redacted, SSID state)
         """
         # attempt to get current network
         ssid: str | None = None
+        is_connected = False
+
         # On MacOS <= 14...
         version = Version(platform.mac_ver()[0])
         try:
             if version <= Version("14"):
                 if "Current Wi-Fi Network: " in (output := cmd(f"networksetup -getairportnetwork {self.interface}")):
                     ssid = output.replace("Current Wi-Fi Network: ", "").strip()
+                    is_connected = True
             elif version < Version("15.6"):
                 if match := re.search(r"\n\s+SSID : ([\x20-\x7E]{1,32})", cmd(f"ipconfig getsummary {self.interface}")):
                     ssid = match.group(1)
-        except:
+                    is_connected = True
+                    if ssid == "<redacted>":
+                        ssid = None  # Redacted, but we know we're connected
+        except Exception:
+            # Ignore exceptions here; fallback logic below will attempt to get the SSID using an alternative method.
             pass
-        # For current MacOs versions or if above failed.
-        # TODO this should be parsed more generally but Apple is probably going to remove this functionality also...so
-        # I'm not going to bother. Assuming the current ID is only needed to prevent connecting  "better" solution is
-        # try to communicate with the camera using a raw HTTP endpoint to get the camera name
-        ssid = cmd(
-            r"system_profiler SPAirPortDataType | sed -n '/Current Network Information:/,/PHY Mode:/ p' | head -2 | tail -1 | sed 's/^[[:space:]]*//' | sed 's/:$//'"
-        ).strip()
 
-        return (ssid, SsidState.CONNECTED) if ssid else (None, SsidState.DISCONNECTED)
+        # For current MacOs versions or if above failed.
+        if not ssid and not is_connected:
+            output = cmd(
+                r"system_profiler SPAirPortDataType | sed -n '/Current Network Information:/,/PHY Mode:/ p' | head -2 | tail -1 | sed 's/^[[:space:]]*//' | sed 's/:$//'"
+            ).strip()
+            if output and output != "":
+                is_connected = True
+                if output != "<redacted>":
+                    ssid = output
+                # else: connected but redacted, ssid remains None
+
+        # Determine state based on connection status
+        if is_connected:
+            return (ssid, SsidState.CONNECTED)
+        else:
+            return (None, SsidState.DISCONNECTED)
 
     def available_interfaces(self) -> list[str]:
         """Return a list of available Wifi Interface strings

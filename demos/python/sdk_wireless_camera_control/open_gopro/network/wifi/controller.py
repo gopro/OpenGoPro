@@ -61,9 +61,14 @@ class WifiController(ABC):
     def current(self) -> tuple[Optional[str], SsidState]:
         """Return the SSID and state of the current network.
 
+        Note:
+            On macOS 15+, SSID names are redacted for privacy. In this case, SSID may be None
+            even when state is CONNECTED. Use the state field to determine connection status.
+
         Returns:
-            tuple[Optional[str], SsidState]: Tuple of SSID str and state. If SSID is None,
-            there is no current connection.
+            tuple[Optional[str], SsidState]: Tuple of SSID str and state. SSID may be None if:
+                - Not connected to any network
+                - Connected but SSID is redacted (macOS 15+)
         """
 
     @abstractmethod
