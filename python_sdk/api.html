@@ -1809,14 +1809,11 @@ scan for the camera for BLE.</p>
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ip_address</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#open_gopro.gopro_wireless.WirelessGoPro.ip_address" title="Link to this definition"></a></dt>
 <dd><p>The IP address of the GoPro device</p>
 <dl class="field-list simple">
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.domain.exceptions.GoProNotOpened" title="open_gopro.domain.exceptions.GoProNotOpened"><strong>GoProNotOpened</strong></a> – The GoPro IP address is not yet available</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>IP address</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>IP address</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2150,14 +2147,11 @@ Then wait for COHN to be connected and ready</p>
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ip_address</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#open_gopro.gopro_wired.WiredGoPro.ip_address" title="Link to this definition"></a></dt>
 <dd><p>The IP address of the GoPro device</p>
 <dl class="field-list simple">
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.domain.exceptions.GoProNotOpened" title="open_gopro.domain.exceptions.GoProNotOpened"><strong>GoProNotOpened</strong></a> – The GoPro IP address is not yet available</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>IP address</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>IP address</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -12226,14 +12220,11 @@ from a receiver.</p>
 <em class="property"><span class="k"><span class="pre">abstract</span></span><span class="w"> </span><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ip_address</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#open_gopro.gopro_base.GoProBase.ip_address" title="Link to this definition"></a></dt>
 <dd><p>The IP address of the GoPro device</p>
 <dl class="field-list simple">
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#open_gopro.domain.exceptions.GoProNotOpened" title="open_gopro.domain.exceptions.GoProNotOpened"><strong>GoProNotOpened</strong></a> – The GoPro IP address is not yet available</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>IP address</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>IP address</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -13344,10 +13335,21 @@ Can be set later with the characteristics property</p>
 <dt class="sig sig-object py" id="open_gopro.network.wifi.controller.WifiController.current">
 <em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#open_gopro.network.wifi.controller.SsidState" title="open_gopro.network.wifi.controller.SsidState"><span class="pre">SsidState</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#open_gopro.network.wifi.controller.WifiController.current" title="Link to this definition"></a></dt>
 <dd><p>Return the SSID and state of the current network.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On macOS 15+, SSID names are redacted for privacy. In this case, SSID may be None
+even when state is CONNECTED. Use the state field to determine connection status.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tuple of SSID str and state. If SSID is None,
-there is no current connection.</p>
+<dd class="field-odd"><p><dl class="simple">
+<dt>Tuple of SSID str and state. SSID may be None if:</dt><dd><ul class="simple">
+<li><p>Not connected to any network</p></li>
+<li><p>Connected but SSID is redacted (macOS 15+)</p></li>
+</ul>
+</dd>
+</dl>
+</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a>[Optional[<a class="reference external" href="library/stdtypes.html#str" title="(in Python v3.14)">str</a>], <a class="reference internal" href="#open_gopro.network.wifi.controller.SsidState" title="open_gopro.network.wifi.controller.SsidState">SsidState</a>]</p>
@@ -13452,6 +13454,11 @@ there is no current connection.</p>
 <dt class="sig sig-object py" id="open_gopro.network.wifi.client.WifiClient.is_connected">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_connected</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></em><a class="headerlink" href="#open_gopro.network.wifi.client.WifiClient.is_connected" title="Link to this definition"></a></dt>
 <dd><p>Is the WiFi connection currently established?</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On macOS 15+, the SSID name is redacted for privacy, so this method
+only checks the connection state, not the SSID name.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>True if yes, False if no</p>
