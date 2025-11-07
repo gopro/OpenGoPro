@@ -31,10 +31,10 @@ jobs:
                       path: ~\AppData\Local\pip\Cache
         steps:
             - name: Checkout source branch
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
 
             - name: Set up Python ${{ matrix.python-version }}
-              uses: actions/setup-python@v5
+              uses: actions/setup-python@v6
               with:
                   python-version: ${{ matrix.python-version }}
 
@@ -70,7 +70,7 @@ jobs:
               run: nox -p 3.13 -s format lint docstrings docs
 
             - name: Archive test report on failure
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v5
               if: failure()
               with:
                   name: test-reports
