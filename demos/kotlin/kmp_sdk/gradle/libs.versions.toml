@@ -15,23 +15,23 @@ uiToolingPreview = "1.9.0-alpha02"
 junit = "4.13.2"
 # https://central.sonatype.com/artifact/io.insert-koin/koin-test-junit4/versions
 koinTestJunit4 = "4.1.0"
-kotlin = "2.1.20"
+kotlin = "2.2.21"
 # https://touchlab.co/understanding-and-configuring-your-kmm-test-suite
 androidx-core-ktx = "1.15.0"
 espresso = "3.6.1"
 junitKtx = "1.2.1"
 # https://github.com/Kotlin/kotlinx.serialization/releases
-kotlinx-serialization = "1.8.0"
+kotlinx-serialization = "1.9.0"
 # https://github.com/touchlab/Kermit/releases
 kermit = "2.0.4"
 # https://github.com/Kotlin/kotlinx-datetime/releases
-kotlinx-datetime = "0.6.0"
+kotlinx-datetime = "0.7.1-0.6.x-compat"
 # https://github.com/Kotlin/kotlinx.coroutines/releases
 kotlinCoroutines = "1.10.1"
 # https://github.com/benasher44/uuid/releases/tag/0.8.4
 uuid = "0.8.4"
 # https://ktor.io/changelog/
-ktor = "3.2.0"
+ktor = "3.3.2"
 # https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-navigation-routing.html
 navigationCompose = "2.9.0-beta03"
 lifecycleViewModel = "2.8.7"
@@ -53,7 +53,7 @@ coil3 = "3.0.0-alpha06"
 # https://developer.android.com/jetpack/androidx/releases/media3
 exoplayer = "1.6.0"
 # https://kotlinlang.org/docs/ksp-quickstart.html
-ksp = "2.1.20-1.0.32"
+ksp = "2.3.2"
 # https://developer.android.com/jetpack/androidx/releases/sqlite
 sqlite = "2.5.0-rc03"
 # https://developer.android.com/jetpack/androidx/releases/room
@@ -62,17 +62,17 @@ coreKtx = "1.6.1" # This was breaking room gradle task on newer versions.
 # https://mvnrepository.com/artifact/org.videolan.android/libvlc-all
 vlc = "3.6.1"
 # https://github.com/Kotlin/dokka/releases/tag/v1.9.20
-dokka = "2.0.0"
+dokka = "2.1.0"
 # https://central.sonatype.com/artifact/org.mockito/mockito-core
-mockito = "5.18.0"
+mockito = "5.20.0"
 # https://github.com/jaredsburrows/gradle-license-plugin/releases/tag/0.9.8
 license = '0.9.8'
 # https://github.com/streem/pbandk/releases/tag/v0.16.0
 pbandk = "0.16.0"
 # https://github.com/vanniktech/gradle-maven-publish-plugin/releases/tag/0.30.0
-publish =  "0.33.0"
+publish =  "0.34.0"
 # https://github.com/cortinico/ktfmt-gradle/releases/
-format = "0.23.0"
+format = "0.25.0"
 # Our SDK version
 ogpSdk = "0.1.0"
 
