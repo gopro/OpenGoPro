@@ -531,6 +531,11 @@ EnumPresetGroup
 
      - 
 
+   * - PRESET_GROUP_ID_GENERAL
+     - 2000
+
+     - 
+
 
 
 
@@ -1050,6 +1055,11 @@ EnumPresetIcon
 
      - 
 
+   * - PRESET_ICON_SPORT_POV
+     - 124
+
+     - 
+
    * - PRESET_ICON_TIMELAPSE_PHOTO
      - 1000
 
@@ -1499,6 +1509,11 @@ EnumPresetTitle
 
    * - PRESET_TITLE_NIGHT_LAPSE_PHOTO
      - 134
+
+     - 
+
+   * - PRESET_TITLE_SUPERVIEW
+     - 143
 
      - 
 
@@ -2527,6 +2542,18 @@ Preset Group meta information and contained Presets
      - 5
 
      - A list of flatmodes available for this preset group
+
+   * - custom_name
+     - string
+     - 6
+
+     - Custom string name given to this preset group
+
+   * - active_preset_id
+     - int32
+     - 7
+
+     - Active preset id in this group
 
 
 

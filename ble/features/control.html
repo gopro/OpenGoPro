@@ -137,19 +137,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Control — GoPro BLE API 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3">
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094">
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e">
       <link rel="stylesheet" type="text/css" href="../_static/style.css?v=8b4707e3">
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=d45e8c67"></script>
-        <script src="../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html">
     <link rel="search" title="Search" href="../search.html">
@@ -303,6 +299,7 @@
 <li class="toctree-l2">
 <a class="reference internal" href="#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#keep-alive"><code class="docutils literal notranslate"><span class="pre">Keep</span> <span class="pre">Alive</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#press-button"><code class="docutils literal notranslate"><span class="pre">Press</span> <span class="pre">Button</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#reboot-the-camera"><code class="docutils literal notranslate"><span class="pre">Reboot</span> <span class="pre">the</span> <span class="pre">Camera</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-analytics"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Analytics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-ap-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></code></a></li>
@@ -472,6 +469,7 @@
 <li class="toctree-l3"><a class="reference internal" href="settings.html#multi-shot-framing-233">Multi Shot Framing (233)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#frame-rate-234">Frame Rate (234)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#automatic-wi-fi-access-point-236">Automatic Wi-Fi Access Point (236)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#auto-power-on-usb-237">Auto Power On USB (237)</a></li>
 </ul>
 </li>
 </ul>
@@ -603,14 +601,7 @@
 <span class="sig-name descname"><span class="pre">Keep</span> <span class="pre">Alive</span></span><a class="headerlink" href="#keep-alive" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -668,15 +659,70 @@ messages every 3.0 seconds after a connection is established.</p>
 </dd>
 </dl>
 
+<dl class="operation tlv-command" id="OGP_BUTTON_CMD">
+<dt class="sig sig-object operation" id="press-button">
+<span class="sig-name descname"><span class="pre">Press</span> <span class="pre">Button</span></span><a class="headerlink" href="#press-button" title="Link to this definition"></a>
+</dt>
+<dd>
+<span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/data_protocol.html#commands"><em>TLV command</em></a></p>
+</dd>
+<dt class="field-even">ID<span class="colon">:</span>
+</dt>
+<dd class="field-even">0x1B</dd>
+</dl>
+<p>Simulates pressing a physical button on the camera. The resulting operation matches exactly
+what happens when the corresponding button is physically pressed.</p>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Request</span></span>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="field-list">
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command</em></a></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span>
+</dt>
+<dd class="field-even">
+<ul>
+<li>
+<strong>button_id</strong><em> (uint8) - </em>Button to press (0 = shutter, 1 = mode)</li>
+<li>
+<strong>press_type</strong><em> (uint8) - </em>Type of button press (0 = short press, 1 = long press)</li>
+</ul>
+</dd>
+</dl>
+<dl class="operation tlv-message">
+<dt class="sig sig-object operation">
+<span class="sig-name descname"><span class="pre">Response</span></span>
+</dt>
+<dd></dd>
+</dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">UUID<span class="colon">:</span>
+</dt>
+<dd class="field-odd">
+<p><a class="reference external" href="../protocol/ble_setup.html#ble-characteristics"><em>Command Response</em></a></p>
+</dd>
+</dl>
+</dd>
+</dl>
+
 <dl class="operation tlv-command" id="GPCAMERA_SYSTEM_RESET">
 <dt class="sig sig-object operation" id="reboot-the-camera">
 <span class="sig-name descname"><span class="pre">Reboot</span> <span class="pre">the</span> <span class="pre">Camera</span></span><a class="headerlink" href="#reboot-the-camera" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -723,14 +769,7 @@ messages every 3.0 seconds after a connection is established.</p>
 <span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Analytics</span></span><a class="headerlink" href="#set-analytics" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -777,14 +816,7 @@ messages every 3.0 seconds after a connection is established.</p>
 <span class="sig-name descname"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></span><a class="headerlink" href="#set-ap-control" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -839,13 +871,7 @@ messages every 3.0 seconds after a connection is established.</p>
 <span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Control</span></span><a class="headerlink" href="#set-camera-control" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -922,8 +948,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Camera</span> <span class="pre">Name</span></span><a class="headerlink" href="#set-camera-name" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -993,14 +1018,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Date</span> <span class="pre">Time</span></span><a class="headerlink" href="#set-date-time" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -1065,12 +1083,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></span><a class="headerlink" href="#set-local-date-time" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -1137,14 +1150,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Pairing</span> <span class="pre">State</span></span><a class="headerlink" href="#set-pairing-state" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -1216,14 +1222,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Shutter</span></span><a class="headerlink" href="#set-shutter" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -1278,14 +1277,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <span class="sig-name descname"><span class="pre">Set</span> <span class="pre">Turbo</span> <span class="pre">Transfer</span></span><a class="headerlink" href="#set-turbo-transfer" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -1355,14 +1347,7 @@ camera is in a contextual menu or not is advertised in camera status 63.</p>
 <span class="sig-name descname"><span class="pre">Sleep</span></span><a class="headerlink" href="#sleep" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">

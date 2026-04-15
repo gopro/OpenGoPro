@@ -46,6 +46,22 @@ Operations
     .. operation:tlv-message:: Response
         :uuid: Settings Response
 
+.. operation:tlv-command:: Press Button
+    :operation-id: OGP_BUTTON_CMD
+    :external:
+    :id: 0x1B
+
+    Simulates pressing a physical button on the camera. The resulting operation matches exactly
+    what happens when the corresponding button is physically pressed.
+
+    .. operation:tlv-message:: Request
+        :uuid: Command
+        :params:
+            - button_id (uint8): Button to press (0 = shutter, 1 = mode)
+            - press_type (uint8): Type of button press (0 = short press, 1 = long press)
+    .. operation:tlv-message:: Response
+        :uuid: Command Response
+
 .. operation:tlv-command:: Reboot the Camera
     :operation-id: GPCAMERA_SYSTEM_RESET
     :external:
@@ -117,6 +133,26 @@ Operations
         :action-id: 0xE2
         :uuid: Command Response
         :message: ResponseGeneric
+
+.. operation:tlv-command:: Set Client Device Type
+    :operation-id: GPCAMERA_CLIENT_INFO_DEVICE_TYPE
+    :external:
+    :id: 0x1C
+
+    Allows mobile applications and accessories to specify their device type to the camera.
+    This information is used by the camera for additional pairing context and analytics tracking.
+
+    .. operation:tlv-message:: Request
+        :uuid: Command
+        :params:
+            - reserved (uint8): 0
+            - device_type (uint8): Device type - 1 for IOS, 2 for ANDROID
+            - reserved (uint8): 0
+            - reserved (uint8): 0
+            - reserved (uint8): 0
+            - reserved (uint8): 0
+    .. operation:tlv-message:: Response
+        :uuid: Command Response
 
 .. operation:tlv-command:: Set Date Time
     :operation-id: GPCAMERA_SET_DATE_AND_TIME_ID

@@ -34,7 +34,7 @@
 
 
 
-  <meta property="article:published_time" content="2025-09-24T13:11:07-07:00">
+  <meta property="article:published_time" content="2026-04-15T11:52:53-07:00">
 
 
 
@@ -425,7 +425,7 @@
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Tutorial 3: Parse BLE TLV Responses">
     <meta itemprop="description" content="This document will provide a walk-through tutorial to implementthe Open GoPro Interface to parse BLEType-Length-Value (TLV) Responses.">
-    <meta itemprop="datePublished" content="2025-09-24T13:11:07-07:00">
+    <meta itemprop="datePublished" content="2026-04-15T11:52:53-07:00">
     
 
     <div class="page__inner-wrap">
@@ -514,7 +514,7 @@ through this tutorial.</span>
 <h1 id="just-show-me-the-demos">Just Show me the Demo(s)!!</h1>
 
 <div>
-    <ul class="tab tab-linked" data-tab="e412dcd6-1ee2-40e4-b3b6-e04b79b74620">
+    <ul class="tab tab-linked" data-tab="6fa16fdf-be15-4666-a796-924e23506789">
         
             <li class="active">
                 <a href="">python </a>
@@ -525,7 +525,7 @@ through this tutorial.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="e412dcd6-1ee2-40e4-b3b6-e04b79b74620">
+        <ul class="tab-content" id="6fa16fdf-be15-4666-a796-924e23506789">
         
             <li class="active tab-content-container">
 <p>Each of the scripts for this tutorial can be found in the Tutorial 3
@@ -742,7 +742,7 @@ See the relevant version of the BLE and / or WiFi spec for more details about ea
 were sent in the previous tutorial:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="af737243-9fba-463d-842e-b9d7557b0916">
+    <ul class="tab tab-linked" data-tab="4a5dc689-234d-4909-9302-3a08f1305e63">
         
             <li class="active">
                 <a href="">python </a>
@@ -753,7 +753,7 @@ were sent in the previous tutorial:</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="af737243-9fba-463d-842e-b9d7557b0916">
+        <ul class="tab-content" id="4a5dc689-234d-4909-9302-3a08f1305e63">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">request_uuid</span> <span class="o">=</span> <span class="n">GoProUuid</span><span class="p">.</span><span class="n">COMMAND_REQ_UUID</span>
@@ -857,7 +857,7 @@ The remainder is stored as the payload. This is all of the common parsing across
 response will document how to further parse the payload.</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="7da708e6-4ca7-41b7-96f9-8618fb7863f0">
+    <ul class="tab tab-linked" data-tab="c6c97c21-832f-4a44-bdf9-2d0b7c7636b8">
         
             <li class="active">
                 <a href="">python </a>
@@ -868,7 +868,7 @@ response will document how to further parse the payload.</p>
             </li>
         
         </ul>
-        <ul class="tab-content" id="7da708e6-4ca7-41b7-96f9-8618fb7863f0">
+        <ul class="tab-content" id="c6c97c21-832f-4a44-bdf9-2d0b7c7636b8">
         
             <li class="active tab-content-container">
 <div class="callout note">
@@ -916,7 +916,7 @@ response will document how to further parse the payload.</p>
 the minor version so let’s print them (and all of the other response information) as such:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="88195dcf-51fd-4f7e-89b3-8c36a1ee721f">
+    <ul class="tab tab-linked" data-tab="8e4ac7d0-7cbb-4a85-90c1-0eeb916e7ca2">
         
             <li class="active">
                 <a href="">python </a>
@@ -927,7 +927,7 @@ the minor version so let’s print them (and all of the other response informati
             </li>
         
         </ul>
-        <ul class="tab-content" id="88195dcf-51fd-4f7e-89b3-8c36a1ee721f">
+        <ul class="tab-content" id="8e4ac7d0-7cbb-4a85-90c1-0eeb916e7ca2">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">major_length</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -978,10 +978,10 @@ Got the Open GoPro version successfully: 2.0
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_0f0288a9-cfde-4599-b8da-5452f79ab670" class="quiz">
+<div id="quiz_1e31a716-ef89-4f06-bc25-44626f5b6bd3" class="quiz">
     <div>
-        <div id="question_0f0288a9-cfde-4599-b8da-5452f79ab670" class="quiz__question">What is the maximum size of an individual notification response packet at the Open GoPro application layer?</div>
-        <div id="answers_0f0288a9-cfde-4599-b8da-5452f79ab670">
+        <div id="question_1e31a716-ef89-4f06-bc25-44626f5b6bd3" class="quiz__question">What is the maximum size of an individual notification response packet at the Open GoPro application layer?</div>
+        <div id="answers_1e31a716-ef89-4f06-bc25-44626f5b6bd3">
         
             <input type="radio" name="question" value="A"><label>A: 20 bytes</label>
             <br>
@@ -994,19 +994,19 @@ Got the Open GoPro version successfully: 2.0
         
         </div>
     </div>
-    <button onclick="showResults('0f0288a9-cfde-4599-b8da-5452f79ab670', 'A')">Submit Answer</button>
-    <div id="results_0f0288a9-cfde-4599-b8da-5452f79ab670" style="display: none">
-        <span id="correct_0f0288a9-cfde-4599-b8da-5452f79ab670" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_0f0288a9-cfde-4599-b8da-5452f79ab670" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('1e31a716-ef89-4f06-bc25-44626f5b6bd3', 'A')">Submit Answer</button>
+    <div id="results_1e31a716-ef89-4f06-bc25-44626f5b6bd3" style="display: none">
+        <span id="correct_1e31a716-ef89-4f06-bc25-44626f5b6bd3" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_1e31a716-ef89-4f06-bc25-44626f5b6bd3" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         Responses can be composed of multiple packets where each packet is at
     maximum 20 bytes.
     </div>
 </div>
 
-<div id="quiz_f5ce2cef-6242-4bc0-859a-32f8748691d1" class="quiz">
+<div id="quiz_3a053db4-7684-4608-bbea-e45cb73504d9" class="quiz">
     <div>
-        <div id="question_f5ce2cef-6242-4bc0-859a-32f8748691d1" class="quiz__question">What is the maximum amount of bytes that one response can be composed of?</div>
-        <div id="answers_f5ce2cef-6242-4bc0-859a-32f8748691d1">
+        <div id="question_3a053db4-7684-4608-bbea-e45cb73504d9" class="quiz__question">What is the maximum amount of bytes that one response can be composed of?</div>
+        <div id="answers_3a053db4-7684-4608-bbea-e45cb73504d9">
         
             <input type="radio" name="question" value="A"><label>A: 20 bytes</label>
             <br>
@@ -1019,18 +1019,18 @@ Got the Open GoPro version successfully: 2.0
         
         </div>
     </div>
-    <button onclick="showResults('f5ce2cef-6242-4bc0-859a-32f8748691d1', 'C')">Submit Answer</button>
-    <div id="results_f5ce2cef-6242-4bc0-859a-32f8748691d1" style="display: none">
-        <span id="correct_f5ce2cef-6242-4bc0-859a-32f8748691d1" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_f5ce2cef-6242-4bc0-859a-32f8748691d1" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('3a053db4-7684-4608-bbea-e45cb73504d9', 'C')">Submit Answer</button>
+    <div id="results_3a053db4-7684-4608-bbea-e45cb73504d9" style="display: none">
+        <span id="correct_3a053db4-7684-4608-bbea-e45cb73504d9" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_3a053db4-7684-4608-bbea-e45cb73504d9" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         There is no limit on the amount of packets that can comprise a response.
     </div>
 </div>
 
-<div id="quiz_13ba5686-241d-40f6-acbd-8ef0514d9f33" class="quiz">
+<div id="quiz_c8315a9c-a1d4-4fec-9106-e25216d76d59" class="quiz">
     <div>
-        <div id="question_13ba5686-241d-40f6-acbd-8ef0514d9f33" class="quiz__question">How many packets are command responses composed of?</div>
-        <div id="answers_13ba5686-241d-40f6-acbd-8ef0514d9f33">
+        <div id="question_c8315a9c-a1d4-4fec-9106-e25216d76d59" class="quiz__question">How many packets are command responses composed of?</div>
+        <div id="answers_c8315a9c-a1d4-4fec-9106-e25216d76d59">
         
             <input type="radio" name="question" value="A"><label>A: Always 1 packet</label>
             <br>
@@ -1043,20 +1043,20 @@ Got the Open GoPro version successfully: 2.0
         
         </div>
     </div>
-    <button onclick="showResults('13ba5686-241d-40f6-acbd-8ef0514d9f33', 'C')">Submit Answer</button>
-    <div id="results_13ba5686-241d-40f6-acbd-8ef0514d9f33" style="display: none">
-        <span id="correct_13ba5686-241d-40f6-acbd-8ef0514d9f33" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_13ba5686-241d-40f6-acbd-8ef0514d9f33" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
+    <button onclick="showResults('c8315a9c-a1d4-4fec-9106-e25216d76d59', 'C')">Submit Answer</button>
+    <div id="results_c8315a9c-a1d4-4fec-9106-e25216d76d59" style="display: none">
+        <span id="correct_c8315a9c-a1d4-4fec-9106-e25216d76d59" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_c8315a9c-a1d4-4fec-9106-e25216d76d59" style="display: none"> Incorrect!! 😭 The correct answer is C.</span>
         Command responses are sometimes 1 packet (just returning the status).
     Other times, command responses also contain a payload and can thus be multiple packets if the payload is big enough
     (i.e. in the case of Get Hardware Info). This is described in the per-command documentation in the BLE spec.
     </div>
 </div>
 
-<div id="quiz_be2178c8-9c0b-4ec3-afcb-980fb8f2bc0b" class="quiz">
+<div id="quiz_fabb0298-b424-4513-ac39-40eeb5cf2e57" class="quiz">
     <div>
-        <div id="question_be2178c8-9c0b-4ec3-afcb-980fb8f2bc0b" class="quiz__question">How many packets are setting responses comprised of?</div>
-        <div id="answers_be2178c8-9c0b-4ec3-afcb-980fb8f2bc0b">
+        <div id="question_fabb0298-b424-4513-ac39-40eeb5cf2e57" class="quiz__question">How many packets are setting responses comprised of?</div>
+        <div id="answers_fabb0298-b424-4513-ac39-40eeb5cf2e57">
         
             <input type="radio" name="question" value="A"><label>A: Always 1 packet</label>
             <br>
@@ -1069,10 +1069,10 @@ Got the Open GoPro version successfully: 2.0
         
         </div>
     </div>
-    <button onclick="showResults('be2178c8-9c0b-4ec3-afcb-980fb8f2bc0b', 'A')">Submit Answer</button>
-    <div id="results_be2178c8-9c0b-4ec3-afcb-980fb8f2bc0b" style="display: none">
-        <span id="correct_be2178c8-9c0b-4ec3-afcb-980fb8f2bc0b" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_be2178c8-9c0b-4ec3-afcb-980fb8f2bc0b" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
+    <button onclick="showResults('fabb0298-b424-4513-ac39-40eeb5cf2e57', 'A')">Submit Answer</button>
+    <div id="results_fabb0298-b424-4513-ac39-40eeb5cf2e57" style="display: none">
+        <span id="correct_fabb0298-b424-4513-ac39-40eeb5cf2e57" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_fabb0298-b424-4513-ac39-40eeb5cf2e57" style="display: none"> Incorrect!! 😭 The correct answer is A.</span>
         Settings Responses only ever contain the response status.
     </div>
 </div>
@@ -1166,7 +1166,7 @@ have just used the header bytes of the response as the length, we now must compl
     <p>Is the continuation bit set?</p>
 
     <div>
-    <ul class="tab tab-linked" data-tab="8d565931-2f90-4650-a238-2df559b4dc32">
+    <ul class="tab tab-linked" data-tab="565e5c64-ca12-4967-9333-0da69b0ab18f">
         
             <li class="active">
                 <a href="">python </a>
@@ -1177,7 +1177,7 @@ have just used the header bytes of the response as the length, we now must compl
             </li>
         
         </ul>
-        <ul class="tab-content" id="8d565931-2f90-4650-a238-2df559b4dc32">
+        <ul class="tab-content" id="565e5c64-ca12-4967-9333-0da69b0ab18f">
         
             <li class="active tab-content-container">
 <div class="callout note">
@@ -1207,7 +1207,7 @@ have just used the header bytes of the response as the length, we now must compl
     <p>No, the continuation bit was not set. Therefore create new response, then get its length.</p>
 
     <div>
-    <ul class="tab tab-linked" data-tab="37607bb0-9d24-4d03-9f5e-65abbb25b037">
+    <ul class="tab tab-linked" data-tab="340ce8ce-c055-438a-be58-a3106b07013e">
         
             <li class="active">
                 <a href="">python </a>
@@ -1218,7 +1218,7 @@ have just used the header bytes of the response as the length, we now must compl
             </li>
         
         </ul>
-        <ul class="tab-content" id="37607bb0-9d24-4d03-9f5e-65abbb25b037">
+        <ul class="tab-content" id="340ce8ce-c055-438a-be58-a3106b07013e">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># This is a new packet so start with an empty byte array
@@ -1268,7 +1268,7 @@ have just used the header bytes of the response as the length, we now must compl
     <p>Append current packet to response and decrement bytes remaining.</p>
 
     <div>
-    <ul class="tab tab-linked" data-tab="a313a87a-4514-47ed-94d5-52d06adacde2">
+    <ul class="tab tab-linked" data-tab="2ff25dc1-cbba-42a2-b3e8-c7e9cdd5688e">
         
             <li class="active">
                 <a href="">python </a>
@@ -1279,7 +1279,7 @@ have just used the header bytes of the response as the length, we now must compl
             </li>
         
         </ul>
-        <ul class="tab-content" id="a313a87a-4514-47ed-94d5-52d06adacde2">
+        <ul class="tab-content" id="2ff25dc1-cbba-42a2-b3e8-c7e9cdd5688e">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Append payload to buffer and update remaining / complete
@@ -1303,7 +1303,7 @@ have just used the header bytes of the response as the length, we now must compl
     <p>In the notification handler, we are then enqueueing the received response if there are no bytes remaining.</p>
 
     <div>
-    <ul class="tab tab-linked" data-tab="9c67a4ac-932a-4bb6-991d-77fc856b8dc5">
+    <ul class="tab tab-linked" data-tab="ab28cf59-0158-4aa8-8120-42342c8af803">
         
             <li class="active">
                 <a href="">python </a>
@@ -1314,7 +1314,7 @@ have just used the header bytes of the response as the length, we now must compl
             </li>
         
         </ul>
-        <ul class="tab-content" id="9c67a4ac-932a-4bb6-991d-77fc856b8dc5">
+        <ul class="tab-content" id="ab28cf59-0158-4aa8-8120-42342c8af803">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">is_received</span><span class="p">:</span>
@@ -1366,7 +1366,7 @@ at the current TLV Response level, is just extracting the ID, status, and payloa
 <a href="/OpenGoPro/ble/features/query.html#get-hardware-info">Get Hardware Info</a> Command:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="0d4a040e-7fd7-4e4f-9e47-e1cbeaddaab2">
+    <ul class="tab tab-linked" data-tab="50d62ee3-d17c-4ae3-b782-6c84025aae84">
         
             <li class="active">
                 <a href="">python </a>
@@ -1377,7 +1377,7 @@ at the current TLV Response level, is just extracting the ID, status, and payloa
             </li>
         
         </ul>
-        <ul class="tab-content" id="0d4a040e-7fd7-4e4f-9e47-e1cbeaddaab2">
+        <ul class="tab-content" id="50d62ee3-d17c-4ae3-b782-6c84025aae84">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">request_uuid</span> <span class="o">=</span> <span class="n">GoProUuid</span><span class="p">.</span><span class="n">COMMAND_REQ_UUID</span>
@@ -1409,7 +1409,7 @@ we will be receiving.</span>
 </div>
 
 <div>
-    <ul class="tab tab-linked" data-tab="a145385f-f820-40c4-a1aa-2f66d7064672">
+    <ul class="tab tab-linked" data-tab="7babd147-3d15-4eae-bbd4-b2a3a5c77b28">
         
             <li class="active">
                 <a href="">python </a>
@@ -1420,7 +1420,7 @@ we will be receiving.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="a145385f-f820-40c4-a1aa-2f66d7064672">
+        <ul class="tab-content" id="7babd147-3d15-4eae-bbd4-b2a3a5c77b28">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">request_uuid</span> <span class="o">=</span> <span class="n">GoProUuid</span><span class="p">.</span><span class="n">COMMAND_REQ_UUID</span>
@@ -1471,7 +1471,7 @@ we will be receiving.</span>
 <p>We can see the individual packets being accumulated in the log:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="d4171ad0-bd55-4f27-ade4-5c8940cb9796">
+    <ul class="tab tab-linked" data-tab="4a720c8e-deda-4965-a035-0611a138ad9e">
         
             <li class="active">
                 <a href="">python </a>
@@ -1482,7 +1482,7 @@ we will be receiving.</span>
             </li>
         
         </ul>
-        <ul class="tab-content" id="d4171ad0-bd55-4f27-ade4-5c8940cb9796">
+        <ul class="tab-content" id="4a720c8e-deda-4965-a035-0611a138ad9e">
         
             <li class="active tab-content-container">
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Getting the camera's hardware info...
@@ -1534,7 +1534,7 @@ Received packet of length 16. 0 bytes remaining
 <a href="/OpenGoPro/ble/features/query.html#get-hardware-info">Get Hardware Info</a> response documentation:</p>
 
 <div>
-    <ul class="tab tab-linked" data-tab="0ec959e9-9132-4a09-9718-c9ef924c7258">
+    <ul class="tab tab-linked" data-tab="a9c213ce-49fd-4155-bf6e-14f59546d7d2">
         
             <li class="active">
                 <a href="">python </a>
@@ -1545,7 +1545,7 @@ Received packet of length 16. 0 bytes remaining
             </li>
         
         </ul>
-        <ul class="tab-content" id="0ec959e9-9132-4a09-9718-c9ef924c7258">
+        <ul class="tab-content" id="a9c213ce-49fd-4155-bf6e-14f59546d7d2">
         
             <li class="active tab-content-container">
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hardware_info</span> <span class="o">=</span> <span class="n">HardwareInfo</span><span class="p">.</span><span class="nf">from_bytes</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">payload</span><span class="p">)</span>
@@ -1668,10 +1668,10 @@ Received packet of length 16. 0 bytes remaining
 
 <p><strong>Quiz time! 📚 ✏️</strong></p>
 
-<div id="quiz_ad3d3b7c-4094-4f2a-b5cf-fb68128ecd55" class="quiz">
+<div id="quiz_2db4b80d-c28a-46e2-ab84-d5fe3f909aa5" class="quiz">
     <div>
-        <div id="question_ad3d3b7c-4094-4f2a-b5cf-fb68128ecd55" class="quiz__question">How can we know that a response has been completely received?</div>
-        <div id="answers_ad3d3b7c-4094-4f2a-b5cf-fb68128ecd55">
+        <div id="question_2db4b80d-c28a-46e2-ab84-d5fe3f909aa5" class="quiz__question">How can we know that a response has been completely received?</div>
+        <div id="answers_2db4b80d-c28a-46e2-ab84-d5fe3f909aa5">
         
             <input type="radio" name="question" value="A"><label>A: The stop bit will be set in the header</label>
             <br>
@@ -1684,10 +1684,10 @@ Received packet of length 16. 0 bytes remaining
         
         </div>
     </div>
-    <button onclick="showResults('ad3d3b7c-4094-4f2a-b5cf-fb68128ecd55', 'B')">Submit Answer</button>
-    <div id="results_ad3d3b7c-4094-4f2a-b5cf-fb68128ecd55" style="display: none">
-        <span id="correct_ad3d3b7c-4094-4f2a-b5cf-fb68128ecd55" style="display: none">  Correct!! 😃</span>
-        <span id="incorrect_ad3d3b7c-4094-4f2a-b5cf-fb68128ecd55" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
+    <button onclick="showResults('2db4b80d-c28a-46e2-ab84-d5fe3f909aa5', 'B')">Submit Answer</button>
+    <div id="results_2db4b80d-c28a-46e2-ab84-d5fe3f909aa5" style="display: none">
+        <span id="correct_2db4b80d-c28a-46e2-ab84-d5fe3f909aa5" style="display: none">  Correct!! 😃</span>
+        <span id="incorrect_2db4b80d-c28a-46e2-ab84-d5fe3f909aa5" style="display: none"> Incorrect!! 😭 The correct answer is B.</span>
         The length of the entire response is parsed from the first packet. We
         then accumulate packets, keeping track of the received length, until all of the bytes
         have been received. A and C are just made up 😜.
@@ -1722,7 +1722,7 @@ complete example of this, see the <a href="https://gopro.github.io/OpenGoPro/pyt
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2025-09-24T13:11:07-07:00">September 24, 2025</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-04-15T11:52:53-07:00">April 15, 2026</time></p>
 
       </footer>
 
@@ -1806,7 +1806,7 @@ complete example of this, see the <a href="https://gopro.github.io/OpenGoPro/pyt
 </div>
 
 <div class="page__footer-copyright">
-    © 2025 . Powered by
+    © 2026 . Powered by
     <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp;
     <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.
     <p>

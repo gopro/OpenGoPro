@@ -137,19 +137,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Query — GoPro BLE API 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3">
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094">
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e">
       <link rel="stylesheet" type="text/css" href="../_static/style.css?v=8b4707e3">
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=d45e8c67"></script>
-        <script src="../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html">
     <link rel="search" title="Search" href="../search.html">
@@ -303,6 +299,7 @@
 <li class="toctree-l2">
 <a class="reference internal" href="control.html#operations">Operations</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="control.html#keep-alive"><code class="docutils literal notranslate"><span class="pre">Keep</span> <span class="pre">Alive</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control.html#press-button"><code class="docutils literal notranslate"><span class="pre">Press</span> <span class="pre">Button</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#reboot-the-camera"><code class="docutils literal notranslate"><span class="pre">Reboot</span> <span class="pre">the</span> <span class="pre">Camera</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-analytics"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">Analytics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="control.html#set-ap-control"><code class="docutils literal notranslate"><span class="pre">Set</span> <span class="pre">AP</span> <span class="pre">Control</span></code></a></li>
@@ -472,6 +469,7 @@
 <li class="toctree-l3"><a class="reference internal" href="settings.html#multi-shot-framing-233">Multi Shot Framing (233)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#frame-rate-234">Frame Rate (234)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="settings.html#automatic-wi-fi-access-point-236">Automatic Wi-Fi Access Point (236)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#auto-power-on-usb-237">Auto Power On USB (237)</a></li>
 </ul>
 </li>
 </ul>
@@ -603,14 +601,7 @@
 <span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Date</span> <span class="pre">Time</span></span><a class="headerlink" href="#get-date-time" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -679,14 +670,7 @@
 <span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Hardware</span> <span class="pre">Info</span></span><a class="headerlink" href="#get-hardware-info" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -770,12 +754,7 @@
 <span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Local</span> <span class="pre">Date</span> <span class="pre">Time</span></span><a class="headerlink" href="#get-local-date-time" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -846,10 +825,7 @@
 <span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Last</span> <span class="pre">Captured</span> <span class="pre">Media</span></span><a class="headerlink" href="#get-last-captured-media" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -926,14 +902,7 @@ on the type of media captured, it will return:</p>
 <span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Open</span> <span class="pre">GoPro</span> <span class="pre">Version</span></span><a class="headerlink" href="#get-open-gopro-version" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -994,14 +963,7 @@ on the type of media captured, it will return:</p>
 <span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Setting</span> <span class="pre">Values</span></span><a class="headerlink" href="#get-setting-values" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -1063,14 +1025,7 @@ on the type of media captured, it will return:</p>
 <span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Status</span> <span class="pre">Values</span></span><a class="headerlink" href="#get-status-values" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -1132,14 +1087,7 @@ on the type of media captured, it will return:</p>
 <span class="sig-name descname"><span class="pre">Get</span> <span class="pre">Setting</span> <span class="pre">Capabilities</span></span><a class="headerlink" href="#get-setting-capabilities" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -1202,14 +1150,7 @@ on the type of media captured, it will return:</p>
 <span class="sig-name descname"><span class="pre">Register</span> <span class="pre">for</span> <span class="pre">Setting</span> <span class="pre">Value</span> <span class="pre">Updates</span></span><a class="headerlink" href="#register-for-setting-value-updates" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -1295,14 +1236,7 @@ setting values. Notifications will be sent whenever one of the requested setting
 <span class="sig-name descname"><span class="pre">Register</span> <span class="pre">for</span> <span class="pre">Status</span> <span class="pre">Value</span> <span class="pre">Updates</span></span><a class="headerlink" href="#register-for-status-value-updates" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -1388,14 +1322,7 @@ status values. Notifications will be sent whenever one of the requested statuses
 <span class="sig-name descname"><span class="pre">Register</span> <span class="pre">for</span> <span class="pre">Setting</span> <span class="pre">Capability</span> <span class="pre">Updates</span></span><a class="headerlink" href="#register-for-setting-capability-updates" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -1481,14 +1408,7 @@ setting capabilities. Notifications will be sent whenever one of the requested s
 <span class="sig-name descname"><span class="pre">Unregister</span> <span class="pre">for</span> <span class="pre">Setting</span> <span class="pre">Value</span> <span class="pre">Updates</span></span><a class="headerlink" href="#unregister-for-setting-value-updates" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -1544,14 +1464,7 @@ setting capabilities. Notifications will be sent whenever one of the requested s
 <span class="sig-name descname"><span class="pre">Unregister</span> <span class="pre">for</span> <span class="pre">Status</span> <span class="pre">Value</span> <span class="pre">Updates</span></span><a class="headerlink" href="#unregister-for-status-value-updates" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
@@ -1607,14 +1520,7 @@ setting capabilities. Notifications will be sent whenever one of the requested s
 <span class="sig-name descname"><span class="pre">Unregister</span> <span class="pre">for</span> <span class="pre">Setting</span> <span class="pre">Capability</span> <span class="pre">Updates</span></span><a class="headerlink" href="#unregister-for-setting-capability-updates" title="Link to this definition"></a>
 </dt>
 <dd>
-<img alt="https://img.shields.io/badge/MAX 2-dd3a4d" src="https://img.shields.io/badge/MAX%202-dd3a4d">
-<img alt="https://img.shields.io/badge/HERO13 Black-4cbee0" src="https://img.shields.io/badge/HERO13%20Black-4cbee0">
-<img alt="https://img.shields.io/badge/HERO12 Black-566bb7" src="https://img.shields.io/badge/HERO12%20Black-566bb7">
-<img alt="https://img.shields.io/badge/HERO11 Black Mini-e0952a" src="https://img.shields.io/badge/HERO11%20Black%20Mini-e0952a">
-<img alt="https://img.shields.io/badge/HERO11 Black-7a4ea5" src="https://img.shields.io/badge/HERO11%20Black-7a4ea5">
-<img alt="https://img.shields.io/badge/HERO10 Black-9bb859" src="https://img.shields.io/badge/HERO10%20Black-9bb859">
-<img alt="https://img.shields.io/badge/HERO9 Black-a93b85" src="https://img.shields.io/badge/HERO9%20Black-a93b85">
-<dl class="field-list simple">
+<span style="display:inline-block;background-color:#a27f1f;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">LIT HERO</span><span style="display:inline-block;background-color:#dd3a4d;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">MAX 2</span><span style="display:inline-block;background-color:#4cbee0;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO13 Black</span><span style="display:inline-block;background-color:#566bb7;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO12 Black</span><span style="display:inline-block;background-color:#e0952a;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black Mini</span><span style="display:inline-block;background-color:#7a4ea5;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO11 Black</span><span style="display:inline-block;background-color:#9bb859;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO10 Black</span><span style="display:inline-block;background-color:#a93b85;color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;margin:1px">HERO9 Black</span><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span>
 </dt>
 <dd class="field-odd">

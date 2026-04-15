@@ -262,3 +262,15 @@ svg.plantuml {
     margin-top: 1em;
     margin-bottom: 1em;
 }
+
+/* HTTP Spec (React Redoc App) - position below Jekyll masthead */
+.app-container {
+    top: 4em !important; /* $masthead-height from _variables.scss */
+    height: calc(100vh - 4em) !important;
+    z-index: 10 !important; /* Below masthead (z-index: 20) */
+}
+
+.redoc-container,
+.camera-filter-panel {
+    height: 100% !important;
+}

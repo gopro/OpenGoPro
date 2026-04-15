@@ -95,6 +95,21 @@ Operations
         :uuid: Query Response
         :message: WSDK_ResponseLastCapturedMedia
 
+.. operation:protobuf:: Get Camera Capabilities
+    :operation-id: OGP_GET_CAMERA_CAPABILITIES
+
+    .. operation:protobuf-message:: request
+        :feature-id: 0xF5
+        :action-id: 0x6C
+        :uuid: Query
+        :message: WSDK_RequestGetCameraCapabilities
+
+    .. operation:protobuf-message:: response
+        :feature-id: 0xF5
+        :action-id: 0xEC
+        :uuid: Query Response
+        :message: WSDK_ResponseGetCameraCapabilities
+
 .. operation:protobuf:: Get Network Capabilities
     :operation-id: GPCAMERA_NETWORK_GET_CAPABILITIES
 
