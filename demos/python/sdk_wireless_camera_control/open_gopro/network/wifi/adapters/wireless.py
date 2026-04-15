@@ -43,9 +43,9 @@ def ensure_us_english() -> None:
     else:
         language = os.environ["LANG"]
 
-    if not language.startswith("en_US"):
+    if not language.startswith("en_"):
         raise RuntimeError(
-            f"The Wifi driver parses CLI responses and only supports en_US where your language is {language}"
+            f"The Wifi driver parses CLI responses and only supports en_* where your language is {language}"
         )
 
 
