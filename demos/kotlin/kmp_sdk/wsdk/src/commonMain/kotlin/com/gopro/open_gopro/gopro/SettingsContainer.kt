@@ -490,4 +490,14 @@ class SettingsContainer internal constructor(marshaller: IOperationMarshaller) {
    */
   val automaticWi_FiAccessPoint =
       Setting(SettingId.AUTOMATIC_WI_FI_ACCESS_POINT, AutomaticWi_FiAccessPoint, marshaller)
+
+  /**
+   * Auto Power On USB
+   *
+   * Setting to automatically power on when the camera is connected to a power source.
+   *
+   * @see
+   *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#auto-power-on-usb-237)
+   */
+  val autoPowerOnUsb = Setting(SettingId.AUTO_POWER_ON_USB, AutoPowerOnUsb, marshaller)
 }

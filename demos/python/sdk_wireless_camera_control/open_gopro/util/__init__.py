@@ -5,7 +5,6 @@
 
 from .util import (
     Singleton,
-    SnapshotQueue,
     add_cli_args_and_parse,
     ainput,
     cmd,

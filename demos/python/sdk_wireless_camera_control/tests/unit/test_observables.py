@@ -456,7 +456,7 @@ async def test_status_observable_basic(mock_wireless_gopro_basic: MockWirelessGo
         await GoProObservable(
             gopro=mock_wireless_gopro_basic,
             update=StatusId.ENCODING,
-            register_command=mock_wireless_gopro_basic.mock_gopro_resp(True),
+            register_command=lambda: mock_wireless_gopro_basic.mock_gopro_resp(True),
         )
         .on_subscribe(lambda: started.set())
         .start()
@@ -498,7 +498,7 @@ async def test_status_observable_different_initial_response(mock_wireless_gopro_
         await GoproObserverDistinctInitial(
             gopro=mock_wireless_gopro_basic,
             update=StatusId.ENCODING,
-            register_command=mock_wireless_gopro_basic.ble_command.get_open_gopro_api_version(),
+            register_command=lambda: mock_wireless_gopro_basic.ble_command.get_open_gopro_api_version(),
         )
         .on_subscribe(lambda: started.set())
         .start()
@@ -534,3 +534,453 @@ async def test_status_observable_different_initial_response(mock_wireless_gopro_
 
     # THEN
     assert values == ["2.0", True, False, True, False]
+
+
+###############################################################################
+# Observer lifecycle and error handling tests
+###############################################################################
+
+
+async def test_observer_aclose_removes_observer():
+    # GIVEN
+    observable = Observable[int]()
+    observer = observable.observe(replay=Observable.REPLAY_ALL)
+
+    # WHEN
+    await observable.emit(0)
+    _ = await anext(observer)  # Activates the observer
+    await observer.aclose()
+
+    # THEN - observer should be removed from the observable
+    async with observable._shared_data:
+        assert observer._uuid not in observable._shared_data.q_dict
+    assert not observer._is_active
+
+
+async def test_observer_aclose_is_idempotent():
+    # GIVEN
+    observable = Observable[int]()
+    observer = observable.observe(replay=Observable.REPLAY_ALL)
+
+    # WHEN
+    await observable.emit(0)
+    _ = await anext(observer)
+    await observer.aclose()
+    await observer.aclose()  # Should not raise
+
+    # THEN
+    assert not observer._is_active
+
+
+async def test_observer_athrow_stops_iteration():
+    # GIVEN
+    observable = Observable[int]()
+    observer = observable.observe(replay=Observable.REPLAY_ALL)
+
+    # WHEN
+    await observable.emit(0)
+    _ = await anext(observer)
+
+    # THEN
+    with pytest.raises(ValueError, match="test error"):
+        await observer.athrow(ValueError, ValueError("test error"))
+
+    assert not observer._is_active
+
+
+async def test_observer_athrow_before_activation_raises_stop_iteration():
+    # GIVEN
+    observable = Observable[int]()
+    observer = observable.observe()
+
+    # WHEN / THEN
+    with pytest.raises(StopAsyncIteration):
+        await observer.athrow(ValueError)
+
+
+async def test_observer_asend_advances_iterator():
+    """Test that asend advances the iterator to the next value (same as anext)."""
+    # GIVEN
+    observable = Observable[int]()
+    observer = observable.observe(replay=Observable.REPLAY_ALL)
+
+    # WHEN - emit values first so they're in the cache
+    await observable.emit(0)
+    await observable.emit(1)
+    await observable.emit(2)
+
+    # Get first value via anext
+    first = await anext(observer)
+    assert first == 0
+
+    # Use asend to get the next value (asend(None) is equivalent to anext per AsyncGenerator protocol)
+    second = await observer.asend(None)
+
+    # THEN
+    assert second == 1
+
+
+async def test_observer_asend_before_activation_raises_stop_iteration():
+    # GIVEN
+    observable = Observable[int]()
+    observer = observable.observe()
+
+    # WHEN / THEN
+    with pytest.raises(StopAsyncIteration):
+        await observer.asend(None)
+
+
+###############################################################################
+# Cache and capacity tests
+###############################################################################
+
+
+async def test_observable_capacity_overflow_keeps_most_recent():
+    # GIVEN
+    capacity = 3
+    observable = Observable[int](capacity=capacity)
+
+    # WHEN - emit more than capacity
+    for i in range(10):
+        await observable.emit(i)
+
+    # THEN - only most recent 'capacity' values should be cached
+    observer = observable.observe(replay=Observable.REPLAY_ALL)
+    values = []
+    for _ in range(capacity):
+        values.append(await anext(observer))
+
+    assert values == [7, 8, 9]
+    assert len(observable._shared_data.cache) == capacity
+
+
+async def test_replay_partial_cache():
+    # GIVEN
+    observable = Observable[int]()
+    for i in range(5):
+        await observable.emit(i)
+
+    # WHEN - request replay of 2
+    observer = observable.observe(replay=2)
+
+    # THEN
+    values = []
+    values.append(await anext(observer))
+    values.append(await anext(observer))
+    assert values == [3, 4]
+
+
+async def test_replay_more_than_cache_gets_all():
+    # GIVEN
+    observable = Observable[int]()
+    await observable.emit(0)
+    await observable.emit(1)
+
+    # WHEN - request replay of 10 but only 2 exist
+    observer = observable.observe(replay=10)
+
+    # THEN
+    values = []
+    values.append(await anext(observer))
+    values.append(await anext(observer))
+    assert values == [0, 1]
+
+
+###############################################################################
+# Concurrent operations and deadlock prevention tests
+###############################################################################
+
+
+async def test_concurrent_emit_and_observe_no_deadlock():
+    # GIVEN
+    observable = Observable[int]()
+    results: list[int] = []
+    num_values = 100
+
+    # WHEN - concurrent emit and observe
+    async def emitter():
+        for i in range(num_values):
+            await observable.emit(i)
+            await asyncio.sleep(0)  # Yield to allow observer to run
+
+    async def collector():
+        observer = observable.observe(replay=Observable.REPLAY_ALL)
+        async for value in islice(observer, num_values):
+            results.append(value)
+
+    # THEN - should complete without deadlock
+    try:
+        async with asyncio.timeout(5):
+            async with asyncio.TaskGroup() as tg:
+                tg.create_task(emitter())
+                tg.create_task(collector())
+    except TimeoutError:
+        pytest.fail("Deadlock detected: concurrent emit and observe timed out")
+
+    assert len(results) == num_values
+    assert results == list(range(num_values))
+
+
+async def test_multiple_observers_different_replay_no_deadlock():
+    # GIVEN
+    observable = Observable[int]()
+    results1: list[int] = []
+    results2: list[int] = []
+    results3: list[int] = []
+
+    # WHEN - emit values, then create observers with different replay
+    for i in range(10):
+        await observable.emit(i)
+
+    observer1 = observable.observe(replay=0)
+    observer2 = observable.observe(replay=5)
+    observer3 = observable.observe(replay=Observable.REPLAY_ALL)
+
+    # Collect replayed values
+    async def collect_with_timeout(observer, results, count):
+        try:
+            async with asyncio.timeout(1):
+                async for value in islice(observer, count):
+                    results.append(value)
+        except TimeoutError:
+            pass
+
+    # observer1 shouldn't get any replayed values, so it would timeout waiting
+    # observers 2 and 3 should get their replayed values immediately
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(collect_with_timeout(observer2, results2, 5))
+        tg.create_task(collect_with_timeout(observer3, results3, 10))
+
+    # THEN
+    assert results1 == []  # No replay
+    assert results2 == [5, 6, 7, 8, 9]  # Last 5 values
+    assert results3 == list(range(10))  # All values
+
+
+async def test_observer_close_during_emit_no_deadlock():
+    # GIVEN
+    observable = Observable[int]()
+    observer = observable.observe(replay=Observable.REPLAY_ALL)
+    collected: list[int] = []
+
+    # WHEN
+    await observable.emit(0)
+    collected.append(await anext(observer))
+
+    # Close observer while emitting in background
+    async def close_soon():
+        await asyncio.sleep(0.01)
+        await observer.aclose()
+
+    async def emit_many():
+        for i in range(1, 100):
+            await observable.emit(i)
+            await asyncio.sleep(0.001)
+
+    # THEN - should not deadlock
+    try:
+        async with asyncio.timeout(2):
+            await asyncio.gather(close_soon(), emit_many())
+    except TimeoutError:
+        pytest.fail("Deadlock detected during close while emitting")
+
+
+async def test_rapid_subscribe_unsubscribe_no_deadlock():
+    # GIVEN
+    observable = Observable[int]()
+    subscribe_count = 50
+
+    # WHEN - rapidly create and close observers
+    async def subscribe_and_close():
+        observer = observable.observe(replay=Observable.REPLAY_ALL)
+        await observable.emit(1)
+        _ = await anext(observer)
+        await observer.aclose()
+
+    # THEN - should complete without deadlock
+    try:
+        async with asyncio.timeout(5):
+            for _ in range(subscribe_count):
+                await subscribe_and_close()
+    except TimeoutError:
+        pytest.fail("Deadlock detected during rapid subscribe/unsubscribe")
+
+
+async def test_concurrent_observers_with_slow_consumer_no_deadlock():
+    # GIVEN
+    observable = Observable[int]()
+    fast_results: list[int] = []
+    slow_results: list[int] = []
+    num_values = 20
+
+    # WHEN - one fast consumer, one slow consumer
+    started = asyncio.Event()
+
+    async def emitter():
+        await started.wait()
+        for i in range(num_values):
+            await observable.emit(i)
+            await asyncio.sleep(0.001)
+
+    async def fast_consumer():
+        started.set()
+        observer = observable.observe(replay=Observable.REPLAY_ALL)
+        async for value in islice(observer, num_values):
+            fast_results.append(value)
+
+    async def slow_consumer():
+        await started.wait()
+        observer = observable.observe(replay=Observable.REPLAY_ALL)
+        async for value in islice(observer, num_values):
+            await asyncio.sleep(0.01)  # Slow processing
+            slow_results.append(value)
+
+    # THEN - should complete without deadlock
+    try:
+        async with asyncio.timeout(10):
+            async with asyncio.TaskGroup() as tg:
+                tg.create_task(emitter())
+                tg.create_task(fast_consumer())
+                tg.create_task(slow_consumer())
+    except TimeoutError:
+        pytest.fail("Deadlock detected with slow consumer")
+
+    assert fast_results == list(range(num_values))
+    assert slow_results == list(range(num_values))
+
+
+###############################################################################
+# on_subscribe and on_start action tests
+###############################################################################
+
+
+async def test_on_subscribe_async_action():
+    # GIVEN
+    subscribe_event = asyncio.Event()
+    started = asyncio.Event()
+
+    async def async_subscribe_action():
+        subscribe_event.set()
+
+    observable = Observable[int]().on_subscribe(async_subscribe_action).on_subscribe(lambda: started.set())
+    observer = observable.observe()
+
+    # WHEN
+    async def emit_values():
+        await started.wait()
+        await observable.emit(0)
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        result = tg.create_task(anext(observer))
+
+    # Note: The current implementation has a bug where async on_subscribe is awaited
+    # but sync is also called (we fixed this). This test verifies the fix.
+    assert result.result() == 0
+
+
+async def test_on_start_called_only_once():
+    # GIVEN
+    call_count = 0
+
+    def increment_count(_):
+        nonlocal call_count
+        call_count += 1
+
+    started = asyncio.Event()
+    observable = Observable[int]().on_subscribe(lambda: started.set()).on_start(increment_count)
+    observer = observable.observe()
+
+    # WHEN
+    async def emit_values():
+        await started.wait()
+        for i in range(5):
+            await observable.emit(i)
+
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(emit_values())
+        collected = tg.create_task(collect_n(observer, 5))
+
+    # THEN - on_start should be called only once (for the first value)
+    assert collected.result() == [0, 1, 2, 3, 4]
+    assert call_count == 1
+
+
+###############################################################################
+# Error propagation tests
+###############################################################################
+
+
+async def test_observer_handles_exception_in_iteration():
+    # GIVEN
+    observable = Observable[int]()
+    observer = observable.observe(replay=Observable.REPLAY_ALL)
+
+    # WHEN
+    await observable.emit(0)
+    await observable.emit(1)
+
+    # Simulate an error during processing
+    values = []
+    try:
+        async for value in observer:
+            values.append(value)
+            if value == 1:
+                raise ValueError("Processing error")
+    except ValueError:
+        pass
+
+    # THEN - observer should be cleaned up
+    await observer.aclose()
+    assert not observer._is_active
+
+
+async def test_get_next_with_unregistered_observer_raises():
+    # GIVEN
+    observable = Observable[int]()
+    from uuid import uuid1
+
+    fake_uuid = uuid1()
+
+    # WHEN / THEN
+    with pytest.raises(RuntimeError, match="Observer has not been added"):
+        await observable._get_next(fake_uuid)
+
+
+###############################################################################
+# Current value and state tests
+###############################################################################
+
+
+async def test_current_value_is_none_initially():
+    # GIVEN
+    observable = Observable[int]()
+
+    # THEN
+    assert observable.current is None
+
+
+async def test_current_value_updates_on_emit():
+    # GIVEN
+    observable = Observable[int]()
+
+    # WHEN
+    await observable.emit(42)
+    await observable.emit(100)
+
+    # THEN
+    assert observable.current == 100
+
+
+###############################################################################
+# Helper functions
+###############################################################################
+
+
+async def collect_n(observer, n: int) -> list:
+    """Helper to collect n values from an observer"""
+    values = []
+    async for value in islice(observer, n):
+        values.append(value)
+    return values

@@ -241,7 +241,7 @@ class BleProtoCommand(BleMessage):
                     for element in value:
                         attr.append(element.value if isinstance(element, enum.Enum) else element)  # type: ignore
                 else:
-                    attr.append(value.value if isinstance(value, enum.Enum) else value)  # type:ignore
+                    attr.append(value.value if isinstance(value, enum.Enum) else value)  # type: ignore
             else:
                 setattr(proto, attr_name, value)
         # Prepend headers and serialize
@@ -339,15 +339,17 @@ def ble_register_command(
             else GoProBle._CompositeRegisterType.ALL_SETTINGS
         )
         try:
+            # Compute kwargs once, then pass factories that create fresh coroutines
+            command_kwargs = await wrapped(**kwargs) or kwargs
             return ResultE.from_value(
                 await GoProCompositeObservable(
                     gopro=instance._communicator,
                     update=internal_update_type,
-                    register_command=instance._communicator._send_ble_message(
-                        register_message, **(await wrapped(**kwargs) or kwargs)
+                    register_command=lambda: instance._communicator._send_ble_message(
+                        register_message, **command_kwargs
                     ),
-                    unregister_command=instance._communicator._send_ble_message(
-                        unregister_message, **(await wrapped(**kwargs) or kwargs)
+                    unregister_command=lambda: instance._communicator._send_ble_message(
+                        unregister_message, **command_kwargs
                     ),
                 ).start()
             )
@@ -604,8 +606,8 @@ class BleSettingFacade(Generic[T]):
             await GoProObservable[T](
                 gopro=self._communicator,
                 update=self._identifier,
-                register_command=self._communicator._send_ble_message(register_message),
-                unregister_command=self._communicator._send_ble_message(unregister_message),
+                register_command=lambda: self._communicator._send_ble_message(register_message),
+                unregister_command=lambda: self._communicator._send_ble_message(unregister_message),
             ).start()
         )
 
@@ -631,8 +633,8 @@ class BleSettingFacade(Generic[T]):
             await GoProObservable[list[T]](
                 gopro=self._communicator,
                 update=self._identifier,
-                register_command=self._communicator._send_ble_message(register_message),
-                unregister_command=self._communicator._send_ble_message(unregister_message),
+                register_command=lambda: self._communicator._send_ble_message(register_message),
+                unregister_command=lambda: self._communicator._send_ble_message(unregister_message),
             ).start()
         )
 
@@ -741,8 +743,8 @@ class BleStatusFacade(Generic[T]):
             await GoProObservable[T](
                 gopro=self._communicator,
                 update=self._identifier,
-                register_command=self._communicator._send_ble_message(register_message),
-                unregister_command=self._communicator._send_ble_message(unregister_message),
+                register_command=lambda: self._communicator._send_ble_message(register_message),
+                unregister_command=lambda: self._communicator._send_ble_message(unregister_message),
             ).start()
         )
 

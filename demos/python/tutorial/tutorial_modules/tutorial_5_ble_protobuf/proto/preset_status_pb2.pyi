@@ -90,12 +90,14 @@ class _EnumPresetGroupEnumTypeWrapper(
     PRESET_GROUP_ID_VIDEO: _EnumPresetGroup.ValueType
     PRESET_GROUP_ID_PHOTO: _EnumPresetGroup.ValueType
     PRESET_GROUP_ID_TIMELAPSE: _EnumPresetGroup.ValueType
+    PRESET_GROUP_ID_GENERAL: _EnumPresetGroup.ValueType
 
 class EnumPresetGroup(_EnumPresetGroup, metaclass=_EnumPresetGroupEnumTypeWrapper): ...
 
 PRESET_GROUP_ID_VIDEO: EnumPresetGroup.ValueType
 PRESET_GROUP_ID_PHOTO: EnumPresetGroup.ValueType
 PRESET_GROUP_ID_TIMELAPSE: EnumPresetGroup.ValueType
+PRESET_GROUP_ID_GENERAL: EnumPresetGroup.ValueType
 global___EnumPresetGroup = EnumPresetGroup
 
 class _EnumPresetGroupIcon:
@@ -736,6 +738,8 @@ class PresetGroup(google.protobuf.message.Message):
     CAN_ADD_PRESET_FIELD_NUMBER: builtins.int
     ICON_FIELD_NUMBER: builtins.int
     MODE_ARRAY_FIELD_NUMBER: builtins.int
+    CUSTOM_NAME_FIELD_NUMBER: builtins.int
+    ACTIVE_PRESET_ID_FIELD_NUMBER: builtins.int
     id: global___EnumPresetGroup.ValueType
     "Preset Group ID"
 
@@ -752,6 +756,10 @@ class PresetGroup(google.protobuf.message.Message):
         self,
     ) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[global___EnumFlatMode.ValueType]:
         """A list of flatmodes available for this preset group"""
+    custom_name: builtins.str
+    "Custom string name given to this preset group"
+    active_preset_id: builtins.int
+    "Active preset id in this group"
 
     def __init__(
         self,
@@ -760,16 +768,34 @@ class PresetGroup(google.protobuf.message.Message):
         preset_array: collections.abc.Iterable[global___Preset] | None = ...,
         can_add_preset: builtins.bool | None = ...,
         icon: global___EnumPresetGroupIcon.ValueType | None = ...,
-        mode_array: collections.abc.Iterable[global___EnumFlatMode.ValueType] | None = ...
+        mode_array: collections.abc.Iterable[global___EnumFlatMode.ValueType] | None = ...,
+        custom_name: builtins.str | None = ...,
+        active_preset_id: builtins.int | None = ...
     ) -> None: ...
     def HasField(
-        self, field_name: typing_extensions.Literal["can_add_preset", b"can_add_preset", "icon", b"icon", "id", b"id"]
+        self,
+        field_name: typing_extensions.Literal[
+            "active_preset_id",
+            b"active_preset_id",
+            "can_add_preset",
+            b"can_add_preset",
+            "custom_name",
+            b"custom_name",
+            "icon",
+            b"icon",
+            "id",
+            b"id",
+        ],
     ) -> builtins.bool: ...
     def ClearField(
         self,
         field_name: typing_extensions.Literal[
+            "active_preset_id",
+            b"active_preset_id",
             "can_add_preset",
             b"can_add_preset",
+            "custom_name",
+            b"custom_name",
             "icon",
             b"icon",
             "id",

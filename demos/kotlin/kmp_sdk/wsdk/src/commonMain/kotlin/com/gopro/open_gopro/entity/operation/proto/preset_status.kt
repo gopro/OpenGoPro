@@ -1,6 +1,3 @@
-/* preset_status.kt/Open GoPro, Version 2.0 (C) Copyright 2021 GoPro, Inc. (http://gopro.com/OpenGoPro). */
-/* This copyright was auto-generated on Wed Sep 24 20:06:50 UTC 2025 */
-
 @file:OptIn(pbandk.PublicForGeneratedCode::class)
 
 package com.gopro.open_gopro.operations
@@ -118,12 +115,18 @@ public sealed class EnumPresetGroup(override val value: Int, override val name: 
 
   internal object PRESET_GROUP_ID_TIMELAPSE : EnumPresetGroup(1002, "PRESET_GROUP_ID_TIMELAPSE")
 
+  internal object PRESET_GROUP_ID_GENERAL : EnumPresetGroup(2000, "PRESET_GROUP_ID_GENERAL")
+
   internal class UNRECOGNIZED(value: Int) : EnumPresetGroup(value)
 
   internal companion object :
       pbandk.Message.Enum.Companion<com.gopro.open_gopro.operations.EnumPresetGroup> {
     internal val values: List<com.gopro.open_gopro.operations.EnumPresetGroup> by lazy {
-      listOf(PRESET_GROUP_ID_VIDEO, PRESET_GROUP_ID_PHOTO, PRESET_GROUP_ID_TIMELAPSE)
+      listOf(
+          PRESET_GROUP_ID_VIDEO,
+          PRESET_GROUP_ID_PHOTO,
+          PRESET_GROUP_ID_TIMELAPSE,
+          PRESET_GROUP_ID_GENERAL)
     }
 
     override fun fromValue(value: Int): com.gopro.open_gopro.operations.EnumPresetGroup =
@@ -1152,6 +1155,8 @@ public data class PresetGroup(
     val canAddPreset: Boolean? = null,
     val icon: com.gopro.open_gopro.operations.EnumPresetGroupIcon? = null,
     val modeArray: List<com.gopro.open_gopro.operations.EnumFlatMode> = emptyList(),
+    val customName: String? = null,
+    val activePresetId: Int? = null,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
   override operator fun plus(other: pbandk.Message?): com.gopro.open_gopro.operations.PresetGroup =
@@ -1177,7 +1182,7 @@ public data class PresetGroup(
             messageClass = com.gopro.open_gopro.operations.PresetGroup::class,
             messageCompanion = this,
             fields =
-                buildList(5) {
+                buildList(7) {
                   add(
                       pbandk.FieldDescriptor(
                           messageDescriptor = this@Companion::descriptor,
@@ -1239,6 +1244,22 @@ public data class PresetGroup(
                                                   .Companion)),
                           jsonName = "modeArray",
                           value = com.gopro.open_gopro.operations.PresetGroup::modeArray))
+                  add(
+                      pbandk.FieldDescriptor(
+                          messageDescriptor = this@Companion::descriptor,
+                          name = "custom_name",
+                          number = 6,
+                          type = pbandk.FieldDescriptor.Type.Primitive.String(hasPresence = true),
+                          jsonName = "customName",
+                          value = com.gopro.open_gopro.operations.PresetGroup::customName))
+                  add(
+                      pbandk.FieldDescriptor(
+                          messageDescriptor = this@Companion::descriptor,
+                          name = "active_preset_id",
+                          number = 7,
+                          type = pbandk.FieldDescriptor.Type.Primitive.Int32(hasPresence = true),
+                          jsonName = "activePresetId",
+                          value = com.gopro.open_gopro.operations.PresetGroup::activePresetId))
                 })
   }
 }
@@ -1502,6 +1523,8 @@ private fun PresetGroup.protoMergeImpl(plus: pbandk.Message?): PresetGroup =
           canAddPreset = plus.canAddPreset ?: canAddPreset,
           icon = plus.icon ?: icon,
           modeArray = modeArray + plus.modeArray,
+          customName = plus.customName ?: customName,
+          activePresetId = plus.activePresetId ?: activePresetId,
           unknownFields = unknownFields + plus.unknownFields)
     } ?: this
 
@@ -1512,6 +1535,8 @@ private fun PresetGroup.Companion.decodeWithImpl(u: pbandk.MessageDecoder): Pres
   var canAddPreset: Boolean? = null
   var icon: com.gopro.open_gopro.operations.EnumPresetGroupIcon? = null
   var modeArray: pbandk.ListWithSize.Builder<com.gopro.open_gopro.operations.EnumFlatMode>? = null
+  var customName: String? = null
+  var activePresetId: Int? = null
 
   val unknownFields =
       u.readMessage(this) { _fieldNumber, _fieldValue ->
@@ -1534,6 +1559,8 @@ private fun PresetGroup.Companion.decodeWithImpl(u: pbandk.MessageDecoder): Pres
                             as
                             kotlin.sequences.Sequence<com.gopro.open_gopro.operations.EnumFlatMode>
                   }
+          6 -> customName = _fieldValue as String
+          7 -> activePresetId = _fieldValue as Int
         }
       }
 
@@ -1543,6 +1570,8 @@ private fun PresetGroup.Companion.decodeWithImpl(u: pbandk.MessageDecoder): Pres
       canAddPreset,
       icon,
       pbandk.ListWithSize.Builder.fixed(modeArray),
+      customName,
+      activePresetId,
       unknownFields)
 }
 

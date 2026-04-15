@@ -69,6 +69,7 @@ class SettingId(GoProIntEnum):
     MULTI_SHOT_FRAMING = 233
     FRAME_RATE = 234
     AUTOMATIC_WI_FI_ACCESS_POINT = 236
+    AUTO_POWER_ON_USB = 237
 
 
 class VideoResolution(GoProIntEnum):
@@ -547,6 +548,7 @@ class VideoBitRate(GoProIntEnum):
 
     STANDARD = 0
     HIGH = 1
+    MAX = 2
 
 
 class BitDepth(GoProIntEnum):
@@ -745,6 +747,13 @@ class FrameRate(GoProIntEnum):
 
 class AutomaticWi_FiAccessPoint(GoProIntEnum):
     """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#automatic-wi-fi-access-point-236)"""
+
+    OFF = 0
+    ON = 1
+
+
+class AutoPowerOnUsb(GoProIntEnum):
+    """See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#auto-power-on-usb-237)"""
 
     OFF = 0
     ON = 1

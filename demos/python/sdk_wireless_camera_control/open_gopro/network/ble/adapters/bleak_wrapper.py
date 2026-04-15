@@ -71,10 +71,13 @@ class BleakWrapperController(BLEController[BleakDevice, bleak.BleakClient], Sing
 
     Args:
         exception_handler (Callable | None): Used to catch asyncio exceptions from other tasks. Defaults to None.
+        rich_gatt_querying (bool): If True, read descriptor values during GATT discovery. This provides
+            richer data for GATT CSV exports but may fail on some camera firmware. Defaults to False.
     """
 
-    def __init__(self, exception_handler: Callable | None = None) -> None:
-        BLEController.__init__(self, exception_handler)
+    def __init__(self, exception_handler: Callable | None = None, rich_gatt_querying: bool = False) -> None:
+        BLEController.__init__(self, exception_handler, rich_gatt_querying)
+        self._ble_op_lock = asyncio.Lock()
 
     async def read(self, handle: bleak.BleakClient, uuid: BleUUID) -> bytearray:
         """Read data from a BleUUID.
@@ -86,10 +89,11 @@ class BleakWrapperController(BLEController[BleakDevice, bleak.BleakClient], Sing
         Returns:
             bytearray: read data
         """
-        logger.debug(f"Reading from {uuid}")
-        response = await handle.read_gatt_char(uuid2bleak_string(uuid))
-        logger.debug(f'Received response on BleUUID [{uuid}]: {response.hex( ":")}')
-        return response
+        async with self._ble_op_lock:
+            logger.debug(f"Reading from {uuid}")
+            response = await handle.read_gatt_char(uuid2bleak_string(uuid))
+            logger.debug(f'Received response on BleUUID [{uuid}]: {response.hex(":")}')
+            return response
 
     async def write(self, handle: bleak.BleakClient, uuid: BleUUID, data: bytes) -> None:
         """Write data to a BleUUID.
@@ -99,8 +103,9 @@ class BleakWrapperController(BLEController[BleakDevice, bleak.BleakClient], Sing
             uuid (BleUUID): characteristic BleUUID to write to
             data (bytes): data to write
         """
-        logger.debug(f"Writing to {uuid}: {uuid.hex}")
-        await handle.write_gatt_char(uuid2bleak_string(uuid), data, response=True)
+        async with self._ble_op_lock:
+            logger.debug(f"Writing to {uuid}: {uuid.hex}")
+            await handle.write_gatt_char(uuid2bleak_string(uuid), data, response=True)
 
     async def scan(
         self, token: Pattern, timeout: int = 5, service_uuids: Optional[list[BleUUID]] = None
@@ -375,15 +380,31 @@ class BleakWrapperController(BLEController[BleakDevice, bleak.BleakClient], Sing
                 # Get any descriptors if they exist
                 descriptors: list[Descriptor] = []
                 for descriptor in char.descriptors:
+                    descriptor_uuid = (
+                        uuids[descriptor.uuid]
+                        if uuids and descriptor.uuid in uuids
+                        else BleUUID(descriptor.description, hex=descriptor.uuid)
+                    )
+                    # Only read descriptor values if rich_gatt_querying is enabled.
+                    # Some camera firmware returns None for descriptor values, which causes
+                    # bleak's CoreBluetooth backend to crash with an assertion error.
+                    # Descriptor values are only used for GATT CSV export, not SDK operations.
+                    descriptor_value: bytes | None = None
+                    if self._rich_gatt_querying:
+                        try:
+                            descriptor_value = await handle.read_gatt_descriptor(descriptor.handle)
+                        except Exception as e:  # pylint: disable=broad-exception-caught
+                            logger.warning(
+                                f"Could not read descriptor value for [{descriptor_uuid.name}] "
+                                f"(handle={descriptor.handle}, uuid={descriptor.uuid}) "
+                                f"on characteristic [{char.uuid}]: {type(e).__name__}: {e}. "
+                                f"This may indicate a camera firmware issue."
+                            )
                     descriptors.append(
                         Descriptor(
                             handle=descriptor.handle,
-                            uuid=(
-                                uuids[descriptor.uuid]
-                                if uuids and descriptor.uuid in uuids
-                                else BleUUID(descriptor.description, hex=descriptor.uuid)
-                            ),
-                            value=await handle.read_gatt_descriptor(descriptor.handle),
+                            uuid=descriptor_uuid,
+                            value=descriptor_value,
                         )
                     )
                 # Create new characteristic

@@ -153,7 +153,6 @@ class Observable(Generic[T]):
             self._condition.release()
 
     def __init__(self, capacity: int = 100, debug_id: str | None = None) -> None:
-        self._lock = asyncio.Condition()
         self._count = 0
         self._capacity = capacity
         self._debug_id = debug_id or str(Observable.OBS_IDX)
@@ -325,7 +324,8 @@ class Observable(Generic[T]):
                 for action in self._on_subscribe_actions:
                     if iscoroutinefunction(action):
                         await action()
-                    action()
+                    else:
+                        action()
 
             # Acquire the condition and read the per-collector value
             async with self._shared_data:
@@ -344,6 +344,6 @@ class Observable(Generic[T]):
                     self._mux_action(action, value)  # type: ignore
             # Notify per-value actions
             for action in self._per_value_actions:  # type: ignore
-                action(value)  # type: ignore
+                self._mux_action(action, value)  # type: ignore
             # We've made it! Return the continuing value
             return value

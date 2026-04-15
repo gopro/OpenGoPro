@@ -65,7 +65,8 @@ enum class SettingId(override val value: UByte) : IValuedEnum<UByte> {
   VIDEO_FRAMING(232U),
   MULTI_SHOT_FRAMING(233U),
   FRAME_RATE(234U),
-  AUTOMATIC_WI_FI_ACCESS_POINT(236U);
+  AUTOMATIC_WI_FI_ACCESS_POINT(236U),
+  AUTO_POWER_ON_USB(237U);
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<SettingId> {
@@ -974,7 +975,8 @@ enum class SystemVideoMode(override val value: UByte) : IValuedEnum<UByte> {
  */
 enum class VideoBitRate(override val value: UByte) : IValuedEnum<UByte> {
   STANDARD(0U),
-  HIGH(1U);
+  HIGH(1U),
+  MAX(2U);
 
   @ExperimentalUnsignedTypes
   companion object : IUByteArrayCompanion<VideoBitRate> {
@@ -1430,5 +1432,27 @@ enum class AutomaticWi_FiAccessPoint(override val value: UByte) : IValuedEnum<UB
         AutomaticWi_FiAccessPoint.entries.first { it.value == value.last() }
 
     override fun toUByteArray(value: AutomaticWi_FiAccessPoint) = value.value.toUByteArray()
+  }
+}
+
+/**
+ * Auto Power On USB
+ *
+ * Setting to automatically power on when the camera is connected to a power source.
+ *
+ * @property value
+ * @see
+ *   [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#auto-power-on-usb-237)
+ */
+enum class AutoPowerOnUsb(override val value: UByte) : IValuedEnum<UByte> {
+  OFF(0U),
+  ON(1U);
+
+  @ExperimentalUnsignedTypes
+  companion object : IUByteArrayCompanion<AutoPowerOnUsb> {
+    override fun fromUByteArray(value: UByteArray) =
+        AutoPowerOnUsb.entries.first { it.value == value.last() }
+
+    override fun toUByteArray(value: AutoPowerOnUsb) = value.value.toUByteArray()
   }
 }

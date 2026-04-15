@@ -1,37 +1,37 @@
 name,version,size,homePage,author,license,licenseCompat,errorCode,namever
 annotated-types,0.7.0,36468,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,annotated-types-0.7.0
 asyncstdlib,3.13.1,142529,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,asyncstdlib-3.13.1
-bleak,1.1.1,471223,UNKNOWN,Henrik Blidh,MIT LICENSE,True,0,bleak-1.1.1
-certifi,2025.10.5,298671,https://github.com/certifi/python-certifi,Kenneth Reitz,MOZILLA PUBLIC LICENSE 2.0 _MPL 2.0_,True,0,certifi-2025.10.5
-charset-normalizer,3.4.4,747872,UNKNOWN,UNKNOWN,MIT,True,0,charset-normalizer-3.4.4
+bleak,2.1.1,488732,UNKNOWN,Henrik Blidh,MIT,True,0,bleak-2.1.1
+certifi,2026.1.4,278258,https://github.com/certifi/python-certifi,Kenneth Reitz,MOZILLA PUBLIC LICENSE 2.0 _MPL 2.0_,True,0,certifi-2026.1.4
+charset-normalizer,3.4.4,747880,UNKNOWN,UNKNOWN,MIT,True,0,charset-normalizer-3.4.4
 construct,2.10.70,305145,http://construct.readthedocs.org,"Arkadiusz Bulski, Tomer Filiba, Corbin Simpson",MIT LICENSE,True,0,construct-2.10.70
 idna,3.11,353148,UNKNOWN,UNKNOWN,BSD-3-CLAUSE,True,0,idna-3.11
 ifaddr,0.2.0,25179,https://github.com/pydron/ifaddr,Stefan C. Mueller,MIT LICENSE,True,0,ifaddr-0.2.0
-markdown-it-py,4.0.0,223806,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,markdown-it-py-4.0.0
+markdown-it-py,4.0.0,223814,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,markdown-it-py-4.0.0
 mdurl,0.1.2,22532,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,mdurl-0.1.2
-mypy,1.17.1,45136285,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,mypy-1.17.1
+mypy,1.17.1,45136325,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,mypy-1.17.1
 mypy-extensions,1.1.0,10152,UNKNOWN,UNKNOWN,,False,0,mypy-extensions-1.1.0
-packaging,25.0,236496,UNKNOWN,UNKNOWN,APACHE SOFTWARE LICENSE;; BSD LICENSE,True,0,packaging-25.0
-pathspec,0.12.1,101741,UNKNOWN,UNKNOWN,MOZILLA PUBLIC LICENSE 2.0 _MPL 2.0_,True,0,pathspec-0.12.1
+packaging,26.0,274986,UNKNOWN,UNKNOWN,APACHE-2.0;; BSD-2-CLAUSE,True,0,packaging-26.0
+pathspec,1.0.4,153559,UNKNOWN,UNKNOWN,MOZILLA PUBLIC LICENSE 2.0 _MPL 2.0_,True,0,pathspec-1.0.4
 pexpect,4.9.0,189532,https://pexpect.readthedocs.io/,Noah Spurrier; Thomas Kluyver; Jeff Quast,ISC LICENSE _ISCL_,True,0,pexpect-4.9.0
-protobuf,6.33.0,1575235,https://developers.google.com/protocol-buffers/,protobuf@googlegroups.com,3-CLAUSE BSD LICENSE,True,0,protobuf-6.33.0
+protobuf,6.33.5,1576462,https://developers.google.com/protocol-buffers/,protobuf@googlegroups.com,3-CLAUSE BSD LICENSE,True,0,protobuf-6.33.5
 ptyprocess,0.7.0,39299,https://github.com/pexpect/ptyprocess,Thomas Kluyver,ISC LICENSE _ISCL_,True,0,ptyprocess-0.7.0
-pydantic,2.12.4,1841817,UNKNOWN,UNKNOWN,MIT,True,0,pydantic-2.12.4
+pydantic,2.12.5,1842130,UNKNOWN,UNKNOWN,MIT,True,0,pydantic-2.12.5
 pydantic-core,2.41.5,4433293,https://github.com/pydantic/pydantic-core,UNKNOWN,MIT,True,0,pydantic-core-2.41.5
-pygments,2.19.2,4467119,UNKNOWN,UNKNOWN,BSD LICENSE,True,0,pygments-2.19.2
-pyobjc-core,12.0,2330535,https://github.com/ronaldoussoren/pyobjc,"Ronald Oussoren, bbum, SteveM, LeleG, many others stretching back through the reaches of time...",MIT,True,0,pyobjc-core-12.0
-pyobjc-framework-cocoa,12.0,2555660,https://github.com/ronaldoussoren/pyobjc,Ronald Oussoren,MIT,True,0,pyobjc-framework-cocoa-12.0
-pyobjc-framework-corebluetooth,12.0,109919,https://github.com/ronaldoussoren/pyobjc,Ronald Oussoren,MIT,True,0,pyobjc-framework-corebluetooth-12.0
-pyobjc-framework-libdispatch,12.0,186647,https://github.com/ronaldoussoren/pyobjc,Ronald Oussoren,MIT,True,0,pyobjc-framework-libdispatch-12.0
+pygments,2.19.2,4467127,UNKNOWN,UNKNOWN,BSD LICENSE,True,0,pygments-2.19.2
+pyobjc-core,12.1,2295639,https://github.com/ronaldoussoren/pyobjc,"Ronald Oussoren, bbum, SteveM, LeleG, many others stretching back through the reaches of time...",MIT,True,0,pyobjc-core-12.1
+pyobjc-framework-cocoa,12.1,2556409,https://github.com/ronaldoussoren/pyobjc,Ronald Oussoren,MIT,True,0,pyobjc-framework-cocoa-12.1
+pyobjc-framework-corebluetooth,12.1,109868,https://github.com/ronaldoussoren/pyobjc,Ronald Oussoren,MIT,True,0,pyobjc-framework-corebluetooth-12.1
+pyobjc-framework-libdispatch,12.1,186596,https://github.com/ronaldoussoren/pyobjc,Ronald Oussoren,MIT,True,0,pyobjc-framework-libdispatch-12.1
 pytz,2025.2,957593,http://pythonhosted.org/pytz,Stuart Bishop,MIT LICENSE,True,0,pytz-2025.2
 requests,2.32.5,202514,https://requests.readthedocs.io,Kenneth Reitz,APACHE SOFTWARE LICENSE,True,0,requests-2.32.5
 returns,0.26.0,546444,https://returns.readthedocs.io,sobolevn,BSD LICENSE,True,0,returns-0.26.0
-rich,14.2.0,954430,https://github.com/Textualize/rich,Will McGugan,MIT LICENSE,True,0,rich-14.2.0
+rich,14.3.2,1235145,https://github.com/Textualize/rich,Will McGugan,MIT LICENSE,True,0,rich-14.3.2
 tinydb,4.8.2,75569,https://github.com/msiemens/tinydb,Markus Siemens,MIT LICENSE,True,0,tinydb-4.8.2
 typing-extensions,4.15.0,177718,UNKNOWN,UNKNOWN,PSF-2.0,True,0,typing-extensions-4.15.0
 typing-inspection,0.4.2,52842,UNKNOWN,UNKNOWN,MIT,True,0,typing-inspection-0.4.2
 tzlocal,5.3.1,61311,UNKNOWN,UNKNOWN,MIT LICENSE,True,0,tzlocal-5.3.1
-urllib3,2.5.0,421384,UNKNOWN,UNKNOWN,MIT,True,0,urllib3-2.5.0
-wrapt,2.0.1,324285,https://github.com/GrahamDumpleton/wrapt,Graham Dumpleton,COPYRIGHT _C_ 2013-2025_ GRAHAM DUMPLETON,True,0,wrapt-2.0.1
+urllib3,2.6.3,430021,UNKNOWN,UNKNOWN,MIT,True,0,urllib3-2.6.3
+wrapt,2.1.1,325896,UNKNOWN,UNKNOWN,BSD-2-CLAUSE,True,0,wrapt-2.1.1
 zeroconf,0.148.0,5140733,UNKNOWN,Paul Scott-Murphy,LGPL-2.1-OR-LATER,True,0,zeroconf-0.148.0
 

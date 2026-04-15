@@ -113,14 +113,12 @@ class WifiController(ABC):
             if detected_interfaces:
                 self._interface = detected_interfaces[0]
             else:
-                raise InterfaceConfigFailure(
-                    """
+                raise InterfaceConfigFailure("""
 Can't auto-assign Wifi interface because no suitable interface was found.
 Is there an available Wifi interface on this computer? To verify this, try:
     - MacOS: networksetup -listallhardwareports
     - Linux: nmcli dev
-    - Windows: netsh wlan show interfaces"""
-                )
+    - Windows: netsh wlan show interfaces""")
 
     @abstractmethod
     def power(self, power: bool) -> bool:
