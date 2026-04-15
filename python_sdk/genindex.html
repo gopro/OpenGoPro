@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Index &mdash; Open GoPro Python SDK  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
       <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css" />
 
@@ -165,12 +165,12 @@
 </li>
       <li><a href="api.html#open_gopro.api.http_settings.HttpSettings.anti_flicker">anti_flicker (HttpSettings attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.models.constants.settings.SettingId.ANTI_FLICKER">ANTI_FLICKER (SettingId attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.models.general.CameraInfo.ap_mac_addr">ap_mac_addr (CameraInfo attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#open_gopro.api.ble_statuses.BleStatuses.ap_mode">ap_mode (BleStatuses attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.models.constants.statuses.StatusId.AP_MODE">AP_MODE (StatusId attribute)</a>
@@ -207,6 +207,14 @@
       </ul></li>
       <li><a href="api.html#open_gopro.models.constants.settings.SettingId.AUTO_POWER_DOWN">AUTO_POWER_DOWN (SettingId attribute)</a>
 </li>
+      <li><a href="api.html#open_gopro.api.ble_settings.BleSettings.auto_power_on_usb">auto_power_on_usb (BleSettings attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.api.http_settings.HttpSettings.auto_power_on_usb">(HttpSettings attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#open_gopro.models.constants.settings.SettingId.AUTO_POWER_ON_USB">AUTO_POWER_ON_USB (SettingId attribute)</a>
+</li>
       <li><a href="api.html#open_gopro.api.ble_settings.BleSettings.automatic_wi_fi_access_point">automatic_wi_fi_access_point (BleSettings attribute)</a>
 
       <ul>
@@ -218,6 +226,8 @@
       <li><a href="api.html#open_gopro.models.constants.settings.AutomaticWi_FiAccessPoint">AutomaticWi_FiAccessPoint (class in open_gopro.models.constants.settings)</a>
 </li>
       <li><a href="api.html#open_gopro.models.constants.settings.AutoPowerDown">AutoPowerDown (class in open_gopro.models.constants.settings)</a>
+</li>
+      <li><a href="api.html#open_gopro.models.constants.settings.AutoPowerOnUsb">AutoPowerOnUsb (class in open_gopro.models.constants.settings)</a>
 </li>
       <li><a href="api.html#open_gopro.network.wifi.controller.WifiController.available_interfaces">available_interfaces() (WifiController method)</a>
 </li>
@@ -1468,7 +1478,11 @@
       <li><a href="api.html#open_gopro.models.constants.statuses.LensType.MACRO_LENS">MACRO_LENS (LensType attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.models.constants.settings.StarTrailsLength.MAX">MAX (StarTrailsLength attribute)</a>
+
+      <ul>
+        <li><a href="api.html#open_gopro.models.constants.settings.VideoBitRate.MAX">(VideoBitRate attribute)</a>
 </li>
+      </ul></li>
       <li><a href="api.html#open_gopro.models.media_list.VideoMetadata.max_auto_hilight_score">max_auto_hilight_score (VideoMetadata attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.models.constants.settings.VideoLens.MAX_HYPERVIEW">MAX_HYPERVIEW (VideoLens attribute)</a>
@@ -1569,10 +1583,10 @@
 </li>
       <li><a href="api.html#open_gopro.domain.communicator_interface.MessageRules.Analyzer">MessageRules.Analyzer (class in open_gopro.domain.communicator_interface)</a>
 </li>
-      <li><a href="api.html#open_gopro.domain.communicator_interface.Messages">Messages (class in open_gopro.domain.communicator_interface)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#open_gopro.domain.communicator_interface.Messages">Messages (class in open_gopro.domain.communicator_interface)</a>
+</li>
       <li><a href="api.html#open_gopro.models.media_list.MediaMetadata.metadata_present">metadata_present (MediaMetadata attribute)</a>
 </li>
       <li><a href="api.html#open_gopro.api.ble_statuses.BleStatuses.microphone_accessory">microphone_accessory (BleStatuses attribute)</a>
@@ -2461,6 +2475,8 @@
       <li><a href="api.html#open_gopro.models.constants.settings.AutomaticWi_FiAccessPoint.OFF">OFF (AutomaticWi_FiAccessPoint attribute)</a>
 
       <ul>
+        <li><a href="api.html#open_gopro.models.constants.settings.AutoPowerOnUsb.OFF">(AutoPowerOnUsb attribute)</a>
+</li>
         <li><a href="api.html#open_gopro.models.constants.settings.EnableNightPhoto.OFF">(EnableNightPhoto attribute)</a>
 </li>
         <li><a href="api.html#open_gopro.models.constants.settings.Gps.OFF">(Gps attribute)</a>
@@ -2497,6 +2513,8 @@
       <li><a href="api.html#open_gopro.models.constants.settings.AutomaticWi_FiAccessPoint.ON">ON (AutomaticWi_FiAccessPoint attribute)</a>
 
       <ul>
+        <li><a href="api.html#open_gopro.models.constants.settings.AutoPowerOnUsb.ON">(AutoPowerOnUsb attribute)</a>
+</li>
         <li><a href="api.html#open_gopro.models.constants.settings.EnableNightPhoto.ON">(EnableNightPhoto attribute)</a>
 </li>
         <li><a href="api.html#open_gopro.models.constants.settings.Gps.ON">(Gps attribute)</a>
@@ -2534,6 +2552,8 @@
         <li><a href="api.html#open_gopro.gopro_wireless.WirelessGoPro.open">(WirelessGoPro method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     open_gopro.domain.exceptions
 
@@ -2541,8 +2561,6 @@
         <li><a href="api.html#module-open_gopro.domain.exceptions">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     open_gopro.domain.observable
 
@@ -3882,7 +3900,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2025, GoPro Inc..</p>
+    <p>&#169; Copyright 2026, GoPro Inc..</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

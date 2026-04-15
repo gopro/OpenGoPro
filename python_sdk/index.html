@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Open GoPro Python SDK &mdash; Open GoPro Python SDK  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
       <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css" />
 
@@ -285,6 +285,7 @@ this document in order):</p>
 <li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.api.ble_settings.BleSettings"><code class="docutils literal notranslate"><span class="pre">BleSettings</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.ble_settings.BleSettings.anti_flicker"><code class="docutils literal notranslate"><span class="pre">BleSettings.anti_flicker</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.ble_settings.BleSettings.auto_power_down"><code class="docutils literal notranslate"><span class="pre">BleSettings.auto_power_down</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.ble_settings.BleSettings.auto_power_on_usb"><code class="docutils literal notranslate"><span class="pre">BleSettings.auto_power_on_usb</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.ble_settings.BleSettings.automatic_wi_fi_access_point"><code class="docutils literal notranslate"><span class="pre">BleSettings.automatic_wi_fi_access_point</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.ble_settings.BleSettings.beep_volume"><code class="docutils literal notranslate"><span class="pre">BleSettings.beep_volume</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.ble_settings.BleSettings.bit_depth"><code class="docutils literal notranslate"><span class="pre">BleSettings.bit_depth</span></code></a></li>
@@ -467,6 +468,7 @@ this document in order):</p>
 <li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.api.http_settings.HttpSettings"><code class="docutils literal notranslate"><span class="pre">HttpSettings</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.http_settings.HttpSettings.anti_flicker"><code class="docutils literal notranslate"><span class="pre">HttpSettings.anti_flicker</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.http_settings.HttpSettings.auto_power_down"><code class="docutils literal notranslate"><span class="pre">HttpSettings.auto_power_down</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.http_settings.HttpSettings.auto_power_on_usb"><code class="docutils literal notranslate"><span class="pre">HttpSettings.auto_power_on_usb</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.http_settings.HttpSettings.automatic_wi_fi_access_point"><code class="docutils literal notranslate"><span class="pre">HttpSettings.automatic_wi_fi_access_point</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.http_settings.HttpSettings.beep_volume"><code class="docutils literal notranslate"><span class="pre">HttpSettings.beep_volume</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.api.http_settings.HttpSettings.bit_depth"><code class="docutils literal notranslate"><span class="pre">HttpSettings.bit_depth</span></code></a></li>
@@ -727,6 +729,11 @@ this document in order):</p>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.models.constants.settings.AutoPowerDown.NUM_30_SECONDS"><code class="docutils literal notranslate"><span class="pre">AutoPowerDown.NUM_30_SECONDS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.models.constants.settings.AutoPowerDown.NUM_5_MIN"><code class="docutils literal notranslate"><span class="pre">AutoPowerDown.NUM_5_MIN</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.models.constants.settings.AutoPowerDown.NUM_8_SECONDS"><code class="docutils literal notranslate"><span class="pre">AutoPowerDown.NUM_8_SECONDS</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.models.constants.settings.AutoPowerOnUsb"><code class="docutils literal notranslate"><span class="pre">AutoPowerOnUsb</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.models.constants.settings.AutoPowerOnUsb.OFF"><code class="docutils literal notranslate"><span class="pre">AutoPowerOnUsb.OFF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.models.constants.settings.AutoPowerOnUsb.ON"><code class="docutils literal notranslate"><span class="pre">AutoPowerOnUsb.ON</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.models.constants.settings.AutomaticWi_FiAccessPoint"><code class="docutils literal notranslate"><span class="pre">AutomaticWi_FiAccessPoint</span></code></a><ul>
@@ -1113,6 +1120,7 @@ this document in order):</p>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.models.constants.settings.SettingId.ANTI_FLICKER"><code class="docutils literal notranslate"><span class="pre">SettingId.ANTI_FLICKER</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.models.constants.settings.SettingId.AUTOMATIC_WI_FI_ACCESS_POINT"><code class="docutils literal notranslate"><span class="pre">SettingId.AUTOMATIC_WI_FI_ACCESS_POINT</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.models.constants.settings.SettingId.AUTO_POWER_DOWN"><code class="docutils literal notranslate"><span class="pre">SettingId.AUTO_POWER_DOWN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.models.constants.settings.SettingId.AUTO_POWER_ON_USB"><code class="docutils literal notranslate"><span class="pre">SettingId.AUTO_POWER_ON_USB</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.models.constants.settings.SettingId.BEEP_VOLUME"><code class="docutils literal notranslate"><span class="pre">SettingId.BEEP_VOLUME</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.models.constants.settings.SettingId.BIT_DEPTH"><code class="docutils literal notranslate"><span class="pre">SettingId.BIT_DEPTH</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.models.constants.settings.SettingId.CAMERA_MODE"><code class="docutils literal notranslate"><span class="pre">SettingId.CAMERA_MODE</span></code></a></li>
@@ -1226,6 +1234,7 @@ this document in order):</p>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="api.html#open_gopro.models.constants.settings.VideoBitRate"><code class="docutils literal notranslate"><span class="pre">VideoBitRate</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.models.constants.settings.VideoBitRate.HIGH"><code class="docutils literal notranslate"><span class="pre">VideoBitRate.HIGH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.models.constants.settings.VideoBitRate.MAX"><code class="docutils literal notranslate"><span class="pre">VideoBitRate.MAX</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#open_gopro.models.constants.settings.VideoBitRate.STANDARD"><code class="docutils literal notranslate"><span class="pre">VideoBitRate.STANDARD</span></code></a></li>
 </ul>
 </li>
@@ -1735,6 +1744,7 @@ this document in order):</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#february-5-2026">0.23.0 (February-5-2026)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#september-23-2025">0.22.0 (September-23-2025)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#june-26-2025">0.21.2 (June-26-2025)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#id1">0.21.1 (June-26-2025)</a></li>
@@ -1821,7 +1831,7 @@ this document in order):</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2025, GoPro Inc..</p>
+    <p>&#169; Copyright 2026, GoPro Inc..</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
