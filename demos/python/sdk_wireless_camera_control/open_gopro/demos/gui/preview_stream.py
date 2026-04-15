@@ -11,7 +11,7 @@ import sys
 from returns.pipeline import is_successful
 from rich.console import Console
 
-from open_gopro import WirelessGoPro
+from open_gopro import WiredGoPro, WirelessGoPro
 from open_gopro.demos.gui.video_display import BufferlessVideoCapture
 from open_gopro.models import streaming
 from open_gopro.util import add_cli_args_and_parse
@@ -24,7 +24,7 @@ console = Console()
 async def main(args: argparse.Namespace) -> int:
     setup_logging(__name__, args.log)
 
-    async with WirelessGoPro(args.identifier) as gopro:
+    async with WiredGoPro(args.identifier) if args.wired else WirelessGoPro(args.identifier) as gopro:
         set_stream_logging_level(logging.WARNING)
 
         with console.status("Starting preview stream..."):
@@ -64,6 +64,11 @@ def parse_arguments() -> argparse.Namespace:
     )
     parser.add_argument(
         "--port", type=int, help="Port to use for livestream. Defaults to 8554 if not set", default=8554
+    )
+    parser.add_argument(
+        "--wired",
+        action="store_true",
+        help="Set to use wired (USB) instead of wireless (BLE / WIFI) interface",
     )
     return add_cli_args_and_parse(parser, wifi=False)
 

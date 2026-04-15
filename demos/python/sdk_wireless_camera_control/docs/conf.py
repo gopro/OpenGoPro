@@ -121,6 +121,7 @@ nitpick_ignore = [
     ("py:class", "SyncFilter"),
     ("py:class", "AsyncFilter"),
     ("py:class", "ValueType"),
+    ("py:class", "CommandFactory"),
 ]
 nitpick_ignore_regex = [
     (r"py:class", r".*proto\..+"),

@@ -30,11 +30,9 @@ def dump_cohn_collateral(gopro: WirelessGoPro) -> None:
         gopro (WirelessGoPro): gopro to retrieve the credentials from
     """
     assert gopro.cohn.credentials
-    console.print(
-        f"Sample curl command: {COHN_CURL_CMD_TEMPLATE.format(
+    console.print(f"Sample curl command: {COHN_CURL_CMD_TEMPLATE.format(
         password=gopro.cohn.credentials.password,
-        ip_addr=gopro.cohn.credentials.ip_address,)}"
-    )
+        ip_addr=gopro.cohn.credentials.ip_address,)}")
     with open("cohn.crt", "w") as f:
         f.write(gopro.cohn.credentials.certificate)
 
@@ -87,8 +85,7 @@ async def main(args: argparse.Namespace) -> None:
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        description=textwrap.dedent(
-            """\
+        description=textwrap.dedent("""\
         Open GoPro Camera on the Home Network (COHN) Utility
         ----------------------------------------------------
         This utility is used to configure and demonstrate the Camera On the Home
@@ -120,8 +117,7 @@ def parse_arguments() -> argparse.Namespace:
         Therefore, the general procedure for a freshly factory-reset camera is:
             1. Use operation mode 1 to provision COHN
             2. Use operation mode 2 to communicate with (only) COHN
-        """
-        ),
+        """),
     )
     parser.add_argument(
         "--ssid",

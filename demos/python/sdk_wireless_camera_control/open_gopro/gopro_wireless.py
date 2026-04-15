@@ -8,8 +8,7 @@ from __future__ import annotations
 import asyncio
 import enum
 import logging
-import queue
-import traceback
+from asyncio import Future
 from collections import defaultdict
 from copy import deepcopy
 from pathlib import Path
@@ -62,7 +61,7 @@ from open_gopro.network.wifi import WifiCli
 from open_gopro.network.wifi.controller import WifiController
 from open_gopro.network.wifi.requests_session import create_less_strict_requests_session
 from open_gopro.parsers.response import BleRespBuilder
-from open_gopro.util import SnapshotQueue, get_current_dst_aware_time, pretty_print
+from open_gopro.util import get_current_dst_aware_time, pretty_print
 from open_gopro.util.logger import Logger
 
 logger = logging.getLogger(__name__)
@@ -171,7 +170,9 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         cohn_db (Path): Path to COHN Database. Defaults to Path("cohn_db.json").
         interfaces (set[WirelessGoPro.Interface] | None): Wireless interfaces for which to attempt to
             establish communication channels. Defaults to None in which case both BLE and WiFi will be used.
-        **kwargs (Any): additional parameters for internal use / testing
+        **kwargs (Any): additional parameters for internal use / testing. Includes ``rich_gatt_querying``
+            (bool, default False) which, if True, reads descriptor values during GATT discovery for richer
+            GATT CSV exports (may fail on some camera firmware due to a bleak/CoreBluetooth bug).
 
     Raises:
         ValueError: Invalid combination of arguments.
@@ -218,6 +219,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
         ble_adapter: type[BLEController] = kwargs.get("ble_adapter", BleakWrapperController)
         wifi_adapter: type[WifiController] = kwargs.get("wifi_adapter", WifiCli)
+        rich_gatt_querying: bool = kwargs.get("rich_gatt_querying", False)
         # Set up API delegate
         self._wireless_api = WirelessApi(self)
         self._keep_alive_interval: int = kwargs.get("keep_alive_interval", 3)
@@ -226,7 +228,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             # Initialize GoPro Communication Client
             GoProWirelessInterface.__init__(
                 self,
-                ble_controller=ble_adapter(self._handle_exception),
+                ble_controller=ble_adapter(self._handle_exception, rich_gatt_querying),
                 wifi_controller=wifi_adapter(host_wifi_interface, password=host_sudo_password),
                 disconnected_cb=self._disconnect_handler,
                 notification_cb=self._notification_handler,
@@ -246,10 +248,10 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         # Builders for currently accumulating synchronous responses, indexed by GoProUUID. This assumes there
         # can only be one active response per BleUUID
         self._active_builders: dict[BleUUID, BleRespBuilder] = {}
-        # Responses that we are waiting for.
-        self._sync_resp_wait_q: SnapshotQueue[ResponseType] = SnapshotQueue()
-        # Synchronous response that has been parsed and are ready for their sender to receive as the response.
-        self._sync_resp_ready_q: SnapshotQueue[GoProResp] = SnapshotQueue()
+        # Pending BLE requests: list of (identifier, Future) tuples. Responses are matched to the
+        # head of this list and delivered by resolving the Future directly.
+        self._pending_responses: list[tuple[ResponseType, asyncio.Future[GoProResp]]] = []
+        self._pending_responses_lock: asyncio.Lock = asyncio.Lock()
 
         self._listeners: dict[UpdateType | GoProBle._CompositeRegisterType, set[UpdateCb]] = defaultdict(set)
 
@@ -397,7 +399,15 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
                     logger.info("Performing initial camera configuration...")
                     # TODO need to handle sending these if BLE does not exist
-                    await self.ble_command.set_third_party_client_info()
+                    # Some cameras will not reply to this. We can proceed functionally without it
+                    try:
+                        await self.ble_command.set_third_party_client_info()
+                    except ResponseTimeout:
+                        logger.info(
+                            "Timed out while setting third-party client info; "
+                            "this is expected for some cameras and will be ignored."
+                        )
+
                     # Set current dst-aware time. Don't assert on success since some old cameras don't support this command.
                     dt, tz_offset, is_dst = get_current_dst_aware_time()
                     await self.ble_command.set_date_time_tz_dst(date_time=dt, tz_offset=tz_offset, is_dst=is_dst)
@@ -436,7 +446,6 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
             except Exception as e:  # pylint: disable=broad-exception-caught
                 logger.error(f"Error while opening: {repr(e)}")
-                traceback.print_exc()
                 await self.close()
                 if retry >= RETRIES - 1:
                     raise e
@@ -695,32 +704,40 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         if response._is_query and not response._is_push and len(response.data) == 1:
             response.data = list(response.data.values())[0]
 
-        logger.trace(f"Route response {response.identifier} Waiting for sync resp wait q")  # type: ignore
-        async with self._sync_resp_wait_q:
-            logger.trace(f"Route response {response.identifier} Acquired sync resp wait q")  # type: ignore
-            head = await self._sync_resp_wait_q.peek_front()
-            # Check if this is the awaited synchronous response (id matches). Note! these have to come in order.
-            if (head == response.identifier) or (
-                # There is a special case for an unsupported protobuf error response. It does not contain the feature ID so we
-                # have to match it by Feature ID / UUID. Feature ID's are not used across UUID's so we will only check for
-                # matching Feature ID(s)
-                isinstance(head, ProtobufId)
-                and ProtobufId(head.feature_id, None)
-                == response.identifier  # Feature IDs match and response identifier does not contain Action ID
-            ):
-                logger.info(Logger.build_log_rx_str(original_response, asynchronous=False))
-                # Dequeue it and put the response on the ready queue
-                logger.trace(f"Route response {response.identifier} read from sync resp wait q")  # type: ignore
-                ephemeral_response = await self._sync_resp_wait_q.get()
-                logger.trace(f"Dequeued response {ephemeral_response}")  # type: ignore
-
-                logger.trace(f"Route response putting {response.identifier} on ready q")  # type: ignore
-                await self._sync_resp_ready_q.put(response)
-
-            # If this wasn't the awaited synchronous response...
-            else:
+        logger.trace(f"Route response {response.identifier}")  # type: ignore
+        async with self._pending_responses_lock:
+            if not self._pending_responses:
+                # No pending requests - treat as async/push notification
                 logger.info(Logger.build_log_rx_str(original_response, asynchronous=True))
-        logger.trace(f"Route response {response.identifier} released sync resp wait q")  # type: ignore
+            else:
+                # Search all pending requests for a matching identifier (not just head)
+                matched_index = None
+                matched_future = None
+                for i, (pending_id, pending_future) in enumerate(self._pending_responses):
+                    if (pending_id == response.identifier) or (
+                        # Special case for unsupported protobuf error response.It does not contain the feature ID so we
+                        # have to match it by Feature ID / UUID. Feature ID's are not used across UUID's so we will only check for
+                        # matching Feature ID(s)
+                        isinstance(pending_id, ProtobufId)
+                        and ProtobufId(pending_id.feature_id, None) == response.identifier
+                    ):
+                        matched_index = i
+                        matched_future = pending_future
+                        break
+
+                # If this wasn't the awaited synchronous response...
+                if matched_future is not None:
+                    assert matched_index is not None  # Always set together with matched_future
+                    logger.info(Logger.build_log_rx_str(original_response, asynchronous=False))
+                    # Remove from pending and resolve the Future
+                    self._pending_responses.pop(matched_index)
+                    logger.trace(f"Resolving Future for {response.identifier}")  # type: ignore
+                    matched_future.set_result(response)
+                else:
+                    # Identifier doesn't match any pending request - treat as async response
+                    logger.info(Logger.build_log_rx_str(original_response, asynchronous=True))
+
+        logger.trace(f"Route response {response.identifier} done")  # type: ignore
         if response._is_push:
             for update_id, value in response.data.items():
                 await self._notify_listeners(update_id, value)
@@ -737,7 +754,8 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
         async def _async_notification_handler() -> None:
             # Responses we don't care about. For now, just the BLE-spec defined battery characteristic
-            if (uuid := self._ble.gatt_db.handle2uuid(handle)) == GoProUUID.BATT_LEVEL:
+            uuid = self._ble.gatt_db.handle2uuid(handle)
+            if uuid == GoProUUID.BATT_LEVEL:
                 return
             logger.debug(f'Received response on BleUUID [{uuid}]: {data.hex(":")}')
             # Add to response dict if not already there
@@ -783,9 +801,14 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
     async def _send_ble_message(
         self, message: BleMessage, rules: MessageRules = MessageRules(), **kwargs: Any
     ) -> GoProResp:
-        # Store information on the response we are expecting
-        logger.trace(f"send {message._identifier} putting on sync wait q")  # type: ignore
-        await self._sync_resp_wait_q.put(message._identifier)
+        # Create a Future to receive our response
+        response_future: Future[GoProResp] = asyncio.get_running_loop().create_future()
+
+        # Register this request with its Future
+        async with self._pending_responses_lock:
+            logger.trace(f"send {message._identifier} registering pending response")  # type: ignore
+            self._pending_responses.append((message._identifier, response_future))
+
         logger.info(Logger.build_log_tx_str(pretty_print(message._as_dict(**kwargs))))
 
         # Fragment data and write it
@@ -793,22 +816,18 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             logger.debug(f"Writing to [{message._uuid.name}] UUID: {packet.hex(':')}")
             await self._ble.write(message._uuid, packet)
 
-        # Wait to be notified that response was received
+        # Wait for our specific Future to be resolved
         try:
-            logger.trace(f"send {message._identifier} Waiting to receive sync response from ready q")  # type: ignore
-            response = await asyncio.wait_for(self._sync_resp_ready_q.get(), WirelessGoPro.WRITE_TIMEOUT)
-            logger.trace(f"{message._identifier} received  response {response.identifier}")  # type: ignore
-            if response.identifier != message._identifier:
-                error_message = f"[{message._identifier}] received incorrect response: [{response.identifier}]"
-                logger.error(error_message)
-                raise RuntimeError(error_message)
+            logger.trace(f"send {message._identifier} waiting for response via Future")  # type: ignore
+            response = await asyncio.wait_for(response_future, WirelessGoPro.WRITE_TIMEOUT)
+            logger.trace(f"{message._identifier} received response {response.identifier}")  # type: ignore
         except asyncio.TimeoutError as e:
-            logger.error(
-                f"Response timeout of {WirelessGoPro.WRITE_TIMEOUT} seconds when sending {message._identifier}!"
-            )
-            raise ResponseTimeout(WirelessGoPro.WRITE_TIMEOUT) from e
-        except queue.Empty as e:
-            logger.error(
+            # Clean up our pending request on timeout
+            async with self._pending_responses_lock:
+                self._pending_responses = [
+                    (id_, fut) for id_, fut in self._pending_responses if fut is not response_future
+                ]
+            logger.warning(
                 f"Response timeout of {WirelessGoPro.WRITE_TIMEOUT} seconds when sending {message._identifier}!"
             )
             raise ResponseTimeout(WirelessGoPro.WRITE_TIMEOUT) from e
@@ -850,15 +869,15 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
 
     async def _get_json(self, message: HttpMessage, *args: Any, **kwargs: Any) -> GoProResp:  # type: ignore[override]
         message = self._handle_cohn(message)
-        return await super()._get_json(*args, message=message, **kwargs)  # type: ignore[call-arg]
+        return await super()._get_json(*args, message=message, **kwargs)  # type: ignore[arg-type]
 
     async def _get_stream(self, message: HttpMessage, *args: Any, **kwargs: Any) -> GoProResp:  # type: ignore[override]
         message = self._handle_cohn(message)
-        return await super()._get_stream(*args, message=message, **kwargs)  # type: ignore[call-arg]
+        return await super()._get_stream(*args, message=message, **kwargs)  # type: ignore[arg-type]
 
     async def _put_json(self, message: HttpMessage, *args: Any, **kwargs: Any) -> GoProResp:  # type: ignore[override]
         message = self._handle_cohn(message)
-        return await super()._put_json(*args, message=message, **kwargs)  # type: ignore[call-arg]
+        return await super()._put_json(*args, message=message, **kwargs)  # type: ignore[arg-type]
 
     @GoProBase._ensure_opened((GoProMessageInterface.BLE,))
     async def _open_wifi(self, timeout: int = 30, retries: int = 5) -> None:

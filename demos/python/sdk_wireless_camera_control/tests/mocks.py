@@ -6,9 +6,10 @@ import asyncio
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Generic, Optional, Pattern, TypeVar
+from typing import Any, AsyncGenerator, Generic, Optional, Pattern, TypeVar
 
 import requests
+from returns.result import Success
 
 from open_gopro import WiredGoPro, WirelessGoPro
 from open_gopro.api import (
@@ -256,6 +257,45 @@ class MockGoproResp:
         return self.status is ErrorCode.SUCCESS if self.status else True
 
 
+class MockGoProObservable(Generic[T]):
+    """Mock observable that doesn't make BLE calls.
+
+    Used to avoid sending actual BLE messages during test open().
+    """
+
+    def __init__(self) -> None:
+        self._is_open = False
+
+    async def start(self) -> "MockGoProObservable[T]":
+        self._is_open = True
+        return self
+
+    async def stop(self) -> None:
+        self._is_open = False
+
+    async def __aenter__(self) -> "MockGoProObservable[T]":
+        if not self._is_open:
+            await self.start()
+        return self
+
+    async def __aexit__(self, *args: Any) -> None:
+        if self._is_open:
+            await self.stop()
+
+    def observe(self, replay: int = 1, debug_id: str | None = None) -> AsyncGenerator[T, None]:
+        """Yields nothing - doesn't provide any status updates"""
+
+        async def _empty_generator() -> AsyncGenerator[T, None]:
+            # Block forever (or until cancelled) to simulate waiting for updates
+            try:
+                await asyncio.Event().wait()
+            except asyncio.CancelledError:
+                return
+            yield  # type: ignore  # Makes this a generator
+
+        return _empty_generator()
+
+
 # Create a context manager class to mock GoproObserverDistinctInitial
 class MockObserver(Generic[T, T2]):
     initial_response: Any = None
@@ -444,22 +484,14 @@ class MockGoProMaintainBle(WirelessGoPro):
         )
         self._test_version = "2.0"
         self._api.ble_command.get_open_gopro_api_version = self._mock_get_version
-        self.ble_status.encoding.register_value_update = self._mock_register_encoding
-        self.ble_status.busy.register_value_update = self._mock_register_busy
+        self._api.ble_status.encoding.get_value_observable = self._mock_get_encoding_observable
+        self._api.ble_status.busy.get_value_observable = self._mock_get_busy_observable
         self.ble_setting.led.set = self._mock_led_set
         self._open_wifi = self._mock_open_wifi
         self.ble_command.set_pairing_complete = self._mock_pairing_complete
-        self._sync_resp_ready_q.get = self._mock_q_get
+        self.ble_command.set_third_party_client_info = self._mock_empty_return
+        self.ble_command.set_date_time_tz_dst = self._mock_empty_return
         self.generic_spy: asyncio.Queue[Any] = asyncio.Queue()
-
-    async def _mock_q_get(self, *args, **kwargs):
-        current = await self._sync_resp_wait_q.get()
-        return GoProResp(
-            protocol=GoProResp.Protocol.BLE,
-            status=ErrorCode.SUCCESS,
-            identifier=current,
-            data=True,
-        )
 
     async def _mock_led_set(self, *args):
         await self.generic_spy.put(args)
@@ -471,11 +503,16 @@ class MockGoProMaintainBle(WirelessGoPro):
     async def _mock_pairing_complete(self) -> MockGoproResp:
         return MockGoproResp()
 
-    async def _mock_register_encoding(self, *args):
-        return MockGoproResp({StatusId.ENCODING: 1})
+    async def _mock_empty_return(self, *args, **kwargs) -> MockGoproResp:
+        return MockGoproResp()
 
-    async def _mock_register_busy(self, *args):
-        return MockGoproResp({StatusId.BUSY: 1})
+    async def _mock_get_encoding_observable(self):
+        """Return a mock observable for encoding status"""
+        return Success(MockGoProObservable())
+
+    async def _mock_get_busy_observable(self):
+        """Return a mock observable for busy status"""
+        return Success(MockGoProObservable())
 
     async def mock_handle2uuid(self, *args):
         return GoProUUID.CQ_QUERY_RESP

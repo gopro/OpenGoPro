@@ -6,7 +6,6 @@
 import argparse
 import asyncio
 import enum
-import sys
 from abc import ABC
 from dataclasses import dataclass
 from typing import Generic, TypeVar
@@ -21,6 +20,9 @@ from open_gopro.network.wifi.mdns_scanner import find_first_ip_addr
 from open_gopro.util import add_cli_args_and_parse, ainput
 
 console = Console()
+
+# Global shutdown event for graceful exit
+shutdown_event: asyncio.Event
 
 
 class NetworkType(enum.Enum):
@@ -84,9 +86,11 @@ async def scan_ble() -> None:
     unique_adv_data: set[GoProAdvData] = set()
 
     async with BleakScanner(service_uuids=["0000fea6-0000-1000-8000-00805f9b34fb"]) as scanner:
-        while True:
+        while not shutdown_event.is_set():
             adv_data = AdvData()
             async for _, data in scanner.advertisement_data():
+                if shutdown_event.is_set():
+                    return
                 adv_data.update(data)
                 if adv_data.local_name:  # Once we've received the scan response...
                     break
@@ -105,7 +109,7 @@ async def scan_dns() -> None:
     """Scan for MDNS entries that match the GoPro service name"""
     unique_responses: set[str] = set()
 
-    while True:
+    while not shutdown_event.is_set():
         try:
             response = await find_first_ip_addr(WiredGoPro._MDNS_SERVICE_NAME, 10)
             serial = response.name.split(".")[0]
@@ -120,10 +124,13 @@ async def wait_for_exit() -> None:
     """Exit on enter"""
     await ainput("Press enter to exit\n")
     console.print("Exiting...")
-    sys.exit()
+    shutdown_event.set()
 
 
 async def main(_: argparse.Namespace) -> None:
+    global shutdown_event
+    shutdown_event = asyncio.Event()
+
     await asyncio.gather(
         scan_ble(),
         # scan_wifi_ap(args.password, args.interface),

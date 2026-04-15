@@ -14,7 +14,7 @@ import sys
 from dataclasses import is_dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Callable, Generic, TypeVar
+from typing import TYPE_CHECKING, Any, Callable
 
 import pytz
 from construct import Container
@@ -223,35 +223,6 @@ def cmd(command: str) -> str:
     util_logger.debug(f"Receive response --> {response}")
 
     return response
-
-
-T = TypeVar("T")
-
-
-class SnapshotQueue(asyncio.Queue, Generic[T]):
-    """A subclass of the default queue module to safely take a snapshot of the queue
-
-    This is so we can access the elements (in a thread safe manner) without dequeuing them.
-    """
-
-    def __init__(self, maxsize: int = 0) -> None:
-        self._lock = asyncio.Lock()
-        super().__init__(maxsize)
-
-    async def peek_front(self) -> T | None:
-        """Get the first element without dequeueing it
-
-        Returns:
-            T | None: First element of None if the queue is empty
-        """
-        return None if self.empty() else self._queue[0]  # type: ignore
-
-    async def __aenter__(self) -> SnapshotQueue[T]:
-        await self._lock.__aenter__()
-        return self
-
-    async def __aexit__(self, exc_type: Any, exc: Any, tb: Any) -> None:
-        return await self._lock.__aexit__(exc_type, exc, tb)
 
 
 def add_cli_args_and_parse(

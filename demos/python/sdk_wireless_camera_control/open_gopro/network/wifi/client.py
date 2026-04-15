@@ -68,7 +68,7 @@ class WifiClient:
         Returns:
             bool: True if yes, False if no
         """
-        (ssid, state) = self._controller.current()
+        ssid, state = self._controller.current()
         # On modern macOS (15+), SSID may be None even when connected due to privacy redaction
         # So we primarily check the connection state
         return state is SsidState.CONNECTED

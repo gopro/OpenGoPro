@@ -213,3 +213,77 @@ async def test_discovery(mock_bleak_wrapper: BleakWrapperController):
     assert len(gatt_db.services) == 1
     assert len(gatt_db.characteristics) == 1
     assert len(list(gatt_db.characteristics.values())[0].descriptors) == 1
+
+
+async def test_concurrent_writes_to_same_characteristic(mock_bleak_wrapper: BleakWrapperController, monkeypatch):
+    """Test that concurrent writes to the same characteristic both complete.
+
+    Verifies the contract that when two writes to the same characteristic are issued
+    concurrently, both writes must complete successfully without any being orphaned.
+    """
+    completed_writes = []
+
+    @dataclass
+    class MockBleakClient:
+        async def write_gatt_char(self, uuid: str, data: bytes, response: bool = False):
+            # Simulate BLE write taking some time
+            await asyncio.sleep(0.05)
+            completed_writes.append(data)
+
+    client = MockBleakClient()
+    test_uuid = GoProUUID.CQ_QUERY
+
+    # Launch two concurrent writes to the same characteristic
+    async def write_1():
+        await mock_bleak_wrapper.write(client, test_uuid, b"data1")
+
+    async def write_2():
+        await mock_bleak_wrapper.write(client, test_uuid, b"data2")
+
+    # Both writes should complete without error
+    await asyncio.gather(write_1(), write_2())
+
+    # Verify both writes completed (order may vary, but both must finish)
+    assert b"data1" in completed_writes
+    assert b"data2" in completed_writes
+    assert len(completed_writes) == 2
+
+
+async def test_ble_writes_are_serialized(mock_bleak_wrapper: BleakWrapperController, monkeypatch):
+    """Test that BLE writes are serialized (not concurrent) via lock.
+
+    This ensures the lock is working - writes should execute in sequence,
+    not overlap.
+    """
+    execution_log = []
+
+    @dataclass
+    class MockBleakClient:
+        async def write_gatt_char(self, uuid: str, data: bytes, response: bool = False):
+            execution_log.append(f"write_start:{data}")
+            await asyncio.sleep(0.02)  # Simulate BLE latency
+            execution_log.append(f"write_end:{data}")
+
+    client = MockBleakClient()
+    test_uuid = GoProUUID.CQ_QUERY
+
+    # Launch concurrent writes
+    await asyncio.gather(
+        mock_bleak_wrapper.write(client, test_uuid, b"A"),
+        mock_bleak_wrapper.write(client, test_uuid, b"B"),
+    )
+
+    # With serialization, writes should NOT interleave
+    # Either: start_A, end_A, start_B, end_B  OR  start_B, end_B, start_A, end_A
+    assert len(execution_log) == 4
+
+    # Check that writes don't interleave (start-end pairs are adjacent)
+    if execution_log[0] == "write_start:b'A'":
+        assert execution_log[1] == "write_end:b'A'"
+        assert execution_log[2] == "write_start:b'B'"
+        assert execution_log[3] == "write_end:b'B'"
+    else:
+        assert execution_log[0] == "write_start:b'B'"
+        assert execution_log[1] == "write_end:b'B'"
+        assert execution_log[2] == "write_start:b'A'"
+        assert execution_log[3] == "write_end:b'A'"

@@ -59,13 +59,14 @@ class CohnFeature(BaseFeature):
         logger.debug("Opening COHN")
         await super().open(loop, gopro, *args, **kwargs)
         assert self._gopro
+        gopro_ref = self._gopro  # Capture for lambda to satisfy type checker
         if cohn_credentials:
             self.credentials = cohn_credentials
         self._ready_event = asyncio.Event()
         self._status_observable = GoProObservable(
-            gopro=self._gopro,
+            gopro=gopro_ref,
             update=ProtobufId(FeatureId.QUERY, ActionId.RESPONSE_GET_COHN_STATUS),
-            register_command=self._gopro.ble_command.cohn_get_status(register=True),
+            register_command=lambda: gopro_ref.ble_command.cohn_get_status(register=True),
         ).on_start(lambda _: self._ready_event.set())
         self._status_task = asyncio.create_task(self._track_status())
         logger.debug("COHN opened")
@@ -99,10 +100,20 @@ class CohnFeature(BaseFeature):
                         async for status in observable.observe(debug_id="Cohn Feature"):
                             logger.debug(f"Feature Received COHN status: {status}")
                 except GoProError as exc:
-                    logger.warning(f"Failed to start COHN feature: {str(exc)}")
+                    logger.warning(f"Failed to start COHN feature: {str(exc)}. Camera may not support COHN.")
                     self._supported = False
                     self._ready_event.set()
+                    return  # Exit - COHN is not supported on this camera
+                except asyncio.CancelledError:
+                    logger.debug("COHN status tracking cancelled")
+                    raise  # Re-raise to properly cancel the task
+                except Exception as exc:  # pylint: disable=broad-exception-caught
+                    logger.error(f"Unexpected error in COHN status tracking: {repr(exc)}")
+                    self._supported = False
+                    self._ready_event.set()
+                    await asyncio.sleep(1)  # Backoff before retrying
             else:
+                logger.debug("Waiting for BLE connection before starting COHN status tracking")
                 await asyncio.sleep(1)
 
     @property

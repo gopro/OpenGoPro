@@ -727,10 +727,10 @@ class NetworksetupWireless(WifiController):
             # Escape single quotes
             ssid = ssid.replace(r"'", '''"'"''')
 
-            # On macOS 15+, system_profiler redacts SSID names, so we skip explicit scanning
-            # and rely on networksetup's internal scanning when attempting to connect
             version = Version(platform.mac_ver()[0])
+
             if version < Version("15"):
+                # On macOS < 15, use system_profiler for scanning
                 logger.info(f"Scanning for {ssid}...")
                 start = time.time()
                 discovered = False
@@ -741,63 +741,77 @@ class NetworksetupWireless(WifiController):
                         r"\n\s+([\x20-\x7E]{1,32}):\n\s+PHY Mode:"
                     )  # 0x20...0x7E --> ASCII for printable characters
                     if ssid in sorted(regex.findall(response)):
+                        discovered = True
                         break
                     time.sleep(1)
-                else:
+                if not discovered:
                     logger.warning("Wifi Scan timed out")
                     return False
-            else:
-                # On macOS 15+, we can't pre-scan due to SSID redaction, so we'll attempt
-                # connection directly. networksetup will scan internally and return error if not found.
-                logger.info(f"Attempting to connect to {ssid} without explicitly scanning first...")
-            # Check version once for use in connection logic
 
-            # If we're already connected, return (skip on macOS 15+ where current() can hang)
-            if version < Version("15"):
+                # If we're already connected, return
                 if self.current()[0] == ssid:
                     logger.info("Wifi already connected")
                     return True
 
-            # Connect now that we found the ssid
-            logger.info(f"Connecting to {ssid}...")
-            response = cmd(f"networksetup -setairportnetwork '{self.interface}' '{ssid}' '{password}'")
+                # Connect now that we found the ssid
+                logger.info(f"Connecting to {ssid}...")
+                response = cmd(f"networksetup -setairportnetwork '{self.interface}' '{ssid}' '{password}'")
 
-            if "not find" in response.lower():
-                logger.warning("Network was not found.")
-                return False
-
-            # Check if we're on macOS 15+ where SSID verification doesn't work
-            if version >= Version("15"):
-                # On macOS 15+, we can't verify the SSID due to redaction, so we just
-                # check that we're connected to *some* network after a brief wait
-                logger.debug("macOS 15+: Skipping SSID verification, checking for any connection...")
-                time.sleep(2)  # Give connection time to establish
-                current, state = self.current()
-                if state == SsidState.CONNECTED:
-                    logger.info("Connected to network (SSID redacted by macOS)")
-                    # Additional delay for network to be ready
-                    time.sleep(3)
-                    return True
-                else:
-                    logger.warning("No connection established after networksetup command")
+                if "not find" in response.lower():
+                    logger.warning("Network was not found during connection attempt.")
                     return False
 
-            # For macOS < 15, we can verify the actual SSID
-            # Now wait for network to actually establish
-            current = self.current()[0]
-            logger.debug(f"current wifi: {current}")
-            while current is not None and ssid not in current and timeout > 0:
-                time.sleep(1)
+                # Wait for network to actually establish
                 current = self.current()[0]
                 logger.debug(f"current wifi: {current}")
-                timeout -= 1
-                if timeout == 0:
-                    return False
+                while current is not None and ssid not in current and timeout > 0:
+                    time.sleep(1)
+                    current = self.current()[0]
+                    logger.debug(f"current wifi: {current}")
+                    timeout -= 1
+                    if timeout == 0:
+                        return False
 
-            # There is some delay required here, presumably because the network is not ready.
-            time.sleep(5)
+                # There is some delay required here, presumably because the network is not ready.
+                time.sleep(5)
+                return True
 
-            return True
+            else:
+                # On macOS 15+, SSIDs are redacted in system tools, so we use retry-based connection.
+                # The GoPro's WiFi AP takes time to become discoverable after being enabled via BLE.
+                # We retry the networksetup command with delays between attempts.
+                logger.info(f"Attempting to connect to {ssid} (macOS 15+ with retry logic)...")
+
+                # Internal retry loop with increasing delays
+                # The network typically becomes visible within 5-10 seconds of AP enable
+                max_internal_retries = 5
+                retry_delays = [2, 3, 4, 5, 5]  # seconds to wait before each retry
+
+                for retry_attempt in range(max_internal_retries):
+                    logger.info(f"Connection attempt {retry_attempt + 1}/{max_internal_retries}...")
+                    response = cmd(f"networksetup -setairportnetwork '{self.interface}' '{ssid}' '{password}'")
+
+                    if "not find" not in response.lower():
+                        # Connection command succeeded (or at least didn't fail with "not found")
+                        logger.debug("macOS 15+: Checking connection status...")
+                        time.sleep(2)  # Give connection time to establish
+                        current, state = self.current()
+                        if state == SsidState.CONNECTED:
+                            logger.info("Connected to network (SSID redacted by macOS)")
+                            # Additional delay for network interface to be fully ready
+                            time.sleep(3)
+                            return True
+                        else:
+                            logger.warning("networksetup succeeded but no connection established")
+
+                    # Network not found or connection failed - wait before retry
+                    if retry_attempt < max_internal_retries - 1:
+                        delay = retry_delays[retry_attempt]
+                        logger.info(f"Network not yet visible, waiting {delay}s before retry...")
+                        time.sleep(delay)
+
+                logger.warning(f"Failed to connect to {ssid} after {max_internal_retries} attempts")
+                return False
 
         return await asyncio.to_thread(_sync_connect)
 

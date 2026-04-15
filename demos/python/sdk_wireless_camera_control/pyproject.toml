@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "open_gopro"
-version = "0.22.0"
+version = "0.23.0"
 description = "Open GoPro API and Examples"
 authors = ["Tim Camise <tcamise@gopro.com>"]
 readme = "README.md"
@@ -32,6 +32,7 @@ gopro-livestream = "open_gopro.demos.gui.livestream:entrypoint"
 gopro-preview-stream = "open_gopro.demos.gui.preview_stream:entrypoint"
 gopro-cohn = "open_gopro.demos.cohn:entrypoint"
 gopro-scan = "open_gopro.demos.scanner:entrypoint"
+gopro-dump-gatt = "open_gopro.demos.dump_gatt:entrypoint"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -39,7 +40,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.14"
-bleak = "=1.1.1"
+bleak = "=2.1.1"
 construct = "^2"
 wrapt = "^2"
 requests = "^2"

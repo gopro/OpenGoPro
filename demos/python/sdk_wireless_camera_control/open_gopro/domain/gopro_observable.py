@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import logging
 from types import TracebackType
-from typing import Any, Coroutine, Generic, Self, TypeVar
+from typing import Any, Callable, Coroutine, Generic, Self, TypeVar
 
 from open_gopro.domain.communicator_interface import BaseGoProCommunicator
 from open_gopro.domain.exceptions import GoProError
@@ -20,6 +20,9 @@ I = TypeVar("I")
 
 logger = logging.getLogger(__name__)
 
+# Type alias for command factories - callables that return fresh coroutines
+CommandFactory = Callable[[], Coroutine[Any, Any, GoProResp[Any]]]
+
 
 class GoproObserverDistinctInitial(Observable[T], Generic[I, T]):
     """Observable for asynchronous notifications where the initial notifications is a different type than proceeding notifications.
@@ -27,21 +30,22 @@ class GoproObserverDistinctInitial(Observable[T], Generic[I, T]):
     Args:
         gopro (BaseGoProCommunicator): gopro camera to operate on
         update (UpdateType | BaseGoProCommunicator._CompositeRegisterType): the observable's update type
-        register_command (Coroutine[Any, Any, GoProResp[I]]): command to call to start receiving values
-        unregister_command (Coroutine[Any, Any, Any] | None): Command to call to stop receiving values. Defaults to None.
+        register_command (CommandFactory): factory that creates coroutine to start receiving values.
+            Must be a callable (e.g., lambda) that returns a fresh coroutine each time, NOT a raw coroutine.
+        unregister_command (CommandFactory | None): factory that creates coroutine to stop receiving values. Defaults to None.
     """
 
     def __init__(
         self,
         gopro: BaseGoProCommunicator,
         update: UpdateType | BaseGoProCommunicator._CompositeRegisterType,
-        register_command: Coroutine[Any, Any, GoProResp[I]],
-        unregister_command: Coroutine[Any, Any, Any] | None = None,
+        register_command: CommandFactory,
+        unregister_command: CommandFactory | None = None,
     ) -> None:
         self._gopro = gopro
         self._update = update
-        self._register_command = register_command
-        self._unregister_command = unregister_command
+        self._register_command_factory = register_command
+        self._unregister_command_factory = unregister_command
         self._initial_response: I
         self._is_open = False
         super().__init__(debug_id=str(update))
@@ -82,7 +86,7 @@ class GoproObserverDistinctInitial(Observable[T], Generic[I, T]):
             Self: modified observable
         """
         self._gopro._register_update(self._emit_value, self._update)
-        initial_response = await self._register_command
+        initial_response = await self._register_command_factory()
         if not initial_response.ok:
             raise GoProError(f"Failed to start receiving update ==> {self._update}")
         self._initial_response = initial_response.data
@@ -92,8 +96,8 @@ class GoproObserverDistinctInitial(Observable[T], Generic[I, T]):
     async def stop(self) -> None:
         """Configure the camera to stop sending notifications"""
         self._gopro._unregister_update(self._emit_value, self._update)
-        if self._unregister_command:
-            await self._unregister_command
+        if self._unregister_command_factory:
+            await self._unregister_command_factory()
         self._is_open = False
 
 
@@ -103,18 +107,10 @@ class GoProObservable(GoproObserverDistinctInitial[T, T]):
     Args:
         gopro (BaseGoProCommunicator): gopro camera to operate on
         update (UpdateType | BaseGoProCommunicator._CompositeRegisterType): the update's update type
-        register_command (Coroutine[Any, Any, GoProResp[T]]): command to call to start receiving notifications
-        unregister_command (Coroutine[Any, Any, Any] | None): Command to call to stop receiving notifications. Defaults to None.
+        register_command (CommandFactory): factory that creates coroutine to start receiving notifications.
+            Must be a callable (e.g., lambda) that returns a fresh coroutine each time, NOT a raw coroutine.
+        unregister_command (CommandFactory | None): factory that creates coroutine to stop receiving notifications. Defaults to None.
     """
-
-    def __init__(
-        self,
-        gopro: BaseGoProCommunicator,
-        update: UpdateType | BaseGoProCommunicator._CompositeRegisterType,
-        register_command: Coroutine[Any, Any, GoProResp[T]],
-        unregister_command: Coroutine[Any, Any, Any] | None = None,
-    ) -> None:
-        super().__init__(gopro, update, register_command, unregister_command)
 
     async def start(self: Self) -> Self:
         """Configure the camera to start receiving notifications.
@@ -128,7 +124,7 @@ class GoProObservable(GoproObserverDistinctInitial[T, T]):
             Self: modified observable
         """
         self._gopro._register_update(self._emit_value, self._update)
-        initial_response = await self._register_command
+        initial_response = await self._register_command_factory()
         if not initial_response.ok:
             raise GoProError(f"Failed to start receiving updates ==> {self._update}")
         self._initial_response = initial_response.data
@@ -143,8 +139,9 @@ class GoProCompositeObservable(GoProObservable[dict[UpdateType | BaseGoProCommun
     Args:
         gopro (BaseGoProCommunicator): gopro camera to operate on
         update (UpdateType | BaseGoProCommunicator._CompositeRegisterType): the updates's update type
-        register_command (Coroutine[Any, Any, GoProResp[T]]): command to call to start receiving notifications
-        unregister_command (Coroutine[Any, Any, Any] | None): Command to call to stop receiving notifications. Defaults to None.
+        register_command (CommandFactory): factory that creates coroutine to start receiving notifications.
+            Must be a callable (e.g., lambda) that returns a fresh coroutine each time, NOT a raw coroutine.
+        unregister_command (CommandFactory | None): factory that creates coroutine to stop receiving notifications. Defaults to None.
     """
 
     async def _emit_value(

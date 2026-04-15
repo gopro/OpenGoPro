@@ -46,6 +46,7 @@ enum EnumPresetGroup {
     PRESET_GROUP_ID_VIDEO     = 1000;
     PRESET_GROUP_ID_PHOTO     = 1001;
     PRESET_GROUP_ID_TIMELAPSE = 1002;
+    PRESET_GROUP_ID_GENERAL   = 2000;
 }
 
 enum EnumPresetGroupIcon {
@@ -338,11 +339,13 @@ message RequestPresetSetVisibility {
  * Preset Group meta information and contained Presets
  */
 message PresetGroup {
-    optional EnumPresetGroup     id             = 1; // Preset Group ID
-    repeated Preset              preset_array   = 2; // Array of Presets contained in this Preset Group
-    optional bool                can_add_preset = 3; // Is there room in the group to add additional Presets?
-    optional EnumPresetGroupIcon icon           = 4; // The icon to display for this preset group
-    repeated EnumFlatMode        mode_array     = 5; // A list of flatmodes available for this preset group
+    optional EnumPresetGroup     id               = 1; // Preset Group ID
+    repeated Preset              preset_array     = 2; // Array of Presets contained in this Preset Group
+    optional bool                can_add_preset   = 3; // Is there room in the group to add additional Presets?
+    optional EnumPresetGroupIcon icon             = 4; // The icon to display for this preset group
+    repeated EnumFlatMode        mode_array       = 5; // A list of flatmodes available for this preset group
+    optional string              custom_name      = 6; // Custom string name given to this preset group
+    optional int32               active_preset_id = 7; // Active preset id in this group
 }
 
 /**

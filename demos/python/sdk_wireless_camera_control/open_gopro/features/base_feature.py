@@ -2,6 +2,7 @@
 # This copyright was auto-generated on Mon May 12 23:03:50 UTC 2025
 
 """Functionality common to all features."""
+
 from __future__ import annotations
 
 import asyncio

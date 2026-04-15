@@ -163,12 +163,13 @@ async def test_route_all_data(mock_wireless_gopro_basic: WirelessGoPro):
     )
 
     # WHEN
-    # Make it appear to be the synchronous response
-    await mock_wireless_gopro_basic._sync_resp_wait_q.put(mock_response)
-    # Route the mock response
+    # Create a Future and register it as pending
+    future: asyncio.Future[GoProResp] = asyncio.Future()
+    mock_wireless_gopro_basic._pending_responses.append((QueryCmdId.GET_SETTING_VAL, future))
+    # Route the mock response - this should resolve the Future
     await mock_wireless_gopro_basic._route_response(mock_response)
-    # Get the routed response
-    routed_response = await mock_wireless_gopro_basic._sync_resp_ready_q.get()
+    # Get the routed response from the resolved Future
+    routed_response = await future
 
     # THEN
     assert routed_response.data == mock_data
@@ -187,15 +188,155 @@ async def test_route_individual_data(mock_wireless_gopro_basic: WirelessGoPro):
     )
 
     # WHEN
-    # Make it appear to be the synchronous response
-    await mock_wireless_gopro_basic._sync_resp_wait_q.put(mock_response)
-    # Route the mock response
+    # Create a Future and register it as pending
+    future: asyncio.Future[GoProResp] = asyncio.Future()
+    mock_wireless_gopro_basic._pending_responses.append((QueryCmdId.GET_SETTING_VAL, future))
+    # Route the mock response - this should resolve the Future
     await mock_wireless_gopro_basic._route_response(mock_response)
-    # Get the routed response
-    routed_response = await mock_wireless_gopro_basic._sync_resp_ready_q.get()
+    # Get the routed response from the resolved Future
+    routed_response = await future
 
     # THEN
     assert routed_response.data == 1
+
+
+async def test_concurrent_ble_messages_receive_correct_responses(mock_wireless_gopro_basic: WirelessGoPro):
+    """Test that concurrent BLE message senders receive their own responses, not each other's.
+
+    With the Future-based approach, each sender creates and awaits its own Future.
+    When _route_response resolves a Future, only the sender waiting on that specific
+    Future receives the response - eliminating the race condition.
+    """
+    mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
+
+    # GIVEN two different request identifiers
+    request_1_id = QueryCmdId.GET_SETTING_VAL  # Sender 1's request
+    request_2_id = QueryCmdId.GET_STATUS_VAL  # Sender 2's request
+
+    response_for_sender_1 = GoProResp(
+        protocol=GoProResp.Protocol.BLE,
+        status=ErrorCode.SUCCESS,
+        data={"setting": "value"},
+        identifier=request_1_id,
+    )
+    response_for_sender_2 = GoProResp(
+        protocol=GoProResp.Protocol.BLE,
+        status=ErrorCode.SUCCESS,
+        data={"status": "value"},
+        identifier=request_2_id,
+    )
+
+    # Track which response each simulated sender receives
+    received_responses: dict[str, GoProResp] = {}
+
+    # Coordination events to precisely control timing
+    sender1_registered = asyncio.Event()
+    sender2_registered = asyncio.Event()
+
+    # Create Futures for each sender
+    future_1: asyncio.Future[GoProResp] = asyncio.Future()
+    future_2: asyncio.Future[GoProResp] = asyncio.Future()
+
+    async def simulate_sender_1():
+        """Sender 1: registers first, awaits its own Future"""
+        # Register our Future in the pending list FIRST
+        mock_wireless_gopro_basic._pending_responses.append((request_1_id, future_1))
+        sender1_registered.set()
+        # Wait for sender 2 to also register
+        await sender2_registered.wait()
+        # Await our own Future - only we will receive this response
+        response = await asyncio.wait_for(future_1, timeout=2)
+        received_responses["sender1"] = response
+
+    async def simulate_sender_2():
+        """Sender 2: registers second, awaits its own Future"""
+        # Wait for sender 1 to register
+        await sender1_registered.wait()
+        # Register our Future in the pending list SECOND
+        mock_wireless_gopro_basic._pending_responses.append((request_2_id, future_2))
+        sender2_registered.set()
+        # Await our own Future - only we will receive this response
+        response = await asyncio.wait_for(future_2, timeout=2)
+        received_responses["sender2"] = response
+
+    # Start both senders
+    task1 = asyncio.create_task(simulate_sender_1())
+    task2 = asyncio.create_task(simulate_sender_2())
+
+    # Wait for both to be registered and waiting
+    await sender2_registered.wait()
+    await asyncio.sleep(0.01)  # Ensure both are blocked awaiting their Futures
+
+    # WHEN: Route response for sender 1 (matches head of pending list: request_1_id)
+    # This resolves future_1 directly - only sender 1 will wake up
+    await mock_wireless_gopro_basic._route_response(response_for_sender_1)
+
+    # Then route response for sender 2 (now matches new head: request_2_id)
+    # This resolves future_2 directly - only sender 2 will wake up
+    await mock_wireless_gopro_basic._route_response(response_for_sender_2)
+
+    # Wait for both senders to complete
+    await asyncio.gather(task1, task2)
+
+    # THEN: Each sender receives ITS OWN response
+    # With Direct Future resolution, this PASSES because:
+    # - Each sender awaits its own Future
+    # - _route_response resolves the specific Future for the matching identifier
+    # - No race condition - responses go directly to the correct sender
+    assert (
+        received_responses["sender1"].identifier == request_1_id
+    ), f"Sender 1 (expecting {request_1_id}) received wrong response: {received_responses['sender1'].identifier}"
+    assert (
+        received_responses["sender2"].identifier == request_2_id
+    ), f"Sender 2 (expecting {request_2_id}) received wrong response: {received_responses['sender2'].identifier}"
+
+
+async def test_out_of_order_ble_responses_routed_correctly(mock_wireless_gopro_basic: WirelessGoPro):
+    """Test that responses arriving out of order are still routed to the correct sender.
+
+    Scenario: A slow command (e.g., COHN) is pending at the head, then a fast command's
+    response arrives. The fast response should match its sender, not be treated as async.
+
+    Current bug: _route_response only checks the head, so the fast response gets
+    misrouted as async because it doesn't match the slow command at the head.
+    """
+    mock_wireless_gopro_basic._loop = asyncio.get_running_loop()
+
+    # GIVEN: Two requests registered - slow command first, fast command second
+    slow_request_id = QueryCmdId.GET_SETTING_VAL  # Simulates slow COHN-like command
+    fast_request_id = QueryCmdId.GET_STATUS_VAL  # Simulates fast LED-like command
+
+    future_slow: asyncio.Future[GoProResp] = asyncio.Future()
+    future_fast: asyncio.Future[GoProResp] = asyncio.Future()
+
+    # Register slow command first (at head of queue)
+    mock_wireless_gopro_basic._pending_responses.append((slow_request_id, future_slow))
+    # Register fast command second (behind slow command)
+    mock_wireless_gopro_basic._pending_responses.append((fast_request_id, future_fast))
+
+    # Response for fast command (arrives first, out of order)
+    fast_response = GoProResp(
+        protocol=GoProResp.Protocol.BLE,
+        status=ErrorCode.SUCCESS,
+        data={"status": "fast_value"},
+        identifier=fast_request_id,
+    )
+
+    # WHEN: Fast response arrives while slow command is still at head
+    await mock_wireless_gopro_basic._route_response(fast_response)
+
+    # THEN: Fast response should resolve the fast Future (not be treated as async)
+    assert future_fast.done(), "Fast response should have resolved the fast Future"
+    assert future_fast.result().identifier == fast_request_id
+    # Note: _route_response unwraps single-value dicts for query responses
+    assert future_fast.result().data == "fast_value"
+
+    # AND: Slow Future should still be pending
+    assert not future_slow.done(), "Slow Future should still be pending"
+
+    # AND: Pending responses should only have the slow request left
+    assert len(mock_wireless_gopro_basic._pending_responses) == 1
+    assert mock_wireless_gopro_basic._pending_responses[0][0] == slow_request_id
 
 
 async def test_get_update_unregister(mock_wireless_gopro_basic: WirelessGoPro):
@@ -248,9 +389,19 @@ async def test_lifecycle(mock_wireless_gopro: MockGoProMaintainBle):
     await mock_wireless_gopro._update_internal_state(update=StatusId.BUSY, value=False)
     assert await mock_wireless_gopro.is_ready
 
+    async def provide_response():
+        """Simulate the response being routed by resolving the pending Future"""
+        # Wait a bit for the BLE command to register its Future
+        await asyncio.sleep(0.1)
+        # Get the pending Future and resolve it with a mock response
+        if mock_wireless_gopro._pending_responses:
+            _, future = mock_wireless_gopro._pending_responses[0]
+            mock_wireless_gopro._pending_responses.pop(0)
+            future.set_result(mock_good_response)
+
     results = await asyncio.gather(
         mock_wireless_gopro.ble_command.enable_wifi_ap(enable=False),
-        mock_wireless_gopro._sync_resp_ready_q.put(mock_good_response),
+        provide_response(),
     )
 
     assert results[0].ok

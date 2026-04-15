@@ -48,7 +48,7 @@ class PreviewStreamController(StreamController[PreviewStreamOptions]):
         logger.info(f"Starting preview stream on port {self._current_options.port}")
         # Stop the preview stream if it is already running
         await self.gopro.http_command.set_preview_stream(mode=Toggle.DISABLE)
-        await self.gopro.ble_command.set_shutter(shutter=Toggle.DISABLE)
+        await self.gopro.http_command.set_shutter(shutter=Toggle.DISABLE)
         # Now start the preview stream
         response = await self.gopro.http_command.set_preview_stream(mode=Toggle.ENABLE, port=self._current_options.port)
         if response.ok:

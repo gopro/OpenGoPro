@@ -483,4 +483,14 @@ class BleSettings(BleMessages[BleSetting.BleSettingMessageBase]):
 
         See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#automatic-wi-fi-access-point-236)"""
 
+        self.auto_power_on_usb: BleSetting[settings.AutoPowerOnUsb] = BleSetting[settings.AutoPowerOnUsb](
+            communicator, SettingId.AUTO_POWER_ON_USB, settings.AutoPowerOnUsb
+        )
+
+        """Auto Power On USB
+
+        Setting to automatically power on when the camera is connected to a power source.
+
+        See [Open GoPro Spec](https://gopro.github.io/OpenGoPro/ble/features/settings.html#auto-power-on-usb-237)"""
+
         super().__init__(communicator)
