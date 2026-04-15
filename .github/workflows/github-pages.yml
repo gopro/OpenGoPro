@@ -14,7 +14,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout branch (staging public_main_mirror)
-              uses: actions/checkout@v5
+              uses: actions/checkout@v6
               with:
                   repository: gopro/OpenGoPro-Staging
                   ref: public_main_mirror
@@ -31,7 +31,7 @@ jobs:
     copyright:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
               with:
                   token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
 
@@ -61,7 +61,7 @@ jobs:
             build_kotlin_sdk: ${{ steps.check_kotlin_files.outputs.found_modified_kotlin_file }}
         steps:
             - name: Checkout code
-              uses: actions/checkout@v5
+              uses: actions/checkout@v6
               with:
                   fetch-depth: 2
 
@@ -113,7 +113,7 @@ jobs:
 
         steps:
             - name: Checkout source branch (the PR branch)
-              uses: actions/checkout@v5
+              uses: actions/checkout@v6
               with:
                   path: source
 
@@ -127,7 +127,7 @@ jobs:
                   python-version: 3.13.3
 
             - name: Restore cached pip environment
-              uses: actions/cache@v4
+              uses: actions/cache@v5
               with:
                   path: ${{ matrix.path }}
                   key: ${{ runner.os }}-3.13.3-pip-${{ hashFiles('demos/python/sdk_wireless_camera_control/poetry.lock') }}
@@ -148,7 +148,7 @@ jobs:
               run: nox -s docs
 
             - name: Checkout target branch (the gh-pages branch)
-              uses: actions/checkout@v5
+              uses: actions/checkout@v6
               with:
                   ref: gh-pages
                   path: target
@@ -172,7 +172,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout source branch (the PR branch)
-              uses: actions/checkout@v5
+              uses: actions/checkout@v6
               with:
                   path: source
 
@@ -189,7 +189,7 @@ jobs:
               run: ./gradlew dokkaHtml
 
             - name: Checkout target branch (the gh-pages branch)
-              uses: actions/checkout@v5
+              uses: actions/checkout@v6
               with:
                   ref: gh-pages
                   path: target
