@@ -20,7 +20,7 @@ def main() -> None:
     # TODO update tutorial docs to get directory
     for media in media_list["media"]:
         for media_file in [x["n"] for x in media["fs"]]:
-            if media_file.lower().endswith(".jpg"):
+            if media_file.lower().endswith((".jpg", ".360", ".36p")):
                 logger.info(f"found a photo: {media_file}")
                 photo = media_file
                 directory = media["d"]
