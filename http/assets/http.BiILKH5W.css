@@ -1,0 +1,1 @@
+.app-container{display:flex;height:100vh;width:100vw;overflow:hidden;position:fixed;top:0;left:0}.redoc-container{flex:1;height:100vh;overflow-y:auto;overflow-x:hidden}.redoc-container>div{min-height:100%}

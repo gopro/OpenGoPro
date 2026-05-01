@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkgopro_api_poc=globalThis.webpackChunkgopro_api_poc||[]).push([[5187],{5187(p,a,e){e.d(a,{createTreemapServices:()=>o.d});var o=e(1592);e(6902)}}]);

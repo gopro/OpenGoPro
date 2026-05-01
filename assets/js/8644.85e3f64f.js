@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkgopro_api_poc=globalThis.webpackChunkgopro_api_poc||[]).push([[8644],{8644(c,e,p){p.d(e,{createArchitectureServices:()=>a.S});var a=p(5877);p(6902)}}]);

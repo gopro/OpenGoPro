@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkgopro_api_poc=globalThis.webpackChunkgopro_api_poc||[]).push([[6235],{6235(o,p,a){a.d(p,{createInfoServices:()=>c.v});var c=a(1009);a(6902)}}]);

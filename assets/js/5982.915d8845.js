@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkgopro_api_poc=globalThis.webpackChunkgopro_api_poc||[]).push([[5982],{5982(a,p,c){c.d(p,{createPacketServices:()=>e.$});var e=c(6527);c(6902)}}]);
