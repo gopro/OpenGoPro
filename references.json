@@ -1,114 +1,7 @@
 {
   "operations": {
-    "OGP_UNREGISTER_SETTING_VALUE_UPDATES": {
-      "name": "Unregister for Setting Value Updates",
-      "type": "tlv",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/query#unregister-for-setting-value-updates"
-      },
-      "commandId": "0x72",
-      "tlvType": "query"
-    },
-    "GPCAMERA_POWER_ID": {
-      "name": "Sleep",
-      "type": "tlv",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/control#sleep",
-        "http": "/http/#tag/Control/operation/GPCAMERA_POWER_ID"
-      },
-      "commandId": "0x05",
-      "tlvType": "command"
-    },
-    "GPCAMERA_CUSTOM_PRESET_UPDATE": {
-      "name": "Update Custom Preset",
-      "type": "protobuf",
-      "cameras": [
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/presets#update-custom-preset",
-        "http": "/http/#tag/Presets/operation/GPCAMERA_CUSTOM_PRESET_UPDATE"
-      },
-      "featureId": "0xF1",
-      "actionId": "0x64",
-      "protobufMessages": [
-        {
-          "type": "request",
-          "featureId": "0xF1",
-          "actionId": "0x64",
-          "message": "RequestCustomPresetUpdate"
-        },
-        {
-          "type": "response",
-          "featureId": "0xF1",
-          "actionId": "0xE4",
-          "message": "ResponseGeneric"
-        }
-      ]
-    },
-    "OGP_REGISTER_SETTING_VALUE_UPDATES": {
-      "name": "Register for Setting Value Updates",
-      "type": "tlv",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/query#register-for-setting-value-updates"
-      },
-      "commandId": "0x52",
-      "tlvType": "query"
-    },
-    "OGP_TAG_MOMENT": {
-      "name": "OGP_TAG_MOMENT",
-      "type": "http",
-      "cameras": [
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Hilights/operation/OGP_TAG_MOMENT"
-      }
-    },
-    "OGP_TURBO_MODE_ENABLE": {
-      "name": "OGP_TURBO_MODE_ENABLE",
+    "OGP_PRESET_LOAD": {
+      "name": "OGP_PRESET_LOAD",
       "type": "http",
       "cameras": [
         "HERO9 Black",
@@ -122,65 +15,7 @@
       ],
       "documented": true,
       "protocols": {
-        "http": "/http/#tag/Control/operation/OGP_TURBO_MODE_ENABLE"
-      }
-    },
-    "OGP_GET_SETTING_VALUE": {
-      "name": "Get Setting Values",
-      "type": "tlv",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/query#get-setting-values"
-      },
-      "commandId": "0x12",
-      "tlvType": "query"
-    },
-    "GPCAMERA_INFO": {
-      "name": "Get Hardware Info",
-      "type": "tlv",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/query#get-hardware-info",
-        "http": "/http/#tag/Query/operation/GPCAMERA_INFO"
-      },
-      "commandId": "0x3C",
-      "tlvType": "command"
-    },
-    "GPCAMERA_FIRMWARE_UPDATE_V2": {
-      "name": "GPCAMERA_FIRMWARE_UPDATE_V2",
-      "type": "http",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/OTA/operation/GPCAMERA_FIRMWARE_UPDATE_V2"
+        "http": "/http/#tag/Presets/operation/OGP_PRESET_LOAD"
       }
     },
     "GPCAMERA_DELETE_ALL_FILES_ID": {
@@ -204,6 +39,310 @@
       "commandId": "0x41",
       "tlvType": "command"
     },
+    "OGP_MEDIA_THUMBNAIL": {
+      "name": "OGP_MEDIA_THUMBNAIL",
+      "type": "http",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Media/operation/OGP_MEDIA_THUMBNAIL"
+      }
+    },
+    "GPCAMERA_WEBCAM_PREVIEW_OGP": {
+      "name": "GPCAMERA_WEBCAM_PREVIEW_OGP",
+      "type": "http",
+      "cameras": [
+        "HERO13 Black"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Webcam/operation/GPCAMERA_WEBCAM_PREVIEW_OGP"
+      }
+    },
+    "GPCAMERA_POWER_ID": {
+      "name": "Sleep",
+      "type": "tlv",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/control#sleep",
+        "http": "/http/#tag/Control/operation/GPCAMERA_POWER_ID"
+      },
+      "commandId": "0x05",
+      "tlvType": "command"
+    },
+    "GPCAMERA_TURBO_MODE_ENABLE": {
+      "name": "Set Turbo Transfer",
+      "type": "protobuf",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/control#set-turbo-transfer",
+        "http": "/http/#tag/Control/operation/GPCAMERA_TURBO_MODE_ENABLE"
+      },
+      "featureId": "0xF1",
+      "actionId": "0x6B",
+      "protobufMessages": [
+        {
+          "type": "request",
+          "featureId": "0xF1",
+          "actionId": "0x6B",
+          "message": "RequestSetTurboActive"
+        },
+        {
+          "type": "response",
+          "featureId": "0xF1",
+          "actionId": "0xEB",
+          "message": "ResponseGeneric"
+        }
+      ]
+    },
+    "OGP_GET_SETTING_CAPABILITIES": {
+      "name": "Get Setting Capabilities",
+      "type": "tlv",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/query#get-setting-capabilities"
+      },
+      "commandId": "0x32",
+      "tlvType": "query"
+    },
+    "OGP_PRESET_SET_GROUP": {
+      "name": "Load Preset Group",
+      "type": "tlv",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/presets#load-preset-group",
+        "http": "/http/#tag/Presets/operation/OGP_PRESET_SET_GROUP"
+      },
+      "commandId": "0x3E",
+      "tlvType": "command"
+    },
+    "GPCAMERA_DELETE_FILE_GROUP": {
+      "name": "GPCAMERA_DELETE_FILE_GROUP",
+      "type": "http",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Media/operation/GPCAMERA_DELETE_FILE_GROUP"
+      }
+    },
+    "GPCAMERA_GET_CAMERA_NAME": {
+      "name": "GPCAMERA_GET_CAMERA_NAME",
+      "type": "http",
+      "cameras": [
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Query/operation/GPCAMERA_GET_CAMERA_NAME"
+      }
+    },
+    "GPCAMERA_GET_HOME_NETWORK_STATUS": {
+      "name": "Get COHN Status",
+      "type": "protobuf",
+      "cameras": [
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/cohn#get-cohn-status",
+        "http": "/http/#tag/COHN/operation/GPCAMERA_GET_HOME_NETWORK_STATUS"
+      },
+      "featureId": "0xF5",
+      "actionId": "0x6F",
+      "protobufMessages": [
+        {
+          "type": "request",
+          "featureId": "0xF5",
+          "actionId": "0x6F",
+          "message": "RequestGetCOHNStatus"
+        },
+        {
+          "type": "response",
+          "featureId": "0xF5",
+          "actionId": "0xEF",
+          "message": "NotifyCOHNStatus"
+        },
+        {
+          "type": "notification",
+          "featureId": "0xF5",
+          "actionId": "0xEF",
+          "message": "NotifyCOHNStatus"
+        }
+      ]
+    },
+    "OGP_UNREGISTER_SETTING_VALUE_UPDATES": {
+      "name": "Unregister for Setting Value Updates",
+      "type": "tlv",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/query#unregister-for-setting-value-updates"
+      },
+      "commandId": "0x72",
+      "tlvType": "query"
+    },
+    "OGP_GET_DATE_AND_TIME_DST": {
+      "name": "Get Local Date Time",
+      "type": "tlv",
+      "cameras": [
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/query#get-local-date-time"
+      },
+      "commandId": "0x10",
+      "tlvType": "command"
+    },
+    "GPCAMERA_AP_CONTROL": {
+      "name": "Set AP Control",
+      "type": "tlv",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/networking#set-ap-control"
+      },
+      "commandId": "0x17",
+      "tlvType": "command",
+      "referenced_by": {
+        "statuses": [
+          69
+        ]
+      }
+    },
+    "GPCAMERA_WEBCAM_STOP_OGP": {
+      "name": "GPCAMERA_WEBCAM_STOP_OGP",
+      "type": "http",
+      "cameras": [
+        "HERO13 Black"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Webcam/operation/GPCAMERA_WEBCAM_STOP_OGP"
+      }
+    },
+    "OGP_DOWNLOAD_MEDIA": {
+      "name": "OGP_DOWNLOAD_MEDIA",
+      "type": "http",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Media/operation/OGP_DOWNLOAD_MEDIA"
+      }
+    },
+    "GPCAMERA_OPENGOPRO_VERSION": {
+      "name": "Get Open GoPro Version",
+      "type": "tlv",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/query#get-open-gopro-version",
+        "http": "/http/#tag/Query/operation/GPCAMERA_OPENGOPRO_VERSION"
+      },
+      "commandId": "0x51",
+      "tlvType": "command"
+    },
     "OGP_DIGITAL_ZOOM_SET": {
       "name": "OGP_DIGITAL_ZOOM_SET",
       "type": "http",
@@ -222,8 +361,26 @@
         "http": "/http/#tag/Control/operation/OGP_DIGITAL_ZOOM_SET"
       }
     },
-    "GPCAMERA_SET_DATE_AND_TIME_ID": {
-      "name": "Set Date Time",
+    "OGP_MEDIA_SCREENNAIL": {
+      "name": "OGP_MEDIA_SCREENNAIL",
+      "type": "http",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Media/operation/OGP_MEDIA_SCREENNAIL"
+      }
+    },
+    "OGP_REGISTER_STATUS_VALUE_UPDATES": {
+      "name": "Register for Status Value Updates",
       "type": "tlv",
       "cameras": [
         "HERO9 Black",
@@ -232,14 +389,15 @@
         "HERO11 Black Mini",
         "HERO12 Black",
         "HERO13 Black",
-        "MAX 2"
+        "MAX 2",
+        "LIT HERO"
       ],
       "documented": true,
       "protocols": {
-        "ble": "/docs/ble/control#set-date-time"
+        "ble": "/docs/ble/query#register-for-status-value-updates"
       },
-      "commandId": "0x0D",
-      "tlvType": "command"
+      "commandId": "0x53",
+      "tlvType": "query"
     },
     "OGP_MEDIA_LIST": {
       "name": "OGP_MEDIA_LIST",
@@ -259,8 +417,24 @@
         "http": "/http/#tag/Media/operation/OGP_MEDIA_LIST"
       }
     },
-    "OGP_GET_DATE_TIME": {
-      "name": "Get Date Time",
+    "OGP_SET_DATE_AND_TIME_DST": {
+      "name": "OGP_SET_DATE_AND_TIME_DST",
+      "type": "http",
+      "cameras": [
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Control/operation/OGP_SET_DATE_AND_TIME_DST"
+      }
+    },
+    "GPCAMERA_SET_PRESET": {
+      "name": "Load Preset",
       "type": "tlv",
       "cameras": [
         "HERO9 Black",
@@ -274,145 +448,20 @@
       ],
       "documented": true,
       "protocols": {
-        "ble": "/docs/ble/query#get-date-time"
+        "ble": "/docs/ble/presets#load-preset"
       },
-      "commandId": "0x0E",
+      "commandId": "0x40",
       "tlvType": "command"
     },
-    "GPCAMERA_SET_DATE_AND_TIME_DST_ID": {
-      "name": "Set Local Date Time",
-      "type": "tlv",
-      "cameras": [
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/control#set-local-date-time",
-        "http": "/http/#tag/Control/operation/GPCAMERA_SET_DATE_AND_TIME_DST_ID"
-      },
-      "commandId": "0x0F",
-      "tlvType": "command"
-    },
-    "GPCAMERA_SET_PRESET_VISIBILITY_V2": {
-      "name": "Set Preset Visibility V2",
-      "type": "protobuf",
-      "cameras": [
-        "MAX 2"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/presets#set-preset-visibility-v2",
-        "http": "/http/#tag/Presets/operation/GPCAMERA_SET_PRESET_VISIBILITY_V2"
-      },
-      "featureId": "0xF1",
-      "actionId": "0x63",
-      "protobufMessages": [
-        {
-          "type": "request",
-          "featureId": "0xF1",
-          "actionId": "0x63",
-          "message": "RequestPresetSetVisibility"
-        },
-        {
-          "type": "response",
-          "featureId": "0xF1",
-          "actionId": "0xE3",
-          "message": "ResponseGeneric"
-        }
-      ]
-    },
-    "OGP_REGISTER_SETTING_CAPABILITY_UPDATES": {
-      "name": "Register for Setting Capability Updates",
-      "type": "tlv",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/query#register-for-setting-capability-updates"
-      },
-      "commandId": "0x62",
-      "tlvType": "query"
-    },
-    "GPCAMERA_NETWORK_CONNECT_NEW_AP": {
-      "name": "Connect to a New Access Point",
-      "type": "protobuf",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/networking#connect-to-a-new-access-point"
-      },
-      "featureId": "0x02",
-      "actionId": "0x05",
-      "protobufMessages": [
-        {
-          "type": "request",
-          "featureId": "0x02",
-          "actionId": "0x05",
-          "message": "RequestConnectNew"
-        },
-        {
-          "type": "response",
-          "featureId": "0x02",
-          "actionId": "0x85",
-          "message": "ResponseConnectNew"
-        },
-        {
-          "type": "notification",
-          "featureId": "0x02",
-          "actionId": "0x0C",
-          "message": "NotifProvisioningState"
-        }
-      ]
-    },
-    "GPCAMERA_WEBCAM_PREVIEW_OGP": {
-      "name": "GPCAMERA_WEBCAM_PREVIEW_OGP",
+    "GPCAMERA_WEBCAM_VERSION_OGP": {
+      "name": "GPCAMERA_WEBCAM_VERSION_OGP",
       "type": "http",
       "cameras": [
         "HERO13 Black"
       ],
       "documented": true,
       "protocols": {
-        "http": "/http/#tag/Webcam/operation/GPCAMERA_WEBCAM_PREVIEW_OGP"
-      }
-    },
-    "OGP_DOWNLOAD_MEDIA": {
-      "name": "OGP_DOWNLOAD_MEDIA",
-      "type": "http",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Media/operation/OGP_DOWNLOAD_MEDIA"
+        "http": "/http/#tag/Webcam/operation/GPCAMERA_WEBCAM_VERSION_OGP"
       }
     },
     "GPCAMERA_NETWORK_START_AP_SCAN": {
@@ -455,8 +504,8 @@
         }
       ]
     },
-    "GPCAMERA_OPENGOPRO_VERSION": {
-      "name": "Get Open GoPro Version",
+    "OGP_REGISTER_SETTING_CAPABILITY_UPDATES": {
+      "name": "Register for Setting Capability Updates",
       "type": "tlv",
       "cameras": [
         "HERO9 Black",
@@ -470,51 +519,83 @@
       ],
       "documented": true,
       "protocols": {
-        "ble": "/docs/ble/query#get-open-gopro-version",
-        "http": "/http/#tag/Query/operation/GPCAMERA_OPENGOPRO_VERSION"
+        "ble": "/docs/ble/query#register-for-setting-capability-updates"
       },
-      "commandId": "0x51",
-      "tlvType": "command"
+      "commandId": "0x62",
+      "tlvType": "query"
     },
-    "OGP_PREVIEW_STREAM_STOP": {
-      "name": "OGP_PREVIEW_STREAM_STOP",
-      "type": "http",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Preview-Stream/operation/OGP_PREVIEW_STREAM_STOP"
-      }
-    },
-    "OGP_REMOVE_HILIGHT": {
-      "name": "OGP_REMOVE_HILIGHT",
-      "type": "http",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Hilights/operation/OGP_REMOVE_HILIGHT"
-      }
-    },
-    "GPCAMERA_SYSTEM_RESET": {
-      "name": "Reboot the Camera",
+    "OGP_GET_SETTING_VALUE": {
+      "name": "Get Setting Values",
       "type": "tlv",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/query#get-setting-values"
+      },
+      "commandId": "0x12",
+      "tlvType": "query"
+    },
+    "OGP_TURBO_MODE_ENABLE": {
+      "name": "OGP_TURBO_MODE_ENABLE",
+      "type": "http",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Control/operation/OGP_TURBO_MODE_ENABLE"
+      }
+    },
+    "GPCAMERA_WEBCAM_EXIT_OGP": {
+      "name": "GPCAMERA_WEBCAM_EXIT_OGP",
+      "type": "http",
+      "cameras": [
+        "HERO13 Black"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Webcam/operation/GPCAMERA_WEBCAM_EXIT_OGP"
+      }
+    },
+    "OGP_UNREGISTER_STATUS_VALUE_UPDATES": {
+      "name": "Unregister for Status Value Updates",
+      "type": "tlv",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/query#unregister-for-status-value-updates"
+      },
+      "commandId": "0x73",
+      "tlvType": "query"
+    },
+    "GPCAMERA_SET_HOME_NETWORK_SETTING": {
+      "name": "Set COHN Setting",
+      "type": "protobuf",
       "cameras": [
         "HERO12 Black",
         "HERO13 Black",
@@ -522,22 +603,163 @@
       ],
       "documented": true,
       "protocols": {
-        "ble": "/docs/ble/control#reboot-the-camera",
-        "http": "/http/#tag/Control/operation/GPCAMERA_SYSTEM_RESET"
+        "ble": "/docs/ble/cohn#set-cohn-setting",
+        "http": "/http/#tag/COHN/operation/GPCAMERA_SET_HOME_NETWORK_SETTING"
       },
-      "commandId": "0x11",
-      "tlvType": "command"
+      "featureId": "0xF1",
+      "actionId": "0x65",
+      "protobufMessages": [
+        {
+          "type": "request",
+          "featureId": "0xF1",
+          "actionId": "0x65",
+          "message": "RequestSetCOHNSetting"
+        },
+        {
+          "type": "response",
+          "featureId": "0xF1",
+          "actionId": "0xE5",
+          "message": "ResponseGeneric"
+        }
+      ]
     },
-    "GPCAMERA_WEBCAM_VERSION_OGP": {
-      "name": "GPCAMERA_WEBCAM_VERSION_OGP",
-      "type": "http",
+    "OGP_PRESETS_GET": {
+      "name": "Get Available Presets",
+      "type": "protobuf",
       "cameras": [
-        "HERO13 Black"
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
       ],
       "documented": true,
       "protocols": {
-        "http": "/http/#tag/Webcam/operation/GPCAMERA_WEBCAM_VERSION_OGP"
+        "ble": "/docs/ble/presets#get-available-presets"
+      },
+      "featureId": "0xF5",
+      "actionId": "0x72",
+      "protobufMessages": [
+        {
+          "type": "request",
+          "featureId": "0xF5",
+          "actionId": "0x72",
+          "message": "RequestGetPresetStatus"
+        },
+        {
+          "type": "response",
+          "featureId": "0xF5",
+          "actionId": "0xF2",
+          "message": "NotifyPresetStatus"
+        },
+        {
+          "type": "notification",
+          "featureId": "0xF5",
+          "actionId": "0xF3",
+          "message": "NotifyPresetStatus"
+        }
+      ]
+    },
+    "GPCAMERA_TAG_MOMENT": {
+      "name": "Hilight Moment",
+      "type": "tlv",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/hilights#hilight-moment",
+        "http": "/http/#tag/Hilights/operation/GPCAMERA_TAG_MOMENT"
+      },
+      "commandId": "0x18",
+      "tlvType": "command"
+    },
+    "OGP_GET_STATE": {
+      "name": "OGP_GET_STATE",
+      "type": "http",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Query/operation/OGP_GET_STATE"
       }
+    },
+    "GPCAMERA_NETWORK_CONNECT_NEW_AP": {
+      "name": "Connect to a New Access Point",
+      "type": "protobuf",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/networking#connect-to-a-new-access-point"
+      },
+      "featureId": "0x02",
+      "actionId": "0x05",
+      "protobufMessages": [
+        {
+          "type": "request",
+          "featureId": "0x02",
+          "actionId": "0x05",
+          "message": "RequestConnectNew"
+        },
+        {
+          "type": "response",
+          "featureId": "0x02",
+          "actionId": "0x85",
+          "message": "ResponseConnectNew"
+        },
+        {
+          "type": "notification",
+          "featureId": "0x02",
+          "actionId": "0x0C",
+          "message": "NotifProvisioningState"
+        }
+      ]
+    },
+    "OGP_REGISTER_SETTING_VALUE_UPDATES": {
+      "name": "Register for Setting Value Updates",
+      "type": "tlv",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/query#register-for-setting-value-updates"
+      },
+      "commandId": "0x52",
+      "tlvType": "query"
     },
     "GPCAMERA_WEBCAM_START_OGP": {
       "name": "GPCAMERA_WEBCAM_START_OGP",
@@ -584,91 +806,104 @@
         }
       ]
     },
-    "GPCAMERA_SET_CAMERA_NAME": {
-      "name": "Set Camera Name",
-      "type": "protobuf",
+    "GPCAMERA_SET_DATE_AND_TIME_DST_ID": {
+      "name": "Set Local Date Time",
+      "type": "tlv",
       "cameras": [
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
         "MAX 2",
         "LIT HERO"
       ],
       "documented": true,
       "protocols": {
-        "ble": "/docs/ble/control#set-camera-name",
-        "http": "/http/#tag/Control/operation/GPCAMERA_SET_CAMERA_NAME"
+        "ble": "/docs/ble/control#set-local-date-time",
+        "http": "/http/#tag/Control/operation/GPCAMERA_SET_DATE_AND_TIME_DST_ID"
       },
-      "featureId": "0xF1",
-      "actionId": "0x62",
+      "commandId": "0x0F",
+      "tlvType": "command"
+    },
+    "GPCAMERA_NETWORK_CONNECT_EXISTING_AP": {
+      "name": "Connect to Provisioned Access Point",
+      "type": "protobuf",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/networking#connect-to-provisioned-access-point"
+      },
+      "featureId": "0x02",
+      "actionId": "0x04",
       "protobufMessages": [
         {
           "type": "request",
-          "featureId": "0xF1",
-          "actionId": "0x62",
-          "message": "RequestSetCameraName"
+          "featureId": "0x02",
+          "actionId": "0x04",
+          "message": "RequestConnect"
         },
         {
           "type": "response",
-          "featureId": "0xF1",
-          "actionId": "0xE2",
+          "featureId": "0x02",
+          "actionId": "0x84",
+          "message": "ResponseConnect"
+        },
+        {
+          "type": "notification",
+          "featureId": "0x02",
+          "actionId": "0x0C",
+          "message": "NotifProvisioningState"
+        }
+      ]
+    },
+    "GPCAMERA_WIRELESS_PAIRING_COMPLETE": {
+      "name": "Set Pairing State",
+      "type": "protobuf",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/control#set-pairing-state",
+        "http": "/http/#tag/Control/operation/GPCAMERA_WIRELESS_PAIRING_COMPLETE"
+      },
+      "featureId": "0x03",
+      "actionId": "0x01",
+      "protobufMessages": [
+        {
+          "type": "request",
+          "featureId": "0x03",
+          "actionId": "0x01",
+          "message": "RequestPairingFinish"
+        },
+        {
+          "type": "response",
+          "featureId": "0x03",
+          "actionId": "0x81",
           "message": "ResponseGeneric"
         }
       ]
     },
-    "OGP_PRESETS_GET": {
-      "name": "Get Available Presets",
-      "type": "protobuf",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/presets#get-available-presets"
-      },
-      "featureId": "0xF5",
-      "actionId": "0x72",
-      "protobufMessages": [
-        {
-          "type": "request",
-          "featureId": "0xF5",
-          "actionId": "0x72",
-          "message": "RequestGetPresetStatus"
-        },
-        {
-          "type": "response",
-          "featureId": "0xF5",
-          "actionId": "0xF2",
-          "message": "NotifyPresetStatus"
-        },
-        {
-          "type": "notification",
-          "featureId": "0xF5",
-          "actionId": "0xF3",
-          "message": "NotifyPresetStatus"
-        }
-      ]
-    },
-    "GPCAMERA_WEBCAM_EXIT_OGP": {
-      "name": "GPCAMERA_WEBCAM_EXIT_OGP",
+    "OGP_SHUTTER": {
+      "name": "OGP_SHUTTER",
       "type": "http",
       "cameras": [
-        "HERO13 Black"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Webcam/operation/GPCAMERA_WEBCAM_EXIT_OGP"
-      }
-    },
-    "OGP_GET_STATUS_VALUE": {
-      "name": "Get Status Values",
-      "type": "tlv",
-      "cameras": [
-        "HERO9 Black",
         "HERO10 Black",
         "HERO11 Black",
         "HERO11 Black Mini",
@@ -679,13 +914,11 @@
       ],
       "documented": true,
       "protocols": {
-        "ble": "/docs/ble/query#get-status-values"
-      },
-      "commandId": "0x13",
-      "tlvType": "query"
+        "http": "/http/#tag/Control/operation/OGP_SHUTTER"
+      }
     },
-    "OGP_MEDIA_GPMF": {
-      "name": "OGP_MEDIA_GPMF",
+    "OGP_SET_ANALYTICS": {
+      "name": "OGP_SET_ANALYTICS",
       "type": "http",
       "cameras": [
         "HERO9 Black",
@@ -699,146 +932,8 @@
       ],
       "documented": true,
       "protocols": {
-        "http": "/http/#tag/Media/operation/OGP_MEDIA_GPMF"
+        "http": "/http/#tag/Analytics/operation/OGP_SET_ANALYTICS"
       }
-    },
-    "GPCAMERA_FWUPDATE_DOWNLOAD_FILE": {
-      "name": "GPCAMERA_FWUPDATE_DOWNLOAD_FILE",
-      "type": "http",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/OTA/operation/GPCAMERA_FWUPDATE_DOWNLOAD_FILE"
-      }
-    },
-    "OGP_PREVIEW_STREAM_START": {
-      "name": "OGP_PREVIEW_STREAM_START",
-      "type": "http",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Preview-Stream/operation/OGP_PREVIEW_STREAM_START"
-      }
-    },
-    "OGP_DELETE_SINGLE_FILE": {
-      "name": "OGP_DELETE_SINGLE_FILE",
-      "type": "http",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Media/operation/OGP_DELETE_SINGLE_FILE"
-      }
-    },
-    "GPCAMERA_GET_HOME_NETWORK_CERT": {
-      "name": "Get COHN Certificate",
-      "type": "protobuf",
-      "cameras": [
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/cohn#get-cohn-certificate",
-        "http": "/http/#tag/COHN/operation/GPCAMERA_GET_HOME_NETWORK_CERT"
-      },
-      "featureId": "0xF5",
-      "actionId": "0x6E",
-      "protobufMessages": [
-        {
-          "type": "request",
-          "featureId": "0xF5",
-          "actionId": "0x6E",
-          "message": "RequestCOHNCert"
-        },
-        {
-          "type": "response",
-          "featureId": "0xF5",
-          "actionId": "0xEE",
-          "message": "ResponseCOHNCert"
-        }
-      ]
-    },
-    "OGP_MEDIA_THUMBNAIL": {
-      "name": "OGP_MEDIA_THUMBNAIL",
-      "type": "http",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Media/operation/OGP_MEDIA_THUMBNAIL"
-      }
-    },
-    "GPCAMERA_GET_HOME_NETWORK_STATUS": {
-      "name": "Get COHN Status",
-      "type": "protobuf",
-      "cameras": [
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/cohn#get-cohn-status",
-        "http": "/http/#tag/COHN/operation/GPCAMERA_GET_HOME_NETWORK_STATUS"
-      },
-      "featureId": "0xF5",
-      "actionId": "0x6F",
-      "protobufMessages": [
-        {
-          "type": "request",
-          "featureId": "0xF5",
-          "actionId": "0x6F",
-          "message": "RequestGetCOHNStatus"
-        },
-        {
-          "type": "response",
-          "featureId": "0xF5",
-          "actionId": "0xEF",
-          "message": "NotifyCOHNStatus"
-        },
-        {
-          "type": "notification",
-          "featureId": "0xF5",
-          "actionId": "0xEF",
-          "message": "NotifyCOHNStatus"
-        }
-      ]
     },
     "GPCAMERA_CHANGE_SETTING": {
       "name": "Change Setting",
@@ -860,9 +955,60 @@
       "commandId": "SettingID",
       "tlvType": "command"
     },
-    "GPCAMERA_SHUTTER": {
-      "name": "Set Shutter",
-      "type": "tlv",
+    "GPCAMERA_SET_CAMERA_CONTROL_STATUS": {
+      "name": "Set Camera Control",
+      "type": "protobuf",
+      "cameras": [
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/control#set-camera-control",
+        "http": "/http/#tag/Control/operation/GPCAMERA_SET_CAMERA_CONTROL_STATUS"
+      },
+      "featureId": "0xF1",
+      "actionId": "0x69",
+      "protobufMessages": [
+        {
+          "type": "request",
+          "featureId": "0xF1",
+          "actionId": "0x69",
+          "message": "RequestSetCameraControlStatus"
+        },
+        {
+          "type": "response",
+          "featureId": "0xF1",
+          "actionId": "0xE9",
+          "message": "ResponseGeneric"
+        }
+      ]
+    },
+    "GPCAMERA_FIRMWARE_UPDATE_V2": {
+      "name": "GPCAMERA_FIRMWARE_UPDATE_V2",
+      "type": "http",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/OTA/operation/GPCAMERA_FIRMWARE_UPDATE_V2"
+      }
+    },
+    "OGP_ADD_HILIGHT": {
+      "name": "OGP_ADD_HILIGHT",
+      "type": "http",
       "cameras": [
         "HERO9 Black",
         "HERO10 Black",
@@ -875,11 +1021,92 @@
       ],
       "documented": true,
       "protocols": {
-        "ble": "/docs/ble/control#set-shutter",
-        "http": "/http/#tag/Control/operation/GPCAMERA_SHUTTER"
+        "http": "/http/#tag/Hilights/operation/OGP_ADD_HILIGHT"
+      }
+    },
+    "OGP_MEDIA_TELEMETRY": {
+      "name": "OGP_MEDIA_TELEMETRY",
+      "type": "http",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Media/operation/OGP_MEDIA_TELEMETRY"
+      }
+    },
+    "OGP_MEDIA_GPMF": {
+      "name": "OGP_MEDIA_GPMF",
+      "type": "http",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Media/operation/OGP_MEDIA_GPMF"
+      }
+    },
+    "OGP_PREVIEW_STREAM_START": {
+      "name": "OGP_PREVIEW_STREAM_START",
+      "type": "http",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Preview-Stream/operation/OGP_PREVIEW_STREAM_START"
+      }
+    },
+    "OGP_GET_LAST_MEDIA": {
+      "name": "Get Last Captured Media",
+      "type": "protobuf",
+      "cameras": [
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/query#get-last-captured-media",
+        "http": "/http/#tag/Media/operation/OGP_GET_LAST_MEDIA"
       },
-      "commandId": "0x01",
-      "tlvType": "command"
+      "featureId": "0xF5",
+      "actionId": "0x6D",
+      "protobufMessages": [
+        {
+          "type": "request",
+          "featureId": "0xF5",
+          "actionId": "0x6D",
+          "message": "RequestGetLastCapturedMedia"
+        },
+        {
+          "type": "response",
+          "featureId": "0xF5",
+          "actionId": "0xED",
+          "message": "ResponseLastCapturedMedia"
+        }
+      ]
     },
     "GPCAMERA_CREATE_HOME_NETWORK_CERT": {
       "name": "Create COHN Certificate",
@@ -910,6 +1137,192 @@
           "message": "ResponseGeneric"
         }
       ]
+    },
+    "OGP_GET_DATE_TIME": {
+      "name": "Get Date Time",
+      "type": "tlv",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/query#get-date-time"
+      },
+      "commandId": "0x0E",
+      "tlvType": "command"
+    },
+    "OGP_DELETE_SINGLE_FILE": {
+      "name": "OGP_DELETE_SINGLE_FILE",
+      "type": "http",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Media/operation/OGP_DELETE_SINGLE_FILE"
+      }
+    },
+    "GPCAMERA_WEBCAM_STATUS_OGP": {
+      "name": "GPCAMERA_WEBCAM_STATUS_OGP",
+      "type": "http",
+      "cameras": [
+        "HERO13 Black"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Webcam/operation/GPCAMERA_WEBCAM_STATUS_OGP"
+      }
+    },
+    "OGP_CAMERA_INFO": {
+      "name": "OGP_CAMERA_INFO",
+      "type": "http",
+      "cameras": [
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Query/operation/OGP_CAMERA_INFO"
+      }
+    },
+    "OGP_SET_WIRED_USB_CONTROL": {
+      "name": "OGP_SET_WIRED_USB_CONTROL",
+      "type": "http",
+      "cameras": [
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Control/operation/OGP_SET_WIRED_USB_CONTROL"
+      }
+    },
+    "GPCAMERA_SET_CAMERA_NAME": {
+      "name": "Set Camera Name",
+      "type": "protobuf",
+      "cameras": [
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/control#set-camera-name",
+        "http": "/http/#tag/Control/operation/GPCAMERA_SET_CAMERA_NAME"
+      },
+      "featureId": "0xF1",
+      "actionId": "0x62",
+      "protobufMessages": [
+        {
+          "type": "request",
+          "featureId": "0xF1",
+          "actionId": "0x62",
+          "message": "RequestSetCameraName"
+        },
+        {
+          "type": "response",
+          "featureId": "0xF1",
+          "actionId": "0xE2",
+          "message": "ResponseGeneric"
+        }
+      ]
+    },
+    "GPCAMERA_FWUPDATE_DOWNLOAD_FILE": {
+      "name": "GPCAMERA_FWUPDATE_DOWNLOAD_FILE",
+      "type": "http",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/OTA/operation/GPCAMERA_FWUPDATE_DOWNLOAD_FILE"
+      }
+    },
+    "OGP_BUTTON_CMD": {
+      "name": "Press Button",
+      "type": "tlv",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/control#press-button"
+      },
+      "commandId": "0x1B",
+      "tlvType": "command"
+    },
+    "GPCAMERA_INFO": {
+      "name": "Get Hardware Info",
+      "type": "tlv",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/query#get-hardware-info",
+        "http": "/http/#tag/Query/operation/GPCAMERA_INFO"
+      },
+      "commandId": "0x3C",
+      "tlvType": "command"
+    },
+    "GPCAMERA_SET_DATE_AND_TIME_ID": {
+      "name": "Set Date Time",
+      "type": "tlv",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/control#set-date-time"
+      },
+      "commandId": "0x0D",
+      "tlvType": "command"
     },
     "OGP_LIVESTREAM_STATUS": {
       "name": "Get Livestream Status",
@@ -952,55 +1365,37 @@
         }
       ]
     },
-    "GPCAMERA_WEBCAM_STOP_OGP": {
-      "name": "GPCAMERA_WEBCAM_STOP_OGP",
-      "type": "http",
-      "cameras": [
-        "HERO13 Black"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Webcam/operation/GPCAMERA_WEBCAM_STOP_OGP"
-      }
-    },
-    "OGP_MEDIA_SCREENNAIL": {
-      "name": "OGP_MEDIA_SCREENNAIL",
-      "type": "http",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Media/operation/OGP_MEDIA_SCREENNAIL"
-      }
-    },
-    "OGP_SHUTTER": {
-      "name": "OGP_SHUTTER",
-      "type": "http",
-      "cameras": [
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Control/operation/OGP_SHUTTER"
-      }
-    },
-    "OGP_GET_LAST_MEDIA": {
-      "name": "Get Last Captured Media",
+    "GPCAMERA_SET_PRESET_VISIBILITY_V2": {
+      "name": "Set Preset Visibility V2",
       "type": "protobuf",
+      "cameras": [
+        "MAX 2"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/presets#set-preset-visibility-v2",
+        "http": "/http/#tag/Presets/operation/GPCAMERA_SET_PRESET_VISIBILITY_V2"
+      },
+      "featureId": "0xF1",
+      "actionId": "0x63",
+      "protobufMessages": [
+        {
+          "type": "request",
+          "featureId": "0xF1",
+          "actionId": "0x63",
+          "message": "RequestPresetSetVisibility"
+        },
+        {
+          "type": "response",
+          "featureId": "0xF1",
+          "actionId": "0xE3",
+          "message": "ResponseGeneric"
+        }
+      ]
+    },
+    "GPCAMERA_SYSTEM_RESET": {
+      "name": "Reboot the Camera",
+      "type": "tlv",
       "cameras": [
         "HERO12 Black",
         "HERO13 Black",
@@ -1008,45 +1403,14 @@
       ],
       "documented": true,
       "protocols": {
-        "ble": "/docs/ble/query#get-last-captured-media",
-        "http": "/http/#tag/Media/operation/OGP_GET_LAST_MEDIA"
+        "ble": "/docs/ble/control#reboot-the-camera",
+        "http": "/http/#tag/Control/operation/GPCAMERA_SYSTEM_RESET"
       },
-      "featureId": "0xF5",
-      "actionId": "0x6D",
-      "protobufMessages": [
-        {
-          "type": "request",
-          "featureId": "0xF5",
-          "actionId": "0x6D",
-          "message": "RequestGetLastCapturedMedia"
-        },
-        {
-          "type": "response",
-          "featureId": "0xF5",
-          "actionId": "0xED",
-          "message": "ResponseLastCapturedMedia"
-        }
-      ]
+      "commandId": "0x11",
+      "tlvType": "command"
     },
-    "OGP_SET_CAMERA_CONTROL_STATUS": {
-      "name": "OGP_SET_CAMERA_CONTROL_STATUS",
-      "type": "http",
-      "cameras": [
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Control/operation/OGP_SET_CAMERA_CONTROL_STATUS"
-      }
-    },
-    "OGP_SET_ANALYTICS": {
-      "name": "OGP_SET_ANALYTICS",
+    "OGP_REMOVE_HILIGHT": {
+      "name": "OGP_REMOVE_HILIGHT",
       "type": "http",
       "cameras": [
         "HERO9 Black",
@@ -1060,43 +1424,7 @@
       ],
       "documented": true,
       "protocols": {
-        "http": "/http/#tag/Analytics/operation/OGP_SET_ANALYTICS"
-      }
-    },
-    "OGP_MEDIA_TELEMETRY": {
-      "name": "OGP_MEDIA_TELEMETRY",
-      "type": "http",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Media/operation/OGP_MEDIA_TELEMETRY"
-      }
-    },
-    "OGP_MEDIA_INFO": {
-      "name": "OGP_MEDIA_INFO",
-      "type": "http",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Media/operation/OGP_MEDIA_INFO"
+        "http": "/http/#tag/Hilights/operation/OGP_REMOVE_HILIGHT"
       }
     },
     "OGP_UNREGISTER_SETTING_CAPABILITY_UPDATES": {
@@ -1118,6 +1446,177 @@
       },
       "commandId": "0x82",
       "tlvType": "query"
+    },
+    "OGP_MEDIA_INFO": {
+      "name": "OGP_MEDIA_INFO",
+      "type": "http",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Media/operation/OGP_MEDIA_INFO"
+      }
+    },
+    "GPCAMERA_CUSTOM_PRESET_UPDATE": {
+      "name": "Update Custom Preset",
+      "type": "protobuf",
+      "cameras": [
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/presets#update-custom-preset",
+        "http": "/http/#tag/Presets/operation/GPCAMERA_CUSTOM_PRESET_UPDATE"
+      },
+      "featureId": "0xF1",
+      "actionId": "0x64",
+      "protobufMessages": [
+        {
+          "type": "request",
+          "featureId": "0xF1",
+          "actionId": "0x64",
+          "message": "RequestCustomPresetUpdate"
+        },
+        {
+          "type": "response",
+          "featureId": "0xF1",
+          "actionId": "0xE4",
+          "message": "ResponseGeneric"
+        }
+      ]
+    },
+    "OGP_SET_CAMERA_CONTROL_STATUS": {
+      "name": "OGP_SET_CAMERA_CONTROL_STATUS",
+      "type": "http",
+      "cameras": [
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Control/operation/OGP_SET_CAMERA_CONTROL_STATUS"
+      }
+    },
+    "OGP_TAG_MOMENT": {
+      "name": "OGP_TAG_MOMENT",
+      "type": "http",
+      "cameras": [
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Hilights/operation/OGP_TAG_MOMENT"
+      }
+    },
+    "GPCAMERA_GET_HOME_NETWORK_CERT": {
+      "name": "Get COHN Certificate",
+      "type": "protobuf",
+      "cameras": [
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/cohn#get-cohn-certificate",
+        "http": "/http/#tag/COHN/operation/GPCAMERA_GET_HOME_NETWORK_CERT"
+      },
+      "featureId": "0xF5",
+      "actionId": "0x6E",
+      "protobufMessages": [
+        {
+          "type": "request",
+          "featureId": "0xF5",
+          "actionId": "0x6E",
+          "message": "RequestCOHNCert"
+        },
+        {
+          "type": "response",
+          "featureId": "0xF5",
+          "actionId": "0xEE",
+          "message": "ResponseCOHNCert"
+        }
+      ]
+    },
+    "OGP_KEEP_ALIVE": {
+      "name": "Keep Alive",
+      "type": "tlv",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/control#keep-alive"
+      },
+      "commandId": "0x5B",
+      "tlvType": "command"
+    },
+    "GPCAMERA_SHUTTER": {
+      "name": "Set Shutter",
+      "type": "tlv",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/control#set-shutter",
+        "http": "/http/#tag/Control/operation/GPCAMERA_SHUTTER"
+      },
+      "commandId": "0x01",
+      "tlvType": "command"
+    },
+    "OGP_PREVIEW_STREAM_STOP": {
+      "name": "OGP_PREVIEW_STREAM_STOP",
+      "type": "http",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "http": "/http/#tag/Preview-Stream/operation/OGP_PREVIEW_STREAM_STOP"
+      }
     },
     "GPCAMERA_LIVE_STREAM_SETUP": {
       "name": "Set Livestream Mode",
@@ -1152,6 +1651,26 @@
         }
       ]
     },
+    "OGP_GET_STATUS_VALUE": {
+      "name": "Get Status Values",
+      "type": "tlv",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ],
+      "documented": true,
+      "protocols": {
+        "ble": "/docs/ble/query#get-status-values"
+      },
+      "commandId": "0x13",
+      "tlvType": "query"
+    },
     "GPCAMERA_CLEAR_HOME_NETWORK_CERT": {
       "name": "Clear COHN Certificate",
       "type": "protobuf",
@@ -1181,525 +1700,6 @@
           "message": "ResponseGeneric"
         }
       ]
-    },
-    "OGP_PRESET_LOAD": {
-      "name": "OGP_PRESET_LOAD",
-      "type": "http",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Presets/operation/OGP_PRESET_LOAD"
-      }
-    },
-    "OGP_GET_STATE": {
-      "name": "OGP_GET_STATE",
-      "type": "http",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Query/operation/OGP_GET_STATE"
-      }
-    },
-    "GPCAMERA_AP_CONTROL": {
-      "name": "Set AP Control",
-      "type": "tlv",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/networking#set-ap-control"
-      },
-      "commandId": "0x17",
-      "tlvType": "command",
-      "referenced_by": {
-        "statuses": [
-          69
-        ]
-      }
-    },
-    "GPCAMERA_GET_CAMERA_NAME": {
-      "name": "GPCAMERA_GET_CAMERA_NAME",
-      "type": "http",
-      "cameras": [
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Query/operation/GPCAMERA_GET_CAMERA_NAME"
-      }
-    },
-    "GPCAMERA_TAG_MOMENT": {
-      "name": "Hilight Moment",
-      "type": "tlv",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/hilights#hilight-moment",
-        "http": "/http/#tag/Hilights/operation/GPCAMERA_TAG_MOMENT"
-      },
-      "commandId": "0x18",
-      "tlvType": "command"
-    },
-    "OGP_BUTTON_CMD": {
-      "name": "Press Button",
-      "type": "tlv",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/control#press-button"
-      },
-      "commandId": "0x1B",
-      "tlvType": "command"
-    },
-    "GPCAMERA_SET_CAMERA_CONTROL_STATUS": {
-      "name": "Set Camera Control",
-      "type": "protobuf",
-      "cameras": [
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/control#set-camera-control",
-        "http": "/http/#tag/Control/operation/GPCAMERA_SET_CAMERA_CONTROL_STATUS"
-      },
-      "featureId": "0xF1",
-      "actionId": "0x69",
-      "protobufMessages": [
-        {
-          "type": "request",
-          "featureId": "0xF1",
-          "actionId": "0x69",
-          "message": "RequestSetCameraControlStatus"
-        },
-        {
-          "type": "response",
-          "featureId": "0xF1",
-          "actionId": "0xE9",
-          "message": "ResponseGeneric"
-        }
-      ]
-    },
-    "GPCAMERA_SET_HOME_NETWORK_SETTING": {
-      "name": "Set COHN Setting",
-      "type": "protobuf",
-      "cameras": [
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/cohn#set-cohn-setting",
-        "http": "/http/#tag/COHN/operation/GPCAMERA_SET_HOME_NETWORK_SETTING"
-      },
-      "featureId": "0xF1",
-      "actionId": "0x65",
-      "protobufMessages": [
-        {
-          "type": "request",
-          "featureId": "0xF1",
-          "actionId": "0x65",
-          "message": "RequestSetCOHNSetting"
-        },
-        {
-          "type": "response",
-          "featureId": "0xF1",
-          "actionId": "0xE5",
-          "message": "ResponseGeneric"
-        }
-      ]
-    },
-    "GPCAMERA_WEBCAM_STATUS_OGP": {
-      "name": "GPCAMERA_WEBCAM_STATUS_OGP",
-      "type": "http",
-      "cameras": [
-        "HERO13 Black"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Webcam/operation/GPCAMERA_WEBCAM_STATUS_OGP"
-      }
-    },
-    "OGP_CAMERA_INFO": {
-      "name": "OGP_CAMERA_INFO",
-      "type": "http",
-      "cameras": [
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Query/operation/OGP_CAMERA_INFO"
-      }
-    },
-    "GPCAMERA_DELETE_FILE_GROUP": {
-      "name": "GPCAMERA_DELETE_FILE_GROUP",
-      "type": "http",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Media/operation/GPCAMERA_DELETE_FILE_GROUP"
-      }
-    },
-    "OGP_GET_DATE_AND_TIME_DST": {
-      "name": "Get Local Date Time",
-      "type": "tlv",
-      "cameras": [
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/query#get-local-date-time"
-      },
-      "commandId": "0x10",
-      "tlvType": "command"
-    },
-    "OGP_KEEP_ALIVE": {
-      "name": "Keep Alive",
-      "type": "tlv",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/control#keep-alive"
-      },
-      "commandId": "0x5B",
-      "tlvType": "command"
-    },
-    "GPCAMERA_SET_PRESET": {
-      "name": "Load Preset",
-      "type": "tlv",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/presets#load-preset"
-      },
-      "commandId": "0x40",
-      "tlvType": "command"
-    },
-    "OGP_ADD_HILIGHT": {
-      "name": "OGP_ADD_HILIGHT",
-      "type": "http",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Hilights/operation/OGP_ADD_HILIGHT"
-      }
-    },
-    "OGP_GET_SETTING_CAPABILITIES": {
-      "name": "Get Setting Capabilities",
-      "type": "tlv",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/query#get-setting-capabilities"
-      },
-      "commandId": "0x32",
-      "tlvType": "query"
-    },
-    "GPCAMERA_WIRELESS_PAIRING_COMPLETE": {
-      "name": "Set Pairing State",
-      "type": "protobuf",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/control#set-pairing-state",
-        "http": "/http/#tag/Control/operation/GPCAMERA_WIRELESS_PAIRING_COMPLETE"
-      },
-      "featureId": "0x03",
-      "actionId": "0x01",
-      "protobufMessages": [
-        {
-          "type": "request",
-          "featureId": "0x03",
-          "actionId": "0x01",
-          "message": "RequestPairingFinish"
-        },
-        {
-          "type": "response",
-          "featureId": "0x03",
-          "actionId": "0x81",
-          "message": "ResponseGeneric"
-        }
-      ]
-    },
-    "GPCAMERA_NETWORK_CONNECT_EXISTING_AP": {
-      "name": "Connect to Provisioned Access Point",
-      "type": "protobuf",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/networking#connect-to-provisioned-access-point"
-      },
-      "featureId": "0x02",
-      "actionId": "0x04",
-      "protobufMessages": [
-        {
-          "type": "request",
-          "featureId": "0x02",
-          "actionId": "0x04",
-          "message": "RequestConnect"
-        },
-        {
-          "type": "response",
-          "featureId": "0x02",
-          "actionId": "0x84",
-          "message": "ResponseConnect"
-        },
-        {
-          "type": "notification",
-          "featureId": "0x02",
-          "actionId": "0x0C",
-          "message": "NotifProvisioningState"
-        }
-      ]
-    },
-    "OGP_PRESET_SET_GROUP": {
-      "name": "Load Preset Group",
-      "type": "tlv",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/presets#load-preset-group",
-        "http": "/http/#tag/Presets/operation/OGP_PRESET_SET_GROUP"
-      },
-      "commandId": "0x3E",
-      "tlvType": "command"
-    },
-    "GPCAMERA_TURBO_MODE_ENABLE": {
-      "name": "Set Turbo Transfer",
-      "type": "protobuf",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/control#set-turbo-transfer",
-        "http": "/http/#tag/Control/operation/GPCAMERA_TURBO_MODE_ENABLE"
-      },
-      "featureId": "0xF1",
-      "actionId": "0x6B",
-      "protobufMessages": [
-        {
-          "type": "request",
-          "featureId": "0xF1",
-          "actionId": "0x6B",
-          "message": "RequestSetTurboActive"
-        },
-        {
-          "type": "response",
-          "featureId": "0xF1",
-          "actionId": "0xEB",
-          "message": "ResponseGeneric"
-        }
-      ]
-    },
-    "OGP_UNREGISTER_STATUS_VALUE_UPDATES": {
-      "name": "Unregister for Status Value Updates",
-      "type": "tlv",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/query#unregister-for-status-value-updates"
-      },
-      "commandId": "0x73",
-      "tlvType": "query"
-    },
-    "OGP_REGISTER_STATUS_VALUE_UPDATES": {
-      "name": "Register for Status Value Updates",
-      "type": "tlv",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "ble": "/docs/ble/query#register-for-status-value-updates"
-      },
-      "commandId": "0x53",
-      "tlvType": "query"
-    },
-    "OGP_SET_WIRED_USB_CONTROL": {
-      "name": "OGP_SET_WIRED_USB_CONTROL",
-      "type": "http",
-      "cameras": [
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Control/operation/OGP_SET_WIRED_USB_CONTROL"
-      }
-    },
-    "OGP_SET_DATE_AND_TIME_DST": {
-      "name": "OGP_SET_DATE_AND_TIME_DST",
-      "type": "http",
-      "cameras": [
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ],
-      "documented": true,
-      "protocols": {
-        "http": "/http/#tag/Control/operation/OGP_SET_DATE_AND_TIME_DST"
-      }
     }
   },
   "settings": {
@@ -9931,10 +9931,10 @@
     }
   },
   "featureFlags": {
-    "GPCAMERA_SDCARD_GET_ID": {
-      "name": "Sdcard Get ID",
+    "GPCAMERA_GENERIC": {
+      "name": "Generic",
       "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-sdcard-get-id",
+      "path": "/docs/api-reference#gpcamera-generic",
       "cameras": [
         "HERO9 Black",
         "HERO10 Black",
@@ -9944,6 +9944,111 @@
         "HERO13 Black",
         "MAX 2",
         "LIT HERO"
+      ]
+    },
+    "GPCAMERA_EASY_MAX_LENS_SUPPORTED": {
+      "name": "Easy Max Lens Supported",
+      "description": "TODO documentation here",
+      "path": "/docs/api-reference#gpcamera-easy-max-lens-supported",
+      "cameras": [
+        "HERO12 Black",
+        "HERO13 Black"
+      ]
+    },
+    "GPCAMERA_PARALLEL_DOWNLOADS": {
+      "name": "Parallel Downloads",
+      "description": "TODO documentation here",
+      "path": "/docs/api-reference#gpcamera-parallel-downloads",
+      "cameras": [
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black"
+      ]
+    },
+    "GPCAMERA_WEBCAM": {
+      "name": "Webcam",
+      "description": "This indicates that all of the following command ID's are supported_options:\n\n- GPCAMERA_WEBCAM_PREVIEW\n- GPCAMERA_WEBCAM_START\n- GPCAMERA_WEBCAM_STOP\n- GPCAMERA_WEBCAM_EXIT\n- GPCAMERA_WEBCAM_STATUS\n- GPCAMERA_WEBCAM_VERSION\n- GPCAMERA_WEBCAM_PREVIEW_OGP\n- GPCAMERA_WEBCAM_START_OGP\n- GPCAMERA_WEBCAM_STOP_OGP\n- GPCAMERA_WEBCAM_EXIT_OGP\n- GPCAMERA_WEBCAM_STATUS_OGP\n- GPCAMERA_WEBCAM_VERSION_OGP\n",
+      "path": "/docs/api-reference#gpcamera-webcam",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO12 Black",
+        "HERO13 Black"
+      ]
+    },
+    "GPCAMERA_MEDIA_METADATA_V5": {
+      "name": "Media Metadata V5",
+      "description": "settings.json: HERO6..HERO12\nAdds more video/photo metadata fields over MEDIA_METADATA_V4\nhttps://goproinc.atlassian.net/wiki/spaces/SBO/pages/24016465/gpMediaMetadata\n",
+      "path": "/docs/api-reference#gpcamera-media-metadata-v5",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ]
+    },
+    "GPCAMERA_NETWORK_NAME_ID": {
+      "name": "Network Name ID",
+      "description": "TODO documentation here",
+      "path": "/docs/api-reference#gpcamera-network-name-id",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ]
+    },
+    "GPCAMERA_QR_CODE_TIMESTAMPS": {
+      "name": "QR Code Timestamps",
+      "description": "TODO documentation here",
+      "path": "/docs/api-reference#gpcamera-qr-code-timestamps",
+      "cameras": [
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2"
+      ]
+    },
+    "GPCAMERA_BATTERY_LEVEL_ID": {
+      "name": "Battery Level ID",
+      "description": "App display hint to for battery level indicator.",
+      "path": "/docs/api-reference#gpcamera-battery-level-id",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ]
+    },
+    "GPCAMERA_INFO_SERIAL_NUMBER_ID": {
+      "name": "Info Serial Number ID",
+      "description": "TODO documentation here",
+      "path": "/docs/api-reference#gpcamera-info-serial-number-id",
+      "cameras": [
+        "HERO11 Black Mini",
+        "HERO13 Black",
+        "MAX 2"
+      ]
+    },
+    "GPCAMERA_INFO_NAME_ID": {
+      "name": "Info Name ID",
+      "description": "TODO documentation here",
+      "path": "/docs/api-reference#gpcamera-info-name-id",
+      "cameras": [
+        "HERO11 Black Mini"
       ]
     },
     "GPCAMERA_RC_PAIR": {
@@ -9958,10 +10063,164 @@
         "LIT HERO"
       ]
     },
-    "GPCAMERA_GET_WIFI_CONFIG": {
-      "name": "Get WIFI Config",
-      "description": "SSID and Password can be read with a single command.",
-      "path": "/docs/api-reference#gpcamera-get-wifi-config",
+    "GPCAMERA_MEDIA_GET_AUDIO_TRACK": {
+      "name": "Media Get Audio Track",
+      "description": "TODO documentation here",
+      "path": "/docs/api-reference#gpcamera-media-get-audio-track",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ]
+    },
+    "GPCAMERA_SDCARD_CAPACITY_ID": {
+      "name": "Sdcard Capacity ID",
+      "description": "TODO documentation here",
+      "path": "/docs/api-reference#gpcamera-sdcard-capacity-id",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ]
+    },
+    "GPCAMERA_PREVIEW_ENABLED": {
+      "name": "Preview Enabled",
+      "description": "Legacy Preview. Only used on HERO3 (not supported by PyWSDK)",
+      "path": "/docs/api-reference#gpcamera-preview-enabled",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "LIT HERO"
+      ]
+    },
+    "GPCAMERA_MEDIA_GET_TELEMETRY_TRACK": {
+      "name": "Media Get Telemetry Track",
+      "description": "TODO documentation here",
+      "path": "/docs/api-reference#gpcamera-media-get-telemetry-track",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ]
+    },
+    "GPCAMERA_FEATURE_GPMF_IN_VIDEO_THM_ID": {
+      "name": "Feature Gpmf In Video Thm ID",
+      "description": "Feature flag to notify app and 3rd party that GPMF can be grabbed from video thumbnail",
+      "path": "/docs/api-reference#gpcamera-feature-gpmf-in-video-thm-id",
+      "cameras": [
+        "HERO13 Black"
+      ]
+    },
+    "GPCAMERA_USE_CURRENT_WIRELESS_REMOTE_ID": {
+      "name": "Use Current Wireless Remote ID",
+      "description": "Used to set setting 63 to value 2 (SettingOptions.STREAM_WIRELESS_MODE_RC)",
+      "path": "/docs/api-reference#gpcamera-use-current-wireless-remote-id",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini"
+      ]
+    },
+    "GPCAMERA_PREVIEW_TS": {
+      "name": "Preview Ts",
+      "description": "TODO documentation here",
+      "path": "/docs/api-reference#gpcamera-preview-ts",
+      "cameras": [
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ]
+    },
+    "GPCAMERA_FEATURE_SHOW_HIDDEN_PRESETS": {
+      "name": "Feature Show Hidden Presets",
+      "description": "Indicates that the `GetPresetStatus` operation supports the `include_hidden` parameter",
+      "path": "/docs/api-reference#gpcamera-feature-show-hidden-presets",
+      "cameras": [
+        "MAX 2"
+      ]
+    },
+    "GPCAMERA_CANCEL_PAIR_WIRELESS_REMOTE_ID": {
+      "name": "Cancel Pair Wireless Remote ID",
+      "description": "The presence of this feature flag indicates that the camera will cancel pairing if the wifi remote attempts to pair\nwhen the camera was already paired.\n",
+      "path": "/docs/api-reference#gpcamera-cancel-pair-wireless-remote-id",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2"
+      ]
+    },
+    "GPCAMERA_PRESET_DISPLAY_CAROUSEL": {
+      "name": "Preset Display Carousel",
+      "description": "Feature flag to let WSDK know preset carousel UI should be displayed. This should indicate that only one mode group exists in the preset carousel.",
+      "path": "/docs/api-reference#gpcamera-preset-display-carousel",
+      "cameras": [
+        "LIT HERO"
+      ]
+    },
+    "GPCAMERA_HILIGHT_REMOVE_VIDEO_PLAYBACK_MOMENT": {
+      "name": "Hilight Remove Video Playback Moment",
+      "description": "TODO documentation here",
+      "path": "/docs/api-reference#gpcamera-hilight-remove-video-playback-moment",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2"
+      ]
+    },
+    "GPCAMERA_FEATURE_MEDIA_OFFLOAD_WITHOUT_CHARGING": {
+      "name": "Feature Media Offload Without Charging",
+      "description": "Indicates the camera can upload to cloud without a charging cable connected\n",
+      "path": "/docs/api-reference#gpcamera-feature-media-offload-without-charging",
+      "cameras": [
+        "HERO13 Black",
+        "MAX 2"
+      ]
+    },
+    "GPCAMERA_MEDIA_METADATA_V4": {
+      "name": "Media Metadata V4",
+      "description": "Exists in HERO5..HERO12 (BOSS-3660)\n\nIs not used by Android WSDK (see getMediaWithFields API in GpMediaGateway.java)\n\nNever released: V4 = V1 + Session metadata (i.e. Karma)\n\nEndpoint: /gp/gpMediaList?fields=xxx\n\nDefinition: MediaListV4 = MediaListV1 + Session files (media list + metadata)\nReferences:\n  https://goproinc.atlassian.net/wiki/spaces/SBO/pages/23986454/MediaList+V4+Australia\n  https://goproinc.atlassian.net/wiki/spaces/SBO/pages/24027744/GpControl+gpMediaList+Field+WhiteList\n",
+      "path": "/docs/api-reference#gpcamera-media-metadata-v4",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ]
+    },
+    "GPCAMERA_MEDIA_GET_GLOBAL_GPMF": {
+      "name": "Media Get Global Gpmf",
+      "description": "TODO documentation here",
+      "path": "/docs/api-reference#gpcamera-media-get-global-gpmf",
       "cameras": [
         "HERO9 Black",
         "HERO10 Black",
@@ -9981,10 +10240,30 @@
         "LIT HERO"
       ]
     },
-    "GPCAMERA_MEDIA_SELECTIVE_OFFLOAD": {
-      "name": "Media Selective Offload",
+    "GPCAMERA_SENSOR_PAIRING_AVAILABLE": {
+      "name": "Sensor Pairing Available",
       "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-media-selective-offload",
+      "path": "/docs/api-reference#gpcamera-sensor-pairing-available",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "LIT HERO"
+      ]
+    },
+    "GPCAMERA_MEDIA_START_SHORT_PROVISON": {
+      "name": "Media Start Short Provison",
+      "description": "TODO documentation here",
+      "path": "/docs/api-reference#gpcamera-media-start-short-provison",
+      "cameras": [
+        "LIT HERO"
+      ]
+    },
+    "GPCAMERA_SDCARD_GET_ID": {
+      "name": "Sdcard Get ID",
+      "description": "TODO documentation here",
+      "path": "/docs/api-reference#gpcamera-sdcard-get-id",
       "cameras": [
         "HERO9 Black",
         "HERO10 Black",
@@ -9992,7 +10271,8 @@
         "HERO11 Black Mini",
         "HERO12 Black",
         "HERO13 Black",
-        "MAX 2"
+        "MAX 2",
+        "LIT HERO"
       ]
     },
     "GPCAMERA_INFO_PASSWORD_ID": {
@@ -10003,23 +10283,31 @@
         "HERO11 Black Mini"
       ]
     },
-    "GPCAMERA_PREVIEW_ENABLED": {
-      "name": "Preview Enabled",
-      "description": "Legacy Preview. Only used on HERO3 (not supported by PyWSDK)",
-      "path": "/docs/api-reference#gpcamera-preview-enabled",
+    "GPCAMERA_EXPOSURE_SELECT_RESET": {
+      "name": "Exposure Select Reset",
+      "description": "TODO documentation here",
+      "path": "/docs/api-reference#gpcamera-exposure-select-reset",
       "cameras": [
         "HERO9 Black",
         "HERO10 Black",
         "HERO11 Black",
         "HERO11 Black Mini",
-        "LIT HERO"
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2"
       ]
     },
-    "GPCAMERA_FEATURE_SHOW_HIDDEN_PRESETS": {
-      "name": "Feature Show Hidden Presets",
-      "description": "Indicates that the `GetPresetStatus` operation supports the `include_hidden` parameter",
-      "path": "/docs/api-reference#gpcamera-feature-show-hidden-presets",
+    "GPCAMERA_HILIGHT_REMOVE_PHOTO_MOMENT": {
+      "name": "Hilight Remove Photo Moment",
+      "description": "TODO documentation here",
+      "path": "/docs/api-reference#gpcamera-hilight-remove-photo-moment",
       "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
         "MAX 2"
       ]
     },
@@ -10034,6 +10322,47 @@
         "HERO11 Black Mini",
         "HERO12 Black",
         "HERO13 Black"
+      ]
+    },
+    "GPCAMERA_SESSION_LIST": {
+      "name": "Session List",
+      "description": "TODO documentation here",
+      "path": "/docs/api-reference#gpcamera-session-list",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini"
+      ]
+    },
+    "GPCAMERA_DELETE_FILE_ID_V3": {
+      "name": "Delete File ID V3",
+      "description": "Uses /gp/gpControl/command/storage/delete to delete all media",
+      "path": "/docs/api-reference#gpcamera-delete-file-id-v3",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
+      ]
+    },
+    "GPCAMERA_GET_WIFI_CONFIG": {
+      "name": "Get WIFI Config",
+      "description": "SSID and Password can be read with a single command.",
+      "path": "/docs/api-reference#gpcamera-get-wifi-config",
+      "cameras": [
+        "HERO9 Black",
+        "HERO10 Black",
+        "HERO11 Black",
+        "HERO11 Black Mini",
+        "HERO12 Black",
+        "HERO13 Black",
+        "MAX 2",
+        "LIT HERO"
       ]
     },
     "GPCAMERA_INFO_VERSION_ID": {
@@ -10051,21 +10380,10 @@
         "LIT HERO"
       ]
     },
-    "GPCAMERA_USE_CURRENT_WIRELESS_REMOTE_ID": {
-      "name": "Use Current Wireless Remote ID",
-      "description": "Used to set setting 63 to value 2 (SettingOptions.STREAM_WIRELESS_MODE_RC)",
-      "path": "/docs/api-reference#gpcamera-use-current-wireless-remote-id",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini"
-      ]
-    },
-    "GPCAMERA_MEDIA_METADATA_V5": {
-      "name": "Media Metadata V5",
-      "description": "settings.json: HERO6..HERO12\nAdds more video/photo metadata fields over MEDIA_METADATA_V4\nhttps://goproinc.atlassian.net/wiki/spaces/SBO/pages/24016465/gpMediaMetadata\n",
-      "path": "/docs/api-reference#gpcamera-media-metadata-v5",
+    "GPCAMERA_MEDIA_SELECTIVE_OFFLOAD": {
+      "name": "Media Selective Offload",
+      "description": "TODO documentation here",
+      "path": "/docs/api-reference#gpcamera-media-selective-offload",
       "cameras": [
         "HERO9 Black",
         "HERO10 Black",
@@ -10073,14 +10391,13 @@
         "HERO11 Black Mini",
         "HERO12 Black",
         "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
+        "MAX 2"
       ]
     },
-    "GPCAMERA_MEDIA_GET_TELEMETRY_TRACK": {
-      "name": "Media Get Telemetry Track",
+    "GPCAMERA_NETWORK_VERSION_ID": {
+      "name": "Network Version ID",
       "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-media-get-telemetry-track",
+      "path": "/docs/api-reference#gpcamera-network-version-id",
       "cameras": [
         "HERO9 Black",
         "HERO10 Black",
@@ -10107,327 +10424,10 @@
         "LIT HERO"
       ]
     },
-    "GPCAMERA_DELETE_FILE_ID_V3": {
-      "name": "Delete File ID V3",
-      "description": "Uses /gp/gpControl/command/storage/delete to delete all media",
-      "path": "/docs/api-reference#gpcamera-delete-file-id-v3",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ]
-    },
     "GPCAMERA_MEDIA_LIST_V4": {
       "name": "Media List V4",
       "description": "TODO documentation here",
       "path": "/docs/api-reference#gpcamera-media-list-v4",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "LIT HERO"
-      ]
-    },
-    "GPCAMERA_BATTERY_LEVEL_ID": {
-      "name": "Battery Level ID",
-      "description": "App display hint to for battery level indicator.",
-      "path": "/docs/api-reference#gpcamera-battery-level-id",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ]
-    },
-    "GPCAMERA_FEATURE_GPMF_IN_VIDEO_THM_ID": {
-      "name": "Feature Gpmf In Video Thm ID",
-      "description": "Feature flag to notify app and 3rd party that GPMF can be grabbed from video thumbnail",
-      "path": "/docs/api-reference#gpcamera-feature-gpmf-in-video-thm-id",
-      "cameras": [
-        "HERO13 Black"
-      ]
-    },
-    "GPCAMERA_HILIGHT_REMOVE_VIDEO_PLAYBACK_MOMENT": {
-      "name": "Hilight Remove Video Playback Moment",
-      "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-hilight-remove-video-playback-moment",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2"
-      ]
-    },
-    "GPCAMERA_NETWORK_NAME_ID": {
-      "name": "Network Name ID",
-      "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-network-name-id",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ]
-    },
-    "GPCAMERA_SESSION_LIST": {
-      "name": "Session List",
-      "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-session-list",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini"
-      ]
-    },
-    "GPCAMERA_CANCEL_PAIR_WIRELESS_REMOTE_ID": {
-      "name": "Cancel Pair Wireless Remote ID",
-      "description": "The presence of this feature flag indicates that the camera will cancel pairing if the wifi remote attempts to pair\nwhen the camera was already paired.\n",
-      "path": "/docs/api-reference#gpcamera-cancel-pair-wireless-remote-id",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2"
-      ]
-    },
-    "GPCAMERA_INFO_NAME_ID": {
-      "name": "Info Name ID",
-      "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-info-name-id",
-      "cameras": [
-        "HERO11 Black Mini"
-      ]
-    },
-    "GPCAMERA_PREVIEW_TS": {
-      "name": "Preview Ts",
-      "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-preview-ts",
-      "cameras": [
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ]
-    },
-    "GPCAMERA_FEATURE_MEDIA_OFFLOAD_WITHOUT_CHARGING": {
-      "name": "Feature Media Offload Without Charging",
-      "description": "Indicates the camera can upload to cloud without a charging cable connected\n",
-      "path": "/docs/api-reference#gpcamera-feature-media-offload-without-charging",
-      "cameras": [
-        "HERO13 Black",
-        "MAX 2"
-      ]
-    },
-    "GPCAMERA_EASY_MAX_LENS_SUPPORTED": {
-      "name": "Easy Max Lens Supported",
-      "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-easy-max-lens-supported",
-      "cameras": [
-        "HERO12 Black",
-        "HERO13 Black"
-      ]
-    },
-    "GPCAMERA_GENERIC": {
-      "name": "Generic",
-      "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-generic",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ]
-    },
-    "GPCAMERA_WEBCAM": {
-      "name": "Webcam",
-      "description": "This indicates that all of the following command ID's are supported_options:\n\n- GPCAMERA_WEBCAM_PREVIEW\n- GPCAMERA_WEBCAM_START\n- GPCAMERA_WEBCAM_STOP\n- GPCAMERA_WEBCAM_EXIT\n- GPCAMERA_WEBCAM_STATUS\n- GPCAMERA_WEBCAM_VERSION\n- GPCAMERA_WEBCAM_PREVIEW_OGP\n- GPCAMERA_WEBCAM_START_OGP\n- GPCAMERA_WEBCAM_STOP_OGP\n- GPCAMERA_WEBCAM_EXIT_OGP\n- GPCAMERA_WEBCAM_STATUS_OGP\n- GPCAMERA_WEBCAM_VERSION_OGP\n",
-      "path": "/docs/api-reference#gpcamera-webcam",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO12 Black",
-        "HERO13 Black"
-      ]
-    },
-    "GPCAMERA_NETWORK_VERSION_ID": {
-      "name": "Network Version ID",
-      "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-network-version-id",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ]
-    },
-    "GPCAMERA_EXPOSURE_SELECT_RESET": {
-      "name": "Exposure Select Reset",
-      "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-exposure-select-reset",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2"
-      ]
-    },
-    "GPCAMERA_PRESET_DISPLAY_CAROUSEL": {
-      "name": "Preset Display Carousel",
-      "description": "Feature flag to let WSDK know preset carousel UI should be displayed. This should indicate that only one mode group exists in the preset carousel.",
-      "path": "/docs/api-reference#gpcamera-preset-display-carousel",
-      "cameras": [
-        "LIT HERO"
-      ]
-    },
-    "GPCAMERA_SDCARD_CAPACITY_ID": {
-      "name": "Sdcard Capacity ID",
-      "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-sdcard-capacity-id",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ]
-    },
-    "GPCAMERA_HILIGHT_REMOVE_PHOTO_MOMENT": {
-      "name": "Hilight Remove Photo Moment",
-      "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-hilight-remove-photo-moment",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2"
-      ]
-    },
-    "GPCAMERA_MEDIA_GET_GLOBAL_GPMF": {
-      "name": "Media Get Global Gpmf",
-      "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-media-get-global-gpmf",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ]
-    },
-    "GPCAMERA_MEDIA_METADATA_V4": {
-      "name": "Media Metadata V4",
-      "description": "Exists in HERO5..HERO12 (BOSS-3660)\n\nIs not used by Android WSDK (see getMediaWithFields API in GpMediaGateway.java)\n\nNever released: V4 = V1 + Session metadata (i.e. Karma)\n\nEndpoint: /gp/gpMediaList?fields=xxx\n\nDefinition: MediaListV4 = MediaListV1 + Session files (media list + metadata)\nReferences:\n  https://goproinc.atlassian.net/wiki/spaces/SBO/pages/23986454/MediaList+V4+Australia\n  https://goproinc.atlassian.net/wiki/spaces/SBO/pages/24027744/GpControl+gpMediaList+Field+WhiteList\n",
-      "path": "/docs/api-reference#gpcamera-media-metadata-v4",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ]
-    },
-    "GPCAMERA_INFO_SERIAL_NUMBER_ID": {
-      "name": "Info Serial Number ID",
-      "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-info-serial-number-id",
-      "cameras": [
-        "HERO11 Black Mini",
-        "HERO13 Black",
-        "MAX 2"
-      ]
-    },
-    "GPCAMERA_MEDIA_GET_AUDIO_TRACK": {
-      "name": "Media Get Audio Track",
-      "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-media-get-audio-track",
-      "cameras": [
-        "HERO9 Black",
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2",
-        "LIT HERO"
-      ]
-    },
-    "GPCAMERA_PARALLEL_DOWNLOADS": {
-      "name": "Parallel Downloads",
-      "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-parallel-downloads",
-      "cameras": [
-        "HERO10 Black",
-        "HERO11 Black",
-        "HERO11 Black Mini",
-        "HERO12 Black"
-      ]
-    },
-    "GPCAMERA_MEDIA_START_SHORT_PROVISON": {
-      "name": "Media Start Short Provison",
-      "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-media-start-short-provison",
-      "cameras": [
-        "LIT HERO"
-      ]
-    },
-    "GPCAMERA_QR_CODE_TIMESTAMPS": {
-      "name": "QR Code Timestamps",
-      "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-qr-code-timestamps",
-      "cameras": [
-        "HERO12 Black",
-        "HERO13 Black",
-        "MAX 2"
-      ]
-    },
-    "GPCAMERA_SENSOR_PAIRING_AVAILABLE": {
-      "name": "Sensor Pairing Available",
-      "description": "TODO documentation here",
-      "path": "/docs/api-reference#gpcamera-sensor-pairing-available",
       "cameras": [
         "HERO9 Black",
         "HERO10 Black",
