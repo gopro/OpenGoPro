@@ -79,10 +79,10 @@ class LiveStreamController(StreamController[LivestreamOptions]):
         """
         return await GoProObservable[NotifyLiveStreamStatus](
             gopro=self.gopro,
-            register_command=self.gopro.ble_command.register_livestream_status(
+            register_command=lambda: self.gopro.ble_command.register_livestream_status(
                 register=[EnumRegisterLiveStreamStatus.REGISTER_LIVE_STREAM_STATUS_STATUS]
             ),
-            unregister_command=self.gopro.ble_command.register_livestream_status(
+            unregister_command=lambda: self.gopro.ble_command.register_livestream_status(
                 unregister=[EnumRegisterLiveStreamStatus.REGISTER_LIVE_STREAM_STATUS_STATUS]
             ),
             update=ProtobufId(FeatureId.QUERY, ActionId.LIVESTREAM_STATUS_NOTIF),

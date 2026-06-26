@@ -5,6 +5,7 @@
 
 import asyncio
 import logging
+from functools import partial
 
 from returns.pipeline import is_successful
 from returns.result import Result
@@ -58,7 +59,7 @@ class AccessPointFeature(BaseFeature):
         async with GoproObserverDistinctInitial[ResponseStartScanning, NotifStartScanning](
             gopro=self._gopro,
             update=ProtobufId(FeatureId.NETWORK_MANAGEMENT, ActionId.NOTIF_START_SCAN),
-            register_command=self._gopro.ble_command.scan_wifi_networks(),
+            register_command=lambda: self._gopro.ble_command.scan_wifi_networks(),
         ) as observable, asyncio.timeout(timeout):
             if observable.initial_response.result != EnumResultGeneric.RESULT_SUCCESS:
                 return Result.from_failure(GoProError("Failed to start scanning."))
@@ -90,10 +91,12 @@ class AccessPointFeature(BaseFeature):
                     # Are we already provisioned?
                     if entry.scan_entry_flags & EnumScanEntryFlags.SCAN_FLAG_CONFIGURED:
                         logger.info(f"Connecting to already provisioned network {ssid}...")
-                        command = self._gopro.ble_command.request_wifi_connect(ssid=ssid)
+                        command = partial(self._gopro.ble_command.request_wifi_connect, ssid=ssid)
                     else:
                         logger.info(f"Provisioning new network {ssid}...")
-                        command = self._gopro.ble_command.request_wifi_connect_new(ssid=ssid, password=password)
+                        command = partial(
+                            self._gopro.ble_command.request_wifi_connect_new, ssid=ssid, password=password
+                        )
 
                     async with GoproObserverDistinctInitial[
                         ResponseConnect | ResponseConnectNew,
