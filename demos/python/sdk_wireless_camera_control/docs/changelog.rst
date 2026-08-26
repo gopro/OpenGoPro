@@ -9,6 +9,10 @@ All notable changes to this project will be documented in this file.
 The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
+Unreleased
+----------
+* Add Python 3.14 support
+
 0.23.0 (February-5-2026)
 ------------------------
 * Add Support for Lit Hero

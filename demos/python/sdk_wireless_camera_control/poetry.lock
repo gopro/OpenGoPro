@@ -3189,5 +3189,5 @@ gui = ["Pillow", "opencv-python"]
 
 [metadata]
 lock-version = "2.1"
-python-versions = ">=3.11,<3.14"
-content-hash = "07331d3861224dbf9eb2c6e57647392d0040419ec0d779fcf13b788b7b6900cf"
+python-versions = ">=3.11,<3.15"
+content-hash = "0afe0da7bfd775c7cebf016999cdddac90b846a96a3275d7782ec565a66fc0fc"
